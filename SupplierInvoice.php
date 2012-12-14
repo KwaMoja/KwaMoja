@@ -142,9 +142,9 @@ elseif (!isset($_SESSION['SuppTrans'])) {
 if (isset($_GET['ReceivePO']) and $_GET['ReceivePO'] != '') {
 	/*Need to check that the user has permission to receive goods */
 
-	if (!in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])) {
+	if (!in_array(1001, $_SESSION['AllowedPageSecurityTokens'])) {
 		prnMsg(_('Your permissions do not allow receiving of goods. Automatic receiving of purchase orders is restricted to those only users who are authorised to receive goods/services'), 'error');
-	} //!in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])
+	} //!in_array(1001, $_SESSION['AllowedPageSecurityTokens'])
 	else {
 		/* The user has permission to receive goods then lets go */
 

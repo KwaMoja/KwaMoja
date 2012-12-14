@@ -13,7 +13,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 ?>
 <html>
 <head>
-	<title>webERP Login screen</title>
+	<title>KwaMoja Login screen</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="css/login.css" type="text/css" />
@@ -43,7 +43,7 @@ if (get_magic_quotes_gpc()){
 			$DirHandle = dir('companies/');
 
 			while (false !== ($CompanyEntry = $DirHandle->read())){
-				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != '' AND $CompanyEntry!='.svn' AND $CompanyEntry!='.'){
+				if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry!='.svn' and $CompanyEntry!='.'){
 					if ($CompanyEntry==$DefaultCompany) {
 						echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
 					} else {

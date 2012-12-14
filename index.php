@@ -10,7 +10,7 @@ include('includes/header.inc');
 include('includes/MainMenuLinksArray.php');
 
 if (isset($SupplierLogin) and $SupplierLogin==1){
-	echo '<table class="table_index">
+	echo '<br /><table class="table_index">
 			<tr>
 			<td class="menu_group_item">
 				<p>&bull; <a href="' . $rootpath . '/SupplierTenders.php?TenderType=1">' . _('View or Amend outstanding offers') . '</a></p>
@@ -26,11 +26,11 @@ if (isset($SupplierLogin) and $SupplierLogin==1){
 				<p>&bull; <a href="' . $rootpath . '/SupplierTenders.php?TenderType=3">' . _('View any open tenders without an offer') . '</a></p>
 			</td>
 			</tr>
-		</table>';
+		</table><br />';
 	include('includes/footer.inc');
 	exit;
 } elseif (isset($SupplierLogin) and $SupplierLogin==0){
-	echo '<table class="table_index">
+	echo '<br /><table class="table_index">
 			<tr>
 			<td class="menu_group_item">
 				<p>&bull; <a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Account Status') . '</a></p>
@@ -46,7 +46,7 @@ if (isset($SupplierLogin) and $SupplierLogin==1){
 				<p>&bull; <a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Status') . '</a></p>
 			</td>
 			</tr>
-		</table>';
+		</table><br />';
 
 	include('includes/footer.inc');
 	exit;

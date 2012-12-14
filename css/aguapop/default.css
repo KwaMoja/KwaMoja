@@ -96,7 +96,6 @@ text-align:center;
 
 input { /*specifies the input field text characteristics*/
 font-family: Arial, Verdana, Helvetica, sans-serif;
-font-size: 100%;
 font-style: italic;
 }
 input.number{
@@ -112,7 +111,6 @@ background:#9ffffb;
 
 select {
 font-family: Arial, Verdana, Helvetica, sans-serif;
-font-size: 110%;
 }
 select:hover { /* drop down */
 background:#9ffffb;

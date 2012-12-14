@@ -1155,7 +1155,7 @@ else { //dont require customer selection
 					elseif ($_SESSION['Items' . $identifier]->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity) {
 					prnMsg(_('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'), 'warn');
 				} //$_SESSION['Items' . $identifier]->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity
-					elseif ($OrderLine->Quantity != $Quantity or $OrderLine->Price != $Price or ABoS($OrderLine->DiscountPercent - $DiscountPercentage / 100) > 0.001 or $OrderLine->Narrative != $Narrative or $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber] or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
+					elseif ($OrderLine->Quantity != $Quantity or $OrderLine->Price != $Price or ABS($OrderLine->DiscountPercent - $DiscountPercentage / 100) > 0.001 or $OrderLine->Narrative != $Narrative or $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber] or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
 					$WithinCreditLimit = true;
 
 					if ($_SESSION['CheckCreditLimits'] > 0 and $AlreadyWarnedAboutCredit == false) {

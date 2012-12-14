@@ -104,39 +104,44 @@ if (isset($_POST['Show'])){
 	$LastPeriodSelected = max($SelectedPeriod);
 
 	if ($_POST['tag']==0) {
- 		$sql= "SELECT type,
-			typename,
-			gltrans.typeno,
-			trandate,
-			narrative,
-			amount,
-			periodno,
-			tag
-		FROM gltrans, systypes
-		WHERE gltrans.account = '" . $SelectedAccount . "'
-		AND systypes.typeid=gltrans.type
-		AND posted=1
-		AND periodno>='" . $FirstPeriodSelected . "'
-		AND periodno<='" . $LastPeriodSelected . "'
-		ORDER BY periodno, gltrans.trandate, counterindex";
+ 		$sql = "SELECT type,
+						typename,
+						gltrans.typeno,
+						trandate,
+						narrative,
+						amount,
+						periodno,
+						tag
+					FROM gltrans
+					INNER JOIN systypes
+						ON systypes.typeid=gltrans.type
+					WHERE gltrans.account = '" . $SelectedAccount . "'
+						AND periodno>='" . $FirstPeriodSelected . "'
+						AND periodno<='" . $LastPeriodSelected . "'
+					ORDER BY periodno,
+							gltrans.trandate,
+							counterindex";
 
 	} else {
- 		$sql= "SELECT type,
-			typename,
-			gltrans.typeno,
-			trandate,
-			narrative,
-			amount,
-			periodno,
-			tag
-		FROM gltrans, systypes
-		WHERE gltrans.account = '" . $SelectedAccount . "'
-		AND systypes.typeid=gltrans.type
-		AND posted=1
-		AND periodno>= '" . $FirstPeriodSelected . "'
-		AND periodno<= '" . $LastPeriodSelected . "'
-		AND tag='".$_POST['tag']."'
-		ORDER BY periodno, gltrans.trandate, counterindex";
+ 		$sql = "SELECT type,
+						typename,
+						gltrans.typeno,
+						trandate,
+						narrative,
+						amount,
+						periodno,
+						tag
+					FROM gltrans
+					INNER JOIN systypes
+						ON systypes.typeid=gltrans.type
+					WHERE gltrans.account = '" . $SelectedAccount . "'
+						AND posted=1
+						AND periodno>= '" . $FirstPeriodSelected . "'
+						AND periodno<= '" . $LastPeriodSelected . "'
+						AND tag='".$_POST['tag']."'
+					ORDER BY periodno,
+							gltrans.trandate,
+							counterindex";
 	}
 
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
@@ -236,7 +241,7 @@ if (isset($_POST['Show'])){
 				}
 				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal -$ChartDetailRow['actual'],3);
 
-				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
+				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01 and $_POST['tag']==0){
 					$ShowIntegrityReport = True;
 				}
 			}

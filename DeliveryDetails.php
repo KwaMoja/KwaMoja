@@ -1136,7 +1136,7 @@ $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 $sql = "SELECT shipper_id, shippername FROM shippers";
 $ShipperResults = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 while ($myrow=DB_fetch_array($ShipperResults)){
-	if ($myrow['shipper_id']==$_POST['ShipVia']){
+	if (isset($_POST['ShipVia']) and ($myrow['shipper_id']==$_POST['ShipVia'])){
 			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 	}else {
 		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
