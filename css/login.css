@@ -4,9 +4,10 @@ body {
 	margin: 0;
 	text-align: center;
 	font: 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	background: transparent url(bg.jpg); /* -repeat-x left bottom- not needed cause now img equals div */
-	background-size: 100%;
-	color: #000000;
+background: #6191bf; /* Fallback background color for non supported browsers */
+
+background-image: -moz-radial-gradient(center 95deg,circle cover, #00ACC5, #090090);
+background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%,800, from(#236212), to(#ADD889));	color: #000000;
 }
 
 div.left {
