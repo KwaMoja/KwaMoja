@@ -979,7 +979,7 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Assembly, Kit, Manufactured or Service/Labour') . ':</td>
 		<td><select name="MBFlag">';
-if ($_POST['MBFlag']=='A'){
+if (!isset($_POST['MBFlag']) or  $_POST['MBFlag']=='A'){
 	echo '<option selected="selected" value="A">' . _('Assembly') . '</option>';
 } else {
 	echo '<option value="A">' . _('Assembly') . '</option>';
