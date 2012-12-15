@@ -43,6 +43,9 @@ if (isset($_GET['SelectedCustomer'])){
 } elseif (isset($_POST['SelectedCustomer'])){
 	$SelectedCustomer = $_POST['SelectedCustomer'];
 }
+if (isset($SupplierLogin) and $SupplierLogin==0){
+	$SelectedCustomer = $_SESSION['CustomerID'];
+}
 
 if (isset($SelectedStockItem) and $SelectedStockItem==''){
 	unset($SelectedStockItem);

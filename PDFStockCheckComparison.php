@@ -135,38 +135,38 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									amount,
-									narrative)
-							VALUES (17,
-								'" .$AdjustmentNumber . "',
-								'" . $SQLAdjustmentDate . "',
-								'" . $PeriodNo . "',
-								'" .  $StockGLCodes['adjglact'] . "',
-								'" . $myrow['standardcost'] * -($StockQtyDifference) . "',
-								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+												typeno,
+												trandate,
+												periodno,
+												account,
+												amount,
+												narrative)
+											VALUES (17,
+												'" .$AdjustmentNumber . "',
+												'" . $SQLAdjustmentDate . "',
+												'" . $PeriodNo . "',
+												'" .  $StockGLCodes['adjglact'] . "',
+												'" . ($myrow['standardcost'] * -($StockQtyDifference)) . "',
+												'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									amount,
-									narrative)
-							VALUES (17,
-								'" .$AdjustmentNumber . "',
-								'" . $SQLAdjustmentDate . "',
-								'" . $PeriodNo . "',
-								'" .  $StockGLCodes['stockact'] . "',
-								'" . $myrow['standardcost'] * $StockQtyDifference . "',
-								'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
+												typeno,
+												trandate,
+												periodno,
+												account,
+												amount,
+												narrative)
+											VALUES (17,
+												'" .$AdjustmentNumber . "',
+												'" . $SQLAdjustmentDate . "',
+												'" . $PeriodNo . "',
+												'" .  $StockGLCodes['stockact'] . "',
+												'" . ($myrow['standardcost'] * $StockQtyDifference) . "',
+												'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
@@ -182,22 +182,23 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 	$ErrMsg = _('The Inventory Comparison data could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the Inventory Comparison data was used');
 	$sql = "SELECT stockcheckfreeze.stockid,
-			description,
-			stockmaster.categoryid,
-			stockcategory.categorydescription,
-			stockcheckfreeze.loccode,
-			locations.locationname,
-			stockcheckfreeze.qoh,
-			stockmaster.decimalplaces
-			FROM stockcheckfreeze INNER JOIN stockmaster
-				ON stockcheckfreeze.stockid=stockmaster.stockid
-			INNER JOIN locations
-				ON stockcheckfreeze.loccode=locations.loccode
-			INNER JOIN stockcategory
-				ON stockmaster.categoryid=stockcategory.categoryid
-			ORDER BY stockcheckfreeze.loccode,
-				stockmaster.categoryid,
-				stockcheckfreeze.stockid";
+					description,
+					stockmaster.categoryid,
+					stockcategory.categorydescription,
+					stockcheckfreeze.loccode,
+					locations.locationname,
+					stockcheckfreeze.qoh,
+					stockmaster.decimalplaces
+				FROM stockcheckfreeze
+				INNER JOIN stockmaster
+					ON stockcheckfreeze.stockid=stockmaster.stockid
+				INNER JOIN locations
+					ON stockcheckfreeze.loccode=locations.loccode
+				INNER JOIN stockcategory
+					ON stockmaster.categoryid=stockcategory.categoryid
+				ORDER BY stockcheckfreeze.loccode,
+						stockmaster.categoryid,
+						stockcheckfreeze.stockid";
 
 	$CheckedItems = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 

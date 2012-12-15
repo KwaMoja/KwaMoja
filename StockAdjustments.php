@@ -7,8 +7,8 @@ include('includes/DefineSerialItems.php');
 include('includes/session.inc');
 $title = _('Stock Adjustments');
 /* KwaMoja manual links before header.inc */
-$ViewTopic= "Inventory";
-$BookMark = "InventoryAdjustments";
+$ViewTopic= 'Inventory';
+$BookMark = 'InventoryAdjustments';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -39,6 +39,7 @@ if (isset($_GET['StockID'])){
 		$StockID = trim(mb_strtoupper($_POST['StockID']));
 	}
 }
+
 if ($NewAdjustment==true){
 
 	$_SESSION['Adjustment' . $identifier]->StockID = trim(mb_strtoupper($StockID));
@@ -61,8 +62,8 @@ if ($NewAdjustment==true){
 		$_SESSION['Adjustment' . $identifier]->Quantity=0;
 	}
 
-	$_SESSION['Adjustment' . $identifier]->PartUnit=$myrow['units'];
-	$_SESSION['Adjustment' . $identifier]->StandardCost=$myrow['totalcost'];
+	$_SESSION['Adjustment' . $identifier]->PartUnit = $myrow['units'];
+	$_SESSION['Adjustment' . $identifier]->StandardCost = $myrow['totalcost'];
 	$DecimalPlaces = $myrow['decimalplaces'];
 	DB_free_result($result);
 
@@ -305,8 +306,7 @@ if (isset($_POST['EnterAdjustment']) and $_POST['EnterAdjustment']!= ''){
 									'" . round($_SESSION['Adjustment' . $identifier]->StandardCost * -($_SESSION['Adjustment' . $identifier]->Quantity), $_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . $_SESSION['Adjustment' . $identifier]->StockID . " x " . $_SESSION['Adjustment' . $identifier]->Quantity . " @ " .
 										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative . "',
-									'" . $_SESSION['Adjustment' . $identifier]->tag . "'
-									)";
+									'" . $_SESSION['Adjustment' . $identifier]->tag . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');

@@ -43,8 +43,8 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 							currencies.decimalplaces
 					FROM salesorders INNER JOIN 	debtorsmaster
 					ON salesorders.debtorno = debtorsmaster.debtorno
-					INNER JOIN currencies 
-					ON debtorsmaster.currcode=currencies.currabrev 
+					INNER JOIN currencies
+					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
 $ErrMsg =  _('The order cannot be retrieved because');
@@ -58,7 +58,13 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $myrow['decimalplaces'];
-	
+
+	if ((isset($SupplierLogin) and $SupplierLogin==0) and $myrow['debtorno']!= $_SESSION['CustomerID']) {
+		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
+
 	echo '<table class="selection">
 			<tr>
 				<th colspan="4"><h3>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
@@ -140,7 +146,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 							actualdispatchdate,
 							qtyinvoiced
 						FROM salesorderdetails INNER JOIN stockmaster
-						ON salesorderdetails.stkcode = stockmaster.stockid 
+						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
