@@ -32,3 +32,4 @@ INSERT INTO `securitytokens` VALUES(1000, 'User can view and alter sales prices'
 INSERT INTO `securitytokens` VALUES(1001, 'User can bypass purchasing security and go straight from order to invoice');
 UPDATE `securitytokens` SET tokenname='Unknown' WHERE tokenid=12;
 ALTER TABLE `www_users` ADD `fontsize` TINYINT( 2 ) NOT NULL DEFAULT 0;
+INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
