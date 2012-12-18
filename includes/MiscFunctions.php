@@ -7,8 +7,8 @@
 /*  ******************************************  */
 
 function prnMsg($Msg,$Type='info', $Prefix=''){
-
-	echo getMsg($Msg, $Type, $Prefix);
+	global $Messages;
+	$Messages[] = array($Msg, $Type, $Prefix);
 
 }//prnMsg
 
