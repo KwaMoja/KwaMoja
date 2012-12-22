@@ -417,9 +417,11 @@ color:black;
 }
 
 #TransactionsDiv,#InquiriesDiv,#MaintenanceDiv{
+width: 33%;
 display:table-cell;
 }
 #InquiriesDiv div{ /* default div, used for custom report header */
+width: 33%;
 background:silver;
 color:black;
 padding:2px;
