@@ -22,9 +22,10 @@ $ModuleList = array(_('Orders'),
 					_('Utilities')
 					);
 
-$PDFLanguages = array(_('Latin Western Languages'),
+$PDFLanguages = array(  _('Latin Western Languages'),
 						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),
-						_('Chinese'));
+						_('Chinese'),
+						_('Free Serif'));
 
 $title = _('User Maintenance');
 /* KwaMoja manual links before header.inc */
