@@ -861,7 +861,7 @@ if (!isset($_POST['PostInvoice'])) {
 			<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') . '" /></td>
 			<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
-	if ($_POST['OverRideTax'] == 'Man') {
+	if (isset($_POST['OverRideTax']) and $_POST['OverRideTax'] == 'Man') {
 		echo '<option value="Auto">' . _('Automatic') . '</option>
 				<option selected="selected" value="Man">' . _('Manual') . '</option>';
 	} //$_POST['OverRideTax'] == 'Man'
@@ -1881,7 +1881,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 }
 /*end of process invoice */
 
-if ($InputError == true) { //add a link to return if users make input errors.
+if (isset($InputError) and $InputError == true) { //add a link to return if users make input errors.
 	echo '<div class="centre"><a href="' . $rootpath . '/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
 
