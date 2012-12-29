@@ -23,7 +23,7 @@ if (!isset($_POST['JobCPrint'])) {
 	$myrow = DB_fetch_array($result);
 	$CustomerName = $myrow['name'];
 	echo '<p class="page_title_text">';
-	echo '<img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Job Cards for Customer') . '" alt="" />' . ' ' . _('Job Cards for Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName;
+	echo '<img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Job Cards for Customer') . '" alt="" />' . ' ' . _('Job Cards for Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName;
 	echo '</p>';
 	$printbk = 'background:white;';
 } //!isset($_POST['JobCPrint'])

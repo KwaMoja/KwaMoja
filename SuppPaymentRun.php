@@ -237,7 +237,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 	$Title=_('Payment Run');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 		. '" alt="" />' . $Title . '</p>';
 
 	if (isset($_POST['Currency']) and !is_numeric(filter_number_format($_POST['ExRate']))){

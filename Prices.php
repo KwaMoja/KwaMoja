@@ -27,7 +27,7 @@ if (!isset($_POST['CurrAbrev'])){
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
 echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
 

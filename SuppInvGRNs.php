@@ -13,7 +13,7 @@ $Title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
+		<img src="' . $rootpath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $Complete = false;

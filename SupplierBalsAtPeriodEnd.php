@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF'])
 	$Title=_('Supplier Balances At A Period End');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' .
 		_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';

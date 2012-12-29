@@ -92,7 +92,7 @@ if (!isset($AllowAnyone)) {
 	}
 
 	/*  Need to set the theme to make login screen nice */
-	$theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
+	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 		case UL_OK;
 			include($PathPrefix . 'includes/LanguageSetup.php');
@@ -189,15 +189,15 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
 
 if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
-	$theme = $_POST['Theme'];
+	$Theme = $_POST['Theme'];
 } //isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])
 elseif (!isset($_SESSION['Theme'])) {
-	$theme = $_SESSION['DefaultTheme'];
+	$Theme = $_SESSION['DefaultTheme'];
 	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
 
 } //!isset($_SESSION['Theme'])
 else {
-	$theme = $_SESSION['Theme'];
+	$Theme = $_SESSION['Theme'];
 }
 
 /* Set the logo if not yet set.

@@ -115,7 +115,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Low Gross Profit Report') . '</p>';
 
 	if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {

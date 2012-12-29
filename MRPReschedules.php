@@ -122,7 +122,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
+			<img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="'
 		. _('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 

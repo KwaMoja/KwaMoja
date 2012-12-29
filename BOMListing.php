@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF'])
 
 	$Title=_('Bill Of Material Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p><br />';
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 

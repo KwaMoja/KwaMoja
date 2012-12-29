@@ -54,7 +54,7 @@ echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'
 echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
+		<img src="'.$rootpath.'/css/'.$Theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 

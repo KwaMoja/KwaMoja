@@ -14,7 +14,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 $i=0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test

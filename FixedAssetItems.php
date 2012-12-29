@@ -9,7 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 echo '<a href="' . $rootpath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		_('Fixed Asset Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
 /* If this form is called with the AssetID then it is assumed that the asset is to be modified  */

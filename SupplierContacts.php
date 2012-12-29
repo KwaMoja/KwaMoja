@@ -17,7 +17,7 @@ if (isset($_GET['SupplierID'])){
 
 echo '<a href="' . $rootpath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' .
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' .
 	_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($SupplierID)) {

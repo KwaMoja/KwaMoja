@@ -570,16 +570,16 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder' 
 
 			echo '<br /><table class="selection">
 					<tr>
-						<td><img src="' . $rootpath . '/css/' . $theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+						<td><img src="' . $rootpath . '/css/' . $Theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 						<td>' . ' ' . '<a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier=' . $identifier . '&amp;TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' . '</a></td>
 					</tr>';
 			echo '<tr>
-					<td><img src="' . $rootpath . '/css/' . $theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+					<td><img src="' . $rootpath . '/css/' . $Theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 					<td>' . ' ' . '<a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier=' . $identifier . '&amp;TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Laser') . ')' . '</a></td>
 				</tr>';
 
 			echo '<tr>
-					<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
+					<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?identifier=' . $identifier . '&amp;OrderNumber=' . $OrderNo . '">' . _('Confirm Dispatch and Produce Invoice') . '</a></td>
 				</tr>';
 
@@ -590,20 +590,20 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder' 
 			/*link to print the quotation */
 			echo '<br /><table class="selection">
 					<tr>
-						<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
+						<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
 						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier=' . $identifier . '&amp;QuotationNo=' . $OrderNo . '">' . _('Print Quotation (Landscape)') . '</a></td>
 					</tr>
 					</table>';
 			echo '<br /><table class="selection">
 					<tr>
-						<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
+						<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
 						<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?identifier=' . $identifier . '&amp;QuotationNo=' . $OrderNo . '">' . _('Print Quotation (Portrait)') . '</a></td>
 					</tr>
 					</table>';
 		}
 		echo '<br /><table class="selection">
 				<tr>
-					<td><img src="' . $rootpath . '/css/' . $theme . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
+					<td><img src="' . $rootpath . '/css/' . $Theme . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="' . $rootpath . '/SelectOrderItems.php?identifier=' . $identifier . '&amp;NewOrder=Yes">' . _('Add Another Sales Order') . '</a></td>
 				</tr>
 				</table>';
@@ -778,13 +778,13 @@ elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOr
 		/*link to print the quotation */
 		echo '<br /><table class="selection">
 				<tr>
-					<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
+					<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
 					<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotation.php?identifier=' . $identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder' . $identifier] . '">' . _('Print Quotation (Landscape)') . '</a></td>
 				</tr>
 				</table>';
 		echo '<br /><table class="selection">
 				<tr>
-					<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
+					<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="' . $rootpath . '/PDFQuotationPortrait.php?identifier=' . $identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder' . $identifier] . '">' . _('Print Quotation (Portrait)') . '</a></td>
 				</tr>
 				</table>';
@@ -795,19 +795,19 @@ elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOr
 		echo '<br />
 			<table class="selection">
 			<tr>
-			<td><img src="' . $rootpath . '/css/' . $theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+			<td><img src="' . $rootpath . '/css/' . $Theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 			<td><a target="_blank" href="' . $rootpath . '/PrintCustOrder.php?identifier=' . $identifier . '&amp;TransNo=' . $_SESSION['ExistingOrder' . $identifier] . '">' . _('Print packing slip - pre-printed stationery') . '</a></td>
 			</tr>';
 		echo '<tr>
-			<td><img src="' . $rootpath . '/css/' . $theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
+			<td><img src="' . $rootpath . '/css/' . $Theme . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 			<td><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?identifier=' . $identifier . '&amp;TransNo=' . $_SESSION['ExistingOrder' . $identifier] . '">' . _('Print packing slip') . ' (' . _('Laser') . ')' . '</a></td>
 		</tr>';
 		echo '<tr>
-			<td><img src="' . $rootpath . '/css/' . $theme . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
+			<td><img src="' . $rootpath . '/css/' . $Theme . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
 			<td><a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?identifier=' . $identifier . '&amp;OrderNumber=' . $_SESSION['ExistingOrder' . $identifier] . '">' . _('Confirm Order Delivery Quantities and Produce Invoice') . '</a></td>
 		</tr>';
 		echo '<tr>
-			<td><img src="' . $rootpath . '/css/' . $theme . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
+			<td><img src="' . $rootpath . '/css/' . $Theme . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
 			<td><a href="' . $rootpath . '/SelectSalesOrder.php?identifier=' . $identifier . '">' . _('Select A Different Order') . '</a></td>
 		</tr>
 		</table>';
@@ -820,9 +820,9 @@ elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOr
 if (isset($_SESSION['Items' . $identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items' . $identifier]->SpecialInstructions) > 0) {
 	prnMsg($_SESSION['Items' . $identifier]->SpecialInstructions, 'info');
 } //isset($_SESSION['Items' . $identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items' . $identifier]->SpecialInstructions) > 0
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details') . '</p>';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details') . '</p>';
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items' . $identifier]->DebtorNo . '<br />';
+echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . $_SESSION['Items' . $identifier]->DebtorNo . '<br />';
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items' . $identifier]->CustomerName . '</b></p>';
 
 

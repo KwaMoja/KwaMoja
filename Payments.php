@@ -43,7 +43,7 @@ else {
 }
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $theme . '/images/transactions.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . _('Payment Entry') . '
+		<img src="' . $rootpath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . _('Payment Entry') . '
 	</p>';
 echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
 	<br />';

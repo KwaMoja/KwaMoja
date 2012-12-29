@@ -586,7 +586,7 @@ elseif (!$_SESSION['Items' . $identifier]->DefaultSalesType or $_SESSION['Items'
 } //!$_SESSION['Items' . $identifier]->DefaultSalesType or $_SESSION['Items' . $identifier]->DefaultSalesType == ''
 
 if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['Items' . $identifier]->DebtorNo) or $_SESSION['Items' . $identifier]->DebtorNo == '') {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
 	echo '<div class="page_help_text">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">
 		 <div>
@@ -713,7 +713,7 @@ else { //dont require customer selection
 	else {
 		/*Not cancelling the order */
 
-		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Order') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Order') . '" alt="" />' . ' ';
 
 		if ($_SESSION['Items' . $identifier]->Quotation == 1) {
 			echo _('Quotation for customer') . ' ';
@@ -1554,7 +1554,7 @@ else { //dont require customer selection
 
 			$result2 = DB_query($SQL, $db);
 			echo '<p class="page_title_text">
-					<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Frequently Ordered Items') . '</p>
+					<img src="' . $rootpath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Frequently Ordered Items') . '</p>
 					<br />
 					<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div>
 					<br />
@@ -1675,7 +1675,7 @@ else { //dont require customer selection
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
 		echo '<br /><div class="centre">' . $msg;
-		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Order Items') . '</p></div>';
 		echo '<div class="page_help_text">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">

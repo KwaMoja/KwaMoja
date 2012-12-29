@@ -18,7 +18,7 @@ if (isset($_GET['WO'])) {
 echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
+		<img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 

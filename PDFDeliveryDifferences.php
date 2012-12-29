@@ -21,7 +21,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError==1){
 	 $Title = _('Delivery Differences Report');
 	 include ('includes/header.inc');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Delivery Differences Report') . '</p></div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

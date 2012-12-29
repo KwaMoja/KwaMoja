@@ -268,7 +268,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 	$Title= _('Price Labels');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
 		 ' . ' ' . _('Print Price Labels') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
