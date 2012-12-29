@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Customers');
+$Title = _('Search Customers');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 if (isset($_GET['Select'])) {

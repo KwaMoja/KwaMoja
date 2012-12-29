@@ -34,7 +34,7 @@ if ((isset($_POST['PrintPDF']))
 	$SuppliersResult = DB_query($sql,$db);
 	if (DB_num_rows($SuppliersResult)==0){
 		//then there aint awt to print
-		$title = _('Print Remittance Advices Error');
+		$Title = _('Print Remittance Advices Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
@@ -77,7 +77,7 @@ if ((isset($_POST['PrintPDF']))
 
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Remittance Advice Problem Report');
+			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -127,11 +127,11 @@ if ((isset($_POST['PrintPDF']))
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Remittance Advices');
+	$Title=_('Remittance Advices');
 	include('includes/header.inc');
 
-    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . $title . '" alt="" />' . ' '
-        . $title . '</p>';
+    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
+        . $Title . '</p>';
 	/* show form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';

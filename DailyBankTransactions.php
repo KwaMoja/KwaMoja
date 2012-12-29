@@ -3,12 +3,12 @@
 /* $Id: DailyBankTransactions.php 4556 2011-04-26 11:03:36Z daintree $ */
 
 include ('includes/session.inc');
-$title = _('Bank Transactions Inquiry');
+$Title = _('Bank Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' .
-	 _('Search') . '" alt="" />' . ' ' . $title.'
+	 _('Search') . '" alt="" />' . ' ' . $Title.'
 	 </p>';
 
 if (!isset($_POST['Show'])) {

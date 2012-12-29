@@ -52,7 +52,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
-		$title = _('Payment Processing - Problem Report');
+		$Title = _('Payment Processing - Problem Report');
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 		echo '<br>
@@ -83,7 +83,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		$ProcessResult = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Processing - Problem Report') . '.... ';
+			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				" .  -$AccumBalance . ")";
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
-		$title = _('Payment Processing - Problem Report');
+		$Title = _('Payment Processing - Problem Report');
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 		echo '<br />
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
+			$Title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br />
@@ -181,7 +181,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Processing - Problem Report');
+			$Title = _('Payment Processing - Problem Report');
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -212,7 +212,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 			$ProcessResult = DB_query($SQL,$db,'','',false,false);
 			if (DB_error_no($db) !=0) {
-				$title = _('Payment Processing - Problem Report');
+				$Title = _('Payment Processing - Problem Report');
 				include('header.inc');
 				prnMsg(_('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg($db),'error');
 				echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';

@@ -11,7 +11,7 @@ Call this page with:
 
 include('includes/DefineCustAllocsClass.php');
 include('includes/session.inc');
-$title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
+$Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

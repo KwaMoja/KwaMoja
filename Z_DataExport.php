@@ -66,7 +66,7 @@ if ( isset($_POST['pricelist']) ) {
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Price List Export Problem ....');
+		$Title = _('Price List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -162,7 +162,7 @@ if ( isset($_POST['pricelist']) ) {
 	$CustResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Customer List Export Problem ....');
+		$Title = _('Customer List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -253,7 +253,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SalesManResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Salesman List Export Problem ....');
+		$Title = _('Salesman List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -302,7 +302,7 @@ if ( isset($_POST['pricelist']) ) {
 	$ImageResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Security Token List Export Problem ....');
+		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -341,7 +341,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SecTokenResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Security Token List Export Problem ....');
+		$Title = _('Security Token List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -377,7 +377,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SecRoleResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Security Role List Export Problem ....');
+		$Title = _('Security Role List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -413,7 +413,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SecGroupResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Security Group List Export Problem ....');
+		$Title = _('Security Group List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -465,7 +465,7 @@ if ( isset($_POST['pricelist']) ) {
 	$SecUserResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Security User List Export Problem ....');
+		$Title = _('Security User List Export Problem ....');
 		include('includes/header.inc');
 		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -526,7 +526,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo $CSVContent;
 	exit;
 } else {
-	$title = _('Data Exports');
+	$Title = _('Data Exports');
 	include('includes/header.inc');
 
 	// SELECT EXPORT FOR PRICE LIST

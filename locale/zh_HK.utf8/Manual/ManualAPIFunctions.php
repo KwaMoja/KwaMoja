@@ -7,9 +7,9 @@ $PathPrefix= $_SERVER['HTTP_HOST'].$rootpath.'/../../';
 include('../../xmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
 
-$title = 'API documentation';
+$Title = 'API documentation';
 
-echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
+echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
 echo '<link REL="shortcut icon" HREF="'. $rootpath.'/favicon.ico">';
 echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('iso-8859-1') . '">';

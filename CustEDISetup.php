@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer EDI Set Up');
+$Title = _('Customer EDI Set Up');
 include('includes/header.inc');
 
 echo '<a href="' . $rootpath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
@@ -14,7 +14,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 $i=0;
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test

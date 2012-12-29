@@ -4,7 +4,7 @@
 /* $Id: GLAccountCSV.php 4492 2011-02-18 09:56:52Z daintree $ */
 
 include ('includes/session.inc');
-$title = _('General Ledger Account Report');
+$Title = _('General Ledger Account Report');
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 

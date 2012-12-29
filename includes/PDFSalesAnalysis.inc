@@ -537,7 +537,7 @@ if (isset($_GET['ProduceCVSFile'])){
 			fputs($fp, $line."\n");
 		  }
 	 }
-	 $title = _('Sales Analysis Comma Separated File (CSV) Generation');
+	 $Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';

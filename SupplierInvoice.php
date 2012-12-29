@@ -13,7 +13,7 @@ include('includes/DefinePOClass.php'); //needed for auto receiving code
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Enter Supplier Invoice');
+$Title = _('Enter Supplier Invoice');
 /* webERP manual links before header.inc */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';

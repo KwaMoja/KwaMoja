@@ -9,7 +9,7 @@ include('includes/SQL_CommonFunctions.inc');
  * and authorisation level check
  */
 include('includes/session.inc');
-$title = _('Purchase Order Items');
+$Title = _('Purchase Order Items');
 
 $identifier = $_GET['identifier'];
 

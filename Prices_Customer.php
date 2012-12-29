@@ -12,7 +12,7 @@ $result = DB_query("SELECT debtorsmaster.name,
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_array($result);
 
-$title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
+$Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
 include('includes/header.inc');
 

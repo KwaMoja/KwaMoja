@@ -9,12 +9,12 @@ if (isset($_GET['TaxAuthority'])){
 }
 
 include('includes/session.inc');
-$title = _('Tax Rates');
+$Title = _('Tax Rates');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $title. '
+	. '" alt="" />' . $Title. '
 	</p>';
 
 if (!isset($TaxAuthority)){

@@ -3,12 +3,12 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Work Order Entry');
+$Title = _('Work Order Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+		<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 

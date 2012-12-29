@@ -13,7 +13,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1){
 
-	$title = _('Print Labels');
+	$Title = _('Print Labels');
 	include('includes/header.inc');
 
 	$SQL = "SELECT prices.stockid,
@@ -265,7 +265,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 
 } else { /*The option to print PDF was not hit */
 
-	$title= _('Price Labels');
+	$Title= _('Price Labels');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />

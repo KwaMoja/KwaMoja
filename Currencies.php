@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Currencies Maintenance');
+$Title = _('Currencies Maintenance');
 $ViewTopic= 'Currencies';
 $BookMark = 'Currencies';
 include('includes/header.inc');
@@ -26,7 +26,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<br />';
 
 if (isset($_POST['submit'])) {

@@ -40,7 +40,7 @@ if (isset($_POST['PrintPDF'])
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Count Sheets - Problem Report');
+			$Title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -62,7 +62,7 @@ if (isset($_POST['PrintPDF'])
 
 		$result = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
+			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF'])
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze - Problem Report');
+			$Title = _('Stock Freeze - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -103,7 +103,7 @@ if (isset($_POST['PrintPDF'])
 			include('includes/footer.inc');
 			exit;
 		} else {
-			$title = _('Stock Check Freeze Update');
+			$Title = _('Stock Check Freeze Update');
 			include('includes/header.inc');
 			echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
 			prnMsg( _('Added to the stock check file successfully'),'success');
@@ -136,7 +136,7 @@ if (isset($_POST['PrintPDF'])
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
+		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDF'])
 		exit;
 	}
 	if (DB_num_rows($InventoryResult) ==0) {
-		$title = _('Stock Count Sheets - Problem Report');
+		$Title = _('Stock Count Sheets - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -189,7 +189,7 @@ if (isset($_POST['PrintPDF'])
 			$DemandResult = DB_query($SQL,$db,'','',false, false);
 
 			if (DB_error_no($db) !=0) {
-	 			$title = _('Stock Check Sheets - Problem Report');
+	 			$Title = _('Stock Check Sheets - Problem Report');
 		  		include('includes/header.inc');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
 	   			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -255,14 +255,14 @@ if (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Stock Check Sheets');
+	$Title=_('Stock Check Sheets');
 	include('includes/header.inc');
 
 	if (!isset($_POST['FromCriteria']) and !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="'
-			. _('print') . '" alt="" />' . ' ' . $title.'</p><br />';
+			. _('print') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
         echo '<div>';

@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
 
-$title = _('Reverse Goods Received');
+$Title = _('Reverse Goods Received');
 
 include('includes/header.inc');
 

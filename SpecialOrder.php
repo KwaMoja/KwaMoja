@@ -7,7 +7,7 @@ include('includes/DefineSpecialOrderClass.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-$title = _('Special Order Entry');
+$Title = _('Special Order Entry');
 
 include('includes/header.inc');
 

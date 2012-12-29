@@ -3,7 +3,7 @@
 /* Script to update costs for all BOM items, from the bottom up */
 
 include('includes/session.inc');
-$title = _('Recalculate BOM costs');
+$Title = _('Recalculate BOM costs');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Stock Movements');
+$Title = _('Stock Movements');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";

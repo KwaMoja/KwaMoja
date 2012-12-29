@@ -35,9 +35,9 @@ if (!isset($WO) or $WO==''){
 	exit;
 }
 if ($Serialised==1){
-	$title = _('Work Order Serial Numbers in Progress');
+	$Title = _('Work Order Serial Numbers in Progress');
 } else {
-	$title = _('Work Order Batches in Progress');
+	$Title = _('Work Order Batches in Progress');
 }
 
 include('includes/header.inc');

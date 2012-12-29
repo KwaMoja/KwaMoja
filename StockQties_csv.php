@@ -2,10 +2,10 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Produce Stock Quantities CSV');
+$Title = _('Produce Stock Quantities CSV');
 include ('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .'" alt="" /><b>' . $title. '</b></p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);

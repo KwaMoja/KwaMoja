@@ -16,7 +16,7 @@ if (isset($_POST['cancel'])) {
 
 }
 
-$title = _('New Language');
+$Title = _('New Language');
 
 include('includes/header.inc');
 

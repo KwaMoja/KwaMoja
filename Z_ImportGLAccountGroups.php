@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Import Chart of Accounts');
+$Title = _('Import Chart of Accounts');
 include('includes/header.inc');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');

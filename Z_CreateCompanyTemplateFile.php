@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Create Database Template File');
+$Title = _('Create Database Template File');
 include ('includes/header.inc');
 
 if (isset($_POST['CreateTemplate'])){

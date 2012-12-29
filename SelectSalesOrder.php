@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Search Outstanding Sales Orders');
+$Title = _('Search Outstanding Sales Orders');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= "SalesOrders";
 $BookMark = "SelectSalesOrder";

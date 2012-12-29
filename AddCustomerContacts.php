@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Contacts');
+$Title = _('Customer Contacts');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

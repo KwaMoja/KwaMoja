@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Stock Status');
+$Title = _('Stock Status');
 
 include('includes/header.inc');
 

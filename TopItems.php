@@ -5,7 +5,7 @@
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
-$title = _('Top Items Searching');
+$Title = _('Top Items Searching');
 include ('includes/header.inc');
 //check if input already
 if (!(isset($_POST['Search']))) {

@@ -6,7 +6,7 @@ $PricesSecurity = 1000;
 
 include('includes/session.inc');
 
-$title = _('Search Outstanding Purchase Orders');
+$Title = _('Search Outstanding Purchase Orders');
 
 include('includes/header.inc');
 include('includes/DefinePOClass.php');
@@ -146,7 +146,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	else {
 		echo '<a href="' . $rootpath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':

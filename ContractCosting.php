@@ -4,7 +4,7 @@
 
 include('includes/DefineContractClass.php');
 include('includes/session.inc');
-$title = _('Contract Costing');
+$Title = _('Contract Costing');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 

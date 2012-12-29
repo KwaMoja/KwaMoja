@@ -24,7 +24,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 	and is_numeric(filter_number_format($_POST['ExRate']))){
 
 /*then print the report */
-	$title = _('Payment Run - Problem Report');
+	$Title = _('Payment Run - Problem Report');
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Payment Run Report'));
@@ -106,7 +106,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Run - Problem Report');
+			$Title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -180,7 +180,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 
 				$ProcessResult = DB_query($SQL,$db,'','',false,false);
 				if (DB_error_no($db) !=0) {
-					$title = _('Payment Processing - Problem Report') . '.... ';
+					$Title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
 					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
 					echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -211,7 +211,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 		$ProcessResult = DB_Txn_Commit($db);
 
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Processing - Problem Report') . '.... ';
+			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -234,11 +234,11 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Payment Run');
+	$Title=_('Payment Run');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Supplier Types')
-		. '" alt="" />' . $title . '</p>';
+		. '" alt="" />' . $Title . '</p>';
 
 	if (isset($_POST['Currency']) and !is_numeric(filter_number_format($_POST['ExRate']))){
 		echo '<br />' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';

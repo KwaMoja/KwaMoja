@@ -2,7 +2,7 @@
 /* $Id$ */
 
 include ('includes/session.inc');
-$title = _('Update of Prices By A Multiple Of Cost');
+$Title = _('Update of Prices By A Multiple Of Cost');
 include ('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';

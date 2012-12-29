@@ -3,7 +3,7 @@
 /* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/session.inc');
-$title = _('Supplier Types') . ' / ' . _('Maintenance');
+$Title = _('Supplier Types') . ' / ' . _('Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){

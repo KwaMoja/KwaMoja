@@ -74,7 +74,7 @@ else { //set SESSION['FormID'] before the a user has even logged in
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 
-
+/* only do security checks if AllowAnyone is not true */
 if (!isset($AllowAnyone)) {
 	/* only do security checks if AllowAnyone is not true */
 
@@ -106,7 +106,7 @@ if (!isset($AllowAnyone)) {
 			die(include($PathPrefix . 'includes/FailedLogin.php'));
 
 		case UL_CONFIGERR:
-			$title = _('Account Error Report');
+			$Title = _('Account Error Report');
 			include($PathPrefix . 'includes/header.inc');
 			echo '<br /><br /><br />';
 			prnMsg(_('Your user role does not have any access defined for KwaMoja. There is an error in the security setup for this user account'), 'error');
@@ -123,10 +123,10 @@ if (!isset($AllowAnyone)) {
 
 	} //$rc
 } //!isset($AllowAnyone)
-
-/* only do security checks if AllowAnyone is not true */
-
-
+else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
+	/* User nust have hit refresh on Logout page */
+	die(include($PathPrefix . 'includes/Login.php'));
+}
 
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
@@ -261,7 +261,7 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
-	$title = _('Account Error Report');
+	$Title = _('Account Error Report');
 	include($PathPrefix . 'includes/header.inc');
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
@@ -280,7 +280,7 @@ if (!isset($PageSecurity)) {
 
 if (!isset($AllowAnyone)) {
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		$title = _('Security Permissions Problem');
+		$Title = _('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.inc');
 		echo '<tr>
 			<td class="menu_group_items">
@@ -330,7 +330,7 @@ function CryptPass($Password) {
 if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from KwaMoja with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$title = _('Error in form verification');
+		$Title = _('Error in form verification');
 		include('includes/header.inc');
 		prnMsg(_('This form was not submitted with a correct ID'), 'error');
 		include('includes/footer.inc');

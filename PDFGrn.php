@@ -126,7 +126,7 @@ if ($NoOfGRNs > 0) {
 	$pdf->__destruct();
 } //$NoOfGRNs > 0
 else { //there were not GRNs to print
-	$title = _('GRN Error');
+	$Title = _('GRN Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no GRNs to print'), 'warn');
 	echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';

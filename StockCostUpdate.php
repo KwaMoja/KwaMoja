@@ -5,7 +5,7 @@
 $UpdateSecurity =10;
 
 include('includes/session.inc');
-$title = _('Stock Cost Update');
+$Title = _('Stock Cost Update');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -19,7 +19,7 @@ echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</
 
 echo '<p class="page_title_text">
 	 <img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />
-	 ' . ' ' . $title . '</p>';
+	 ' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateData'])){
 

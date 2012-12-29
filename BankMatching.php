@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Bank Account Matching');
+$Title = _('Bank Account Matching');
 include('includes/header.inc');
 
 if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')

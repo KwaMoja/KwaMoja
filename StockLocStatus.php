@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('All Stock Status By Location/Category');
+$Title = _('All Stock Status By Location/Category');
 
 include('includes/header.inc');
 
@@ -25,7 +25,7 @@ $sql = "SELECT loccode,
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<p class="page_title_text">
-         <img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+         <img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
       </p>';
 
 echo '<table class="selection">

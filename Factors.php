@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Factor Company Maintenance');
+$Title = _('Factor Company Maintenance');
 
 include('includes/header.inc');
 
@@ -23,7 +23,7 @@ if (isset($_POST['Create'])) {
 };
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="'
-	. _('Factor Companies') . '" alt="" />' . ' ' .$title . '</p></div>';
+	. _('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
  form hopefully with input in the correct fields, which we check for firsrt. */

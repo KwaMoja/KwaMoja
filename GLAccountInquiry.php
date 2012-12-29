@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('General Ledger Account Inquiry');
+$Title = _('General Ledger Account Inquiry');
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 

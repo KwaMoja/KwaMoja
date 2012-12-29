@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Sales Analysis Report Columns');
+$Title = _('Sales Analysis Report Columns');
 
 include('includes/header.inc');
 
@@ -48,7 +48,7 @@ function DataOptions ($DataX){
 
 Right ... now to the meat */
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedCol'])){
 	$SelectedCol = $_GET['SelectedCol'];

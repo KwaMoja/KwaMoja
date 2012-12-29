@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Transactions Inquiry');
+$Title = _('Customer Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">

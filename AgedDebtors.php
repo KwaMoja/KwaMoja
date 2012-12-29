@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF'])
 	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
+		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -360,7 +360,7 @@ if (isset($_POST['PrintPDF'])
 
 			$DetailResult = DB_query($sql,$db,'','',False,False); /*Dont trap errors */
 			if (DB_error_no($db) !=0) {
-				$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
+				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 				echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -425,7 +425,7 @@ if (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
 
 	if ($ListCount == 0) {
-		$title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg(_('There are no customers with balances meeting the criteria specified to list'),'info');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -438,10 +438,10 @@ if (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Aged Debtor Analysis');
+	$Title=_('Aged Debtor Analysis');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if ((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
 

@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Fulfill Stock Requests');
+$Title = _('Fulfill Stock Requests');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

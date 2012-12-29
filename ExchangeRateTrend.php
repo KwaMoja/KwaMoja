@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('View Currency Trends');
+$Title = _('View Currency Trends');
 
 include('includes/header.inc');
 

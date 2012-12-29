@@ -3,7 +3,7 @@
 
 include('includes/DefineOfferClass.php');
 include('includes/session.inc');
-$title = _('Supplier Tendering');
+$Title = _('Supplier Tendering');
 include('includes/header.inc');
 
 $Maximum_Number_Of_Parts_To_Show=50;

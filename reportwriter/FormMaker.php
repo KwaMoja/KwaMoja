@@ -34,7 +34,7 @@ switch ($_POST['todo']) {
 
 	default: // determine how we entered the script to show correct form list information
 		$OutputString = BuildFormList((int) $_GET['id']); // ['id'] will be null for generic entry
-		$title=RPT_FORMSELECT;
+		$Title=RPT_FORMSELECT;
 		$IncludePage = 'forms/FormsList.html';
 		break;
 
@@ -43,7 +43,7 @@ switch ($_POST['todo']) {
 		if ($ReportID=='') { // then no report was selected, error
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
 			$OutputString = BuildFormList((int) $_GET['id']);
-			$title=RPT_FORMSELECT;
+			$Title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 		} else {
 			$Prefs = FetchReportDetails($ReportID);  //fetch the defaults 
@@ -55,7 +55,7 @@ switch ($_POST['todo']) {
 					$Prefs['CritListings'][$i-1]['params'] = $Prefs['CritListings'][$i-1]['params'].':'.$_GET['cr'.$i];
 				}
 			}
-			$title=RPT_CRITERIA;
+			$Title=RPT_CRITERIA;
 			$IncludePage = 'forms/FormsFilter.html';
 		}
 		break;
@@ -65,7 +65,7 @@ switch ($_POST['todo']) {
 		if ($ReportID=='') { // then no report was selected, error
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
 			$OutputString = BuildFormList((int) $_GET['id']);
-			$title=RPT_FORMSELECT;
+			$Title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 			break;
 		}
@@ -113,11 +113,11 @@ switch ($_POST['todo']) {
 					$Prefs['CritListings'][$i-1]['params'] = $Prefs['CritListings'][$i-1]['params'].':'.$_GET['cr'.$i];
 				}
 			}
-			$title=RPT_CRITERIA;
+			$Title=RPT_CRITERIA;
 			$IncludePage = 'forms/FormsFilter.html';
 		} else { // return to the form list page
 			$OutputString = BuildFormList((int) $_GET['id']);
-			$title=RPT_FORMSELECT;
+			$Title=RPT_FORMSELECT;
 			$IncludePage = 'forms/FormsList.html';
 		}
 		break;

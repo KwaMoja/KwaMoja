@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Freight Costs Set Up');
+$Title = _('Freight Costs Set Up');
 include('includes/header.inc');
 
 if (isset($_GET['LocationFrom'])){
@@ -23,7 +23,7 @@ if (isset($_GET['SelectedFreightCost'])){
 }
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-		_('Freight Costs') . '" alt="" />' . ' ' . $title . '</p></div>';
+		_('Freight Costs') . '" alt="" />' . ' ' . $Title . '</p></div>';
 
 if (!isset($LocationFrom) or !isset($ShipperID)) {
 

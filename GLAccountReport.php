@@ -213,7 +213,7 @@ if (isset($_POST['RunReport'])){
 	} //end if the report has some output
 } /* end of if PrintReport button hit */
  else {
-	$title = _('General Ledger Account Report');
+	$Title = _('General Ledger Account Report');
 	include('includes/header.inc');
 	include('includes/GLPostings.inc');
 

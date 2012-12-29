@@ -9,11 +9,11 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
-$title = _('Enter Supplier Invoice Against Goods Received');
+$Title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $title . '
+		<img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $Complete = false;

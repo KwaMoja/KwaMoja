@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Types') . ' / ' . _('Maintenance');
+$Title = _('Customer Types') . ' / ' . _('Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.inc');
-$title = _('Customer Purchases');
+$Title = _('Customer Purchases');
 include('includes/header.inc');
 
 if (isset($_GET['DebtorNo'])) {

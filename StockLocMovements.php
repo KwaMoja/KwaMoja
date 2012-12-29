@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$title = _('All Stock Movements By Location');
+$Title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
@@ -12,7 +12,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $title.'</p>';
+	'" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<table class="selection">
      <tr>

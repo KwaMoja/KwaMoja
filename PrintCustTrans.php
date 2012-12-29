@@ -210,7 +210,7 @@ if (isset($PrintPDF)
 		$result=DB_query($sql, $db, '',  '',false, false);
 
 		if (DB_error_no($db)!=0) {
-			$title = _('Transaction Print Error Report');
+			$Title = _('Transaction Print Error Report');
 			include ('includes/header.inc');
 			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($debug==1) {
@@ -258,7 +258,7 @@ if (isset($PrintPDF)
 
 			$result=DB_query($sql,$db);
 			if (DB_error_no($db)!=0) {
-				$title = _('Transaction Print Error Report');
+				$Title = _('Transaction Print Error Report');
 				include ('includes/header.inc');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 				if ($debug==1) {
@@ -478,7 +478,7 @@ if (isset($PrintPDF)
 
 		unlink($FileName); //delete the temporary file
 
-		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
+		$Title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.inc');
 		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
@@ -492,7 +492,7 @@ if (isset($PrintPDF)
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Select Invoices/Credit Notes To Print');
+	$Title=_('Select Invoices/Credit Notes To Print');
 	include('includes/header.inc');
 
 	if (!isset($FromTransNo) or $FromTransNo=='') {

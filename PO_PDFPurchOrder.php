@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
 
 if (!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])) {
-	$title = _('Select a Purchase Order');
+	$Title = _('Select a Purchase Order');
 	include('includes/header.inc');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(_('Select a Purchase Order Number to Print before calling this page'), 'error');
@@ -37,7 +37,7 @@ if (isset($_GET['OrderNo'])) {
 elseif (isset($_POST['OrderNo'])) {
 	$OrderNo = $_POST['OrderNo'];
 } //isset($_POST['OrderNo'])
-$title = _('Print Purchase Order Number') . ' ' . $OrderNo;
+$Title = _('Print Purchase Order Number') . ' ' . $OrderNo;
 
 if (isset($_POST['PrintOrEmail']) and isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' and !IsEmailAddress($_POST['EmailTo'])) {
@@ -111,7 +111,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 	$result = DB_query($sql, $db, $ErrMsg);
 	if (DB_num_rows($result) == 0) {
 		/*There is no order header returned */
-		$title = _('Print Purchase Order Error');
+		$Title = _('Print Purchase Order Error');
 		include('includes/header.inc');
 		echo '<div class="centre"><br /><br /><br />';
 		prnMsg(_('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
@@ -143,7 +143,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 
 		if ($ViewingOnly == 0) {
 			if ($POHeader['allowprint'] == 0) {
-				$title = _('Purchase Order Already Printed');
+				$Title = _('Purchase Order Already Printed');
 				include('includes/header.inc');
 				echo '<p>';
 				prnMsg(_('Purchase Order Number') . ' ' . $OrderNo . ' ' . _('has previously been printed') . '. ' . _('It was printed on') . ' ' . ConvertSQLDate($POHeader['dateprinted']) . '<br />' . _('To re-print the order it must be modified to allow a reprint') . '<br />' . _('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
@@ -336,14 +336,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$_POST['EmailTo']
 		));
 		if ($Success == 1) {
-			$title = _('Email a Purchase Order');
+			$Title = _('Email a Purchase Order');
 			include('includes/header.inc');
 			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
 
 		} //$Success == 1
 		else { //email failed
-			$title = _('Email a Purchase Order');
+			$Title = _('Email a Purchase Order');
 			include('includes/header.inc');
 			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Emailing Purchase order') . ' ' . $OrderNo . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');

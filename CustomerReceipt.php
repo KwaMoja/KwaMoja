@@ -5,7 +5,7 @@
 include('includes/DefineReceiptClass.php');
 include('includes/session.inc');
 
-$title = _('Receipt Entry');
+$Title = _('Receipt Entry');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

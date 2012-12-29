@@ -2,7 +2,7 @@
 
 /* $Id$*/
 //$PageSecurity = 3;
-$title = _('Geocode Generate');
+$Title = _('Geocode Generate');
 
 include ('includes/session.inc');
 include ('includes/header.inc');

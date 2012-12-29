@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Search Suppliers');
+$Title = _('Search Suppliers');
 
 /* webERP manual links before header.inc */
 $ViewTopic= 'AccountsPayable';

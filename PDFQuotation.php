@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['QuotationNo']) or $_GET['QuotationNo']==""){
-	$title = _('Select Quotation To Print');
+	$Title = _('Select Quotation To Print');
 	include('includes/header.inc');
 	echo '<div class="centre">
 			<br />
@@ -74,7 +74,7 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //if there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-		$title = _('Print Quotation Error');
+		$Title = _('Print Quotation Error');
 		include('includes/header.inc');
 		 echo '<div class="centre">
 				<br />
@@ -265,7 +265,7 @@ if (DB_num_rows($result)>0){
 
 
 if ($ListCount == 0){
-	$title = _('Print Quotation Error');
+	$Title = _('Print Quotation Error');
 	include('includes/header.inc');
 	prnMsg(_('There were no items on the quotation') . '. ' . _('The quotation cannot be printed'),'info');
 	echo '<br /><a href="' . $rootpath . '/SelectSalesOrder.php?Quotation=Quotes_only">'. _('Print Another Quotation'). '</a>

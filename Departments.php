@@ -3,11 +3,11 @@
 
 include('includes/session.inc');
 
-$title = _('Departments');
+$Title = _('Departments');
 
 include('includes/header.inc');
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' .
-		_('Departments') . '" alt="" />' . ' ' . $title . '</p>';
+		_('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )
 	$SelectedDepartmentID = $_GET['SelectedDepartmentID'];

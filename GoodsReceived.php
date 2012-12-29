@@ -19,7 +19,7 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
-$title = _('Receive Purchase Orders');
+$Title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
 echo '<a href="'. $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Back to Purchase Orders'). '</a>

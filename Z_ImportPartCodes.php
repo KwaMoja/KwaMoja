@@ -3,7 +3,7 @@
 
 
 include('includes/session.inc');
-$title = _('Import Stock Items');
+$Title = _('Import Stock Items');
 include('includes/header.inc');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');

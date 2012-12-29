@@ -8,7 +8,7 @@ include('includes/session.inc');
 $_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
-	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
+	$Title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
 	include('includes/header.inc');
 	echo '<br /><br /><br />';
@@ -53,7 +53,7 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $title . '
+			<img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);

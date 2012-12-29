@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Geocode Maintenance');
+$Title = _('Geocode Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['SelectedParam'])){

@@ -11,7 +11,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Supplier Transaction General Ledger Analysis');
+$Title = _('Supplier Transaction General Ledger Analysis');
 
 include('includes/header.inc');
 

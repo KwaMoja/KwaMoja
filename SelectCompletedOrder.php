@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Search All Sales Orders');
+$Title = _('Search All Sales Orders');
 
 include('includes/header.inc');
 

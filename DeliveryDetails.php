@@ -11,7 +11,7 @@ include('includes/DefineCartClass.php');
 /* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
 include('includes/session.inc');
-$title = _('Order Delivery Details');
+$Title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
 include('includes/SQL_CommonFunctions.inc');

@@ -5,7 +5,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.inc');
-$title = _('Contract Other Requirements');
+$Title = _('Contract Other Requirements');
 
 $identifier=$_GET['identifier'];
 

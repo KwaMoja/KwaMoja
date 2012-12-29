@@ -7,7 +7,7 @@
 
 include ('includes/session.inc');
 
-$title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');
+$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');
 
 include('includes/header.inc');
 

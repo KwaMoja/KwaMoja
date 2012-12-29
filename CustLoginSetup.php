@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Login Configuration');
+$Title = _('Customer Login Configuration');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');

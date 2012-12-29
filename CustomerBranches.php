@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Branches');
+$Title = _('Customer Branches');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomerBranch';

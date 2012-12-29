@@ -2,7 +2,7 @@
 
 /* $Id$*/
 
-$title = _('Geocoded Supplier Report');
+$Title = _('Geocoded Supplier Report');
 
 include ('includes/session.inc');
 include ('includes/header.inc');

@@ -8,7 +8,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Edit Header');
+$Title = _('Edit Header');
 
 include('includes/header.inc');
 

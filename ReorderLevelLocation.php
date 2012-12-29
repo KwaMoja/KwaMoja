@@ -6,7 +6,7 @@
 
 include('includes/session.inc');
 
-$title=_('Reorder Level Location Reporting');
+$Title=_('Reorder Level Location Reporting');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';

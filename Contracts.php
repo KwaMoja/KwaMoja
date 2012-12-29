@@ -6,9 +6,9 @@ include('includes/DefineContractClass.php');
 include('includes/session.inc');
 
 if (isset($_GET['ModifyContractNo'])) {
-	$title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
+	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
 } else {
-	$title = _('Contract Entry');
+	$Title = _('Contract Entry');
 }
 
 if (isset($_GET['CustomerID'])) {

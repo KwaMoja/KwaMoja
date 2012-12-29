@@ -5,7 +5,7 @@
 /*Variables required to configure this script must be set in config.php */
 
 include('includes/session.inc');
-$title=_('FTP order to Radio Beacon');
+$Title=_('FTP order to Radio Beacon');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

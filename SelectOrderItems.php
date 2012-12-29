@@ -9,10 +9,10 @@ config.php is in turn included in session.inc*/
 include('includes/session.inc');
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	$title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
 } //isset($_GET['ModifyOrderNumber'])
 else {
-	$title = _('Select Order Items');
+	$Title = _('Select Order Items');
 }
 /* KwaMoja manual links before header.inc */
 $ViewTopic = 'SalesOrders';

@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Stock Usage');
+$Title = _('Stock Usage');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -26,7 +26,7 @@ include('includes/header.inc');
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="' . _('Dispatch') .
-		'" alt="" />' . ' ' . $title . '
+		'" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $result = DB_query("SELECT description,

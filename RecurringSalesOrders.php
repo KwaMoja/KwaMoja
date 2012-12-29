@@ -10,7 +10,7 @@ $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.inc');
-$title = _('Recurring Orders');
+$Title = _('Recurring Orders');
 
 
 /* webERP manual links before header.inc */

@@ -8,7 +8,7 @@
 
 include('includes/session.inc');
 
-$title = _('Payment Allocations');
+$Title = _('Payment Allocations');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

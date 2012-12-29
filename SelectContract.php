@@ -3,7 +3,7 @@
 /* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/session.inc');
-$title = _('Select Contract');
+$Title = _('Select Contract');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';

@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Stock Re-Order Level Maintenance');
+$Title = _('Stock Re-Order Level Maintenance');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $title. '</b>
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'", $db);

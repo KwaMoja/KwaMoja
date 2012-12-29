@@ -5,7 +5,7 @@
 include ('includes/session.inc');
 include ('includes/SQL_CommonFunctions.inc');
 
-$title = _('Petty Cash Management Report');
+$Title = _('Petty Cash Management Report');
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -18,7 +18,7 @@ if ((! isset($_POST['FromDate']) and ! isset($_POST['ToDate'])) or isset($_POST[
 	include  ('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $title . '</p>';
+	. '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';
@@ -227,7 +227,7 @@ if ((! isset($_POST['FromDate']) and ! isset($_POST['ToDate'])) or isset($_POST[
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $title . '</p>';
+	. '" alt="" />' . ' ' . $Title . '</p>';
 
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);

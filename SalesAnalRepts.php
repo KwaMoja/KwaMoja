@@ -4,14 +4,14 @@
 
 include('includes/session.inc');
 
-$title = _('Sales Analysis Reports Maintenance');
+$Title = _('Sales Analysis Reports Maintenance');
 /* webERP manual links before header.inc */
 $ViewTopic= 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title . '</p>';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 function GrpByDataOptions($GroupByDataX) {
 

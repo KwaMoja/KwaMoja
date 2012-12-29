@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Authorisation of Petty Cash Expenses');
+$Title = _('Authorisation of Petty Cash Expenses');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "AuthorizeExpense";

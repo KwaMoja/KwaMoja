@@ -10,7 +10,7 @@ include('includes/DefineSerialItems.php');
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Create Credit Note');
+$Title = _('Create Credit Note');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

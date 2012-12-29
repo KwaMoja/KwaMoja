@@ -3,7 +3,7 @@
 /* $Id: Labels.php 4950 2012-02-22 06:26:38Z daintree $*/
 
 include('includes/session.inc');
-$title = _('Label Templates');
+$Title = _('Label Templates');
 include('includes/header.inc');
 
 //define PaperSize array sizes in pdf points
@@ -21,7 +21,7 @@ $PaperSize['Legal']['PageWidth'] = 215.9;
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
-	. '" alt="" />' . $title. '
+	. '" alt="" />' . $Title. '
 	</p>';
 
 if (isset($_POST['SelectedLabelID'])){

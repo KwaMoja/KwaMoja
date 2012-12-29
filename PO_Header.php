@@ -7,10 +7,10 @@ include('includes/session.inc');
 
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	$title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
 } //isset($_GET['ModifyOrderNumber'])
 else {
-	$title = _('Purchase Order Entry');
+	$Title = _('Purchase Order Entry');
 }
 
 if (isset($_GET['SupplierID'])) {

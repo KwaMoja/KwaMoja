@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Work Order Status Inquiry');
+$Title = _('Work Order Status Inquiry');
 include('includes/header.inc');
 
 if (isset($_GET['WO'])) {
@@ -55,7 +55,7 @@ echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' 
 
 echo '<p class="page_title_text">
 		<img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $title.'
+	_('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 echo '<table cellpadding="2" class="selection">

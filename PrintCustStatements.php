@@ -78,7 +78,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	$StatementResults=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_Num_Rows($StatementResults) == 0){
-		$title = _('Print Statements') . ' - ' . _('No Customers Found');
+		$Title = _('Print Statements') . ' - ' . _('No Customers Found');
 	    require('includes/header.inc');
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
@@ -398,7 +398,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
         $pdf->__destruct();
 
 	} else {
-		$title = _('Print Statements') . ' - ' . _('No Statements Found');
+		$Title = _('Print Statements') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
 		echo '<br /><br /><br />' . prnMsg( _('There were no statements to print') );
 	        echo '<br /><br /><br />';
@@ -407,7 +407,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
 } else { /*The option to print PDF was not hit */
 
-	$title = _('Select Statements to Print');
+	$Title = _('Select Statements to Print');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 	if (!isset($_POST['FromCust']) or $_POST['FromCust']=='') {

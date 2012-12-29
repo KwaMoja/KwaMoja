@@ -2,7 +2,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Supplier Purchasing Data');
+$Title = _('Supplier Purchasing Data');
 
 include ('includes/header.inc');
 
@@ -385,7 +385,7 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 } else {
 	if ($NoPurchasingData=0) {
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .
-			$title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
+			$Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
 		echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . _('Search for a supplier') . '</p><br />';

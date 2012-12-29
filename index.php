@@ -2,7 +2,7 @@
 $PageSecurity=0;
 
 include('includes/session.inc');
-$title=_('Main Menu');
+$Title=_('Main Menu');
 include('includes/header.inc');
 
 

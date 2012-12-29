@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('General Ledger Transaction Inquiry');
+$Title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
 $MenuURL = '<div><a href="'. $rootpath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
@@ -33,7 +33,7 @@ if ( !isset($_GET['TypeID']) or !isset($_GET['TransNo']) ) {
 		//========[ SHOW SYNOPSYS ]===========
 		//
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/magnifier.png" title="'
-			. _('Print') . '" alt="" />' . ' ' . $title . '</p>';
+			. _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
 				<th colspan="7"><h2><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></h2></th>

@@ -22,7 +22,7 @@ if (isset($_POST['PrintPDF'])
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 		if ($_SESSION['CustomerID']==''){
-			$title = _('Special price List - No Customer Selected');
+			$Title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
@@ -31,7 +31,7 @@ if (isset($_POST['PrintPDF'])
 			exit;
 		}
 		if (!Is_Date($_POST['EffectiveDate'])){
-			$title = _('Special price List - No Customer Selected');
+			$Title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
@@ -122,7 +122,7 @@ if (isset($_POST['PrintPDF'])
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Price List') . ' - ' . _('Problem Report....');
+		$Title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
@@ -133,7 +133,7 @@ if (isset($_POST['PrintPDF'])
 		exit;
 	}
 	if (DB_num_rows($PricesResult)==0){
-		$title = _('Print Price List Error');
+		$Title = _('Print Price List Error');
 		include('includes/header.inc');
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">'. _('Back').'</a>';
@@ -248,7 +248,7 @@ if (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title= _('Price Listing');
+	$Title= _('Price Listing');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />

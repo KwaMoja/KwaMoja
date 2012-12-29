@@ -5,7 +5,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.inc');
-$title = _('Contract Bill of Materials');
+$Title = _('Contract Bill of Materials');
 
 $identifier=$_GET['identifier'];
 

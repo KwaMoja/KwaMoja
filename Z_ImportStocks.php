@@ -2,7 +2,7 @@
 /* $Id: Z_ImportStocks.php 5746 2012-11-25 11:12:57Z tim_schofield $*/
 
 include('includes/session.inc');
-$title = _('Import Items');
+$Title = _('Import Items');
 include('includes/header.inc');
 
 // If this script is called with a file object, then the file contents are imported

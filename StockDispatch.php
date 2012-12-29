@@ -97,7 +97,7 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Stock Dispatch - Problem Report');
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.inc');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 		echo '<br />
@@ -109,7 +109,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 	if (DB_num_rows($result) ==0) {
-		$title = _('Stock Dispatch - Problem Report');
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
@@ -276,7 +276,7 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Stock Dispatch Report');
+	$Title=_('Stock Dispatch Report');
 	include('includes/header.inc');
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>'

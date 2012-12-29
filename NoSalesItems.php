@@ -3,7 +3,7 @@
 /* $Id: NoSalesItems.php 2012-05-12 $*/
 
 include ('includes/session.inc');
-$title = _('No Sales Items Searching');
+$Title = _('No Sales Items Searching');
 include ('includes/header.inc');
 if (!(isset($_POST['Search']))) {
 echo '<div class="centre"><p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';

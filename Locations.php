@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Location Maintenance');
+$Title = _('Location Maintenance');
 
 include('includes/header.inc');
 
@@ -369,7 +369,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if (DB_num_rows($result)!=0){
 
@@ -432,7 +432,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedLocation)) {
 		//editing an existing Location
 		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" title="' .
-			_('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		$sql = "SELECT loccode,
 					locationname,

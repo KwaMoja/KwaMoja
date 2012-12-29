@@ -2,7 +2,7 @@
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include ('includes/session.inc');
-$title = _('List of Items without picture');
+$Title = _('List of Items without picture');
 include ('includes/header.inc');
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,

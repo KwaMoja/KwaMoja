@@ -4,10 +4,10 @@
 
 include('includes/session.inc');
 
-$title = _('Purchase Order Authorisation Maintenance');
+$Title = _('Purchase Order Authorisation Maintenance');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p><br />';
+echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 
 /*Note: If CanCreate==0 then this means the user can create orders

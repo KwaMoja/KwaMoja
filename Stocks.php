@@ -3,7 +3,7 @@
 /* $Id$ */
 
 include('includes/session.inc');
-$title = _('Item Maintenance');
+$Title = _('Item Maintenance');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAddingItems';
@@ -42,7 +42,7 @@ if (isset($_POST['New'])) {
 echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $title . '
+		<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] !='') {

@@ -4,7 +4,7 @@
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
-	//  $title - should be defined in the page this file is included with
+	//  $Title - should be defined in the page this file is included with
 	if (!isset($rootpath)){
 		$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
 		if ($rootpath == '/' or $rootpath == "\\") {
@@ -23,13 +23,13 @@
 			header('Content-type: text/html; charset=utf-8');
 		}
 	}
-	if($title == _('Copy a BOM to New Item Code')){//solve the cannot modify heaer information in CopyBOM.php scritps
+	if($Title == _('Copy a BOM to New Item Code')){//solve the cannot modify heaer information in CopyBOM.php scritps
 		ob_start();
 	}
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
-	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
+	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
 	echo '<link rel="shortcut icon" href="'. $rootpath.'/favicon.ico" />';
 	echo '<link rel="icon" href="' . $rootpath.'/favicon.ico" />';
 	if ($StrictXHTML) {
@@ -71,7 +71,7 @@
 	echo '<div id="HeaderWrapDiv">';
 
 
-	if (isset($title)) {
+	if (isset($Title)) {
 
 
 		echo '<div id="AppInfoDiv">'; //===HJ===
@@ -83,7 +83,7 @@
 			echo '</div>';
 			echo '<div id="AppInfoModuleDiv">';
 				// Make the title text a class, can be set to display:none is some themes
-				echo $title;
+				echo $Title;
 			echo '</div>';
 		echo '</div>'; // AppInfoDiv
 

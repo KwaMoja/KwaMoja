@@ -4,7 +4,7 @@
 $PricesSecurity = 9;
 
 include ('includes/session.inc');
-$title = _('Select an Asset');
+$Title = _('Select an Asset');
 include ('includes/header.inc');
 
 if (isset($_GET['AssetID'])) {
@@ -43,7 +43,7 @@ if (DB_num_rows($result) == 0) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'</p>
+		<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 		<table class="selection">
 		<tr>
 			<td>' . _('In Asset Category') . ':</td>

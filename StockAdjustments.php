@@ -5,7 +5,7 @@
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
-$title = _('Stock Adjustments');
+$Title = _('Stock Adjustments');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= 'Inventory';
 $BookMark = 'InventoryAdjustments';

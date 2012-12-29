@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title=_('Check Period Sales Ledger Control Account');
+$Title=_('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
 
 echo '<table>';

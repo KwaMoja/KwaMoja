@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include ('includes/session.inc');
-$title = _('Profit and Loss');
+$Title = _('Profit and Loss');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -175,7 +175,7 @@ if ((!isset($_POST['FromPeriod'])
 	$AccountsResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) != 0) {
-		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
@@ -186,7 +186,7 @@ if ((!isset($_POST['FromPeriod'])
 		exit;
 	}
 	if (DB_num_rows($AccountsResult)==0){
-		$title = _('Print Profit and Loss Error');
+		$Title = _('Print Profit and Loss Error');
 		include('includes/header.inc');
 		echo '<br />';
 		prnMsg( _('There were no entries to print out for the selections specified'),'warn' );

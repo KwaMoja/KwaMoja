@@ -2,14 +2,14 @@
 /* $Id$ */
 
 include('includes/session.inc');
-$title = _('Maintenance Of Petty Cash Type of Tabs');
+$Title = _('Maintenance Of Petty Cash Type of Tabs');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= "PettyCash";
 $BookMark = "PCTabTypes";
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/money_add.png" title="' . _('Payment Entry')
-	. '" alt="" />' . ' ' . $title . '</p>';
+	. '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedTab'])){
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);

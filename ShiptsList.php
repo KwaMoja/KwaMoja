@@ -4,7 +4,7 @@
 
 //$PageSecurity = 2;
 include ('includes/session.inc');
-$title = _('Shipments Open Inquiry');
+$Title = _('Shipments Open Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $theme . '/images/supplier.png" title="' .

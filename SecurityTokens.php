@@ -3,7 +3,7 @@
 /* $Id: SecurityTokens.php 4424 2010-12-22 16:27:45Z tim_schofield $*/
 
 include('includes/session.inc');
-$title = _('Maintain Security Tokens');
+$Title = _('Maintain Security Tokens');
 
 include('includes/header.inc');
 
@@ -86,7 +86,7 @@ if (isset($_POST['Update']) and $InputError == 0) {
 	$_POST['TokenID']='';
 }
 echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' .
-		_('Print') . '" alt="" />' . ' ' . $title . '</p>';
+		_('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
 echo '<div>';

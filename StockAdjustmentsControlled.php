@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 include('includes/session.inc');
 
-$title = _('Adjusting Controlled Items');
+$Title = _('Adjusting Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 

@@ -3,7 +3,7 @@
 /* $Id: SalesByTypePeriodInquiry.php 4261 2010-12-22 15:56:50Z tim_schofield $*/
 
 include('includes/session.inc');
-$title = _('Sales Report');
+$Title = _('Sales Report');
 include('includes/header.inc');
 
 

@@ -11,7 +11,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started here for password checking and authorisation level check */
 include('includes/session.inc');
 
-$title = _('Fixed Asset Charges or Credits');
+$Title = _('Fixed Asset Charges or Credits');
 
 include('includes/header.inc');
 

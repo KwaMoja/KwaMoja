@@ -2,7 +2,7 @@
 /* $Id$*/
 //$PageSecurity = 15;
 include('includes/session.inc');
-$title = _('Upgrade KwaMoja 3.071 - 3.08');
+$Title = _('Upgrade KwaMoja 3.071 - 3.08');
 include('includes/header.inc');
 
 

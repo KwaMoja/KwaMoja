@@ -6,7 +6,7 @@ include('includes/DefineSerialItems.php');
 
 include('includes/session.inc');
 
-$title = _('Receive Controlled Items');
+$Title = _('Receive Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 

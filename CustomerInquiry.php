@@ -5,7 +5,7 @@
 include('includes/SQL_CommonFunctions.inc');
 
 include('includes/session.inc');
-$title = _('Customer Inquiry');
+$Title = _('Customer Inquiry');
 include('includes/header.inc');
 
 // always figure out the SQL required from the inputs available

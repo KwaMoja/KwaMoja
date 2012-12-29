@@ -10,7 +10,7 @@
 
 include ('includes/session.inc');
 
-$title = _('Edit Module');
+$Title = _('Edit Module');
 
 include('includes/header.inc');
 

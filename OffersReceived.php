@@ -3,7 +3,7 @@
 /*$Id: OffersReceived.php 4500 2011-02-27 09:18:42Z daintree $ */
 
 include('includes/session.inc');
-$title = _('Supplier Offers');
+$Title = _('Supplier Offers');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

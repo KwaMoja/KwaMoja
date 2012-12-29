@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
-	$title = _('Select Order To Print');
+	$Title = _('Select Order To Print');
 	include('includes/header.inc');
 	echo '<div class="centre">
 			<br />
@@ -79,7 +79,7 @@ $result=DB_query($sql,$db, $ErrMsg);
 
 //if there are no rows, there's a problem.
 if (DB_num_rows($result)==0){
-	$title = _('Print Packing Slip Error');
+	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	 echo '<div class="centre">
 			<br />
@@ -113,7 +113,7 @@ if (DB_num_rows($result)==0){
 	$DeliverBlind = $myrow['deliverblind'];
 	$DeliveryDate = $myrow['salesorders.deliverydate'];
 	if ($myrow['printedpackingslip']==1 and ($_GET['Reprint']!='OK' or !isset($_GET['Reprint']))){
-		$title = _('Print Packing Slip Error');
+		$Title = _('Print Packing Slip Error');
 		include('includes/header.inc');
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . _('has previously been printed') . ' ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 		echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'

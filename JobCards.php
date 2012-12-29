@@ -12,7 +12,7 @@ if (isset($_POST['BranchNo'])) {
 } //isset($_POST['BranchNo'])
 
 include('includes/session.inc');
-$title = _('Customer Job Cards');
+$Title = _('Customer Job Cards');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/JobCards.inc');

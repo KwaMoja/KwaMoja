@@ -21,7 +21,7 @@
 include('includes/DefineSuppAllocsClass.php');
 include('includes/session.inc');
 
-$title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
+$Title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

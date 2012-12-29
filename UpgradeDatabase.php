@@ -4,7 +4,7 @@
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
 include('includes/session.inc');
-$title = _('Upgrade KwaMoja Database');
+$Title = _('Upgrade KwaMoja Database');
 include('includes/header.inc');
 
 if (!isset($_POST['DoUpgrade'])){

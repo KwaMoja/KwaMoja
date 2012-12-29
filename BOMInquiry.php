@@ -3,7 +3,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Costed Bill Of Material');
+$Title = _('Costed Bill Of Material');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
@@ -184,7 +184,7 @@ if (isset($StockID) and $StockID!=""){
 	} else {
 		echo '<a href="'.$rootpath.'/index.php">'._('Return to Main Menu').'</a>';
 		echo '<p class="page_title_text">
-				<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $title.'
+				<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 				</p>
 				<br />';
 

@@ -10,7 +10,7 @@ include('includes/session.inc');
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
-	$title='MRP error';
+	$Title='MRP error';
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
@@ -42,7 +42,7 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('MRP Reschedules') . ' - ' . _('Problem Report');
+	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
@@ -54,7 +54,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 	if (DB_num_rows($result) == 0) {
-	  $title = _('MRP Reschedules') . ' - ' . _('Problem Report');
+	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
@@ -118,12 +118,12 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('MRP Reschedule Reporting');
+	$Title=_('MRP Reschedule Reporting');
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text">
 			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="'
-		. _('Stock') . '" alt="" />' . ' ' . $title . '
+		. _('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<br />

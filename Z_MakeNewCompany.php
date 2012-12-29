@@ -13,7 +13,7 @@ if (isset($_POST['EnterCompanyDetails'])) {
 	exit;
 }
 
-$title = _('Make New Company Database Utility');
+$Title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
 

@@ -10,7 +10,7 @@ include('includes/session.inc');
 $sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
 $result=DB_query($sql,$db);
 if (DB_num_rows($result)==0) {
-	$title=_('MRP error');
+	$Title=_('MRP error');
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
@@ -103,7 +103,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 	$result = DB_query($sql,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
+	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
 	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
@@ -114,7 +114,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 	   exit;
 	}
 	if (DB_num_rows($result)==0){ //then there's nothing to print
-		$title = _('MRP Planned Work Orders');
+		$Title = _('MRP Planned Work Orders');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with demand greater than supply'),'info');
 		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -241,10 +241,10 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 
 	} else { // Review planned work orders
 
-		$title = _('Review/Convert MRP Planned Work Orders');
+		$Title = _('Review/Convert MRP Planned Work Orders');
 		include('includes/header.inc');
 		echo '<p class="page_title_text">
-				<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+				<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">';
 		echo '<div>';
@@ -315,10 +315,10 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('MRP Planned Work Orders Reporting');
+	$Title=_('MRP Planned Work Orders Reporting');
 	include('includes/header.inc');
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $title . '</p>';
+			<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<div>';

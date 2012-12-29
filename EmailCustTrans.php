@@ -12,7 +12,7 @@ if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Credit Note');
 	$TypeCode =11;
 }
-$title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['FromTransNo'];
+$Title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['FromTransNo'];
 
 if (isset($_POST['DoIt']) and IsEmailAddress($_POST['EmailAddr'])){
 

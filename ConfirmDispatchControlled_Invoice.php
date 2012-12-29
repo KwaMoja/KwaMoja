@@ -5,7 +5,7 @@
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
-$title = _('Specify Dispatched Controlled Items');
+$Title = _('Specify Dispatched Controlled Items');
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');

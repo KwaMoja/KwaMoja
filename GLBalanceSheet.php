@@ -6,7 +6,7 @@
 
 
 include ('includes/session.inc');
-$title = _('Balance Sheet');
+$Title = _('Balance Sheet');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
@@ -98,7 +98,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	$AccumProfitResult = DB_query($SQL,$db);
 	if (DB_error_no($db) !=0) {
-		$title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('The accumulated profits brought forward could not be calculated by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br />
@@ -137,7 +137,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$AccountsResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
+		$Title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
 		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
@@ -314,7 +314,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,locale_number_format($LYCheckTotal,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 
 	if ($ListCount == 0) {   //UldisN
-		$title = _('Print Balance Sheet Error');
+		$Title = _('Print Balance Sheet Error');
 		include('includes/header.inc');
 		prnMsg( _('There were no entries to print out for the selections specified') );
 		echo '<br /><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';

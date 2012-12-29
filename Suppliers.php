@@ -4,7 +4,7 @@
 
 include('includes/session.inc');
 
-$title = _('Supplier Maintenance');
+$Title = _('Supplier Maintenance');
 /* KwaMoja manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'NewSupplier';

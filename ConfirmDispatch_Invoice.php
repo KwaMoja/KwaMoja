@@ -6,7 +6,7 @@
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
-$title = _('Confirm Dispatches and Invoice An Order');
+$Title = _('Confirm Dispatches and Invoice An Order');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

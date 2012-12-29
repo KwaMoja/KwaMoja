@@ -2,7 +2,7 @@
 /* $Id: SMTPServer.php 4469 2011-01-15 02:28:37Z daintree $*/
 include('includes/session.inc');
 
-$title = _('SMTP Server details');
+$Title = _('SMTP Server details');
 
 include('includes/header.inc');
 

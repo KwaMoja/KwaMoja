@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$title = _('Customer Type (Group) Notes');
+$Title = _('Customer Type (Group) Notes');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

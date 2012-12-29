@@ -5,7 +5,7 @@
 include('includes/session.inc');
 
 if (!isset($_POST['FromCat'])  or $_POST['FromCat']=='') {
-	$title=_('Low Gross Profit Sales');
+	$Title=_('Low Gross Profit Sales');
 }
 $debug=0;
 if (isset($_POST['PrintPDF'])) {
@@ -17,7 +17,7 @@ if (isset($_POST['PrintPDF'])) {
 	$PageNumber=1;
 	$line_height=12;
 
-	$title = _('Low GP sales') . ' - ' . _('Problem Report');
+	$Title = _('Low GP sales') . ' - ' . _('Problem Report');
 
 	if (! Is_Date($_POST['FromDate']) or ! Is_Date($_POST['ToDate'])){
 		include('includes/header.inc');
@@ -115,7 +115,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Low Gross Profit Report') . '</p>';
 
 	if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {

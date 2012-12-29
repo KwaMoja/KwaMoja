@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 
-$title = _('Search GL Accounts');
+$Title = _('Search GL Accounts');
 
 include('includes/header.inc');
 
