@@ -125,7 +125,7 @@ if (isset($_POST['PrintPDF'])
 		$Title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -251,7 +251,7 @@ if (isset($_POST['PrintPDF'])
 	$Title= _('Price Listing');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price List') . '" alt="" />
          ' . ' ' . _('Print a price list') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {

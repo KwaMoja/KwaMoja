@@ -6,7 +6,7 @@ include ('includes/session.inc');
 $Title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
-$MenuURL = '<div><a href="'. $rootpath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
+$MenuURL = '<div><a href="'. $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
 if ( !isset($_GET['TypeID']) or !isset($_GET['TransNo']) ) {
 	prnMsg(_('This page requires a valid transaction type and number'),'warn');
@@ -32,7 +32,7 @@ if ( !isset($_GET['TypeID']) or !isset($_GET['TransNo']) ) {
 		//
 		//========[ SHOW SYNOPSYS ]===========
 		//
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/magnifier.png" title="'
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="'
 			. _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
@@ -75,7 +75,7 @@ if ( !isset($_GET['TypeID']) or !isset($_GET['TransNo']) ) {
 			$DetailResult = false;
 
 			$AccountName = $TransRow['accountname'];
-			$URL = $rootpath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
+			$URL = $RootPath . '/GLAccountInquiry.php?Account=' . $TransRow['account'];
 
 			if ( $TransRow['amount'] > 0) {
 					$DebitAmount = locale_number_format($TransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
@@ -111,10 +111,10 @@ if ( !isset($_GET['TypeID']) or !isset($_GET['TransNo']) ) {
 			if ($DetailResult) {
 				$DetailRow = DB_fetch_array($DetailResult);// there can be only one
 				if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-					$URL = $rootpath . '/CustomerInquiry.php?CustomerID=' . $DetailRow['debtorno'] . '&amp;TransAfterDate=' . $TranDate;
+					$URL = $RootPath . '/CustomerInquiry.php?CustomerID=' . $DetailRow['debtorno'] . '&amp;TransAfterDate=' . $TranDate;
 					$AccountName .= ' ' . $DetailRow['name'];
 				} else { //its a supplier trans
-					$URL = $rootpath . '/SupplierInquiry.php?SupplierID=' . $DetailRow['supplierno'] . '&amp;FromDate=' . $TranDate;
+					$URL = $RootPath . '/SupplierInquiry.php?SupplierID=' . $DetailRow['supplierno'] . '&amp;FromDate=' . $TranDate;
 					$AccountName .= ' ' . $DetailRow['suppname'];
 				}
 				DB_free_result($DetailResult);

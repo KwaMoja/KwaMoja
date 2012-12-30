@@ -7,7 +7,7 @@ include ('includes/session.inc');
 $Title = _('Shipments Open Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/supplier.png" title="' .
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
 				_('Supplier') . '" alt="" />' . ' ' . _('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
 
 if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
@@ -50,7 +50,7 @@ while ($myrow=DB_fetch_array($ShiptsResult)) {
               $k=1;
        }
 
-       echo '<td><a href="'.$rootpath.'/Shipments.php?SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
+       echo '<td><a href="'.$RootPath.'/Shipments.php?SelectedShipment='.$myrow['shiptref'].'">'.$myrow['shiptref'].'</a></td>
        		<td>'.$myrow['vessel'].'</td>
 		<td>'.ConvertSQLDate($myrow['eta']).'</td>
 		</tr>';

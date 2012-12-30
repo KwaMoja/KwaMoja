@@ -218,7 +218,7 @@ if(isset($_POST['Submit']) and $InputError==False){
 	DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
-	echo '<p><a href="'.$rootpath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">'. _('Print the Transfer Docket'). '</a></p>';
+	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">'. _('Print the Transfer Docket'). '</a></p>';
 	include('includes/footer.inc');
 
 } else {
@@ -241,7 +241,7 @@ if(isset($_POST['Submit']) and $InputError==False){
 
 	}
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';

@@ -23,7 +23,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])){
 	 $Title = _('Payment Listing');
 	 include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $title . '</p>';
 
 	if ($InputError==1){

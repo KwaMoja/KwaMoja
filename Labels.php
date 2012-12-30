@@ -20,7 +20,7 @@ $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
 	. '" alt="" />' . $Title. '
 	</p>';
 
@@ -234,7 +234,7 @@ if (!isset($SelectedLabelID)) {
 						$myrow['labelid'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 						$myrow['labelid'],
-						$rootpath . '/LabelFields.php?',
+						$RootPath . '/LabelFields.php?',
 						$myrow['labelid']);
 			} else {
 				printf('<td>%s</td>
@@ -260,7 +260,7 @@ if (!isset($SelectedLabelID)) {
 						$myrow['labelid'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 						$myrow['labelid'],
-						$rootpath . '/LabelFields.php?',
+						$RootPath . '/LabelFields.php?',
 						$myrow['labelid']);
 			}
 		}
@@ -532,7 +532,7 @@ echo '<br />
 		</div>
 	<br />
 		<div class="centre">
-			<a href="' . $rootpath  . '/PDFPrintLabel.php">' . _('Print Labels') . '</a>
+			<a href="' . $RootPath  . '/PDFPrintLabel.php">' . _('Print Labels') . '</a>
 		</div>
 	</form>';
 

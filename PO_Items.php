@@ -18,14 +18,14 @@ $identifier = $_GET['identifier'];
  */
 
 if (!isset($_SESSION['PO' . $identifier])) {
-	header('Location:' . $rootpath . '/PO_Header.php');
+	header('Location:' . $RootPath . '/PO_Header.php');
 	exit;
 } //end if (!isset($_SESSION['PO'.$identifier]))
 
 include('includes/header.inc');
 
 if (!isset($_POST['Commit'])) {
-	echo '<a href="' . $rootpath . '/PO_Header.php?identifier=' . $identifier . '">' . _('Back To Purchase Order Header') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PO_Header.php?identifier=' . $identifier . '">' . _('Back To Purchase Order Header') . '</a><br />';
 } //!isset($_POST['Commit'])
 
 if (isset($_POST['UpdateLines']) or isset($_POST['Commit'])) {
@@ -384,7 +384,7 @@ if (isset($_POST['Commit'])) {
 			echo '<br /><br />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('has been updated'), 'success');
 			if ($_SESSION['PO' . $identifier]->AllowPrintPO == 1 and ($_SESSION['PO' . $identifier]->Status == 'Authorised' or $_SESSION['PO' . $identifier]->Status == 'Printed')) {
-				echo '<br /><div class="centre"><a target="_blank" href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+				echo '<br /><div class="centre"><a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
 			} //$_SESSION['PO' . $identifier]->AllowPrintPO == 1 and ($_SESSION['PO' . $identifier]->Status == 'Authorised' or $_SESSION['PO' . $identifier]->Status == 'Printed')
 
 		}
@@ -662,7 +662,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 /*need to set up entry for item description where not a stock item and GL Codes */
 
 if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit'])) {
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />  ' . $_SESSION['PO' . $identifier]->SupplierName;
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />  ' . $_SESSION['PO' . $identifier]->SupplierName;
 
 	if (isset($_SESSION['PO' . $identifier]->OrderNo)) {
 		echo ' ' . _('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo;
@@ -1090,7 +1090,7 @@ if (!isset($_GET['Edit'])) {
 		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr><td></td>
-		<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $rootpath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
+		<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $RootPath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
 		</table>
 		<br />
 
@@ -1129,7 +1129,7 @@ if (isset($SearchResult)) {
 
 		$FileName = $myrow['stockid'] . '.jpg';
 		if (file_exists($_SESSION['part_pics_dir'] . '/' . $FileName)) {
-			$ImageSource = '<img src="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
+			$ImageSource = '<img src="' . $RootPath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50" />';
 		} //file_exists($_SESSION['part_pics_dir'] . '/' . $FileName)
 		else {
 			$ImageSource = '<i>' . _('No Image') . '</i>';

@@ -49,7 +49,7 @@ echo '<div id="FooterDiv">';
 echo '<div id="FooterWrapDiv">';
 
 echo '<div id="FooterLogoDiv">';
-	echo '<img src="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="KwaMoja" title="KwaMoja" />';
+	echo '<img src="'. $RootPath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="KwaMoja" title="KwaMoja" />';
 echo '</div>';
 
 echo '<div id="FooterVersionDiv">';

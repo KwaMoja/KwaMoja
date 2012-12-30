@@ -56,7 +56,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 		echo '<br>
-				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
@@ -86,7 +86,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . $SQL,'error');
 			}
@@ -116,7 +116,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		include('header.inc');
 		prnMsg(_('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 		echo '<br />
-				<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
 			echo '<br />
-					<a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+					<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<br />' . $SQL, 'error');
 			}
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			$Title = _('Payment Processing - Problem Report');
 			include('header.inc');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL,'error');
 			}
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				$Title = _('Payment Processing - Problem Report');
 				include('header.inc');
 				prnMsg(_('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg($db),'error');
-				echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 				if ($debug==1){
 					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}

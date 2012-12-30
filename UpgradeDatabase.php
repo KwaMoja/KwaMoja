@@ -35,7 +35,7 @@ if (!isset($_POST['DoUpgrade'])){
 				</select></td>
 			</tr>
 		</table>';
-		prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+		prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
 		echo '<div class="centre">
 					<input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" />
 				</div>';
@@ -46,7 +46,7 @@ if (!isset($_POST['DoUpgrade'])){
 		if (strcmp($Version,$_SESSION['VersionNumber'])==0){
 			prnMsg(_('The database is up to date, there are no upgrades to perform'),'info');
 		} else {
-			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The KwaMoja code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $rootpath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The KwaMoja code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
 
 			echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
 			echo '<div class="centre">
@@ -61,7 +61,7 @@ if (!isset($_POST['DoUpgrade'])){
 
 if (isset($_POST['DoUpgrade'])){
 
-	if ($dbType=='mysql' or $dbType =='mysqli'){
+	if ($DBType=='mysql' or $dbType =='mysqli'){
 
 		$SQLScripts = array();
 

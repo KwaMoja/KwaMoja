@@ -20,8 +20,8 @@ if (!isset($_GET['TransNo']) or $_GET['TransNo']==""){
 			<tr>
 			<td class="menu_group_item">
 			<ul>
-				<li><a href="'. $rootpath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
-				<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectSalesOrder.php?">' . _('Outstanding Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 			</ul>
 			</td>
 			</tr>
@@ -83,8 +83,8 @@ if (DB_num_rows($result)==0){
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-			<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 			</td>
 			</tr>
 			</table>
@@ -108,17 +108,17 @@ if (DB_num_rows($result)==0){
 				prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 						_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
 						'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-			  echo '<p><a href="' . $rootpath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+			  echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 				. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-				'<a href="' . $rootpath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
 				echo '<br /><br /><br />';
 				echo  _('Or select another Order Number to Print');
 				echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-						<li><a href="'. $rootpath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-						<li><a href="'. $rootpath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 						</td>
 						</tr>
 						</table>
@@ -240,9 +240,9 @@ if ($ListCount == 0) {
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
 	echo '<p>'. _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-			'<br /><a href="' . $rootpath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
+			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">'. _('Print Another Packing Slip/Order').
 			'</a>
-			<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.inc');
 	exit;
 } else {

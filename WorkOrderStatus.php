@@ -50,11 +50,11 @@ if (DB_num_rows($WOResult)==0){
 }
 $WORow = DB_fetch_array($WOResult);
 
-echo '<a href="'. $rootpath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
-echo '<a href="'. $rootpath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
+echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/group_add.png" title="' .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 

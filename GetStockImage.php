@@ -143,7 +143,7 @@ if( !$automake and !isset($FileName) ) {
 		$Title = _('Stock Image Retrieval ....');
 		include('includes/header.inc');
 		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'.  _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 }

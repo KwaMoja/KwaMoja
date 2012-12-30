@@ -43,7 +43,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 
 	if (DB_error_no($db) !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">'.  _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'.  _('Back to the menu'). '</a>';
 		if ($debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
@@ -111,7 +111,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 		</div>
 		<br />
 			<div class="centre">
-				<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
+				<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 			</div>
 		</form>';
 	include('includes/footer.inc');
@@ -268,7 +268,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 	$Title= _('Price Labels');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
 		 ' . ' ' . _('Print Price Labels') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
@@ -348,7 +348,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 				</div>
 				<br />
 				<div class="centre">
-					<a href="'. $rootpath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
+					<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 				</div>
 				</form>';
 

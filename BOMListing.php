@@ -41,7 +41,7 @@ if (isset($_POST['PrintPDF'])
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $SQL;
 	   }
@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF'])
 
 	$Title=_('Bill Of Material Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p><br />';
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 

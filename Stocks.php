@@ -39,10 +39,10 @@ if (isset($_POST['New'])) {
 	$New=$_POST['New'];
 }
 
-echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	<br />
 	<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] !='') {
@@ -906,7 +906,7 @@ if (!isset($_POST['CategoryID'])) {
 	$_POST['CategoryID']=$Category;
 }
 
-echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td>
+echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Stock Categories') . '</a></td>
 	</tr>';
 
 if (!isset($_POST['EOQ']) or $_POST['EOQ']==''){

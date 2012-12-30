@@ -43,7 +43,7 @@ if ($Serialised==1){
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
 	</p>';
 
 $DbgMsg = _('The SQL that failed was');
@@ -337,7 +337,7 @@ if (DB_num_rows($WOSerialNoResult)==0){
 
 } //end of if there are woserialno items defined
 
-echo '<br /><a href="' . $rootpath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
+echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . _('Back To Work Order') . ' ' . $WO .'</a>';
 
 echo '</div>
       </form>';

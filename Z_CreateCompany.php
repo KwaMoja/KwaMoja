@@ -94,7 +94,7 @@ if ($myrow[0]==0){
 	$Result = DB_query($sql,$db);
 }
 
-prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $rootpath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
+prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
 
 include('includes/footer.inc');
 ?>

@@ -13,12 +13,12 @@ $Title = _('Tax Rates');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $Title. '
 	</p>';
 
 if (!isset($TaxAuthority)){
-	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . '<br /><a href="' . $rootpath . '/TaxAuthorities.php">' . _('click here') . '</a> ' . _('to go to the Tax Authority page'),'error');
+	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . '<br /><a href="' . $RootPath . '/TaxAuthorities.php">' . _('click here') . '</a> ' . _('to go to the Tax Authority page'),'error');
 	include ('includes/footer.inc');
 	exit;
 }
@@ -129,13 +129,13 @@ echo '<br />
 
 echo '<br />
 	<br />
-	<a href="' . $rootpath . '/TaxAuthorities.php">' . _('Tax Authorities') .  '</a>
+	<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities') .  '</a>
 	<br />
-	<a href="' . $rootpath . '/TaxGroups.php">' . _('Tax Groupings') .  '</a>
+	<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Groupings') .  '</a>
 	<br />
-	<a href="' . $rootpath . '/TaxCategories.php">' . _('Tax Categories') .  '</a>
+	<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Categories') .  '</a>
 	<br />
-	<a href="' . $rootpath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') .  '</a>
+	<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') .  '</a>
 	</div>';
 
 echo '</div>

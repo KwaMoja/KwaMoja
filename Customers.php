@@ -13,7 +13,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');
 
 echo '<p class="page_title_text">
-		<img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Maintenance') . '
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Maintenance') . '
 	</p>';
 
 if (isset($Errors)) {
@@ -269,9 +269,9 @@ if (isset($_POST['submit'])) {
 
 			$BranchCode = mb_substr($_POST['DebtorNo'], 0, 4);
 
-			echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo'] . '">';
+			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo'] . '">';
 
-			echo '<div class="centre">' . _('You should automatically be forwarded to the entry of a new Customer Branch page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo'] . '"></a></div>';
+			echo '<div class="centre">' . _('You should automatically be forwarded to the entry of a new Customer Branch page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo'] . '"></a></div>';
 
 			include('includes/footer.inc');
 			exit;
@@ -406,7 +406,7 @@ elseif (isset($_GET['Add'])) {
 } //isset($_GET['Add'])
 
 if (isset($_POST['AddContact']) and (isset($_POST['AddContact']) != '')) {
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/AddCustomerContacts.php?DebtorNo=' . $DebtorNo . '">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/AddCustomerContacts.php?DebtorNo=' . $DebtorNo . '">';
 } //isset($_POST['AddContact']) and (isset($_POST['AddContact']) != '')
 
 if (!isset($DebtorNo)) {
@@ -420,7 +420,7 @@ if (!isset($DebtorNo)) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] == 0) {
-		prnMsg(_('In order to create a new customer you must first set up at least one sales type/price list') . '<br />' . _('Click') . ' ' . '<a target="_blank" href="' . $rootpath . '/SalesTypes.php">' . _('here') . ' ' . '</a>' . _('to set up your price lists'), 'warning') . '<br />';
+		prnMsg(_('In order to create a new customer you must first set up at least one sales type/price list') . '<br />' . _('Click') . ' ' . '<a target="_blank" href="' . $RootPath . '/SalesTypes.php">' . _('here') . ' ' . '</a>' . _('to set up your price lists'), 'warning') . '<br />';
 		$SetupErrors += 1;
 	} //$myrow[0] == 0
 	$sql = "SELECT COUNT(typeid)
@@ -428,7 +428,7 @@ if (!isset($DebtorNo)) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] == 0) {
-		prnMsg(_('In order to create a new customer you must first set up at least one customer type') . '<br />' . _('Click') . ' ' . '<a target="_blank" href="' . $rootpath . '/CustomerTypes.php">' . _('here') . ' ' . '</a>' . _('to set up your customer types'), 'warning');
+		prnMsg(_('In order to create a new customer you must first set up at least one customer type') . '<br />' . _('Click') . ' ' . '<a target="_blank" href="' . $RootPath . '/CustomerTypes.php">' . _('here') . ' ' . '</a>' . _('to set up your customer types'), 'warning');
 		$SetupErrors += 1;
 	} //$myrow[0] == 0
 

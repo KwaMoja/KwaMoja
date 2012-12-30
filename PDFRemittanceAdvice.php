@@ -80,7 +80,7 @@ if ((isset($_POST['PrintPDF']))
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 			}
@@ -130,7 +130,7 @@ if ((isset($_POST['PrintPDF']))
 	$Title=_('Remittance Advices');
 	include('includes/header.inc');
 
-    echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
+    echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
         . $Title . '</p>';
 	/* show form to allow input	*/
 

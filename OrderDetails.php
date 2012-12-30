@@ -53,7 +53,7 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
@@ -71,7 +71,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Code') . ':</th>
-				<td class="OddTableRows"><a href="' . $rootpath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a></td>
+				<td class="OddTableRows"><a href="' . $RootPath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a></td>
 				<th style="text-align: left">' . _('Customer Name') . ':</th>
 				<th>' . $myrow['name'] . '</th>
 			</tr>

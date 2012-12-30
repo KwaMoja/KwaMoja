@@ -26,7 +26,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -277,7 +277,7 @@ or deletion of the records*/
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$myrow['currabrev'],
 					_('Delete'),
-					$rootpath,
+					$RootPath,
 					'&amp;CurrencyToShow=' . $myrow['currabrev']);
 		} else {
 			printf('<td><img src="%s" alt="" /></td>

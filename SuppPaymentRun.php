@@ -109,7 +109,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
 			}
@@ -119,7 +119,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 		if (DB_num_rows($TransResult)==0) {
 			include('includes/header.inc');
 			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -183,7 +183,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 					$Title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
 					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db),'error');
-					echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 					if ($debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
@@ -214,7 +214,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 			$Title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
@@ -237,7 +237,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 	$Title=_('Payment Run');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 		. '" alt="" />' . $Title . '</p>';
 
 	if (isset($_POST['Currency']) and !is_numeric(filter_number_format($_POST['ExRate']))){
@@ -329,7 +329,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 		 echo '</select></td>
 			</tr>
 			</table>
-			<p>' . _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') . '.
+			<p>' . _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') . '.
 			</p>';
 		 include('includes/footer.inc');
 		 exit;

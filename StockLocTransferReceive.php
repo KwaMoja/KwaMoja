@@ -408,7 +408,7 @@ if(isset($_GET['Trf_ID'])){
 if (isset($_SESSION['Transfer'])){
 	//Begin Form for receiving shipment
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
@@ -467,7 +467,7 @@ if (isset($_SESSION['Transfer'])){
 		echo '<td class="number">' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
 		if ($TrfLine->Controlled==1){
-			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /><a href="' . $rootpath .'/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
+			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $i . '" maxlength="10" size="auto" value="' . locale_number_format($Qty,$TrfLine->DecimalPlaces) . '" /></td>';
 		}
@@ -479,9 +479,9 @@ if (isset($_SESSION['Transfer'])){
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){
-				echo '<td><a href="' . $rootpath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</a></td>';
+				echo '<td><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</a></td>';
 			} else {
-				echo '<td><a href="' . $rootpath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</a></td>';
+				echo '<td><a href="' . $RootPath .'/StockTransferControlled.php?TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</a></td>';
 			}
 		}
 
@@ -502,7 +502,7 @@ if (isset($_SESSION['Transfer'])){
 
 } else { /*Not $_SESSION['Transfer'] set */
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
     echo '<div>';

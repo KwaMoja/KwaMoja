@@ -25,7 +25,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 				locationname
 			FROM locations";
 	$result=DB_query($sql, $db);
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -142,7 +142,7 @@ if (isset($_POST['TransDate'])
 		echo '<br />
 				<table class="selection">
 				<tr>
-					<td><a href="'. $rootpath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a></td>
+					<td><a href="'. $RootPath . '/PDFPickingList.php">' . _('Enter Another Date') . '</a></td>
 				</tr>
 				</table>
 				<br />';

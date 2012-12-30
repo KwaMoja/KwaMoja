@@ -34,7 +34,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 			include('includes/header.inc');
 			echo '<br />';
 			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu').'</a>';
+			echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
 			if ($debug==1){
 		  			echo '<br />' . $sql;
 			}
@@ -60,7 +60,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 				include('includes/header.inc');
 				echo '<br />';
 				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg($db). 'error');
-				echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu').'</a>';
+				echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu').'</a>';
 				if ($debug==1){
 					echo '<br />'. $sql;
 				}
@@ -207,7 +207,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
-		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
+		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">'. _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -266,7 +266,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 	  		include('includes/header.inc');
 	   		echo '<br />';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+	   		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 	   		if ($debug==1){
 		  			echo '<br />'. $SQL;
 	   		}
@@ -327,7 +327,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 	$Title= _('Inventory Comparison Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';

@@ -11,7 +11,7 @@ include('includes/header.inc');
 //
 
 	// Context Navigation and Title
-	echo '<a href="'. $rootpath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
+	echo '<a href="'. $RootPath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
 	echo '<div class="centre"><h3>' . $Title . '</h3></div>';
 
 	// Page Border

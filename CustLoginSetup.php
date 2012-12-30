@@ -12,13 +12,13 @@ include ('includes/LanguagesArray.php');
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />
 		<br />';
-	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $rootpath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
+	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
 	include('includes/footer.inc');
 	exit;
 }
 
 
-echo '<a href="' . $rootpath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
 $sql="SELECT name
 		FROM debtorsmaster
@@ -29,7 +29,7 @@ $myrow=DB_fetch_array($result);
 $CustomerName=$myrow['name'];
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
 	'</p>
 	<br />';
 

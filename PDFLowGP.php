@@ -56,7 +56,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	  include('includes/header.inc');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' . $SQL;
 		}
@@ -68,7 +68,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		include('includes/header.inc');
 		prnMsg(_('No low GP items retrieved'), 'warn');
-		echo '<br /><a href="'  . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 		  echo '<br />' .  $SQL;
 		}
@@ -115,7 +115,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Low Gross Profit Report') . '</p>';
 
 	if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {

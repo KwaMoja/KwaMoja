@@ -1,9 +1,9 @@
 <?php
 /* $Id$*/
-// Display demo user name and password within login form if $allow_demo_mode is true
+// Display demo user name and password within login form if $AllowDemoMode is true
 include ('LanguageSetup.php');
 
-if ($allow_demo_mode == True and !isset($demo_text)) {
+if ($AllowDemoMode == True and !isset($demo_text)) {
 	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('kwamoja') . '</i>';
 } elseif (!isset($demo_text)) {
 	$demo_text = _('Please login here');

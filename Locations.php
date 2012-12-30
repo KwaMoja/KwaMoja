@@ -368,7 +368,7 @@ or deletion of the records*/
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$result = DB_query($sql,$db);
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if (DB_num_rows($result)!=0){
@@ -431,7 +431,7 @@ if (!isset($_GET['delete'])) {
 
 	if (isset($SelectedLocation)) {
 		//editing an existing Location
-		echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' .
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		$sql = "SELECT loccode,

@@ -48,7 +48,7 @@ function DataOptions ($DataX){
 
 Right ... now to the meat */
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedCol'])){
 	$SelectedCol = $_GET['SelectedCol'];
@@ -321,7 +321,7 @@ if (DB_num_rows($result)!=0){
 
 echo '</table><br />
 		<div class="centre">
-			<a href="' . $rootpath . '/SalesAnalRepts.php">' . _('Maintain Report Headers') . '</a>
+			<a href="' . $RootPath . '/SalesAnalRepts.php">' . _('Maintain Report Headers') . '</a>
 		</div>';
 if (DB_num_rows($result)>10){
     prnMsg(_('WARNING') . ': ' . _('User defined reports can have up to 10 columns defined') . '. ' . _('The report will not be able to be run until some columns are deleted'),'warn');

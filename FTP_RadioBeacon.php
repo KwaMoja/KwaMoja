@@ -76,7 +76,7 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 	$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 	$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($myrow['datepackingslipprinted']);
-	$ModifyPage = $rootpath . 'SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
 
 	if ($myrow['printedpackingslip'] ==1){
 		printf('<td><font size="2"><a href="%s">%s</a></font></td>
@@ -183,8 +183,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 		$myrow = DB_fetch_array($result);
 		if ($myrow['printedpackingslip']==1){
 			prnMsg(_('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has previously been sent to Radio Beacon') . '. ' . _('It was sent on') . ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . _('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
-			echo '<p><a href="' . $rootpath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
-			echo '<p><a href="' . $rootpath/index.php . '">' . _('Back to the menu') . '</a>';
+			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
+			echo '<p><a href="' . $RootPath/index.php . '">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		 }

@@ -24796,7 +24796,7 @@ Tim Schofield <tim@weberpafrica.com>	2008-10-21
 
 Tim Schofield <tim@weberpafrica.com>	2008-10-21
 
-    Correctly show $rootpath in href links
+    Correctly show $RootPath in href links
     
     
     git-svn-id: http://svn.code.sf.net/p/web-erp/code/trunk@1201 09516a42-71f9-43be-811f-9b821cf0d246

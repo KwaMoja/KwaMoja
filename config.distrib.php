@@ -9,7 +9,7 @@
 $DefaultLanguage ='en_GB.utf8';
 
 // Whether to display the demo login and password or not on the login screen
-$allow_demo_mode = True;
+$AllowDemoMode = True;
 
 // KwaMoja version
 
@@ -31,14 +31,14 @@ date_default_timezone_set('Asia/Shanghai');
 $host = 'localhost';
 $mysqlport=3306;
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'mysqli';
-//$dbType = 'postgres' - DEPRECIATED;
-//$dbType = 'mysql';
-//$dbType = 'mysqli'; for PHP 5 and mysql > 4.1
+$DBType = 'mysqli';
+//$DBType = 'postgres' - DEPRECATED;
+//$DBType = 'mysql';
+//$DBType = 'mysqli'; for PHP 5 and mysql > 4.1
 
 // sql user & password
-$dbuser = 'kwamoja_db_user';
-$dbpassword = 'kwamoja_db_pwd';
+$DBUser = 'kwamoja_db_user';
+$DBPassword = 'kwamoja_db_pwd';
 
 //It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be turned off with this parameter
 $AllowCompanySelectionBox = true;
@@ -72,21 +72,21 @@ $DefaultClock = 12;
 
 
 
-/*The $rootpath is used in most scripts to tell the script the installation details of the files.
+/*The $RootPath is used in most scripts to tell the script the installation details of the files.
 
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
 eg. if the files are under the webserver root directory then rootpath =''; if they are under kwamoja then kwamoja is the rootpath - notice no additional slashes are necessary.
 */
 
-$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$rootpath = mb_substr($rootpath,0, strrpos($rootpath,'/'));
+		$RootPath = mb_substr($RootPath,0, strrpos($rootpath,'/'));
 	}
 }
 
-if ($rootpath == "/" or $rootpath == "\\") {
-	$rootpath = "";
+if ($RootPath == "/" or $RootPath == "\\") {
+	$RootPath = "";
 }
 
 

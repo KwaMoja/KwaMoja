@@ -12,7 +12,7 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
 		</p>';
 
 } elseif ((isset($_GET['Type']) and $_GET['Type']=='Payments')
@@ -21,7 +21,7 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 	$Type = 'Payments';
 	$TypeName =_('Payments');
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
 		</p>';
 
 } else {
@@ -161,7 +161,7 @@ echo '</table>
 	<div class="centre">
 		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />
 		<p>
-		<a href="' . $rootpath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a>
+		<a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a>
 		</p>
 	</div>';
 

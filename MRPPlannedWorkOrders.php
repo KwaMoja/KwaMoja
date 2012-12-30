@@ -14,7 +14,7 @@ if (DB_num_rows($result)==0) {
 	include('includes/header.inc');
 	echo '<br />';
 	prnMsg( _('The MRP calculation must be run before you can run this report').'<br />'.
-			_('To run the MRP calculation click').' '.'<a href="' . $rootpath . '/MRP.php">'._('here').'</a>', 'error');
+			_('To run the MRP calculation click').' '.'<a href="' . $RootPath . '/MRP.php">'._('here').'</a>', 'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -106,7 +106,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The MRP planned work orders could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		  echo '<br />' . $sql;
 	   }
@@ -117,7 +117,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 		$Title = _('MRP Planned Work Orders');
 		include('includes/header.inc');
 		prnMsg(_('There were no items with demand greater than supply'),'info');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -244,7 +244,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 		$Title = _('Review/Convert MRP Planned Work Orders');
 		include('includes/header.inc');
 		echo '<p class="page_title_text">
-				<img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">';
 		echo '<div>';
@@ -280,7 +280,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 				$k++;
 			}
 
-			echo '<td><a href="' . $rootpath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&amp;ReqQty=' . $myrow['supplyquantity'] . '&amp;ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
+			echo '<td><a href="' . $RootPath . '/WorkOrderEntry.php?NewItem=' . $myrow['part'] . '&amp;ReqQty=' . $myrow['supplyquantity'] . '&amp;ReqDate=' . $myrow['duedate'] . '">' . _('Convert') . '</a></td>
 				<td>' . $myrow['part'] . ' <input type="hidden" name="' . $j . '_part" value="' . $myrow['part']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td>' . ConvertSQLDate($myrow['mrpdate']) . '</td>
@@ -308,7 +308,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 		echo '</div>
 			  </form>';
 
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 
 	}
@@ -318,7 +318,7 @@ if ( isset($_POST['PrintPDF']) or isset($_POST['Review']) ) {
 	$Title=_('MRP Planned Work Orders Reporting');
 	include('includes/header.inc');
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<br /><br /><form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<div>';

@@ -270,7 +270,7 @@ if (($_POST['DemoData']==false) or ($_POST['database_name'] != "weberpdemo")){  
 	}
 }
 	$mysqlport=3306;
-$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 
 //$msg holds the text of the new config.php file
 $msg = "<?php\n\n";
@@ -279,19 +279,19 @@ $msg .= "//---------------------------------------------------\n\n";
 $msg .= "//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override\n";
 $msg .= "\$DefaultLanguage ='en_GB.utf8';\n\n";
 $msg .= "// Whether to display the demo login and password or not on the login screen\n";
-$msg .= "\$allow_demo_mode = False;\n\n";
+$msg .= "\$AllowDemoMode = False;\n\n";
 $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
 $msg .= "\$mysqlport = 3306;\n\n";
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbType = 'mysqli';\n";
+$msg .= "\$DBType = 'mysqli';\n";
 
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbuser = '" . $_POST['database_username'] . "';\n";
+$msg .= "\$DBUser = '" . $_POST['database_username'] . "';\n";
 $msg .= "// assuming that the web server is also the sql server\n";
-$msg .= "\$dbpassword = '" . $_POST['database_password'] . "';\n";
+$msg .= "\$DBPassword = '" . $_POST['database_password'] . "';\n";
 
 $msg .= "// The timezone of the business - this allows the possibility of having;\n";
 
@@ -307,14 +307,14 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$rootpath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
+$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$msg .= "\$rootpath = mb_substr(\$rootpath,0, strrpos(\$rootpath,'/'));\n";
+$msg .= "\$RootPath = mb_substr(\$RootPath,0, strrpos(\$rootpath,'/'));\n";
 $msg .= "} }\n";
 
-$msg .= "if (\$rootpath == '/' or \$rootpath == '\\\') {;\n";
-$msg .= "\$rootpath = '';\n";
+$msg .= "if (\$RootPath == '/' or \$RootPath == '\\\') {;\n";
+$msg .= "\$RootPath = '';\n";
 $msg .= "}\n";
 $msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
 $msg .= "?>";

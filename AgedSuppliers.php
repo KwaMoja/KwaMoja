@@ -108,7 +108,7 @@ if (isset($_POST['PrintPDF'])
 		$Title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -195,7 +195,7 @@ if (isset($_POST['PrintPDF'])
 			$Title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.inc');
 			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
 			   echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
 			}
@@ -273,7 +273,7 @@ if (isset($_POST['PrintPDF'])
 	$Title = _('Aged Supplier Analysis');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 

@@ -51,7 +51,7 @@ if (isset($_POST['PrintPDF'])
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -62,7 +62,7 @@ if (isset($_POST['PrintPDF'])
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('There are no supplier balances to list'),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF'])
 	$Title=_('Supplier Balances At A Period End');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/transactions.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
 		_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';

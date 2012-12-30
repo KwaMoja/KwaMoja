@@ -60,7 +60,7 @@ if (isset($_POST['TaxAuthority']) and
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -165,7 +165,7 @@ if (isset($_POST['TaxAuthority']) and
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo '<br /><a href="' . $rootpath . '/index.php?">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -274,7 +274,7 @@ if (isset($_POST['TaxAuthority']) and
 		$Title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		prnMsg (_('There are no tax entries to list'),'info');
-		echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
     } else {
@@ -286,7 +286,7 @@ if (isset($_POST['TaxAuthority']) and
 	$Title=_('Tax Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $Title. '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';

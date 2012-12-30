@@ -6,11 +6,11 @@ if (!isset($PathPrefix)) {
 } //!isset($PathPrefix)
 
 if (!file_exists($PathPrefix . 'config.php')) {
-	$rootpath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
-	if ($rootpath == '/' or $rootpath == "\\") {
-		$rootpath = '';
-	} //$rootpath == '/' or $rootpath == "\\"
-	header('Location:' . $rootpath . '/install/index.php');
+	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+	if ($RootPath == '/' or $RootPath == "\\") {
+		$RootPath = '';
+	} //$RootPath == '/' or $RootPath == "\\"
+	header('Location:' . $RootPath . '/install/index.php');
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
 
@@ -42,19 +42,19 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 */
 
 if (isset($_SESSION['DatabaseName'])) {
-	foreach ($_POST as $key => $value) {
-		if (gettype($value) != 'array') {
+	foreach ($_POST as $PostVariableName => $PostVariableValue) {
+		if (gettype($PostVariableValue) != 'array') {
 			if (get_magic_quotes_gpc()) {
 				$_POST['name'] = stripslashes($_POST['name']);
 			} //get_magic_quotes_gpc()
-			$_POST[$key] = DB_escape_string($value);
+			$_POST[$PostVariableName] = DB_escape_string($PostVariableValue);
 		} //gettype($value) != 'array'
 		else {
-			foreach ($value as $key1 => $value1) {
+			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if (get_magic_quotes_gpc()) {
-					$value[$key1] = stripslashes($value[$key1]);
-				} //get_magic_quotes_gpc()
-				$value[$key1] = DB_escape_string($value1);
+					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+				}
+				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
 			} //$value as $key1 => $value1
 		}
 	} //$_POST as $key => $value
@@ -62,9 +62,9 @@ if (isset($_SESSION['DatabaseName'])) {
 	/* iterate through all elements of the $_GET array and DB_escape_string them
 	to limit possibility for SQL injection attacks and cross scripting attacks
 	*/
-	foreach ($_GET as $key => $value) {
+	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($value) != 'array') {
-			$_GET[$key] = DB_escape_string($value);
+			$_GET[$GetKey] = DB_escape_string($GetValue);
 		} //gettype($value) != 'array'
 	} //$_GET as $key => $value
 } //isset($_SESSION['DatabaseName'])
@@ -124,8 +124,7 @@ if (!isset($AllowAnyone)) {
 	} //$rc
 } //!isset($AllowAnyone)
 else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
-	/* User nust have hit refresh on Logout page */
-	die(include($PathPrefix . 'includes/Login.php'));
+	header('Location: index.php');
 }
 
 /*User is logged in so get configuration parameters  - save in session*/

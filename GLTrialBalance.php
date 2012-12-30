@@ -27,7 +27,7 @@ if ((! isset($_POST['FromPeriod'])
 
 	include  ('includes/header.inc');
 	echo '<p class="page_title_text">
-			<img src="'.$rootpath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Trial Balance') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -160,7 +160,7 @@ if ((! isset($_POST['FromPeriod'])
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
-		echo '<br /><a href="' .$rootpath .'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">'. _('Back to the menu'). '</a>';
 		if ($debug==1){
 			echo '<br />'. $SQL;
 		}
@@ -172,7 +172,7 @@ if ((! isset($_POST['FromPeriod'])
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no entries to print out for the selections specified') );
-		echo '<br /><a href="'. $rootpath.'/index.php">'. _('Back to the menu'). '</a>';
+		echo '<br /><a href="'. $RootPath.'/index.php">'. _('Back to the menu'). '</a>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -431,7 +431,7 @@ if ((! isset($_POST['FromPeriod'])
 				 _('No general ledger accounts were returned by the SQL because'),
 				 _('The SQL that failed was:'));
 
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/magnifier.png" title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		_('Trial Balance') . '" alt="" />' . ' ' . _('Trial Balance Report') . '</p>';
 
 	/*show a table of the accounts info returned by the SQL
@@ -613,7 +613,7 @@ if ((! isset($_POST['FromPeriod'])
 		$CheckPeriodActual += $AccountPeriodActual;
 		$CheckPeriodBudget += $AccountPeriodBudget;
 
-		$ActEnquiryURL = '<a href="'. $rootpath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+		$ActEnquiryURL = '<a href="'. $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
 
 		printf('<td>%s</td>
 				<td>%s</td>

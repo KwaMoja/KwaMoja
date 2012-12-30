@@ -7,7 +7,7 @@ $Title = _('Bank Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/money_add.png" title="' .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 	 _('Search') . '" alt="" />' . ' ' . $Title.'
 	 </p>';
 
@@ -36,7 +36,7 @@ if (!isset($_POST['Show'])) {
 	if (DB_num_rows($AccountsResults)==0){
 		echo '</select></td>
 				</tr></table>';
-		prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
+		prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'),'warn');
 		include('includes/footer.inc');
 		exit;
 	} else {

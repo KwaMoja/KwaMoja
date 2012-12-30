@@ -22,7 +22,7 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 };
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="'
+echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="'
 	. _('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
@@ -331,7 +331,7 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 			<td>' . $myrow['telephone'].'</td>
 			<td>' . $myrow['fax'].'</td>
 			<td>' . $myrow['email'].'</td>
-			<td><a href="'.$rootpath . '/Factors.php?FactorID='.$myrow['id'].'">'._('Edit').'</a></td>
+			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$myrow['id'].'">'._('Edit').'</a></td>
 			</tr>';
 	} //end while loop
 	echo '</table>

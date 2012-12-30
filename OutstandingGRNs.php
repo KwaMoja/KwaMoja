@@ -46,7 +46,7 @@ if (isset($_POST['FromCriteria'])
 		$Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
-		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 		if ($debug==1){
 			echo '<br />' . $SQL;
@@ -59,7 +59,7 @@ if (isset($_POST['FromCriteria'])
 		$Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
 		prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
-		echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
 		if ($debug==1){
 			echo '<br />' . $SQL;

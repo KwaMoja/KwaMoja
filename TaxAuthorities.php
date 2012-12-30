@@ -7,7 +7,7 @@ $Title = _('Tax Authorities');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . $Title. '
 	</p>';
 
@@ -187,7 +187,7 @@ if (!isset($SelectedTaxAuthID)) {
 				$myrow[0],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow[0],
-				$rootpath . '/TaxAuthorityRates.php?',
+				$RootPath . '/TaxAuthorityRates.php?',
 				$myrow[0]);
 
 	}

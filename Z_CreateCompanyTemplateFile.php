@@ -200,11 +200,11 @@ if (isset($_POST['CreateTemplate'])){
            fwrite ($FileHandle, $SQLScript);
            fclose ($FileHandle);
 
-           echo '<P><a href="' . $rootpath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . _('Show the sql template file produced') . '</a>';
+           echo '<P><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . _('Show the sql template file produced') . '</a>';
 		   include('includes/htmlMimeMail.php');
 		   $Recipients = array('"Submissions" <submissions@kwamoja.com>');
 		   $mail = new htmlMimeMail();
-		   $attachment = $mail->getFile( $rootpath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
+		   $attachment = $mail->getFile( $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
 		   $mail->setText('Please find company template ' . $_POST['TemplateName']);
 		   $mail->addAttachment($attachment, 'CompanyTemplate.sql', 'application/txt');
 		   $mail->setSubject('Company Template Submission');

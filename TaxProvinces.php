@@ -8,7 +8,7 @@ $Title = _('Dispatch Tax Provinces');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if ( isset($_GET['SelectedTaxProvince']) )
@@ -242,11 +242,11 @@ if (! isset($_GET['delete'])) {
 
 echo '<div class="centre">
 		<br />
-		<a href="' . $rootpath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>
+		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') .  '</a>
 		<br />
-		<a href="' . $rootpath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>
+		<a href="' . $RootPath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') .  '</a>
 		<br />
-		<a href="' . $rootpath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>
+		<a href="' . $RootPath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') .  '</a>
 	</div>';
 
 include('includes/footer.inc');

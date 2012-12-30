@@ -23,7 +23,7 @@ if (!isset($_POST['JobCPrint'])) {
 	$myrow = DB_fetch_array($result);
 	$CustomerName = $myrow['name'];
 	echo '<p class="page_title_text">';
-	echo '<img src="' . $rootpath . '/css/' . $Theme . '/images/customer.png" title="' . _('Job Cards for Customer') . '" alt="" />' . ' ' . _('Job Cards for Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName;
+	echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Job Cards for Customer') . '" alt="" />' . ' ' . _('Job Cards for Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName;
 	echo '</p>';
 	$printbk = 'background:white;';
 } //!isset($_POST['JobCPrint'])
@@ -45,7 +45,7 @@ if (!isset($_POST['SaveUpdateJob'])) {
 					<th width=50%>' . _('Job Card Description') . '</th>
 					<th width=10%>' . _('Print') . '</th>
 				</tr>';
-		echo GetJobCards($db, $rootpath);
+		echo GetJobCards($db, $RootPath);
 		echo '</table>';
 		echo '<form action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&AddJob=1" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

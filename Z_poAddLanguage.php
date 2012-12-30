@@ -11,7 +11,7 @@ include ('includes/session.inc');
 
 if (isset($_POST['cancel'])) {
 
-	header ('Location:' . $rootpath . '/Z_poAdmin.php');
+	header ('Location:' . $RootPath . '/Z_poAdmin.php');
 	exit;
 
 }
@@ -27,7 +27,7 @@ $DefaultLanguage = 'en_GB';		// the default language IS English ...
 
 $PathToDefault		= './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
 
-echo '<br />&nbsp;<a href="' . $rootpath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to create a new language file');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 

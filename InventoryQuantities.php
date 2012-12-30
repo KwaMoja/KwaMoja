@@ -84,7 +84,7 @@ if (isset($_POST['PrintPDF'])) {
 	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-	   echo '<br /><a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 	      echo '<br />' . $sql;
 	   }
@@ -95,7 +95,7 @@ if (isset($_POST['PrintPDF'])) {
 			$Title = _('Print Inventory Quantities Report');
 			include('includes/header.inc');
 			prnMsg(_('There were no items with inventory quantities'),'error');
-			echo '<br /><a href="'.$rootpath.'/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="'.$RootPath.'/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 	}
@@ -152,7 +152,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Title=_('Inventory Quantities Reporting');
 	include('includes/header.inc');
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
 echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
 
 
@@ -179,7 +179,7 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		echo '</table>
 			<p />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.inc');
 		exit;
 	}

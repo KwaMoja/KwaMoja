@@ -399,7 +399,7 @@ if (isset($_POST['PlacePO'])){ /*user hit button to place PO for selected orders
 
 /*To the sales order selection form */
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post">';
 echo '<div>';
@@ -561,7 +561,7 @@ if (!isset($StockID)) {
 
 		echo '</select> </td>
 				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
-				<td><a href="' . $rootpath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
+				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
 			</tr>
 			</table>';
 	}
@@ -915,16 +915,16 @@ if (isset($StockItemsResult)
 				$k++;
 			}
 
-			$ModifyPage = $rootpath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
-			$Confirm_Invoice = $rootpath . '/ConfirmDispatch_Invoice.php?OrderNumber=' .$myrow['orderno'];
+			$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
+			$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' .$myrow['orderno'];
 
 			if ($_SESSION['PackNoteFormat']==1){ /*Laser printed A4 default */
-				$PrintDispatchNote = $rootpath . '/PrintCustOrder_generic.php?TransNo=' . $myrow['orderno'];
+				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $myrow['orderno'];
 			} else { /*pre-printed stationery default */
-				$PrintDispatchNote = $rootpath . '/PrintCustOrder.php?TransNo=' . $myrow['orderno'];
+				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $myrow['orderno'];
 			}
-			$PrintQuotation = $rootpath . '/PDFQuotation.php?QuotationNo=' . $myrow['orderno'];
-			$PrintQuotationPortrait = $rootpath . '/PDFQuotationPortrait.php?QuotationNo=' . $myrow['orderno'];
+			$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . $myrow['orderno'];
+			$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . $myrow['orderno'];
 			$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 			$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
@@ -941,7 +941,7 @@ if (isset($StockItemsResult)
 				if ($AuthRow['cancreate']==0 and $myrow['poplaced']==0){ //cancreate==0 if the user can create POs and not already placed
 				printf('<td><a href="%s">%s</a></td>
         				<td><a href="%s">' . _('Invoice') . '</a></td>
-        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+        				<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath.'/css/'.$Theme.'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
         				<td>%s</td>
         				<td>%s</td>
         				<td>%s</td>
@@ -968,7 +968,7 @@ if (isset($StockItemsResult)
 				} else {  /*User is not authorised to create POs so don't even show the option */
 					printf('<td><a href="%s">%s</a></td>
 							<td><a href="%s">' . _('Invoice') . '</a></td>
-							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$rootpath . '/css/' . $Theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
+							<td><a target="_blank" href="%s">' . $PrintText . ' <img src="' .$RootPath . '/css/' . $Theme .'/images/pdf.png" title="' . _('Click for PDF') . '" alt="" /></a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>

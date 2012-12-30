@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('User Settings');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/user.png" title="' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' .
 	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
 
 $PDFLanguages = array(  _('Latin Western Languages - Times'),

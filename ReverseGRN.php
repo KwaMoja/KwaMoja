@@ -19,7 +19,7 @@ if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID']!='')
 
 if (!isset($_POST['SupplierID']) or $_POST['SupplierID']==""){
 	echo '<br />' . _('This page is expected to be called after a supplier has been selected');
-	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/SelectSupplier.php">';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectSupplier.php">';
 	exit;
 } elseif (!isset($_POST['SuppName']) or $_POST['SuppName']=="") {
 	$sql = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
@@ -28,7 +28,7 @@ if (!isset($_POST['SupplierID']) or $_POST['SupplierID']==""){
 	$_POST['SuppName'] = $SuppRow[0];
 }
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Reverse Goods Received from') . ' ' . $_POST['SuppName'] .  '</p> ';
 
 if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])){
 /* SQL to process the postings for the GRN reversal.. */

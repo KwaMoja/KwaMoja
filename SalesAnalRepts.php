@@ -11,7 +11,7 @@ $BookMark = 'SalesAnalysis';
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 function GrpByDataOptions($GroupByDataX) {
 
@@ -310,11 +310,11 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow[0],
-			$rootpath,
+			$RootPath,
 			$myrow[0],
-			$rootpath,
+			$RootPath,
 			$myrow[0],
-			$rootpath,
+			$RootPath,
 			$myrow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow[0]);

@@ -9,7 +9,7 @@ include ('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['EnterCompanyDetails'])) {
 
-	header ('Location:' . $rootpath . '/CompanyPreferences.php');
+	header ('Location:' . $RootPath . '/CompanyPreferences.php');
 	exit;
 }
 
@@ -69,27 +69,27 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 
 				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 
-				if ($dbType=='postgres'){
+				if ($DBType=='postgres'){
 
 					$PgConnStr = 'dbname=' . $_POST['NewCompany'];
 					if ( isset($host) and ($host != "")) {
 						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
 					}
 
-					if (isset( $dbuser ) and ($dbuser != "")) {
+					if (isset( $DBUser ) and ($dbuser != "")) {
 						// if we have a user we need to use password if supplied
-						$PgConnStr .= " user=".$dbuser;
-						if ( isset( $dbpassword ) and ($dbpassword != "") ) {
-							$PgConnStr .= " password=".$dbpassword;
+						$PgConnStr .= " user=".$DBUser;
+						if ( isset( $DBPassword ) and ($dbpassword != "") ) {
+							$PgConnStr .= " password=".$DBPassword;
 						}
 					}
 					$db = pg_connect( $PgConnStr );
 					$SQLScriptFile = file('./sql/pg/kwamoja-new.psql');
 
-				} elseif ($dbType =='mysql') { //its a mysql db < 4.1
+				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewCompany'],$db);
 					$SQLScriptFile = file('./sql/mysql/kwamoja-new.sql');
-				} elseif ($dbType =='mysqli') { //its a mysql db using the >4.1 library functions
+				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewCompany']);
 					$SQLScriptFile = file('./sql/mysql/kwamoja-new.sql');
 				}
@@ -191,9 +191,9 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 
 		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "kwamoja" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
-		echo '<p><a href="' . $rootpath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
-		echo '<p><a href="' . $rootpath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
+		echo '<p><a href="' . $RootPath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
+		echo '<p><a href="' . $RootPath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
+		echo '<p><a href="' . $RootPath . '/WWW_Users.php">' . _('Set Up User Accounts') . '</a>';
 
         echo '</div>';
 		echo '</form>';

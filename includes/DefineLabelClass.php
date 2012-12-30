@@ -164,7 +164,7 @@ class LabelList extends SimpleXMLElement {
  *  @return nothing
  */
 function abortMsg($msg) {
-    global $rootpath, $DefaultClock, $Version, $Theme;
+    global $RootPath, $DefaultClock, $Version, $Theme;
     $Title=_('No label templates exist');
     include ('includes/header.inc');
     echo '<br />';

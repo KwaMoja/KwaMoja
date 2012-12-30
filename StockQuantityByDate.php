@@ -7,7 +7,7 @@ $Title = _('Stock On Hand By Date');
 include('includes/header.inc');
 
 echo '<p class="page_title_text">
-		<img src="'.$rootpath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
 '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
@@ -140,7 +140,7 @@ if(isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 			}
 
 			if($NumRows == 0){
-				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</a></td>
+				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
 						<td>%s</td>
 						<td class="number">%s</td></tr>',
 						'StockID=' . mb_strtoupper($myrows['stockid']),
@@ -148,7 +148,7 @@ if(isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 						$myrows['description'],
 						0);
 			} else {
-				printf('<td><a target="_blank" href="' . $rootpath . '/StockStatus.php?%s">%s</a></td>
+				printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
 					<td>%s</td>
 					<td class="number">%s</td></tr>',
 					'StockID=' . mb_strtoupper($myrows['stockid']),

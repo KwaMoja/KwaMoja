@@ -16,8 +16,8 @@ if (!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])) {
 				<br />
 				<table class="table_index">
 					<tr><td class="menu_group_item">
-						<li><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-						<li><a href="' . $rootpath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+						<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
 						</td>
 					</tr></table>
 				</div>
@@ -28,7 +28,7 @@ if (!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])) {
 	exit();
 
 	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
-	echo '<br /><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a></div>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 	exit;
 } //!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])
 if (isset($_GET['OrderNo'])) {
@@ -120,8 +120,8 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 			<br />
 			<table class="table_index">
 				<tr><td class="menu_group_item">
-				<li><a href="' . $rootpath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-				<li><a href="' . $rootpath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+				<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
 				</td>
 				</tr>
 			</table>
@@ -149,10 +149,10 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 				prnMsg(_('Purchase Order Number') . ' ' . $OrderNo . ' ' . _('has previously been printed') . '. ' . _('It was printed on') . ' ' . ConvertSQLDate($POHeader['dateprinted']) . '<br />' . _('To re-print the order it must be modified to allow a reprint') . '<br />' . _('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
 
 				echo '<div class="centre">
- 					<li><a href="' . $rootpath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">' . _('Print This Order as a Copy') . '</a>
- 					<li><a href="' . $rootpath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . _('Modify the order to allow a real reprint') . '</a>
-					<li><a href="' . $rootpath . '/PO_SelectPurchOrder.php">' . _('Select another order') . '</a>
-					<li><a href="' . $rootpath . '/index.php">' . _('Back to the menu') . '</a></div>';
+ 					<li><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">' . _('Print This Order as a Copy') . '</a>
+ 					<li><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . _('Modify the order to allow a real reprint') . '</a>
+					<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Select another order') . '</a>
+					<li><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 
 				include('includes/footer.inc');
 				exit;
