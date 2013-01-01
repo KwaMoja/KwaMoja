@@ -14,6 +14,12 @@ if (!file_exists($PathPrefix . 'config.php')) {
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
 
+if (isset($dbuser)) {
+	$DBUser=$dbuser;
+	$DBPassword=$dbpassword;
+	$DBType=$dbType;
+}
+
 if (isset($SessionSavePath)) {
 	session_save_path($SessionSavePath);
 } //isset($SessionSavePath)
@@ -63,7 +69,7 @@ if (isset($_SESSION['DatabaseName'])) {
 	to limit possibility for SQL injection attacks and cross scripting attacks
 	*/
 	foreach ($_GET as $GetKey => $GetValue) {
-		if (gettype($value) != 'array') {
+		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string($GetValue);
 		} //gettype($value) != 'array'
 	} //$_GET as $key => $value

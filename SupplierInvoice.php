@@ -14,7 +14,7 @@ include('includes/DefinePOClass.php'); //needed for auto receiving code
 include('includes/session.inc');
 
 $Title = _('Enter Supplier Invoice');
-/* webERP manual links before header.inc */
+/* KwaMoja manual links before header.inc */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
 include('includes/header.inc');

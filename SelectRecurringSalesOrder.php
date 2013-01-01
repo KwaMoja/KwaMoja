@@ -3,7 +3,7 @@
 
 include('includes/session.inc');
 $Title = _('Search Recurring Sales Orders');
-/* webERP manual links before header.inc */
+/* KwaMoja manual links before header.inc */
 $ViewTopic= 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
@@ -58,14 +58,14 @@ if (isset($_POST['SearchRecurringOrders'])){
 				recurringsalesorders.frequency,
 SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurrsalesorderdetails.discountpercent)) AS ordervalue
 			FROM recurringsalesorders INNER JOIN recurrsalesorderdetails
-			ON recurringsalesorders.recurrorderno = recurrsalesorderdetails.recurrorderno 
-			INNER JOIN debtorsmaster 
+			ON recurringsalesorders.recurrorderno = recurrsalesorderdetails.recurrorderno
+			INNER JOIN debtorsmaster
 			ON recurringsalesorders.debtorno = debtorsmaster.debtorno
 			INNER JOIN custbranch
 			ON debtorsmaster.debtorno = custbranch.debtorno
-			AND recurringsalesorders.branchcode = custbranch.branchcode 
-			INNER JOIN currencies 
-			ON debtorsmaster.currcode=currencies.currabrev 
+			AND recurringsalesorders.branchcode = custbranch.branchcode
+			INNER JOIN currencies
+			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE recurringsalesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 			GROUP BY recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
@@ -96,7 +96,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 						<th>' . _('Times p.a.') . '</th>
 						<th>' . _('Order Total') . '</th>
 					</tr>';
-		
+
 	echo $tableheader;
 
 	$j = 1;

@@ -5,7 +5,7 @@
 include('includes/session.inc');
 
 $Title = _('Sales Analysis Reports Maintenance');
-/* webERP manual links before header.inc */
+/* KwaMoja manual links before header.inc */
 $ViewTopic= 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
 

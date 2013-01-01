@@ -17,7 +17,7 @@ if (isset($_GET['SupplierID'])) {
 	$_POST['Select'] = $_GET['SupplierID'];
 } //isset($_GET['SupplierID'])
 
-/* webERP manual links before header.inc */
+/* KwaMoja manual links before header.inc */
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 

@@ -4,7 +4,7 @@
 include ('includes/session.inc');
 $Title = _('Search Suppliers');
 
-/* webERP manual links before header.inc */
+/* KwaMoja manual links before header.inc */
 $ViewTopic= 'AccountsPayable';
 $BookMark = 'SelectSupplier';
 

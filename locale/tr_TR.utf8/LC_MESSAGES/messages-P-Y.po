@@ -1,11 +1,11 @@
-# TURKISH FOR webERP.
+# TURKISH FOR KwaMoja.
 # Copyright (C) 2006 Logicworks Ltd
-# This file is distributed under the same license as the webERP package.
+# This file is distributed under the same license as the KwaMoja package.
 # Bora Tür <bora@boratur.net>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WebERP 3.x\n"
+"Project-Id-Version: KwaMoja 3.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-09 09:25+0000\n"
 "PO-Revision-Date: 2009-07-24 12:43-0000\n"
@@ -1657,7 +1657,7 @@ msgid "Bank Account Matching"
 msgstr "UYAN BANKA ÖDEMELERI"
 
 #: BankMatching.php:64
-msgid "Use this screen to match webERP deposits and receipts to your Bank Statement."
+msgid "Use this screen to match KwaMoja deposits and receipts to your Bank Statement."
 msgstr ""
 
 #: BankMatching.php:71
@@ -8186,7 +8186,7 @@ msgstr "SIPARIS ONAYI"
 #: EDIProcessOrders.php:214
 #: EDIProcessOrders.php:218
 msgid "not created in web-ERP"
-msgstr "WebERP ILE OLUSTURULMAMIS"
+msgstr "KwaMoja ILE OLUSTURULMAMIS"
 
 #: EDIProcessOrders.php:218
 msgid "Provisional order only"
@@ -9782,12 +9782,12 @@ msgstr ""
 
 #: GLJournal.php:149
 #: GLJournal.php:180
-msgid "GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration"
+msgid "GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration"
 msgstr ""
 
 #: GLJournal.php:153
 #: GLJournal.php:184
-msgid "GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration"
+msgid "GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration"
 msgstr ""
 
 #: GLJournal.php:158
@@ -11291,8 +11291,8 @@ msgid "Log Off"
 msgstr "ÇIKIS"
 
 #: Logout.php:42
-msgid "Thank you for using webERP"
-msgstr "WebERP'YI KULLANDIGINIZ IÇIN TESEKKUR EDERIZ"
+msgid "Thank you for using KwaMoja"
+msgstr "KwaMoja'YI KULLANDIGINIZ IÇIN TESEKKUR EDERIZ"
 
 #: Logout.php:45
 msgid "Click here to Login Again"
@@ -21944,7 +21944,7 @@ msgid "is not a valid New Zealand Bank"
 msgstr ""
 
 #: Suppliers.php:141
-msgid "If you are using webERP outside New Zealand error trapping relevant to your country should be used"
+msgid "If you are using KwaMoja outside New Zealand error trapping relevant to your country should be used"
 msgstr ""
 
 #: Suppliers.php:283
@@ -22874,7 +22874,7 @@ msgid "Wiki application"
 msgstr ""
 
 #: SystemParameters.php:707
-msgid "This feature makes webERP show links to a free form company knowlege base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation"
+msgid "This feature makes KwaMoja show links to a free form company knowlege base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation"
 msgstr ""
 
 #: SystemParameters.php:709
@@ -22882,7 +22882,7 @@ msgid "Wiki Path"
 msgstr ""
 
 #: SystemParameters.php:711
-msgid "The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP"
+msgid "The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as KwaMoja"
 msgstr ""
 
 #: SystemParameters.php:713
@@ -22991,7 +22991,7 @@ msgid "Standard Costing"
 msgstr "ÜRÜN BASINA STANDARD MALIYET"
 
 #: SystemParameters.php:787
-msgid "webERP allows inventory to be costed based on the weighted average of items in stock or full standard costing with price variances reported. The selection here determines the method used and the general ledger postings resulting from purchase invoices and shipment closing"
+msgid "KwaMoja allows inventory to be costed based on the weighted average of items in stock or full standard costing with price variances reported. The selection here determines the method used and the general ledger postings resulting from purchase invoices and shipment closing"
 msgstr ""
 
 #: SystemParameters.php:789
@@ -25857,7 +25857,7 @@ msgid " records failed to import"
 msgstr "DÜZELTILECEK MODÜLÜ SEÇIN"
 
 #: Z_ImportChartOfAccounts.php:72
-msgid "Select a csv file containing the details of the account codes that you wish to import into webERP. "
+msgid "Select a csv file containing the details of the account codes that you wish to import into KwaMoja. "
 msgstr ""
 
 #: Z_ImportChartOfAccounts.php:73
@@ -25885,7 +25885,7 @@ msgstr "DÜZELTILECEK MODÜLÜ SEÇIN"
 
 #: Z_ImportGLAccountGroups.php:67
 #: Z_ImportGLAccountSections.php:67
-msgid "Select a csv file containing the details of the account sections that you wish to import into webERP. "
+msgid "Select a csv file containing the details of the account sections that you wish to import into KwaMoja. "
 msgstr ""
 
 #: Z_ImportGLAccountSections.php:27
@@ -25903,7 +25903,7 @@ msgid "No locations have been set up. At least one location should be set up fir
 msgstr ""
 
 #: Z_ImportPartCodes.php:72
-msgid "Select a csv file containing the details of the parts that you wish to import into webERP. "
+msgid "Select a csv file containing the details of the parts that you wish to import into KwaMoja. "
 msgstr ""
 
 #: Z_ImportStocks.php:8
@@ -26121,7 +26121,7 @@ msgid "is blank"
 msgstr "BU LINK"
 
 #: Z_MakeNewCompany.php:188
-msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
+msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"KwaMoja\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
 msgstr ""
 
 #: Z_MakeNewCompany.php:188
@@ -26784,7 +26784,7 @@ msgid "Please re-select the reporting period"
 msgstr "LÜTFEN RAPOR TARIH ARALIGINI TEKRAR SEÇINIZ"
 
 #: Z_Upgrade_3.01-3.02.php:5
-msgid "Upgrade webERP 3.01 - 3.02"
+msgid "Upgrade KwaMoja 3.01 - 3.02"
 msgstr ""
 
 #: Z_Upgrade_3.01-3.02.php:8
@@ -26801,7 +26801,7 @@ msgid "The sales orderdetails lines have been numbered appropriately for version
 msgstr ""
 
 #: Z_Upgrade_3.04-3.05.php:5
-msgid "Upgrade webERP 3.04 - 3.05"
+msgid "Upgrade KwaMoja 3.04 - 3.05"
 msgstr ""
 
 #: Z_Upgrade_3.04-3.05.php:9
@@ -26839,7 +26839,7 @@ msgid "The GRN records have been updated with cost information from purchorderde
 msgstr ""
 
 #: Z_Upgrade_3.05-3.06.php:4
-msgid "Upgrade webERP 3.06 - 3.07"
+msgid "Upgrade KwaMoja 3.06 - 3.07"
 msgstr ""
 
 #: Z_Upgrade_3.05-3.06.php:8
@@ -26847,7 +26847,7 @@ msgid "This script will run perform any modifications to the database since v 3.
 msgstr ""
 
 #: Z_Upgrade_3.07-3.08.php:4
-msgid "Upgrade webERP 3.071 - 3.08"
+msgid "Upgrade KwaMoja 3.071 - 3.08"
 msgstr ""
 
 #: Z_Upgrade_3.07-3.08.php:8
@@ -26855,7 +26855,7 @@ msgid "This script will run perform any modifications to the database since v 3.
 msgstr ""
 
 #: Z_Upgrade_3.08-3.09.php:4
-msgid "Upgrade webERP 3.08 - 3.09"
+msgid "Upgrade KwaMoja 3.08 - 3.09"
 msgstr ""
 
 #: Z_Upgrade_3.08-3.09.php:8
@@ -26863,7 +26863,7 @@ msgid "This script will run perform any modifications to the database since v 3.
 msgstr ""
 
 #: Z_Upgrade_3.09-3.10.php:4
-msgid "Upgrade webERP 3.09 - 3.10"
+msgid "Upgrade KwaMoja 3.09 - 3.10"
 msgstr ""
 
 #: Z_Upgrade_3.09-3.10.php:8
@@ -27178,8 +27178,8 @@ msgid "with password"
 msgstr "PAROLA"
 
 #: includes/Login.php:7
-msgid "weberp"
-msgstr "weberp"
+msgid "KwaMoja"
+msgstr "KwaMoja"
 
 #: includes/Login.php:9
 msgid "Please login here"
@@ -27269,7 +27269,7 @@ msgid "Wiki "
 msgstr "Wiki"
 
 #: includes/ConnectDB.inc:11
-msgid "The company name entered is not configured for use with this installation of webERP. The company name abbreviation entered at login must also have a company directory defined. See your system administrator"
+msgid "The company name entered is not configured for use with this installation of KwaMoja. The company name abbreviation entered at login must also have a company directory defined. See your system administrator"
 msgstr ""
 
 #: includes/ConnectDB_mysqli.inc:21
@@ -28110,7 +28110,7 @@ msgid "Account Error Report"
 msgstr "HESAP HATA RAPORU"
 
 #: includes/session.inc:141
-msgid "Your user role does not have any access defined for webERP. There is an error in the security setup for this user account"
+msgid "Your user role does not have any access defined for KwaMoja. There is an error in the security setup for this user account"
 msgstr "KULLANICI HESABINIZ IÇIN TANIMLI BIR ROL YOK"
 
 #: includes/session.inc:167
@@ -28131,8 +28131,8 @@ msgid "There was a problem deleting expired audit-trail history"
 msgstr "VARSAYILAN NAKLIYECI TESTI SIRASINDA PROBLEM OLUSTU"
 
 #: includes/session.inc:285
-msgid "webERP is configured to allow only secure socket connections. Pages must be called with https://"
-msgstr "WebERP SADECE GÜVENLI SOKET BAGLANTI ÜZERINDE ÇALIPMAK IÇIN AYARLANMIS, https:// KULLANINIZ"
+msgid "KwaMoja is configured to allow only secure socket connections. Pages must be called with https://"
+msgstr "KwaMoja SADECE GÜVENLI SOKET BAGLANTI ÜZERINDE ÇALIPMAK IÇIN AYARLANMIS, https:// KULLANINIZ"
 
 #: includes/session.inc:301
 msgid "Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server"
@@ -28407,11 +28407,11 @@ msgstr ""
 #~ msgstr "[ MÜSTERI ]  "
 
 #, fuzzy
-#~ msgid "The webERP customer record could not be inserted because"
+#~ msgid "The KwaMoja customer record could not be inserted because"
 #~ msgstr "ISLEM BASARISIZ!"
 
 #, fuzzy
-#~ msgid "The webERP customer branch record could not be inserted because"
+#~ msgid "The KwaMoja customer branch record could not be inserted because"
 #~ msgstr "ISLEM BASARISIZ!"
 
 #, fuzzy
@@ -28423,8 +28423,8 @@ msgstr ""
 #~ msgstr "BU ÜRÜNE TALEP:"
 
 #, fuzzy
-#~ msgid "does not exist in webERP"
-#~ msgstr "WebERP ILE OLUSTURULMAMIS"
+#~ msgid "does not exist in KwaMoja"
+#~ msgstr "KwaMoja ILE OLUSTURULMAMIS"
 
 #, fuzzy
 #~ msgid "This order line was for"
@@ -28435,11 +28435,11 @@ msgstr ""
 #~ msgstr "Tarih: "
 
 #, fuzzy
-#~ msgid "A new webERP order has been created - number"
+#~ msgid "A new KwaMoja order has been created - number"
 #~ msgstr "YENI KULLANICI KAYDI EKLENDI"
 
 #, fuzzy
-#~ msgid "Imported webERP order number"
+#~ msgid "Imported KwaMoja order number"
 #~ msgstr "SATINALMA SIPARIS NO"
 
 #, fuzzy

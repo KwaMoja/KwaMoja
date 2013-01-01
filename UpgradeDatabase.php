@@ -158,6 +158,19 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade4.08-4.09.sql';
 				case '4.09':
 					$SQLScripts[] = './sql/mysql/upgrade4.09-4.10.sql';
+					if (!is_writable('config.php')) {
+						prnMsg( _('To perform this upgrade the web server must have write access to the config.php file.') . '<br />' . _('Please correct this and run the upgrade again'), 'warning');
+						include('includes/footer.inc');
+						exit;
+					} else {
+						$FileContents = file_get_contents('config.php');
+						$FileContents = str_replace("dbuser","DBUser",$FileContents);
+						$FileContents = str_replace("dbpassword","DBPassword",$FileContents);
+						$FileContents = str_replace("dbType","DBType",$FileContents);
+						$FileContents = str_replace("allow_demo_mode","AllowDemoMode",$FileContents);
+						file_put_contents('config.php',$FileContents);
+						prnMsg( _('You should now make the config.php read only for the web server.'), 'warning');
+					}
 				case '4.09.1':
 					break;
 			} //end switch

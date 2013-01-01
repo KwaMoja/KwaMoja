@@ -4,7 +4,6 @@ ALTER TABLE `salesman` CHANGE `salesmancode` `salesmancode` VARCHAR( 4 ) NOT NUL
 ALTER TABLE `salesorderdetails` DROP `commissionrate`;
 ALTER TABLE `salesorderdetails` DROP `commissionearned`;
 INSERT INTO scripts VALUES ('CounterReturns.php','5','Allows credits and refunds from the default Counter Sale account for an inventory location');
-UPDATE config SET confvalue='4.09.1' WHERE confname='VersionNumber';
 
 ALTER TABLE purchorders MODIFY `initiator` VARCHAR(20);
 
@@ -34,7 +33,8 @@ UPDATE `securitytokens` SET tokenname='Unknown' WHERE tokenid=12;
 ALTER TABLE `www_users` ADD `fontsize` TINYINT( 2 ) NOT NULL DEFAULT 0;
 INSERT INTO scripts VALUES ('CustomerPurchases.php','5','Shows the purchases a customer has made.');
 INSERT INTO scripts VALUES ('GoodsReceivedButNotInvoiced.php','15','Shows the list of Goods Received Not Yet Invoiced, both in supplier currency and home currency. Total in home curency should match the GL Account for Goods received not invoiced. Any discrepancy is due to multicurrency errors.');
-INSERT INTO scripts VALUES ('ItemsWithoutPicture.php','15','Shows the list of curent items without picture in webERP');
+INSERT INTO scripts VALUES ('ItemsWithoutPicture.php','15','Shows the list of curent items without picture in KwaMoja');
 
 UPDATE scripts SET pagesecurity='2' WHERE script='GoodsReceivedButNotInvoiced.php';
 UPDATE scripts SET script='Z_ItemsWithoutPicture.php' WHERE script='ItemsWithoutPicture.php';
+UPDATE config SET confvalue='4.10' WHERE confname='VersionNumber';
