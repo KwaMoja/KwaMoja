@@ -92,15 +92,15 @@ $pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
 $XPos +=80;
 
 if ($myrow['invaddrbranch']==0){
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['address1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['address2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['address3'] . ' ' . $myrow['address4']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['address1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['address2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['address3'] . ' ' . $myrow['address4']));
 } else {
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['brpostaddr1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['brpostaddr2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4'] . ' ' . $myrow['brpostaddr5'] . ' ' . $myrow['brpostaddr6']);
+	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
+	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['brpostaddr1']));
+	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['brpostaddr2']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4'] . ' ' . $myrow['brpostaddr5'] . ' ' . $myrow['brpostaddr6']));
 }
 
 
