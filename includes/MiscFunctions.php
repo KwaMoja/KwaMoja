@@ -248,14 +248,13 @@ function wikiLink($type, $id) {
 		$WikiPath='../' . $_SESSION['WikiPath'] . '/';
 	}
 	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo '<a target="_blank" href="' . $WikiPath . $type .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
+		echo ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <' . $WikiPath . $type .  $id . '>  <br />';
 	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
-		echo '<a target="_blank" href="' . $WikiPath . '/index.php/' . $type . '/' .  $id . '">' . _('Wiki ' . $type . ' Knowlege Base') . '</a><br />';
+		echo ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <' . $WikiPath . 'index.php/' . $type . '/' .  $id . '>  <br />';
 	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
-		echo $WikiPath . '/doku.php?id=' . $type . ':' . $id . ' ' . _('Wiki ' . $type . ' Knowlege Base') . ' <br />';
+		echo $WikiPath . '/doku.php?id=' . $type . ':' . $id . ' ' . _('Wiki ' .$type . ' Knowlege Base') . ' <br />';
 	}
-
-}//wikiLink
+}
 
 
 //  Lindsay debug stuff
