@@ -14,7 +14,7 @@ if (!isset($_POST['BatchNo'])){
 	include ('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
-		 $Title . '" alt="" />' . ' ' . $title . '</p>';
+		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$sql="SELECT DISTINCT
 			transno,

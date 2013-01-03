@@ -4908,9 +4908,9 @@ class PHPlot
 
         case 'title': // SetLegendPosition with mode='title', relative to main title.
             // Recalculate main title position/size, since CalcMargins does not save it. See DrawTitle()
-            list($Title_width, $title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
-            $Title_x = (int)(($this->image_width - $title_width) / 2);
-            return array((int)($x_base * $Title_width - $x * $width) + $title_x + $x_offset,
+            list($Title_width, $Title_height) = $this->SizeText($this->fonts['title'], 0, $this->title_txt);
+            $Title_x = (int)(($this->image_width - $Title_width) / 2);
+            return array((int)($x_base * $Title_width - $x * $width) + $Title_x + $x_offset,
                          (int)($y_base * $Title_height - $y * $height) + $this->title_offset + $y_offset);
 
         default: // If mode is unset (or invalid), use default position.

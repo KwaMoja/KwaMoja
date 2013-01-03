@@ -16584,10 +16584,10 @@ class TCPDF {
 			$oid = $this->_newobj();
 			// covert HTML title to string
 			$Title = preg_replace($nltags, "\n", $o['t']);
-			$Title = preg_replace("/[\r]+/si", '', $title);
-			$Title = preg_replace("/[\n]+/si", "\n", $title);
-			$Title = strip_tags($title);
-			$Title = $this->stringTrim($title);
+			$Title = preg_replace("/[\r]+/si", '', $Title);
+			$Title = preg_replace("/[\n]+/si", "\n", $Title);
+			$Title = strip_tags($Title);
+			$Title = $this->stringTrim($Title);
 			$out = '<</Title '.$this->_textstring($Title, $oid);
 			$out .= ' /Parent '.($n + $o['parent']).' 0 R';
 			if (isset($o['prev'])) {

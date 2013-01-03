@@ -68,6 +68,13 @@ function Is_date($DateEntry) {
 			} else {
 				return 0;
 			}
+		} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
+
+			if (checkdate((int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])){
+				return 1;
+			} else {
+				return 0;
+			}
 		} else { /*Can't be in an appropriate DefaultDateFormat */
 			return 0;
 		}
@@ -248,6 +255,9 @@ function ConvertSQLDate($DateEntry) {
 			case 'Y/m/d':
 				return '0000/0/0';
 				break;
+			case 'Y-m-d':
+				return '0000-0-0';
+				break;
 		}
 	}
 
@@ -263,6 +273,8 @@ function ConvertSQLDate($DateEntry) {
 		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+	} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 	}
 
 } // end function ConvertSQLDate
@@ -906,14 +918,14 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 		$Date1_array = explode('-',$Date1);
 	} elseif (mb_strpos ($Date1,'.')) {
 		$Date1_array = explode('.',$Date1);
-  }
+	}
 	if (mb_strpos($Date2,'/')) {
 		$Date2_array = explode('/',$Date2);
 	} elseif (mb_strpos ($Date2,'-')) {
 		$Date2_array = explode('-',$Date2);
 	} elseif (mb_strpos ($Date2,'.')) {
 		$Date2_array = explode('.',$Date2);
-  }
+	}
 
 	if (($_SESSION['DefaultDateFormat']=='d/m/Y') or ($_SESSION['DefaultDateFormat']=='d.m.Y')){
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[1],(int)$Date1_array[0],(int)$Date1_array[2]);
