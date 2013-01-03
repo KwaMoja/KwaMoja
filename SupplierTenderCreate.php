@@ -19,7 +19,7 @@ if (isset($_GET['New']) and isset($_SESSION['tender'.$identifier])) {
 if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
 	$Title = _('Authorisation Problem');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$Title . '</p>';
 	prnMsg( _('You do not have authority to create supplier tenders for this company.') . '<br />' .
 			_('Please see your system administrator'), 'warn');
 	include('includes/footer.inc');
@@ -29,7 +29,7 @@ if (isset($_GET['New']) and $_SESSION['CanCreateTender']==0) {
 if (isset($_GET['Edit']) and $_SESSION['CanCreateTender']==0) {
 	$Title = _('Authorisation Problem');
 	include('includes/header.inc');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />  '.$Title . '</p>';
 	prnMsg( _('You do not have authority to amend supplier tenders for this company.') . '<br />' .
 			_('Please see your system administrator'), 'warn');
 	include('includes/footer.inc');
@@ -465,6 +465,7 @@ if (isset($_POST['SearchSupplier']) or isset($_POST['Go'])
 					address3,
 					address4
 				FROM suppliers
+				WHERE email<>''
 				ORDER BY suppname";
 	} else {
 		if (mb_strlen($_POST['Keywords']) > 0) {
@@ -480,6 +481,7 @@ if (isset($_POST['SearchSupplier']) or isset($_POST['Go'])
 					address4
 				FROM suppliers
 				WHERE suppname " . LIKE . " '$SearchString'
+					AND email<>''
 				ORDER BY suppname";
 		} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
 			$_POST['SupplierCode'] = mb_strtoupper($_POST['SupplierCode']);
@@ -492,6 +494,7 @@ if (isset($_POST['SearchSupplier']) or isset($_POST['Go'])
 					address4
 				FROM suppliers
 				WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
+					AND email<>''
 				ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string

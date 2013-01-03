@@ -32,7 +32,6 @@ if (!isset($_POST['supplierid'])) {
 		LEFT JOIN suppliers
 			ON suppliers.supplierid=offers.supplierid
 		WHERE purchorderauth.userid='".$_SESSION['UserID']."'
-			AND offers.expirydate>'".date('Y-m-d')."'
 			AND purchorderauth.cancreate=0";
 	$result=DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
@@ -82,12 +81,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				ON offers.currcode=purchorderauth.currabrev
 			INNER JOIN suppliers
 				ON suppliers.supplierid=offers.supplierid
-			INNER JOIN currencies 
+			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid
 			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-			AND offers.expirydate>'" . date('Y-m-d') . "'
 			AND offers.supplierid='" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
 	$result=DB_query($sql, $db);

@@ -59,13 +59,7 @@ if (isset($_POST['submit'])) {
 
 	/* Make a comma separated list of modules allowed ready to update the database*/
 	$i=0;
-	$ModulesAllowed = '';
-	while ($i < count($ModuleList)){
-		$FormVbl = 'Module_' . $i;
-		$ModulesAllowed .= $_POST[($FormVbl)] . ',';
-		$i++;
-	}
-
+	$ModulesAllowed = '0,0,0,0,0,0,0,0,0,0,0,';
 
 	if ($InputError !=1) {
 
