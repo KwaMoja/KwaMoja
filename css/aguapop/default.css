@@ -9,7 +9,8 @@ by Hindra Joshua
 */
 
 body {
-font-family:Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 background: silver;
 margin:0;
 padding:0;
@@ -67,18 +68,15 @@ max-width:90%;
 th {
 background-color:skyblue;
 color:black;
-font-weight:normal;
 padding:3px;
 }
 th.number {
 text-align: right;
-font-weight: normal;
 background-color: skyblue;
 color: white;
 }
 
 td {
-font-family: Arial, Verdana, Helvetica, sans-serif;
 text-align: left;
 }
 td.select {
@@ -95,7 +93,6 @@ text-align:center;
 }
 
 input { /*specifies the input field text characteristics*/
-font-family: Arial, Verdana, Helvetica, sans-serif;
 font-style: italic;
 }
 input.number{
@@ -110,14 +107,12 @@ background:#9ffffb;
 }
 
 select {
-font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 select:hover { /* drop down */
 background:#9ffffb;
 }
 
 textarea{
-font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 background:#9ffffb;
@@ -171,8 +166,6 @@ float: none;
 visibility: visible;
 margin: 0 auto;
 position: static;
-font-family: Arial, Verdana, Helvetica, sans-serif;
-font-weight: normal;
 color: black;
 text-align:center;
 padding-left: 24px;
@@ -214,7 +207,6 @@ border: 1px solid darkslategray;
 margin: 0 auto;
 }
 .tableheader {
-font-weight: normal;
 background-color: skyblue;
 color: white;
 }

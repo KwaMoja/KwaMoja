@@ -6,7 +6,8 @@ New Default Theme for KwaMoja
 
 body{
 background-color:#ccd;
-font-family:Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 margin:0;
 padding:0
 }
@@ -49,18 +50,15 @@ table.selection{
 padding-bottom:5px;
 }
 th{
-font-weight:normal;
 background-color:#B06161;
 color:white;
 }
 th.number{
 text-align:right;
-font-weight:normal;
 background-color:#B06161;
 color:white;
 }
 td{
-font-family:Arial, Verdana, Helvetica, sans-serif;
 text-align:left;
 }
 td.select{
@@ -75,7 +73,6 @@ text-align:center;
 padding:5px;
 }
 input{
-font-family:Arial, Verdana, Helvetica, sans-serif;
 }
 input.number{
 text-align:right;
@@ -87,10 +84,8 @@ background-color:transparent;
 input:hover{
 }
 select{
-font-family:Arial, Verdana, Helvetica, sans-serif;
 }
 textarea{
-font-family:Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 }
@@ -132,8 +127,6 @@ FLOAT:none;
 VISIBILITY:visible;
 MARGIN:0 auto;
 POSITION:static;
-font-family:Arial, Verdana, Helvetica, sans-serif;
-font-weight:normal;
 color:black;
 TEXT-ALIGN:center;
 }
@@ -147,10 +140,8 @@ VISIBILITY:visible;
 MARGIN:0 auto;
 POSITION:static;
 background:lightgray;
-font-family:Arial, Verdana, Helvetica, sans-serif;
 padding-top:1px;
 padding-bottom:1px;
-font-weight:normal;
 color:black;
 TEXT-ALIGN:left;
 }
@@ -198,7 +189,6 @@ margin:0 auto;
 }*/
 
 .tableheader{
-font-weight:normal;
 background-color:#800000;
 color:white;
 }

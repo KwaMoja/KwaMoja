@@ -16,14 +16,14 @@ the next project. :)
 ***/
 
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 	background-color: white;
 	margin:0;
 	padding:5px;
 }
 
 a {
-	font-weight: normal;
 	text-decoration: none;
 	color: blue;
 }
@@ -37,7 +37,6 @@ img {
 	background: transparent;
 }
 .page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
     padding-top: 2px;
     padding-bottom: 2px;
 	font-weight: bold;
@@ -64,19 +63,16 @@ table.selection {
 	outline-width:1px;
 }
 th {
-	font-weight: normal;
 	background-color: #ccc;
 	color: #330000;
 	text-align: center;
 }
 th.number {
 	text-align: right;
-	font-weight: normal;
 	background-color: #ccc;
 	color: #330000;
 }
 td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	text-align: left;
 }
 td.select {
@@ -93,7 +89,6 @@ input{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 input:hover{
 	background: url(images/inputh.png) #eee;
@@ -110,13 +105,11 @@ input.image {
 select {
 	background:#eee;
 	color:#111;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea{
   	background: url(images/input.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 }
@@ -130,7 +123,6 @@ textarea{
 	background: url(images/inputtxt.png) #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
-	font-family: Verdana, Arial, Helvetica;
 }
 textarea:hover{
 	background: url(images/inputhtxt.png) #eee;
@@ -140,7 +132,8 @@ textarea:hover{
 div.error { /*** is this used??? ***/
 	background-color:red;
 	color: white;
-	font-style: italic; font-weight:bold;
+	font-style: italic;
+	font-weight:bold;
 	border: 3px solid red;
 }
 div.warn {
@@ -170,8 +163,6 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-    font-weight: normal;
     color: black;
 	TEXT-ALIGN:center;
 }
@@ -185,10 +176,8 @@ DIV.system_check { /*** is this used???  */
         MARGIN: 0 auto;
         POSITION: static;
         background: lightgray;
-        font-family: Arial, Verdana, Helvetica, sans-serif;
         padding-top: 1px;
         padding-bottom: 1px;
-        font-weight: normal;
         color: black;
         TEXT-ALIGN:left;
 }
@@ -225,12 +214,10 @@ cursor:pointer;
   margin: 0 auto;
 }
 .tableheader { /* used */
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 }
 .notavailable { /* used */
-	font-weight: normal;
 	font-style:italic;
 	color:#555555;
 }

@@ -18,7 +18,8 @@ the next project. :)
 ***/
 
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 	background-color: #ddd;
 	margin:0;
 	padding:0;
@@ -44,7 +45,6 @@ a:hover {
 
 /*table detail items default format */
 td {
-	font-family: Arial, Verdana, Helvetica;
 	text-align: left;
 }
 td.select {
@@ -89,13 +89,11 @@ td.number {
 }
 
 th { /* table heading */
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: center;
 }
 th.number {
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: right;
@@ -128,7 +126,6 @@ div.info {
 which should have the same width as the column where it is located
 e.g.: class input_button, input_column_button, input_text */
 input {
-	font-family: Arial, Verdana, Helvetica;
 }
 input.number{
 	text-align: right;
@@ -160,7 +157,6 @@ button:hover{
 /* dropdown box */
 
 select {
-	font-family: Arial, Verdana, Helvetica;
 }
 select.selecterror {
 	background-color: #fddbdb;
@@ -188,7 +184,6 @@ p.bad {
 }
 
 textarea{ /* default style for textarre */
-	font-family: Arial, Verdana, Helvetica;
 }
 textarea:hover{
 }
@@ -216,16 +211,13 @@ div.csv {
         VISIBILITY: visible;
         MARGIN: 0 auto;
         POSITION: static;
-        font-family: Arial, Verdana, Helvetica;
         padding-top: 1px;
         padding-bottom: 1px;
-        font-weight: normal;
         TEXT-ALIGN:center;
 }
 
 .page_title_text { /* used */
-	font-family: Arial, Verdana, Helvetica;
-        padding-top: 2px;
+       padding-top: 2px;
         padding-bottom: 2px;
 	font-weight: bold;
 	color: black;
@@ -244,8 +236,6 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Arial, Verdana, Helvetica;
-        font-weight: normal;
         color: black;
 	TEXT-ALIGN:center;
 }
@@ -266,7 +256,6 @@ textarea.texterror {
 
 
 .tableheader {
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 }

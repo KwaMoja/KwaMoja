@@ -19,7 +19,8 @@ the next project. :)
 ***/
 
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-family:Titillium Maps;
+	font-weight:normal;
 	background-color: #ddd;
 	margin:0;
 	padding:0;
@@ -40,13 +41,12 @@ a:hover {
 }
 
 .centre { /* used */
-  margin: 0 auto;
-  text-align:center;
+	margin: 0 auto;
+	text-align:center;
 }
 
 /*table detail items default format */
 td {
-	font-family: Arial, Verdana, Helvetica;
 	text-align: left;
 }
 td.select {
@@ -91,13 +91,11 @@ td.number {
 }
 
 th { /* table heading */
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: center;
 }
 th.number {
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 	text-align: right;
@@ -130,7 +128,6 @@ div.info {
 which should have the same width as the column where it is located
 e.g.: class input_button, input_column_button, input_text */
 input {
-	font-family: Arial, Verdana, Helvetica;
 }
 input.number{
 	text-align: right;
@@ -162,7 +159,6 @@ button:hover{
 /* dropdown box */
 
 select {
-	font-family: Arial, Verdana, Helvetica;
 }
 select.selecterror {
 	background-color: #fddbdb;
@@ -172,12 +168,12 @@ select:hover{
 }
 
 p.good {
-    font-weight: bold;
-    color: green;
+	font-weight: bold;
+	color: green;
 }
 p.bad {
-    font-weight: bold;
-    color:red;
+	font-weight: bold;
+	color:red;
 }
 
 .header {
@@ -190,7 +186,6 @@ p.bad {
 }
 
 textarea{ /* default style for textarre */
-	font-family: Arial, Verdana, Helvetica;
 }
 textarea:hover{
 }
@@ -208,27 +203,24 @@ input.address3 {
 }
 
 div.csv {
-        background:lightgray;
-        color: black;
-        border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        font-family: Arial, Verdana, Helvetica;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        font-weight: normal;
-        TEXT-ALIGN:center;
+		background:lightgray;
+		color: black;
+		border: 1px solid black;
+		PADDING-LEFT: 3px;
+		Z-INDEX: 1;
+		width: 50%;
+		FLOAT: none;
+		VISIBILITY: visible;
+		MARGIN: 0 auto;
+		POSITION: static;
+		padding-top: 1px;
+		padding-bottom: 1px;
+		TEXT-ALIGN:center;
 }
 
 .page_title_text { /* used */
-	font-family: Arial, Verdana, Helvetica;
-        padding-top: 2px;
-        padding-bottom: 2px;
+		padding-top: 2px;
+		padding-bottom: 2px;
 	font-weight: bold;
 	color: black;
 	TEXT-ALIGN:center;
@@ -238,7 +230,7 @@ DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
 	padding-top:2px;
-        padding-bottom: 2px;
+		padding-bottom: 2px;
 	PADDING-LEFT: 10px;
 	Z-INDEX: 1;
 	width: 80%;
@@ -246,9 +238,7 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Arial, Verdana, Helvetica;
-        font-weight: normal;
-        color: black;
+		color: black;
 	TEXT-ALIGN:center;
 }
 
@@ -268,7 +258,6 @@ textarea.texterror {
 
 
 .tableheader {
-	font-weight: normal;
 	background-color: #cccce5;
 	color: #330000;
 }
@@ -352,12 +341,12 @@ li {
 	list-style:none; /* hide the bullets */
 }
 #QuickMenuDiv li{
-    display:inline; /* items are inline */
+	display:inline; /* items are inline */
 	float:right; /* right to left */
 }
 
 /*** links as buttons!!! clicking anywhere in the button will activate
-     the link!!! ***HJ***/
+	 the link!!! ***HJ***/
 
 #QuickMenuDiv li a{
 	padding:3px; /* links as button */
@@ -392,7 +381,7 @@ li {
 }
 /*#BodyDiv .centre{
 	margin:0 auto 10px;
-    text-align:center;
+	text-align:center;
 }*/
 
 /*** BODY - MAIN MENU ***/
@@ -499,8 +488,8 @@ li {
 
 #FooterDiv{
 	clear:both; /* REQUIRED */
-    overflow:hidden;
-    color:gray;
+	overflow:hidden;
+	color:gray;
 }
 #FooterWrapDiv{
 	overflow:hidden;

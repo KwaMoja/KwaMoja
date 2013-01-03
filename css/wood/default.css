@@ -19,7 +19,8 @@ Notes:
 */
 
 body{
-font-family:Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 margin:10px;
 background:url(images/desk.jpg) #631;
 }
@@ -72,14 +73,12 @@ background:#feb;
 box-shadow:none;
 }
 th { /* table headers */
-font-weight: normal;
 background-color: #ffd980;
 color: black;
 text-align: center;
 }
 th.number {
 text-align: right;
-font-weight: normal;
 background-color: #800000;
 color: white;
 }
@@ -99,7 +98,6 @@ margin:5px;
 }
 
 input { /* used for text box and buttons (buttons should have their own styles) */
-font-family: Arial, Verdana, Helvetica, sans-serif;;
 }
 input.number{
 text-align: right;
@@ -113,14 +111,12 @@ background:#fff791;
 }
 
 select { /* drop down */
-font-family: Arial, Verdana, Helvetica, sans-serif;;
 }
 select:hover { /* drop down */
 background:#fff791;
 }
 
 textarea{
-font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 background:#fff791;
@@ -181,8 +177,6 @@ Z-INDEX: 1;
 FLOAT: none;
 VISIBILITY: visible;
 POSITION: static;
-font-family: Arial, Verdana, Helvetica, sans-serif;
-font-weight: normal;
 color: black;
 TEXT-ALIGN:center;
 
@@ -198,8 +192,7 @@ FLOAT: none;
 VISIBILITY: visible;
 POSITION: static;
 background: lightgray;
-font-family: Arial, Verdana, Helvetica, sans-serif;
-font-weight: normal;
+
 color: black;
 TEXT-ALIGN:left;
 
@@ -248,7 +241,6 @@ cursor:pointer;
   margin: 0 auto;
 }
 .tableheader {
-font-weight: normal;
 background-color: #777C59;
 color: white;
 }
@@ -311,7 +303,6 @@ overflow:hidden;
 }
 #HeaderDiv a{
 color: black;
-font-weight: normal;
 text-decoration: none;
 border:2px outset #feb;
 border-radius:10px;
@@ -322,7 +313,6 @@ background:none;
 }
 #HeaderDiv a:hover{
 color: black;
-font-weight: normal;
 text-decoration: none;
 border:2px outset #feb;
 border-radius:10px;

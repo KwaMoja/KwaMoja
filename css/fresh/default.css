@@ -18,7 +18,8 @@ the next project. :)
 ***/
 
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 	margin:0;
 	padding:0;
 }
@@ -38,7 +39,6 @@ img {
 	vertical-align:middle;
 }
 p.page_title_text {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	font-weight: bold;
@@ -64,19 +64,16 @@ table {
 table.selection {
 }
 th {
-	font-weight: normal;
 	background-color: #777C59;
 	color: white;
 	text-align: center;
 }
 th.number {
 	text-align: right;
-	font-weight: normal;
 	background-color: #800000;
 	color: white;
 }
 td {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	text-align: left;
 }
 td.select {
@@ -90,7 +87,6 @@ div.centre { /* centering buttons / links */
   text-align:center;
 }
 input {
-	font-family: Arial, Verdana, Helvetica, sans-serif;;
 }
 input.number{
 	text-align: right;
@@ -102,10 +98,8 @@ input.image {
 input:hover{
 }
 select {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea{
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 textarea:hover{
 }
@@ -148,8 +142,6 @@ DIV.page_help_text {
 	VISIBILITY: visible;
 	MARGIN: 0 auto;
 	POSITION: static;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-        font-weight: normal;
         color: black;
 	TEXT-ALIGN:center;
 }
@@ -199,7 +191,6 @@ DIV.page_help_text {
   margin: 0 auto;
 }
 .tableheader {
-	font-weight: normal;
 	background-color: #777C59;
 	color: white;
 }

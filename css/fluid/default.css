@@ -8,7 +8,8 @@ Beware, the contents is currently not fluid! :D
 */
 
 body{
-font-family:Arial, Verdana, Helvetica, sans-serif;
+font-family:Titillium Maps;
+font-weight:normal;
 margin:0;
 padding:0;
 }
@@ -35,19 +36,16 @@ margin-bottom:5px;
 }
 table.selection{}
 th{ /* table heading */
-font-weight:normal;
 background-color:#cccce5;
 color:#330000;
 text-align:center;
 }
 th.number{
-font-weight:normal;
 background-color:#cccce5;
 color:#330000;
 text-align:right;
 }
 td{
-font-family:Arial, Verdana, Helvetica;
 text-align:left;
 }
 td.select{
@@ -63,7 +61,6 @@ text-align:right;
 }
 
 input{
-font-family:Arial, Verdana, Helvetica;
 }
 input.number{
 text-align:right;
@@ -79,7 +76,6 @@ input.inputerror{
 background-color:#fddbdb;
 }
 select{
-font-family:Arial, Verdana, Helvetica;
 }
 select:hover{
 background:lightblue;
@@ -88,7 +84,6 @@ select.selecterror{
 background-color:#fddbdb;
 }
 textarea{ /* default style for textarre */
-font-family:Arial, Verdana, Helvetica;
 }
 textarea:hover{
 }
@@ -134,10 +129,8 @@ div.csv{
         VISIBILITY:visible;
         MARGIN:0 auto;
         POSITION:static;
-        font-family:Arial, Verdana, Helvetica;
         padding-top:1px;
         padding-bottom:1px;
-        font-weight:normal;
         TEXT-ALIGN:center;
 }
 DIV.page_help_text{
@@ -152,8 +145,6 @@ FLOAT:none;
 VISIBILITY:visible;
 MARGIN:0 auto;
 POSITION:static;
-font-family:Arial, Verdana, Helvetica;
-        font-weight:normal;
         color:black;
 TEXT-ALIGN:center;
 }
@@ -191,7 +182,6 @@ cursor:pointer;
   margin:0 auto;
 }
 .tableheader{
-font-weight:normal;
 background-color:#cccce5;
 color:#330000;
 }
