@@ -45,7 +45,7 @@ if (!isset($_POST['Show'])) {
 			if (!isset($_POST['BankAccount']) and $myrow['currcode']==$_SESSION['CompanyRecord']['currencydefault']){
 				$_POST['BankAccount']=$myrow['accountcode'];
 			}
-			if ($_POST['BankAccount']==$myrow['accountcode']){
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
 				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
 			} else {
 				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';

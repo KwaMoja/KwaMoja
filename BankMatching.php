@@ -132,7 +132,7 @@ echo '<tr>
 		<td colspan="3">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</td>
 		<td><select tabindex="4" name="Ostg_or_All">';
 
-if ($_POST['Ostg_or_All']=='All'){
+if (isset($_POST['Ostg_or_All']) and $_POST['Ostg_or_All']=='All'){
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
 	echo '<option value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only') . '</option>';
 } else {
@@ -145,7 +145,7 @@ echo '</select></td>
 echo '<tr>
 	<td colspan="3">' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</td>
 	<td><select tabindex="5" name="First20_or_All">';
-if ($_POST['First20_or_All']=='All'){
+if (isset($_POST['First20_or_All']) and $_POST['First20_or_All']=='All'){
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
 	echo '<option value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';
 } else {
@@ -159,11 +159,13 @@ echo '</select></td>
 echo '</table>
 	<br />
 	<div class="centre">
-		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />
-		<p>
+		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />';
+if (isset($_POST['BankAccount'])) {
+	echo '<p>
 		<a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a>
 		</p>
 	</div>';
+}
 
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])){
