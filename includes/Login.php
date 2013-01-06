@@ -69,17 +69,6 @@ if (get_magic_quotes_gpc()){
 	</form>
 	</div>
 </div></div>
-<div class="right"><div id="container">
-	<img src="companies/logo.png" style="width:75%" />
-	<div><font size="4"; color="#2C5D17"><b><i>KwaMoja - </i></b></font></div>
-	<div style="margin: 5px;padding: 3px;border: solid 1px;border-radius: 3px;"><i>
-		<?php
-			echo '<p>' . _('KwaMoja is a swahili concept representing the idea of unity, or integration.') . '</p>';
-			echo '<p>' . _('In the sense of an organisation this represernts the bringing together of all parts of the business in one software package.') . '</p>';
-			echo '<p>' . _('In the sense of an open source project this means having an open democratic and honest organisation behind the project.') . '</p>';
-		?>
-	</i></div>
-</div></div>
 	<script type="text/javascript">
 			<!--
 				  document.forms[0].UserNameEntryField.focus();

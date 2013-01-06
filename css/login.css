@@ -3,21 +3,11 @@ body {
 	padding: 0;
 	margin: 0;
 	text-align: center;
-	font: 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-background: #6191bf; /* Fallback background color for non supported browsers */
-
-background-image: -moz-radial-gradient(center 95deg,circle cover, #00ACC5, #090090);
-background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%,800, from(#236212), to(#ADD889));	color: #000000;
-}
-
-div.left {
-	width: 50%;
-	float: left;
-}
-
-div.right {
-	width: 50%;
-	float: left;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	font-size: 12pt;
+	background: #BEBEBE; /* Fallback background color for non supported browsers */
+	background-image: -moz-radial-gradient(center 95deg,circle cover, #BEBEBE, #999999);
+	background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%,800, from(#BEBEBE), to(#999999));	color: #000000;
 }
 
 #container {
@@ -33,6 +23,7 @@ div.right {
 	border: solid #A49999 1px;
 	border-radius: 15px;
 	opacity: 0.6;
+box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px black;
 }
 
 #login_logo {
@@ -46,11 +37,10 @@ form {
 }
 
 select {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 100%;
 	background: transparent;
     color:#000000;
 	border-width: 1px;
+	font-size: 100%;
 	border-bottom-color: gray;
 	border-bottom-style: solid;
 	border-top-color: gray;
@@ -62,16 +52,15 @@ select {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	width: 200px;
+	width: 70%;
 	margin: 4px 0 11px 50px;
 }
 
 select:hover {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 100%;
 	background: transparent;
     color:#000000;
 	border-width: 1px;
+	font-size: 100%;
 	border-bottom-color: black;
 	border-bottom-style: solid;
 	border-top-color: black;
@@ -81,16 +70,15 @@ select:hover {
 	border-right-color: black;
 	border-right-style: solid;
 	border-radius: 3px;
-	width: 200px;
+	width: 70%;
 	margin: 4px 0 11px 50px;
 }
 
 input {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 100%;
 	background-color: transparent;
 	border-width:1px;
     color:#000000;
+	font-size: 100%;
 	border-bottom-color: gray;
 	border-bottom-style: solid;
 	border-top-color: gray;
@@ -102,13 +90,13 @@ input {
 	border-radius: 3px;
 	vertical-align: middle;
 	margin: 3px 0 10px 50px;
+	width: 70%;
 }
 
 input:hover {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 100%;
 	background-color: transparent;
 	border-width:1px;
+	font-size: 100%;
 	border-bottom-color: black;
 	border-bottom-style: solid;
 	border-top-color: black;
@@ -118,10 +106,12 @@ input:hover {
 	border-right-color: black;
 	border-right-style: solid;
 	border-radius: 3px;
+	width: 70%;
 }
 
 input.button {
 	font-weight: bold;
+	font-size: 100%;
 	color: #fff;
 	background: #585858;
 	border: solid #e3e3e3 1px;
