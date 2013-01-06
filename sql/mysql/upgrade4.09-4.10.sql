@@ -38,3 +38,4 @@ INSERT INTO scripts VALUES ('ItemsWithoutPicture.php','15','Shows the list of cu
 UPDATE scripts SET pagesecurity='2' WHERE script='GoodsReceivedButNotInvoiced.php';
 UPDATE scripts SET script='Z_ItemsWithoutPicture.php' WHERE script='ItemsWithoutPicture.php';
 UPDATE config SET confvalue='4.10' WHERE confname='VersionNumber';
+ALTER TABLE `taxauthorities` CHANGE `description` `description` VARCHAR( 40 ) NOT NULL DEFAULT '';

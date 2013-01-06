@@ -62,6 +62,16 @@ if (!isset($_POST['Show'])) {
 			<td>' . _('Transactions Dated To') . ':</td>
 			<td><input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
+		<tr>
+			<td>' . _('Show Transactions') . '</td>
+			<td>
+				<select name="ShowType">
+					<option value="All">' . _('All') . '</option>
+					<option value="Unmatched">' . _('Unmatched') . '</option>
+					<option value="Matched">' . _('Matched') . '</option>
+				</select>
+			</td>
+		</tr>
 		</table>
 		<br />
 		<div class="centre">
@@ -82,6 +92,7 @@ if (!isset($_POST['Show'])) {
 
 	$sql="SELECT 	banktrans.currcode,
 					banktrans.amount,
+					banktrans.amountcleared,
 					banktrans.functionalexrate,
 					banktrans.exrate,
 					banktrans.banktranstype,
@@ -106,7 +117,7 @@ if (!isset($_POST['Show'])) {
 		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<table class="selection">
 				<tr>
-					<th colspan="8"><h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</h3></th>
+					<th colspan="9"><h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '</h3></th>
 				</tr>
 				<tr>
 					<th>' . ('Date') . '</th>
@@ -117,6 +128,7 @@ if (!isset($_POST['Show'])) {
 					<th>'._('Running Total').' '.$BankDetailRow['currcode'].'</th>
 					<th>'._('Amount in').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
 					<th>'._('Running Total').' '.$_SESSION['CompanyRecord']['currencydefault'].'</th>
+					<th>'._('Matched') . '</th>
 				</tr>';
 
 		$AccountCurrTotal=0;
@@ -127,16 +139,25 @@ if (!isset($_POST['Show'])) {
 			$AccountCurrTotal += $myrow['amount'];
 			$LocalCurrTotal += $myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'];
 
-			echo '<tr>
-					<td>'. ConvertSQLDate($myrow['transdate']) . '</td>
-					<td>'.$myrow['typename'].'</td>
-					<td>'.$myrow['banktranstype'].'</td>
-					<td>'.$myrow['ref'].'</td>
-					<td class="number">'.locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']).'</td>
-					<td class="number">'.locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']).'</td>
-					<td class="number">'.locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-					<td class="number">'.locale_number_format($LocalCurrTotal,$_SESSION['CompanyRecord']['decimalplaces']).'</td>
-				</tr>';
+			if ($myrow['amount']==$myrow['amountcleared']) {
+				$Matched=_('Yes');
+			} else {
+				$Matched=_('No');
+			}
+
+			if ($_POST['ShowType']=='All' or ($_POST['ShowType']=='Unmatched' and $Matched==_('No')) or ($_POST['ShowType']=='Matched' and $Matched==_('Yes'))) {
+				echo '<tr>
+						<td>'. ConvertSQLDate($myrow['transdate']) . '</td>
+						<td>'.$myrow['typename'].'</td>
+						<td>'.$myrow['banktranstype'].'</td>
+						<td>'.$myrow['ref'].'</td>
+						<td class="number">'.locale_number_format($myrow['amount'],$BankDetailRow['decimalplaces']).'</td>
+						<td class="number">'.locale_number_format($AccountCurrTotal,$BankDetailRow['decimalplaces']).'</td>
+						<td class="number">'.locale_number_format($myrow['amount']/$myrow['functionalexrate']/$myrow['exrate'],$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+						<td class="number">'.locale_number_format($LocalCurrTotal,$_SESSION['CompanyRecord']['decimalplaces']).'</td>
+						<td class="number">'.$Matched.'</td>
+					</tr>';
+			}
 		}
 		echo '</table>';
 	} //end if no bank trans in the range to show

@@ -256,7 +256,7 @@ if (!isset($_POST['Description'])) {
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Tax Type Description') . ':</td>
-			<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" name="Description" size="21" maxlength="40" value="' . $_POST['Description'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Input tax GL Account') . ':</td>
