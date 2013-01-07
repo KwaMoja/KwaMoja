@@ -232,6 +232,7 @@ if (! isset($_GET['delete'])) {
 
 	}  else {
 		$_POST['DepartmentName']='';
+		$AuthoriserID = '';
 		echo '<table class="selection">';
 	}
 	echo '<tr>

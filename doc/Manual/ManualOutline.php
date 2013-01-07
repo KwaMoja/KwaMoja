@@ -81,6 +81,7 @@ $TOC_Array = array (
 								 'Inventory location maintenance',
 								 'Inventory adjustments',
 								 'Inventory location transfers',
+								 'Internal inventory requests',
 								 'Inventory reports and inquiries',
 								 'Inventory status inquiries',
 								 'Inventory movement inquiries',

@@ -208,7 +208,7 @@ $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orde
 														_('Enter Stock Counts'),
 														_('Create a New Internal Stock Request'),
 														_('Authorise Internal Stock Requests'),
-														_('Fulfill Internal Stock Requests')
+														_('Fulfil Internal Stock Requests')
 														);
 $MenuItems['stock']['Transactions']['URL'] = array ('/PO_SelectOSPurchOrder.php',
 													'/StockLocTransfer.php',

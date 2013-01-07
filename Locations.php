@@ -592,7 +592,7 @@ if (!isset($_GET['delete'])) {
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces",$db);
 	while ($myrow=DB_fetch_array($TaxProvinceResult)){
-		if ($_POST['TaxProvince']==$myrow['taxprovinceid']){
+		if (isset($_POST['TaxProvince']) and $_POST['TaxProvince']==$myrow['taxprovinceid']){
 			echo '<option selected="selected" value="' . $myrow['taxprovinceid'] . '">' . $myrow['taxprovincename'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['taxprovinceid'] . '">' . $myrow['taxprovincename'] . '</option>';
@@ -612,12 +612,12 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';
-	if ($_POST['InternalRequest']==1){
+	if (isset($_POST['InternalRequest']) and $_POST['InternalRequest']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	if ($_POST['InternalRequest']==0){
+	if (isset($_POST['InternalRequest']) and $_POST['InternalRequest']==0){
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
