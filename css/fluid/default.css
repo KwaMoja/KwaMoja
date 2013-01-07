@@ -8,11 +8,12 @@ Beware, the contents is currently not fluid! :D
 */
 
 body{
-font-family: Arial;
+font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 font-weight:normal;
 margin:0;
 padding:0;
 }
+input, textarea, select{font-family:inherit;}
 a{color:blue;text-decoration:none;}
 a:hover{color:blue;text-decoration:underline;}
 img{border:none;vertical-align:middle;}

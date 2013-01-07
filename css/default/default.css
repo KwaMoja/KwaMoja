@@ -6,11 +6,12 @@ New Default Theme for KwaMoja
 
 body{
 background-color:#ccd;
-font-family: Arial;
+font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 font-weight:normal;
 margin:0;
 padding:0
 }
+input, textarea, select{font-family:inherit;}
 
 a{
 color:blue;

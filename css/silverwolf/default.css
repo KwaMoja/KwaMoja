@@ -16,14 +16,14 @@ the next project. :)
 ***/
 
 
-body{
-font-family: Arial;
+body {
+font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 font-weight:normal;
 background:url(images/stripe.png) white;
 margin:0;
 padding:5px;
 }
-
+input, textarea, select{font-family:inherit;}
 a{
 color:#5B5B68;
 text-decoration:none;
@@ -86,7 +86,7 @@ text-align:right;
 margin:0 auto 10px;
 text-align:center;
 }
-
+input, textarea, select{font-size:inherit;}
 input{
 background-color:#e3e1e1;
 border-width:1px;
