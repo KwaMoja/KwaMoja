@@ -644,19 +644,16 @@ echo '<tr>
 		<td>' . _('Theme') . ':</td>
 		<td><select name="Theme">';
 
-$ThemeDirectory = dir('css/');
+$Themes = scandir('css/');
 
-
-while (false != ($ThemeName = $ThemeDirectory->read())){
+foreach ($Themes as $ThemeName) {
 
 	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn'){
 
-		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
+		if ($_SESSION['Theme'] == $ThemeName){
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName .'</option>';
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
 	}
 }
