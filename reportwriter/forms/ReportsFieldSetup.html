@@ -2,7 +2,7 @@
 <body>
 <h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_FLDSETUP; ?></h2>
 <table align="center" width="550" border="0" cellspacing="1" cellpadding="1">
-  <form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
+  <form name="RptFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step6">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
 	<input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -27,7 +27,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-	<form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
+	<form name="RptFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step6">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	<input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -85,7 +85,7 @@
 		echo '<tr><td align="center" colspan="7">'.RPT_NOFIELD.'</td></tr>';
 	} else {
 	foreach ($FieldListings['lists'] as $FieldDetails) { ?>
-    <tr><form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
+    <tr><form name="RptFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step6">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
 	<input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -125,7 +125,7 @@
 } // end else ?>
 </table>
 <table align="center" width="550" border="0" cellspacing="1" cellpadding="1">
-  <form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
+  <form name="RptFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step6">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
 	<input name="Type" type="hidden" value="<?php echo $Type; ?>">

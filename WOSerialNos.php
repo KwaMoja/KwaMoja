@@ -42,7 +42,7 @@ if ($Serialised==1){
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text">
+echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
 	</p>';
 
@@ -228,7 +228,7 @@ if (isset($_POST['UpdateItems'])){
 }
 
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

@@ -9,7 +9,7 @@ $Title=_('File Upload');
 
 include('includes/header.inc');
 
-echo '<form ENCtype="multipart/form-data" action="Z_UploadResult.php" method="post">';
+echo '<form ENCtype="multipart/form-data" action="Z_UploadResult.php" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .

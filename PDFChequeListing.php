@@ -23,14 +23,14 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])){
 	 $Title = _('Payment Listing');
 	 include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 
 	echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
 	echo '<table class="selection">

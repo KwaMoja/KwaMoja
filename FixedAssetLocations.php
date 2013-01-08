@@ -5,7 +5,7 @@
 include('includes/session.inc');
 $Title = _('Fixed Asset Locations');
 include('includes/header.inc');
-echo '<p class="page_title_text">
+echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
@@ -109,7 +109,7 @@ while ($myrow=DB_fetch_array($result)) {
 
 echo '</table>
 	<br />';
-echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
+echo '<form id="LocationForm" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
       <div>
     <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">

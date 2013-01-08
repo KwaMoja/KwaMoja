@@ -1,5 +1,5 @@
 <h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_CRIT; ?></h2>
-<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+<form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -92,7 +92,7 @@
       <td align="center"><?php echo RPT_DEFAULT; ?></td>
       <td>&nbsp;</td>
     </tr>
-    <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+    <tr><form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	    <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 		<input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -125,7 +125,7 @@
 	} else {
 		foreach ($GroupListings['lists'] as $FieldDetails) { ?>
 			<tr>
-				<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+				<form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 				<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 				<input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -161,7 +161,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-	<form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	<form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -194,7 +194,7 @@
 	} else {
 	foreach ($SortListings['lists'] as $FieldDetails) { ?>
 		<tr>
-		  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+		  <form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 		  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 		  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -231,7 +231,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-	  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	  <form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
@@ -269,7 +269,7 @@
 	} else {
 	foreach ($CritListings['lists'] as $FieldDetails) { ?>
     <tr>
-	  <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
+	  <form name="CritFieldForm" method="post" class="noPrint" action="ReportCreator.php?action=step7">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	  <input name="Type" type="hidden" value="<?php echo $Type; ?>">

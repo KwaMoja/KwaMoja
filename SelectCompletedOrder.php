@@ -8,10 +8,10 @@ $Title = _('Search All Sales Orders');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
      ' . ' ' . _('Search Sales Orders') . '</p>';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -64,7 +64,7 @@ if (isset($_POST['ResetPart'])) {
 }
 
 if (isset($OrderNumber)) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
+	echo '<p class="page_title_text noPrint"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
          ' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
 	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo _('For customer') . ': ' . $SelectedCustomer;
@@ -479,7 +479,7 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 if (!isset($_POST['OrdersAfterDate']) or $_POST['OrdersAfterDate'] == '' or ! Is_Date($_POST['OrdersAfterDate'])){
 	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
-echo '<table class="selection">';
+echo '<div><table class="selection">';
 
 if (isset($PartString)) {
 	echo '<tr><td>' . $PartString . '</td>';
@@ -501,7 +501,7 @@ echo '<tr>
 		<td></td>
 		<td colspan="2"><input type="checkbox" ' . $ShowChecked . ' name="completed" />' . _('Show Completed orders only') . '</td></tr>';
 
-echo '</table>';
+echo '</table></div>';
 
 if (!isset($SelectedStockItem)) {
 	$result1 = DB_query("SELECT categoryid,
@@ -510,9 +510,9 @@ if (!isset($SelectedStockItem)) {
 						ORDER BY categorydescription",$db);
 
    echo '<br />';
-   echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
+   echo '<div class="page_help_text noPrint">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
    echo '<br />
-		<table class="selection">';
+		<div><table class="selection">';
    echo '<tr><td>' . _('Select a stock category') . ':';
    echo '<select name="StockCat">';
 
@@ -540,7 +540,7 @@ if (!isset($SelectedStockItem)) {
    }
    echo '</td>
 		</tr>
-		</table>';
+		</table></div>';
 
 }
 
@@ -599,9 +599,17 @@ if (isset($SalesOrdersResult)) {
 
 /*show a table of the orders returned by the SQL */
 
-	echo '<br /><table cellpadding="2" width="90%" class="selection">';
+	echo '<br /><table cellpadding="2" width="90%" class="selection">
+			<tr>
+				<th colspan="9">
+					<h3>' . _('Sales Orders') . '
+						<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+					</h3>
+				</th>
+			</tr>';
 
-	$tableheader = '<tr><th>' . _('Order') . ' #</th>
+	$tableheader = '<tr>
+						<th>' . _('Order') . ' #</th>
 						<th>' . _('Customer') . '</th>
 						<th>' . _('Branch') . '</th>
 						<th>' . _('Cust Order') . ' #</th>

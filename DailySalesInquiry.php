@@ -6,11 +6,11 @@ include('includes/session.inc');
 $Title = _('Daily Sales Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
-echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
+echo '<div class="page_help_text noPrint">' . _('Select the month to show daily sales for') . '</div>
 	<br />';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -21,10 +21,10 @@ if (!isset($_POST['MonthToShow'])){
 	$EndDateSQL = $myrow['lastdate_in_period'];
 }
 
-echo '<table class="selection">
-	<tr>
-		<td>' . _('Month to Show') . ':</td>
-		<td><select tabindex="1" name="MonthToShow">';
+echo '<div class="centre"><table class="selection">
+		<tr>
+			<td>' . _('Month to Show') . ':</td>
+			<td><select tabindex="1" name="MonthToShow">';
 
 $PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods",$db);
 
@@ -68,7 +68,7 @@ echo '</tr>
 		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
 	</div>
     </div>
-	</form>
+	</form></div>
 	<br />';
 /*Now get and display the sales data returned */
 if (mb_strpos($EndDateSQL,'/')) {
@@ -105,17 +105,24 @@ if ($_POST['Salesperson']!='All') {
 $sql .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 $SalesResult = DB_query($sql, $db,$ErrMsg);
-
+$MonthName = date("F", mktime(0, 0, 0, (int)$Date_Array[1], 10));
 echo '<table class="selection">
-	<tr>
-		<th style="width: 14%">' . _('Sunday') . '</th>
-		<th style="width: 14%">' . _('Monday') . '</th>
-		<th style="width: 14%">' . _('Tuesday') . '</th>
-		<th style="width: 14%">' . _('Wednesday') . '</th>
-		<th style="width: 14%">' . _('Thursday') . '</th>
-		<th style="width: 14%">' . _('Friday') . '</th>
-		<th style="width: 14%">' . _('Saturday') . '</th>
-	</tr>';
+		<tr>
+			<th colspan="9">
+				<h3>' . _('Daily Sales For').' '.$MonthName.' ' . $Date_Array[0] . '
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+				</h3>
+			</th>
+		</tr>
+		<tr>
+			<th style="width: 14%">' . _('Sunday') . '</th>
+			<th style="width: 14%">' . _('Monday') . '</th>
+			<th style="width: 14%">' . _('Tuesday') . '</th>
+			<th style="width: 14%">' . _('Wednesday') . '</th>
+			<th style="width: 14%">' . _('Thursday') . '</th>
+			<th style="width: 14%">' . _('Friday') . '</th>
+			<th style="width: 14%">' . _('Saturday') . '</th>
+		</tr>';
 
 $CumulativeTotalSales = 0;
 $CumulativeTotalCost = 0;

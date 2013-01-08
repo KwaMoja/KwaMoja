@@ -201,11 +201,11 @@ if (isset($_POST['PrintPDF'])
 	if (empty($_POST['FromCriteria']) or empty($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
-		echo '<p class="page_title_text">
+		echo '<p class="page_title_text noPrint" >
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
 			</p>';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
               <div>
             <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">

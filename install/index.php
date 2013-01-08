@@ -73,7 +73,7 @@ function change_data(type) {
 </head>
 <body>
 
-<form id="kwamoja_installation_wizard" action="save.php" method="post" enctype="multipart/form-data">
+<form id="kwamoja_installation_wizard" action="save.php" method="post" class="noPrint" enctype="multipart/form-data">
 <div>
 <input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 <input type="hidden" name="url" value="" />

@@ -16,7 +16,7 @@ if (isset($_POST['ChangeDate'])){
 	$ChangeDate =trim(mb_strtoupper($_GET['ChangeDate']));
 }
 
-echo '<p class="page_title_text">
+echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '
 	</p>';
@@ -252,7 +252,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
           <div>
 			<br />
 			<br />';

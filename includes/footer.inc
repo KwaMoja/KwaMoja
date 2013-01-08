@@ -12,7 +12,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
 					fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
 				}
-				echo '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
+				echo '<div class="'.$Class.' noPrint"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
 				break;
 			case 'warn':
 				$Class = 'warn';
@@ -20,7 +20,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
 					fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
 				}
-				echo '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
+				echo '<div class="'.$Class.' noPrint"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
 				break;
 			case 'success':
 				$Class = 'success';
@@ -28,7 +28,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
 					fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
 				}
-				echo '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
+				echo '<div class="'.$Class.' noPrint"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
 				break;
 			case 'info':
 			default:
@@ -37,7 +37,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>2) {
 					fwrite($LogFile, date('Y-m-d h-m-s').','.$Type.','.$_SESSION['UserID'].','.trim($Msg,',')."\n");
 				}
-				echo '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
+				echo '<div class="'.$Class.' noPrint"><b>' . $Prefix . '</b> : ' .$Message[0] . '</div>';
 		}
 	}
 }
@@ -45,7 +45,7 @@ if (isset($Messages) and count($Messages) > 0) {
 echo '<br /></div>'; // BodyWrapDiv
 echo '</div>'; // BodyDiv
 
-echo '<div id="FooterDiv">';
+echo '<div id="FooterDiv" class="noPrint">';
 echo '<div id="FooterWrapDiv">';
 
 echo '<div id="FooterLogoDiv">';

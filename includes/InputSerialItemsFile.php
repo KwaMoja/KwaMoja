@@ -167,7 +167,7 @@ if ($ShowFileInfo){
 if ($invalid_imports>0 and !$_SESSION['CurImportFile']['Processed']){
 		// IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
 
-	echo '<br /><form method="post">';
+	echo '<br /><form method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="submit" name="ValidateFile" value="' . _('Validate File') . '" />
 			<input type="hidden" name="LineNo" value="' . $LineNo . '" />
@@ -183,7 +183,7 @@ if ($invalid_imports>0 and !$_SESSION['CurImportFile']['Processed']){
 	echo '</pre>';
 
 } else {
-	echo '<br /><form method="post">';
+	echo '<br /><form method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<button type="submit" name="ValidateFile">' . _('Update Batches') . '</button>
 			<input type="hidden" name="LineNo" value="' . $LineNo . '" />

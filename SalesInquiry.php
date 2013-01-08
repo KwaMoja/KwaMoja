@@ -68,7 +68,7 @@ else {
 }
 
 if (isset($_POST['submit'])) {
-	submit($db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType);
+	submit($db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $Theme);
 } //isset($_POST['submit'])
 else {
 	display($db);
@@ -76,7 +76,7 @@ else {
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType) {
+function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $Theme) {
 	//initialise no input errors
 	$InputError = 0;
 
@@ -666,7 +666,14 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			echo '  ' . _('Invoice Type') . '  - ' . $itype . '<br/>';
 		} //$_POST['DateType'] != 'Order'
 		echo '</div><br />';
-		echo '<table class="selection" style="width: 99%">';
+		echo '<table class="selection" style="width: 99%">
+				<tr>
+					<th colspan="15">
+						<h3>' . _('Sales Inquiry') . '
+							<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+						</h3>
+					</th>
+				</tr>';
 		if ($_POST['ReportType'] == 'Detail') {
 			if ($_POST['DateType'] == 'Order') {
 				printf('<tr>
@@ -876,7 +883,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	// Display form fields. This function is called the first time
 	// the page is called.
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
 		  <div>
 			<br/>
 			<br/>';

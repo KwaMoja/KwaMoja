@@ -32,7 +32,7 @@ elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_POST['SelectedSupplier']);
 } //isset($_POST['SelectedSupplier'])
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -53,7 +53,7 @@ if (isset($OrderNumber) and $OrderNumber != '') {
 else {
 	if (isset($SelectedSupplier)) {
 		echo '<br />
-				<div class="page_help_text">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
+				<div class="page_help_text noPrint">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type="hidden" name="SelectedSupplier" value="' . $SelectedSupplier . '" />
 				</div>';
 	} //isset($SelectedSupplier)
@@ -64,7 +64,7 @@ else {
 
 if (isset($_POST['SearchParts'])) {
 	if (isset($_POST['Keywords']) and isset($_POST['StockCode'])) {
-		echo '<div class="page_help_text">' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
+		echo '<div class="page_help_text noPrint">' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
 	} //isset($_POST['Keywords']) and isset($_POST['StockCode'])
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -146,7 +146,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	else {
 		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
@@ -210,7 +210,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL, $db);
 
-echo '<br /><div class="page_help_text">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</div>';
+echo '<br /><div class="page_help_text noPrint">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</div>';
 echo '<br />
 		<table class="selection">
 		<tr>';

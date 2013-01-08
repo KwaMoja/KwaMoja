@@ -6,22 +6,23 @@ include('includes/session.inc');
 $Title = _('Top Sales Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
+echo '<div class="page_help_text noPrint">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DateRange'])){
 	/* then assume report is for This Month - maybe wrong to do this but hey better than reporting an error?*/
 	$_POST['DateRange']='ThisMonth';
 }
 
-echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding="2" class="selection">
-		<tr><td valign="top">
-		<table>';
-	
+echo '<table cellpadding="2">
+		<tr>
+			<td valign="top">
+			<table>';
+
 echo '<tr>
 		<th colspan="2" class="centre">' . _('Date Selection') . '</th>
 	</tr>
@@ -171,25 +172,25 @@ if (isset($_POST['ShowSales'])){
 	$sql = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockcategory.categorydescription,
-					SUM(CASE WHEN stockmoves.type=10 
-							OR stockmoves.type=11 THEN 
+					SUM(CASE WHEN stockmoves.type=10
+							OR stockmoves.type=11 THEN
 							 -qty
 							ELSE 0 END) as salesquantity,
-					SUM(CASE WHEN stockmoves.type=10 THEN 
+					SUM(CASE WHEN stockmoves.type=10 THEN
 							price*(1-discountpercent)* -qty
 							ELSE 0 END) as salesvalue,
-					SUM(CASE WHEN stockmoves.type=11 THEN 
+					SUM(CASE WHEN stockmoves.type=11 THEN
 							price*(1-discountpercent)* (-qty)
 							ELSE 0 END) as returnvalue,
-					SUM(CASE WHEN stockmoves.type=11 
-								OR stockmoves.type=10 THEN 
+					SUM(CASE WHEN stockmoves.type=11
+								OR stockmoves.type=10 THEN
 							price*(1-discountpercent)* (-qty)
 							ELSE 0 END) as netsalesvalue,
 					SUM((standardcost * -qty)) as cost
 			FROM stockmoves INNER JOIN stockmaster
-			ON stockmoves.stockid=stockmaster.stockid 
-			INNER JOIN stockcategory 
-			ON stockmaster.categoryid=stockcategory.categoryid 
+			ON stockmoves.stockid=stockmaster.stockid
+			INNER JOIN stockcategory
+			ON stockmaster.categoryid=stockcategory.categoryid
 			WHERE (stockmoves.type=10 or stockmoves.type=11)
 			AND show_on_inv_crds =1
 			AND trandate>='" . $FromDate . "'
@@ -197,7 +198,7 @@ if (isset($_POST['ShowSales'])){
 			GROUP BY stockmaster.stockid,
 					stockmaster.description,
 					stockcategory.categorydescription ";
-	
+
 	if ($_POST['OrderBy']=='NetSales'){
 		$sql .= " ORDER BY netsalesvalue DESC ";
 	} else {
@@ -208,13 +209,13 @@ if (isset($_POST['ShowSales'])){
 			$sql .= " LIMIT " . $_POST['NoToDisplay'];
 		}
 	}
-	
+
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
 
-	
+
 	echo '<table cellpadding="2" class="selection">';
-	
+
 	echo'<tr>
 			<th>' . _('Rank') . '</th>
 			<th>' . _('Item') . '</th>
@@ -224,7 +225,7 @@ if (isset($_POST['ShowSales'])){
 			<th>' . _('Net Sales') . '</th>
 			<th>' . _('Sales') .'<br />' . _('Quantity') . '</th>
 		</tr>';
-	
+
 	$CumulativeTotalSales = 0;
 	$CumulativeTotalRefunds = 0;
 	$CumulativeTotalNetSales = 0;
@@ -239,7 +240,7 @@ if (isset($_POST['ShowSales'])){
 			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
-				
+
 		echo '<td>' . $i . '</td>
 				<td>' . $SalesRow['stockid'] . ' - ' . $SalesRow['description'] . '</td>
 				<td>' . $SalesRow['categorydescription'] . '</td>
@@ -249,14 +250,14 @@ if (isset($_POST['ShowSales'])){
 				<td class="number">' . locale_number_format($SalesRow['salesquantity'],'Variable') . '</td>
 				</tr>';
 		$i++;
-		
+
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
 		$CumulativeTotalRefunds += $SalesRow['returnvalue'];
 		$CumulativeTotalNetSales += ($SalesRow['salesvalue']+$SalesRow['returnvalue']);
 		$CumulativeTotalQuantity += $SalesRow['salesquantity'];
 
 	} //loop around category sales for the period
-	
+
 	if ($k==1){
 		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
 		echo '<tr class="OddTableRows">';
@@ -270,7 +271,7 @@ if (isset($_POST['ShowSales'])){
 		<td class="number">' . locale_number_format($CumulativeTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalQuantity,'Variable') . '</td>
 		</tr>';
-	
+
 	echo '</table>';
 
 } //end of if user hit show sales

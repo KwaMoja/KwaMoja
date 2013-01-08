@@ -132,9 +132,9 @@ or deletion of the records*/
 			FROM geocode_param";
 	$result = DB_query($sql, $db);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'.
 			_('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
-	echo '<div class="page_help_text">'. _('Get a google API key at ') .
+	echo '<div class="page_help_text noPrint">'. _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
 	echo '<div class="centre"><p>'. _('Find the lat/long for your map center point at ') .
 			'<a href="http://www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></p>';
@@ -197,7 +197,7 @@ if (isset($SelectedParam)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -227,7 +227,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
+		echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</p>';
 		echo '<br /><table>
 				<tr><td>'. _('Geocode Code') .':</td>
 					<td>' . $_POST['GeoCodeID'] . '</td></tr>';
@@ -273,7 +273,7 @@ if (!isset($_GET['delete'])) {
 		<br />
 	</div>
 	</form>';
-echo '<div class="page_help_text">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';
+echo '<div class="page_help_text noPrint">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';
 echo '<p>' . _('Suppliers and Customer Branches are geocoded when being entered/updated. You can rerun the geocode process from this screen at any time.') . '</p></div><br />';
 
 echo '<div class="centre"><a href="' . $RootPath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a><br />';

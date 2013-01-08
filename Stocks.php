@@ -41,7 +41,7 @@ if (isset($_POST['New'])) {
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	<br />
-	<p class="page_title_text">
+	<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
@@ -759,7 +759,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<form id="ItemForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form id="ItemForm" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

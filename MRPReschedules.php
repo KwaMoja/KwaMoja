@@ -121,14 +121,14 @@ if (isset($_POST['PrintPDF'])) {
 	$Title=_('MRP Reschedule Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text">
+	echo '<p class="page_title_text noPrint" >
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="'
 		. _('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<br />
 		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
         <div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">

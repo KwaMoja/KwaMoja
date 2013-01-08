@@ -15,7 +15,6 @@
 	$ViewTopic = isset($ViewTopic)?'?ViewTopic=' . $ViewTopic : '';
 	$BookMark = isset($BookMark)? '#' . $BookMark : '';
 	$StrictXHTML=False;
-
 	if (!headers_sent()){
 		if ($StrictXHTML) {
 			header('Content-type: application/xhtml+xml; charset=utf-8');
@@ -39,6 +38,14 @@
 	}
 	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
 	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>';
+	echo '<style media="screen">
+			.noPrint{ display: block; }
+			.yesPrint{ display: block !important; }
+		</style>
+		<style media="print">
+			.noPrint{ display: none; }
+			.yesPrint{ display: block !important; }
+		</style>';
 	echo '</head>';
 	echo '<body>';
 
@@ -67,7 +74,7 @@
 			</style>';
 
     echo '<div id="CanvasDiv">';
-	echo '<div id="HeaderDiv">';
+	echo '<div id="HeaderDiv" class="noPrint">';
 	echo '<div id="HeaderWrapDiv">';
 
 

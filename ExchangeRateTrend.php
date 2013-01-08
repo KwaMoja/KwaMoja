@@ -20,10 +20,10 @@ if ( isset($_GET['CurrencyToShow']) ){
 // SHOW OUR MAIN INPUT FORM
 // ************************
 
-	echo '<form method="post" id="update" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" class="noPrint" id="update" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
+	echo '<div class="centre"><p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		_('View Currency Trend') . '" alt="" />' . ' ' . _('View Currency Trend') . '</p></div>';
 	echo '<table>'; // First column
 

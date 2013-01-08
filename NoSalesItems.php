@@ -6,11 +6,11 @@ include ('includes/session.inc');
 $Title = _('No Sales Items Searching');
 include ('includes/header.inc');
 if (!(isset($_POST['Search']))) {
-echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
-	echo '<div class="page_help_text">'
+echo '<div class="centre"><p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
+	echo '<div class="page_help_text noPrint">'
 	. _('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />'. _( 'This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />'. _('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
 	echo '<br />';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
@@ -176,7 +176,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 				ORDER BY stockmaster.stockid";
 	}
 	$result = DB_query($SQL, $db);
-	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
+	echo '<p class="page_title_text noPrint"  align="center"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

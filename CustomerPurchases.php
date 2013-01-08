@@ -27,7 +27,7 @@ $ErrMsg = _('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL, $db, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<p class="page_title_text">
+echo '<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
 	</p>';
 

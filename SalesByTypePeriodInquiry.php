@@ -7,8 +7,8 @@ $Title = _('Sales Report');
 include('includes/header.inc');
 
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
+echo '<div class="page_help_text noPrint">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DisplayData'])){
 	/* then assume to display daily - maybe wrong to do this but hey better than reporting an error?*/
@@ -19,7 +19,7 @@ if (!isset($_POST['DateRange'])){
 	$_POST['DateRange']='ThisMonth';
 }
 
-echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -329,7 +329,14 @@ if (isset($_POST['ShowSales'])){
 	$SalesResult = DB_query($sql,$db,$ErrMsg);
 
 
-	echo '<table cellpadding="2" class="selection">';
+	echo '<table cellpadding="2" class="selection">
+			<tr>
+				<th colspan="9">
+					<h3>' . _('Show').' '.$_POST['DisplayData'].' '._('sales for').' '.$_POST['DateRange'] . '
+						<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+					</h3>
+				</th>
+			</tr>';
 
 	echo'<tr>
 		<th>' . _('Period') . '</th>

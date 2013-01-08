@@ -6,7 +6,7 @@ include('includes/session.inc');
 $Title = _('Page Security Levels');
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title.'</p><br />';
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 if (isset($_POST['Update'])) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {
@@ -25,7 +25,7 @@ $sql="SELECT script,
 
 $result=DB_query($sql, $db);
 
-echo '<br /><form method="post" id="PageSecurity" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<br /><form method="post" class="noPrint" id="PageSecurity" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

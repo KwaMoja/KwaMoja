@@ -23,7 +23,7 @@
 include('ManualHeader.html');
 
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="noPrint">
 <?php
 if (((!isset($_POST['Submit'])) and (!isset($_GET['ViewTopic']))) or
      ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {

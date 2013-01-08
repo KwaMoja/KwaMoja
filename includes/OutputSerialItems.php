@@ -124,7 +124,7 @@ echo '<table class="selection">';
 echo $tableheader;
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="Ga6uF5Wa" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" name="Ga6uF5Wa" method="post" class="noPrint">
       <input type="hidden" name="LineNo" value="' . $LineNo . '" />
       <input type="hidden" name="StockID" value="' . $StockID . '" />
       <input type="hidden" name="EntryType" value="KEYED" />';

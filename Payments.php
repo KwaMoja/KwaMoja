@@ -42,10 +42,10 @@ else {
 	$BankAccountEmpty = false;
 }
 
-echo '<p class="page_title_text">
+echo '<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . _('Payment Entry') . '
 	</p>';
-echo '<div class="page_help_text">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
+echo '<div class="page_help_text noPrint">' . _('Use this screen to enter payments FROM your bank account.  <br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') . '</div>
 	<br />';
 
 if (isset($_GET['SupplierID'])) {
@@ -283,7 +283,7 @@ if (isset($_POST['CommitBatch'])) {
 			<br />
 			<br />';
 
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
+		echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?
@@ -727,7 +727,7 @@ if (isset($_POST['BankAccount']) and $_POST['BankAccount'] != '') {
 	} //DB_num_rows($result) == 0
 } //isset($_POST['BankAccount']) and $_POST['BankAccount'] != ''
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

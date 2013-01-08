@@ -38,6 +38,10 @@ img{
 border:none;
 vertical-align:middle;
 }
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 p.good{
 font-weight:bold;
 color:green;
@@ -160,7 +164,7 @@ width:80%;
 text-align:center;
 margin:0 auto;
 }
-div.page_help_text{ /* many */
+div.page_help_text noPrint{ /* many */
 background-color:#ccc;/* lightgray is not a w3c css valid color #ccc */
 border:#a52a2a 1px solid;
 padding-top:1px;/* 2px in merge */

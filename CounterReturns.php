@@ -193,7 +193,7 @@ if (isset($_POST['CancelReturn'])) {
 
 } else { /*Not cancelling the return */
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Counter Return') . '" alt="" />' . ' ';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Counter Return') . '" alt="" />' . ' ';
 	echo '<font color="red" size="5">' . $_SESSION['Items'.$identifier]->CustomerName . '<br /> ' . _('Counter Return') . ' ' . _('to') . ' ' . $_SESSION['Items'.$identifier]->LocationName . ' ' . _('inventory') . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</font></p>';
 }
@@ -201,11 +201,11 @@ if (isset($_POST['CancelReturn'])) {
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 	if ($_POST['Keywords']!='' and $_POST['StockCode']=='') {
-		$msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
+		$msg='<div class="page_help_text noPrint">' . _('Item description has been used in search') . '.</div>';
 	} else if ($_POST['StockCode']!='' and $_POST['Keywords']=='') {
-		$msg='<div class="page_help_text">' . _('Item Code has been used in search') . '.</div>';
+		$msg='<div class="page_help_text noPrint">' . _('Item Code has been used in search') . '.</div>';
 	} else if ($_POST['Keywords']=='' and $_POST['StockCode']=='') {
-		$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
+		$msg='<div class="page_help_text noPrint">' . _('Stock Category has been used in search') . '.</div>';
 	}
 	if (isset($_POST['Keywords']) and mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -342,7 +342,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 /* Always do the stuff below */
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" name="SelectParts" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" name="SelectParts" method="post" class="noPrint">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
@@ -1605,9 +1605,9 @@ if (!isset($_POST['ProcessReturn'])){
 	 if (isset($_POST['PartSearch']) and $_POST['PartSearch']!=''){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '" />';
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
+		echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Items') . '</p>';
-		echo '<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
+		echo '<div class="page_help_text noPrint">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">
 				<tr>
 					<td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
@@ -1654,14 +1654,14 @@ if (!isset($_POST['ProcessReturn'])){
 	// Add some useful help as the order progresses
 		if (isset($SearchResult)) {
 			echo '<br />';
-			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Return when ready.') . '</div>';
+			echo '<div class="page_help_text noPrint">' . _('Select an item by entering the quantity required.  Click Return when ready.') . '</div>';
 			echo '<br />';
 		}
 
 
 		if (isset($SearchResult)) {
 			$j = 1;
-			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" name="ReturnForm">';
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" class="noPrint" name="ReturnForm">';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<tr>
@@ -1799,7 +1799,7 @@ if (!isset($_POST['ProcessReturn'])){
 	} /*end of PartSearch options to be displayed */
 		else { /* show the quick entry form variable */
 
-		echo '<div class="page_help_text"><b>' . _('Use this form to add return items quickly if the item codes are already known') . '</b></div><br />
+		echo '<div class="page_help_text noPrint"><b>' . _('Use this form to add return items quickly if the item codes are already known') . '</b></div><br />
 		 		<table border="1">
 				<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/

@@ -13,7 +13,7 @@ if (!isset($_POST['BatchNo'])){
 	$Title = _('Create PDF Print Out For A Batch Of Receipts');
 	include ('includes/header.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$sql="SELECT DISTINCT
@@ -24,7 +24,7 @@ if (!isset($_POST['BatchNo'])){
 		ORDER BY transno DESC";
 	$result=DB_query($sql, $db);
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';

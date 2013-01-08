@@ -18,7 +18,7 @@ if (!isset($_POST['Date'])){
 	 include ('includes/header.inc');
 
 	echo '<div class="centre">
-			<p class="page_title_text">
+			<p class="page_title_text noPrint" >
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
 			'</p>';
 
@@ -26,7 +26,7 @@ if (!isset($_POST['Date'])){
 		prnMsg($msg,'error');
 	}
 
-	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	 echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	 echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
 	 echo '<table class="selection">
 	 		<tr>

@@ -167,9 +167,9 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult)>0){
 
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
+	echo '<p class="page_title_text noPrint"  align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
 
-	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
+	echo '<div class="page_help_text noPrint">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
 	echo '<div>';
 	echo '<table class="selection">';
@@ -254,11 +254,11 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult)>0){
 	$Title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+	echo '<p class="page_title_text noPrint"  align="center"><strong>' . $Title . '</strong></p>';
 
-	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
+	echo '<div class="page_help_text noPrint">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
           <div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
