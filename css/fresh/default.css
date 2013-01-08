@@ -39,6 +39,10 @@ img {
 	border:none;
 	vertical-align:middle;
 }
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 p.page_title_text {
 	padding-top: 2px;
 	padding-bottom: 2px;

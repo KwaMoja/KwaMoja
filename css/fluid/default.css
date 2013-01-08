@@ -17,6 +17,10 @@ input, textarea, select{font-family:inherit;}
 a{color:blue;text-decoration:none;}
 a:hover{color:blue;text-decoration:underline;}
 img{border:none;vertical-align:middle;}
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 .page_title_text{
 font-weight:bold;
 color:black;

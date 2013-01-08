@@ -41,6 +41,10 @@ img{ /* icon on page title, etc */
 border:none;
 vertical-align:middle;
 }
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 
 p{
 }

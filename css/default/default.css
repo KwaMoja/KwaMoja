@@ -26,6 +26,10 @@ img{
 border:none;
 vertical-align:middle;
 }
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 
 .page_title_text{
 padding:5px;

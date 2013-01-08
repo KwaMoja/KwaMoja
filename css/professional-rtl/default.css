@@ -32,6 +32,10 @@ img {
 	border:none;
 	vertical-align:middle;
 }
+.PrintIcon {
+	float: right;
+	cursor: pointer;
+}
 a {
 	color:blue;
 	text-decoration:none;
