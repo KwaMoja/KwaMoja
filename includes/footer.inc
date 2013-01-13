@@ -49,7 +49,7 @@ echo '<div id="FooterDiv" class="noPrint">';
 echo '<div id="FooterWrapDiv">';
 
 echo '<div id="FooterLogoDiv">';
-	echo '<img src="'. $RootPath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="KwaMoja" title="KwaMoja" />';
+	echo '<a href="http://www.kwamoja.com" target="_blank"><img src="'. $RootPath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="KwaMoja" title="KwaMoja" /></a>';
 echo '</div>';
 
 echo '<div id="FooterVersionDiv">';

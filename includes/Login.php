@@ -30,7 +30,7 @@ if (get_magic_quotes_gpc()){
 
 <div class="left"><div id="container">
 	<div id="login_logo">
-		<img src="companies/logo.png" style="width:100%" />
+		<a href="http://www.kwamoja.com" target="_blank"><img src="companies/logo.png" style="width:100%" /></a>
 	</div>
 	<div id="login_box">
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');?>" method="post" class="noPrint">
