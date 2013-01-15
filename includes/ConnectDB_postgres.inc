@@ -138,7 +138,7 @@ function DB_show_fields($TableName,&$Conn){
 	if (DB_num_rows($Result)==1){
 		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
 		return $Result;
-	}r
+	}
 }
 function DB_Maintenance($Conn){
 

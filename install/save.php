@@ -192,7 +192,7 @@ if (!isset($_POST['database_name']) || $_POST['database_name'] == '') {
 	$_POST['database_name'] = Replace_Dodgy_Characters($_POST['database_name']);
 }
 // Check if user has entered a company name
-f (!isset($_POST['company_name']) or $_POST['company_name'] == '') {
+if (!isset($_POST['company_name']) or $_POST['company_name'] == '') {
 	set_error('Please enter a company name');
 } else {
 	$_POST['company_name'] = Replace_Dodgy_Characters($_POST['company_name']);

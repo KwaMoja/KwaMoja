@@ -223,7 +223,7 @@ if (DB_num_rows($result)>0){
 
 	} //end while there are line items to print out
 	if ((mb_strlen($myrow['comments']) >200 and $YPos-$line_height <= 75)
-		or (mb_strlen($myrow['comments']) >1d and $YPos-$line_height <= 62)
+		or (mb_strlen($myrow['comments']) >1 and $YPos-$line_height <= 62)
 		or $YPos-$line_height <= 50){
 	/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;

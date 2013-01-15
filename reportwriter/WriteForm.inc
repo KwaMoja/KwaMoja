@@ -468,8 +468,8 @@ function BuildPDF($ReportID, $Prefs) {
 
 	// Build query string and execute
 	$sqlCrit = '';
-	if ($strCrit and $strDate) $sqlCrit {
-		.= $strDate.' AND '.$strCrit;
+	if ($strCrit and $strDate) {
+		$sqlCrit .= $strDate.' AND '.$strCrit;
 	}
 	if (!$strCrit and $strDate) {
 		$sqlCrit .= $strDate;
