@@ -49,12 +49,20 @@
 	echo '</head>';
 	echo '<body>';
 
+	if (isset($_GET['FontSize'])) {
+		$sql = "UPDATE www_users
+						SET fontsize='" . $_GET['FontSize'] . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+		$result = DB_query($sql,$db);
+	}
+
 	if (isset($_POST['FontSize'])) {
 		$_SESSION['ScreenFontSize']=$_POST['FontSize'];
+	} else if (isset($_GET['FontSize'])) {
+		$_SESSION['ScreenFontSize']=$_GET['FontSize'];
 	}
 
 	switch ($_SESSION['ScreenFontSize']) {
-
 		case 0:
 			$FontSize='8pt';
 			break;
@@ -82,19 +90,23 @@
 
 
 		echo '<div id="AppInfoDiv">'; //===HJ===
-			echo '<div id="AppInfoCompanyDiv">';
-				echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/company.png" title="'._('Company').'" alt="'._('Company').'"/>'.stripslashes($_SESSION['CompanyRecord']['coyname']);
-			echo '</div>';
-			echo '<div id="AppInfoUserDiv">';
-				echo '<a href="'. $RootPath.'/UserSettings.php"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="User" alt="'._('User').'"/>'.stripslashes($_SESSION['UsersRealName']).'</a>';
-			echo '</div>';
-			echo '<div id="AppInfoModuleDiv">';
-				// Make the title text a class, can be set to display:none is some themes
-				echo $Title;
-			echo '</div>';
+		echo '<div id="AppInfoCompanyDiv">';
+		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/company.png" title="'._('Company').'" alt="'._('Company').'"/>'.stripslashes($_SESSION['CompanyRecord']['coyname']);
+		echo '</div>';
+		echo '<div id="AppInfoUserDiv">';
+		echo '<a href="'. $RootPath.'/UserSettings.php"><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="User" alt="'._('User').'"/>'.stripslashes($_SESSION['UsersRealName']).'</a>';
+		echo '</div>';
+		echo '<div id="AppInfoModuleDiv">';
+		// Make the title text a class, can be set to display:none is some themes
+		echo $Title;
+		if (basename($_SERVER['PHP_SELF'])=='index.php') {
+			echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+			echo '<span style="font-size:8pt;"><a href="'.$RootPath.'/index.php?FontSize=0" title="Small text size">A</a></span>&nbsp;';
+			echo '<span style="font-size:10pt;"><a href="'.$RootPath.'/index.php?FontSize=1" title="Medium text size">A</a></span>&nbsp;';
+			echo '<span style="font-size:12pt;"><a href="'.$RootPath.'/index.php?FontSize=2" title="Large text size">A</a></span>&nbsp;';
+		}
+		echo '</div>';
 		echo '</div>'; // AppInfoDiv
-
-
 		echo '<div id="QuickMenuDiv"><ul>';
 
 		echo '<li><a href="'.$RootPath.'/index.php">'._('Main Menu').'</a></li>'; //take off inline formatting, use CSS instead ===HJ===
