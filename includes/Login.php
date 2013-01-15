@@ -28,7 +28,7 @@ if (get_magic_quotes_gpc()){
 }
 ?>
 
-<div class="left"><div id="container">
+<div id="container">
 	<div id="login_logo">
 		<a href="http://www.kwamoja.com" target="_blank"><img src="companies/logo.png" style="width:100%" /></a>
 	</div>
@@ -68,7 +68,7 @@ if (get_magic_quotes_gpc()){
 	<input class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser" />
 	</form>
 	</div>
-</div></div>
+</div>
 	<script type="text/javascript">
 			<!--
 				  document.forms[0].UserNameEntryField.focus();
