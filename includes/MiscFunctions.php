@@ -344,7 +344,7 @@ function locale_number_format($Number, $DecimalPlaces=0) {
 				$DecimalPlaces--;
 			}
 		}
-		return number_format($Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
+		return number_format((float)$Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
 	}
 }
 
