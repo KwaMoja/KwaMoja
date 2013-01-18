@@ -39,3 +39,4 @@ UPDATE scripts SET pagesecurity='2' WHERE script='GoodsReceivedButNotInvoiced.ph
 UPDATE scripts SET script='Z_ItemsWithoutPicture.php' WHERE script='ItemsWithoutPicture.php';
 UPDATE config SET confvalue='4.10' WHERE confname='VersionNumber';
 ALTER TABLE `taxauthorities` CHANGE `description` `description` VARCHAR( 40 ) NOT NULL DEFAULT '';
+INSERT INTO scripts VALUES('MaterialsNotUsed.php', '4', 'Lists the items from Raw Materials Categories not used in any bom (thus not used at all)');
