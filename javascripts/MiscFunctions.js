@@ -10,7 +10,7 @@ function rTN(event){
 	else if (event) k=event.which;
 	else return true;
 	kC=String.fromCharCode(k);
-	if ((k==null) or (k==0) or (k==8) or (k==9) or (k==13) or (k==27)) return true;
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 	else if ((("0123456789.,-").indexOf(kC)>-1)) return true;
 	else return false;
 }
@@ -40,21 +40,21 @@ function isDate(dS,dF){
 		m=mA[1];
 	}
 	y=mA[5];
-	if (m<1 or m>12){
+	if (m<1 || m>12){
 		alert("Month must be between 1 and 12");
 		return false;
 	}
-	if (d<1 or d>31){
+	if (d<1 || d>31){
 		alert("Day must be between 1 and 31");
 		return false;
 	}
-	if ((m==4 or m==6 or m==9 or m==11) and d==31){
+	if ((m==4 || m==6 || m==9 || m==11) && d==31){
 		alert("Month "+m+" doesn`t have 31 days");
 		return false;
 	}
 	if (m==2){
 		var isleap=(y%4==0);
-		if (d>29 or (d==29 and !isleap)){
+		if (d>29 || (d==29 && !isleap)){
 			alert("February "+y+" doesn`t have "+d+" days");
 			return false;
 		}
@@ -98,7 +98,7 @@ function Calendar(md,dF){
 }
 function drawCalendar(md,y,m,d,dF){
 	var tD=new Date();
-	if ((m>=0) and (y>0)) tD=new Date(y,m,1);
+	if ((m>=0) && (y>0)) tD=new Date(y,m,1);
 	else{
 		d=tD.getDate();
 		tD.setDate(1);
@@ -199,7 +199,7 @@ function initial(){
 		var as=document.getElementsByTagName("a");
 		for (i=0;i<as.length;i++){
 			var a=as[i];
-			if (a.getAttribute("href") and
+			if (a.getAttribute("href") &&
 				a.getAttribute("rel")=="external")
 				a.target="_blank";
 		}
