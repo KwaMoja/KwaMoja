@@ -1,3 +1,583 @@
+Tim Schofield <tim@weberpafrica.com>	2013-01-24
+
+    Update files for new database upgrade system.
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-23
+
+    Change function AddConstraint() to handle keys with more than one field
+
+Merge: 4f8a110 77320fc
+Tim Schofield <tim@weberpafrica.com>	2013-01-23
+
+    Merge branch 'develop' of https://github.com/KwaMoja/KwaMoja into dbupgrade
+
+Merge: 16e5009 78b2802
+KwaMoja <pmunir31@gmail.com>	2013-01-23
+
+    Merge pull request #42 from timschofield/master
+    
+    Fixes to javascript causing some functions not to run
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-23
+
+    Fix up javascript errors preventing some of the functions from working
+
+Merge: 00111de 16e5009
+Tim Schofield <tim@weberpafrica.com>	2013-01-22
+
+    Merge branch 'develop' of https://github.com/KwaMoja/KwaMoja into dbupgrade
+
+Merge: c4345a8 c080830
+KwaMoja <pmunir31@gmail.com>	2013-01-21
+
+    Merge pull request #41 from timschofield/master
+    
+    Version 4.10 changes
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-22
+
+    Database files for version 4.10
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-22
+
+    Language files for version 4.10
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-21
+
+    Add ChangeConfigValue() and ChangeConfigName() functions for mysql
+
+Merge: 2dbb3c9 b039e2f
+KwaMoja <pmunir31@gmail.com>	2013-01-21
+
+    Merge pull request #40 from timschofield/develop
+    
+    Facility for allowing account group name to be changed
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-21
+
+    Facility for allowing account group name to be changed
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-19
+
+    Convert sql update files to atomic php files for new database upgrade system
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-19
+
+    New function for dropping an index from table
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-18
+
+    Rename the update files as .php rather than .sql
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-18
+
+    Extend the language field in the users table
+
+Merge: c02cb68 2dbb3c9
+Tim Schofield <tim@weberpafrica.com>	2013-01-18
+
+    Merge branch 'develop' of https://github.com/KwaMoja/KwaMoja into dbupgrade
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-18
+
+    Enforce ansi standard sql for mysql connections
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-18
+
+    Updates to the new database upgrade system.
+
+Merge: ca21974 f1162af
+KwaMoja <pmunir31@gmail.com>	2013-01-18
+
+    Merge pull request #39 from fahadhatib/develop
+    
+    Pak Ricard: New script showing raw materials not used in any BOM
+
+Pak Ricard <pakricard@gmail.com>	2013-01-18
+
+    New script showing raw materials not used in any BOM
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-17
+
+    Initial database file, for creation of the new kwamoja database
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-17
+
+    Scripts required for new DB upgrade system and new install system.
+
+Merge: 70269c7 75edcd4
+KwaMoja <pmunir31@gmail.com>	2013-01-17
+
+    Merge pull request #38 from fahadhatib/develop
+    
+    Improve ments to Stock location transfer from Pak Ricard
+
+Pak Ricard <pakricard@gmail.com>	2013-01-17
+
+    Pak Ricard: Improvement to Email text
+
+Pak Ricard <pakricard@gmail.com>	2013-01-17
+
+    Pak Ricard: Send an Email to Inventory Manager when there is a balance cancellation or transfer reception to prevent employee fraud.
+
+Merge: 69a1bc2 f126c80
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #37 from timschofield/develop
+    
+    Force the number to be a floating point number before sending to number_...
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-15
+
+    Force the number to be a floating point number before sending to number_format function
+
+Merge: 38a027c cbfc010
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #36 from timschofield/develop
+    
+    Change name of variable from $rootpath to $RootPath
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-15
+
+    Change name of variable from $rootpath to $RootPath
+
+Merge: 231efc4 425b38f
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #35 from MarthaMadjack/develop
+    
+    Add in facility to set the users font size directly in the header
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-15
+
+    Add in facility to set the users font size directly in the header
+
+Merge: 75c77c4 c3ecc4b
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #34 from fahadhatib/develop
+    
+    Fix various syntax errors and typos
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-15
+
+    Fix various syntax errora and typos
+
+Merge: f55bd6e 2117757
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #33 from fahadhatib/develop
+    
+    Remove unnecessary <div> tags
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-15
+
+    Remove unnecessary <div> tags
+
+Merge: a27e8e2 274a70e
+KwaMoja <pmunir31@gmail.com>	2013-01-15
+
+    Merge pull request #31 from timschofield/develop
+    
+    Reinstate commit 5219 - Pak Ricard enable user to copy previous data lea...
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-15
+
+    Reinstate commit 5319 - Pak Ricard enable user to copy previous data leaving price and date field to be input.
+
+Merge: 1432a5c a4c2b09
+KwaMoja <pmunir31@gmail.com>	2013-01-14
+
+    Merge pull request #30 from timschofield/develop
+    
+    pak Ricard: Added a link to SelectProduct.php by stockid
+
+Pak Ricard <pakricard@gmail.com>	2013-01-14
+
+    pak Ricard: Added a link to SelectProduct.php by stockid
+
+Merge: b0c46ab babff91
+KwaMoja <pmunir31@gmail.com>	2013-01-13
+
+    Merge pull request #29 from MarthaMadjack/develop
+    
+    Develop
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-13
+
+    Link the logos with the project home page
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-13
+
+    Add in new favicon for KwaMoja
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-13
+
+    Revise INSTALL.txt with a link to frequently asked install questions
+
+Munir Patel <pmunir31@gmail.com>	2013-01-08
+
+    Remove incorrect file
+
+Merge: a2b2c95 c35b726
+KwaMoja <pmunir31@gmail.com>	2013-01-08
+
+    Merge pull request #28 from MarthaMadjack/develop
+    
+    Sort the themes alphabetically
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-08
+
+    Sort the themes alphabetically
+
+Merge: 1d72e5f 84edbd2
+KwaMoja <pmunir31@gmail.com>	2013-01-08
+
+    Merge pull request #27 from MarthaMadjack/develop
+    
+    Push print table icon style to all themes
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-08
+
+    Push print table icon style to all themes
+
+Merge: f3a59cd cd70502
+KwaMoja <pmunir31@gmail.com>	2013-01-08
+
+    Merge pull request #26 from timschofield/develop
+    
+    Develop
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-08
+
+    Framework required for printing of html tables
+
+Phil Daintree <phil@logicworks.co.nz>	2013-01-08
+
+    Phil: Fix bug in purchase ordering conversion factor
+
+Merge: cf2e375 adf4ebf
+KwaMoja <pmunir31@gmail.com>	2013-01-07
+
+    Merge pull request #25 from MarthaMadjack/develop
+    
+    Ensure form elements correctly inherit the font sizes and font family fr...
+
+Merge: 68f68c6 4fa55db
+KwaMoja <pmunir31@gmail.com>	2013-01-07
+
+    Merge pull request #24 from fahadhatib/develop
+    
+    New manual entry for internal stock requests and fixes for minor bugs found whilst writing the manual entry
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-07
+
+    Ensure form elements correctly inherit the font sizes and font family from page body
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    Use same font family in manual as in the rest of KwaMoja
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    Ensure variables are initialised before use
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    Allow raw materials in internal stock requests
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    Correct spelling mistakes
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    New manual entries for internal stock requests
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-07
+
+    Set $AuthoriserID to '' before using it.
+
+Merge: 5fb61f1 6a75aee
+KwaMoja <pmunir31@gmail.com>	2013-01-06
+
+    Merge pull request #23 from MarthaMadjack/develop
+    
+    Correction to default theme to use for install
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-06
+
+    Correction to default theme to use for install
+
+Merge: cab3894 2900136
+KwaMoja <pmunir31@gmail.com>	2013-01-06
+
+    Merge pull request #22 from MarthaMadjack/develop
+    
+    More improvements to login screen
+
+Merge: a82bb83 4c657b8
+KwaMoja <pmunir31@gmail.com>	2013-01-06
+
+    Merge pull request #21 from timschofield/develop
+    
+    Develop
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-06
+
+    More improvements to login screen
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Fix minor bugs
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    If there is no currency set yet take the company default parameter
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Show whether a transaction has been matched, and add filter by matched status
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Lengthen the tax authority name field from 20 characters to 40
+
+Merge: 7166054 5ecbd13
+KwaMoja <pmunir31@gmail.com>	2013-01-05
+
+    Merge pull request #20 from timschofield/develop
+    
+    Develop
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Change caption for bank transactions enquiry as it shows a range of days
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Minor bug fixes
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Only show the back to reconciliation link if you have come from a reconciliation
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-05
+
+    Fix syntax error in if statement
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-03
+
+    Show blank line under last system message
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-03
+
+    Fix bugs in select sales order scripts
+
+Merge: f55ab7d 26b6a5e
+KwaMoja <pmunir31@gmail.com>	2013-01-03
+
+    Merge pull request #19 from MarthaMadjack/develop
+    
+    Change font, and bug fix from webERP
+
+Bob Thomas <rft@asthomas.com>	2013-01-03
+
+    Bob Thomas: Bug fixes to the wikilink function to work with wikimedia
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-03
+
+    Change to Arial font for consistency across all platforms
+
+Merge: f832ad7 a0346ff
+KwaMoja <pmunir31@gmail.com>	2013-01-03
+
+    Merge pull request #18 from MarthaMadjack/develop
+    
+    Change to a nicer font, and move font attributes into body tag style
+
+Merge: e9dbbdf 7a41514
+KwaMoja <pmunir31@gmail.com>	2013-01-03
+
+    Merge pull request #17 from timschofield/develop
+    
+    Properly decode html entities before printing them on pdf report
+
+Martha Njeri <marthamadjack@gmail.com>	2013-01-03
+
+    Change to a nicer font, and move font attributes into body tag style
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-03
+
+    Properly decode html entities before printing them on pdf report
+
+Merge: 6e4510b 548bbf2
+KwaMoja <pmunir31@gmail.com>	2013-01-03
+
+    Merge pull request #15 from timschofield/develop
+    
+    Date format, string changes, and variable names.
+
+Merge: 0010cec f97ff5d
+KwaMoja <pmunir31@gmail.com>	2013-01-03
+
+    Merge pull request #16 from fahadhatib/develop
+    
+    Manual for supplier tendering.
+
+Phil Daintree <phil@logicworks.co.nz>	2013-01-03
+
+    Phil: Change case of some variable names
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-03
+
+    Fix bug in allowed modules. Ensure that no modules are allowed in supplier only logins
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-03
+
+    Fix bugs in tendering
+
+Fahad Hatib <fahad.hatib@gmail.com>	2013-01-03
+
+    New manual pages for supplier tendering
+
+Thomas Timothy Lie <open@baliboss.com>	2013-01-01
+
+    Thomas: Corrections to strings
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-01
+
+    Changes to work for ISO 8601 date formats - Y-m-d
+
+Merge: 63c12c1 b7f5558
+KwaMoja <pmunir31@gmail.com>	2013-01-01
+
+    Merge pull request #14 from timschofield/develop
+    
+    Remove remaining references to webERP
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-01
+
+    Remove unnecessary details about changing config.php
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-01
+
+    Fix up language files prior to release
+
+Tim Schofield <tim@weberpafrica.com>	2013-01-01
+
+    Remove references to webERP
+
+Tim Schofield <tim@weberpafrica.com>	2012-12-31
+
+    Automatically adjust config.php for variable name changes
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-31
+
+    Phil: notes on upgrading
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-31
+
+    Phil: notes on upgrading
+
+Merge: 626584c 41cf668
+KwaMoja <pmunir31@gmail.com>	2012-12-30
+
+    Merge pull request #13 from timschofield/develop
+    
+    Updates from webERP
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Change variable case and improve logout functionality
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Change case on variables and rework logout functionality
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Replace all instances of $allow_demo_mode with $AllowDemoMode
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Change all instances of $dbtype to $DBType
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Change all instances of $dbuser and $dbpassword to $DBUser and $DBPassword
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-30
+
+    Phil: Replace all occurences of $rootpath with $RootPath
+
+Merge: 6128899 9430f18
+KwaMoja <pmunir31@gmail.com>	2012-12-29
+
+    Merge pull request #12 from timschofield/develop
+    
+    Phil: Replace all instances of $theme with $Theme
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-29
+
+    Phil: Replace all instances of $theme with $Theme
+
+Merge: ca443eb 8031e69
+KwaMoja <pmunir31@gmail.com>	2012-12-29
+
+    Merge pull request #11 from fahadhatib/develop
+    
+    Develop
+
+Merge: e5f6036 ca443eb
+Fahad Hatib <fahad.hatib@gmail.com>	2012-12-29
+
+    Merge branch 'develop' of github.com:KwaMoja/KwaMoja into develop
+
+Fahad Hatib <fahad.hatib@gmail.com>	2012-12-29
+
+    Fix bugs
+
+Fahad Hatib <fahad.hatib@gmail.com>	2012-12-29
+
+    Ensure the $_POST variable is set before checking
+
+Merge: 3c268ec 141170f
+KwaMoja <pmunir31@gmail.com>	2012-12-29
+
+    Merge pull request #10 from MarthaMadjack/develop
+    
+    Develop
+
+Merge: 9c192a1 3c268ec
+Martha Njeri <marthamadjack@gmail.com>	2012-12-29
+
+    Merge branch 'develop' of github.com:KwaMoja/KwaMoja into develop
+
+Martha Njeri <marthamadjack@gmail.com>	2012-12-29
+
+    New translation files
+
+Munir Patel <pmunir31@gmail.com>	2012-12-29
+
+    Remove config file should not be tracked
+
+Merge: 5e465b5 8bc4ffa
+KwaMoja <pmunir31@gmail.com>	2012-12-29
+
+    Merge pull request #9 from timschofield/develop
+    
+    Updates from webERP
+
+Phil Daintree <phil@logicworks.co.nz>	2012-12-29
+
+    Phil: Change $title to $Title in all scripts
+
+Tim Schofield <tim@weberpafrica.com>	2012-12-29
+
+    New change log generated by git
+
 Tim Schofield <tim@weberpafrica.com>	2012-12-29
 
     Move repeated font atttributes up to the body tag
@@ -24796,7 +25376,7 @@ Tim Schofield <tim@weberpafrica.com>	2008-10-21
 
 Tim Schofield <tim@weberpafrica.com>	2008-10-21
 
-    Correctly show $RootPath in href links
+    Correctly show $rootpath in href links
     
     
     git-svn-id: http://svn.code.sf.net/p/web-erp/code/trunk@1201 09516a42-71f9-43be-811f-9b821cf0d246
@@ -27764,7 +28344,7 @@ Tim Schofield <tim@weberpafrica.com>	2008-03-15
 
 Tim Schofield <tim@weberpafrica.com>	2008-03-15
 
-    Correct $Theme to silverwolf
+    Correct $theme to silverwolf
     
     
     git-svn-id: http://svn.code.sf.net/p/web-erp/code/trunk@776 09516a42-71f9-43be-811f-9b821cf0d246

@@ -172,6 +172,9 @@ if (isset($_POST['DoUpgrade'])){
 						prnMsg( _('You should now make the config.php read only for the web server.'), 'warning');
 					}
 				case '4.09.1':
+				case '4.10':
+					$SQLScripts[] = './sql/mysql/upgrade4.10-4.11.sql';
+				case '4.10.1':
 					break;
 			} //end switch
 		}
