@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-21 22:24+0000\n"
+"POT-Creation-Date: 2013-01-25 10:38+0000\n"
 "PO-Revision-Date: 2011-07-13 16:40+0000\n"
 "Last-Translator: Bruno Monteiro <Unknown>\n"
 "Language-Team: Portugese (Portugal) <thiago.figueiredo@microskills.eu>\n"
@@ -280,7 +280,7 @@ msgstr "Não foi possível obter grupos Contábeis pois"
 #: WhereUsedInquiry.php:18 WorkCentres.php:111 WorkCentres.php:162
 #: WorkOrderCosting.php:22 WorkOrderEntry.php:11 WorkOrderIssue.php:22
 #: WorkOrderReceive.php:31 WorkOrderStatus.php:58 WWW_Access.php:11
-#: WWW_Users.php:37 Z_BottomUpCosts.php:57 Z_UpgradeDatabase.php:39
+#: WWW_Users.php:37 Z_BottomUpCosts.php:57
 msgid "Search"
 msgstr "Pesquisa"
 
@@ -618,8 +618,7 @@ msgstr "O código de conta inserido não é válido"
 #: PcClaimExpensesFromTab.php:82 PcExpenses.php:98 PcTabs.php:104
 #: PcTypeTabs.php:63 PO_Items.php:385 SalesAnalReptCols.php:129
 #: SalesPeople.php:97 SalesTypes.php:66 Stocks.php:515 Suppliers.php:520
-#: SupplierTypes.php:67 includes/UpgradeDB_mysql.inc:234
-#: includes/UpgradeDB_mysql.inc:252 includes/UpgradeDB_mysql.inc:334
+#: SupplierTypes.php:67
 msgid "has been updated"
 msgstr "foi actualizado(a)"
 
@@ -760,10 +759,10 @@ msgid "Date"
 msgstr "Data"
 
 #: AddCustomerNotes.php:118 AddCustomerTypeNotes.php:112 PcReportTab.php:172
-#: Stocks.php:1062 UpgradeDatabase.php:224 UpgradeDatabase.php:227
-#: UpgradeDatabase.php:230 UpgradeDatabase.php:233 UpgradeDatabase.php:236
-#: UpgradeDatabase.php:239 UpgradeDatabase.php:242 UpgradeDatabase.php:245
-#: UpgradeDatabase.php:248 Z_Upgrade_3.10-3.11.php:62
+#: Stocks.php:1062 UpgradeDatabase.php:227 UpgradeDatabase.php:230
+#: UpgradeDatabase.php:233 UpgradeDatabase.php:236 UpgradeDatabase.php:239
+#: UpgradeDatabase.php:242 UpgradeDatabase.php:245 UpgradeDatabase.php:248
+#: UpgradeDatabase.php:251 Z_Upgrade_3.10-3.11.php:62
 #: Z_Upgrade_3.10-3.11.php:66 Z_Upgrade_3.10-3.11.php:70
 #: Z_Upgrade_3.10-3.11.php:74 Z_Upgrade_3.10-3.11.php:78
 #: Z_Upgrade_3.11-4.00.php:62 Z_Upgrade_3.11-4.00.php:66
@@ -1146,8 +1145,7 @@ msgstr "Código da área"
 msgid "New area code"
 msgstr "Novo código de área"
 
-#: Areas.php:86 includes/UpgradeDB_mysql.inc:31
-#: includes/UpgradeDB_mysql.inc:215
+#: Areas.php:86
 msgid "has been inserted"
 msgstr "foi inserido(a)"
 
@@ -9026,7 +9024,7 @@ msgstr "Tipo de Cliente"
 #: PcClaimExpensesFromTab.php:109 PcExpenses.php:127 PcExpensesTypeTab.php:79
 #: PcTabs.php:142 PcTypeTabs.php:88 PO_Items.php:242 SalesTypes.php:90
 #: SelectSalesOrder.php:230 SelectSalesOrder.php:391 SpecialOrder.php:480
-#: SupplierTypes.php:91 includes/UpgradeDB_mysql.inc:268
+#: SupplierTypes.php:91
 msgid "has been created"
 msgstr "foi criado"
 
@@ -22706,17 +22704,7 @@ msgstr ""
 "O relatório não será permitido de executar até algumas colunas serem "
 "removidas"
 
-#: SalesAnalReptCols.php:365 includes/UpgradeDB_mysql.inc:31
-#: includes/UpgradeDB_mysql.inc:33 includes/UpgradeDB_mysql.inc:36
-#: includes/UpgradeDB_mysql.inc:89 includes/UpgradeDB_mysql.inc:91
-#: includes/UpgradeDB_mysql.inc:94 includes/UpgradeDB_mysql.inc:109
-#: includes/UpgradeDB_mysql.inc:111 includes/UpgradeDB_mysql.inc:114
-#: includes/UpgradeDB_mysql.inc:132 includes/UpgradeDB_mysql.inc:134
-#: includes/UpgradeDB_mysql.inc:137 includes/UpgradeDB_mysql.inc:157
-#: includes/UpgradeDB_mysql.inc:159 includes/UpgradeDB_mysql.inc:162
-#: includes/UpgradeDB_mysql.inc:177 includes/UpgradeDB_mysql.inc:179
-#: includes/UpgradeDB_mysql.inc:182 includes/UpgradeDB_mysql.inc:197
-#: includes/UpgradeDB_mysql.inc:199 includes/UpgradeDB_mysql.inc:202
+#: SalesAnalReptCols.php:365
 msgid "The column"
 msgstr "A coluna"
 
@@ -23282,14 +23270,11 @@ msgstr "A categoria de vendas"
 msgid "Stock item"
 msgstr "Item de Stock"
 
-#: SalesCategories.php:149 includes/UpgradeDB_mysql.inc:309
-#: includes/UpgradeDB_mysql.inc:445
+#: SalesCategories.php:149
 msgid "has been added"
 msgstr "foi adicionada"
 
-#: SalesCategories.php:157 includes/UpgradeDB_mysql.inc:89
-#: includes/UpgradeDB_mysql.inc:295 includes/UpgradeDB_mysql.inc:378
-#: includes/UpgradeDB_mysql.inc:428
+#: SalesCategories.php:157
 msgid "has been removed"
 msgstr "foi removido"
 
@@ -33086,71 +33071,71 @@ msgstr "Favor corrigir e tentar novamente"
 msgid "You should now make the config.php read only for the web server."
 msgstr ""
 
-#: UpgradeDatabase.php:179
+#: UpgradeDatabase.php:182
 msgid ""
 "Only mysql upgrades are performed seamlessly at this time. Your database "
 "will need to be manually updated"
 msgstr ""
 
-#: UpgradeDatabase.php:193
+#: UpgradeDatabase.php:196
 msgid "Applying"
 msgstr "Aplicando"
 
-#: UpgradeDatabase.php:221 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
+#: UpgradeDatabase.php:224 Z_Upgrade_3.10-3.11.php:59 Z_Upgrade3.10.php:29
 #: Z_Upgrade3.10.php:34 Z_Upgrade3.10.php:46 Z_Upgrade3.10.php:51
 #: Z_Upgrade3.10.php:60 Z_Upgrade3.10.php:65 Z_Upgrade3.10.php:74
 #: Z_Upgrade3.10.php:79 Z_Upgrade_3.11-4.00.php:59
 msgid "Success"
 msgstr "Sucesso"
 
-#: UpgradeDatabase.php:224
+#: UpgradeDatabase.php:227
 msgid "Foreign Key already removed"
 msgstr ""
 
-#: UpgradeDatabase.php:227 Z_Upgrade_3.10-3.11.php:63
+#: UpgradeDatabase.php:230 Z_Upgrade_3.10-3.11.php:63
 #: Z_Upgrade_3.11-4.00.php:63
 msgid "Table has already been created"
 msgstr "Tabela já foi criado"
 
-#: UpgradeDatabase.php:230
+#: UpgradeDatabase.php:233
 #, fuzzy
 msgid "Column has already been changed"
 msgstr "A coluna já foi criado"
 
-#: UpgradeDatabase.php:233 Z_Upgrade_3.10-3.11.php:67
+#: UpgradeDatabase.php:236 Z_Upgrade_3.10-3.11.php:67
 #: Z_Upgrade_3.11-4.00.php:67
 msgid "Column has already been created"
 msgstr "A coluna já foi criado"
 
-#: UpgradeDatabase.php:236 Z_Upgrade_3.10-3.11.php:71
+#: UpgradeDatabase.php:239 Z_Upgrade_3.10-3.11.php:71
 #: Z_Upgrade_3.11-4.00.php:71
 msgid "Index already exists"
 msgstr "Índice já existe"
 
-#: UpgradeDatabase.php:239 Z_Upgrade_3.10-3.11.php:75
+#: UpgradeDatabase.php:242 Z_Upgrade_3.10-3.11.php:75
 #: Z_Upgrade_3.11-4.00.php:75
 msgid "Entry has already been done"
 msgstr "Entrada já foi feito"
 
-#: UpgradeDatabase.php:242
+#: UpgradeDatabase.php:245
 msgid "SQL syntax error. The SQL error message is"
 msgstr "Erro de sintaxe SQL. A mensagem de erro do SQL é"
 
-#: UpgradeDatabase.php:245 Z_Upgrade_3.10-3.11.php:79
+#: UpgradeDatabase.php:248 Z_Upgrade_3.10-3.11.php:79
 #: Z_Upgrade_3.11-4.00.php:79
 msgid "Primary key already exists"
 msgstr "Chave primária já existe"
 
-#: UpgradeDatabase.php:248
+#: UpgradeDatabase.php:251
 msgid "Index already dropped previously"
 msgstr "Índice já caiu anteriormente"
 
-#: UpgradeDatabase.php:251 Z_Upgrade_3.10-3.11.php:82
+#: UpgradeDatabase.php:254 Z_Upgrade_3.10-3.11.php:82
 #: Z_Upgrade_3.11-4.00.php:82
 msgid "Failure"
 msgstr "Falha"
 
-#: UpgradeDatabase.php:251 Z_Upgrade_3.10-3.11.php:83
+#: UpgradeDatabase.php:254 Z_Upgrade_3.10-3.11.php:83
 #: Z_Upgrade_3.11-4.00.php:83
 msgid "Error number"
 msgstr "Número de erro"
@@ -37541,61 +37526,6 @@ msgstr ""
 "dados desde v 3,11 necessários para permitir a funcionalidade adicional na "
 "versão 4.00 scripts"
 
-#: Z_UpgradeDatabase.php:7
-#, fuzzy
-msgid "Database Upgrade"
-msgstr "Executar uma atualização de banco de dados"
-
-#: Z_UpgradeDatabase.php:36
-#, fuzzy
-msgid ""
-"Your database type is not covered by this upgrade script. Please see your "
-"system administrator"
-msgstr ""
-"Não possui acesso de escrita para os ficheiros requeridos por favor entre em "
-"contato com o administrador do sistema"
-
-#: Z_UpgradeDatabase.php:45
-msgid "You have database updates that are required."
-msgstr "Você tem atualizações de banco de dados que são necessários."
-
-#: Z_UpgradeDatabase.php:46
-msgid ""
-"Please ensure that you have taken a backup of your current database before "
-"continuing."
-msgstr ""
-"Certifique-se de que você tenha tomado um backup do seu banco de dados atual "
-"antes de continuar."
-
-#: Z_UpgradeDatabase.php:48
-msgid "Continue With Updates"
-msgstr ""
-
-#: Z_UpgradeDatabase.php:71
-#, fuzzy
-msgid "Database Updates Have Been Run"
-msgstr "Falha na atualização de banco de dados"
-
-#: Z_UpgradeDatabase.php:72
-#, fuzzy
-msgid "updates have errors in them"
-msgstr "Nenhuma atualização realizada"
-
-#: Z_UpgradeDatabase.php:73
-#, fuzzy
-msgid "updates have succeeded"
-msgstr "Nenhuma atualização realizada"
-
-#: Z_UpgradeDatabase.php:74
-msgid ""
-"updates have not been done as the update was unnecessary on this database"
-msgstr ""
-
-#: Z_UpgradeDatabase.php:81
-msgid ""
-"You must logout and log back in to ensure that all the updates take affect"
-msgstr ""
-
 #: Z_UploadForm.php:8 includes/InputSerialItems.php:85
 msgid "File Upload"
 msgstr "Envio de Ficheiro"
@@ -38699,8 +38629,7 @@ msgstr ""
 msgid "The order line for"
 msgstr "A odem de linha para"
 
-#: includes/DefineCartClass.php:174 includes/UpgradeDB_mysql.inc:33
-#: includes/UpgradeDB_mysql.inc:217
+#: includes/DefineCartClass.php:174
 msgid "could not be inserted"
 msgstr "não pôde ser inserida"
 
@@ -38708,8 +38637,7 @@ msgstr "não pôde ser inserida"
 msgid "The order line number"
 msgstr "Linha de pedido número"
 
-#: includes/DefineCartClass.php:214 includes/UpgradeDB_mysql.inc:236
-#: includes/UpgradeDB_mysql.inc:254 includes/UpgradeDB_mysql.inc:336
+#: includes/DefineCartClass.php:214
 msgid "could not be updated"
 msgstr "não pôde ser atualizada"
 
@@ -41168,207 +41096,6 @@ msgid ""
 msgstr ""
 "As informações sobre a empresa e as preferências não pôde ser reactivado. "
 "Consulte o administrador do sistema"
-
-#: includes/UpgradeDB_mysql.inc:36 includes/UpgradeDB_mysql.inc:273
-#: includes/UpgradeDB_mysql.inc:314 includes/UpgradeDB_mysql.inc:466
-#, fuzzy
-msgid "already exists"
-msgstr " já existe."
-
-#: includes/UpgradeDB_mysql.inc:53
-#, fuzzy
-msgid "The index has been inserted"
-msgstr "O novo preço foi inserida"
-
-#: includes/UpgradeDB_mysql.inc:55
-#, fuzzy
-msgid "The column could not be inserted"
-msgstr "não pôde ser inserida"
-
-#: includes/UpgradeDB_mysql.inc:58
-#, fuzzy
-msgid "The column already exists"
-msgstr " já existe."
-
-#: includes/UpgradeDB_mysql.inc:71
-#, fuzzy
-msgid "The index has been droppeed"
-msgstr "O preço foi actualizado"
-
-#: includes/UpgradeDB_mysql.inc:73
-#, fuzzy
-msgid "The index could not be dropped"
-msgstr "Não foi possível processar a atualização"
-
-#: includes/UpgradeDB_mysql.inc:76
-#, fuzzy
-msgid "The index does not exist"
-msgstr "O item inserido não existe"
-
-#: includes/UpgradeDB_mysql.inc:91 includes/UpgradeDB_mysql.inc:297
-#: includes/UpgradeDB_mysql.inc:380 includes/UpgradeDB_mysql.inc:430
-#, fuzzy
-msgid "could not be removed"
-msgstr "não puderam ser obtidos"
-
-#: includes/UpgradeDB_mysql.inc:94
-#, fuzzy
-msgid "is already removed"
-msgstr "já foi vendido"
-
-#: includes/UpgradeDB_mysql.inc:109 includes/UpgradeDB_mysql.inc:157
-#: includes/UpgradeDB_mysql.inc:177 includes/UpgradeDB_mysql.inc:197
-#, fuzzy
-msgid "has been changed"
-msgstr "foi cancelada"
-
-#: includes/UpgradeDB_mysql.inc:111 includes/UpgradeDB_mysql.inc:159
-#: includes/UpgradeDB_mysql.inc:179 includes/UpgradeDB_mysql.inc:199
-#, fuzzy
-msgid "could not be changed"
-msgstr "não pôde ser adicionado"
-
-#: includes/UpgradeDB_mysql.inc:114 includes/UpgradeDB_mysql.inc:137
-#: includes/UpgradeDB_mysql.inc:162 includes/UpgradeDB_mysql.inc:182
-#: includes/UpgradeDB_mysql.inc:202
-#, fuzzy
-msgid "is already changed"
-msgstr "A coluna já foi criado"
-
-#: includes/UpgradeDB_mysql.inc:132
-#, fuzzy
-msgid "has been renamed"
-msgstr "foi removido"
-
-#: includes/UpgradeDB_mysql.inc:134
-#, fuzzy
-msgid "could not be renamed"
-msgstr "não pôde ser adicionado"
-
-#: includes/UpgradeDB_mysql.inc:215 includes/UpgradeDB_mysql.inc:217
-#: includes/UpgradeDB_mysql.inc:220 includes/UpgradeDB_mysql.inc:234
-#: includes/UpgradeDB_mysql.inc:236 includes/UpgradeDB_mysql.inc:239
-#: includes/UpgradeDB_mysql.inc:252 includes/UpgradeDB_mysql.inc:254
-#: includes/UpgradeDB_mysql.inc:257
-#, fuzzy
-msgid "The config value"
-msgstr "O arquivo"
-
-#: includes/UpgradeDB_mysql.inc:220
-#, fuzzy
-msgid "is in"
-msgstr "Existe em"
-
-#: includes/UpgradeDB_mysql.inc:239
-#, fuzzy
-msgid "is already set to"
-msgstr "está definida como"
-
-#: includes/UpgradeDB_mysql.inc:257
-#, fuzzy
-msgid "is already changed to"
-msgstr "já está neste pedido"
-
-#: includes/UpgradeDB_mysql.inc:268 includes/UpgradeDB_mysql.inc:270
-#: includes/UpgradeDB_mysql.inc:273 includes/UpgradeDB_mysql.inc:461
-#: includes/UpgradeDB_mysql.inc:463 includes/UpgradeDB_mysql.inc:466
-#, fuzzy
-msgid "The table"
-msgstr "A variável"
-
-#: includes/UpgradeDB_mysql.inc:270
-#, fuzzy
-msgid "could not be created"
-msgstr "não puderam ser obtidos"
-
-#: includes/UpgradeDB_mysql.inc:295 includes/UpgradeDB_mysql.inc:297
-#: includes/UpgradeDB_mysql.inc:300 includes/UpgradeDB_mysql.inc:309
-#: includes/UpgradeDB_mysql.inc:311 includes/UpgradeDB_mysql.inc:314
-#, fuzzy
-msgid "The constraint"
-msgstr "O componente"
-
-#: includes/UpgradeDB_mysql.inc:300
-#, fuzzy
-msgid "does not exist"
-msgstr "não existe"
-
-#: includes/UpgradeDB_mysql.inc:311 includes/UpgradeDB_mysql.inc:447
-msgid "could not be added"
-msgstr "não pôde ser adicionado"
-
-#: includes/UpgradeDB_mysql.inc:334 includes/UpgradeDB_mysql.inc:336
-#: includes/UpgradeDB_mysql.inc:339
-#, fuzzy
-msgid "The field"
-msgstr "O arquivo"
-
-#: includes/UpgradeDB_mysql.inc:339
-#, fuzzy
-msgid "is already correct"
-msgstr "já está neste pedido"
-
-#: includes/UpgradeDB_mysql.inc:352
-#, fuzzy
-msgid "Rows have been deleted from"
-msgstr "ter sido eliminado"
-
-#: includes/UpgradeDB_mysql.inc:354
-#, fuzzy
-msgid "Rows could not be deleted from"
-msgstr "não pode ser removida pois"
-
-#: includes/UpgradeDB_mysql.inc:357
-#, fuzzy
-msgid "There was nothing to delete from"
-msgstr "Não há nada a ser processado"
-
-#: includes/UpgradeDB_mysql.inc:378 includes/UpgradeDB_mysql.inc:380
-#: includes/UpgradeDB_mysql.inc:383
-#, fuzzy
-msgid "The old table"
-msgstr "A variável"
-
-#: includes/UpgradeDB_mysql.inc:383 includes/UpgradeDB_mysql.inc:433
-#, fuzzy
-msgid "has already been removed"
-msgstr "já foi vendido"
-
-#: includes/UpgradeDB_mysql.inc:408
-#, fuzzy
-msgid "The record has been inserted"
-msgstr "Um novo registro de utilizador foi inserido"
-
-#: includes/UpgradeDB_mysql.inc:410
-#, fuzzy
-msgid "The record could not be inserted"
-msgstr "O registro da NBR não pode ser inserida"
-
-#: includes/UpgradeDB_mysql.inc:413
-#, fuzzy
-msgid "The record is already in the table"
-msgstr "A moeda já existe no banco de dados"
-
-#: includes/UpgradeDB_mysql.inc:428 includes/UpgradeDB_mysql.inc:430
-#: includes/UpgradeDB_mysql.inc:433 includes/UpgradeDB_mysql.inc:445
-#: includes/UpgradeDB_mysql.inc:447 includes/UpgradeDB_mysql.inc:450
-msgid "The primary key in"
-msgstr "A chave primária em"
-
-#: includes/UpgradeDB_mysql.inc:450
-#, fuzzy
-msgid "has already been added"
-msgstr "já foi vendido"
-
-#: includes/UpgradeDB_mysql.inc:461
-#, fuzzy
-msgid "has been renamed to"
-msgstr "foi enviada por email para"
-
-#: includes/UpgradeDB_mysql.inc:463
-#, fuzzy
-msgid "could not be renamed to"
-msgstr "não foi possível enviar por email para"
 
 #: api/api_debtortransactions.php:1269 api/api_debtortransactions.php:1282
 #: api/api_debtortransactions.php:1567 api/api_debtortransactions.php:1579
@@ -43970,6 +43697,186 @@ msgstr "Parâmetros"
 #: api/api_xml-rpc.php:3495
 msgid "Return Value"
 msgstr "Valor de retorno"
+
+#, fuzzy
+#~ msgid "Database Upgrade"
+#~ msgstr "Executar uma atualização de banco de dados"
+
+#, fuzzy
+#~ msgid ""
+#~ "Your database type is not covered by this upgrade script. Please see your "
+#~ "system administrator"
+#~ msgstr ""
+#~ "Não possui acesso de escrita para os ficheiros requeridos por favor entre "
+#~ "em contato com o administrador do sistema"
+
+#~ msgid "You have database updates that are required."
+#~ msgstr "Você tem atualizações de banco de dados que são necessários."
+
+#~ msgid ""
+#~ "Please ensure that you have taken a backup of your current database "
+#~ "before continuing."
+#~ msgstr ""
+#~ "Certifique-se de que você tenha tomado um backup do seu banco de dados "
+#~ "atual antes de continuar."
+
+#, fuzzy
+#~ msgid "Database Updates Have Been Run"
+#~ msgstr "Falha na atualização de banco de dados"
+
+#, fuzzy
+#~ msgid "updates have errors in them"
+#~ msgstr "Nenhuma atualização realizada"
+
+#, fuzzy
+#~ msgid "updates have succeeded"
+#~ msgstr "Nenhuma atualização realizada"
+
+#, fuzzy
+#~ msgid "already exists"
+#~ msgstr " já existe."
+
+#, fuzzy
+#~ msgid "The index has been inserted"
+#~ msgstr "O novo preço foi inserida"
+
+#, fuzzy
+#~ msgid "The column could not be inserted"
+#~ msgstr "não pôde ser inserida"
+
+#, fuzzy
+#~ msgid "The column already exists"
+#~ msgstr " já existe."
+
+#, fuzzy
+#~ msgid "The index has been droppeed"
+#~ msgstr "O preço foi actualizado"
+
+#, fuzzy
+#~ msgid "The index could not be dropped"
+#~ msgstr "Não foi possível processar a atualização"
+
+#, fuzzy
+#~ msgid "The index does not exist"
+#~ msgstr "O item inserido não existe"
+
+#, fuzzy
+#~ msgid "could not be removed"
+#~ msgstr "não puderam ser obtidos"
+
+#, fuzzy
+#~ msgid "is already removed"
+#~ msgstr "já foi vendido"
+
+#, fuzzy
+#~ msgid "has been changed"
+#~ msgstr "foi cancelada"
+
+#, fuzzy
+#~ msgid "could not be changed"
+#~ msgstr "não pôde ser adicionado"
+
+#, fuzzy
+#~ msgid "is already changed"
+#~ msgstr "A coluna já foi criado"
+
+#, fuzzy
+#~ msgid "has been renamed"
+#~ msgstr "foi removido"
+
+#, fuzzy
+#~ msgid "could not be renamed"
+#~ msgstr "não pôde ser adicionado"
+
+#, fuzzy
+#~ msgid "The config value"
+#~ msgstr "O arquivo"
+
+#, fuzzy
+#~ msgid "is in"
+#~ msgstr "Existe em"
+
+#, fuzzy
+#~ msgid "is already set to"
+#~ msgstr "está definida como"
+
+#, fuzzy
+#~ msgid "is already changed to"
+#~ msgstr "já está neste pedido"
+
+#, fuzzy
+#~ msgid "The table"
+#~ msgstr "A variável"
+
+#, fuzzy
+#~ msgid "could not be created"
+#~ msgstr "não puderam ser obtidos"
+
+#, fuzzy
+#~ msgid "The constraint"
+#~ msgstr "O componente"
+
+#, fuzzy
+#~ msgid "does not exist"
+#~ msgstr "não existe"
+
+#~ msgid "could not be added"
+#~ msgstr "não pôde ser adicionado"
+
+#, fuzzy
+#~ msgid "The field"
+#~ msgstr "O arquivo"
+
+#, fuzzy
+#~ msgid "is already correct"
+#~ msgstr "já está neste pedido"
+
+#, fuzzy
+#~ msgid "Rows have been deleted from"
+#~ msgstr "ter sido eliminado"
+
+#, fuzzy
+#~ msgid "Rows could not be deleted from"
+#~ msgstr "não pode ser removida pois"
+
+#, fuzzy
+#~ msgid "There was nothing to delete from"
+#~ msgstr "Não há nada a ser processado"
+
+#, fuzzy
+#~ msgid "The old table"
+#~ msgstr "A variável"
+
+#, fuzzy
+#~ msgid "has already been removed"
+#~ msgstr "já foi vendido"
+
+#, fuzzy
+#~ msgid "The record has been inserted"
+#~ msgstr "Um novo registro de utilizador foi inserido"
+
+#, fuzzy
+#~ msgid "The record could not be inserted"
+#~ msgstr "O registro da NBR não pode ser inserida"
+
+#, fuzzy
+#~ msgid "The record is already in the table"
+#~ msgstr "A moeda já existe no banco de dados"
+
+#~ msgid "The primary key in"
+#~ msgstr "A chave primária em"
+
+#, fuzzy
+#~ msgid "has already been added"
+#~ msgstr "já foi vendido"
+
+#, fuzzy
+#~ msgid "has been renamed to"
+#~ msgstr "foi enviada por email para"
+
+#, fuzzy
+#~ msgid "could not be renamed to"
+#~ msgstr "não foi possível enviar por email para"
 
 #, fuzzy
 #~ msgid "The  contain any of the following characters \" ' - &amp; or a space"
