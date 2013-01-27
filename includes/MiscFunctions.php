@@ -336,7 +336,7 @@ function locale_number_format($Number, $DecimalPlaces=0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
 	if ($_SESSION['Language']=='hi_IN.utf8' or $_SESSION['Language']=='en_IN.utf8'){
-		return indian_number_format($Number,$DecimalPlaces);
+		return indian_number_format(floatval($Number),$DecimalPlaces);
 	} else {
 		if (!is_numeric($DecimalPlaces) and $DecimalPlaces == 'Variable'){
 			$DecimalPlaces = mb_strlen($Number) - mb_strlen(intval($Number));
@@ -344,7 +344,7 @@ function locale_number_format($Number, $DecimalPlaces=0) {
 				$DecimalPlaces--;
 			}
 		}
-		return number_format((float)$Number,$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
+		return number_format(floatval($Number),$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
 	}
 }
 

@@ -303,28 +303,23 @@ class Cart {
 		and the taxprovince of the dispatch location */
 
 		$sql = "SELECT stockmovestaxes.taxauthid,
-				taxauthorities.description,
-				taxauthorities.taxglcode,
-				stockmovestaxes.taxcalculationorder,
-				stockmovestaxes.taxontax,
-				stockmovestaxes.taxrate
-			FROM stockmovestaxes INNER JOIN taxauthorities
-				ON stockmovestaxes.taxauthid = taxauthorities.taxid
-			WHERE stkmoveno = '" . $stkmoveno . "'
-			ORDER BY taxcalculationorder";
+						taxauthorities.description,
+						taxauthorities.taxglcode,
+						stockmovestaxes.taxcalculationorder,
+						stockmovestaxes.taxontax,
+						stockmovestaxes.taxrate
+					FROM stockmovestaxes
+					INNER JOIN taxauthorities
+						ON stockmovestaxes.taxauthid = taxauthorities.taxid
+					WHERE stkmoveno = '" . $stkmoveno . "'
+					ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 
-			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =
-								  new Tax($myrow['taxcalculationorder'],
-										$myrow['taxauthid'],
-										$myrow['description'],
-										$myrow['taxrate'],
-										$myrow['taxontax'],
-										$myrow['taxglcode']);
+			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] = new Tax($myrow['taxcalculationorder'], $myrow['taxauthid'], $myrow['description'], $myrow['taxrate'], $myrow['taxontax'], $myrow['taxglcode']);
 		}
 	} //end method GetExistingTaxes
 
@@ -336,19 +331,20 @@ class Cart {
 		and the taxprovince of the dispatch location */
 
 		$SQL = "SELECT taxgrouptaxes.calculationorder,
-					taxauthorities.description,
-					taxgrouptaxes.taxauthid,
-					taxauthorities.taxglcode,
-					taxgrouptaxes.taxontax,
-					taxauthrates.taxrate
-			FROM taxauthrates INNER JOIN taxgrouptaxes ON
-				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
-				INNER JOIN taxauthorities ON
-				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . "
-			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . "
-			AND taxauthrates.taxcatid = " . $this->LineItems[$LineNumber]->TaxCategory . "
-			ORDER BY taxgrouptaxes.calculationorder";
+						taxauthorities.description,
+						taxgrouptaxes.taxauthid,
+						taxauthorities.taxglcode,
+						taxgrouptaxes.taxontax,
+						taxauthrates.taxrate
+					FROM taxauthrates
+					INNER JOIN taxgrouptaxes
+						ON taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+					INNER JOIN taxauthorities
+						ON taxauthrates.taxauthority=taxauthorities.taxid
+					WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . "
+						AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . "
+						AND taxauthrates.taxcatid = " . $this->LineItems[$LineNumber]->TaxCategory . "
+					ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);

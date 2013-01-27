@@ -57,7 +57,8 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Order Inquiry'),
 													_('Sales Order Detail Or Summary Inquiries'),
 													_('Top Sales Items Report'),
 													_('Worst Sales Items Report'),
-													_('Sales With Low Gross Profit Report')
+													_('Sales With Low Gross Profit Report'),
+													_('Sell Through Support Claims Report')
 												);
 
 $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
@@ -73,15 +74,18 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/SalesInquiry.php',
 												'/TopItems.php',
 												'/NoSalesItems.php',
-												'/PDFLowGP.php'
+												'/PDFLowGP.php',
+												'/PDFSellThroughSupportClaim.php'
 											);
 
 $MenuItems['orders']['Maintenance']['Caption'] = array( _('Select Contract'),
-													_('Create Contract')
+													_('Create Contract'),
+													_('Sell Through Support Deals')
 												);
 
 $MenuItems['orders']['Maintenance']['URL'] = array( '/SelectContract.php',
-													'/Contracts.php'
+													'/Contracts.php',
+													'/SellThroughSupport.php'
 												);
 
 $MenuItems['AR']['Transactions']['Caption'] = array (_('Select Order to Invoice'),

@@ -599,8 +599,32 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 					$PurchDataResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 					if (DB_num_rows($PurchDataResult) > 0) { //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
-						$PurchPrice = $PurchRow['price'] / $PurchRow['conversionfactor'];
-						$ConversionFactor = $PurchRow['conversionfactor'];
+						/* Now to get the applicable discounts */
+						$sql = "SELECT discountpercent,
+										discountamount
+								FROM supplierdiscounts
+								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
+								AND effectivefrom <='" . Date('Y-m-d') . "'
+								AND effectiveto >='" . Date('Y-m-d') . "'
+								AND stockid = '". $ItemCode . "'";
+
+						$ItemDiscountPercent = 0;
+						$ItemDiscountAmount = 0;
+						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
+						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
+						$DiscountResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
+							$ItemDiscountPercent += $DiscountRow['discountpercent'];
+							$ItemDiscountAmount += $DiscountRow['discountamount'];
+						}
+						if ($ItemDiscountPercent != 0) {
+							prnMsg(_('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
+						}
+						if ($ItemDiscountAmount != 0 ){
+							prnMsg(_('Taken accumulated round sum supplier discount of') .  ' ' . $_SESSION['PO'.$identifier]->CurrCode . ' ' . locale_number_format($ItemDiscountAmount,$_SESSION['PO'.$identifier]->CurrDecimalPlaces) . ' (' . _('per supplier unit') . ')','info');
+						}
+						$PurchPrice = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
+ 						$ConversionFactor = $PurchRow['conversionfactor'];
 						$SupplierDescription = $PurchRow['suppliers_partno'] . ' - ';
 						if (mb_strlen($PurchRow['supplierdescription']) > 2) {
 							$SupplierDescription .= $PurchRow['supplierdescription'];
@@ -713,7 +737,7 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit']
 				<td class="number">' . locale_number_format($POLine->Quantity, $POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
-				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo . '" size="8" value="' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
+				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
 				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round($POLine->Quantity / $POLine->ConversionFactor, $POLine->DecimalPlaces), $POLine->DecimalPlaces) . '" /></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round(($POLine->Price * $POLine->ConversionFactor), $_SESSION['PO' . $identifier]->CurrDecimalPlaces), $_SESSION['PO' . $identifier]->CurrDecimalPlaces) . '" /></td>
@@ -822,6 +846,7 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
@@ -838,6 +863,7 @@ if (isset($_POST['Search'])) {
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
@@ -856,6 +882,7 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO' . $identifier]->SupplierID . "'
@@ -872,6 +899,7 @@ if (isset($_POST['Search'])) {
 						FROM stockmaster INNER JOIN stockcategory
 						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND stockmaster.discontinued<>1
@@ -896,6 +924,7 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO' . $identifier]->SupplierID . "'
@@ -911,6 +940,7 @@ if (isset($_POST['Search'])) {
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
@@ -929,10 +959,11 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO' . $identifier]->SupplierID . "'
-						and stockmaster.discontinued<>1
+						AND stockmaster.discontinued<>1
 						AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						ORDER BY stockmaster.stockid
@@ -945,9 +976,10 @@ if (isset($_POST['Search'])) {
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
-					and stockmaster.discontinued<>1
+					AND stockmaster.discontinued<>1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid
@@ -967,6 +999,7 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO' . $identifier]->SupplierID . "'
@@ -981,6 +1014,7 @@ if (isset($_POST['Search'])) {
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
@@ -998,6 +1032,7 @@ if (isset($_POST['Search'])) {
 						INNER JOIN purchdata
 						ON stockmaster.stockid=purchdata.stockid
 						WHERE stockmaster.mbflag<>'D'
+						AND stockmaster.mbflag<>'A'
 						AND stockmaster.mbflag<>'K'
 						AND stockmaster.mbflag<>'G'
 						AND purchdata.supplierno='" . $_SESSION['PO' . $identifier]->SupplierID . "'
@@ -1013,6 +1048,7 @@ if (isset($_POST['Search'])) {
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag<>'D'
+					AND stockmaster.mbflag<>'A'
 					AND stockmaster.mbflag<>'K'
 					AND stockmaster.mbflag<>'G'
 					AND stockmaster.discontinued<>1
