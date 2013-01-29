@@ -66,7 +66,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_error_no($db) !=0) {
 
-	  include('includes/header.inc');
+		include('includes/header.inc');
 		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	if (DB_num_rows($LowGPSalesResult) == 0) {
+	if (DB_num_rows($ClaimsResult) == 0) {
 
 		include('includes/header.inc');
 		prnMsg(_('No sell through support items retrieved'), 'warn');
@@ -99,7 +99,7 @@ if (isset($_POST['PrintPDF'])) {
 			$FontSize = 10;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$SellThroRow['suppname']);
 			$YPos -=$line_height;
-			
+
 			if ($SupplierClaimTotal > 0) {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')');
 				$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
@@ -119,8 +119,8 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap(330,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
 		$SupplierClaimTotal += $ClaimTotal;
-		
-		
+
+
 		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
 		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
@@ -138,6 +138,8 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit */
 
+	$Title = _('Sell Through Support Claims Report');
+
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
@@ -149,7 +151,7 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>
+		echo '<div>
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<table class="selection">
 					<tr>
@@ -165,8 +167,8 @@ if (isset($_POST['PrintPDF'])) {
 				<div class="centre">
 					<input type="submit" name="PrintPDF" value="' . _('Create Claims Report') . '" />
 				</div>';
-        echo '</div>
-              </form>';
+		echo '</div>
+			  </form>';
 	}
 	include('includes/footer.inc');
 
