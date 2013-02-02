@@ -37,6 +37,9 @@
 		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
 	}
 	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
+	if ($debug==1) {
+		echo '<link href="' . $RootPath . '/css/holmes.css" rel="stylesheet" type="text/css" />';
+	}
 	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>';
 	echo '<style media="screen">
 			.noPrint{ display: block; }
@@ -47,7 +50,9 @@
 			.yesPrint{ display: block !important; }
 		</style>';
 	echo '</head>';
-	echo '<body>';
+	if ($debug==1) {
+		echo '<body class="holmes-debug">';
+	}
 
 	if (isset($_GET['FontSize'])) {
 		$sql = "UPDATE www_users

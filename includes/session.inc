@@ -311,13 +311,6 @@ else if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION
 	$SupplierLogin = 0;
 } //in_array(1, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity == 0 and count($_SESSION['AllowedPageSecurityTokens']) == 2
 
-if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-	/*System administrator login */
-	$debug = 1; //allow debug messages
-} //in_array(15, $_SESSION['AllowedPageSecurityTokens'])
-else {
-	$debug = 0; //don't allow debug messages
-}
 function CryptPass($Password) {
 	global $CryptFunction;
 	if ($CryptFunction == 'sha1') {

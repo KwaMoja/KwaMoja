@@ -531,7 +531,8 @@ $MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories 
 														_('MRP Available Production Days'),
 														_('MRP Demand Types'),
 														_('Maintain Internal Departments'),
-														_('Maintain Internal Stock Categories to User Roles')
+														_('Maintain Internal Stock Categories to User Roles'),
+														_('Report a problem with KwaMoja')
 														);
 
 $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
@@ -541,7 +542,8 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/MRPCalendar.php',
 													'/MRPDemandTypes.php',
 													'/Departments.php',
-													'/InternalStockCategoriesByRole.php'
+													'/InternalStockCategoriesByRole.php',
+													'/ReportBug.php'
 													);
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Change A Customer Code'),
