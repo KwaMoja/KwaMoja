@@ -6,8 +6,7 @@ include('includes/barcodepack/class.code128.php');
 
 $PtsPerMM = 2.83465; //pdf points per mm
 
-
-if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
+if ((isset($_POST['ShowLabels']) or isset($_POST['SetAll']))
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
@@ -57,37 +56,45 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 		exit;
 	}
 
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . _('Price Labels') . '" alt="' . _('Print Price Labels') . '" />
+		 ' . ' ' . _('Print Price Labels') . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
+
+	if (!isset($_POST['All'])) {
+		$_POST['All'] = 0;
+	}
+
+	if (isset($_POST['SetAll'])) {
+		for ($i=0;$i < $_POST['NoOfLabels'];$i++){
+			$_POST['Qty' . $i] = $_POST['All'];
+		}
+	}
+
+	echo '<table class="selection" summary="' . _('Labels to print') . '">
+			<tr>
+				<th colspan="4">
+					<input type="submit" name="SetAll" value="' . _('Set all to') . '" />
+					<input type="input" name="All" size="4" class="number" value="' . $_POST['All'] . '" />
+				</th>
 			<tr>
 				<th>' . _('Item Code') . '</th>
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Price') . '</th>
-				<th>' . _('Print') . ' ?</th>
-			</tr>
-			<tr>
-				<th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
-	if (isset($_POST['CheckAll'])){
-		echo 'checked="checked" ';
-	}
-	echo 'onchange="ReloadForm(SelectAll)" /></td>
-		</tr>';
+				<th>' . _('Qty To Print') . '</th>
+			</tr>';
 
 	$i=0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)){
+		if (!isset($_POST['Qty' . $i])) {
+			$_POST['Qty' . $i] = 0;
+		}
 		echo '<tr>
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
 				<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
-				<td>';
-		if (isset($_POST['SelectAll']) and isset($_POST['CheckAll'])) {
-			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
-		} else {
-			echo '<input type="checkbox" name="PrintLabel' . $i .'" />';
-		}
-		echo '</td>
+				<td><input type="input" name="Qty' . $i . '" size="4" class="number" value="' . locale_number_format($_POST['Qty' . $i], 0) . '" /></td>
 			</tr>';
 		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
@@ -97,7 +104,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 	}
 	$i--;
 	echo '</table>
-		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
+		<input type="hidden" name="NoOfLabels" value="' . ($i+1) . '" />
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
 		<input type="hidden" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" />
 		<input type="hidden" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
@@ -117,12 +124,13 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 	include('includes/footer.inc');
 	exit;
 }
+
 if (isset($_POST['PrintLabels'])
 	and isset($_POST['NoOfLabels'])
 	and $_POST['NoOfLabels']>0){
 	$NoOfLabels = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
-		if (isset($_POST['PrintLabel'.$i])){
+		if (isset($_POST['Qty'.$i])){
 			$NoOfLabels++;
 		}
 	}
@@ -171,8 +179,6 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 		$i++;
 	}
 
-	$PaperSize = 'Custom'; // so PDF starter wont default the DocumentPaper
-	$DocumentPaper = array($LabelDimensions['page_width'],$LabelDimensions['page_height']);
 	include('includes/PDFStarter.php');
 	$Top_Margin = $LabelDimensions['label_topmargin'];
 	$Left_Margin = $LabelDimensions['label_leftmargin'];
@@ -198,68 +204,69 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 	$XPos = $Left_Margin; // left of current label
 
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
-		if (isset($_POST['PrintLabel'.$i])){
-			$NoOfLabels--;
-			foreach ($LabelFields as $Field){
-				//print_r($Field);
+		if (isset($_POST['Qty'.$i]) and ($_POST['Qty'.$i]>0)){
+			for ($j=0;$j<$_POST['Qty'.$i]; $j++) {
+				foreach ($LabelFields as $Field) {
 
-				if ($Field['FieldValue']== 'price'){
-					$Value = $_POST['Price' . $i];
-				} elseif ($Field['FieldValue']== 'stockid'){
-					$Value = $_POST['StockID' . $i];
-				} elseif ($Field['FieldValue']== 'description'){
-					$Value = $_POST['Description' . $i];
-				} elseif ($Field['FieldValue']== 'barcode'){
-					$Value = $_POST['Barcode' . $i];
-				}
-				if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
-					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$_POST['Price' . $i],'center');
-				} elseif($Field['Barcode']==1) {
-
-					$BarcodeImage = new code128(str_replace('_','',$Value));
-
-					ob_start();
-					imagepng(imagepng($BarcodeImage->draw()));
-					$Image_String = ob_get_contents();
-					ob_end_clean();
-
-					$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
-
-				} else {
-					$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos']-20,$Field['FontSize'],$Value);
-				}
-			} // end loop through label fields
-			if ($NoOfLabels>0) {
-				//setup $YPos and $XPos for the next label
-				if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
-					/* not enough space below the above label to print a new label
-					 * so the above was the last label in the column
-					 * need to start either a new column or new page
-					 */
-					if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
-						/* Not enough space to start a new column so we are into a new page
-						 */
-						$pdf->newPage();
-						$PageNumber++;
-						$YPos = $Page_Height - $Top_Margin; //top of next label
-						$XPos = $Left_Margin; // left of next label
-					} else {
-						/* There is enough space for another column */
-						$YPos = $Page_Height - $Top_Margin; //back to the top of next label column
-						$XPos += $LabelDimensions['label_columnwidth']; // left of next label
+					if ($Field['FieldValue']== 'price'){
+						$Value = $_POST['Price' . $i];
+					} elseif ($Field['FieldValue']== 'stockid'){
+						$Value = $_POST['StockID' . $i];
+					} elseif ($Field['FieldValue']== 'description'){
+						$Value = $_POST['Description' . $i];
+					} elseif ($Field['FieldValue']== 'barcode'){
+						$Value = $_POST['Barcode' . $i];
 					}
-				} else {
-					/* There is space below to print a label
-					 */
-					$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
-				}
-			}//end if there is another label to print
+					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
+						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$_POST['Price' . $i],'center');
+					} elseif($Field['Barcode']==1) {
+
+						$BarcodeImage = new code128(str_replace('_','',$Value));
+
+						ob_start();
+						imagepng(imagepng($BarcodeImage->draw()));
+						$Image_String = ob_get_contents();
+						ob_end_clean();
+
+						$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
+
+					} else {
+						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos']-20,$Field['FontSize'],$Value);
+					}
+				} // end loop through label fields
+				if ($NoOfLabels>0) {
+					//setup $YPos and $XPos for the next label
+					if (($YPos - $LabelDimensions['label_rowheight']) < $LabelDimensions['label_height']){
+						/* not enough space below the above label to print a new label
+						* so the above was the last label in the column
+						* need to start either a new column or new page
+						*/
+						if (($Page_Width - $XPos - $LabelDimensions['label_columnwidth']) < $LabelDimensions['label_width']) {
+							/* Not enough space to start a new column so we are into a new page
+							*/
+							$pdf->newPage();
+							$PageNumber++;
+							$YPos = $Page_Height - $Top_Margin; //top of next label
+							$XPos = $Left_Margin; // left of next label
+						} else {
+							/* There is enough space for another column */
+							$YPos = $Page_Height - $Top_Margin; //back to the top of next label column
+							$XPos += $LabelDimensions['label_columnwidth']; // left of next label
+						}
+					} else {
+						/* There is space below to print a label
+						*/
+						$YPos -= $LabelDimensions['label_rowheight']; //Top of next label
+					}
+				}//end if there is another label to print
+			}
+			$NoOfLabels--;
 		} //this label is set to print
 	} //loop through labels selected to print
 
 
 	$FileName=$_SESSION['DatabaseName']. '_' . _('Price_Labels') . '_' . date('Y-m-d').'.pdf';
-	ob_clean();
+//	ob_clean();
 	$pdf->OutputI($FileName);
 	$pdf->__destruct();
 
@@ -268,16 +275,16 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 	$Title= _('Price Labels');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . _('Price Labels') . '" alt="' . _('Print Price Labels') . '" />
 		 ' . ' ' . _('Print Price Labels') . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
+		echo '<table class="selection" summary="' . _('Print Price Labels') . '">';
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
 				<td><select name="LabelID">';
@@ -296,10 +303,13 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+				</td>
+			</tr>';
 
-		echo '<tr><td>' . _('To Inventory Category Code'). ':</td>
-				  <td><select name="ToCriteria">';
+		echo '<tr>
+				<td>' . _('To Inventory Category Code'). ':</td>
+				<td><select name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -307,10 +317,13 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+				</td>
+			</tr>';
 
-		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-				  <td><select name="SalesType">';
+		echo '<tr>
+				<td>' . _('For Sales Type/Price List').':</td>
+				<td><select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult=DB_query($sql,$db);
 
@@ -323,8 +336,9 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Currency').':</td>
-				  <td><select name="Currency">';
+		echo '<tr>
+				<td>' . _('For Currency').':</td>
+				<td><select name="Currency">';
 		$sql = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult=DB_query($sql,$db);
 
@@ -337,9 +351,10 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels>0) {
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Effective As At') . ':</td>';
-		echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-		echo '</td></tr>';
+		echo '<tr>
+				<td>' . _('Effective As At') . ':</td>
+				<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			</tr>';
 
 		echo '</table>
 				<br />

@@ -20,8 +20,7 @@ $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
 echo '<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance')
-	. '" alt="" />' . $Title. '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Label Template Maintenance') . '" alt="' . _('Label Template Maintenance') . '" />' . $Title. '
 	</p>';
 
 if (isset($_POST['SelectedLabelID'])){
@@ -155,7 +154,6 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	/*Cascade deletes in TaxAuthLevels */
 	$result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'",$db);
 	$result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'",$db);
 	prnMsg(_('The selected label template has been deleted'),'success');
@@ -183,7 +181,7 @@ if (!isset($SelectedLabelID)) {
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($result)>0){
-		echo '<table class="selection">
+		echo '<table class="selection" summary="' . _('List of all currently setup Label dimensions') . '">
 				<tr>
 					<th>' . _('Description') . '</th>
 					<th>' . _('Rows x Cols') . '</th>
@@ -268,7 +266,7 @@ if (!isset($SelectedLabelID)) {
 
 		//end of ifs and buts!
 
-		echo '</table><p>';
+		echo '</table>';
 	} //end if there are label definitions to show
 }
 
@@ -278,7 +276,7 @@ if (isset($SelectedLabelID)) {
 		</div>';
 }
 
-echo '<p><form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedLabelID)) {
@@ -323,10 +321,10 @@ if (isset($SelectedLabelID)) {
 if (!isset($_POST['Description'])) {
 	$_POST['Description']='';
 }
-echo '<table class="selection">
+echo '<table class="selection" summary="' . _('Outside container for label diagram and info') . '">
 		<tr>
-			<td><img src="css/paramsLabel.png"></td>
-			<td><table>
+			<td><img src="css/paramsLabel.png" alt="Label diagram" /></td>
+			<td><table summary="' . _('Label specifications') . '">
 				<tr>
 					<td>' . _('Label Description') . ':</td>
 					<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
@@ -436,10 +434,10 @@ if (isset($SelectedLabelID)) {
 	$ErrMsg = _('Could not get the label fields because');
 	$result = DB_query($SQL,$db,$ErrMsg);
 	$i=0;
-	echo '<table class="selection">
+	echo '<table class="selection" summary="' . _('Outside container for label diagram and info') . '">
 				<tr>
-				<td><img src="css/labelsDim.png"></td>
-				<td><table>
+				<td><img src="css/labelsDim.png" alt="Label dimensions diagram" /></td>
+				<td><table summary="' . _('Label dimensions table') . '">
 					<tr>
 						<th>' . _('Field') . '</th>
 						<th>' . _('Vertical') . '<br />' . _('Position')  . '<br />(VPos)</th>
@@ -522,8 +520,7 @@ if (isset($SelectedLabelID)) {
 		</table>
 		</td>
 		</tr>
-		</table>
-		<p />';
+		</table>';
 }
 
 echo '<br />
