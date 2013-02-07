@@ -11,10 +11,12 @@ if (isset($_GET['BatchNo'])){
 
 if (!isset($_POST['BatchNo'])){
 	$Title = _('Create PDF Print Out For A Batch Of Receipts');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'BankingSummary';
 	include ('includes/header.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
-		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
 
 	$sql="SELECT DISTINCT
 			transno,
@@ -27,7 +29,7 @@ if (!isset($_POST['BatchNo'])){
 	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<table class="selection" summary="' . _('Details of the batch to be re-printed') . '">';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
 	echo '<td><select name="BatchNo">';
 	while ($myrow=DB_fetch_array($result)) {
@@ -156,10 +158,10 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 			include ('includes/PDFBankingSummaryPageHeader.inc');
 		} /*end of new page header  */
 	} /* end of while there are customer receipts in the batch to print */
-	
+
 	/* Right now print out the GL receipt entries in the batch */
 	while ($myrow=DB_fetch_array($GLRecs)){
-	
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
 		$YPos -= ($line_height);

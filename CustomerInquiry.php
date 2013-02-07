@@ -6,6 +6,9 @@ include('includes/SQL_CommonFunctions.inc');
 
 include('includes/session.inc');
 $Title = _('Customer Inquiry');
+/* KwaMoja manual links before header.inc */
+$ViewTopic = 'ARInquiries';
+$BookMark = 'CustomerInquiry';
 include('includes/header.inc');
 
 // always figure out the SQL required from the inputs available

@@ -4,6 +4,8 @@
 
 include('includes/session.inc');
 $Title = _('Fixed Asset Locations');
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetLocations';
 include('includes/header.inc');
 echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'

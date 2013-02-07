@@ -4,21 +4,23 @@
 
 include('includes/session.inc');
 $Title = _('Customer How Paid Inquiry');
+/* KwaMoja manual links before header.inc */
+$ViewTopic = 'ARInquiries';
+$BookMark = 'WhereAllocated';
 include('includes/header.inc');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="" />' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .	_('Customer Where Allocated'). '" alt="' .	_('Customer Where Allocated'). '" />' . $Title . '
 	</p>
-	<table class="selection">
+	<table class="selection" summary="' . _('Select criteria for the where used inquiry') . '">
 	<tr>
 		<td>' . _('Type') . ':</td>
 		<td><select tabindex="1" name="TransType"> ';
 
-$sql = "SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid=12";
+$sql = "SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid = 11 OR typeid=12";
 $resultTypes = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultTypes)){
 	if (isset($_POST['TransType'])){
@@ -35,13 +37,14 @@ echo '</select></td>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<td>'._('Transaction Number').':</td>
-		<td><input tabindex="2" type="text" name="TransNo" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
+		<td><input class="number" tabindex="2" type="text" name="TransNo" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" /></td>
 	</tr>
 	</table>
 	<br />
 	<div class="centre">
 		<input tabindex="3" type="submit" name="ShowResults" value="' . _('Show How Allocated') . '" />
-	</div>';
+	</div>
+	</form>';
 
 if (isset($_POST['ShowResults']) and  $_POST['TransNo']==''){
 	echo '<br />';
@@ -91,12 +94,13 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo']!=''){
 			prnMsg(_('There are no allocations made against this transaction'),'info');
 		} else {
 			echo '<br />
-				<table class="selection">';
+				<table class="selection" summary="'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '">';
 
 			echo '<tr>
 					<th colspan="6">
 					<div class="centre">
 						<b>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '<br />'._('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
+						<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
 					</div>
 					</th>
 				</tr>';
@@ -155,7 +159,6 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo']!=''){
 	} //got the ID of the transaction to find allocations for
 }
 echo '</div>';
-echo '</form>';
 include('includes/footer.inc');
 
 ?>

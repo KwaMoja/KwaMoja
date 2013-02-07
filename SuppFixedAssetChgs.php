@@ -13,6 +13,8 @@ include('includes/session.inc');
 
 $Title = _('Fixed Asset Charges or Credits');
 
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetInvoices';
 include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])) {

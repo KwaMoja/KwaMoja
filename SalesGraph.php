@@ -2,14 +2,17 @@
 
 /* $Id$*/
 
- include('includes/session.inc');
- include('includes/phplot/phplot.php');
- $Title=_('Sales Report Graph');
- include('includes/header.inc');
+include('includes/session.inc');
+include('includes/phplot/phplot.php');
+$Title=_('Sales Report Graph');
+/* KwaMoja manual links before header.inc */
+$ViewTopic = 'ARInquiries';
+$BookMark = 'SalesGraph';
+include('includes/header.inc');
 
- $SelectADifferentPeriod ='';
+$SelectADifferentPeriod ='';
 
- if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod'])){
+if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod'])){
 
 	if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
@@ -25,7 +28,7 @@
 	}
  }
 
- if ((! isset($_POST['FromPeriod'])
+if ((! isset($_POST['FromPeriod'])
 		or ! isset($_POST['ToPeriod']))
 		or $SelectADifferentPeriod==_('Select A Different Period')){
 
@@ -33,9 +36,9 @@
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Select criteria') . '" alt="' . _('Select criteria') . '" />' . ' ' . $Title.'</p>';
 
-	echo '<table class="selection">
+	echo '<table class="selection" summary="' . _('Criteria for the sales graph') . '">
 			<tr><td>' . _('Select Period From:') . '</td>
 			<td><select name="FromPeriod">';
 
@@ -311,11 +314,17 @@
 
 	//Draw it
 	$graph->DrawGraph();
-	echo '<table class="selection">
-			<tr><td>';
-	echo '<p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></p>';
-	echo '</td>
-		</tr>
+	echo '<br /><table class="selection" summary="' . _('Sales Report Graph') . '">
+			<tr>
+				<th>' . _('Sales Report Graph') . '
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="' . _('Sales Report Graph') . '"></img>
+				</td>
+			</tr>
 		</table>';
 	include('includes/footer.inc');
 }

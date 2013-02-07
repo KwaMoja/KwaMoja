@@ -147,7 +147,10 @@ if (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . $FromTransNo . "'";
+						AND debtortrans.tra	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'CustomerStatements';
+nsno='" . $FromTransNo . "'";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
@@ -493,6 +496,9 @@ if (isset($PrintPDF)
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Select Invoices/Credit Notes To Print');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'PrintInvoicesCredits';
 	include('includes/header.inc');
 
 	if (!isset($FromTransNo) or $FromTransNo=='') {

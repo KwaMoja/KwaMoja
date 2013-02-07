@@ -12,6 +12,9 @@ Call this page with:
 include('includes/DefineCustAllocsClass.php');
 include('includes/session.inc');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
+/* KwaMoja manual links before header.inc */
+$ViewTopic= "ARTransactions";
+$BookMark = "CustomerAllocations";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

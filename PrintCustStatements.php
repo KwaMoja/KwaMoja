@@ -408,6 +408,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 } else { /*The option to print PDF was not hit */
 
 	$Title = _('Select Statements to Print');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'CustomerStatements';
 	include('includes/header.inc');
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
 	if (!isset($_POST['FromCust']) or $_POST['FromCust']=='') {

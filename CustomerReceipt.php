@@ -7,6 +7,9 @@ include('includes/session.inc');
 
 $Title = _('Receipt Entry');
 
+/* KwaMoja manual links before header.inc */
+$ViewTopic= "ARTransactions";
+$BookMark = "CustomerReceipts";
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

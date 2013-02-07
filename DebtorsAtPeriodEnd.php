@@ -121,9 +121,11 @@ if (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Debtor Balances');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'PriorMonthDebtors';
 	include('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
-	 '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Debtor Balances') . '" alt="' . _('Debtor Balances') . '" />' . ' ' . $Title.'</p><br />';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
@@ -133,7 +135,7 @@ if (isset($_POST['PrintPDF'])
               <div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<table class="selection">';
+		echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 		echo '<tr>
 				<td>' . _('From Customer Code') .':</td>
 				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="1" /></td>

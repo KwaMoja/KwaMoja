@@ -6,8 +6,13 @@ include('includes/session.inc');
 
 $Title = _('Customer Maintenance');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = 'AccountsReceivable';
-$BookMark = 'NewCustomer';
+if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
+	$ViewTopic = 'AccountsReceivable';
+	$BookMark = 'AmendCustomer';
+} else {
+	$ViewTopic = 'AccountsReceivable';
+	$BookMark = 'NewCustomer';
+}
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/CountriesArray.php');

@@ -14,12 +14,15 @@ if (isset($_POST['Date']) and !Is_Date($_POST['Date'])){
 
 if (!isset($_POST['Date'])){
 
-	 $Title = _('Customer Transaction Listing');
-	 include ('includes/header.inc');
+	$Title = _('Customer Transaction Listing');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'DailyTransactions';
+	include ('includes/header.inc');
 
 	echo '<div class="centre">
 			<p class="page_title_text noPrint" >
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . _('Customer Transaction Listing').
 			'</p>';
 
 	if ($InputError==1){
@@ -28,7 +31,7 @@ if (!isset($_POST['Date'])){
 
 	 echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	 echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
-	 echo '<table class="selection">
+	 echo '<table class="selection" summary="' . _('Input criteria for report') . '">
 	 		<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
 				<td><input type="text" name="Date" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>

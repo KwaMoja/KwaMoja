@@ -520,6 +520,9 @@ if (isset($PrintPDF)
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Select Invoices/Credit Notes To Print');
+	/* KwaMoja manual links before header.inc */
+	$ViewTopic = 'ARReports';
+	$BookMark = 'PrintInvoicesCredits';
 	include('includes/header.inc');
 
 	if (!isset($FromTransNo) or $FromTransNo=='') {

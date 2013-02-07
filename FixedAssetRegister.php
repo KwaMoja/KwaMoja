@@ -1,6 +1,8 @@
 <?php
 
 include ('includes/session.inc');
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetRegister';
 $Title = _('Fixed Asset Register');
 $csv_output = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format

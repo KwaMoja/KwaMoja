@@ -5,6 +5,8 @@ $PricesSecurity = 9;
 
 include ('includes/session.inc');
 $Title = _('Select an Asset');
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetSelection';
 include ('includes/header.inc');
 
 if (isset($_GET['AssetID'])) {

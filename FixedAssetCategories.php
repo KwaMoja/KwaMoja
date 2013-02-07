@@ -6,6 +6,8 @@ include('includes/session.inc');
 
 $Title = _('Fixed Asset Category Maintenance');
 
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetCategories';
 include('includes/header.inc');
 
 echo '<div class="centre">
