@@ -147,10 +147,7 @@ if (isset($PrintPDF)
 						INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.tra	/* KwaMoja manual links before header.inc */
-	$ViewTopic = 'ARReports';
-	$BookMark = 'CustomerStatements';
-nsno='" . $FromTransNo . "'";
+						AND debtortrans.transno='" . $FromTransNo . "'";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
