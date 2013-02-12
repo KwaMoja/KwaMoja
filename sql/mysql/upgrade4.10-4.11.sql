@@ -38,4 +38,6 @@ INSERT INTO scripts VALUES ('SellThroughSupport.php',  '9',  'Defines the items,
 INSERT INTO scripts VALUES ('PDFSellThroughSupportClaim.php',  '9',  'Reports the sell through support claims to be made against all suppliers for a given date range.');
 INSERT INTO scripts VALUES ('ReportBug.php',  '15',  'Report an issue directly to the KwaMoja bugs page');
 
+ALTER TABLE `locstock` ADD `bin` VARCHAR( 10 ) NOT NULL , ADD INDEX ( `bin` );
+
 UPDATE config SET confvalue='4.10.1' WHERE confname='VersionNumber';

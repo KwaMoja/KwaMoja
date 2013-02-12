@@ -5,30 +5,14 @@ include('includes/session.inc');
 
 $Title = _('Search GL Accounts');
 
+$ViewTopic= "GeneralLedger";
+$BookMark = "GLAccountInquiry";
 include('includes/header.inc');
 
 $msg='';
 unset($result);
 
-if (isset($_POST['Select'])) {
-
-	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
-	$myrow = DB_fetch_row($result);
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-
-	echo '<div class="page_help_text noPrint">' . _('Account Code') . ' <b>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </b>' . _('has been selected') . '. <br />' . _('Select one of the links below to operate using this Account') . '.</div>';
-	$AccountID = $_POST['Select'];
-	$_POST['Select'] = NULL;
-
-	echo '<br />
-		<div class="centre">
-			<a href="' . $RootPath . '/GLAccounts.php?SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</a>';
-	echo '<br />
-			<a href="' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountID . '">' . _('Account Inquiry') . '</a>';
-	echo '<br />
-		<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">' . _('New Search') . '</a></div>';
-
-} elseif (isset($_POST['Search'])){
+if (isset($_POST['Search'])){
 
 	if (mb_strlen($_POST['Keywords']>0) and mb_strlen($_POST['GLCode'])>0) {
 		$msg=_('Account name keywords have been used in preference to the account code extract entered');
@@ -85,7 +69,7 @@ if (!isset($AccountID)) {
 
 
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
+		'" alt="' . _('Search for General Ledger Accounts') . '" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post" class="noPrint">';
 	echo '<div>';
@@ -95,7 +79,7 @@ if (!isset($AccountID)) {
 		prnMsg($msg,'info');
 	}
 
-	echo '<table class="selection">
+	echo '<table class="selection" summary="' . _('Criteria for inquiry') . '">
 		<tr>
 			<td>' . _('Enter extract of text in the Account name') .':</td>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
@@ -109,11 +93,14 @@ if (!isset($AccountID)) {
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 			<input type="submit" name="reset" value="' . _('Reset') .'" />
-		</div>';
+		</div></form>';
 
 	if (isset($result) and DB_num_rows($result)>0) {
 
-		echo '<br /><table class="selection">';
+	echo '<br />
+		<form action="GLAccountInquiry.php" method="post" class="noPrint">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<br /><table class="selection" summary="' . _('List of GL Accounts') . '">';
 
 		$TableHeader = '<tr>
 							<th>' . _('Code') . '</th>

@@ -4,22 +4,37 @@
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
+$ViewTopic= "GeneralLedger";
+$BookMark = "GLAccountInquiry";
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 
-if (isset($_POST['Account'])){
+if (isset($_POST['Select'])){
+	$_POST['Account'] = $_POST['Select'];
+}
+if (isset($_POST['Account'])) {
 	$SelectedAccount = $_POST['Account'];
 } elseif (isset($_GET['Account'])){
 	$SelectedAccount = $_GET['Account'];
 }
 
-if (isset($_POST['Period'])){
-	$SelectedPeriod = $_POST['Period'];
-} elseif (isset($_GET['Period'])){
-	$SelectedPeriod = $_GET['Period'];
+if (isset($_POST['ToPeriod'])){
+	$SelectedToPeriod = $_POST['ToPeriod'];
+} elseif (isset($_GET['ToPeriod'])){
+	$SelectedToPeriod = $_GET['ToPeriod'];
 }
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
+if (isset($_POST['FromPeriod'])){
+	$SelectedFromPeriod = $_POST['FromPeriod'];
+} elseif (isset($_GET['FromPeriod'])){
+	$SelectedFromPeriod = $_GET['FromPeriod'];
+}
+
+if (isset($_POST['Period'])) {
+	$SelectedPeriod=$_POST['Period'];
+}
+
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="' . _('General Ledger Account Inquiry') . '" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
 
 echo '<div class="page_help_text noPrint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 
@@ -27,11 +42,23 @@ echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER[
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+/* Get the start and periods, depending on how this script was called*/
+if (isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
+	$FirstPeriodSelected = min($SelectedPeriod);
+	$LastPeriodSelected = max($SelectedPeriod);
+} elseif (isset($_GET['FromPeriod'])) { //If it was called from the Trial Balance/P&L or Balance sheet
+	$FirstPeriodSelected = $_GET['FromPeriod'];
+	$LastPeriodSelected = $_GET['ToPeriod'];
+} else { // Otherwise just highlight the current period
+	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+}
+
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection">
+echo '<table class="selection" summary="' . _('Inquiry Selection Criteria') . '">
 		<tr>
 			<td>'._('Account').':</td><td><select name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
@@ -71,7 +98,7 @@ $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC"
 $Periods = DB_query($sql,$db);
 $id=0;
 while ($myrow=DB_fetch_array($Periods,$db)){
-	if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
+	if(isset($FirstPeriodSelected) and $myrow['periodno'] >= $FirstPeriodSelected and $myrow['periodno'] <= $LastPeriodSelected){
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;
 	} else {
@@ -108,9 +135,6 @@ if (isset($_POST['Show'])){
 	}else{
 		$PandLAccount = False; /*its a balance sheet account */
 	}
-
-	$FirstPeriodSelected = min($SelectedPeriod);
-	$LastPeriodSelected = max($SelectedPeriod);
 
 	if ($_POST['tag']==0) {
  		$sql = "SELECT type,
@@ -161,7 +185,7 @@ if (isset($_POST['Show'])){
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
 	echo '<br />
-			<table class="selection">
+			<table class="selection" summary="' . _('General Ledger account inquiry details') . '">
 			<tr>
 					<th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th>
 			</tr>';
@@ -196,17 +220,15 @@ if (isset($_POST['Show'])){
 
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo '<tr style="background-color:#FDFEEF">
+			echo '<tr>
 					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
 					<td></td>
 					<td class="number"><b>' . locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
-			echo '<tr style="background-color:#FDFEEF">
+			echo '<tr>
 					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
 					<td class="number"><b>' . locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td colspan="2"></td>
 				</tr>';
 		}
 	}
@@ -232,7 +254,7 @@ if (isset($_POST['Show'])){
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-				echo '<tr style="background-color:#FDFEEF">
+				echo '<tr>
 						<td colspan="3"><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 					if ($PandLAccount==True) {
@@ -309,7 +331,7 @@ if (isset($_POST['Show'])){
 
 	}
 
-	echo '<tr style="background-color:#FDFEEF"><td colspan="3"><b>';
+	echo '<tr><td colspan="3"><b>';
 	if ($PandLAccount==True){
 		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/
@@ -318,9 +340,15 @@ if (isset($_POST['Show'])){
 	echo '</b></td>';
 
 	if ($RunningTotal >0){
-		echo '<td class="number"><b>' . locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
+		echo '<td class="number">
+				<b>' . locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b>
+			</td>
+		</tr>';
 	}else {
-		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
+		echo '<td class="number" colspan="2">
+				<b>' . locale_number_format((-$RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b>
+			</td>
+		</tr>';
 	}
 	echo '</table>';
 } /* end of if Show button hit */
