@@ -2,15 +2,17 @@
 
 include ('includes/session.inc');
 $Title = _('General Ledger Journal Inquiry');
+$ViewTopic= "GeneralLedger";
+$BookMark = "GLJournalInquiry";
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . $Title.'" alt="' . $Title.'" />' . ' ' . $Title.'</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">';
+	echo '<table class="selection" summary="' . _('Selection Criteria') . '">';
 	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
 
 	$sql = "SELECT typeno FROM systypes WHERE typeid=0";
@@ -20,8 +22,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':'. '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />'.'</td>
-			<td>' . _('To') . ':'. '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />'.'</td>
+			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />'.'</td>
+			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />'.'</td>
 		</tr>';
 
 	$sql = "SELECT MIN(trandate) AS fromdate,
@@ -36,9 +38,10 @@ if (!isset($_POST['Show'])) {
 		$ToDate=date('Y-m-d');
 	}
 
-	echo '<tr><td>' . _('Journals Dated Between') . ':</td>
-		<td>' . _('From') . ':'. '<input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
-		<td>' . _('To') . ':'. '<input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
+	echo '<tr>
+			<td>' . _('Journals Dated Between') . ':</td>
+			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
+			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
 		</tr>';
 
 	echo '</table>';
@@ -71,8 +74,14 @@ if (!isset($_POST['Show'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {
-		echo '<table class="selection">';
-		echo '<tr>
+		echo '<table class="selection" summary="' . _('General ledger journal listing') . '">
+			<tr>
+				<th colspan="9">
+					<b>'. _('General Ledger Jornals') .'</b>
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+				</th>
+			</tr>
+			<tr>
 				<th>' . ('Date') . '</th>
 				<th>'._('Journal Number').'</th>
 				<th>'._('Account Code').'</th>

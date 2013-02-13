@@ -214,10 +214,12 @@ if (isset($_POST['RunReport'])){
 } /* end of if PrintReport button hit */
  else {
 	$Title = _('General Ledger Account Report');
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "GLAccountReport";
 	include('includes/header.inc');
 	include('includes/GLPostings.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="' . _('General Ledger Account Inquiry') . '" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
 	echo '<div class="page_help_text noPrint">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
@@ -228,7 +230,7 @@ if (isset($_POST['RunReport'])){
 	$DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 	/*Show a form to allow input of criteria for the report */
-	echo '<table>
+	echo '<table class="selection" summary="' . _('Selection Criteria fro Report') . '">
 				<tr>
 				 <td>'._('Selected Accounts') . ':</td>
 				 <td><select name="Account[]" multiple="multiple">';

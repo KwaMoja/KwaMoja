@@ -279,6 +279,10 @@ $TOC_Array = array (
 								 'EDI setup',
 								 'Sending EDI Invoices'
 								),
+	'EDI'				=> array('EDI',
+								 'EDI Setup',
+								 'Sending EDI Invoices'
+								),
 	'FixedAssets'       => array('Fixed assets',
 								 'Fixed assets overview',
 								 'Creating a fixed asset',

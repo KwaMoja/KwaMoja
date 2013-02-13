@@ -5,6 +5,8 @@
 include('includes/session.inc');
 $Title = _('Maintain General Ledger Tags');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLTags';
 include('includes/header.inc');
 
 if (isset($_GET['SelectedTag'])) {
@@ -48,14 +50,14 @@ if (isset($_POST['update'])) {
 }
 echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-		_('Print') . '" alt="" />' . ' ' . $Title . '
+		_('Print') . '" alt="' . $Title . '" />' . ' ' . $Title . '
 	</p>';
 
 echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
-	<table>
+	<table class="selection" summary="' . _('Description of tag') . '">
 	<tr>
 		<td>'. _('Description') . '</td>
 		<td><input type="text" size="30" maxlength="30" name="Description" value="'.$Description.'" /></td>
@@ -71,9 +73,9 @@ echo '</td>
 	</tr>
 	</table>
 	<br />
-    </div>
+	</div>
 	</form>
-	<table class="selection">
+	<table class="selection" summary="' . _('List of existing tags') . '">
 	<tr>
 		<th>'. _('Tag ID') .'</th>
 		<th>'. _('Description'). '</th>

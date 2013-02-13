@@ -8,8 +8,13 @@ include('includes/session.inc');
 $Title = _('Receipt Entry');
 
 /* KwaMoja manual links before header.inc */
-$ViewTopic= "ARTransactions";
-$BookMark = "CustomerReceipts";
+if ($_GET['Type']=='GL') {
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "GLReceipts";
+} else {
+	$ViewTopic= "ARTransactions";
+	$BookMark = "CustomerReceipts";
+}
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -248,7 +253,7 @@ if (isset($_POST['CommitBatch'])){
 		</p>
 		<br />';
 
-	echo '<table class="selection">
+	echo '<table class="selection" summary="' . _('Batch Listing') . '">
 			<tr>
 				<th>'._('Batch Number').'</th>
 				<th>' . _('Date Banked') . '</th>
@@ -750,13 +755,13 @@ $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 if (isset($_POST['GLEntry'])) {
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('General Ledger Receipt Entry') . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="' . _('Enter Receipt') . '" />' . ' ' . _('General Ledger Receipt Entry') . '</p>';
 } else {
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Enter Receipt') . '" alt="" />' . ' ' . _('Enter Customer Receipt') . '</p>';
 	echo '<div class="page_help_text noPrint">' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</div>';
 }
 echo '<br />
-	<table class="selection">
+	<table class="selection" summary="' . _('Select batch header details') . '">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
 		 <td><select tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
@@ -906,7 +911,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 				$_SESSION['ReceiptBatch']->BankAccountName . ' ' . _('on') . ' ' . $_SESSION['ReceiptBatch']->DateBanked . '</p>';
 	}
 
-	echo '<table width="90%" class="selection">
+	echo '<table width="90%" class="selection" summary="' . _('Batch summary') . '">
 		<tr>
 			<th>' . _('Amount') . ' ' . _('Received') . '</th>
 			<th>' . _('Discount') . '</th>
@@ -972,7 +977,7 @@ if (isset($_SESSION['CustomerRecord'])
 			<br/>';
 	}
 
-	echo '<table width="90%" class="selection">
+	echo '<table width="90%" class="selection" summary="' . _('Batch Totals') . '">
 			<tr>
 				<th width="20%">' . _('Total Balance') . '</th>
 				<th width="20%">' . _('Current') . '</th>
@@ -1003,7 +1008,7 @@ if (isset($_SESSION['CustomerRecord'])
 if (isset($_POST['GLEntry']) and isset($_SESSION['ReceiptBatch'])){
 /* Set up a heading for the transaction entry for a GL Receipt */
 	echo '<br />
-		<table class="selection">
+		<table class="selection" summary="' . _('GL Receipt entry form') . '">
 			<tr>
 				<th colspan="2">' . _('General Ledger Receipt Entry') . '</th>
 			</tr>';
@@ -1044,7 +1049,7 @@ if (isset($_POST['GLEntry']) and isset($_SESSION['ReceiptBatch'])){
 	} else {
 		echo '<option value=""></option>';
 		while ($myrow=DB_fetch_array($result)){
-			if ($_POST['GLCode']==$myrow['accountcode']){
+			if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow['accountcode']){
 				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 			} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';

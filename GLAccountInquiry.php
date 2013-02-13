@@ -187,7 +187,10 @@ if (isset($_POST['Show'])){
 	echo '<br />
 			<table class="selection" summary="' . _('General Ledger account inquiry details') . '">
 			<tr>
-					<th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th>
+					<th colspan="8">
+						<b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b>
+						<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+					</th>
 			</tr>';
 
 	$TableHeader = '<tr>

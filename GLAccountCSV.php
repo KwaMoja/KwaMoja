@@ -5,6 +5,8 @@
 
 include ('includes/session.inc');
 $Title = _('General Ledger Account Report');
+$ViewTopic= "GeneralLedger";
+$BookMark = "GLAccountCSV";
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 
@@ -14,19 +16,18 @@ if (isset($_POST['Period'])){
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="' . _('General Ledger Account Inquiry') . '" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
 echo '<div class="page_help_text noPrint">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for the report */
-echo '<table>
+echo '<table class="selection" summary="' . _('Criteria for report') . '">
 	        <tr>
 	         <td>'._('Selected Accounts') . ':</td>
 	         <td><select name="Account[]" size="12" multiple="multiple">';

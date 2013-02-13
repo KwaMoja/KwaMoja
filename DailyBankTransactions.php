@@ -4,16 +4,18 @@
 
 include ('includes/session.inc');
 $Title = _('Bank Transactions Inquiry');
+$ViewTopic= "GeneralLedger";
+$BookMark = "DailyBankTransactions";
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" > <img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text noPrint" > <img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . $Title.'" alt="' . $Title.'" />' . ' ' . $Title.'</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">';
+	echo '<table class="selection" summary="' . _('Select criteria for inquiry') . '">';
 
 	$SQL = "SELECT 	bankaccountname,
 					bankaccounts.accountcode,
@@ -112,11 +114,11 @@ if (!isset($_POST['Show'])) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {
 		$BankDetailRow = DB_fetch_array($BankResult);
-		echo '<table>
+		echo '<table class="selection" summary="' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '">
 				<tr>
 					<th colspan="9">
 						<h3>' . _('Account Transactions For').' '.$BankDetailRow['bankaccountname'].' '._('Between').' '.$_POST['FromTransDate'] . ' ' . _('and') . ' ' . $_POST['ToTransDate'] . '
-							<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+							<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
 						</h3>
 					</th>
 				</tr>

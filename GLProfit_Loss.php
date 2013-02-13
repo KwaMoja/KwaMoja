@@ -16,10 +16,12 @@ if ((!isset($_POST['FromPeriod'])
 	and !isset($_POST['ToPeriod']))
 		or isset($_POST['SelectADifferentPeriod'])){
 
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "ProfitAndLoss";
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text noPrint" >
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Profit and Loss Report') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Profit and Loss Report') . '" alt="' . _('Print Profit and Loss Report') . '" />' . ' ' . _('Print Profit and Loss Report') . '
 		</p>';
 	echo '<div class="page_help_text noPrint">' . _('Profit and loss statement (P&amp;L), also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') .
 		'<br />'
@@ -42,9 +44,11 @@ if ((!isset($_POST['FromPeriod'])
 	$period=GetPeriod($FromDate, $db);
 
 	/*Show a form to allow input of criteria for profit and loss to show */
-	echo '<br /><table class="selection">
-			<tr><td>' . _('Select Period From') . ':</td>
-				<td><select name="FromPeriod">';
+	echo '<br />
+			<table class="selection" summary="' . _('Criteria for report') . '">
+				<tr>
+					<td>' . _('Select Period From') . ':</td>
+					<td><select name="FromPeriod">';
 
 	$sql = "SELECT periodno,
 					lastdate_in_period
@@ -549,9 +553,10 @@ if ((!isset($_POST['FromPeriod'])
 
 } else {
 
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "ProfitAndLoss";
 	include('includes/header.inc');
-	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="FromPeriod" value="' . $_POST['FromPeriod'] . '" />
 			<input type="hidden" name="ToPeriod" value="' . $_POST['ToPeriod'] . '" />';
@@ -597,12 +602,18 @@ if ((!isset($_POST['FromPeriod'])
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Profit Loss Inquiry') . '" alt="' . _('General Ledger Profit Loss Inquiry') . '" />' . ' ' . _('Statement of Profit and Loss for the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' and including ' . $PeriodToDate . '</p>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
-	echo '<table class="selection">';
+	echo '<table class="selection" summary="' . _('General Ledger Profit Loss Inquiry') . '">
+			<tr>
+				<th colspan="8">
+					<b>' . _('General Ledger Profit Loss Inquiry') . '</b>
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+				</th>
+			</tr>';
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = '<tr>
@@ -757,7 +768,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td><hr /></td>
 						</tr>';
 
-					printf('<tr style="background-color:#ffffff">
+					printf('<tr>
 							<td colspan="2"><h2>%s</td>
 							<td></td>
 							<td class="number">%s</td>
@@ -801,7 +812,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
 						</tr>';
-					printf('<tr style="background-color:#ffffff">
+					printf('<tr>
 							<td colspan="2"><h2>'._('Gross Profit').'</h2></td>
 							<td></td>
 							<td class="number">%s</td>
@@ -833,7 +844,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
 						</tr>';
-					printf('<tr style="background-color:#ffffff">
+					printf('<tr>
 							<td colspan="2"><h4><i>'._('Gross Profit Percent').'</i></h4></td>
 							<td></td>
 							<td class="number"><i>%s</i></td>
@@ -854,7 +865,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td colspan="6"><hr /></td>
 						</tr>';
 
-					printf('<tr style="background-color:#ffffff">
+					printf('<tr>
 								<td colspan="2"><h4><b>'._('Profit').' - '._('Loss'). ' '. _('after'). ' ' . $Sections[$Section] .'</b></h2></td>
 								<td></td>
 								<td class="number">%s</td>
@@ -882,7 +893,7 @@ if ((!isset($_POST['FromPeriod'])
 					} else {
 						$LYNPPercent = 0;
 					}
-					printf('<tr style="background-color:#ffffff">
+					printf('<tr>
 								<td colspan="2"><h4><i>'._('P/L Percent after').' ' . $Sections[$Section] .'</i></h4></td>
 								<td></td>
 								<td class="number"><i>%s</i></td>
@@ -1228,7 +1239,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 
-	printf('<tr style="background-color:#ffffff">
+	printf('<tr>
 				<td colspan="2"><h2><b>'._('Profit').' - '._('Loss').'</b></h2></td>
 				<td></td>
 				<td class="number">%s</td>
@@ -1261,7 +1272,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 
-	printf('<tr style="background-color:#ffffff">
+	printf('<tr>
 				<td colspan="2"><h4><i>'._('Net Profit Percent').'</i></h4></td>
 				<td></td>
 				<td class="number"><i>%s</i></td>
@@ -1280,7 +1291,7 @@ if ((!isset($_POST['FromPeriod'])
 			<td colspan="6"><hr /></td>
 		</tr>';
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
+	echo '<br /><div class="centre noPrint"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
 echo '</div>';
 echo '</form>';

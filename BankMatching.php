@@ -4,6 +4,8 @@
 
 include('includes/session.inc');
 $Title = _('Bank Account Matching');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'BankMatching';
 include('includes/header.inc');
 
 if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
@@ -12,7 +14,7 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
 	echo '<p class="page_title_text noPrint" >
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Receipts') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Bank Matching') . '" alt="' . _('Bank Matching') . '" />' . ' ' . _('Bank Account Matching - Receipts') . '
 		</p>';
 
 } elseif ((isset($_GET['Type']) and $_GET['Type']=='Payments')
@@ -21,7 +23,7 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 	$Type = 'Payments';
 	$TypeName =_('Payments');
 	echo '<p class="page_title_text noPrint" >
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="" />' . ' ' . _('Bank Account Matching - Payments') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/money_delete.png" title="' . _('Bank Matching') . '" alt="' . _('Bank Matching') . '" />' . ' ' . _('Bank Account Matching - Payments') . '
 		</p>';
 
 } else {
@@ -91,9 +93,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<input type="hidden" name="Type" value="' . $Type . '" />';
 
-echo '<table class="selection">
+echo '<table class="selection" summary="' . _('Selection Criteria for inquiry') . '">
 		<tr>
-			<td align="left">' . _('Bank Account') . ':</td>
+			<td>' . _('Bank Account') . ':</td>
 			<td colspan="3"><select tabindex="1" name="BankAccount">';
 
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
@@ -266,11 +268,10 @@ if ($InputError !=1
 	$ErrMsg = _('The payments with the selected criteria could not be retrieved because');
 	$PaymentsResult = DB_query($sql, $db, $ErrMsg);
 
-	echo '<table cellpadding="2" class="selection">
+	echo '<table cellpadding="2" class="selection" summary="' . _('Payments to be matched') . '">
 			<tr>
 				<th>'. _('Cheque No') . '</th>
 				<th>' . _('Ref') . '</th>
-				<th>' . $TypeName . '</th>
 				<th>' . _('Date') . '</th>
 				<th>' . _('Amount') . '</th>
 				<th>' . _('Outstanding') . '</th>
@@ -284,6 +285,9 @@ if ($InputError !=1
 
 		$DisplayTranDate = ConvertSQLDate($myrow['transdate']);
 		$Outstanding = $myrow['amt']- $myrow['amountcleared'];
+		if ($myrow['ref']=='') {
+			$myrow['ref'] = _('N/A');
+		}
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
 			printf('<tr style="background-color:#CCCEEE">

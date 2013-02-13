@@ -6,6 +6,8 @@ include('includes/session.inc');
 
 $Title = _('Account Sections');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'AccountSections';
 include('includes/header.inc');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE

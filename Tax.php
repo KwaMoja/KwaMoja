@@ -25,13 +25,13 @@ if (isset($_POST['TaxAuthority']) and
 
 	$pdf->addInfo('Title',_('Taxation Report'));
 	$ReportTitle = $TaxAuthorityName . ' ' . _('Tax Report for') . ' ' . $_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd;
-    $pdf->addInfo('Subject', $ReportTitle);
+	$pdf->addInfo('Subject', $ReportTitle);
 
 	$FontSize=12;
 	$PageNumber=0;
 	$line_height=12;
 
-      /*Now get the invoices for the tax report */
+	  /*Now get the invoices for the tax report */
 
 	$SQL = "SELECT debtortrans.transno,
 					debtortrans.type,
@@ -79,11 +79,11 @@ if (isset($_POST['TaxAuthority']) and
 	$Inputs =0;
 	$InputTax =0;
 
-    $ListCount = 0;
+	$ListCount = 0;
 
 	while ($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)){
 
-        $ListCount ++;
+		$ListCount ++;
 
 		if ($_POST['DetailOrSummary']=='Detail'){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $DebtorTransRow['typename'],'left');
@@ -182,7 +182,7 @@ if (isset($_POST['TaxAuthority']) and
 
 	while ($SuppTransRow = DB_fetch_array($SuppTransResult,$db)){
 
-        $ListCount ++;
+		$ListCount ++;
 
 		if ($_POST['DetailOrSummary']=='Detail'){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $SuppTransRow['typename'],'left');
@@ -277,22 +277,20 @@ if (isset($_POST['TaxAuthority']) and
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
-    } else {
-    	$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
-    }
-    $pdf->__destruct();
+	} else {
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_Tax_Report_' . Date('Y-m-d'));
+	}
+	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Tax Reporting');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $Title. '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Tax Reports') . '" alt="' . $Title. '" />' . $Title. '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection" summary="' . _('Criteria for report') . '">';
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</td>
 			<td><select name="TaxAuthority">';
@@ -351,7 +349,7 @@ if (isset($_POST['TaxAuthority']) and
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
+		</div>
 		</form>';
 
 	include('includes/footer.inc');

@@ -12,19 +12,19 @@ include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 
-	/*Show a form to allow input of criteria for TB to show */
+	/*Show a form to allow input of criteria for Balance Sheet to show */
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "BalanceSheet";
 	include('includes/header.inc');
-	echo '<div class="centre"><p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
-		. _('Print') . '" alt="" />' . ' ' . _('Balance Sheet') . '</p></div>';
+	echo '<div class="centre"><p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Balance Sheet') . '" alt="' . _('Balance Sheet') . '" />' . ' ' . _('Balance Sheet') . '</p></div>';
 	echo '<div class="page_help_text noPrint">'
 	. _('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />'
 	. _('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />'
 	. _('KwaMoja is an "accrual" based system (not a "cash based" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
+	echo '<br /><table class="selection" summary="' . _('Criteria for report') . '">
 			<tr>
 				<td>'._('Select the balance date').':</td>
 				<td><select name="BalancePeriodEnd">';
@@ -326,9 +326,10 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	}
 	exit;
 } else {
+	$ViewTopic= "GeneralLedger";
+	$BookMark = "BalanceSheet";
 	include('includes/header.inc');
-	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="BalancePeriodEnd" value="' . $_POST['BalancePeriodEnd'] . '" />';
 
@@ -375,15 +376,15 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode";
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('Search') . '" alt="" /> ' . _('HTML View') . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/preview.gif" title="' . _('HTML View') . '" alt="' . _('HTML View') . '" /> ' . _('HTML View') . '</p>';
 
 	echo '<div class="invoice">
-			<table class="selection">
+			<table class="selection" summary="' . _('HTML View') . '">
 			<tr>
 				<th colspan="6">
-					<div class="centre"><h1>' .
-		_('Balance Sheet as at') . ' ' . $BalanceDate .'</h1>
-					</div>
+					<h2>' . _('Balance Sheet as at') . ' ' . $BalanceDate .'
+					<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+					</h2>
 				</th>
 			</tr>';
 
@@ -691,7 +692,7 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 
 	echo '</table>';
 	echo '</div>';
-	echo '<br /><div class="centre"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
+	echo '<br /><div class="centre noPrint"><input type="submit" name="SelectADifferentPeriod" value="'._('Select A Different Balance Date').'" /></div>';
 	echo '</div></form>';
 }
 
