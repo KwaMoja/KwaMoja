@@ -156,7 +156,7 @@ div.info { /* ??? */
 	color: white;
 	border: 1px solid white;
 }
-DIV.page_help_text noPrint {
+DIV.page_help_text {
 	background: lightgrey url(images/help.png) top left no-repeat;
 	BORDER: #a52a2a 1px solid;
 	padding-top:2px;

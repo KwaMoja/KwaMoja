@@ -64,6 +64,8 @@ margin:0 auto;
 margin-bottom:10px;
 }
 table.selection{
+border: solid 1px #B8BAC5;
+border-radius: 5px;
 }
 th{
 background-color:#C3C3C3;
