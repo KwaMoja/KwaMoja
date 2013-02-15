@@ -277,6 +277,7 @@ $MenuItems['stock']['Maintenance']['Caption'] = array (_('Add A New Item'),
 														_('Sales Category Maintenance'),
 														_('Add or Update Prices Based On Costs'),
 														_('View or Update Prices Based On Costs'),
+														_('Upload new prices from csv file'),
 														_('Reorder Level By Category/Location')
 														);
 $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
@@ -284,6 +285,7 @@ $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 													'/SalesCategories.php',
 													'/PricesBasedOnMarkUp.php',
 													'/PricesByCost.php',
+													'/UploadPriceList.php',
 													'/ReorderLevelLocation.php'
 													);
 

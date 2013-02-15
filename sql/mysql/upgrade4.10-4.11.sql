@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `sellthroughsupport` (
 INSERT INTO scripts VALUES ('SellThroughSupport.php',  '9',  'Defines the items, period and quantum of support for which supplier has agreed to provide.');
 INSERT INTO scripts VALUES ('PDFSellThroughSupportClaim.php',  '9',  'Reports the sell through support claims to be made against all suppliers for a given date range.');
 INSERT INTO scripts VALUES ('ReportBug.php',  '15',  'Report an issue directly to the KwaMoja bugs page');
+INSERT INTO scripts VALUES ('UploadPriceList.php',  '15',  'Loads a new price list from a csv file');
 
 ALTER TABLE `locstock` ADD `bin` VARCHAR( 10 ) NOT NULL , ADD INDEX ( `bin` );
 
