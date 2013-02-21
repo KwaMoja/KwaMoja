@@ -13,7 +13,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	header('Location:' . $RootPath . '/install/index.php');
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
-
+$DBVersion=HighestFileName($PathPrefix);
 if (isset($dbuser)) {
 	$DBUser=$dbuser;
 	$DBPassword=$dbpassword;
@@ -136,10 +136,10 @@ else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-/*if the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
-} //strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')
+/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
+if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='Z_UpgradeDatabase.php')) {
+	header('Location: Z_UpgradeDatabase.php');
+}
 
 if (isset($_SESSION['DB_Maintenance'])) {
 	if ($_SESSION['DB_Maintenance'] != 0) {
@@ -324,6 +324,26 @@ function CryptPass($Password) {
 	}
 }
 
+function HighestFileName($PathPrefix) {
+	if($handle=opendir($PathPrefix . 'sql/updates')){
+
+		$i=0;
+
+		// Go through directory:
+		while(false!==($file=readdir($handle))){
+			// filter unnecessary file/dir paths:
+			if(substr($file,-3)=='php'){
+
+				$FileNameLength=strlen($file)-4;
+				$UpdateNames[$i]=substr($file,0,$FileNameLength);
+
+				$i++;
+			}
+		}
+		closedir($handle);
+	}
+	return max($UpdateNames);
+}
 
 if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from KwaMoja with the FormID = $_SESSION['FormID'] - which is set before the first login*/

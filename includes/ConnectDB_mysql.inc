@@ -9,6 +9,7 @@ if (!isset($mysqlport)){
 	$mysqlport = 3306;
 }
 $db = mysql_connect($host.':'.$mysqlport , $DBUser, $DBPassword);
+$result=DB_query("SET sql_mode = 'ANSI'", $db);
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysql server and mysql client/library may assume otherwise
@@ -217,6 +218,16 @@ function DB_IgnoreForeignKeys($Conn){
 }
 function DB_ReinstateForeignKeys($Conn){
 	mysql_query("SET FOREIGN_KEY_CHECKS=1",$Conn);
+}
+
+function DB_table_exists($TableName, $Conn) {
+	$ShowSQL="SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$TableName."'";
+	$result=DB_query($ShowSQL, $Conn);
+	if (DB_num_rows($result)>0) {
+		return True;
+	} else {
+		return False;
+	}
 }
 
 ?>

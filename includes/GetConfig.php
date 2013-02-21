@@ -39,6 +39,11 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 		$_SESSION['PageSecurityArray'][$myrow['script']]=$myrow['pagesecurity'];
 	}
 
+	if (!isset($_SESSION['DBUpdateNumber'])){ // the config record for VersionNumber is not yet added
+		$_SESSION['DBUpdateNumber']=-1;
+		header('Location: Z_UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+	}
+
 	/*
 	 check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
 	*/

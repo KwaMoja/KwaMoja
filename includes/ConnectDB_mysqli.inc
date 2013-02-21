@@ -229,4 +229,15 @@ function DB_IgnoreForeignKeys($Conn){
 function DB_ReinstateForeignKeys($Conn){
 	mysqli_query($Conn, 'SET FOREIGN_KEY_CHECKS=1');
 }
+
+function DB_table_exists($TableName, $Conn) {
+	$ShowSQL="SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$TableName."'";
+	$result=DB_query($ShowSQL, $Conn);
+	if (DB_num_rows($result)>0) {
+		return True;
+	} else {
+		return False;
+	}
+}
+
 ?>
