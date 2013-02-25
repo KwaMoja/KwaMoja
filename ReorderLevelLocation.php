@@ -16,9 +16,10 @@ echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'
 if (isset($_POST['submit'])){
 	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers
 		if (isset($_POST['StockID' . $i]) and is_numeric(filter_number_format($_POST['ReorderLevel'.$i]))){
-			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST['ReorderLevel'.$i]) . "'
-						WHERE loccode = '" . $_POST['StockLocation'] . "'
-						AND stockid = '" . $_POST['StockID' . $i] . "'";
+			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST['ReorderLevel'.$i]) . "',
+											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "'
+										WHERE loccode = '" . $_POST['StockLocation'] . "'
+											AND stockid = '" . $_POST['StockID' . $i] . "'";
 			$Result = DB_query($SQLUpdate,$db);
 		}
 	}
@@ -39,6 +40,8 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	$sql="SELECT locstock.stockid,
 				description,
 				reorderlevel,
+				bin,
+				quantity,
 				decimalplaces
 			FROM locstock INNER JOIN stockmaster
 			ON locstock.stockid = stockmaster.stockid
@@ -110,21 +113,14 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 		$TotQtyResult = DB_query($SqlOH,$db);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
-		//get On Hand in Location
-		$SqlOHLoc="SELECT SUM(quantity) AS qty
-					FROM locstock
-					WHERE stockid='" . $myrow['stockid'] . "'
-					AND locstock.loccode = '" . $_POST['StockLocation'] . "'";
-		$LocQtyResult = DB_query($SqlOHLoc,$db);
-		$LocQtyRow = DB_fetch_array($LocQtyResult);
-
 		echo $myrow['stockid'].'</td>
 			<td>'.$myrow['description'].'</td>
 			<td class="number">'.locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']).'</td>
 			<td class="number">'.locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']).'</td>
-			<td class="number">'.locale_number_format($LocQtyRow['qty'],$myrow['decimalplaces']).'</td>
+			<td class="number">'.locale_number_format($myrow['quantity'],$myrow['decimalplaces']).'</td>
 			<td><input type="text" class="number" name="ReorderLevel' . $i .'" maxlength="10" size="10" value="'. locale_number_format($myrow['reorderlevel'],0) .'" />
-				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
+			<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
+			<td><input type="text" name="BinLocation' . $i .'" maxlength="10" size="10" value="'. $myrow['bin'] .'" /></td>
 			</tr> ';
 		$i++;
 	} //end of looping

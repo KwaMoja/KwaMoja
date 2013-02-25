@@ -38,11 +38,13 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])){
 	 		<tr>
 				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
 				<td><input type="text" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
-	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ':</td>
-	 		<td><input type="text" name="ToDate" maxlength="10" size="10"  class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-	</tr>';
-	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
+			</tr>
+			<tr>
+				<td>' . _('Enter the date to which cheques are to be listed') . ':</td>
+				<td><input type="text" name="ToDate" maxlength="10" size="10"  class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Bank Account') . '</td><td>';
 
 	 $sql = "SELECT bankaccountname, accountcode FROM bankaccounts";
 	 $result = DB_query($sql,$db);
@@ -91,17 +93,17 @@ $BankAccountName = $myrow['bankaccountname'];
 $Currency = $myrow['currcode'];
 $BankCurrDecimalPlaces = $myrow['bankcurrdecimalplaces'];
 
-$sql= "SELECT amount,
-		ref,
-		transdate,
-		banktranstype,
-		type,
-		transno
-	FROM banktrans
-	WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
-	AND (banktrans.type=1 or banktrans.type=22)
-	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+$sql = "SELECT amount,
+				ref,
+				transdate,
+				banktranstype,
+				type,
+				transno
+			FROM banktrans
+			WHERE banktrans.bankact='" . $_POST['BankAccount'] . "'
+				AND (banktrans.type=1 or banktrans.type=22)
+				AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+				AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 $Result=DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -139,13 +141,13 @@ while ($myrow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
 	$sql = "SELECT accountname,
-			amount,
-			narrative
-		FROM gltrans,
-			chartmaster
-		WHERE chartmaster.accountcode=gltrans.account
-		AND gltrans.typeno ='" . $myrow['transno'] . "'
-		AND gltrans.type='" . $myrow['type'] . "'";
+					amount,
+					narrative
+				FROM gltrans
+				INNER JOIN chartmaster
+					ON chartmaster.accountcode=gltrans.account
+				WHERE gltrans.typeno ='" . $myrow['transno'] . "'
+					AND gltrans.type='" . $myrow['type'] . "'";
 
 	$GLTransResult = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)!=0){

@@ -71,18 +71,18 @@ echo '<br />
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;
 $ItemMustExist = true;
 $StockID = $LineItem->StockID;
-$InOutModifier=1; 
+$InOutModifier=1;
 $ShowExisting = true;
 if (isset($TransferItem)){
 	$LineNo=$TransferItem;
 } else {
 	$LineNo=0;
 }
-include ('includes/OutputSerialItems.php');
+include ('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */
-$LineItem->Quantity = $TransferQuantity;
+$LineItem->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the Transfer without keying */
 

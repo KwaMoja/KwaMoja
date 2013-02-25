@@ -488,7 +488,7 @@ if (!isset($DebtorNo)) {
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
-		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
+		if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 		} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 		elseif (!isset($_POST['Address6']) and $CountryName == "") {
@@ -772,7 +772,7 @@ else {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
+			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 			elseif (!isset($_POST['Address6']) and $CountryName == "") {
@@ -814,7 +814,7 @@ else {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
+			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 			elseif (!isset($_POST['Address6']) and $CountryName == "") {
@@ -992,7 +992,7 @@ else {
 		$result = DB_query("SELECT currency FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'", $db);
 		$myrow = DB_fetch_array($result);
 		echo '<tr>
-				<td>' . _('Credit Status') . ':</td>
+				<td>' . _('Customers Currency') . ':</td>
 				<td>' . $myrow['currency'] . '</td></tr>';
 	} //isset($_GET['Modify'])
 	else {
@@ -1012,25 +1012,17 @@ else {
 		echo '</select></td>
 			</tr>';
 	}
-	/*added lines 8/23/2007 by Morris Kelly to get po line parameter Y/N*/
+	echo '<tr>
+			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine'] == 0) {
-			echo '<tr>
-					<td>' . _('Credit Status') . ':</td>
-					<td>' . _('No') . '</td>
-				</tr>';
+			echo '<td>'._('No') . '</td>';
 		} //$_POST['CustomerPOLine'] == 0
 		else {
-			echo '<tr>
-					<td>' . _('Credit Status') . ':</td>
-					<td>' . _('Yes') . '</td>
-				</tr>';
+			echo '<td>'._('Yes') . '</td>';
 		}
-	} //isset($_GET['Modify'])
-	else {
-		echo '<tr>
-				<td>' . _('Require Customer PO Line on SO') . ':</td>
-				<td><select name="CustomerPOLine">';
+	} else {
+		echo '<td><select name="CustomerPOLine">';
 		if ($_POST['CustomerPOLine'] == 0) {
 			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 			echo '<option value="1">' . _('Yes') . '</option>';
@@ -1039,12 +1031,12 @@ else {
 			echo '<option value="0">' . _('No') . '</option>';
 			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select></td>';
 	}
+	echo '</tr>';
 
 	if (isset($_GET['Modify'])) {
-		if ($_POST['CustomerPOLine'] == 0) {
+		if ($_POST['InvAddrBranch']==0){
 			echo '<tr>
 					<td>' . _('Invoice Addressing') . ':</td>
 					<td>' . _('Address to HO') . '</td>

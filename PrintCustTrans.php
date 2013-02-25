@@ -88,6 +88,7 @@ if (isset($PrintPDF)
 							debtortrans.ovgst,
 							debtortrans.rate,
 							debtortrans.invtext,
+							debtortrans.packages,
 							debtortrans.consignment,
 							debtorsmaster.name,
 							debtorsmaster.address1,

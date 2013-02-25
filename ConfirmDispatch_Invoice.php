@@ -781,7 +781,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									rate,
 									invtext,
 									shipvia,
-									consignment )
+									consignment,
+									packages)
 								VALUES (
 									'". $InvoiceNo . "',
 									10,
@@ -799,7 +800,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 									'" . $_SESSION['CurrencyRate'] . "',
 									'" . $_POST['InvoiceText'] . "',
 									'" . $_SESSION['Items'.$identifier]->ShipVia . "',
-									'" . $_POST['Consignment'] . "'	)";
+									'" . $_POST['Consignment'] . "',
+									'" . $_POST['Packages'] . "')";
 
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -1639,6 +1641,10 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		$_POST['Consignment']='';
 	}
 
+	if (!isset($_POST['Packages'])) {
+		$_POST['Packages']='1';
+	}
+
 	if (!isset($_POST['InvoiceText'])) {
 		$_POST['InvoiceText']='';
 	}
@@ -1653,6 +1659,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			<td>' . _('Consignment Note Ref'). ':</td>
 			<td><input tabindex="'.$j.'" type="text" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
 		</tr>';
+	$j++;
+ 	echo '<tr>
+			<td>' . _('No Of Packages in Delivery'). ':</td>
+			<td><input tabindex="'.$j.'" type="text" maxlength="6" size="6" class="number" name="Packages" value="' . $_POST['Packages'] . '" /></td>
+		</tr>';
+
 	$j++;
 	echo '<tr>
 			<td>'._('Action For Balance'). ':</td>

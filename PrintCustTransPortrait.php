@@ -107,6 +107,7 @@ if (isset($PrintPDF)
 							debtortrans.rate,
 							debtortrans.invtext,
 							debtortrans.consignment,
+							debtortrans.packages,
 							debtorsmaster.name,
 							debtorsmaster.address1,
 							debtorsmaster.address2,
