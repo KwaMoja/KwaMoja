@@ -3,8 +3,11 @@
 /* $Id: ManualAPIFunctions.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
 
 $PageSecurity = 1;
+
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+
 $PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
-//include('../../includes/session.inc');
+
 include('../../xmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
 
@@ -14,16 +17,10 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</ti
 echo '<link REL="shortcut icon" HREF="'. $RootPath.'/favicon.ico">';
 echo '<link REL="icon" HREF="' . $RootPath.'/favicon.ico">';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '<link href="'.$RootPath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
+//echo '<link href="'.$RootPath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
 echo '</head>';
 
 echo '<body>';
-
-$kwamojauser = $_SESSION['UserID'];
-$sql="SELECT password FROM www_users WHERE userid='".$kwamojauser."'";
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$kwamojapassword = $myrow[0];
 
 $ServerString = $_SERVER['HTTP_HOST'].$RootPath;
 $FirstBitOfURL = mb_substr($ServerString,0,mb_strpos($ServerString,'/doc/Manual'));
