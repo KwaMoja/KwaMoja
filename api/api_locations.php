@@ -7,7 +7,7 @@
 
 /* Verify that the Location code is valid, and doesn't already
    exist.*/
-   
+
 	function VerifyLocationCode($LocationCode, $i, $Errors, $db) {
 		if ((mb_strlen($LocationCode)<1) or (mb_strlen($LocationCode)>5)) {
 			$Errors[$i] = IncorrectLocationCodeLength;
@@ -22,7 +22,7 @@
 		}
 		return $Errors;
 	}
-	
+
 /* Check that the Location Code exists*/
 	function VerifyLocationExists($LocationCode, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(loccode)
@@ -46,8 +46,8 @@
 
 /* Check that the tax province id is set up in the kwamoja database */
 	function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors, $db) {
-		$Searchsql = "SELECT COUNT(taxprovinceid) 
-						FROM taxprovinces 
+		$Searchsql = "SELECT COUNT(taxprovinceid)
+						FROM taxprovinces
 						WHERE taxprovinceid='".$TaxProvinceId."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_row($SearchResult);
@@ -68,6 +68,8 @@
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
+		} else {
+			$Errors[0] = 0;
 		}
 		$sql = "SELECT loccode FROM locations";
 		$result = DB_query($sql, $db);
@@ -76,7 +78,8 @@
 			$LocationList[$i]=$myrow[0];
 			$i++;
 		}
-		return $LocationList;
+		$Errors[1] = $LocationList;
+		return $Errors;
 	}
 
 /* This function takes as a parameter a stock location id
@@ -90,15 +93,18 @@
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
+		} else {
+			$Errors[0] = 0;
 		}
 		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
 		$result = DB_query($sql, $db);
-		return DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($result);
+		return $Errors;
 	}
-	
+
 /* Inserts a Location in KwaMoja.
  */
- 	
+
 	function InsertLocation($Location, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -149,9 +155,9 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ") 
+			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
-				
+
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -161,10 +167,10 @@
 		}
 		return $Errors;
 	}
-	
+
 /* Modify a Location Details in KwaMoja.
  */
- 	
+
 	function ModifyLocation($Location, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
