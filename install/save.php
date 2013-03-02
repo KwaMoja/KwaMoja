@@ -307,7 +307,7 @@ $msg .= "\$MaximumExecutionTime =120;\n";
 $msg .= "\$CryptFunction = 'sha1';\n";
 $msg .= "\$DefaultClock = 12;\n";
 
-$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,\'UTF-8\'));\n";
+$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
 $msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
 $msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
 $msg .= "\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
