@@ -300,7 +300,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']==1 and !isset($_POST['R
 			INNER JOIN stockmaster
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
-				AND offers.expirydate>=NOW()";
+				AND offers.expirydate>=CURRENT_DATE";
 
 	$result=DB_query($sql, $db);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);

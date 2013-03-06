@@ -87,7 +87,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				ON stockmaster.stockid=offers.stockid
 			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
 				AND offers.supplierid='" . $_POST['supplierid'] . "'
-				AND  offers.expirydate>=NOW()
+				AND  offers.expirydate>=CURRENT_DATE
 			ORDER BY offerid";
 	$result=DB_query($sql, $db);
 

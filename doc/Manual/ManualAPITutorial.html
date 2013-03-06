@@ -29,7 +29,8 @@ echo "Test KwaMoja API";
 
 //the xmlrpc class can output some funny warnings so make sure notices are turned off error_reporting (E_ALL & ~E_NOTICE);
 
-/* you need to include the phpxmlrpc class - see link above - copy the whole directory structure of the class over to your client application from the KwaMoja/xmlrpc directory */
+/* you need to include the phpxmlrpc class - see link above - copy the whole directory structure of the class over to
+your client application from the KwaMoja/xmlrpc directory */
 
 include ("xmlrpc/lib/xmlrpc.inc");
 
@@ -41,7 +42,9 @@ $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 $Parameters = array();
 
-/* The trap for me was that each parameter needs to be run through xmlrpcval() - to create the necessary xml required for the rpc call if one of the parameters required is an array then it needs to be processing into xml for the rpc call through php_xmlrpc_encode()*/
+/* The trap for me was that each parameter needs to be run through xmlrpcval() - to create the necessary xml
+required for the rpc call if one of the parameters required is an array then it needs to be processing into xml for
+the rpc call through php_xmlrpc_encode()*/
 
 $Parameters['StockID'] = xmlrpcval('DVD-TOPGUN'); //the stockid of the item we wish to know the balance for
 
