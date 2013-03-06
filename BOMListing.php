@@ -28,10 +28,11 @@ if (isset($_POST['PrintPDF'])
 				bom.effectiveto AS eff_to,
 				bom.effectiveafter AS eff_frm
 			FROM stockmaster INNER JOIN bom
-			ON stockmaster.stockid=bom.component
+				ON stockmaster.stockid=bom.component
 			WHERE bom.parent >= '" . $_POST['FromCriteria'] . "'
-			AND bom.parent <= '" . $_POST['ToCriteria'] . "'
-			AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
+				AND bom.parent <= '" . $_POST['ToCriteria'] . "'
+				AND bom.effectiveto >= CURRENT_DATE
+				AND bom.effectiveafter <= CURRENT_DATE
 			ORDER BY bom.parent,
 					bom.component";
 

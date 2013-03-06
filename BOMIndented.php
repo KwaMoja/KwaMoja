@@ -49,8 +49,8 @@ if (isset($_POST['PrintPDF'])) {
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() 
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= CURRENT_DATE
+			  AND bom.effectiveafter <= CURRENT_DATE";
 	$result = DB_query($sql,$db);
 
 	$LevelCounter = 2;
@@ -76,8 +76,8 @@ if (isset($_POST['PrintPDF'])) {
 					 bom.quantity
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= NOW() 
-			  AND bom.effectiveafter <= NOW()";
+			  AND bom.effectiveto >= CURRENT_DATE
+			  AND bom.effectiveafter <= CURRENT_DATE";
 	$result = DB_query($sql,$db);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -109,7 +109,8 @@ if (isset($_POST['PrintPDF'])) {
 						 bom.quantity
 				 FROM bom, passbom
 				 WHERE bom.parent = passbom.part
-				  AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()";
+				  AND bom.effectiveto >= CURRENT_DATE
+				  AND bom.effectiveafter <= CURRENT_DATE";
 			$result = DB_query($sql,$db);
 
 			$sql = "DROP TABLE IF EXISTS passbom2";
@@ -132,8 +133,8 @@ if (isset($_POST['PrintPDF'])) {
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
-						AND bom.effectiveto >= NOW() 
-						AND bom.effectiveafter <= NOW()";
+						AND bom.effectiveto >= CURRENT_DATE
+						AND bom.effectiveafter <= CURRENT_DATE";
 			$result = DB_query($sql,$db);
 
 
@@ -184,7 +185,7 @@ if (isset($_POST['PrintPDF'])) {
 	$fill = false;
 	$pdf->SetFillColor(224,235,255);
 
-	$ListCount = DB_num_rows($result); 
+	$ListCount = DB_num_rows($result);
 
 	while ($myrow = DB_fetch_array($result,$db)){
 
@@ -246,7 +247,7 @@ if (isset($_POST['PrintPDF'])) {
         echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
-          <div> 
+          <div>
           <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">';
 	echo '<tr>

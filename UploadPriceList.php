@@ -104,7 +104,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$sql = "UPDATE prices
 						SET enddate='" . FormatDateForSQL($_POST['StartDate']) . "'
 						WHERE stockid='".$myrow[0]."'
-							AND enddate>NOW()
+							AND enddate>CURRENT_DATE
 							AND typeabbrev='" . $myrow[1] . "'";
 			$result = DB_query($sql,$db);
 

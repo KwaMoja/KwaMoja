@@ -71,7 +71,7 @@ $sql = "SELECT recurringsalesorders.recurrorderno,
 		AND recurringsalesorders.branchcode = custbranch.branchcode
 		AND recurringsalesorders.fromstkloc=locations.loccode
 		AND recurringsalesorders.ordertype=salestypes.typeabbrev
-		AND (TO_DAYS(NOW()) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency)
+		AND (TO_DAYS(CURRENT_DATE) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency)
 		AND DATE_ADD(recurringsalesorders.lastrecurrence, " . INTERVAL ('365/recurringsalesorders.frequency', 'DAY') . ") <= recurringsalesorders.stopdate";
 
 $RecurrOrdersDueResult = DB_query($sql,$db,_('There was a problem retrieving the recurring sales order templates. The database reported:'));

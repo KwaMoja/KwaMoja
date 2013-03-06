@@ -314,7 +314,7 @@ if (isset($_POST['submit'])) {
 										 directdemand,
 										 whererequired)
 							   SELECT locstock.stockid,
-									  NOW(),
+									  CURRENT_DATE,
 									  (locstock.reorderlevel - locstock.quantity) AS reordqty,
 									  'REORD',
 									  '1',
@@ -513,13 +513,14 @@ if (isset($_POST['submit'])) {
 									eoqflag,
 									usemrpdemands,
 									leeway)
-									VALUES (NOW(),
-								'" . $locparm . "',
-								'" .  $_POST['pansizeflag']  . "',
-								'" .  $_POST['shrinkageflag']  . "',
-								'" .  $_POST['eoqflag']  . "',
-								'" .  $_POST['usemrpdemands']  . "',
-								'" . filter_number_format($_POST['Leeway']) . "')";
+								VALUES (
+									CURRENT_DATE,
+									'" . $locparm . "',
+									'" .  $_POST['pansizeflag']  . "',
+									'" .  $_POST['shrinkageflag']  . "',
+									'" .  $_POST['eoqflag']  . "',
+									'" .  $_POST['usemrpdemands']  . "',
+									'" . filter_number_format($_POST['Leeway']) . "')";
 	$result = DB_query($sql,$db);
 
 } else { // End of if submit isset
