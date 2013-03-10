@@ -347,7 +347,7 @@ if (isset($_POST['EnterAdjustment']) and $_POST['EnterAdjustment']!= ''){
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 		}
-
+		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);
 	} /* end if there was no input error */
 
@@ -359,7 +359,6 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_SESSION['Adjustment' . $identifier])) {
-	$StockID='';
 	$Controlled= 0;
 	$Quantity = 0;
 	$DecimalPlaces =2;

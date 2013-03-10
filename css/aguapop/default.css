@@ -24,7 +24,44 @@ padding:0;
 }
 input, textarea, select{font-family:inherit;}
 
-/* default styles */
+/* Styles for three boxes across */
+div.container{
+	width:100%;
+	padding-top:1%;
+}
+div.box{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+	width:32%;
+	float:left;
+	margin-left: 1%;
+	border: 1px solid;
+	border-radius: 5px;
+}
+div.box_header{
+	width: 98%;
+	border: solid 1px;
+	border-radius: 7px;
+	margin: 1%;
+	font-size:120%;
+	font-weight: bold;
+	color: #0F1378;
+}
+label.box {
+	clear: left;
+	float: left;
+	width: 50%; /* or whatever length suits */
+	text-align: left;
+	padding-left: 1%;
+}
+select.box {
+	width: 98%;
+	margin: 1%;
+	background: #BBBEF9;
+	border-radius: 7px;
+}
+/* End of styles for three boxes across */
 
 a{
 color:blue;
