@@ -917,6 +917,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 			<th>' . _('Discount') . '</th>
 			<th>' . _('Customer') . '</th>
 			<th>' . _('GL Code') . '</th>
+			<th>' . _('Tag') . '</th>
 			<th>' . _('Narrative') . '</th>
 		</tr>';
 
@@ -925,14 +926,19 @@ if (isset($_SESSION['ReceiptBatch'])){
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
 		$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
-		$Result=DB_query($SQL,$db);
-		$myrow=DB_fetch_array($Result);
+		$GLAccountResult=DB_query($SQL,$db);
+		$MyGLAccountRow=DB_fetch_array($GLAccountResult);
+
+		$SQL = "SELECT tagdescription FROM tags WHERE tagref='" . $ReceiptItem->tag . "'";
+		$TagResult = DB_query($SQL,$db);
+		$MyTagRow = DB_fetch_array($TagResult);
 
 		echo '<tr>
 				<td class="number">' . locale_number_format($ReceiptItem->Amount,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format($ReceiptItem->Discount,$_SESSION['ReceiptBatch']->CurrDecimalPlaces) . '</td>
 				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
-				<td>'.$ReceiptItem->GLCode.' - '.$myrow['accountname'].'</td>
+				<td>'.$ReceiptItem->GLCode.' - '.$MyGLAccountRow['accountname'].'</td>
+				<td>'.$MyTagRow['tagdescription'].'</td>
 				<td>'. stripslashes($ReceiptItem->Narrative) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $ReceiptItem->ID . '&Type=' . $_GET['Type']. '">' . _('Delete') . '</a></td>
 			</tr>';
