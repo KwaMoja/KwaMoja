@@ -139,7 +139,7 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "')";
 
-			$msg = _('The Petty Cash Tab') . ' ' . $_POST['tabcode'] .  ' ' . _('has been created');
+			$msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] .  ' ' . _('has been created');
 
 		}
 	}
