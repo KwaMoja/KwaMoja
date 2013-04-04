@@ -640,6 +640,8 @@ InsertRecord('systypes', array('typeid', 'typename'), array('49', 'Import Fixed 
  * database table.
  */
 
+DropTable('scripts', 'pagedescription', $db);
+
 CreateTable('scripts', "CREATE TABLE `scripts` (
 	`script` varchar(78) NOT NULL DEFAULT '',
 	`security` int(11) NOT NULL DEFAULT 1,

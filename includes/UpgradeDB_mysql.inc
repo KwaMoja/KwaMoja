@@ -18,7 +18,7 @@ function NewScript($ScriptName, $PageSecurity, $db) {
 	$sql = "SELECT script FROM scripts WHERE script='" . $ScriptName . "'";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
-		$sql = "INSERT INTO `scripts` VALUES('" . $ScriptName . "', '" . $PageSecurity . "', '')";
+		$sql = "INSERT INTO `scripts` VALUES('" . $ScriptName . "', '" . $PageSecurity . "')";
 		$response = executeSQL($sql, $db, False);
 		if ($response==0) {
 			OutputResult( _('The script').' '.$ScriptName.' '._('has been inserted') , 'success');
@@ -52,22 +52,24 @@ function AddColumn($Column, $Table, $Type, $Null, $Default, $After, $db) {
 	if (DB_table_exists($Table, $db)) {
 		$sql="desc ".$Table." ".$Column;
 		$result = DB_query($sql, $db);
-	}
-	if (isset($SQLFile) or DB_num_rows($result)==0) {
-		if ($Type=='text') {
-			$response=executeSQL("ALTER TABLE `".$Table."` ADD COLUMN `".$Column."` ".$Type." ".$Null.
-				" AFTER `".$After."`", $db, False);
+		if (isset($SQLFile) or DB_num_rows($result)==0) {
+			if ($Type=='text') {
+				$response=executeSQL("ALTER TABLE `".$Table."` ADD COLUMN `".$Column."` ".$Type." ".$Null.
+					" AFTER `".$After."`", $db, False);
+			} else {
+				$response=executeSQL("ALTER TABLE `".$Table."` ADD COLUMN `".$Column."` ".$Type." ".$Null." DEFAULT '".$Default.
+					"' AFTER `".$After."`", $db, False);
+			}
+			$SQL="ALTER TABLE `".$Table."` ADD COLUMN `".$Column."` ".$Type." ".$Null." DEFAULT '".$Default.
+					"' AFTER `".$After."`";
+			if ($response==0) {
+				OutputResult( _('The column').' '.$Column.' '._('has been inserted') , 'success');
+			} else {
+				OutputResult( _('The column').' '.$Column.' '._('could not be inserted') . '<br />' . $SQL , 'error');
+			}
 		} else {
-			$response=executeSQL("ALTER TABLE `".$Table."` ADD COLUMN `".$Column."` ".$Type." ".$Null." DEFAULT '".$Default.
-				"' AFTER `".$After."`", $db, False);
+			OutputResult( _('The column').' '.$Column.' '._('already exists') , 'info');
 		}
-		if ($response==0) {
-			OutputResult( _('The column').' '.$Column.' '._('has been inserted') , 'success');
-		} else {
-			OutputResult( _('The column').' '.$Column.' '._('could not be inserted') , 'error');
-		}
-	} else {
-		OutputResult( _('The column').' '.$Column.' '._('already exists') , 'info');
 	}
 }
 
@@ -75,21 +77,21 @@ function AddIndex($Columns, $Table, $Name, $db) {
 	if (DB_table_exists($Table, $db)) {
 		$sql="SHOW INDEX FROM " . $Table . " WHERE Key_name='".$Name."'";
 		$result = DB_query($sql, $db);
-	}
-	if (DB_num_rows($result)==0) {
-		$sql="ALTER TABLE `".$Table."` ADD INDEX ".$Name." (`".$Columns[0]."`";
-		for ($i=1; $i<sizeOf($Columns); $i++) {
-			$sql.=",".$Columns[$i];
-		}
-		$sql.=")";
-		$response=executeSQL($sql, $db, False);
-		if ($response==0) {
-			OutputResult( _('The index has been inserted') , 'success');
+		if (DB_num_rows($result)==0) {
+			$sql="ALTER TABLE `".$Table."` ADD INDEX ".$Name." (`".$Columns[0]."`";
+			for ($i=1; $i<sizeOf($Columns); $i++) {
+				$sql.=",".$Columns[$i];
+			}
+			$sql.=")";
+			$response=executeSQL($sql, $db, False);
+			if ($response==0) {
+				OutputResult( _('The index has been inserted') , 'success');
+			} else {
+				OutputResult( _('The column could not be inserted') , 'error');
+			}
 		} else {
-			OutputResult( _('The column could not be inserted') , 'error');
+			OutputResult( _('The column already exists') , 'info');
 		}
-	} else {
-		OutputResult( _('The column already exists') , 'info');
 	}
 }
 
@@ -97,17 +99,17 @@ function DropIndex($Table, $Name, $db) {
 	if (DB_table_exists($Table, $db)) {
 		$sql="SHOW INDEX FROM " . $Table . " WHERE Key_name='".$Name."'";
 		$result = DB_query($sql, $db);
-	}
-	if (DB_num_rows($result)!=0) {
-		$sql="ALTER TABLE `".$Table."` DROP INDEX ".$Name;
-		$response=executeSQL($sql, $db, False);
-		if ($response==0) {
-			OutputResult( _('The index has been droppeed') , 'success');
+		if (DB_num_rows($result)!=0) {
+			$sql="ALTER TABLE `".$Table."` DROP INDEX ".$Name;
+			$response=executeSQL($sql, $db, False);
+			if ($response==0) {
+				OutputResult( _('The index has been droppeed') , 'success');
+			} else {
+				OutputResult( _('The index could not be dropped') , 'error');
+			}
 		} else {
-			OutputResult( _('The index could not be dropped') , 'error');
+			OutputResult( _('The index does not exist') , 'info');
 		}
-	} else {
-		OutputResult( _('The index does not exist') , 'info');
 	}
 }
 
@@ -116,16 +118,16 @@ function DropColumn($Column, $Table, $db) {
 	if (DB_table_exists($Table, $db)) {
 		$sql="desc ".$Table." ".$Column;
 		$result = DB_query($sql, $db);
-	}
-	if (isset($SQLFile) or DB_num_rows($result)!=0) {
-		$response=executeSQL("ALTER TABLE `".$Table."` DROP `".$Column, $db, False);
-		if ($response==0) {
-			OutputResult( _('The column').' '.$Column.' '._('has been removed') , 'success');
+		if (isset($SQLFile) or DB_num_rows($result)!=0) {
+			$response=executeSQL("ALTER TABLE `".$Table."` DROP `".$Column, $db, False);
+			if ($response==0) {
+				OutputResult( _('The column').' '.$Column.' '._('has been removed') , 'success');
+			} else {
+				OutputResult( _('The column').' '.$Column.' '._('could not be removed') , 'error');
+			}
 		} else {
-			OutputResult( _('The column').' '.$Column.' '._('could not be removed') , 'error');
+			OutputResult( _('The column').' '.$Column.' '._('is already removed') , 'info');
 		}
-	} else {
-		OutputResult( _('The column').' '.$Column.' '._('is already removed') , 'info');
 	}
 }
 
@@ -322,7 +324,9 @@ function CreateTable($Table, $sql, $db) {
 	$result=DB_query($ShowSQL, $db);
 
 	if (DB_num_rows($result)==0) {
+		DB_IgnoreForeignKeys($db);
 		$response=executeSQL($sql . ' ENGINE=InnoDB DEFAULT CHARSET=utf8', $db, False);
+		DB_ReinstateForeignKeys($db);
 		if ($response==0) {
 			OutputResult( _('The table').' '.$Table.' '._('has been created') , 'success');
 		} else {
@@ -513,7 +517,7 @@ function AddPrimaryKey($Table, $Fields, $db) {
 		if ($response==0) {
 			OutputResult( _('The primary key in').' '.$Table.' '._('has been added') , 'success');
 		} else {
-			OutputResult( _('The primary key in').' '.$Table.' '._('could not be added') , 'error');
+			OutputResult( _('The primary key in').' '.$Table.' '._('could not be added') . '<br />' . "ALTER TABLE ".$Table." ADD PRIMARY KEY ( ".$KeyString." )" , 'error');
 		}
 	} else {
 		OutputResult( _('The primary key in').' '.$Table.' '._('has already been added') , 'info');

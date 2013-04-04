@@ -1,7 +1,7 @@
 <?php
 
 DropColumn('lastcurcostdate', 'stockmaster', $db);
-AddColumn('lastcostupdate', 'stockmaster', 'DATE', 'NOT NULL', "'0000-00-00'", 'netweight', $db);
+AddColumn('lastcostupdate', 'stockmaster', 'DATE', 'NOT NULL', "0000-00-00", 'netweight', $db);
 
 NewConfigValue('InventoryManagerEmail',  'inventory@example.com', $db);
 

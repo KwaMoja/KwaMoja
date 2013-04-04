@@ -37,7 +37,7 @@ AddConstraint('stockrequest', 'loccode', 'loccode', 'locations', 'loccode', $db)
 AddIndex(array('departmentid'), 'stockrequest', 'departmentid', $db);
 AddConstraint('stockrequest', 'departmentid', 'departmentid', 'departments', 'departmentid', $db);
 
-AddPrimaryKey('stockrequestitems', array('dispatchitemsid'), $db);
+AddPrimaryKey('stockrequestitems', array('dispatchitemsid', 'dispatchid'), $db);
 AddIndex(array('dispatchid'), 'stockrequestitems', 'dispatchid', $db);
 AddIndex(array('stockid'), 'stockrequestitems', 'stockid', $db);
 AddConstraint('stockrequestitems', 'dispatchid', 'dispatchid', 'stockrequest', 'dispatchid', $db);
