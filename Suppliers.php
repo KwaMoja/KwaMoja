@@ -342,12 +342,12 @@ if (isset($_POST['submit'])) {
 		$Errors[$i]='ID';
 		$i++;
 	}
-	if (ContainsIllegalCharacters($SupplierID)) {
-		$InputError = 1;
-		prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
-		$Errors[$i]='ID';
-		$i++;
-	}
+//	if (ContainsIllegalCharacters($SupplierID)) {
+//		$InputError = 1;
+//		prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
+//		$Errors[$i]='ID';
+//		$i++;
+//	}
 	if (mb_strlen($_POST['Phone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
@@ -1030,7 +1030,7 @@ if (!isset($SupplierID)) {
 			<div class="centre">
 				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
 		echo '<br />
-			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . _('Review Contact Details') . '</a>
+			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode($SupplierID) . '">' . _('Review Contact Details') . '</a>
 			</div>';
 	}
 	echo '</div>
