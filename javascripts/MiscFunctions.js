@@ -146,6 +146,8 @@ function formatDate(dV,dF){
 			return d+"."+m+"."+y;
 		case "Y/m/d":
 			return y+"/"+m+"/"+d;
+		case "Y-m-d":
+			return y+"-"+m+"-"+d;
 		default :
 			return m+"/"+d+"/"+y;
 	}

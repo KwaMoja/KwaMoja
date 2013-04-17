@@ -146,17 +146,18 @@ if (isset($_SESSION['DB_Maintenance'])) {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') >= $_SESSION['DB_Maintenance']) {
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
-			//purge the audit trail if necessary
-			if (isset($_SESSION['MonthsAuditTrail'])) {
-				$sql = "DELETE FROM audittrail
-						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
-				$ErrMsg = _('There was a problem deleting expired audit-trail history');
-				$result = DB_query($sql, $db);
-			} //isset($_SESSION['MonthsAuditTrail'])
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 		} //DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') >= $_SESSION['DB_Maintenance']
 	} //$_SESSION['DB_Maintenance'] != 0
 } //isset($_SESSION['DB_Maintenance'])
+
+//purge the audit trail if necessary
+if (isset($_SESSION['MonthsAuditTrail'])) {
+	$sql = "DELETE FROM audittrail
+			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+	$ErrMsg = _('There was a problem deleting expired audit-trail history');
+	$result = DB_query($sql, $db);
+} //isset($_SESSION['MonthsAuditTrail'])
 
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
