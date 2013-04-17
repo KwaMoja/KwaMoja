@@ -31,15 +31,6 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate'])==1){
 	while ($Payment = DB_fetch_array($Result)){
 		prnMsg(_('Deleting payment number') . ' ' . $Payment['transno'] . ' ' . _('to supplier code') . ' ' . $Payment['supplierno'] . ' ' . _('for an amount of') . ' ' . $Payment['ovamount'],'info');
 
-		$SQL = "DELETE FROM supptrans
-			WHERE type=22
-			AND transno='" . $Payment['transno'] . "'
-			AND trandate='" . $SQLTranDate . "'";
-
-		$DelResult = DB_query($SQL,$db);
-		prnMsg(_('Deleted the SuppTran record'),'success');
-
-
 		$SQL = "SELECT supptrans.transno,
 				supptrans.type,
 				suppallocs.amt
@@ -52,7 +43,7 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate'])==1){
 
 			$SQL= "UPDATE supptrans SET settled=0,
 										alloc=alloc-" . $Alloc['amt'] . ",
-										diffonexch = diffonexch - ((" . $Alloc['Amt'] . "/rate ) - " . $Alloc['amt']/$Payment['rate'] . ")
+										diffonexch = diffonexch - ((" . $Alloc['amt'] . "/rate ) - " . $Alloc['amt']/$Payment['rate'] . ")
 									WHERE supptrans.type='" . $Alloc['type'] . "'
 										AND transno='" . $Alloc['transno'] . "'";
 
@@ -65,6 +56,14 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate'])==1){
 		$SQL= "DELETE FROM suppallocs WHERE transid_allocfrom='" . $Payment['id'] . "'";
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(' ... ' . _('deleted the SuppAllocs records'),'info');
+
+		$SQL = "DELETE FROM supptrans
+			WHERE type=22
+			AND transno='" . $Payment['transno'] . "'
+			AND trandate='" . $SQLTranDate . "'";
+
+		$DelResult = DB_query($SQL,$db);
+		prnMsg(_('Deleted the SuppTran record'),'success');
 
 		$SQL= "DELETE FROM gltrans WHERE typeno='" . $Payment['transno'] . "' AND type=22";
 		$DelResult = DB_query($SQL,$db);

@@ -739,7 +739,7 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	}
 
 	/* The dates are equal, so return an error state */
-	return 1;
+	return 0;
 
 }
 
