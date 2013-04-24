@@ -5,8 +5,6 @@ include('includes/session.inc');
 $Title=_('Main Menu');
 include('includes/header.inc');
 
-
-/*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/MainMenuLinksArray.php');
 
 if (isset($SupplierLogin) and $SupplierLogin==1){
@@ -101,8 +99,10 @@ $i=0;
 foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption) {
 /* Transactions Menu Item */
 	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
+	if (isset($_SESSION['PageSecurityArray'][$ScriptNameArray[0]])) {
+		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+	}
+	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity!='')) {
 		echo '<li class="menu_group_item">
 				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i] .'">' . $Caption . '</a></p>
 			  </li>';
@@ -125,20 +125,22 @@ echo '</li>';
 
 
 $i=0;
-foreach ($MenuItems[$_SESSION['Module']]['Reports']['Caption'] as $Caption) {
-/* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Reports']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		echo '<li class="menu_group_item">
-				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
-			  </li>';
+if (isset($MenuItems[$_SESSION['Module']]['Reports'])) {
+	foreach ($MenuItems[$_SESSION['Module']]['Reports']['Caption'] as $Caption) {
+	/* Transactions Menu Item */
+		$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Reports']['URL'][$i],1));
+		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
+			echo '<li class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] .'">' . $Caption . '</a></p>
+				</li>';
+		}
+		$i++;
 	}
-	$i++;
 }
+
 echo GetRptLinks($_SESSION['Module']); //=== GetRptLinks() must be modified!!! ===
 echo '</ul></div>'; //=== InquiriesDiv ===
-
 
 echo '<div id="MaintenanceDiv"><ul>'; //=== MaintenanceDive ===
 
@@ -152,16 +154,20 @@ echo $Header;
 echo '</li>';
 
 $i=0;
-foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) {
-/* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i],1));
-	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		echo '<li class="menu_group_item">
-				<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
-			  </li>';
+if (isset($MenuItems[$_SESSION['Module']]['Maintenance'])) {
+	foreach ($MenuItems[$_SESSION['Module']]['Maintenance']['Caption'] as $Caption) {
+	/* Transactions Menu Item */
+		$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i],1));
+		if (isset($_SESSION['PageSecurityArray'][$ScriptNameArray[0]])) {
+			$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+			if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
+				echo '<li class="menu_group_item">
+						<p>&bull; <a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] .'">' . $Caption . '</a></p>
+					</li>';
+			}
+		}
+		$i++;
 	}
-	$i++;
 }
 echo '</ul></div>'; // MaintenanceDive ===HJ===
 echo '</div>'; // SubMenuDiv ===HJ===

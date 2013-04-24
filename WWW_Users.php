@@ -9,18 +9,7 @@ if (isset($_POST['UserID']) and isset($_POST['ID'])){
 }
 include('includes/session.inc');
 
-$ModuleList = array(_('Orders'),
-					_('Receivables'),
-					_('Payables'),
-					_('Purchasing'),
-					_('Inventory'),
-					_('Manufacturing'),
-					_('General Ledger'),
-					_('Asset Manager'),
-					_('Petty Cash'),
-					_('Setup'),
-					_('Utilities')
-					);
+include('includes/MainMenuLinksArray.php');
 
 $PDFLanguages = array(  _('Latin Western Languages'),
 						_('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'),

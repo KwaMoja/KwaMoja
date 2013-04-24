@@ -534,7 +534,10 @@ $MenuItems['system']['Maintenance']['Caption'] = array (_('Inventory Categories 
 														_('MRP Demand Types'),
 														_('Maintain Internal Departments'),
 														_('Maintain Internal Stock Categories to User Roles'),
-														_('Report a problem with KwaMoja')
+														_('Report a problem with KwaMoja'),
+														_('Upload a KwaMoja plugin file'),
+														_('Install a KwaMoja plugin'),
+														_('Remove a KwaMoja plugin')
 														);
 
 $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
@@ -545,7 +548,10 @@ $MenuItems['system']['Maintenance']['URL'] = array ('/StockCategories.php',
 													'/MRPDemandTypes.php',
 													'/Departments.php',
 													'/InternalStockCategoriesByRole.php',
-													'/ReportBug.php'
+													'/ReportBug.php',
+													'/PluginUpload.php',
+													'/PluginInstall.php',
+													'/PluginUnInstall.php'
 													);
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array (_('Change A Customer Code'),
@@ -601,4 +607,7 @@ $MenuItems['Utilities']['Maintenance']['URL'] = array ('/Z_poAdmin.php',
 														'/Z_RePostGLFromPeriod.php',
 														'/Z_DeleteOldPrices.php'
 												);
+
+include('includes/PluginMenuLinksArray.php');
+
 ?>

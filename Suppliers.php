@@ -756,7 +756,6 @@ if (!isset($SupplierID)) {
 			echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
-	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" /></td></tr>';
@@ -961,7 +960,6 @@ if (!isset($SupplierID)) {
 		echo '<option value="' . $myrow['id'] . '">' . $myrow['coyname'] .'</option>';
 		}
 	} //end while loop
-	DB_data_seek($result, 0);
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" maxlength="20" value="' . $_POST['TaxRef'] .'" /></td></tr>';

@@ -48,12 +48,12 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			www_users.realname,
 			locations.locationname,
 			currencies.decimalplaces AS currdecimalplaces
-		FROM purchorders 
+		FROM purchorders
 		INNER JOIN locations
 		ON locations.loccode=purchorders.intostocklocation
 		INNER JOIN suppliers
 		ON purchorders.supplierno = suppliers.supplierid
-		INNER JOIN currencies 
+		INNER JOIN currencies
 		ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
 		ON purchorders.initiator=www_users.userid
@@ -86,8 +86,8 @@ echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'
 
 echo '<table class="selection" cellpadding="2">';
 echo '<tr><th colspan="8"><b>'. _('Order Header Details'). '</b></th></tr>';
-echo '<tr><td style="text-align:left">' . _('Supplier Code'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['supplierid'] . '</a></td>
-	<td style="text-align:left">' . _('Supplier Name'). '</td><td><a href="SelectSupplier.php?SupplierID='.$myrow['supplierid'].'">' . $myrow['suppname'] . '</a></td></tr>';
+echo '<tr><td style="text-align:left">' . _('Supplier Code'). '</td><td><a href="SelectSupplier.php?SupplierID='.urlencode(stripslashes($myrow['supplierid'])).'">' . $myrow['supplierid'] . '</a></td>
+	<td style="text-align:left">' . _('Supplier Name'). '</td><td><a href="SelectSupplier.php?SupplierID='.urlencode(stripslashes($myrow['supplierid'])).'">' . $myrow['suppname'] . '</a></td></tr>';
 
 echo '<tr><td style="text-align:left">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
 	<td style="text-align:left">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';

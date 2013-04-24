@@ -81,14 +81,30 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
-		$sql = "SELECT counterindex,
-						periodno,
-						account,
-						amount
-					FROM gltrans
-					WHERE posted=0
+	$CheckSQL = "SELECT SUM(amount) as checksum
+						FROM gltrans
+						WHERE posted=0
+							AND periodno='" . $CurrPeriod . "'
+						ORDER BY account";
+	$CheckResult = DB_query($CheckSQL, $db);
+	$CheckRow = DB_fetch_array($CheckResult);
+
+	if ($CheckRow['checksum'] != 0) {
+		$Title = _('Error with GL balances');
+		include('includes/header.inc');
+		prnMsg( _('The balances on the general ledger that are about to be posted do not balance.') . '<br />' . _('Please see your system administrator'), 'error');
+		include('includes/footer.inc');
+		exit;
+	}
+
+	$sql = "SELECT counterindex,
+					periodno,
+					account,
+					amount
+				FROM gltrans
+				WHERE posted=0
 					AND periodno='" . $CurrPeriod . "'
-					ORDER BY account";
+				ORDER BY account";
 
 	$UnpostedTransResult = DB_query($sql, $db);
 
@@ -96,6 +112,29 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	$CurrentAccount=0;
 	$TotalAmount=0;
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
+
+		$CheckCurrentPeriodSQL = "SELECT COUNT(actual) as periodexists
+										FROM chartdetails
+										WHERE  accountcode = '" . $UnpostedTrans['account'] . "'
+											AND period= '" . $CurrPeriod . "'";
+		$CheckCurrentPeriodResult = DB_query($CheckCurrentPeriodSQL, $db);
+		$CheckCurrentPeriodRow = DB_fetch_array($CheckCurrentPeriodResult);
+
+		$CheckNextPeriodSQL = "SELECT COUNT(actual) as periodexists
+										FROM chartdetails
+										WHERE  accountcode = '" . $UnpostedTrans['account'] . "'
+											AND period= '" . ($CurrPeriod+1) . "'";
+		$CheckNextPeriodResult = DB_query($CheckNextPeriodSQL, $db);
+		$CheckNextPeriodRow = DB_fetch_array($CheckNextPeriodResult);
+
+		if ($CheckCurrentPeriodRow['periodexists']==0 or $CheckNextPeriodRow['periodexists']==0) {
+			$Title = _('Error with GL periods');
+			include('includes/header.inc');
+			prnMsg( _('You are trying to post to periods that are not setup in the chartdetails table.') . '<br />' . _('Please see your system administrator'), 'error');
+			include('includes/footer.inc');
+			exit;
+		}
+
 		if($CurrentAccount != $UnpostedTrans['account']) {
 			if($CurrentAccount != 0) {
 				$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "

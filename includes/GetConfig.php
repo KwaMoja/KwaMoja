@@ -21,10 +21,6 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
-		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
-	}
-
 	/*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";
 	$result=DB_query($sql, $db,'','',false,false);
@@ -32,7 +28,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 		/* the table may not exist with the pagesecurity field in it if it is an older KwaMoja database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
-		header('Location: UpgradeDatabase.php');
+		header('Location: Z_UpgradeDatabase.php');
 	}
 	//Populate the PageSecurityArray array for each script's  PageSecurity value
 	while ($myrow=DB_fetch_array($result)) {
