@@ -15,6 +15,13 @@ if (isset($_GET['CustomerID'])) {
 	$_POST['SelectedCustomer']=$_GET['CustomerID'];
 }
 
+foreach ($_POST as $name=>$value) {
+	if (substr($name, 0, 6)=='Submit') {
+		$index = substr($name, 6);
+		$_POST['SelectedCustomer'] = $_POST['SelectedCustomer' . $index];
+	}
+}
+
 $ViewTopic= 'Contracts';
 $BookMark = 'CreateContract';
 include('includes/header.inc');
