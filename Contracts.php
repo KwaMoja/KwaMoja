@@ -17,8 +17,9 @@ if (isset($_GET['CustomerID'])) {
 
 foreach ($_POST as $name=>$value) {
 	if (substr($name, 0, 6)=='Submit') {
-		$index = substr($name, 6);
-		$_POST['SelectedCustomer'] = $_POST['SelectedCustomer' . $index];
+		$Index = substr($name, 6);
+		$_POST['SelectedCustomer'] = $_POST['SelectedCustomer' . $Index];
+		$_POST['SelectedBranch']=$_POST['SelectedBranch' . $Index];
 	}
 }
 
@@ -690,18 +691,6 @@ if (isset($_POST['SearchCustomers'])){
 } /*one of keywords or custcode was more than a zero length string */
 
 if (isset($_POST['SelectedCustomer'])) {
-
-/* will only be true if page called from customer selection form
- * or set because only one customer record returned from a search
- * so parse the $Select string into debtorno and branch code */
-
-	foreach ($_POST as $key => $value) {
-		if (mb_substr($key, 0, 6)=='Submit') {
-			$Index=mb_substr($key, 6, 1);
-			$_POST['SelectedCustomer']=$_POST['SelectedCustomer'.$Index];
-			$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
-		}
-	}
 
 	$_SESSION['Contract'.$identifier]->DebtorNo  = $_POST['SelectedCustomer'];
 	$_SESSION['Contract'.$identifier]->BranchCode = $_POST['SelectedBranch'];
