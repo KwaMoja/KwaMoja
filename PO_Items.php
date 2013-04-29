@@ -42,7 +42,7 @@ if (isset($_POST['UpdateLines']) or isset($_POST['Commit'])) {
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'), 'error');
 			} //!is_numeric(filter_number_format($_POST['SuppQty' . $POLine->LineNo]))
 			else { //ok to update the PO object variables
-				$_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->Quantity = filter_number_format(round(filter_number_format($_POST['SuppQty' . $POLine->LineNo]) * filter_number_format($_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->ConversionFactor), $_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->DecimalPlaces));
+				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity = round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor,$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
 			}
 			if (!is_numeric(filter_number_format($_POST['SuppPrice' . $POLine->LineNo]))) {
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'), 'error');
@@ -413,8 +413,7 @@ if (isset($_POST['Commit'])) {
 
 if (isset($_GET['Delete'])) {
 	if ($_SESSION['PO' . $identifier]->Some_Already_Received($_GET['Delete']) == 0) {
-		$_SESSION['PO' . $identifier]->LineItems[$_GET['Delete']]->Deleted = True;
-		$_SESSION['PO' . $identifier]->LinesOnOrder--;
+		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$_SESSION['PO' . $identifier]->Some_Already_Received($_GET['Delete']) == 0
 	else {
@@ -515,7 +514,28 @@ if (isset($_POST['EnterLine'])) {
 	if ($AllowUpdate == true) {
 		//adding the non-stock item
 
-		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1, '', 0, /*Serialised */ 0, /*Controlled */ filter_number_format($_POST['Qty']), $_POST['ItemDescription'], filter_number_format($_POST['Price']), $_POST['SuppliersUnit'], $_POST['GLCode'], $_POST['ReqDelDate'], '', 0, '', 0, 0, $GLAccountName, 2, $_POST['SuppliersUnit'], 1, '', $_POST['AssetID']);
+		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1,
+													'',
+													0, /*Serialised */
+													0, /*Controlled */
+													filter_number_format($_POST['Qty']),
+													$_POST['ItemDescription'],
+													filter_number_format($_POST['Price']),
+													$_POST['SuppliersUnit'],
+													$_POST['GLCode'],
+													$_POST['ReqDelDate'],
+													'',
+													0,
+													'',
+													0,
+													0,
+													$GLAccountName,
+													2,
+													$_POST['SuppliersUnit'],
+													1,
+													1,
+													'',
+													$_POST['AssetID']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$AllowUpdate == true
 } //isset($_POST['EnterLine'])
@@ -1183,7 +1203,7 @@ if (isset($SearchResult)) {
 		if (DB_num_rows($PurchDataResult) > 0) {
 			$PurchDataRow = DB_fetch_array($PurchDataResult);
 			$OrderUnits = $PurchDataRow['suppliersuom'];
-			$ConversionFactor = $PurchDataRow['conversionfactor'];
+			$ConversionFactor = locale_number_format($PurchDataRow['conversionfactor'],'Variable');
 		} //DB_num_rows($PurchDataResult) > 0
 		else {
 			$OrderUnits = $myrow['units'];

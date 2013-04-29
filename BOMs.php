@@ -307,7 +307,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		} elseif ($InputError !=1 and ! isset($SelectedComponent) and isset($SelectedParent)) {
 
-		/*Selected component is null cos no item selected on first time round so must be				adding a record must be Submitting new entries in the new component form */
+		/*Selected component is null cos no item selected on first time round so must be adding a record must be Submitting new entries in the new component form */
 
 		//need to check not recursive BOM component of itself!
 
@@ -508,8 +508,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
-	 	echo '</div></td></tr>';
-        echo '</table>';
+	 	echo '</div></td>
+				</tr>
+			</table>';
 	}
 	// Display Phantom/Ghosts
 	$sql = "SELECT bom.parent,
@@ -524,16 +525,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
 	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	if( DB_num_rows($result) > 0 ) {
-		echo '<table class="selection">';
-        echo '<tr><td><div class="centre">'._('Phantom').' : ';
-	 	$ix = 0;
-	 	while ($myrow = DB_fetch_array($result)){
-	 	   echo (($ix)?', ':'').'<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">'.
-			$myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
+		echo '<table class="selection">
+				<tr>
+					<td><div class="centre">'._('Phantom').' : ';
+		$ix = 0;
+		while ($myrow = DB_fetch_array($result)){
+			echo (($ix)?', ':'').'<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$myrow['parent'].'">'. $myrow['description'].'&nbsp;('.$myrow['parent'].')</a>';
 			$ix++;
-	 	} //end while loop
-	 	echo '</div></td></tr>';
-        echo '</table>';
+		} //end while loop
+		echo '</div></td></tr>';
+		echo '</table>';
 	}
 	echo '<br />
 			<table class="selection">';
@@ -626,6 +627,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<tr>
 					<td>' . _('Component') . ':</td>
 					<td><b>' . $SelectedComponent . '</b></td>
+					<input type="hidden" name="Component" value="' . $SelectedComponent . '" />
 				</tr>';
 
 		} else { //end of if $SelectedComponent

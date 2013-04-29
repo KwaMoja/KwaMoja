@@ -2,7 +2,7 @@
 /* $Id$*/
 
 include('includes/session.inc');
-$Title=_('Currency Debtor Balances');
+$Title=_('Currency Supplier Balances');
 include('includes/header.inc');
 
 echo '<div class="centre"><h3>' . _('Suppliers Balances By Currency Totals') . '</h3></div>';
@@ -11,9 +11,9 @@ $sql = "SELECT SUM(ovamount+ovgst-alloc) AS currencybalance,
 		currcode,
 		decimalplaces AS currdecimalplaces,
 		SUM((ovamount+ovgst-alloc)/supptrans.rate) AS localbalance
-		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid 
+		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 		INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
-		WHERE (ovamount+ovgst-alloc)<>0 
+		WHERE (ovamount+ovgst-alloc)<>0
 		GROUP BY currcode";
 
 $result = DB_query($sql,$db);

@@ -116,8 +116,7 @@ echo '</td>
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
 	<br />
-    </div>
-	</form>';
+	</div>';
 echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 // query for list of record(s)
@@ -218,9 +217,6 @@ if (isset($_POST['Search']) or isset($_POST['Go']) or isset($_POST['Next']) or i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($SearchResult) and !isset($_POST['Select'])) {
-	echo '<form action="FixedAssetItems.php" method="post" class="noPrint">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
@@ -257,6 +253,11 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 
 			echo '<br /></div>';
 		}
+		echo '</form>';
+
+		echo '<form action="FixedAssetItems.php" method="post">';
+		echo '<div>';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 		$tableheader = '<tr>
 					<th>' . _('Asset Code') . '</th>
@@ -294,9 +295,9 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>';
+		echo '</div>
+		  </form>';
 	} // there were records to list
-    echo '</div>
-          </form>';
 }
 /* end display list if there is more than one record */
 include ('includes/footer.inc');
