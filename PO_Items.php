@@ -240,6 +240,12 @@ if (isset($_POST['Commit'])) {
 			/* end of the loop round the detail line items on the order */
 			echo '<p />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO' . $identifier]->SupplierName . ' ' . _('has been created'), 'success');
+			if ($_SESSION['PO'.$identifier]->AllowPrintPO==1
+				and ($_SESSION['PO'.$identifier]->Status=='Authorised'
+				or $_SESSION['PO'.$identifier]->Status=='Printed')){
+
+				echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+			}
 		} //$_SESSION['ExistingOrder'] == 0
 		else {
 			/*its an existing order need to update the old order info */
@@ -393,8 +399,10 @@ if (isset($_POST['Commit'])) {
 
 		$Result = DB_Txn_Commit($db);
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
-		if ($_SESSION['PO' . $identifier]->Status == 'Authorised' and in_array(1001, $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO' . $identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO' . $identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
+		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
+			and in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
+
+			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
 		} //$_SESSION['PO' . $identifier]->Status == 'Authorised' and in_array(1001, $_SESSION['AllowedPageSecurityTokens'])
 
 		unset($_SESSION['PO' . $identifier]);
@@ -659,7 +667,7 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						 * if > header DeliveryDate then set DeliveryDate to today + leadtime
 						 */
 						$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', $LeadTime);
-						if (!Date1GreaterThanDate2($DeliveryDate, $_SESSION['PO' . $identifier]->DeliveryDate)) {
+						if (Date1GreaterThanDate2($_SESSION['PO'.$identifier]->DeliveryDate,$DeliveryDate)) {
 							$DeliveryDate = $_SESSION['PO' . $identifier]->DeliveryDate;
 						} //!Date1GreaterThanDate2($DeliveryDate, $_SESSION['PO' . $identifier]->DeliveryDate)
 					} //DB_num_rows($PurchDataResult) > 0

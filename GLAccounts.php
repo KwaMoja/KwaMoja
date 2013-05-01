@@ -28,12 +28,9 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (!is_long((integer)$_POST['AccountCode'])) {
+	if (mb_strlen($_POST['AccountName']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The account code must be an integer'),'warn');
-	} elseif (mb_strlen($_POST['AccountName']) >50) {
-		$InputError = 1;
-		prnMsg( _('The account name must be fifty characters or less long'),'warn');
+		prnMsg( _('The account name must be twenty characters or less long'),'warn');
 	}
 
 	if (isset($SelectedAccount) and $InputError !=1) {
