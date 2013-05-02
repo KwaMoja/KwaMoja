@@ -25,7 +25,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError==1){
 		. _('Delivery Differences Report') . '</p></div>';
 
 	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -81,8 +81,8 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError==1){
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
-     echo '</div>
-           </form>';
+	 echo '</div>
+		   </form>';
 
 	 if ($InputError==1){
 	 	prnMsg($msg,'error');
@@ -288,9 +288,7 @@ if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-		$fp = fopen( $_SESSION['reports_dir'] . '/'.$ReportFileName,'wb');
-	fwrite ($fp, $pdfcode);
-	fclose ($fp);
+	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');
 
 	include('includes/htmlMimeMail.php');
 
@@ -298,10 +296,13 @@ if ($_POST['Email']=='Yes'){
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, $ReportFileName, 'application/pdf');
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] .'>');
+	if($_SESSION['SmtpSetting'] == 0){
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
+		$result = $mail->send(array($_SESSION['FactoryManagerEmail']));
+	} else {
+		$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+	}
 
-	/* $DelDiffsRecipients defined in config.php */
-	$result = $mail->send($DelDiffsRecipients);
 }
-
+$pdf->__destruct();
 ?>
