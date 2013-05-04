@@ -77,7 +77,7 @@ if (!isset($_POST['continue'])) {
 		}
 	}
 	echo '</table><br />';
-	prnMsg( _('You must logout and log back in to ensure that all the updates take affect') , 'warn');
+	$ForceConfigReload = True;
 }
 if (isset($SQLFile)) {
 //		header('Location: Z_UpgradeDatabase.php'); //divert to the db upgrade if the table doesn't exist
