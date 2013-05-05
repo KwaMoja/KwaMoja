@@ -75,7 +75,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
 									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-									AND prices.startdate ='" . date('Y-m-d') . "'";
+									AND prices.startdate ='CURRENT_DATE'";
 				$TestExistsResult = DB_query($SQLTestExists,$db);
 				if (DB_num_rows($TestExistsResult)==1){
 	                 //then we are updating
@@ -85,7 +85,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 									AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
 									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-									AND prices.startdate ='" . date('Y-m-d') . "'
+									AND prices.startdate ='CURRENT_DATE'
 									AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
 				$ResultUpdate = DB_query($SQLUpdate, $db);
 				} else { //there is not a price already starting today so need to create one
@@ -114,7 +114,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 														'" . $_POST['CurrCode'] . "',
 														'" . $_POST['DebtorNo_' . $PriceCounter] . "',
 														'" . $_POST['BranchCode_' . $PriceCounter] . "',
-														'" . date('Y-m-d') . "'
+														'CURRENT_DATE'
 													)";
 					$ResultInsert = DB_query($SQLInsert, $db);
 				}

@@ -192,16 +192,16 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 					stat_comment,
 					paymentterms)
 				VALUES (
-					'".$OrderNo."',
-					'".$_POST['supplierid']."',
-					'".date('Y-m-d')."',
-					'".$Rate."',
-					'".$_SESSION['UserID']."',
-					'".$_SESSION['DefaultFactoryLocation']."',
-					'".date('Y-m-d')."',
-					'"._('Pending')."',
-					'"._('Automatically generated from tendering system')."',
-					'".$PaymentTerms."')";
+					'" . $OrderNo . "',
+					'" . $_POST['supplierid'] . "',
+					'CURRENT_DATE',
+					'" . $Rate . "',
+					'" . $_SESSION['UserID'] . "',
+					'" . $_SESSION['DefaultFactoryLocation'] . "',
+					'CURRENT_DATE',
+					'" . _('Pending') . "',
+					'" . _('Automatically generated from tendering system') . "',
+					'" . $PaymentTerms."')";
 		DB_query($sql, $db);
 		foreach ($accepts as $AcceptID) {
 			$sql="SELECT offers.quantity,
@@ -225,14 +225,14 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 												actprice,
 												quantityord,
 												suppliersunit)
-									VALUES ('".$OrderNo."',
-											'".$myrow['stockid']."',
-											'".date('Y-m-d')."',
-											'".$myrow['description']."',
-											'".$myrow['price']."',
-											'".$myrow['price']."',
-											'".$myrow['quantity']."',
-											'".$myrow['uom']."')";
+									VALUES ('" . $OrderNo . "',
+											'" . $myrow['stockid'] . "',
+											'CURRENT_DATE',
+											'" . $myrow['description'] . "',
+											'" . $myrow['price'] . "',
+											'" . $myrow['price'] . "',
+											'" . $myrow['quantity'] . "',
+											'" . $myrow['uom'] . "')";
 			$result=DB_query($sql, $db);
 			$sql="DELETE FROM offers WHERE offerid='".$AcceptID."'";
 			$result=DB_query($sql, $db);
