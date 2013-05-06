@@ -6,10 +6,7 @@
 
 include('includes/session.inc');
 
-//Maybe not ANSI SQL??
-$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-
-$result=DB_query($sql,$db);
+$result=DB_show_tables($db, 'mrprequirements');
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
@@ -46,7 +43,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "  
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				 AND stockmaster.mbflag IN ('B','P')
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
 	} elseif ($_POST['Consolidation'] == 'Weekly') {
@@ -64,7 +61,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . " 
+				WHERE mrpplannedorders.part = stockmaster.stockid " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 weekindex,
@@ -93,7 +90,7 @@ if (isset($_POST['PrintPDF'])) {
 					   (stockmaster.materialcost + stockmaster.labourcost +
 						stockmaster.overheadcost ) as computedcost
 				FROM mrpplannedorders, stockmaster
-				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . " 
+				WHERE mrpplannedorders.part = stockmaster.stockid  " . $WhereDate . "
 				AND stockmaster.mbflag IN ('B','P')
 				GROUP BY mrpplannedorders.part,
 						 yearmonth,

@@ -7,8 +7,7 @@
 
 include('includes/session.inc');
 
-$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-$result=DB_query($sql,$db);
+$result=DB_show_tables($db, 'mrprequirements');
 if (DB_num_rows($result)==0) {
 	$Title=_('MRP error');
 	include('includes/header.inc');
