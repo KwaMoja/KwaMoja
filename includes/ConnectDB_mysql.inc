@@ -168,8 +168,8 @@ function DB_escape_string($String){
 	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, 'utf-8', false));
 }
 
-function DB_show_tables(&$Conn){
-	$Result = DB_query('SHOW TABLES',$Conn);
+function DB_show_tables(&$Conn, $TableName='%'){
+	$Result = DB_query("SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . " " . LIKE . "'" . $TableName . "'",$Conn);
 	return $Result;
 }
 
