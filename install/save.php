@@ -269,7 +269,7 @@ if (($_POST['DemoData']==false) or ($_POST['database_name'] != "weberpdemo")){  
 		copy( $path_to_root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
 	}
 }
-	$mysqlport=3306;
+$DBPort=3306;
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 
 //$msg holds the text of the new config.php file
@@ -284,7 +284,7 @@ $msg .= "//  Connection information for the database\n";
 $msg .= "// \$host is the computer ip address or name where the database is located\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$host = '" . $_POST['database_host'] . "';\n\n";
-$msg .= "\$mysqlport = 3306;\n\n";
+$msg .= "\$DBPort = 3306;\n\n";
 $msg .= "// assuming that the web server is also the sql server\n";
 $msg .= "\$DBType = 'mysqli';\n";
 

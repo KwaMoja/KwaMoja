@@ -9,12 +9,12 @@
 
 define ('LIKE','LIKE');
 
-if (!isset($mysqlport)){
-	$mysqlport = 3306;
+if (!isset($DBPort)){
+	$DBPort = 3306;
 }
 global $db;	// Make sure it IS global, regardless of our context
 
-$db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
+$db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $DBPort);
 $result=DB_query('SET sql_mode = ANSI', $db);
 
 

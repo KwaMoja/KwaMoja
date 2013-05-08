@@ -3,11 +3,19 @@
 /* $Id$ */
 
 define ('LIKE','ILIKE');
+
+if (!isset($DBPort)){
+	$DBPort = 5432;
+}
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
 if ( isset($host) and ($host != "")) {
 	$PgConnStr = 'host='.$host.' '.$PgConnStr;
+}
+
+if ( isset($DBPort) and ($DBPort != "")) {
+	$PgConnStr = 'port='.$DBPort.' '.$PgConnStr;
 }
 
 if ( isset( $DBUser ) and ($DBUser != "") ) {

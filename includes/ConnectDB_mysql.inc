@@ -5,10 +5,10 @@
 define ('LIKE','LIKE');
 
 global  $db;		// Make sure it IS global, regardless of our context
-if (!isset($mysqlport)){
-	$mysqlport = 3306;
+if (!isset($DBPort)){
+	$DBPort = 3306;
 }
-$db = mysql_connect($host.':'.$mysqlport , $DBUser, $DBPassword);
+$db = mysql_connect($host.':'.$DBPort , $DBUser, $DBPassword);
 $result=DB_query("SET sql_mode = 'ANSI'", $db);
 
 //this statement sets the charset to be used for sending data to and from the db server
