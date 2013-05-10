@@ -50,7 +50,7 @@ if (isset($PrintPDF)
 	$Right_Margin=30;
 
 	$pdf = new Cpdf('P', 'pt', 'A4');
-	$pdf->addInfo('Author','KwaMoja ' . $Version);
+	$pdf->addInfo('Author','KwaMoja ' . $_SESSION['VersionNumber']);
 	$pdf->addInfo('Creator','KwaMoja http://www.kwamoja.com');
 
 	if ($InvOrCredit=='Invoice'){

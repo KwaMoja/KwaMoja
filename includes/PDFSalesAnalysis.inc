@@ -22,7 +22,7 @@ $pdf->cMargin = 0;
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addInfo('Author','KwaMoja ' . $Version);
+$pdf->addInfo('Author','KwaMoja ' . $_SESSION['VersionNumber']);
 $pdf->addInfo('Creator','KwaMoja http://www.kwamoja.com');
 $pdf->addInfo('Title',$ReportSpec['reportheading']);
 $pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);

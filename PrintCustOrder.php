@@ -174,7 +174,7 @@ if (DB_num_rows($result)>0){
 	$pdf = new Cpdf1('L', 'pt', 'LETTER');
 
 	$pdf->addInfo('Creator', 'KwaMoja http://www.kwamoja.com');
-	$pdf->addInfo('Author', 'KwaMoja ' . $Version);
+	$pdf->addInfo('Author', 'KwaMoja ' . $_SESSION['VersionNumber']);
 	$pdf->addInfo('Title', _('Customer Packing Slip') );
 	$pdf->addInfo('Subject', _('Packing slip for order') . ' ' . $_GET['TransNo']);
 

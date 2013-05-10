@@ -90,7 +90,7 @@ if (!class_exists('Cpdf', false)) {
 			}
 			if ($label == 'Author') {
 	/* Javier: Many scripts set the author to be KwaMoja like this
-				$pdf->addInfo('Author', 'KwaMoja ' . $Version);
+				$pdf->addInfo('Author', 'KwaMoja ' . $_SESSION['VersionNumber']);
 		But the Author might be set to be the user or make it constant here.
 	*/			$this->SetAuthor( $value );
 			}

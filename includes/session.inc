@@ -140,7 +140,7 @@ else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
+/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
 }
