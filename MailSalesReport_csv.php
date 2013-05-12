@@ -22,6 +22,13 @@ include('includes/session.inc');
 $DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
+if (sizeOf($Recipients) == 0) {
+	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+	include('includes/header.inc');
+	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	include('includes/footer.inc');
+	exit;
+}
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/CSVSalesAnalysis.inc');
 
@@ -37,6 +44,6 @@ if ($_SESSION['SmtpSetting'] == 0) {
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 	$result = $mail->send($Recipients);
 } else {
-	$result = SendmailBySmtp($mail,$Recipients);
+	$result = SendmailBySmtp($mail, $Recipients);
 }
 ?>
