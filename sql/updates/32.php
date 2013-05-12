@@ -7,7 +7,7 @@ CreateTable('mailgroups',
 	unique (groupname))",
 $db);
 
-CreateTable('sellthroughsupport',
+CreateTable('mailgroupdetails',
 "CREATE TABLE `mailgroupdetails` (
 	groupname varchar(100) NOT NULL,
 	userid varchar(20) NOT NULL,
