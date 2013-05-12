@@ -6,14 +6,14 @@ include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with
-if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
+if (!isset($_GET['TransNo']) or $_GET['TransNo'] == '') {
 	$Title = _('Select Order To Print');
 	include('includes/header.inc');
 	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
+	prnMsg(_('Select an Order Number to Print before calling this page'), 'error');
 	echo '<br />
 			<br />
 			<br />
@@ -21,8 +21,8 @@ if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
 			<tr>
 				<td class="menu_group_item">
 					<ul>
-						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -37,7 +37,7 @@ if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
 
 $MailTo = $_GET['EMail'];
 $headers = 'From: kwamoja.com <info@kwamoja.com>' . '\n';
-$headers  .=  'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n';
+$headers .= 'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n';
 
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
@@ -75,17 +75,17 @@ $sql = "SELECT salesorders.debtorno,
 			AND salesorders.fromstkloc=locations.loccode
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 
-$result=DB_query($sql,$db, $ErrMsg);
+$result = DB_query($sql, $db, $ErrMsg);
 
 //if there are no rows, there's a problem.
-if (DB_num_rows($result)==0){
+if (DB_num_rows($result) == 0) {
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.inc');
-	 echo '<div class="centre">
+	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+	prnMsg(_('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
@@ -93,8 +93,8 @@ if (DB_num_rows($result)==0){
 			<tr>
 				<td class="menu_group_item">
 				<ul>
-	                <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-	                <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+					<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+					<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 				</ul>
 				</td>
 			</tr>
@@ -105,30 +105,30 @@ if (DB_num_rows($result)==0){
 			<br />';
 	include('includes/footer.inc');
 	exit;
-} elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
+} elseif (DB_num_rows($result) == 1) {
+	/*There is only one order header returned - thats good! */
 
 	$myrow = DB_fetch_array($result);
 	/* Place the deliver blind variable into a hold variable to used when
 	producing the packlist */
 	$DeliverBlind = $myrow['deliverblind'];
 	$DeliveryDate = $myrow['salesorders.deliverydate'];
-	if ($myrow['printedpackingslip']==1 and ($_GET['Reprint']!='OK' or !isset($_GET['Reprint']))){
+	if ($myrow['printedpackingslip'] == 1 and ($_GET['Reprint'] != 'OK' or !isset($_GET['Reprint']))) {
 		$Title = _('Print Packing Slip Error');
 		include('includes/header.inc');
-		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . _('has previously been printed') . ' ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
-		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a></p><p><a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a></p>';
+		prnMsg(_('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . _('has previously been printed') . ' ' . _('It was printed on') . ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn');
+		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a></p><p><a href="' . $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed') . '</a></p>';
 
 		echo '<br />
 				<br />
 				<br />';
-		echo  _('Or select another Order Number to Print');
+		echo _('Or select another Order Number to Print');
 		echo '<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
 					<ul>
-						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
 					</ul>
 					</td>
 				</tr>
@@ -140,11 +140,11 @@ if (DB_num_rows($result)==0){
 
 		include('includes/footer.inc');
 		exit;
-	}//packing slip has been printed.
-	$MailSubject = _('Order Confirmation-Sales Order') . ' ' .  $_GET['TransNo'] . ' - '. _('Your PO') . ' ' . $myrow['customerref'] ;
+	} //packing slip has been printed.
+	$MailSubject = _('Order Confirmation-Sales Order') . ' ' . $_GET['TransNo'] . ' - ' . _('Your PO') . ' ' . $myrow['customerref'];
 }
 
-$MailMessage =  '<html>
+$MailMessage = '<html>
 				<head>
 					<title>' . _('Email Confirmation') . '</title>
 				</head>
@@ -160,7 +160,7 @@ $MailMessage =  '<html>
 					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['regoffice4'] . ',<b>' . $_SESSION['CompanyRecord']['regoffice5'] . '</td>
 				</tr>
 				<tr>
-					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax'] . '</td>
+					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax'] . '</td>
 				</tr>
 				<tr>
 					<td colspan="4"> <b>' . $_SESSION['CompanyRecord']['email'] . '
@@ -191,18 +191,18 @@ $MailMessage =  '<html>
 					<td colspan="4"> <b>' . $myrow['deladd1'] . '</td>
 				</tr>';
 
-if(mb_strlen(trim($myrow['deladd2']))) {
-      $MailMessage .= '<tr>
+if (mb_strlen(trim($myrow['deladd2']))) {
+	$MailMessage .= '<tr>
 						<td> <b>' . $myrow['deladd2'] . '</td>
 					</tr>
 					<tr>
-						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']. '
+						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
 							<br />
 							<br />
 							<br /></td>
 					/tr>';
 } else {
-      $MailMessage .= '<tr>
+	$MailMessage .= '<tr>
 						<td> <b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
 							<br />
 							<br />
@@ -211,17 +211,17 @@ if(mb_strlen(trim($myrow['deladd2']))) {
 }
 $MailMessage .= '</table>
 				<table border="1" width="50%"><tr>';
-if($_GET['POLine'] == 1){
+if ($_GET['POLine'] == 1) {
 	$MailMessage .= '<td>' . _('PO Line') . '</td>';
 }
-	$MailMessage .= '<td>' . _('Stock Code') . '</td>
+$MailMessage .= '<td>' . _('Stock Code') . '</td>
 					<td>' . _('Description') . '</td>
 					<td>' . _('Quantity Ordered') . '</td>
 					<td>' . _('Due Date') . '</td>
 					</tr>';
 
 
-	$sql = "SELECT salesorderdetails.stkcode,
+$sql = "SELECT salesorderdetails.stkcode,
 			stockmaster.description,
 			salesorderdetails.quantity,
 			salesorderdetails.qtyinvoiced,
@@ -233,42 +233,56 @@ if($_GET['POLine'] == 1){
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
 		ORDER BY poline";
-	$result=DB_query($sql,$db, $ErrMsg);
-	$i=0;
-	if (DB_num_rows($result)>0){
+$result = DB_query($sql, $db, $ErrMsg);
+$i = 0;
+if (DB_num_rows($result) > 0) {
 
-		while ($myrow2=DB_fetch_array($result)){
+	while ($myrow2 = DB_fetch_array($result)) {
 
-			$DisplayQty = locale_number_format($myrow2['quantity'],0);
-			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],0);
-			$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],0);
-         		$StkCode[$i] = $myrow2['stkcode'];
-         		$DscCode[$i] = $myrow2['description'];
-         		$QtyCode[$i] = $DisplayQty ;
-         		$POLine[$i]  = $myrow2['poline'];
-        		if($myrow2['itemdue'] =='') {
-         			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
-        		} else {
-        			$ItemDue[$i] = date('M d, Y',strtotime($myrow2['itemdue']));
-        		}
-			$MailMessage .= '<tr>';
-			if($_GET['POLine'] == 1){
-				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
-			}
-			$MailMessage .= '<td>' . $myrow2['stkcode'] . '</td>
+		$DisplayQty = locale_number_format($myrow2['quantity'], 0);
+		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'], 0);
+		$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'], 0);
+		$StkCode[$i] = $myrow2['stkcode'];
+		$DscCode[$i] = $myrow2['description'];
+		$QtyCode[$i] = $DisplayQty;
+		$POLine[$i] = $myrow2['poline'];
+		if ($myrow2['itemdue'] == '') {
+			$ItemDue[$i] = date('M d, Y', strtotime($DeliveryDate));
+		} else {
+			$ItemDue[$i] = date('M d, Y', strtotime($myrow2['itemdue']));
+		}
+		$MailMessage .= '<tr>';
+		if ($_GET['POLine'] == 1) {
+			$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
+		}
+		$MailMessage .= '<td>' . $myrow2['stkcode'] . '</td>
 							<td>' . $myrow2['description'] . '</td>
 							<td align="right">' . $DisplayQty . '</td>
-							<td align="center">' . $ItemDue[$i]  . '</td>
+							<td align="center">' . $ItemDue[$i] . '</td>
 							</tr>';
-			$i++;
-		} //end while there are line items to print out
-	} /*end if there are order details to show on the order*/
+		$i++;
+	} //end while there are line items to print out
+}
+/*end if there are order details to show on the order*/
 $MailMessage .= '</table>
 				</body>
 				</html>';
 // echo $MailMessage . "=mailMessage<br />";
-if (mail( $MailTo, $MailSubject, $MailMessage, $headers )){
-	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
+if ($_SESSION['SmtpSetting'] == 0) {
+	$result = mail($MailTo, $MailSubject, $MailMessage, $headers);
+
+} else {
+	include('includes/htmlMimeMail.php');
+	$mail = new htmlMimeMail();
+	$mail->setSubject($mailSubject);
+	$mail->setHTML($MailMessage);
+	$result = SendmailBySmtp($mail, array(
+		$MailTo
+	));
+}
+
+if ($result) {
+	echo ' ' . _('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }
 
 echo '<html>
@@ -277,14 +291,14 @@ echo '<html>
 	</head>
 	<body>
 	<table width="60%">
-		<tr>
+		<tr>.
 			<td align="center" colspan="4"><img src="' . $RootPath . '/' . $_SESSION['LogoFile'] . '" alt="Logo" width="500" height="100" align="center" border="0" /></td>
 	   	</tr>
 		<tr>
 			<td align="center" colspan="4"><h2>' . _('Order Acknowledgement') . '</h2></td>
 		</tr>
 	 	<tr>
-	 		<td align="center" colspan="4"> <b>' . _('Order Number') .  ' ' . $_GET['TransNo'] . '</b>
+	 		<td align="center" colspan="4"> <b>' . _('Order Number') . ' ' . $_GET['TransNo'] . '</b>
 			<br />
 			<br />
 			<br /></td>
@@ -318,18 +332,18 @@ echo '<html>
 	 			<br />
 	 			<br />
 	 		</td>
-	     		<td nowrap width="50%">
-	       		<b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
-	       		<br />
-	       		<br />
-	       		<br />
-	      		</td>
+		 		<td nowrap width="50%">
+		   		<b>' . $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5'] . '
+		   		<br />
+		   		<br />
+		   		<br />
+		  		</td>
 	 	</tr>
 	</table>
 	<table border="1" width="60%" cellpadding="2" cellspacing="2">
 	<tr>';
 
-if($_GET['POLine'] == 1){
+if ($_GET['POLine'] == 1) {
 	echo '<td align="center">' . _('PO Line') . '</td>';
 }
 echo '<td align="center">' . _('Stock Code') . '</td>
@@ -338,9 +352,9 @@ echo '<td align="center">' . _('Stock Code') . '</td>
 	<td align="center">' . _('Due Date') . '</td>
    	</tr>';
 
-for( $j=0; $j<$i; $j++){
+for ($j = 0; $j < $i; $j++) {
 	echo '<tr>';
-	if($_GET['POLine']){
+	if ($_GET['POLine']) {
 		echo '<td align="right">' . $POLine[$j] . '</td>';
 	}
 	echo '<td>' . $StkCode[$j] . '</td>

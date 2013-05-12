@@ -3,10 +3,14 @@
 /*  Performs login checks and $_SESSION initialisation */
 /* $Id$*/
 
-define('UL_OK',  0);		/* User verified, session initialised */
-define('UL_NOTVALID', 1);	/* User/password do not agree */
-define('UL_BLOCKED', 2);	/* Account locked, too many failed logins */
-define('UL_CONFIGERR', 3);	/* Configuration error in KwaMoja or server */
+define('UL_OK', 0);
+/* User verified, session initialised */
+define('UL_NOTVALID', 1);
+/* User/password do not agree */
+define('UL_BLOCKED', 2);
+/* Account locked, too many failed logins */
+define('UL_CONFIGERR', 3);
+/* Configuration error in KwaMoja or server */
 define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
@@ -21,9 +25,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 	global $debug;
 
-	if (!isset($_SESSION['AccessLevel']) or $_SESSION['AccessLevel'] == '' or
-		(isset($Name) and $Name != '')) {
-	/* if not logged in */
+	if (!isset($_SESSION['AccessLevel']) or $_SESSION['AccessLevel'] == '' or (isset($Name) and $Name != '')) {
+		/* if not logged in */
 		$_SESSION['AccessLevel'] = '';
 		$_SESSION['CustomerID'] = '';
 		$_SESSION['UserBranch'] = '';
@@ -34,7 +37,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		$_SESSION['AttemptsCounter']++;
 		// Show login screen
 		if (!isset($Name) or $Name == '') {
-			return  UL_SHOWLOGIN;
+			return UL_SHOWLOGIN;
 		}
 		$sql = "SELECT *
 				FROM www_users
@@ -42,14 +45,14 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				AND (www_users.password='" . CryptPass($Password) . "'
 				OR  www_users.password='" . $Password . "')";
 		$ErrMsg = _('Could not retrieve user details on login because');
-		$debug =1;
-		$Auth_Result = DB_query($sql, $db,$ErrMsg);
+		$debug = 1;
+		$Auth_Result = DB_query($sql, $db, $ErrMsg);
 		// Populate session variables with data base results
 		if (DB_num_rows($Auth_Result) > 0) {
 			$myrow = DB_fetch_array($Auth_Result);
-			if ($myrow['blocked']==1){
-			//the account is blocked
-				return  UL_BLOCKED;
+			if ($myrow['blocked'] == 1) {
+				//the account is blocked
+				return UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
 			$_SESSION['UserID'] = $myrow['userid'];
@@ -78,10 +81,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			if ($myrow['displayrecordsmax'] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
 			} else {
-				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
+				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax']; // default comes from config.php
 			}
 
-			$sql = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
+			$sql = "UPDATE www_users SET lastvisitdate='" . date('Y-m-d H:i:s') . "'
 							WHERE www_users.userid='" . $Name . "'";
 			$Auth_Result = DB_query($sql, $db);
 			/*get the security tokens that the user has access to */
@@ -89,17 +92,17 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
 			$Sec_Result = DB_query($sql, $db);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
-			if (DB_num_rows($Sec_Result)==0){
-				return  UL_CONFIGERR;
+			if (DB_num_rows($Sec_Result) == 0) {
+				return UL_CONFIGERR;
 			} else {
-				$i=0;
-				while ($myrow = DB_fetch_row($Sec_Result)){
+				$i = 0;
+				while ($myrow = DB_fetch_row($Sec_Result)) {
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
 					$i++;
 				}
 			}
 			//  Temporary shift - disable log messages - how temporary?
-		} else {     // Incorrect password
+		} else { // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {
 				$_SESSION['AttemptsCounter'] = 0;
@@ -109,20 +112,33 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
 				$Auth_Result = DB_query($sql, $db);
-				if ($SysAdminEmail != ''){
-					$EmailSubject = _('User access blocked'). ' ' . $Name ;
-					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' . Date('Y-m-d H:i:s') . ' ' . _('due to too many failed attempts.');
-					mail($SysAdminEmail,$EmailSubject,$EmailText);
+				if ($SysAdminEmail != '') {
+					$EmailSubject = _('User access blocked') . ' ' . $Name;
+					$EmailText = _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' . Date('Y-m-d H:i:s') . ' ' . _('due to too many failed attempts.');
+					if ($_SESSION['SmtpSetting'] == 0) {
+						mail($SysAdminEmail, $EmailSubject, $EmailText);
+
+					} else {
+						include('includes/htmlMimeMail.php');
+						$mail = new htmlMimeMail();
+						$mail->setSubject($EmailSubject);
+						$mail->setText($EmailText);
+						$result = SendmailBySmtp($mail, array(
+							$SysAdminEmail
+						));
+					}
+
 				}
-				return  UL_BLOCKED;
+				return UL_BLOCKED;
 			}
 
-			return  UL_NOTVALID;
+			return UL_NOTVALID;
 		}
-	}		// End of userid/password check
+	} // End of userid/password check
 	// Run with debugging messages for the system administrator(s) but not anyone else
 
-	return   UL_OK;		    /* All is well */
+	return UL_OK;
+	/* All is well */
 }
 
 ?>
