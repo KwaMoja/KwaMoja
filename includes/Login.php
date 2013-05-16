@@ -1,13 +1,14 @@
 <?php
 /* $Id$*/
 // Display demo user name and password within login form if $AllowDemoMode is true
-include ('LanguageSetup.php');
+include('LanguageSetup.php');
 
-
-if ($AllowDemoMode == True and !isset($demo_text)) {
-	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('kwamoja') . '</i>';
-} elseif (!isset($demo_text)) {
-	$demo_text = _('Please login here');
+if (isset($AllowDemoMode)) {
+	if ($AllowDemoMode == True and !isset($demo_text)) {
+		$demo_text = _('login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
+	} elseif (!isset($demo_text)) {
+		$demo_text = _('Please login here');
+	}
 }
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -35,7 +36,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
 
 <?php
-if (get_magic_quotes_gpc()){
+if (get_magic_quotes_gpc()) {
 	echo '<p style="background:white">';
 	echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
 	echo '</p>';
@@ -54,40 +55,60 @@ if (get_magic_quotes_gpc()){
 		<tr>
 			<td width="70%">
 				<div id="login_box">
-					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');?>" method="post" class="noPrint">
-					<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
-					<label><?php echo _('Company'); ?>:</label>
+					<form action="<?php
+echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+?>" method="post" class="noPrint">
+					<input type="hidden" name="FormID" value="<?php
+echo $_SESSION['FormID'];
+?>" />
+					<label><?php
+echo _('Company');
+?>:</label>
 					<?php
-						if ($AllowCompanySelectionBox == true){
-							echo '<select name="CompanyNameField">';
+if ($AllowCompanySelectionBox == true) {
+	echo '<select name="CompanyNameField">';
 
-							$DirHandle = dir('companies/');
+	$DirHandle = dir('companies/');
 
-							while (false !== ($CompanyEntry = $DirHandle->read())){
-								if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry!='.svn' and $CompanyEntry!='.'){
-									if ($CompanyEntry==$DefaultCompany) {
-										echo '<option selected="selected" label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
-									} else {
-										echo '<option label="'.$CompanyEntry.'" value="'.$CompanyEntry.'">'.$CompanyEntry.'</option>';
-									}
-								}
-							}
+	while (false !== ($CompanyEntry = $DirHandle->read())) {
+		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.svn' and $CompanyEntry != '.') {
+			if ($CompanyEntry == $DefaultCompany) {
+				echo '<option selected="selected" label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+			} else {
+				echo '<option label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+			}
+		}
+	}
 
-							$DirHandle->close();
+	$DirHandle->close();
 
-							echo '</select>';
-						} else {
-							echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-						}
-					?>
+	echo '</select>';
+} else {
+	echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+}
+?>
 					<br />
-					<label><?php echo _('User name'); ?>:</label>
+					<label><?php
+echo _('User name');
+?>:</label>
 					<input type="text" name="UserNameEntryField" maxlength="20" /><br />
-					<label><?php echo _('Password'); ?>:</label>
+					<label><?php
+echo _('Password');
+?>:</label>
 					<input type="password" name="Password" />
-					<div class="centre"><div id="demo_text"><?php echo $demo_text;?></div>
-					<button class="button" type="submit" value="<?php echo _('Login'); ?>" name="SubmitUser">
-					<?php echo _('Login'); ?>
+       <div id="demo_text">
+       <?php
+if (isset($demo_text)) {
+	echo $demo_text;
+}
+?>
+       </div>
+					<button class="button" type="submit" value="<?php
+echo _('Login');
+?>" name="SubmitUser">
+					<?php
+echo _('Login');
+?>
 					 <img src="css/tick.png" title="' . _('Upgrade') . '" alt="" class="ButtonIcon" /></button>
 					 </div>
 					</form>

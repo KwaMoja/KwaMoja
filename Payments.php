@@ -598,7 +598,7 @@ if (isset($_POST['CommitBatch'])) {
 						VALUES ('" . $TransNo . "',
 								'" . $TransType . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
-								'" . $_SESSION['PaymentDetail' . $identifier]->Narrative . "',
+								'" . $PaymentItem->Narrative . "',
 								'" . $PaymentItem->Cheque . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->ExRate . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
