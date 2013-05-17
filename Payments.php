@@ -278,10 +278,10 @@ if (isset($_POST['CommitBatch'])) {
 			FROM paymentmethods
 			WHERE paymentname='" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "'";
 	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$myrow = DB_fetch_array($result);
 
 	// first time through commit if supplier cheque then print it first
-	if ((!isset($_POST['ChequePrinted'])) and (!isset($_POST['PaymentCancelled'])) and ($myrow[0] == 1)) {
+	if ((!isset($_POST['ChequePrinted'])) and (!isset($_POST['PaymentCancelled'])) and ($myrow['usepreprintedstationery'] == 1)) {
 		// it is a supplier payment by cheque and haven't printed yet so print cheque
 
 		echo '<br />
@@ -560,6 +560,7 @@ if (isset($_POST['CommitBatch'])) {
 										type,
 										bankact,
 										ref,
+										chequeno,
 										exrate,
 										functionalexrate,
 										transdate,
@@ -570,6 +571,7 @@ if (isset($_POST['CommitBatch'])) {
 									'" . $TransType . "',
 									'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
 									'" . $_SESSION['PaymentDetail' . $identifier]->Narrative . "',
+									'" . $_POST['Cheque'] . "',
 									'" . $_SESSION['PaymentDetail' . $identifier]->ExRate . "',
 									'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
 									'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
@@ -598,7 +600,7 @@ if (isset($_POST['CommitBatch'])) {
 						VALUES ('" . $TransNo . "',
 								'" . $TransType . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
-								'" . $PaymentItem->Narrative . "',
+								'" . $_SESSION['PaymentDetail' . $identifier]->Narrative . ' - ' . $PaymentItem->Narrative . "',
 								'" . $PaymentItem->Cheque . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->ExRate . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
@@ -857,7 +859,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Paym
 	if ($_POST['ExRate'] == 1 and isset($SuggestedExRate)) {
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate, 8);
 	} //$_POST['ExRate'] == 1 and isset($SuggestedExRate)
-	elseif ($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)) {
+	elseif (isset($_POST['PreviousCurrency']) and ($_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate))) {
 		$_POST['ExRate'] = locale_number_format($SuggestedExRate, 8);
 
 	} //$_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)
@@ -886,31 +888,44 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 } //$_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] and isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)
 echo '<tr>
 		<td>' . _('Payment type') . ':</td>
-		<td><select name="Paymenttype">';
+		<input type="submit" visibility="hidden" name="UpdatePmtType" value="Update" />
+		<td><select name="Paymenttype" onchange="return ReloadForm(UpdatePmtType)">';
 
 include('includes/GetPaymentMethods.php');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
 payment methods can be modified from the setup tab of the main menu under payment methods*/
 
-foreach ($PaytTypes as $PaytType) {
-	if (isset($_POST['Paymenttype']) and $_POST['Paymenttype'] == $PaytType) {
-		echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
+if (!isset($_POST['Paymenttype'])){
+	$_POST['Paymenttype'] = 1;
+}
+
+foreach ($PaytTypes as $PaytID=>$PaytType) {
+	if (isset($_POST['Paymenttype']) and $_POST['Paymenttype'] == $PaytID) {
+		echo '<option selected="selected" value="' . $PaytID . '">' . $PaytType . '</option>';
 	} //isset($_POST['Paymenttype']) and $_POST['Paymenttype'] == $PaytType
 	else {
-		echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
+		echo '<option value="' . $PaytID . '">' . $PaytType . '</option>';
 	}
 } //end foreach
 echo '</select></td>
 	</tr>';
 
+$sql = "SELECT usepreprintedstationery
+		FROM paymentmethods
+		WHERE paymentid='" . $_POST['Paymenttype'] . "'";
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+
 if (!isset($_POST['ChequeNum'])) {
 	$_POST['ChequeNum'] = '';
 } //!isset($_POST['ChequeNum'])
 
-echo '<tr>
-		<td>' . _('Cheque Number') . ':</td>
-		<td><input type="text" name="ChequeNum" maxlength="8" size="10" value="' . $_POST['ChequeNum'] . '" /> ' . _('(if using pre-printed stationery)') . '</td>
-	</tr>';
+if ($myrow['usepreprintedstationery']==1) {
+	echo '<tr>
+			<td>' . _('Cheque Number') . ':</td>
+			<td><input type="text" name="ChequeNum" maxlength="8" size="10" value="' . $_POST['ChequeNum'] . '" /></td><td>' . _('(if using pre-printed stationery)') . '</td>
+		</tr>';
+}
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative'] = '';
@@ -1144,6 +1159,10 @@ else {
 	else {
 		echo '<input type="hidden" name="Discount" value="0" />';
 	}
+	echo '<tr>
+			<td>' . _('Cheque/Voucher Number') . '</td>
+			<td><input type="text" name="Cheque" maxlength="12" size="12" /></td>
+		</tr>';
 	echo '</table><br />';
 	echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" /></div>';
 }

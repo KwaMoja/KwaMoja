@@ -78,7 +78,10 @@ if (!isset($SelectedCOGSPostingID)) {
 				chartmaster.accountname
 			FROM cogsglpostings LEFT JOIN chartmaster
 			ON cogsglpostings.glcode = chartmaster.accountcode
-			WHERE chartmaster.accountcode IS NULL";
+			WHERE chartmaster.accountcode IS NULL
+			ORDER BY cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype";
 
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)>0){
@@ -124,7 +127,10 @@ if (!isset($SelectedCOGSPostingID)) {
 				cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype
-			FROM cogsglpostings";
+			FROM cogsglpostings
+			ORDER BY cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype";
 
 	$result = DB_query($sql,$db);
 
@@ -138,12 +144,12 @@ if (!isset($SelectedCOGSPostingID)) {
 			$sql = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,
-												sequenceintb ) 
+												sequenceintb )
 										VALUES ('Sales',
 												'1',
 												'1',
 												'10')";
-							
+
 			$result = DB_query($sql,$db);
 		}
 		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
@@ -179,7 +185,10 @@ if (!isset($SelectedCOGSPostingID)) {
 					chartmaster.accountname
 				FROM cogsglpostings,
 					chartmaster
-				WHERE cogsglpostings.glcode = chartmaster.accountcode";
+				WHERE cogsglpostings.glcode = chartmaster.accountcode
+				ORDER BY cogsglpostings.area,
+						cogsglpostings.stkcat,
+						cogsglpostings.salestype";
 
 		$result = DB_query($sql,$db);
 
@@ -215,7 +224,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				$myrow['id'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 				$myrow['id']);
-	
+
 		}//END WHILE LIST LOOP
 		echo '</table>';
 	}

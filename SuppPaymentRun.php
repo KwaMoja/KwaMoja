@@ -354,7 +354,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 /* The array PaytTypes is set up in config.php for user modification
 Payment types can be modified by editing that file */
 
-	foreach ($PaytTypes as $PaytType) {
+	foreach ($PaytTypes as $PaytID=>$PaytType) {
 
 		 if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
 		   echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';

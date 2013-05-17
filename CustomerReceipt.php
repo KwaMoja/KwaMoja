@@ -872,7 +872,7 @@ echo '<tr>
 include('includes/GetPaymentMethods.php');
 /* The array ReceiptTypes is defined from the setup tab of the main menu under payment methods - the array is populated from the include file GetPaymentMethods.php */
 
-foreach ($ReceiptTypes as $RcptType) {
+foreach ($ReceiptTypes as $RcptID=>$RcptType) {
 	if (isset($_POST['ReceiptType']) and $_POST['ReceiptType']==$RcptType){
 		echo '<option selected="selected" value="' . $RcptType . '">' . $RcptType .'</option>';
 	} else {

@@ -111,6 +111,76 @@ if ($AlreadyOnThisOrder!=1){
 
 			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
 
+			/* Need to check for sell through support deals */
+
+			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
+							rebatepercent
+					FROM sellthroughsupport INNER JOIN suppliers
+						ON suppliers.supplierid=sellthroughsupport.supplierno
+					INNER JOIN currencies
+						ON currencies.currabrev=suppliers.currcode
+					WHERE stockid='" . $NewItem . "'
+					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+						OR debtorno='')
+					AND effectivefrom <='" . Date('Y-m-d') . "'
+					AND effectiveto >='" . Date('Y-m-d') . "'";
+			$SellSuppResult = DB_query($sql,$db);
+			$SellSupportDiscount = 0;
+			$SellSupportPercent = 0;
+			/*Only the highest discount is taken - it is not accumulated ? */
+			if (DB_num_rows($SellSuppResult) > 0){
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+						$SellSupportPercent = $SellSupportRow['rebatepercent'];
+					}
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
+					}
+				}
+			}
+
+			/* Sell support can also be specified by stock category */
+
+			$sql = "SELECT rebateamount/rate AS rebateinfunctionalcurrency,
+							rebatepercent
+					FROM sellthroughsupport INNER JOIN stockmaster
+					ON sellthroughsupport.categoryid=stockmaster.categoryid
+					INNER JOIN suppliers
+					ON suppliers.supplierid=sellthroughsupport.supplierno
+					INNER JOIN currencies
+					ON currencies.currabrev=suppliers.currcode
+					WHERE stockmaster.stockid='" . $NewItem . "'
+					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+						OR debtorno='')
+					AND effectivefrom <='" . Date('Y-m-d') . "'
+					AND effectiveto >='" . Date('Y-m-d') . "'";
+			$SellSuppResult = DB_query($sql,$db);
+			/*Only the highest discount is taken - it is not accumulated ? */
+			if (DB_num_rows($SellSuppResult) > 0){
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+						$SellSupportPercent = $SellSupportRow['rebatepercent'];
+					}
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
+					}
+				}
+			}
+			if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault'] and $SellSupportDiscount != 0) {
+				/* Customer currency is not the same as the functional/home currency so need to convert the rebate amount */
+				/* Would be better to have the currency rate held in the cart object so only have to run this query once - this is a hack for this purpose! */
+				$CurrResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+				$CurrRow = DB_fetch_array($CurrResult);
+				$SellSupportDiscount *= $CurrRow['rate'];
+			}
+			/*Convert the Sell through support discount to a percentage and add it to the $SellSupportPercent */
+			$SellSupportPercent += ($SellSupportDiscount/$Price);
+
+			$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
+			if ($SellSupportPercent != 0){
+				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+			}
+
 			$WithinCreditLimit = true;
 
 			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
