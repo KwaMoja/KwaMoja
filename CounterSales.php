@@ -1064,6 +1064,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 		$result = DB_Txn_Begin($db);
 		/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30, $db);
+		$InvoiceNo = GetNextTransNo(10, $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
@@ -1101,8 +1103,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 												0,
 												'" . $_SESSION['Items' . $identifier]->SalesPerson . "')";
 
+		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
-		$InsertQryResult = DB_query($HeaderSQL, $db, $ErrMsg);
+		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderlineno,
 																orderno,
@@ -1301,9 +1304,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 
 		/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 		 * GetPeriod() in includes/DateFunctions.inc */
-
-		$InvoiceNo = GetNextTransNo(10, $db);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 		$DefaultDispatchDate = Date('Y-m-d');
 
