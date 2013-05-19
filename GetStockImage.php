@@ -56,7 +56,7 @@ if (!function_exists('imagecreatefrompng')){
 	include('includes/footer.inc');
 	exit;
 }
-$DefaultImage = 'KwaMojasmall.png';
+$DefaultImage = 'DefaultItem.png';
 
 $FilePath =  $_SESSION['part_pics_dir'] . '/';
 
@@ -137,7 +137,7 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 	$IsJpeg = false;
 } else {
 	$FileName = $DefaultImage;
-	$IsJpeg = $DefaultIsJpeg;
+	$IsJpeg = false;
 }
 if( !$automake and !isset($FileName) ) {
 		$Title = _('Stock Image Retrieval ....');
@@ -292,10 +292,10 @@ if( $automake and !isset($FileName) ) {
 		if( $TranspColour != $BackgroundColour ) {
 			if( !isset($TextColour['alpha']) ) {
 				$ixtranscolor = imagecolorallocate($im,
-					$TranspColour['red'],$TranspColour['green'],$TranspColour['blue']);
+				$TranspColour['red'],$TranspColour['green'],$TranspColour['blue']);
 			} else {
 				$ixtranscolor = imagecolorallocatealpha($im,
-					$TranspColour['red'],$TranspColour['green'],$TranspColour['blue'],$TranspColour['alpha']);
+				$TranspColour['red'],$TranspColour['green'],$TranspColour['blue'],$TranspColour['alpha']);
 			}
 		} else {
 			$ixtranscolor = $ixbgcolor;
