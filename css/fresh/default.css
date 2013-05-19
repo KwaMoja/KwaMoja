@@ -107,6 +107,9 @@ input.image {
 	border-width:0px;
 	background-color: transparent;
 }
+input.image:hover{
+background-color: transparent;
+}
 input:hover{
 }
 select {

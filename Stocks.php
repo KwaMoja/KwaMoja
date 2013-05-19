@@ -20,12 +20,12 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-if (isset($_POST['NextItem'])){
+if (isset($_POST['NextItem_x'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1",$db);
 	$NextItemRow = DB_fetch_row($Result);
 	$StockID = $NextItemRow[0];
 }
-if (isset($_POST['PreviousItem'])){
+if (isset($_POST['PreviousItem_x'])){
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid<'" . $StockID . "' ORDER BY stockid DESC LIMIT 1",$db);
 	$PreviousItemRow = DB_fetch_row($Result);
 	$StockID = $PreviousItemRow[0];
@@ -50,7 +50,9 @@ if (isset($_POST['New'])) {
 	$New=$_POST['New'];
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+echo '<div class="toplink">
+		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+	</div>
 	<br />
 	<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
@@ -795,9 +797,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($StockID)){
 	echo '<table width="100%">
 			<tr>
-				<td width="5%"><input style="background:url(css/previous.png);width:26px;height:43px;" type="submit" name="PreviousItem" value="" /></td>
-				<td width="90%"></td>
-				<td width="5%"><input style="background:url(css/next.png);width:26px;height:43px;" type="submit" name="NextItem" value="" /></td>
+				<td><input class="image" src="css/'.$Theme.'/images/previous.png" type="image" name="PreviousItem" title="' . _('Previous Item') . '" value="" /></td>
+				<td><label>' . _('Navigate Items') . '</label></td>
+				<td><input class="image" src="css/'.$Theme.'/images/next.png" type="image" name="NextItem" title="' . _('Next Item') . '" value="" /></td>
 			</tr>';
 }
 

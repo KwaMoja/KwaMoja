@@ -109,6 +109,16 @@ max-width:90%;
 margin:5px auto;
 padding-bottom:5px;
 }
+table.search {
+border: 1px solid;
+border-radius: 5px;
+width: 60%;
+display: none;
+box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px navy;
+padding: 5px;
+margin-top: 10px;
+margin-bottom: 10px;
+}
 table.selection {
 width:auto;
 max-width:90%;
@@ -140,7 +150,9 @@ div.centre {
 padding:5px;
 text-align:center;
 }
-
+div.toplink{
+padding-top: 1%;
+}
 input { /*specifies the input field text characteristics*/
 font-style: italic;
 }
@@ -153,6 +165,9 @@ background-color: transparent;
 }
 input:hover{
 background:#9ffffb;
+}
+input.image:hover{
+background-color: transparent;
 }
 
 select {
