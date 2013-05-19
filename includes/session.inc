@@ -11,6 +11,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 		$RootPath = '';
 	} //$RootPath == '/' or $RootPath == "\\"
 	header('Location:' . $RootPath . '/install/index.php');
+	exit;
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
 $DBVersion=HighestFileName($PathPrefix);
