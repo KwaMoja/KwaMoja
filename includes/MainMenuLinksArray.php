@@ -294,7 +294,7 @@ $MenuItems['stock']['Maintenance']['URL'] = array ('/Stocks.php',
 $MenuItems['manuf']['Transactions']['Caption'] = array (_('Work Order Entry'),
 														_('Select A Work Order')
 														);
-$MenuItems['manuf']['Transactions']['URL'] = array ('/WorkOrderEntry.php',
+$MenuItems['manuf']['Transactions']['URL'] = array ('/WorkOrderEntry.php?New=True',
 													'/SelectWorkOrder.php'
 													);
 

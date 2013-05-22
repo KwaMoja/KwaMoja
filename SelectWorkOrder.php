@@ -167,7 +167,7 @@ if (!isset($StockID)) {
 
 		echo '</select> &nbsp;&nbsp;';
 		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
-		echo '&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td></tr></table><br />';
+		echo '&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php?New=True">' . _('New Work Order') . '</a></td></tr></table><br />';
 	}
 
 	$SQL="SELECT categoryid,
