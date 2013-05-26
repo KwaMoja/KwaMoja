@@ -437,4 +437,15 @@ function GetMailList($Recipients){
 	return $ToList;
 }
 
+function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db){
+	/* Used in Z_ scripts to change one field across the table.
+	*/
+	echo '<br />' . _('Changing') . ' ' . $TableName . ' ' . _('records');
+	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$DbgMsg = _('The SQL statement that failed was');
+	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	echo ' ... ' . _('completed');
+}
+
 ?>
