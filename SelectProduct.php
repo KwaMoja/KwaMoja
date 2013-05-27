@@ -90,8 +90,17 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 	echo '<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
-	echo '<tr><th class="number">' . _('Category:') . '</th> <td colspan="2" class="select">' . $myrow['categorydescription'] , '</td></tr>';
-	echo '<tr><th class="number">' . _('Item Type:') . '</th>
+	$sql = "SELECT abccategory FROM abcstock WHERE stockid='" . $StockID . "'";
+	$ABCResult = DB_query($sql, $db);
+	$ABCRow = DB_fetch_array($ABCResult);
+	echo '<tr>
+			<th class="number">' . _('Category:') . '</th>
+			<td colspan="2" class="select">' . $myrow['categorydescription'] , '</td>
+			<th class="number">' . _('ABC Rank:') . '</th>
+			<td class="select">' . $ABCRow['abccategory'] , '</td>
+		</tr>';
+	echo '<tr>
+			<th class="number">' . _('Item Type:') . '</th>
 			<td colspan="2" class="select">';
 	switch ($myrow['mbflag']) {
 		case 'A':
