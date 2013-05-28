@@ -14,11 +14,11 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	exit;
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
-$DBVersion=HighestFileName($PathPrefix);
+$DBVersion = HighestFileName($PathPrefix);
 if (isset($dbuser)) {
-	$DBUser=$dbuser;
-	$DBPassword=$dbpassword;
-	$DBType=$dbType;
+	$DBUser = $dbuser;
+	$DBPassword = $dbpassword;
+	$DBType = $dbType;
 }
 
 if (isset($SessionSavePath)) {
@@ -26,7 +26,7 @@ if (isset($SessionSavePath)) {
 } //isset($SessionSavePath)
 
 if (!isset($SysAdminEmail)) {
-	$SysAdminEmail='';
+	$SysAdminEmail = '';
 }
 
 ini_set('session.gc_maxlifetime', $SessionLifeTime);
@@ -134,7 +134,7 @@ if (!isset($AllowAnyone)) {
 
 	} //$rc
 } //!isset($AllowAnyone)
-else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
+else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	header('Location: index.php');
 }
 
@@ -142,12 +142,12 @@ else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php'){
 include($PathPrefix . 'includes/GetConfig.php');
 
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
-if (($DBVersion>$_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME'])!='Z_UpgradeDatabase.php')) {
+if (($DBVersion > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
 }
 
 if (isset($_SESSION['DB_Maintenance'])) {
-	if ($_SESSION['DB_Maintenance'] != 0) {
+	if ($_SESSION['DB_Maintenance'] > 0) {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') >= $_SESSION['DB_Maintenance']) {
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
@@ -331,17 +331,17 @@ function CryptPass($Password) {
 }
 
 function HighestFileName($PathPrefix) {
-	if($handle=opendir($PathPrefix . 'sql/updates')){
+	if ($handle = opendir($PathPrefix . 'sql/updates')) {
 
-		$i=0;
+		$i = 0;
 
 		// Go through directory:
-		while(false!==($file=readdir($handle))){
+		while (false !== ($file = readdir($handle))) {
 			// filter unnecessary file/dir paths:
-			if(substr($file,-3)=='php'){
+			if (substr($file, -3) == 'php') {
 
-				$FileNameLength=strlen($file)-4;
-				$UpdateNames[$i]=substr($file,0,$FileNameLength);
+				$FileNameLength = strlen($file) - 4;
+				$UpdateNames[$i] = substr($file, 0, $FileNameLength);
 
 				$i++;
 			}

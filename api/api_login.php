@@ -1,13 +1,14 @@
 <?php
 /* $Id$*/
 //  Validates user and sets up $_SESSION environment for API users.
-function  LoginAPI($databasename, $user, $password) {
-	global  $PathPrefix;		// For included files
+function LoginAPI($databasename, $user, $password) {
+	global $PathPrefix; // For included files
 	include('../config.php');
 	// Include now for the error code values.
-	include  '../includes/UserLogin.php';	/* Login checking and setup */
-	$RetCode = array();		// Return result.
-	if (!isset($_SESSION['DatabaseName']) or $_SESSION['DatabaseName'] == '' ) {
+	include '../includes/UserLogin.php';
+	/* Login checking and setup */
+	$RetCode = array(); // Return result.
+	if (!isset($_SESSION['DatabaseName']) or $_SESSION['DatabaseName'] == '') {
 		// Establish the database connection for this session.
 		$_SESSION['DatabaseName'] = $databasename;
 		/* Drag in the code to connect to the DB, and some other
@@ -21,37 +22,37 @@ function  LoginAPI($databasename, $user, $password) {
 		if (!isset($db)) {
 			$RetCode[0] = NoAuthorisation;
 			$RetCode[1] = UL_CONFIGERR;
-			return  $RetCode;
+			return $RetCode;
 		}
-		$_SESSION['db'] = $db;		// Set in above include
+		$_SESSION['db'] = $db; // Set in above include
 	}
 	$rc = userLogin($user, $password, $SysAdminEmail, $_SESSION['db']);
 	switch ($rc) {
-	case  UL_OK:
-		$RetCode[0] = 0;		// All is well
-		DoSetup();	    // Additional setting up
-		break;
-	case  UL_NOTVALID:
-	case  UL_BLOCKED:
-	case  UL_CONFIGERR:
-	case  UL_SHOWLOGIN:
-	//  Following not in use at 18 Nov 09.
-	case  UL_MAINTENANCE:
-		/*  Just return an error for now */
-		$RetCode[0] = NoAuthorisation;
-		$RetCode[1] = $rc;
-		break;
+		case UL_OK:
+			$RetCode[0] = 0; // All is well
+			DoSetup(); // Additional setting up
+			break;
+		case UL_NOTVALID:
+		case UL_BLOCKED:
+		case UL_CONFIGERR:
+		case UL_SHOWLOGIN:
+		//  Following not in use at 18 Nov 09.
+		case UL_MAINTENANCE:
+			/*  Just return an error for now */
+			$RetCode[0] = NoAuthorisation;
+			$RetCode[1] = $rc;
+			break;
 	}
-	return  $RetCode;
+	return $RetCode;
 }
 
 
 //  Logout function destroys the session data, and that's about it.
 
-function  LogoutAPI() {
+function LogoutAPI() {
 
 	//  Is this user logged in?
-	if (isset ($_SESSION['db']) ) {
+	if (isset($_SESSION['db'])) {
 		// Cleanup is about all there is to do.
 		session_unset();
 		session_destroy();
@@ -70,28 +71,27 @@ function  LogoutAPI() {
  *  reasonable place to put it.
  */
 
-function GetAPIErrorMessages( $errcodes )
-{
-	global  $ErrorDescription;
+function GetAPIErrorMessages($errcodes) {
+	global $ErrorDescription;
 	$retmsg = array();
 
 	foreach ($errcodes as $errnum) {
-	$rm = array ($errnum );
-	if (isset ($ErrorDescription[$errnum]) ) {
-		if ($errnum == DatabaseUpdateFailed and
-			isset ($_SESSION['db_err_msg']) and
-			mb_strlen ($_SESSION['db_err_msg']) > 0 )
-		$rm[] = $ErrorDescription[$errnum] . ":\n" . $_SESSION['db_err_msg'];
-		else
-		$rm[] = $ErrorDescription[$errnum];
-	} else {
-		$rm[] = _('** Error Code Not Defined **');
-	}
-	// Add this array to returned array.
-	$retmsg[] = $rm;
+		$rm = array(
+			$errnum
+		);
+		if (isset($ErrorDescription[$errnum])) {
+			if ($errnum == DatabaseUpdateFailed and isset($_SESSION['db_err_msg']) and mb_strlen($_SESSION['db_err_msg']) > 0)
+				$rm[] = $ErrorDescription[$errnum] . ":\n" . $_SESSION['db_err_msg'];
+			else
+				$rm[] = $ErrorDescription[$errnum];
+		} else {
+			$rm[] = _('** Error Code Not Defined **');
+		}
+		// Add this array to returned array.
+		$retmsg[] = $rm;
 	}
 
-	return  $retmsg;
+	return $retmsg;
 }
 
 
@@ -100,27 +100,24 @@ function GetAPIErrorMessages( $errcodes )
  *  function should be called when a successful login occurs.
  */
 
-function DoSetup()
-{
-	global  $PathPrefix;
-	if (isset($_SESSION['db']) and $_SESSION['db'] != '' )
+function DoSetup() {
+	global $PathPrefix;
+	if (isset($_SESSION['db']) and $_SESSION['db'] != '')
 		include($PathPrefix . 'includes/GetConfig.php');
 
-	$db = $_SESSION['db'];	    // Used a bit in the following.
-	if(isset($_SESSION['DB_Maintenance'])){
-		if ($_SESSION['DB_Maintenance']!=0)  {
-			if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-					ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-					,'d')	> 	$_SESSION['DB_Maintenance']){
+	$db = $_SESSION['db']; // Used a bit in the following.
+	if (isset($_SESSION['DB_Maintenance'])) {
+		if ($_SESSION['DB_Maintenance'] > 0) {
+			if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') > $_SESSION['DB_Maintenance']) {
 
 				/*Do the DB maintenance routing for the DB_type selected */
 				DB_Maintenance($db);
 				//purge the audit trail if necessary
-				if (isset($_SESSION['MonthsAuditTrail'])){
-					 $sql = "DELETE FROM audittrail
-							WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+				if (isset($_SESSION['MonthsAuditTrail'])) {
+					$sql = "DELETE FROM audittrail
+							WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
 					$ErrMsg = _('There was a problem deleting expired audit-trail history');
-					$result = DB_query($sql,$db);
+					$result = DB_query($sql, $db);
 				}
 				$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 			}
@@ -128,24 +125,22 @@ function DoSetup()
 	}
 
 	/*Check to see if currency rates need to be updated */
-	if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-		if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-			if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-					ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
-					,'d')> 0){
+	if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
+		if ($_SESSION['UpdateCurrencyRatesDaily'] != 0) {
+			if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']), 'd') > 0) {
 
 				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 				/*Loop around the defined currencies and get the rate from ECB */
-				$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
-				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-					if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+				$CurrenciesResult = DB_query('SELECT currabrev FROM currencies', $db);
+				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)) {
+					if ($CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']) {
 						$UpdateCurrRateResult = DB_query("UPDATE currencies SET
-												rate='" . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "'
-												WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+												rate='" . GetCurrencyRate($CurrencyRow[0], $CurrencyRates) . "'
+												WHERE currabrev='" . $CurrencyRow[0] . "'", $db);
 					}
 				}
 				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
+				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'", $db);
 			}
 		}
 	}

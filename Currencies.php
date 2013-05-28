@@ -354,7 +354,7 @@ if (!isset($_GET['delete'])) {
 				<td>' ._('Currency') . ':</td>
 				<td><select name="Abbreviation">';
 		foreach ($CurrenciesArray as $CurrencyAbbreviation => $Currency) {
-			echo '<option value="' . $CurrencyAbbreviation . '">' . $CurrencyAbbreviation . '-' . $Currency . '</option>';
+			echo '<option value="' . $CurrencyAbbreviation . '">' . $CurrencyAbbreviation . '-' . $Currency['Currency'] . '</option>';
 		}
 
 		echo '</select></td>

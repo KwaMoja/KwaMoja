@@ -199,9 +199,11 @@ $MenuItems['PO']['Reports']['URL'] = array ('/PO_SelectPurchOrder.php',
 											'/SuppPriceList.php'
 											);
 
-$MenuItems['PO']['Maintenance']['Caption'] = array (_('Maintain Supplier Price Lists')
+$MenuItems['PO']['Maintenance']['Caption'] = array (_('Maintain Supplier Price Lists'),
+													_('Clear Orders with Quantity on Back Orders')
 													);
-$MenuItems['PO']['Maintenance']['URL'] = array ('/SupplierPriceList.php'
+$MenuItems['PO']['Maintenance']['URL'] = array ('/SupplierPriceList.php',
+												'/POClearBackOrders.php'
 												);
 $MenuItems['stock']['Transactions']['Caption'] = array (_('Receive Purchase Orders'),
 														_('Bulk Inventory Transfer') . ' - ' . _('Dispatch'),
