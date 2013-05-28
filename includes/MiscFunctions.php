@@ -193,7 +193,7 @@ for detail of the European Central Bank rates - published daily */
 
 function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]))){
-  	return quote_oanda_currency($CurrCode);
+  	return google_currency_rate($CurrCode);
   } elseif ($CurrCode=='EUR'){
   	if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]==0) {
   		return 0;

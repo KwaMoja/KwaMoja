@@ -18,7 +18,7 @@ function NewScript($ScriptName, $PageSecurity, $db) {
 	$sql = "SELECT script FROM scripts WHERE script='" . $ScriptName . "'";
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result)==0) {
-		$sql = "INSERT INTO `scripts` VALUES('" . $ScriptName . "', '" . $PageSecurity . "', '')";
+		$sql = "INSERT INTO `scripts` (`script`, `pagesecurity`) VALUES ('" . $ScriptName . "', '" . $PageSecurity . "')";
 		$response = executeSQL($sql, $db, False);
 		if ($response==0) {
 			OutputResult( _('The script').' '.$ScriptName.' '._('has been inserted') , 'success');

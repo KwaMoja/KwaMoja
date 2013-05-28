@@ -526,7 +526,6 @@ if (isset($_POST['submit'])) {
 				} /* end if the stock category changed and forced a change in WIP account */
 				DB_Txn_Commit($db);
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
-				echo '<br />';
 			}
 
 		} else { //it is a NEW part
