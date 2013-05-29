@@ -156,6 +156,11 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 
 			$ErrMsg = _('The order status could not be updated because');
 			$UpdateResult = DB_query($SQL, $db, $ErrMsg);
+
+			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
+				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
+				$UpdateResult =DB_query($SQL,$db,$ErrMsg);
+			}
 		} //$OKToUpdateStatus == 1
 	} //end if there is actually a status change the class Status != the POST['Status']
 } //End if user hit Update Status
@@ -805,7 +810,7 @@ else {
 	echo '</table></td>';
 	//Set up the next column with a sub-table in it too
 	echo '<td style="width:50%" valign="top">
-            <table class="selection" width="100%">';
+	    <table class="selection" width="100%">';
 
 	if ($_SESSION['ExistingOrder'] != 0 and $_SESSION['PO' . $identifier]->Status == 'Printed') {
 		echo '<tr><td><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;identifier=' . $identifier . '">' . _('Receive this order') . '</a></td></tr>';
