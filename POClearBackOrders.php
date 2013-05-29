@@ -2,7 +2,7 @@
 /* $Id: Z_ClearPOBackOrders.php 4466 2011-01-13 09:33:59Z daintree $*/
 
 include ('includes/session.inc');
-$Title = _('UTILITY PAGE To Clear purchase orders with quantity on back order');
+$Title = _('Clear purchase orders with quantity on back order');
 include('includes/header.inc');
 
 if (isset($_POST['ClearSupplierBackOrders'])) {
@@ -21,18 +21,21 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '
-	<div class="centre">
-	<table>
-	<tr><td>' . _('From Supplier Code') . ':</td>
-		<td><input type="text" name="FromSupplierNo" size="20" maxlength="20" /></td>
-	</tr>
-		<tr><td> ' . _('To Supplier Code') . ':</td>
-	<td><input type="text" name="ToSupplierNo" size="20" maxlength="20" /></td>
-	</tr>
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+
+echo '<table>
+		<tr>
+			<td>' . _('From Supplier Code') . ':</td>
+			<td><input type="text" name="FromSupplierNo" size="20" maxlength="20" /></td>
+		</tr>
+		<tr>
+			<td> ' . _('To Supplier Code') . ':</td>
+			<td><input type="text" name="ToSupplierNo" size="20" maxlength="20" /></td>
+		</tr>
 	</table>
-	<button type="submit" name="ClearSupplierBackOrders">' . _('Clear Supplier Back Orders') . '</button>
-	<div>
+	<div class="centre">
+		<button type="submit" name="ClearSupplierBackOrders">' . _('Clear Supplier Back Orders') . '</button>
+	</div>
 	</form>';
 
 include('includes/footer.inc');
