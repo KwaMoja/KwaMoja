@@ -198,7 +198,7 @@ elseif (isset($_GET['delete'])) {
 	if ($myrow['groups'] > 0) {
 		prnMsg(_('Cannot delete this account group because general ledger accounts have been created using this group'), 'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
-		echo '<br /><form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<br /><form onSubmit="VerifyForm(this)" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
@@ -320,7 +320,7 @@ if (isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup']
 } //isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])
 
 if (!isset($_GET['delete'])) {
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this)" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -389,7 +389,7 @@ if (!isset($_GET['delete'])) {
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
 				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" ' . (in_array('GroupName', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="GroupName" size="50" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+				<td><input tabindex="1" type="text" name="GroupName" description="' . _('Account Group Name') . '" id="GroupName" size="50" minlength="1" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
@@ -453,7 +453,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" maxlength="4" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td><input tabindex="5" type="text" minlength="1" maxlength="4" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
 		</tr>';
 
 	echo '<tr>

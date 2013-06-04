@@ -2,6 +2,9 @@ function defaultControl(c){
 c.select();
 c.focus();
 }
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 function ReloadForm(fB){
 fB.click();
 }
@@ -201,6 +204,29 @@ function clickDate(){
 }
 function changeDate(){
 	isDate(this.value,this.alt);
+}
+function VerifyForm(f) {
+	for(var i=0,fLen=f.length;i<fLen;i++){
+		if(f.elements[i].type=='checkbox' && !f.elements[i].checked) {
+			f.elements[i].value=null;
+		}
+		if(f.elements[i].type=='text') {
+			var a=document.getElementById(f.elements[i].id);
+			if (a.getAttribute("minlength")>f.elements[i].value.length) {
+				alert('The '+a.getAttribute("description")+' field, must be at least '+a.getAttribute("minlength")+' characters long');
+				return false;
+			}
+			if (a.getAttribute("maxlength")<f.elements[i].value.length) {
+				alert('The '+a.getAttribute("description")+' field, must be less than '+a.getAttribute("minlength")+' characters long');
+				return false;
+			}
+			if (a.getAttribute("class")=='number' and !is_Number(f.elements[i].value)) {
+				alert('The '+a.getAttribute("description")+' field, must be less than '+a.getAttribute("minlength")+' characters long');
+				return false;
+			}
+		}
+	}
+	return true;
 }
 function initial(){
 	if (document.getElementsByTagName){
