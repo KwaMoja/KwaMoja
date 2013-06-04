@@ -73,7 +73,7 @@ if (isset($_POST['update'])) {
 	prnMsg( _('Select a csv file containing the details of the account codes that you wish to import into KwaMoja. '). '<br />' .
 		 _('The first line must contain the field names that you wish to import. ').
 		 '<a href ="Z_DescribeTable.php?table=chartmaster">' . _('The field names can be found here'). '</a>', 'info');
-	echo '<form id="ItemForm" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" id="ItemForm" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr><td>'._('File to import').'</td>'.

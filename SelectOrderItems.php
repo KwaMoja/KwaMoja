@@ -588,7 +588,7 @@ elseif (!$_SESSION['Items' . $identifier]->DefaultSalesType or $_SESSION['Items'
 if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['Items' . $identifier]->DebtorNo) or $_SESSION['Items' . $identifier]->DebtorNo == '') {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Enter an Order or Quotation') . ' : ' . _('Search for the Customer Branch.') . '</p>';
 	echo '<div class="page_help_text noPrint">' . _('Orders/Quotations are placed against the Customer Branch. A Customer may have several Branches.') . '</div>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint">
 		 <div>
 			 <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			 <table cellpadding="3" class="selection">
@@ -869,7 +869,7 @@ else { //dont require customer selection
 	//Always do the stuff below if not looking for a customerid
 
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" id="SelectParts" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" id="SelectParts" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -1735,7 +1735,7 @@ else { //dont require customer selection
 			echo '<div class="page_help_text noPrint">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 			$j = 1;
-			//echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" class="noPrint" name="orderform">';
+			//echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" class="noPrint" name="orderform">';
 			echo '<div>';
 			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
@@ -1928,7 +1928,7 @@ else { //dont require customer selection
 
 
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >= 1) {
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint" name="deleteform">';
+		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint" name="deleteform">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';

@@ -432,7 +432,7 @@ if (isset($_POST['CloseContract']) and $_SESSION['Contract'.$identifier]->Status
 
 if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order being processed now
 
-	echo '<form  method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
+	echo '<form onSubmit="return VerifyForm(this);"  method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />

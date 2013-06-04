@@ -160,7 +160,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				<th>' . _('List Price') . '</th>
 			<tr>';
 		$k = 0; //row colour counter
-		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" class="noPrint" id="update">';
+		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" class="noPrint" id="update">';
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
@@ -231,7 +231,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text noPrint">' . _('Prices can be displayed based on their relation to cost') . '</div><br />';
 	echo '<br />
-          <form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+          <form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
     echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table class="selection">';

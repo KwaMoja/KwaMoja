@@ -155,7 +155,7 @@ if (isset($_POST['SearchSupplier'])) {
     $DbgMsg = _('The SQL to retrieve supplier details that failed was');
     $SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -197,7 +197,7 @@ if (isset($_POST['SearchSupplier'])) {
 }//end if results to show
 if (!isset($SupplierID) or isset($_POST['SearchSupplier'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="3" colspan="4" class="selection">
 			<tr>
@@ -344,7 +344,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	$SuppName = $SuppRow['suppname'];
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
 			<table class="selection">';

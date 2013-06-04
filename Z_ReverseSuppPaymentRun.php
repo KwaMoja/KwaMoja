@@ -82,7 +82,7 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate'])==1){
 }
 
 
-echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />' . _('Enter the date of the payment run') . ': <input type="text" name="PaytDate" maxlength="11" size="11" value="' . $_POST['PaytDate'] . '" />';

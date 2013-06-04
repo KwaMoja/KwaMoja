@@ -107,7 +107,7 @@ if (isset($_POST['UnInstall'])) {
 	$ForceConfigReload = True;
 	prnMsg( _('The plugin has been successfully removed.'), 'success');
 } else {
-	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />';
 	echo '<div>';

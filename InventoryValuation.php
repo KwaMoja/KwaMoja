@@ -205,7 +205,7 @@ if (isset($_POST['PrintPDF'])
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
 			</p>';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
+		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
               <div>
             <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">

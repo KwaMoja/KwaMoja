@@ -282,7 +282,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		<a href="Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form action="Z_ImportStocks.php" method="post" class="noPrint" enctype="multipart/form-data">';
+	echo '<form onSubmit="return VerifyForm(this);" action="Z_ImportStocks.php" method="post" class="noPrint" enctype="multipart/form-data">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

@@ -13,7 +13,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (!isset($_POST['StockID'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
         <div>
 		<br />
 		<div class="page_help_text noPrint">

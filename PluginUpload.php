@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 }
 
 if (!isset($_POST['submit'])) {
-	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<div class="page_help_text noPrint">' . _('Use this screen to upload a KwaMoja plugin file to your plugins directory. The file should be of type *.zip') . '</div>';

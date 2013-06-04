@@ -252,7 +252,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
           <div>
 			<br />
 			<br />';

@@ -211,7 +211,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div class="page_help_text noPrint">' . _('View the Price List from supplier') . '</div><br />';
 
 	echo '<br/>
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

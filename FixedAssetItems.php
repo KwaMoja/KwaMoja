@@ -382,7 +382,7 @@ if (isset($_POST['submit'])) {
 } /* end if delete asset */
 $result = DB_Txn_Commit($db);
 
-echo '<form id="AssetForm" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+echo '<form onSubmit="return VerifyForm(this);" id="AssetForm" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
       <div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';

@@ -137,7 +137,7 @@ if(isset($_GET['Remove'])){
 }
 if(!isset($_GET['Edit'])){//display the input form
 ?>
-	<form id="MailGroups" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post" />
+	<form onSubmit="return VerifyForm(this);" id="MailGroups" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post" />
 		<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 		<label for="MailGroup"><?php echo _('Mail Group'); ?></label>
 			<input type="text" name="MailGroup" maxlength="100" size="20" />

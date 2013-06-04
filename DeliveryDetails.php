@@ -835,7 +835,7 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items' . $identifier]->CustomerName . '</b></p>';
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

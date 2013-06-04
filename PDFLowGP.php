@@ -124,7 +124,7 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['GPMin']=0;
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
         echo '<div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';

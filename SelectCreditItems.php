@@ -214,7 +214,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['CreditItems'.$identifier]->DebtorNo)
 	OR $_SESSION['CreditItems'.$identifier]->DebtorNo=='' ) {
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .  '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .  '" method="post" class="noPrint">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
@@ -408,7 +408,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /*Always do the stuff below if not looking for a customerid
   Set up the form for the credit note display and  entry*/
 
-	 echo '<form id="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" class="noPrint">';
+	 echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" id="MainForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '" method="post" class="noPrint">';
      echo '<div>';
 	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

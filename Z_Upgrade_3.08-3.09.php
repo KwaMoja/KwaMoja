@@ -8,7 +8,7 @@ include('includes/header.inc');
 
 prnMsg(_('This script will run perform any modifications to the database since v 3.08 required to allow the additional functionality in version 3.09 scripts'),'info');
 
-echo '<p><form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<p><form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" onSubmit="return VerifyForm(this);">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="submit" name="DoUpgrade" value="' . _('Perform Upgrade') . '" />';
 echo '</form>';

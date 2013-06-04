@@ -206,7 +206,7 @@ if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method="post" class="noPrint" id="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="AccountSections" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
     echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

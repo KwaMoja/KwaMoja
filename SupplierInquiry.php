@@ -157,7 +157,7 @@ echo '<tr>
 
 echo '<br />
 	<div class="centre">
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo _('Show all transactions after') . ': ' .'<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />

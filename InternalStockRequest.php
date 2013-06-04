@@ -137,7 +137,7 @@ if (isset($_POST['Submit'])) {
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['Edit'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
@@ -176,7 +176,7 @@ if (isset($_GET['Edit'])) {
 	exit;
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -256,7 +256,7 @@ if (!isset($_SESSION['Request']->Location)) {
 
 //****************MUESTRO LA TABLA CON LOS REGISTROS DE LA TRANSFERENCIA*************************************
 $i = 0; //Line Item Array pointer
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
@@ -302,7 +302,7 @@ echo '</table>
 	</div>
 	</form>';
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -510,7 +510,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])) {
 } //end of if search
 /* display list if there is more than one record */
 if (isset($searchresult) and !isset($_POST['Select'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
@@ -608,7 +608,7 @@ if (isset($SearchResult)) {
 	echo '<div class="page_help_text noPrint">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 	echo '<br />';
 	$j = 1;
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="orderform">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="orderform">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="table1">';

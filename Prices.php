@@ -204,7 +204,7 @@ $sql = "SELECT currencies.currency,
 $result = DB_query($sql,$db);
 
 if (DB_num_rows($result) > 0) {
-	echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';
 	echo '<table class="selection">
 			<tr>
@@ -264,7 +264,7 @@ if (DB_num_rows($result) > 0) {
 	prnMsg(_('There are no prices set up for this part'),'warn');
 }
 
-echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Edit'])){

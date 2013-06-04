@@ -360,7 +360,7 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 		echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
+		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
 				<table cellpadding="3" colspan="4" class="selection">
 				<tr>
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -448,7 +448,7 @@ if (isset($SuppliersResult)) {
 		$StockID = '';
 		$StockUOM = 'each';
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr>
@@ -547,7 +547,7 @@ if (!isset($SuppliersResult)) {
 		$_POST['SupplierCode'] = $myrow['suppliers_partno'];
 		$StockUOM=$myrow['units'];
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($SupplierID)) {

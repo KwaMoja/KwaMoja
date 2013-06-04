@@ -260,7 +260,7 @@ else {
 	} //!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin'] == ''
 	echo '</td></tr></table>';
 }
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (mb_strlen($msg) > 1) {
