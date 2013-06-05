@@ -442,7 +442,7 @@ if (!isset($DebtorNo)) {
 		include('includes/footer.inc');
 		exit;
 	} //$SetupErrors > 0
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form oonSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -523,10 +523,13 @@ if (!isset($DebtorNo)) {
 	if (DB_num_rows($result) == 0) {
 		$DataError = 1;
 		echo '<a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types/price lists defined'), 'error') . '</td></tr>';
+		echo '<tr>
+				<td colspan="2">' . prnMsg(_('No Customer types/price lists defined'), 'error') . '</td>
+			</tr>';
 	} //DB_num_rows($result) == 0
 	else {
-		echo '<tr><td>' . _('Customer Type') . ':</td>
+		echo '<tr>
+				<td>' . _('Customer Type') . ':</td>
 				<td><select tabindex="9" name="typeid">';
 
 		while ($myrow = DB_fetch_array($result)) {
@@ -537,8 +540,9 @@ if (!isset($DebtorNo)) {
 	}
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
-	echo '<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input tabindex="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" value="' . $DateString . '" size="12" minlength="0" maxlength="10" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
+			<td><input tabindex="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" value="' . $DateString . '" size="12" minlength="0" maxlength="10" /></td></tr>';
 
 	echo '</table></td>
 			<td><table class="selection">
@@ -662,7 +666,7 @@ if (!isset($DebtorNo)) {
 else {
 	//DebtorNo exists - either passed when calling the form or from the form itself
 
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">

@@ -62,7 +62,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	echo'<p class="page_title_text noPrint" ><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
 	echo'<p class="page_title_text noPrint" ><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 	$k=0; //row colour counter
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="ReorderLevelLocation.php" method="post" class="noPrint" id="Update">';
+	echo '<form onSubmit="return VerifyForm(this);" action="ReorderLevelLocation.php" method="post" class="noPrint" id="Update">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
@@ -141,7 +141,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 
 	echo '<br />
 		<br />
-		<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
+		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
 		<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT loccode,

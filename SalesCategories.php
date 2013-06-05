@@ -280,7 +280,7 @@ if (DB_num_rows($result) == 0) {
 // ----------------------------------------------------------------------------------------
 // Show New or Edit Category
 
-echo '<br /><form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<br /><form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -367,7 +367,7 @@ $sql = "SELECT stockid, description FROM stockmaster WHERE discontinued = 0 ORDE
 $result = DB_query($sql,$db);
 if($result and DB_num_rows($result)) {
 	// continue id stock id in the stockid array
-	echo '<br /><form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
+	echo '<br /><form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if( isset($SelectedCategory) ) { // if we selected a category we need to keep it selected
@@ -378,9 +378,12 @@ if($result and DB_num_rows($result)) {
 
 
 	echo '<table class="selection">
-		<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>
-		<tr><td>' . _('Select Inv. Item') . ':</td>
-		<td><select name="AddStockID">';
+			<tr>
+				<th colspan="2">'._('Add Inventory to this category.').'</th>
+			</tr>
+			<tr>
+				<td>' . _('Select Inv. Item') . ':</td>
+				<td><select name="AddStockID">';
 
 	while( $myrow = DB_fetch_array($result) ) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {

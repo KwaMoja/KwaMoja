@@ -813,10 +813,10 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 						locale_number_format($TotalExtPrice,2),
 						locale_number_format($TotalInvQty,2),
 						' ');
-            echo '</table>';
+			echo '</table>';
 		} // End of if ($_POST['ReportType']
-		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-        echo '<div>';
+		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'" />';
 		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'" />';
@@ -835,7 +835,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$Suppli
 		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'" />';
 		echo '<br /><div class="centre"><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div>';
 		echo '</div>
-              </form>';
+			  </form>';
 	} // End of if inputerror != 1
 } // End of function submit()
 
@@ -1495,38 +1495,46 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 // Display form fields. This function is called the first time
 // the page is called.
 
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-    echo '<div>';
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">';
-
-	echo '<tr><td>' . _('Report Type') . ':</td>';
-	echo '<td><select name="ReportType">';
-	echo '<option selected="selected" value="Detail">' . _('Detail') . '</option>';
-	echo '<option value="Summary">' . _('Summary') . '</option>';
-	echo '</select></td><td>&nbsp;</td></tr>';
-
-	echo '<tr><td>' . _('Date Type') . ':</td>';
-	echo '<td><select name="DateType">';
-	echo '<option selected="selected" value="Order">' . _('Order Date') . '</option>';
-	echo '<option value="Delivery">' . _('Delivery Date') . '</option>';
-	echo '</select></td><td>&nbsp;</td></tr>';
-
-	echo '<tr>
-		<td>' . _('Date Range') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" minlength="0" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
-        <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
-
-	echo '<tr><td>' . _('Part Number') . ':</td>';
-	echo '<td><select name="PartNumberOp">';
-	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
-	echo '<option value="LIKE">' . _('Begins With') . '</option>';
-	echo '</select>';
+	echo '<table class="selection">
+			<tr>
+				<td>' . _('Report Type') . ':</td>
+				<td>
+					<select name="ReportType">
+						<option selected="selected" value="Detail">' . _('Detail') . '</option>
+						<option value="Summary">' . _('Summary') . '</option>
+					</select>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>' . _('Date Type') . ':</td>
+				<td>
+					<select name="DateType">
+						<option selected="selected" value="Order">' . _('Order Date') . '</option>
+						<option value="Delivery">' . _('Delivery Date') . '</option>
+					</select>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>' . _('Date Range') . ':</td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" minlength="0" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
+				<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Part Number') . ':</td>
+				<td>
+					<select name="PartNumberOp">
+						<option selected="selected" value="Equals">' . _('Equals') . '</option>
+						<option value="LIKE">' . _('Begins With') . '</option>
+					</select>';
 	echo '&nbsp;&nbsp;<input type="text" name="PartNumber" size="20" minlength="0" maxlength="20" value="';
-    if (isset($_POST['PartNumber'])) {
-        echo $_POST['PartNumber'] . '" /></td></tr>';
+	if (isset($_POST['PartNumber'])) {
+		echo $_POST['PartNumber'] . '" /></td></tr>';
 	} else {
 		echo '" /></td></tr>';
 	}
@@ -1537,8 +1545,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
 	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" minlength="0" maxlength="10" value="';
-    if (isset($_POST['SupplierId'])) {
-        echo $_POST['SupplierId'] . '" /></td></tr>';
+	if (isset($_POST['SupplierId'])) {
+		echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
 		echo  '" /></td></tr>';
 	}
@@ -1558,8 +1566,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>' . _('Order Number') . ':</td>';
 	echo '<td>'._('Equals').':&nbsp;&nbsp;';
 	echo '<input type="text" name="OrderNo" size="10" minlength="0" maxlength="10" value="';
-    if (isset($_POST['OrderNo'])) {
-        echo $_POST['OrderNo'] . '" /></td></tr>';
+	if (isset($_POST['OrderNo'])) {
+		echo $_POST['OrderNo'] . '" /></td></tr>';
 	} else {
 		echo  '" /></td></tr>';
 	}
@@ -1611,7 +1619,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	</table>
 	<br/>';
    echo '</div>
-         </form>';
+		 </form>';
 
 } // End of function display()
 

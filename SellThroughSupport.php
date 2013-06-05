@@ -8,16 +8,16 @@ $Title = _('Sell Through Support');
 include ('includes/header.inc');
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
-    $SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
+	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
 } elseif (isset($_POST['SupplierID'])) {
-    $SupplierID = trim(mb_strtoupper($_POST['SupplierID']));
+	$SupplierID = trim(mb_strtoupper($_POST['SupplierID']));
 }
 
 //if $Edit == true then we are editing an existing SellThroughSupport record
 if (isset($_GET['Edit'])) {
-    $Edit = true;
+	$Edit = true;
 } elseif (isset($_POST['Edit'])) {
-    $Edit = true;
+	$Edit = true;
 } else {
 	$Edit = false;
 }
@@ -61,8 +61,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 		$InputError = 1;
 	}
 
-    if ($InputError == 0 AND isset($_POST['AddRecord'])) {
-        $sql = "INSERT INTO sellthroughsupport (supplierno,
+	if ($InputError == 0 AND isset($_POST['AddRecord'])) {
+		$sql = "INSERT INTO sellthroughsupport (supplierno,
 												debtorno,
 												categoryid,
 												stockid,
@@ -81,13 +81,13 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 							'" . FormatDateForSQL($_POST['EffectiveTo']) . "')";
 
-        $ErrMsg = _('The sell through support record could not be added to the database because');
-        $DbgMsg = _('The SQL that failed was');
-        $AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-        prnMsg(_('This sell through support has been added to the database'), 'success');
-    }
-    if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
-        $sql = "UPDATE sellthroughsupport SET debtorno='" . $_POST['DebtorNo'] . "',
+		$ErrMsg = _('The sell through support record could not be added to the database because');
+		$DbgMsg = _('The SQL that failed was');
+		$AddResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		prnMsg(_('This sell through support has been added to the database'), 'success');
+	}
+	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
+		$sql = "UPDATE sellthroughsupport SET debtorno='" . $_POST['DebtorNo'] . "',
 											categoryid='" . $_POST['CategoryID'] . "',
 											stockid='" . $_POST['StockID'] . "',
 											narrative='" . $_POST['Narrative'] . "',
@@ -105,30 +105,30 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 	}
 
-    if ($InputError == 0) {
+	if ($InputError == 0) {
 	/*  insert took place and need to clear the form  */
-        unset($_POST['StockID']);
-        unset($_POST['EffectiveFrom']);
-        unset($_POST['DebtorNo']);
-        unset($_POST['CategoryID']);
-        unset($_POST['Narrative']);
-        unset($_POST['RebatePercent']);
-        unset($_POST['RebateAmount']);
-        unset($_POST['EffectiveFrom']);
-        unset($_POST['EffectiveTo']);
-    }
+		unset($_POST['StockID']);
+		unset($_POST['EffectiveFrom']);
+		unset($_POST['DebtorNo']);
+		unset($_POST['CategoryID']);
+		unset($_POST['Narrative']);
+		unset($_POST['RebatePercent']);
+		unset($_POST['RebateAmount']);
+		unset($_POST['EffectiveFrom']);
+		unset($_POST['EffectiveTo']);
+	}
 }
 
 if (isset($_POST['SearchSupplier'])) {
-    if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-        prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
-        echo '<br />';
-    }
-    if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
-        $_POST['Keywords'] = ' ';
-    }
-    if (mb_strlen($_POST['Keywords']) > 0) {
-        //insert wildcard characters in spaces
+	if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
+		prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
+		echo '<br />';
+	}
+	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
+		$_POST['Keywords'] = ' ';
+	}
+	if (mb_strlen($_POST['Keywords']) > 0) {
+		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		$SQL = "SELECT suppliers.supplierid,
@@ -140,8 +140,8 @@ if (isset($_POST['SearchSupplier'])) {
 				FROM suppliers
 				WHERE suppliers.suppname " . LIKE  . " '".$SearchString."'";
 
-    } elseif (mb_strlen($_POST['SupplierCode']) > 0) {
-        $SQL = "SELECT suppliers.supplierid,
+	} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
+		$SQL = "SELECT suppliers.supplierid,
 						suppliers.suppname,
 						suppliers.currcode,
 						suppliers.address1,
@@ -150,26 +150,26 @@ if (isset($_POST['SearchSupplier'])) {
 				FROM suppliers
 				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
 
-    } //one of keywords or SupplierCode was more than a zero length string
-    $ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-    $DbgMsg = _('The SQL to retrieve supplier details that failed was');
-    $SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	} //one of keywords or SupplierCode was more than a zero length string
+	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
+	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
+	$SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    $TableHeader = '<tr>
+	$TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
-	                	<th>' . _('Supplier Name') . '</th>
+						<th>' . _('Supplier Name') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Address 1') . '</th>
 						<th>' . _('Address 2') . '</th>
 						<th>' . _('Address 3') . '</th>
 					</tr>';
-    echo $TableHeader;
+	echo $TableHeader;
 	$k = 0;
-    while ($myrow = DB_fetch_array($SuppliersResult)) {
+	while ($myrow = DB_fetch_array($SuppliersResult)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -177,7 +177,7 @@ if (isset($_POST['SearchSupplier'])) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-       printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+	   printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -191,13 +191,13 @@ if (isset($_POST['SearchSupplier'])) {
 				$myrow['address2'],
 				$myrow['address3']);
 	}//end of while loop
-    echo '</table>
+	echo '</table>
 			<br/>
 			</form>';
 }//end if results to show
 if (!isset($SupplierID) or isset($_POST['SearchSupplier'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>';
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="3" colspan="4" class="selection">
 			<tr>
@@ -236,7 +236,7 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 
 if (isset($SupplierID) AND $Edit == false) {
 
-    $sql = "SELECT	id,
+	$sql = "SELECT	id,
 					sellthroughsupport.debtorno,
 					debtorsmaster.name,
 					rebateamount,
@@ -256,13 +256,13 @@ if (isset($SupplierID) AND $Edit == false) {
 			ON sellthroughsupport.debtorno=debtorsmaster.debtorno
 			WHERE supplierno = '" . $SupplierID . "'
 			ORDER BY sellthroughsupport.effectivefrom DESC";
-    $ErrMsg = _('The supplier sell through support deals could not be retrieved because');
-    $Result = DB_query($sql, $db, $ErrMsg);
-    if (DB_num_rows($Result)==0) {
+	$ErrMsg = _('The supplier sell through support deals could not be retrieved because');
+	$Result = DB_query($sql, $db, $ErrMsg);
+	if (DB_num_rows($Result)==0) {
 		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
-    } else {
-        echo '<table cellpadding="2" class="selection">';
-        $TableHeader = '<tr>
+	} else {
+		echo '<table cellpadding="2" class="selection">';
+		$TableHeader = '<tr>
 							<th>' . _('Item or Category') . '</th>
 							<th>' . _('Customer') . '</th>
 							<th>' . _('Rebate') . '<br />' .  _('Value') . ' ' . $SuppRow['currcode'] . '</th>
@@ -293,7 +293,7 @@ if (isset($SupplierID) AND $Edit == false) {
 				$Customer = $myrow['debtorno'] . ' - ' . $myrow['name'];
 			}
 
-            printf('<td>%s</td>
+			printf('<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -318,8 +318,8 @@ if (isset($SupplierID) AND $Edit == false) {
 					$SupplierID);
 		} //end of while loop
 		echo '</table><br/>';
-    } // end of there are sell through support rows to show
-    echo '<br/>';
+	} // end of there are sell through support rows to show
+	echo '<br/>';
 } /* Only show the existing supplier sell through support records if one is not being edited */
 
 /*Show the input form for new supplier sell through support details */
@@ -344,7 +344,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	$SuppName = $SuppRow['suppname'];
 
-	echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
 			<table class="selection">';

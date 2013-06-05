@@ -47,7 +47,7 @@ if (!isset($_POST['SaveUpdateJob'])) {
 				</tr>';
 		echo GetJobCards($db, $RootPath);
 		echo '</table>';
-		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&AddJob=1" method="post" class="noPrint">';
+		echo '<form onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&AddJob=1" method="post" class="noPrint">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">';
 		echo '<br><input type=submit name="AddJob" value="' . _('Add Job Card') . '">';
@@ -88,10 +88,10 @@ if (!isset($_POST['SaveUpdateJob'])) {
 		} //(isset($_POST["SaveJob"])) and (!isset($_POST['UpdateJob']))
 		else {
 			if (isset($_POST['UpdateJob'])) {
-				echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&JobCardNo=' . $_POST['JobCardNo'] . '&SaveUpdateJob=1" method="post" class="noPrint">';
+				echo '<form onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&JobCardNo=' . $_POST['JobCardNo'] . '&SaveUpdateJob=1" method="post" class="noPrint">';
 			} //isset($_POST['UpdateJob'])
 			else {
-				echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&AddJob=1&SaveJob=1" method="post" class="noPrint">';
+				echo '<form onSubmit="return VerifyForm(this);" action="' . $_SERVER['PHP_SELF'] . '?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&AddJob=1&SaveJob=1" method="post" class="noPrint">';
 			}
 			echo '<table cellpadding=4 width=99% style ="outline-style:solid;outline-width:1px;' . $printbk . '">';
 			echo '<tr>';

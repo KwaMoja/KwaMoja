@@ -71,7 +71,7 @@ if (!isset($AccountID)) {
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
 		'" alt="' . _('Search for General Ledger Accounts') . '" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
 	echo '<br />
-		<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post" class="noPrint">';
+		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post" class="noPrint">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -98,7 +98,7 @@ if (!isset($AccountID)) {
 	if (isset($result) and DB_num_rows($result)>0) {
 
 	echo '<br />
-		<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="GLAccountInquiry.php" method="post" class="noPrint">';
+		<form onSubmit="return VerifyForm(this);" action="GLAccountInquiry.php" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<br /><table class="selection" summary="' . _('List of GL Accounts') . '">';
 

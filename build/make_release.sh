@@ -1,9 +1,9 @@
 #! /bin/bash
 
-BASE_DIR=/root/Web-Server/KwaMoja;
-OUTPUT_DIR=/root;
+BASE_DIR=/home/tim/workbench/KwaMoja;
+OUTPUT_DIR=/home/tim/;
 MYSQL_USER=root;
-MYSQL_PWD=woofwoof;
+MYSQL_PWD=;
 
 cd $BASE_DIR;
 
@@ -50,7 +50,7 @@ msgfmt -o locale/en_US.utf8/LC_MESSAGES/messages.mo locale/en_US.utf8/LC_MESSAGE
 msgfmt -o locale/es_ES.utf8/LC_MESSAGES/messages.mo locale/es_ES.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/et_EE.utf8/LC_MESSAGES/messages.mo locale/et_EE.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/fa_IR.utf8/LC_MESSAGES/messages.mo locale/fa_IR.utf8/LC_MESSAGES/messages.po
-msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo  locale/fr_FR.utf8/LC_MESSAGES/messages.po 
+msgfmt -o locale/fr_FR.utf8/LC_MESSAGES/messages.mo  locale/fr_FR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hr_HR.utf8/LC_MESSAGES/messages.mo locale/hr_HR.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hi_IN.utf8/LC_MESSAGES/messages.mo locale/hi_IN.utf8/LC_MESSAGES/messages.po
 msgfmt -o locale/hu_HU.utf8/LC_MESSAGES/messages.mo locale/hu_HU.utf8/LC_MESSAGES/messages.po
@@ -77,9 +77,9 @@ mysql -u$MYSQL_USER  -p$MYSQL_PWD < $BASE_DIR/build/TruncateAuditTrail.sql
 
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/kwamoja-new.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=kwamojademo.mrpsupplies  --ignore-table=kwamojademo.mrpplanedorders --ignore-table=kwamojademo.mrpparameters --ignore-table=kwamojademo.levels --ignore-table=kwamojademo.mrprequirements --ignore-table=kwamojademo.buckets --no-data kwamojademo >> $BASE_DIR/sql/mysql/kwamoja-new.sql
+mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=kwamoja.mrpsupplies  --ignore-table=kwamoja.mrpplanedorders --ignore-table=kwamoja.mrpparameters --ignore-table=kwamoja.levels --ignore-table=kwamoja.mrprequirements --ignore-table=kwamoja.buckets --no-data kwamoja >> $BASE_DIR/sql/mysql/kwamoja-new.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no-create-info kwamojademo  \
+mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no-create-info kwamoja  \
        accountgroups \
        bankaccounts \
        chartmaster \
@@ -110,11 +110,11 @@ mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no
        accountsection \
        > $BASE_DIR/sql/mysql/kwamoja-base.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --ignore-table=kwamojademo.mrpsupplies  --ignore-table=kwamojademo.mrpplanedorders --ignore-table=kwamojademo.mrpparameters --ignore-table=kwamojademo.levels --ignore-table=kwamojademo.mrprequirements --no-create-info kwamojademo  > $BASE_DIR/sql/mysql/kwamoja-demo_data.sql
+mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --ignore-table=kwamoja.mrpsupplies  --ignore-table=kwamoja.mrpplanedorders --ignore-table=kwamoja.mrpparameters --ignore-table=kwamoja.levels --ignore-table=kwamoja.mrprequirements --no-create-info kwamoja  > $BASE_DIR/sql/mysql/kwamoja-demo_data.sql
 
 rm  $BASE_DIR/sql/mysql/kwamoja-demo.sql
-echo "CREATE DATABASE IF NOT EXISTS kwamojademo;" > $BASE_DIR/sql/mysql/kwamoja-demo.sql
-echo "USE kwamojademo;" >> $BASE_DIR/sql/mysql/kwamoja-demo.sql
+echo "CREATE DATABASE IF NOT EXISTS kwamoja;" > $BASE_DIR/sql/mysql/kwamoja-demo.sql
+echo "USE kwamoja;" >> $BASE_DIR/sql/mysql/kwamoja-demo.sql
 
 cat $BASE_DIR/sql/mysql/kwamoja-new.sql >> $BASE_DIR/sql/mysql/kwamoja-demo.sql
 
@@ -133,4 +133,4 @@ rm $OUTPUT_DIR/KwaMoja.zip
 
 cd ..
 
-zip -r $OUTPUT_DIR/KwaMoja KwaMoja -x \*.svn* \*/config.php \*.ecoder*
+zip -r $OUTPUT_DIR/KwaMoja KwaMoja -x \*.git* \*/config.php \*.ecoder*

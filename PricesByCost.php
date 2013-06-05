@@ -59,7 +59,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			$SQLTestExists = "SELECT price FROM prices
 								WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
 								AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-		                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+								AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 								AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
 								AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
 								AND prices.startdate ='" . $_POST['StartDate_' . $PriceCounter] . "'
@@ -72,13 +72,13 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				$SQLTestExists = "SELECT price FROM prices
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
 									AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-			                    	AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+									AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
 									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
 									AND prices.startdate ='CURRENT_DATE'";
 				$TestExistsResult = DB_query($SQLTestExists,$db);
 				if (DB_num_rows($TestExistsResult)==1){
-	                 //then we are updating
+					 //then we are updating
 					$SQLUpdate = "UPDATE prices	SET price = '" . filter_number_format($_POST['Price_' . $PriceCounter]) . "'
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
 									AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
@@ -160,8 +160,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 				<th>' . _('List Price') . '</th>
 			<tr>';
 		$k = 0; //row colour counter
-		echo '<form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" class="noPrint" id="update">';
-        echo '<div>';
+		echo '<form onSubmit="return VerifyForm(this);" action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" class="noPrint" id="update">';
+		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
 			<input type="hidden" value="' . $_POST['Margin'] . '" name="Margin" />
@@ -205,7 +205,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			} else {
 				$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 			}
-			echo '   <td>' . $myrow['stockid'] . '</td>
+			echo '  <td>' . $myrow['stockid'] . '</td>
 					<td>' . $myrow['description'] . '</td>
 					<td>' . $myrow['customer'] . '</td>
 					<td>' . $myrow['branch'] . '</td>
@@ -222,8 +222,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 			<td style="text-align:right" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
 			<td style="text-align:left" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
 			 </tr>
-             </div>
-             </form>';
+			 </div>
+			 </form>';
 	} else {
 		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
 		echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '<a/></div>';
@@ -231,13 +231,13 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 } else { /*The option to submit was not hit so display form */
 	echo '<div class="page_help_text noPrint">' . _('Prices can be displayed based on their relation to cost') . '</div><br />';
 	echo '<br />
-          <form onSubmit="return VerifyForm(this);" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    echo '<table class="selection">';
+		  <form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">';
 
 	$SQL = "SELECT categoryid, categorydescription
-		      FROM stockcategory
+			  FROM stockcategory
 			  ORDER BY categorydescription";
 	$result1 = DB_query($SQL, $db);
 	echo '<tr>
@@ -250,8 +250,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Price') . '
 				<select name="Comparator">
-                <option value="1">' . _('Less than or equal to') . '</option>
-                <option value="2">' . _('Greater than or equal to') . '</option>';
+				<option value="1">' . _('Less than or equal to') . '</option>
+				<option value="2">' . _('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting']==1) {
 		echo '</select>'.' '. _('Average Cost') . ' x </td>';
 	} else {
@@ -287,8 +287,8 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '</select></td></tr>';
 	echo '</table>
 		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Submit') . '" /></div>';
-    echo '</div>
-          </form>';
+	echo '</div>
+		  </form>';
 } /*end of else not submit */
 include ('includes/footer.inc');
 ?>
