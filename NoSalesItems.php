@@ -81,7 +81,7 @@ echo '<div class="centre"><p class="page_title_text noPrint" ><img src="' . $Roo
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	maxlength="8" value="30" /></td>
+			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	minlength="0" maxlength="8" value="30" /></td>
 		 </tr>
 	</table>
 	<br />

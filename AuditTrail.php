@@ -40,9 +40,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 echo '<tr><td>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" value="' .$_POST['FromDate']. '" /></td></tr>';
+	<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" minlength="0" maxlength="10" value="' .$_POST['FromDate']. '" /></td></tr>';
 echo '<tr><td>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</td>
-	<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
+	<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
 
 // Show user selections
 echo '<tr><td>'. _('User ID'). '</td>
@@ -75,7 +75,7 @@ if(!isset($_POST['ContainingText'])){
 }
 // Show the text
 echo '<tr><td>' . _('Containing text') . ':</td>';
-echo '<td><input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td></tr>';
+echo '<td><input type="text" name="ContainingText" size="20" minlength="0" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td></tr>';
 
 
 echo '</table><br />';

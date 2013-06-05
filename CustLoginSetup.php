@@ -130,7 +130,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" size="22" maxlength="20" /></td>
+			<td><input type="text" name="UserID" size="22" minlength="0" maxlength="20" /></td>
 		</tr>';
 
 if (!isset($_POST['Password'])) {
@@ -148,19 +148,19 @@ if (!isset($_POST['Email'])) {
 
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" minlength="0" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Full Name') . ':</td>
-			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
+			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" minlength="0" maxlength="35" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
+			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') .':</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
+			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" minlength="0" maxlength="55" /></td>
 		</tr>
         <tr>
 		<td><input type="hidden" name="Access" value="1" />

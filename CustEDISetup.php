@@ -129,7 +129,7 @@ echo '</select></td>
 
 echo '<tr><td>'._('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex="3" type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
+        ' tabindex="3" type="text" name="EDIReference" size="20" minlength="0" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
 
 echo '<tr><td>'._('EDI Communication Method') . ':</td>
 	<td><select tabindex="4" name="EDITransport" >';
@@ -146,14 +146,14 @@ echo '</select></td></tr>';
 
 echo '<tr><td>'._('FTP Server or Email Address') . ':</td>
 	<td><input ' . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex="5" type="text" name="EDIAddress" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
+        ' tabindex="5" type="text" name="EDIAddress" size="42" minlength="0" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
 
 if ($myrow['editransport']=='ftp'){
 
 	echo '<tr><td>'._('FTP Server User Name') . ':</td>
-			<td><input tabindex="6" type="text" name="EDIServerUser" size="20" maxlength="20" value="' . $myrow['ediserveruser'] . '" /></td></tr>';
+			<td><input tabindex="6" type="text" name="EDIServerUser" size="20" minlength="0" maxlength="20" value="' . $myrow['ediserveruser'] . '" /></td></tr>';
 	echo '<tr><td>'._('FTP Server Password') . ':</td>
-			<td><input tabindex="7" type="text" name="EDIServerPwd" size="20" maxlength="20" value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
+			<td><input tabindex="7" type="text" name="EDIServerPwd" size="20" minlength="0" maxlength="20" value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
 }
 
 echo '</table>

@@ -813,7 +813,7 @@ if (!isset($StockID) or $StockID=='' or isset($_POST['UpdateCategories'])) {
 	}
 	if ($New==1) {
 		echo '<tr><td>'. _('Item Code'). ':</td><td><input ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  type="text"
-			value="'.$StockID.'" name="StockID" size="21" maxlength="20" /></td></tr>';
+			value="'.$StockID.'" name="StockID" size="21" minlength="0" maxlength="20" /></td></tr>';
 	} else {
 		echo '<tr><td>'. _('Item Code'). ':</td>
 					<td>'.$StockID.'<input type="hidden" name ="StockID" value="'.$StockID.'" /></td>
@@ -887,7 +887,7 @@ if (isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" minlength="0" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 if (isset($_POST['LongDescription'])) {
@@ -983,15 +983,15 @@ if (!isset($_POST['NextSerialNo'])) {
 
 echo '<tr>
 		<td>' . _('Economic Order Quantity') . ':</td>
-		<td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="EOQ" size="12" maxlength="10" value="' . locale_number_format($_POST['EOQ'],'Variable') . '" /></td></tr>';
+		<td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="EOQ" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['EOQ'],'Variable') . '" /></td></tr>';
 
 echo '<tr>
 		<td>' . _('Packaged Volume (metres cubed)') . ':</td>
-		<td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Volume" size="12" maxlength="10" value="' . locale_number_format($_POST['Volume'],'Variable') . '" /></td>
+		<td><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Volume" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['Volume'],'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="KGS" size="12" maxlength="10" value="' . locale_number_format($_POST['KGS'],'Variable') . '" /></td>
+		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="KGS" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['KGS'],'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1104,7 +1104,7 @@ echo '</select><i>' . _('Note') . ', ' . _('this has no effect if the item is no
 if ($_POST['Serialised']==1 and $_POST['MBFlag']=='M'){
 	echo '<tr>
 			<td>' . _('Next Serial No (>0 for auto numbering)') . ':</td>
-			<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></tr>';
+			<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" minlength="0" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></tr>';
 } else {
 	echo '<tr><td><input type="hidden" name="NextSerialNo" value="0" /></td></tr>';
 }
@@ -1127,7 +1127,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Decimal Places for display Quantity') . ':</td>
-		<td><input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /></td>
+		<td><input type="text" class="number" name="DecimalPlaces" size="1" minlength="0" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /></td>
 	</tr>';
 
 if (isset($_POST['BarCode'])) {
@@ -1137,7 +1137,7 @@ if (isset($_POST['BarCode'])) {
 }
 echo '<tr>
 		<td>' . _('Bar Code') . ':</td>
-		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $BarCode . '" /></td>
+		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" minlength="0" maxlength="20" value="' . $BarCode . '" /></td>
 	</tr>';
 
 if (isset($_POST['DiscountCategory'])) {
@@ -1147,7 +1147,7 @@ if (isset($_POST['DiscountCategory'])) {
 }
 echo '<tr>
 		<td>' . _('Discount Category') . ':</td>
-		<td><input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '" /></td>
+		<td><input type="text" name="DiscountCategory" size="2" minlength="0" maxlength="2" value="' . $DiscountCategory . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1173,11 +1173,11 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Pan Size') . ':</td>
-		<td><input type="text" class="number" name="Pansize" size="6" maxlength="6" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
+		<td><input type="text" class="number" name="Pansize" size="6" minlength="0" maxlength="6" value="' . locale_number_format($_POST['Pansize'],0) . '" /></td>
 	</tr>
 	 <tr>
 		<td>' . _('Shrinkage Factor') . ':</td>
-		<td><input type="text" class="number" name="ShrinkFactor" size="6" maxlength="6" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
+		<td><input type="text" class="number" name="ShrinkFactor" size="6" minlength="0" maxlength="6" value="' . locale_number_format($_POST['ShrinkFactor'],0) . '" /></td>
 	</tr>';
 
 echo '</table>
@@ -1236,10 +1236,10 @@ while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 				echo '<input type="hidden" name="PropMin' . $PropertyCounter . '" value="' . $PropertyRow['minimumvalue'] . '" />';
 				echo '<input type="hidden" name="PropMax' . $PropertyCounter . '" value="' . $PropertyRow['maximumvalue'] . '" />';
 
-				echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue,'Variable') . '" />';
+				echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" minlength="0" maxlength="100" value="' . locale_number_format($PropertyValue,'Variable') . '" />';
 				echo _('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'],'Variable') . ' ' . _('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'],'Variable') . ' ' . _('is expected');
 			} else {
-				echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
+				echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" minlength="0" maxlength="100" value="' . $PropertyValue . '" />';
 			}
 	 		break;
 	 	case 1; //select box

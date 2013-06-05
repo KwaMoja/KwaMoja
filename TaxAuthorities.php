@@ -256,7 +256,7 @@ if (!isset($_POST['Description'])) {
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Tax Type Description') . ':</td>
-			<td><input type="text" name="Description" size="21" maxlength="40" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" name="Description" size="21" minlength="0" maxlength="40" value="' . $_POST['Description'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Input tax GL Account') . ':</td>
@@ -308,19 +308,19 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Name') . ':</td>
-		<td><input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" /></td>
+		<td><input type="text" name="Bank" size="41" minlength="0" maxlength="40" value="' . $_POST['Bank'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account Type') . ':</td>
-		<td><input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" /></td>
+		<td><input type="text" name="BankAccType" size="15" minlength="0" maxlength="20" value="' . $_POST['BankAccType'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" /></td>
+		<td><input type="text" name="BankAcc" size="21" minlength="0" maxlength="20" value="' . $_POST['BankAcc'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Swift No') . ':</td>
-		<td><input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" /></td>
+		<td><input type="text" name="BankSwift" size="15" minlength="0" maxlength="14" value="' . $_POST['BankSwift'] . '" /></td>
 	</tr>
 	</table>';
 

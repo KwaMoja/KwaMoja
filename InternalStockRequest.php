@@ -233,7 +233,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Date when required') . ':</td>';
-echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DispatchDate" maxlength="10" size="11" value="' . $_SESSION['Request']->DispatchDate . '" /></td>
+echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DispatchDate" minlength="0" maxlength="10" size="11" value="' . $_SESSION['Request']->DispatchDate . '" /></td>
 	  </tr>';
 
 echo '<tr>
@@ -342,9 +342,9 @@ while ($myrow1 = DB_fetch_array($result1)) {
 echo '</select></td>
 	<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td>';
 if (isset($_POST['Keywords'])) {
-	echo '<td><input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" /></td>';
+	echo '<td><input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" /></td>';
 } else {
-	echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
+	echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>';
 }
 echo '</tr>
 		<tr>
@@ -352,9 +352,9 @@ echo '</tr>
 			<td><h3>' . _('OR') . ' ' . '</h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 
 if (isset($_POST['StockCode'])) {
-	echo '<td><input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" /></td>';
+	echo '<td><input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" /></td>';
 } else {
-	echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>';
+	echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>';
 }
 echo '</tr>
 	</table>

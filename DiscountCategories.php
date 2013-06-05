@@ -105,13 +105,13 @@ if (isset($_POST['selectchoice'])) {
 		echo '<table class="selection"><tr><td>'. _('Discount Category Code') .':</td><td>';
 
 		if (isset($_POST['DiscCat'])) {
-			echo '<input type="text" name="DiscountCategory" maxlength="2" size="2" value="' . $_POST['DiscCat'] .'" /></td>
+			echo '<input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" value="' . $_POST['DiscCat'] .'" /></td>
 				<td>'._('OR') . '</td>
 				<td></td>
 				<td>'._('OR').'</td>
 				</tr>';
 		} else {
-			echo '<input type="text" name="DiscountCategory" maxlength="2" size="2" /></td>
+			echo '<input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" /></td>
 				<td>' ._('OR') . '</td>
 				<td></td>
 				<td>'._('OR') . '</td>
@@ -128,11 +128,11 @@ if (isset($_POST['selectchoice'])) {
 			$_POST['PartDesc']='';
 		}
 		echo '<tr><td>'. _('Enter Stock Code') .':</td>
-				<td><input type="text" name="StockID" size="20" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
+				<td><input type="text" name="StockID" size="20" minlength="0" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
 				<td>'._('Partial code') . ':</td>
-				<td><input type="text" name="PartID" size="10" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
+				<td><input type="text" name="PartID" size="10" minlength="0" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
 				<td>' . _('Partial description') . ':</td>
-				<td><input type="text" name="PartDesc" size="10" value="' . $_POST['PartDesc'] .'" maxlength="10" /></td>
+				<td><input type="text" name="PartDesc" size="10" value="' . $_POST['PartDesc'] .'" minlength="0" maxlength="10" /></td>
 				<td><input type="submit" name="search" value="' . _('Search') .'" /></td>
 			</tr>';
 
@@ -163,7 +163,7 @@ if (isset($_POST['selectchoice'])) {
 		echo '<table class="selection">
 				<tr>
 				<td>'._('Assign discount category').'</td>';
-		echo '<td><input type="text" name="DiscountCategory" maxlength="2" size="2" /></td>';
+		echo '<td><input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" /></td>';
 		echo '<td>'._('to all items in stock category').'</td>';
 		$sql = "SELECT categoryid,
 				categorydescription

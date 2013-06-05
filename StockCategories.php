@@ -393,7 +393,7 @@ if (isset($SelectedCategory)) {
 			</tr>
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" maxlength="6" value="" /></td>
+				<td><input type="text" name="CategoryID" size="7" minlength="0" maxlength="6" value="" /></td>
 			</tr>';
 }
 
@@ -424,7 +424,7 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<tr>
 		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+		<td><input type="text" name="CategoryDescription" size="22" minlength="0" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
 	</tr>';
 
 
@@ -594,7 +594,7 @@ if (isset($SelectedCategory)) {
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="' . $myrow['stkcatpropid'] . '" />';
 		echo '<tr>
-				<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" value="' . $myrow['label'] . '" /></td>
+				<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" minlength="0" maxlength="100" value="' . $myrow['label'] . '" /></td>
 				<td><select name="PropControlType' . $PropertyCounter . '">';
 		if ($myrow['controltype']==0){
 			echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
@@ -641,7 +641,7 @@ if (isset($SelectedCategory)) {
 	} //end loop around defined properties for this category
 	echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty" />';
 	echo '<tr>
-			<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" /></td>
+			<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" minlength="0" maxlength="100" /></td>
 			<td><select name="PropControlType' . $PropertyCounter . '">
 				<option selected="selected" value="0">' . _('Text Box') . '</option>
 				<option value="1">' . _('Select Box') . '</option>

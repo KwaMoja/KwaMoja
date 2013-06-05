@@ -246,15 +246,15 @@ echo '<br />
     <table>
 	<tr>
 		<td>' . _('Existing Location Code') . ':</td>
-		<td><input type="text" name="OldLocationID" size="5" maxlength="5" /></td>
+		<td><input type="text" name="OldLocationID" size="5" minlength="0" maxlength="5" /></td>
 	</tr>
 	<tr>
 		<td>' . _('New Location Code') . ':</td>
-		<td><input type="text" name="NewLocationID" size="5" maxlength="5" /></td>
+		<td><input type="text" name="NewLocationID" size="5" minlength="0" maxlength="5" /></td>
 	</tr>
 	<tr>
 		<td>' . _('New Location Name') . ':</td>
-		<td><input type="text" name="NewLocationName" size="50" maxlength="50" /></td>
+		<td><input type="text" name="NewLocationName" size="50" minlength="0" maxlength="50" /></td>
 	</tr>
 	</table>
 

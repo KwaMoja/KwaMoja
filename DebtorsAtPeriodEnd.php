@@ -138,11 +138,11 @@ if (isset($_POST['PrintPDF'])
 		echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 		echo '<tr>
 				<td>' . _('From Customer Code') .':</td>
-				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
+				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Balances As At') . ':</td>

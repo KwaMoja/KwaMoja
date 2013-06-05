@@ -38,9 +38,9 @@ echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_S
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" minlength="0" maxlength="20" value="' . $StockID . '" />';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" maxlength="20" />';
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" minlength="0" maxlength="20" />';
 }
 
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';

@@ -366,10 +366,10 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 					<input type="hidden" name="StockID" value="' . $StockID . '" />
 					<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>
-					<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+					<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 					<td><b>' . _('OR') . '</b></td>
 					<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>
-					<td><input type="text" name="SupplierCode" size="20" maxlength="50" /></td>
+					<td><input type="text" name="SupplierCode" size="20" minlength="0" maxlength="50" /></td>
 				</tr>
 				</table>
 				<br />
@@ -561,7 +561,7 @@ if (!isset($SuppliersResult)) {
 	} else {
 		echo '<tr>
 				<td>' . _('Supplier Name') . ':</td>
-				<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />';
+				<input type="hidden" name="SupplierID" minlength="0" maxlength="10" size="11" value="' . $SupplierID . '" />';
 
 		if ($SupplierID!='') {
 			echo '<td>'.$SuppName;
@@ -573,7 +573,7 @@ if (!isset($SuppliersResult)) {
 		}
 		echo '</td></tr>';
 	}
-	echo '<td><input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockID . '" />';
+	echo '<td><input type="hidden" name="StockID" minlength="0" maxlength="10" size="11" value="' . $StockID . '" />';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -601,11 +601,11 @@ if (!isset($SuppliersResult)) {
 		</tr>
 		<tr>
 			<td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-			<td><input type="text" class="number" name="Price" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td>
+			<td><input type="text" class="number" name="Price" minlength="0" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Price Effective From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" minlength="0" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Our Unit of Measure') . ':</td>';
@@ -614,7 +614,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Suppliers Unit of Measure') . ':</td>
-			<td><input type="text" name="SuppliersUOM" size="20" maxlength="20" value ="' . $_POST['SuppliersUOM'] . '"/></td>
+			<td><input type="text" name="SuppliersUOM" size="20" minlength="0" maxlength="20" value ="' . $_POST['SuppliersUOM'] . '"/></td>
 		</tr>';
 
 	if (!isset($_POST['ConversionFactor']) or $_POST['ConversionFactor'] == '') {
@@ -622,19 +622,19 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Conversion Factor (to our UOM)') . ':</td>
-			<td><input type="text" class="number" name="ConversionFactor" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
+			<td><input type="text" class="number" name="ConversionFactor" minlength="0" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Stock Code') . ':</td>
-			<td><input type="text" name="SupplierCode" maxlength="50" size="20" value="' . $_POST['SupplierCode'] . '" /></td>
+			<td><input type="text" name="SupplierCode" minlength="0" maxlength="50" size="20" value="' . $_POST['SupplierCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('MinOrderQty') . ':</td>
-			<td><input type="text" class="number" name="MinOrderQty" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td>
+			<td><input type="text" class="number" name="MinOrderQty" minlength="0" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Stock Description') . ':</td>
-			<td><input type="text" name="SupplierDescription" maxlength="50" size="51" value="' . $_POST['SupplierDescription'] . '" /></td>
+			<td><input type="text" name="SupplierDescription" minlength="0" maxlength="50" size="51" value="' . $_POST['SupplierDescription'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['LeadTime']) or $_POST['LeadTime'] == "") {
@@ -642,7 +642,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-			<td><input type="text" class="number" name="LeadTime" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
+			<td><input type="text" class="number" name="LeadTime" minlength="0" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
@@ -698,11 +698,11 @@ if (!isset($SuppliersResult)) {
 				$k++;
 			}
 			printf('<input type="hidden" name="DiscountID%s" value="%s" />
-					<td><input type="text" name="DiscountNarrative%s" value="%s" maxlength="20" size="20" /></td>
-					<td><input type="text" class="number" name="DiscountAmount%s" value="%s" maxlength="10" size="11" /></td>
-					<td><input type="text" class="number" name="DiscountPercent%s" value="%s" maxlength="5" size="6" /></td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveFrom%s" maxlength="10" size="11" value="%s" /></td>
-					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveTo%s" maxlength="10" size="11" value="%s" /></td>
+					<td><input type="text" name="DiscountNarrative%s" value="%s" minlength="0" maxlength="20" size="20" /></td>
+					<td><input type="text" class="number" name="DiscountAmount%s" value="%s" minlength="0" maxlength="10" size="11" /></td>
+					<td><input type="text" class="number" name="DiscountPercent%s" value="%s" minlength="0" maxlength="5" size="6" /></td>
+					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveFrom%s" minlength="0" maxlength="10" size="11" value="%s" /></td>
+					<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveTo%s" minlength="0" maxlength="10" size="11" value="%s" /></td>
 					<td><a href="%s?DeleteDiscountID=%s&amp;StockID=%s&amp;EffectiveFrom=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Delete') . '</a></td>
 					</tr>',
 					$i,
@@ -731,11 +731,11 @@ if (!isset($SuppliersResult)) {
 		$DefaultEndDate =  Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m')+1,0,Date('y')));
 
 		echo '<tr>
-				<td><input type="text" name="DiscountNarrative" value="" maxlength="20" size="20" /></td>
-				<td><input type="text" class="number" name="DiscountAmount" value="0" maxlength="10" size="11" /></td>
-				<td><input type="text" class="number" name="DiscountPercent" value="0" maxlength="5" size="6" /></td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveTo" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
+				<td><input type="text" name="DiscountNarrative" value="" minlength="0" maxlength="20" size="20" /></td>
+				<td><input type="text" class="number" name="DiscountAmount" value="0" minlength="0" maxlength="10" size="11" /></td>
+				<td><input type="text" class="number" name="DiscountPercent" value="0" minlength="0" maxlength="5" size="6" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveFrom" minlength="0" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DiscountEffectiveTo" minlength="0" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
 			</tr>
 			</table>
 			<br/>';

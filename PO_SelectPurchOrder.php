@@ -115,7 +115,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	if (isset($SelectedStockItem)) {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
-	echo _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
@@ -188,12 +188,12 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 echo '</select></td>
 		<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+		<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	<tr>
 		<td colspan="3">

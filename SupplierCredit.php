@@ -283,15 +283,15 @@ echo '<br />
 		<table class="selection">';
 echo '<tr>
 		<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
-		<td><input type="text" size="20" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+		<td><input type="text" size="20" minlength="0" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
 echo '<td style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="0" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td style="color:red">' . _('Exchange Rate') . ':</td>
-		<td><input type="text" class="number" size="11" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,'Variable') . '" /></td>
+		<td><input type="text" class="number" size="11" minlength="0" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,'Variable') . '" /></td>
 	</tr>
 	</table>';
 
@@ -521,7 +521,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 			<tr>
 				<td style="color:red">' . _('Credit Amount in Supplier Currency') .
 		  ':</td>
-		  	<td colspan="2" class="number"><input type="text" size="12" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
+		  	<td colspan="2" class="number"><input type="text" size="12" minlength="0" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
 }
 
 echo '<tr>
@@ -556,7 +556,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 	if (!isset($_POST['OverRideTax'])
 		OR $_POST['OverRideTax']=='Auto'){
 
-		echo  ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,2) . '" />%';
+		echo  ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" minlength="0" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100,2) . '" />%';
 
 		/*Now recaluclate the tax depending on the method */
 		if ($Tax->TaxOnTax ==1){
@@ -580,7 +580,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 
 		echo '</td>
-				<td><input type="text" class="number" size="12" maxlength="12" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
+				<td><input type="text" class="number" size="12" minlength="0" maxlength="12" name="TaxAmount'  . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,$_SESSION['SuppTrans']->CurrDecimalPlaces),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
 
 	}
 

@@ -105,7 +105,7 @@ if (isset($_POST['SearchParts'])) {
 
 if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '<table class="selection"><tr><td>';
-	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" maxlength="10" size="10" /> '.
+	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" minlength="0" maxlength="10" size="10" /> '.
 		_('Into Stock Location').' :<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
@@ -167,12 +167,12 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 echo '</select></td>
 		<td>' . _('Enter text extracts in the') . '<b> ' . _('description') . '</b>:</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+		<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td><b>' . _('OR') . ' </b> ' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	</table>
 	<br />';

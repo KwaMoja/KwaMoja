@@ -118,10 +118,10 @@ if ($_GET['Action'] == 'Enter'){
 	for ($i=1;$i<=10;$i++){
 
 		echo '<tr>
-				<td><input type="text" name="BarCode_' . $i . '" maxlength="20" size="20" /></td>
-				<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
-				<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-				<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+				<td><input type="text" name="BarCode_' . $i . '" minlength="0" maxlength="20" size="20" /></td>
+				<td><input type="text" name="StockID_' . $i . '" minlength="0" maxlength="20" size="20" /></td>
+				<td><input type="text" name="Qty_' . $i . '" minlength="0" maxlength="10" size="10" /></td>
+				<td><input type="text" name="Ref_' . $i . '" minlength="0" maxlength="20" size="20" /></td>
 			</tr>';
 
 	}
@@ -164,7 +164,7 @@ if ($_GET['Action'] == 'Enter'){
 			<td>".$myrow['qtycounted']."</td>
 			<td>".$myrow['reference']."</td>
 			<td>";
-        echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" /></td></tr>';
+        echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" minlength="0" maxlength="20" size="20" /></td></tr>';
 
 	}
 	echo '</table><br /><div class="centre"><input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" /></div>';

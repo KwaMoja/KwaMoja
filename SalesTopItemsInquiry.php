@@ -66,11 +66,11 @@ if ($_POST['DateRange']=='Custom'){
 	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" minlength="0" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 }
 echo '</table></td>
@@ -104,7 +104,7 @@ echo	' /></td>
 		</tr>
 		<tr>
 		<td>' . _('Number to Display') . ':</td>
-		<td><input type="text" class="number" name="NoToDisplay" size="4" maxlength="4" value="' . $_POST['NoToDisplay'] .'"  /></td>
+		<td><input type="text" class="number" name="NoToDisplay" size="4" minlength="0" maxlength="4" value="' . $_POST['NoToDisplay'] .'"  /></td>
 		</tr>
 	</table>
 	</td></tr>

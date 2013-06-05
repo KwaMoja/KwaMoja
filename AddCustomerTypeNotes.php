@@ -205,15 +205,15 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>'. _('Web site').':</td>
-			<td><input type="text" name="href" value="'. $_POST['href'].'" size="35" maxlength="100" /></td>
+			<td><input type="text" name="href" value="'. $_POST['href'].'" size="35" minlength="0" maxlength="100" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Date').':</td>
-			<td><input type="text" name="date" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date']. '" size="10" maxlength="10" /></td>
+			<td><input type="text" name="date" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['date']. '" size="10" minlength="0" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>'. _('Priority').':</td>
-			<td><input type="text" name="priority" value="'. $_POST['priority'].'" size="1" maxlength="3" /></td>
+			<td><input type="text" name="priority" value="'. $_POST['priority'].'" size="1" minlength="0" maxlength="3" /></td>
 		</tr>
 		</table>
 		<br />

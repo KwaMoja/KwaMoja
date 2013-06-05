@@ -212,28 +212,28 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>'. _('WWW').'</td>';
 	if (isset($_POST['Href'])) {
-		echo '<td><input type="text" name="Href" value="'.$_POST['Href'].'" size="35" maxlength="100" /></td>
+		echo '<td><input type="text" name="Href" value="'.$_POST['Href'].'" size="35" minlength="0" maxlength="100" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="Href" size="35" maxlength="100" /></td>
+		echo '<td><input type="text" name="Href" size="35" minlength="0" maxlength="100" /></td>
 			</tr>';
 	}
 	echo '<tr>
 			<td>' . _('Date') .'</td>';
 	if (isset($_POST['date'])) {
-		echo '<td><input type="text" name="date" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['date']).'" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" name="date" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['date']).'" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="date" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" name="date" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>
 			<td>'. _('Priority'). '</td>';
 	if (isset($_POST['Priority'])) {
-		echo '<td><input type="text" name="Priority" value="' .$_POST['Priority']. '" size="1" maxlength="3" /></td>
+		echo '<td><input type="text" name="Priority" value="' .$_POST['Priority']. '" size="1" minlength="0" maxlength="3" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="Priority" size="1" maxlength="3" /></td>
+		echo '<td><input type="text" name="Priority" size="1" minlength="0" maxlength="3" /></td>
 			</tr>';
 	}
 	echo '<tr>

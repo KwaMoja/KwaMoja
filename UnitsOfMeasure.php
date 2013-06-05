@@ -233,7 +233,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 		<td>' . _('Unit of Measure') . ':' . '</td>
-		<td><input type="text" name="MeasureName" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
+		<td><input type="text" name="MeasureName" size="30" minlength="0" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
 		</tr>';
 	echo '</table>';
 

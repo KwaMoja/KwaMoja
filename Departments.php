@@ -237,7 +237,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Department Name') . ':' . '</td>
-			<td><input type="text" name="DepartmentName" size="50" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
+			<td><input type="text" name="DepartmentName" size="50" minlength="0" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Authoriser') . '</td>

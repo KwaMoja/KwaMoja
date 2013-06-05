@@ -71,9 +71,9 @@ echo '</select></td>
 	<td>' . _('Enter partial description') . ':</td>
 	<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+	echo '<input type="text" name="Keywords" size="20" minlength="0" maxlength="25" />';
 }
 echo '</td>
 	</tr>
@@ -104,9 +104,9 @@ echo '  </td>
 		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>
 		<td>';
 if (isset($_POST['AssetCode'])) {
-	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
+	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" minlength="0" maxlength="13" />';
 } else {
-	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
+	echo '<input type="text" name="AssetCode" size="15" minlength="0" maxlength="13" />';
 }
 echo '</td>
 	</tr>

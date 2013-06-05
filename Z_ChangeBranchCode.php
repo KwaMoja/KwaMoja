@@ -200,15 +200,15 @@ echo '<br />
 	<table>
 		<tr>
 			<td>' . _('Customer Code') . ':</td>
-			<td><input type="text" name="DebtorNo" size="20" maxlength="20" /></td>
+			<td><input type="text" name="DebtorNo" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Existing Branch Code') . ':</td>
-			<td><input type="text" name="OldBranchCode" size="20" maxlength="20" /></td>
+			<td><input type="text" name="OldBranchCode" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('New Branch Code') . ':</td>
-			<td><input type="text" name="NewBranchCode" size="20" maxlength="20" /></td>
+			<td><input type="text" name="NewBranchCode" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 	</table>';
 

@@ -704,13 +704,13 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 		echo '<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items'.$identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
 			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" minlength="0" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 				<td>' . $ReturnItemLine->Units . '</td>
-				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" size="16" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" size="5" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" size="3" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
+				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" size="16" minlength="0" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" size="5" minlength="0" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" size="3" minlength="0" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
 				<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $ReturnItemLine->ItemDue;
 		$_SESSION['Items'.$identifier]->LineItems[$ReturnItemLine->LineNumber]->ItemDue= $LineDueDate;
@@ -768,18 +768,18 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 	//nested table
 	echo '<table><tr>
 		<td style="color:red">'. _('Returned By') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="DeliverTo" value="' . stripslashes($_SESSION['Items'.$identifier]->DeliverTo) . '" /></td>
+		<td><input type="text" size="25" minlength="0" maxlength="25" name="DeliverTo" value="' . stripslashes($_SESSION['Items'.$identifier]->DeliverTo) . '" /></td>
 	</tr>';
 	echo '<tr>
 		<td style="color:red">'. _('Contact Phone Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items'.$identifier]->PhoneNo) . '" /></td>
+		<td><input type="text" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items'.$identifier]->PhoneNo) . '" /></td>
 	</tr>';
 
-	echo '<tr><td style="color:red">' . _('Contact Email') . ':</td><td><input type="text" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items'.$identifier]->Email) . '" /></td></tr>';
+	echo '<tr><td style="color:red">' . _('Contact Email') . ':</td><td><input type="text" size="25" minlength="0" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items'.$identifier]->Email) . '" /></td></tr>';
 
 	echo '<tr>
 			<td style="color:red">'. _('Customer Reference') .':</td>
-			<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>
+			<td><input type="text" size="25" minlength="0" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td style="color:red">' . _('Sales person'). ':</td>
@@ -832,7 +832,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 	}
 	echo '<tr>
 			<td style="color:red">' . _('Paid to Customer') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" name="AmountPaid" minlength="0" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
@@ -1636,10 +1636,10 @@ if (!isset($_POST['ProcessReturn'])){
 
 		</select></td>
 		<td><b><?php echo _('Enter partial Description'); ?>:</b>
-		<input tabindex="2" type="text" name="Keywords" size="20" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
+		<input tabindex="2" type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>" /></td>
 
 		<td align="right"><b><?php echo _('OR'); ?> </b><b><?php echo _('Enter extract of the Stock Code'); ?>:</b>
-		<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
+		<input tabindex="3" type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>" /></td>
 
 		</tr><tr>
 		<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="<?php echo _('Search Now'); ?>" /></td>
@@ -1818,8 +1818,8 @@ if (!isset($_POST['ProcessReturn'])){
 
 	 		echo '<tr class="OddTableRow">';
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
-	 		echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
+	 		echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>
+					<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" />
 						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
 				</tr>';
    		}

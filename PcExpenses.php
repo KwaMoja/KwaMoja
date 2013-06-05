@@ -294,7 +294,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input type="text" ' . (in_array('Description',$Errors) ? 'class="inputerror"' : '' ) . ' name="Description" size="50" maxlength="49" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" ' . (in_array('Description',$Errors) ? 'class="inputerror"' : '' ) . ' name="Description" size="50" minlength="0" maxlength="49" value="' . $_POST['Description'] . '" /></td>
 		</tr>';
 
 	echo '<tr>

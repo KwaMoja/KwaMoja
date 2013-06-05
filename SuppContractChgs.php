@@ -130,7 +130,7 @@ if (!isset($_POST['ContractRef'])) {
 echo '<table>
 		<tr>
 			<td>' . _('Contract Reference') . ':</td>
-			<td><input type="text" name="ContractRef" size="22" maxlength="20" value="' .  $_POST['ContractRef'] . '" /></td>
+			<td><input type="text" name="ContractRef" size="22" minlength="0" maxlength="20" value="' .  $_POST['ContractRef'] . '" /></td>
 		</tr>';
 echo '<tr>
 		<td>' . _('Contract Selection') . ':<br />' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</td>
@@ -162,11 +162,11 @@ if (!isset($_POST['Narrative'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" name="Amount" size="12" minlength="0" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Narrative') . ':</td>
-		<td><input type="text" name="Narrative" size="42" maxlength="40" value="' .  $_POST['Narrative'] . '" /></td>
+		<td><input type="text" name="Narrative" size="42" minlength="0" maxlength="40" value="' .  $_POST['Narrative'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Aniticpated Cost') . ':</td>

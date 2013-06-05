@@ -261,7 +261,7 @@ echo '<table>
 		<td colspan="5"><table class="selection">
 						<tr>
 							<td>'._('Date to Process Journal') . ':</td>
-							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
+							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" minlength="0" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
@@ -321,7 +321,7 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
-echo '<td><input class="number" type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
+echo '<td><input class="number" type="text" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,'.	"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')" value="'. $_POST['GLManualCode'] .'"  /></td>';
 
 $sql="SELECT accountcode,
 			accountname
@@ -353,11 +353,11 @@ if (!isset($_POST['Debit'])) {
 echo '</tr>
 	<tr>
 		<th>' . _('Debit') . '</th>
-		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, '.'Credit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, '.'Credit'.')" minlength="0" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<th>' . _('Credit') . '</th>
-		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, '.'Debit'.')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, '.'Debit'.')" minlength="0" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'],$_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -367,7 +367,7 @@ echo '</tr>
 	<tr>
 		<th></th>
 		<th>' . _('GL Narrative') . '</th>
-		<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>
+		<td><input type="text" name="GLNarrative" minlength="0" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>
 	</tr>
 	</table>
 	<br />'; /*Close the main table */

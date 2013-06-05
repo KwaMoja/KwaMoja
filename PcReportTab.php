@@ -59,10 +59,10 @@ if ((! isset($_POST['FromDate']) and ! isset($_POST['ToDate'])) or isset($_POST[
 
 	echo '</select></td></tr>';
 	echo'<tr><td>' . _('From Date :') . '</td><td>';
-	echo '<input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
+	echo '<input tabindex="2" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="FromDate" minlength="0" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
 	echo '</td></tr>';
 	echo '<tr><td>' . _('To Date:') .'</td><td>';
-	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
+	echo '<input tabindex="3" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" name="ToDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
 	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';

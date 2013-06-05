@@ -263,11 +263,11 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
+			<td><input type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
 		  </tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
+			<td><input type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
 		 </tr>';
 
 
@@ -295,7 +295,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '<tr>
 			<td>' . _('Exchange Rate') . ':</td>
-			<td><input type="text" class="number" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
+			<td><input type="text" class="number" name="ExRate" minlength="0" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" /></td>
 		  </tr>';
 
 	if (!isset($_POST['AmountsDueBy'])){
@@ -306,7 +306,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess']))
 
 	echo '<tr>
 			<td>' . _('Payments Due To') . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="AmountsDueBy" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="AmountsDueBy" minlength="0" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
 		  </tr>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
@@ -376,7 +376,7 @@ Payment types can be modified by editing that file */
 
 	echo '<tr>
 			<td>' . _('Starting Reference no (eg chq no)') . ':</td>
-			<td><input type="text" name="Ref" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
+			<td><input type="text" name="Ref" minlength="0" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
 		  </tr>';
 
 	echo '</table>

@@ -373,7 +373,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr><td>' . _('Limit Of Tab') . ':</td>
-			<td><input type="text" class="number" name="TabLimit" size="12" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
+			<td><input type="text" class="number" name="TabLimit" size="12" minlength="0" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Assigner') . ':</td>
 			<td><select name="SelectAssigner">';

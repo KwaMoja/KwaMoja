@@ -122,7 +122,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
-echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />';
+echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  minlength="0" maxlength="20" />';
 echo '<input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th></tr>';
 echo '<tr><th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th></tr>';
 echo '<tr><th colspan="2">'. _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] .'</th></tr>';

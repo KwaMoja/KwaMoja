@@ -93,7 +93,7 @@ if (!isset($_POST['StartDate'])){
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_SESSION['WorkOrder' . $identifier]->StartDate .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="StartDate" size="12" minlength="0" maxlength="12" value="' . $_SESSION['WorkOrder' . $identifier]->StartDate .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
 	</tr>';
 
 if (!isset($_POST['RequiredBy'])){
@@ -102,7 +102,7 @@ if (!isset($_POST['RequiredBy'])){
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_SESSION['WorkOrder' . $identifier]->RequiredBy .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="RequiredBy" size="12" minlength="0" maxlength="12" value="' . $_SESSION['WorkOrder' . $identifier]->RequiredBy .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
 	</tr>';
 
 if ($_SESSION['WorkOrder'.$identifier]->CostIssued>0){
@@ -145,7 +145,7 @@ if ($_SESSION['WorkOrder'.$identifier]->NumberOfItems>0){
 		if ($WOItem->Controlled==1 and $_SESSION['DefineControlledOnWOEntry']==1){
 			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '</td>';
 		} else {
-		  	echo'<td><input type="text" class="number" name="OutputQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityRequired-$WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" size="10" maxlength="10" /></td>';
+		  	echo'<td><input type="text" class="number" name="OutputQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityRequired-$WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" size="10" minlength="0" maxlength="10" /></td>';
 		}
 		 echo '<td class="number"><input type="hidden" name="RecdQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" />' . locale_number_format($WOItem->QuantityReceived, $WOItem->DecimalPlaces) .'</td>
 		  		<td class="number">' . locale_number_format($WOItem->QuantityRequired-$WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '</td>';
@@ -247,12 +247,12 @@ if (!isset($_POST['StockCode'])) {
 
 echo '</select></td>
 		<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+		<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
 		<td><font size="3"><b>' . _('OR') . ' </b></font>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 	</tr>
 	<tr>
 		<th colspan="3">

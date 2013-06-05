@@ -164,7 +164,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="OddTableRows">
 				<td>' . _('Group Description') . '</td>
-				<td><input type="text" size="30" maxlength="40" name="GroupName" value="" /></td>
+				<td><input type="text" size="30" minlength="0" maxlength="40" name="GroupName" value="" /></td>
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking method') . '</td>

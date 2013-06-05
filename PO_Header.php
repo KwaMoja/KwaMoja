@@ -548,10 +548,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 	echo '<table cellpadding="3" class="selection">
 			<tr>
 				<td>' . _('Enter text in the supplier name') . ':</td>
-				<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+				<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 				<td><h3><b>' . _('OR') . '</b></h3></td>
 				<td>' . _('Enter text extract in the supplier code') . ':</td>
-				<td><input type="text" name="SuppCode" size="15" maxlength="18" /></td>
+				<td><input type="text" name="SuppCode" size="15" minlength="0" maxlength="18" /></td>
 			</tr>
 		</table>
 		<br />
@@ -752,11 +752,11 @@ else {
 
 	echo '<tr>
 			<td>' . _('Version') . ' #' . ':</td>
-			<td><input type="hidden" name="Version" size="16" maxlength="15" value="' . $_POST['Version'] . '" />' . $_POST['Version'] . '</td>
+			<td><input type="hidden" name="Version" size="16" minlength="0" maxlength="15" value="' . $_POST['Version'] . '" />' . $_POST['Version'] . '</td>
 		</tr>
 		<tr>
 			<td>' . _('Revised') . ':</td>
-			<td><input type="hidden" name="Revised" size="11" maxlength="15" value="' . date($_SESSION['DefaultDateFormat']) . '" />' . date($_SESSION['DefaultDateFormat']) . '</td>
+			<td><input type="hidden" name="Revised" size="11" minlength="0" maxlength="15" value="' . date($_SESSION['DefaultDateFormat']) . '" />' . date($_SESSION['DefaultDateFormat']) . '</td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . ':</td>
@@ -771,11 +771,11 @@ else {
 
 	echo '<tr>
 			<td>' . _('Initiated By') . ':</td>
-			<td><input type="hidden" name="Initiator" size="11" maxlength="10" value="' . $_POST['Initiator'] . '" />' . $_POST['InitiatorName'] . '</td>
+			<td><input type="hidden" name="Initiator" size="11" minlength="0" maxlength="10" value="' . $_POST['Initiator'] . '" />' . $_POST['InitiatorName'] . '</td>
 		</tr>
 		<tr>
 			<td>' . _('Requisition Ref') . ':</td>
-			<td><input type="text" name="Requisition" size="16" maxlength="15" value="' . $_POST['Requisition'] . '" /></td>
+			<td><input type="text" name="Requisition" size="16" minlength="0" maxlength="15" value="' . $_POST['Requisition'] . '" /></td>
 		</tr>
 		<tr><td>' . _('Date Printed') . ':</td><td>';
 
@@ -993,31 +993,31 @@ else {
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 1 :</td>
-			<td><input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
+			<td><input type="text" name="DelAdd1" size="41" minlength="0" maxlength="40" value="' . $_POST['DelAdd1'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 2 :</td>
-			<td><input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
+			<td><input type="text" name="DelAdd2" size="41" minlength="0" maxlength="40" value="' . $_POST['DelAdd2'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 3 :</td>
-			<td><input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
+			<td><input type="text" name="DelAdd3" size="41" minlength="0" maxlength="40" value="' . $_POST['DelAdd3'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 4 :</td>
-			<td><input type="text" name="DelAdd4" size="21" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
+			<td><input type="text" name="DelAdd4" size="21" minlength="0" maxlength="20" value="' . $_POST['DelAdd4'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="DelAdd5" size="16" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
+			<td><input type="text" name="DelAdd5" size="16" minlength="0" maxlength="15" value="' . $_POST['DelAdd5'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 6 :</td>
-			<td><input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
+			<td><input type="text" name="DelAdd6" size="16" minlength="0" maxlength="15" value="' . $_POST['DelAdd6'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="Tel" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
+			<td><input type="text" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery By') . ':</td><td><select name="DeliveryBy">';
@@ -1080,27 +1080,27 @@ else {
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 1 :</td>
-			<td><input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd1" size="41" minlength="0" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 2 :</td>
-			<td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd2" size="41" minlength="0" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 3 :</td>
-			<td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd3" size="41" minlength="0" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 4 :</td>
-			<td><input type="text" name="SuppDelAdd5" size="21" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd5" size="21" minlength="0" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address') . ' 5 :</td>
-			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
+			<td><input type="text" name="SuppDelAdd4" size="41" minlength="0" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="SuppTel" size="31" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
+			<td><input type="text" name="SuppTel" size="31" minlength="0" maxlength="30" value="' . $_SESSION['PO' . $identifier]->SuppTel . '" /></td>
 		</tr>';
 
 	$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);

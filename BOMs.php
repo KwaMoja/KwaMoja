@@ -735,7 +735,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				</tr>
 				<tr>
 					<td>' . _('Quantity') . ': </td>
-					<td><input ' . (in_array('Quantity',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" class="number" name="Quantity" size="10" maxlength="8" value="';
+					<td><input ' . (in_array('Quantity',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" class="number" name="Quantity" size="10" minlength="0" maxlength="8" value="';
 		if (isset($_POST['Quantity'])){
 			echo $_POST['Quantity'];
 		} else {
@@ -754,11 +754,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo '<tr>
 				<td>' . _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" name="EffectiveAfter" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" size="11" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
+				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="5" type="text" name="EffectiveAfter" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" size="11" minlength="0" maxlength="10" value="' . $_POST['EffectiveAfter'] .'" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="6" type="text" name="EffectiveTo" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" size="11" maxlength="10" value="' . $_POST['EffectiveTo'] .'" /></td>
+				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class="inputerror"' : '' ) . ' tabindex="6" type="text" name="EffectiveTo" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" size="11" minlength="0" maxlength="10" value="' . $_POST['EffectiveTo'] .'" /></td>
 			</tr>';
 
 		if ($ParentMBflag=='M' or $ParentMBflag=='G'){
@@ -864,10 +864,10 @@ if (!isset($SelectedParent)) {
      <br />
      <table class="selection" cellpadding="3">
 	<tr><td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-		<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
+		<td><input tabindex="1" type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 		<td><b>' . _('OR') . '</b></td>
 		<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="18" /></td>
+		<td><input tabindex="2" type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	</table>
 	<br /><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" /></div>';

@@ -97,11 +97,11 @@ echo '<br />
 	<table>
 		<tr>
 			<td>' . _('Existing Inventory Category Code') . ':</td>
-			<td><input type="text" name="OldStockCategory" size="20" maxlength="20" /></td>
+			<td><input type="text" name="OldStockCategory" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('New Inventory Category Code') . ':</td>
-			<td><input type="text" name="NewStockCategory" size="20" maxlength="20" /></td>
+			<td><input type="text" name="NewStockCategory" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 	</table>
 	

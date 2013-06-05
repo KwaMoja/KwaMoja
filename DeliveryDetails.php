@@ -979,7 +979,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' . _('Deliver To') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -1020,52 +1020,52 @@ if (!isset($_SESSION['Items' . $identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 		<td>' . _('Estimated Delivery Date') . ':</td>
-		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items' . $identifier]->DeliveryDate . '" /></td>
+		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" minlength="0" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items' . $identifier]->DeliveryDate . '" /></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
 		<td>' . _('Quote Date') . ':</td>
-		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" maxlength="14" name="QuoteDate" value="' . $_SESSION['Items' . $identifier]->QuoteDate . '" /></td>
+		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" minlength="0" maxlength="14" name="QuoteDate" value="' . $_SESSION['Items' . $identifier]->QuoteDate . '" /></td>
 	</tr>';
 // The date when the customer confirmed their order
 echo '<tr>
 		<td>' . _('Confirmed Order Date') . ':</td>
-		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items' . $identifier]->ConfirmedDate . '" /></td>
+		<td><input class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" size="15" minlength="0" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items' . $identifier]->ConfirmedDate . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 1') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items' . $identifier]->DelAdd1 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items' . $identifier]->DelAdd1 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 2') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items' . $identifier]->DelAdd2 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items' . $identifier]->DelAdd2 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 3') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items' . $identifier]->DelAdd3 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items' . $identifier]->DelAdd3 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 4') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items' . $identifier]->DelAdd4 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items' . $identifier]->DelAdd4 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 5') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items' . $identifier]->DelAdd5 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items' . $identifier]->DelAdd5 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 6') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd6" value="' . $_SESSION['Items' . $identifier]->DelAdd6 . '" /></td>
+		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd6" value="' . $_SESSION['Items' . $identifier]->DelAdd6 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Contact Phone Number') . ':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" /></td>
+		<td><input type="text" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="text" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" /></td>
+		<td>' . _('Contact Email') . ':</td><td><input type="text" size="40" minlength="0" maxlength="38" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Customer Reference') . ':</td>
-		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items' . $identifier]->CustRef . '" /></td>
+		<td><input type="text" size="25" minlength="0" maxlength="25" name="CustRef" value="' . $_SESSION['Items' . $identifier]->CustRef . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Comments') . ':</td>
@@ -1132,7 +1132,7 @@ else {
 
 echo '<tr>
                                <td>' . _('Charge Freight Cost inc tax') . ':</td>
-                               <td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
+                               <td><input type="text" class="number" size="10" minlength="0" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
 
 if ($_SESSION['DoFreightCalc'] == true) {
 	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';

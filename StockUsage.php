@@ -61,7 +61,7 @@ if ($myrow[2]=='K'
 		</tr>';
 }
 
-echo '<tr><td>' . _('Stock Code') . ':<input type="text" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
+echo '<tr><td>' . _('Stock Code') . ':<input type="text" name="StockID" size="21" minlength="0" maxlength="20" value="' . $StockID . '" />';
 
 echo _('From Stock Location') . ':<select name="StockLocation">';
 

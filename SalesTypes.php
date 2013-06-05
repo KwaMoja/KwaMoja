@@ -260,7 +260,7 @@ if (! isset($_GET['delete'])) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" /></td></tr>';
+				<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" minlength="0" maxlength="2" name="TypeAbbrev" /></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {

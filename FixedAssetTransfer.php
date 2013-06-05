@@ -60,9 +60,9 @@ if (isset($_GET['AssetID'])) {
 
 
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" size="20" minlength="0" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" size="20" minlength="0" maxlength="25" />';
 	}
 
 	echo '</td></tr><tr>
@@ -94,9 +94,9 @@ if (isset($_GET['AssetID'])) {
 	echo '<td>';
 
 	if (isset($_POST['AssetID'])) {
-		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size="15" maxlength="40" />';
+		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" size="15" minlength="0" maxlength="40" />';
 	} else {
-		echo '<input type="text" name="AssetID" size="15" maxlength="40" />';
+		echo '<input type="text" name="AssetID" size="15" minlength="0" maxlength="40" />';
 	}
 
 	echo '</td></tr></table><br />';

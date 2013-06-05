@@ -1515,8 +1515,8 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr>
 		<td>' . _('Date Range') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
-        <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" minlength="0" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
+        <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 
 	echo '<tr><td>' . _('Part Number') . ':</td>';
@@ -1524,7 +1524,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo '&nbsp;&nbsp;<input type="text" name="PartNumber" size="20" maxlength="20" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="PartNumber" size="20" minlength="0" maxlength="20" value="';
     if (isset($_POST['PartNumber'])) {
         echo $_POST['PartNumber'] . '" /></td></tr>';
 	} else {
@@ -1536,7 +1536,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
 	echo '<option value="LIKE">' . _('Begins With') . '</option>';
 	echo '</select>';
-	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" maxlength="10" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" minlength="0" maxlength="10" value="';
     if (isset($_POST['SupplierId'])) {
         echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {
@@ -1548,7 +1548,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<option selected="selected" value="LIKE">' . _('Begins With') . '</option>';
 	echo '<option value="Equals">' . _('Equals') . '</option>';
 	echo '</select>';
-	echo '&nbsp;&nbsp;<input type="text" name="SupplierName" size="30" maxlength="30" value="';
+	echo '&nbsp;&nbsp;<input type="text" name="SupplierName" size="30" minlength="0" maxlength="30" value="';
 	if (isset($_POST['SupplierName'])) {
 		echo $_POST['SupplierName'] . '" /></td></tr>';
 	} else {
@@ -1557,7 +1557,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 	echo '<tr><td>' . _('Order Number') . ':</td>';
 	echo '<td>'._('Equals').':&nbsp;&nbsp;';
-	echo '<input type="text" name="OrderNo" size="10" maxlength="10" value="';
+	echo '<input type="text" name="OrderNo" size="10" minlength="0" maxlength="10" value="';
     if (isset($_POST['OrderNo'])) {
         echo $_POST['OrderNo'] . '" /></td></tr>';
 	} else {

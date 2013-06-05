@@ -341,15 +341,15 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		} else {
 
-			echo '<td><input tabindex="' . $j . '" type="text" class="number" name="Quantity_' . $LnItm->LineNumber .'" maxlength="6" size="6" value="' . $LnItm->QtyDispatched . '" /></td>';
+			echo '<td><input tabindex="' . $j . '" type="text" class="number" name="Quantity_' . $LnItm->LineNumber .'" minlength="0" maxlength="6" size="6" value="' . $LnItm->QtyDispatched . '" /></td>';
 
 		}
 
 		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 
 		$j++;
-		echo '<td><input tabindex="' . $j . '" type="text" class="number" name="Price_' . $LnItm->LineNumber . '" maxlength="12" size="6" value="' . $LnItm->Price . '" /></td>
-		<td><input tabindex="' . $j . '" type="text" class="number" name="Discount_' . $LnItm->LineNumber . '" maxlength="3" size="3" value="' . ($LnItm->DiscountPercent * 100) . '" /></td>
+		echo '<td><input tabindex="' . $j . '" type="text" class="number" name="Price_' . $LnItm->LineNumber . '" minlength="0" maxlength="12" size="6" value="' . $LnItm->Price . '" /></td>
+		<td><input tabindex="' . $j . '" type="text" class="number" name="Discount_' . $LnItm->LineNumber . '" minlength="0" maxlength="3" size="3" value="' . ($LnItm->DiscountPercent * 100) . '" /></td>
 		<td class="number">' . $DisplayLineTotal . '</td>';
 
 		/*Need to list the taxes applicable to this line */
@@ -377,7 +377,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 			}
 			if (!isset($_POST['ProcessCredit'])) {
 				echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder .
-					'_TaxRate" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '" />';
+					'_TaxRate" minlength="0" maxlength="4" size="4" value="' . $Tax->TaxRate*100 . '" />';
 			}
 			$i++;
 			if ($Tax->TaxOnTax ==1){
@@ -422,7 +422,7 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td class="number">' . locale_number_format($_SESSION['Old_FreightCost'],$_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '</td>
 		<td></td>
 		<td colspan="2" class="number">' . _('Credit Freight Cost') . '</td>
-		<td><input tabindex="'.$j.'" type="text" class="number" size="6" maxlength="6" name="ChargeFreightCost" value="' . $_SESSION['CreditItems' . $identifier]->FreightCost . '" /></td>
+		<td><input tabindex="'.$j.'" type="text" class="number" size="6" minlength="0" maxlength="6" name="ChargeFreightCost" value="' . $_SESSION['CreditItems' . $identifier]->FreightCost . '" /></td>
 		<td></td>
 		<td>';
 
@@ -444,7 +444,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine
 	}
 
 	if (!isset($_POST['ProcessCredit'])) {
-		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" maxlength="4" size="4" value="' . $FreightTaxLine->TaxRate * 100 . '" />';
+		echo  '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" minlength="0" maxlength="4" size="4" value="' . $FreightTaxLine->TaxRate * 100 . '" />';
 	}
 	if ($FreightTaxLine->TaxOnTax ==1){
 		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));

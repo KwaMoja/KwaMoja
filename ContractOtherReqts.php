@@ -155,11 +155,11 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Quantity Required') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="10"	maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
+			<td><input type="text" class="number" name="Quantity" size="10"	minlength="0" maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Cost Per Unit') . ':</td>
-			<td><input type="text" class="number" name="CostPerUnit" size="10"	maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
+			<td><input type="text" class="number" name="CostPerUnit" size="10"	minlength="0" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
 		</tr>
 
 		</table>

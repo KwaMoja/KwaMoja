@@ -149,7 +149,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
-				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
+				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select name="StockLocation">';
 
 	$sql = "SELECT loccode, locationname FROM locations";
@@ -228,11 +228,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 } //end loop through categories
 echo '</select></td>';
 echo '<td>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</td>';
-echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 		</tr>
 		<tr><td></td>';
 echo '<td><b>' . _('OR') . '</b>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</td>';
-echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	</table>
 	<br />';

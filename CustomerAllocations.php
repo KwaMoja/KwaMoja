@@ -411,7 +411,7 @@ if (isset($_POST['AllocTrans'])) {
 				}
 				$balance += $YetToAlloc-$AllocnItem->AllocAmt;
 				$j++;
-				echo '<input tabindex="'.$j.'" type="text" class="number" name="Amt' . $Counter .'" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
+				echo '<input tabindex="'.$j.'" type="text" class="number" name="Amt' . $Counter .'" minlength="0" maxlength="12" size="13" value="' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
 					<input type="hidden" name="AllocID' . $Counter . '" value="' . $AllocnItem->ID . '" /></td>
 					<td class="number">' . locale_number_format($balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 				</tr>';

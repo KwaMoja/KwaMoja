@@ -455,7 +455,7 @@ if (isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" /></td>
+		<td><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" minlength="0" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 if (isset($_POST['LongDescription'])) {
@@ -548,11 +548,11 @@ echo '</select>
 	</tr>
 	<tr>
 		<td>' . _('Bar Code') . ':</td>
-		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
+		<td><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" minlength="0" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Serial Number') . ':</td>
-		<td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="SerialNo" size="32" maxlength="30" value="' . $_POST['SerialNo'] . '" /></td>
+		<td><input ' . (in_array('SerialNo',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="SerialNo" size="32" minlength="0" maxlength="30" value="' . $_POST['SerialNo'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Depreciation Type') . ':</td>
@@ -573,7 +573,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Depreciation Rate') . ':</td>
-		<td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
+		<td><input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" minlength="0" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
 	</tr>
 	</table>';
 

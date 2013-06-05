@@ -39,17 +39,17 @@ if (isset($_POST['StockSearch'])) {
 	echo '</select></td>';
 	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" size="34" maxlength="25" />';
+		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" size="34" minlength="0" maxlength="25" />';
 	} else {
-		echo '<input type="search" name="Keywords" size="34" maxlength="25" placeholder="Enter part of the item description" />';
+		echo '<input type="search" name="Keywords" size="34" minlength="0" maxlength="25" placeholder="Enter part of the item description" />';
 	}
 	echo '</td></tr><tr><td></td>';
 	echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" size="15" minlength="0" maxlength="18" />';
 	}
 	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
@@ -395,10 +395,10 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 
 		echo '<table cellpadding="3" class="selection"><tr>';
 		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>';
-		echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
+		echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>';
 		echo '<td><b>' . _('OR') . '</b></td>';
 		echo '<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>';
-		echo '<td><input type="text" name="SupplierCode" size="15" maxlength="18" /></td>';
+		echo '<td><input type="text" name="SupplierCode" size="15" minlength="0" maxlength="18" /></td>';
 		echo '</tr></table><br />';
 		echo '<div class="centre"><input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" /></div>';
 		echo '</div>
@@ -554,11 +554,11 @@ if (isset($_POST['SupplierID'])) {
 					DB_data_seek($UOMResult, 0);
 					echo '</select></td>
 				<td><input type="text" class="number" size="11" value="1" name="ConversionFactor0" /></td>
-				<td><input type="text" size="30" maxlength="50" value="" name="SupplierDescription0" /></td>
+				<td><input type="text" size="30" minlength="0" maxlength="50" value="" name="SupplierDescription0" /></td>
 				<td><input type="text" class="number" size="11" value="1" name="LeadTime0" /></td>';
 				echo '<td><input type="checkbox" name="Preferred0" /></td>';
 				echo '<td><input type="text" class="date" size="11" value="' . date( $_SESSION['DefaultDateFormat']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom0" /></td>
-				<td><input type="text" size="20" maxlength="50" value="" name="SupplierPartNo0" /></td>
+				<td><input type="text" size="20" minlength="0" maxlength="50" value="" name="SupplierPartNo0" /></td>
 				<td><input type="text" class="number" size="11" value="1" name="MinOrderQty0" /></td>
 				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
@@ -581,7 +581,7 @@ if (isset($_POST['SupplierID'])) {
 					}
 					echo '</select></td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['conversionfactor'] . '" name="ConversionFactor'.$RowCounter.'" /></td>
-				<td><input type="text" size="30" maxlength="50" value="' . $myrow['supplierdescription'] . '" name="SupplierDescription'.$RowCounter.'" /></td>
+				<td><input type="text" size="30" minlength="0" maxlength="50" value="' . $myrow['supplierdescription'] . '" name="SupplierDescription'.$RowCounter.'" /></td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['leadtime'] . '" name="LeadTime'.$RowCounter.'" /></td>';
 				if ($myrow['preferred']==1) {
 					echo '<td><input type="checkbox" checked="checked" name="Preferred'.$RowCounter.'" /></td>';
@@ -589,7 +589,7 @@ if (isset($_POST['SupplierID'])) {
 					echo '<td><input type="checkbox" name="Preferred'.$RowCounter.'" /></td>';
 				}
 				echo '<td><input type="text" class="date" size="11" value="' . ConvertSQLDate($myrow['effectivefrom']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom'.$RowCounter.'" /></td>
-				<td><input type="text" size="20" maxlength="50" value="' . $myrow['suppliers_partno'] . '" name="SupplierPartNo'.$RowCounter.'" /></td>
+				<td><input type="text" size="20" minlength="0" maxlength="50" value="' . $myrow['suppliers_partno'] . '" name="SupplierPartNo'.$RowCounter.'" /></td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['minorderqty'] . '" name="MinOrderQty'.$RowCounter.'" /></td>
 				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';

@@ -240,7 +240,7 @@ if (!isset($_GET['delete'])) {
 //			<tr>
 //				<td>'. _('Geocode Code') .":</td>
 //				<td><input " . (in_array('GeoCodeID',$Errors) ? 'class="inputerror"' : '' ) .
-//					" tabindex="1" type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" maxlength="2"></td>
+//					" tabindex="1" type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" minlength="0" maxlength="2"></td>
 //			</tr>";
 	}
 
@@ -250,23 +250,23 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 		<td>'. _('Geocode Key') .':</td>
 		<td><input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
-		 ' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
+		 ' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" minlength="0" maxlength="300" />
 		</td></tr>
 
 		<tr><td>'. _('Geocode Center Long') . '</td>
-		<td><input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" maxlength="300" /></td></tr>
+		<td><input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" minlength="0" maxlength="300" /></td></tr>
 
 		<tr><td>'. _('Geocode Center Lat') . '</td>
-		<td><input tabindex="4" type="text" name="Center_Lat" value="'. $_POST['Center_Lat'] .'" size="28" maxlength="300" /></td></tr>
+		<td><input tabindex="4" type="text" name="Center_Lat" value="'. $_POST['Center_Lat'] .'" size="28" minlength="0" maxlength="300" /></td></tr>
 
 		<tr><td>'. _('Geocode Map Height') . '</td>
-		<td><input tabindex="5" type="text" name="Map_Height" value="'. $_POST['Map_Height'] .'" size="28" maxlength="300" /></td></tr>
+		<td><input tabindex="5" type="text" name="Map_Height" value="'. $_POST['Map_Height'] .'" size="28" minlength="0" maxlength="300" /></td></tr>
 
 		<tr><td>'. _('Geocode Map Width') . '</td>
-		<td><input tabindex="6" type="text" name="Map_Width" value="'. $_POST['Map_Width'] .'" size="28" maxlength="300" /></td></tr>
+		<td><input tabindex="6" type="text" name="Map_Width" value="'. $_POST['Map_Width'] .'" size="28" minlength="0" maxlength="300" /></td></tr>
 
 		<tr><td>'. _('Geocode Host') . '</td>
-		<td><input tabindex="7" type="text" name="Map_Host" value="'. $_POST['Map_Host'] .'" size="20" maxlength="300" /></td></tr>
+		<td><input tabindex="7" type="text" name="Map_Host" value="'. $_POST['Map_Host'] .'" size="20" minlength="0" maxlength="300" /></td></tr>
 		</table>
 		<div class="centre"><input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" /></div>
 		<br />

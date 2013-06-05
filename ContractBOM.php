@@ -321,12 +321,12 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 			<td>' . _('Enter text extracts in the description') . ':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
 			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-			<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+			<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>

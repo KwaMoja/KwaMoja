@@ -203,7 +203,7 @@ if (isset($SelectedWC)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" size="6" maxlength="5" value="' . $_POST['Code'] . '" /></td>
+				<td><input type="text" name="Code" size="6" minlength="0" maxlength="5" value="' . $_POST['Code'] . '" /></td>
 			</tr>';
 }
 
@@ -217,7 +217,7 @@ if (!isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="21" minlength="0" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
 		<td><select name="Location">';
@@ -269,7 +269,7 @@ if (!isset($_POST['OverheadPerHour'])) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Overhead Per Hour') . ':</td>
-		<td><input type="text" class="number" name="OverheadPerHour" size="6" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
+		<td><input type="text" class="number" name="OverheadPerHour" size="6" minlength="0" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
 
 echo '</td>
 	</tr>

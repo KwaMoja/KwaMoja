@@ -750,13 +750,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<table cellpadding="3" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
-			<td><input tabindex="1" type="text" name="CustKeywords" size="20" maxlength="25" /></td>
+			<td><input tabindex="1" type="text" name="CustKeywords" size="20" minlength="0" maxlength="25" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' .  _('Part of the Customer Branch Code'). ':</h5></td>
-			<td><input tabindex="2" type="text" name="CustCode" size="15" maxlength="18" /></td>
+			<td><input tabindex="2" type="text" name="CustCode" size="15" minlength="0" maxlength="18" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' . _('Part of the Branch Phone Number') . ':</h5></td>
-			<td><input tabindex="3" type="text" name="CustPhone" size="15" maxlength="18" /></td>
+			<td><input tabindex="3" type="text" name="CustPhone" size="15" minlength="0" maxlength="18" /></td>
 		</tr>
 		</table>
 		<br /><div class="centre"><input tabindex="4" type="submit" name="SearchCustomers" value="' . _('Search Now') . '" />
@@ -833,7 +833,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				<td>';
 	if ($_SESSION['Contract'.$identifier]->Status==0) {
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
-		echo '<input type="text" name="ContractRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />';
+		echo '<input type="text" name="ContractRef" size="21" minlength="0" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />';
 	} else {
 		/*Just show the contract Ref - dont allow modification */
 		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract'.$identifier]->ContractRef . '" />' . $_SESSION['Contract'.$identifier]->ContractRef;
@@ -919,20 +919,20 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Customer Reference') . ':</td>
-			<td><input type="text" name="CustomerRef" size="21" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td>
+			<td><input type="text" name="CustomerRef" size="21" minlength="0" maxlength="20" value="' . $_SESSION['Contract'.$identifier]->CustomerRef . '" /></td>
 		</tr>';
 	if (!isset($_SESSION['Contract'.$identifier]->Margin)){
 		$_SESSION['Contract'.$identifier]->Margin =50;
 	}
 	echo '<tr>
 			<td>' . _('Gross Profit') . ' %:</td>
-			<td><input class="number" type="text" name="Margin" size="6" maxlength="6" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin, 2) . '" /></td>
+			<td><input class="number" type="text" name="Margin" size="6" minlength="0" maxlength="6" value="' . locale_number_format($_SESSION['Contract'.$identifier]->Margin, 2) . '" /></td>
 		</tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
 		echo '<tr>
 				<td>' . $_SESSION['Contract'.$identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
-				<td><input class="number" type="text" name="ExRate" size="10" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
+				<td><input class="number" type="text" name="ExRate" size="10" minlength="0" maxlength="10" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" /></td>
 			</tr>';
 	} else {
 		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract'.$identifier]->ExRate,'Variable') . '" />';

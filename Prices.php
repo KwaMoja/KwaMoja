@@ -211,7 +211,7 @@ if (DB_num_rows($result) > 0) {
 				<th colspan="7">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' .
 				_('Pricing for part') . ':
-				<input type="text" name="Item" size="22" value="' . $Item . '" maxlength="20" />
+				<input type="text" name="Item" size="22" value="' . $Item . '" minlength="0" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>';
 
@@ -332,13 +332,13 @@ if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = '';
 }
 echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="10" minlength="0" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
 echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" />';
+			<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="EndDate" size="10" minlength="0" maxlength="10" value="' . $_POST['EndDate'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
 echo '<tr><td>' . _('Price') . ':</td>
 		  <td>
-		  <input type="text" class="number" name="Price" size="12" maxlength="11" value="';
+		  <input type="text" class="number" name="Price" size="12" minlength="0" maxlength="11" value="';
 		  if (isset($_POST['Price'])) {
 			 echo $_POST['Price'];
 		  }

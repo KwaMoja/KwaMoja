@@ -535,17 +535,17 @@ if (isset($_POST['PrintPDF']) and $_POST['Part']!='') {
 	echo '</select></td>';
 	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" size="20" minlength="0" maxlength="25" />';
 	}
 	echo '</td></tr><tr><td></td>';
 	echo '<td><h3><b>' . _('OR') . ' ' . '</b></h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
+		echo '<input type="text" name="StockCode" size="15" minlength="0" maxlength="18" />';
 	}
 	echo '</td>
 		</tr>

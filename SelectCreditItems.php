@@ -224,10 +224,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection') .'</h3></th></tr>';
 	echo '<tr>
 			<td>' . _('Enter text in the customer name') . ':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Enter text extract in the customer code') . ':</td>
-			<td><input type="text" name="CustCode" size="15" maxlength="18" /></td>
+			<td><input type="text" name="CustCode" size="15" minlength="0" maxlength="18" /></td>
 		</tr>';
 	echo '</table>
 		<br />
@@ -724,16 +724,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									<td title="'. $LineItem->LongDescription . '">' . $LineItem->ItemDescription . '</td>';
 
 			   if ($LineItem->Controlled==0){
-			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
+			   	echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" minlength="0" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   } else {
 				echo '<td class="number"><a href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '&identifier=' . $identifier . '">' . locale_number_format($LineItem->Quantity,$LineItem->DecimalPlaces) . '</a>
                       <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity,$LineItem->DecimalPlaces),$LineItem->DecimalPlaces) . '" /></td>';
 			   }
 
 			echo '<td>' . $LineItem->Units . '</td>
-			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" maxlength="12" value="' . locale_number_format($LineItem->Price,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>
+			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" minlength="0" maxlength="12" value="' . locale_number_format($LineItem->Price,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>
 			<td><input type="CheckBox" name="Gross" value="false" /></td>
-			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100),'Variable') . '" />%</td>
+			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" minlength="0" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100),'Variable') . '" />%</td>
 			<td class="number">' . $DisplayLineTotal . '</td>';
 
 
@@ -757,7 +757,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($i>0){
 					echo '<br />';
 				}
-				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" minlength="0" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate*100,'Variable') . '" />';
 				$i++;
 				if ($Tax->TaxOnTax ==1){
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -797,7 +797,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<td colspan="5"></td>';
 
 		echo '<td colspan="2" class="number">'. _('Credit Freight').'</td>
-			<td><input type="text" class="number" size="6" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>';
+			<td><input type="text" class="number" size="6" minlength="0" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems'.$identifier]->FreightCost,$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces) . '" /></td>';
 
 		$FreightTaxTotal =0; //initialise tax total
 
@@ -820,7 +820,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<br />';
 			}
 
-			echo  '<input type="text" class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' maxlength="4" size="4" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100),'Variable') . '" />';
+			echo  '<input type="text" class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' minlength="0" maxlength="4" size="4" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100),'Variable') . '" />';
 
 			if ($FreightTaxLine->TaxOnTax ==1){
 				$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems'.$identifier]->FreightCost + $FreightTaxTotal));
@@ -1001,10 +1001,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 	$_POST['StockCode'] = '';
 		 }
 		 echo '<td>' . _('Enter text extracts in the description') . ':&nbsp;</td>';
-		 echo '<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>';
+		 echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>';
 		 echo '<tr><td></td>';
 		 echo '<td><b>' ._('OR') . '</b>&nbsp;&nbsp;' . _('Enter extract of the Stock Code') . ':&nbsp;</td>';
-		 echo '<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>';
+		 echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>';
 		 echo '</tr>';
 		 echo '</table>
 				<br />
@@ -1072,8 +1072,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	      for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 
 	     	echo '<tr class="OddTableRows">
-					<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
-					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" /></td>
+					<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>
+					<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" /></td>
 				</tr>';
 	     }
 

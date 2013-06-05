@@ -26,11 +26,11 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 echo '<table>
 		<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromSupplierNo" size="20" maxlength="20" /></td>
+			<td><input type="text" name="FromSupplierNo" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 		<tr>
 			<td> ' . _('To Supplier Code') . ':</td>
-			<td><input type="text" name="ToSupplierNo" size="20" maxlength="20" /></td>
+			<td><input type="text" name="ToSupplierNo" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 	</table>
 	<div class="centre">

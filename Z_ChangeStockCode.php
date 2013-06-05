@@ -184,11 +184,11 @@ echo '<br />
     <table>
 	<tr>
 		<td>' . _('Existing Inventory Code') . ':</td>
-		<td><input type="text" name="OldStockID" size="20" maxlength="20" /></td>
+		<td><input type="text" name="OldStockID" size="20" minlength="0" maxlength="20" /></td>
 	</tr>
 	<tr>
 		<td>' . _('New Inventory Code') . ':</td>
-		<td><input type="text" name="NewStockID" size="20" maxlength="20" /></td>
+		<td><input type="text" name="NewStockID" size="20" minlength="0" maxlength="20" /></td>
 	</tr>
 	</table>
 

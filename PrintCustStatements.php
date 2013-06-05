@@ -423,9 +423,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
         echo '<table class="selection">';
 		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)'). '
-			</td><td><input type="text" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
+			</td><td><input type="text" minlength="0" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
 			<tr><td>'. _('Ending Customer statement to print (Customer code)').'</td><td>
-				<input type="text" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
+				<input type="text" minlength="0" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
 				<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' .
                 _('Print All Statements in the Range Selected').'" />

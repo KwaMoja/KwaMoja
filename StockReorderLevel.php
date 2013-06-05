@@ -44,7 +44,7 @@ $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<table class="selection">';
 echo '<tr>
-		<th colspan="3">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
+		<th colspan="3">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" minlength="0" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
 	</tr>';
 echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
@@ -85,7 +85,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	printf('<td>%s</td>
 			<td class="number">%s</td>
-			<td><input type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
+			<td><input type="text" class="number" name="%s" minlength="0" maxlength="10" size="10" value="%s" />
 			<input type="hidden" name="Old_%s" value="%s" /></td></tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),

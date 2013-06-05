@@ -285,11 +285,11 @@ if (isset($_POST['PrintPDF'])
 			<table class="selection">
 			<tr>
 				<td>' . _('From Supplier Code') . ':</td>
-				<td><input tabindex="1" type="text" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
+				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Supplier Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>

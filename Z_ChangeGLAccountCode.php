@@ -134,11 +134,11 @@ echo '<br />
     <table>
 	<tr>
 		<td>' . _('Existing GL Account Code') . ':</td>
-		<td><input type="text" name="OldAccountCode" size="20" maxlength="20" /></td>
+		<td><input type="text" name="OldAccountCode" size="20" minlength="0" maxlength="20" /></td>
 	</tr>
 	<tr>
 		<td>' . _('New GL Account Code') . ':</td>
-		<td><input type="text" name="NewAccountCode" size="20" maxlength="20" /></td>
+		<td><input type="text" name="NewAccountCode" size="20" minlength="0" maxlength="20" /></td>
 	</tr>
 	</table>
 

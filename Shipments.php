@@ -310,9 +310,9 @@ echo '<table class="selection">
 
 echo '<tr>
 		<td>'. _('Vessel Name /Transport Agent'). ': </td>
-		<td colspan="3"><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
+		<td colspan="3"><input type="text" name="Vessel" minlength="0" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
 		<td>'._('Voyage Ref / Consignment Note').': </td>
-		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
+		<td><input type="text" name="VoyageRef" minlength="0" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
 if (isset($_SESSION['Shipment']->ETA)){
@@ -323,9 +323,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>'. _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  minlength="0" maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" minlength="0" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>'. _('Into').' ';
 

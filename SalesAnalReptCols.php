@@ -392,7 +392,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<tr>
 				<td>' . _('Column Number') . ':</td>
-				<td><input type="text" class="number" name="ColID" size="3" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;(' . _('A number between 1 and 10 is expected') . ')</td>
+				<td><input type="text" class="number" name="ColID" size="3" minlength="0" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;(' . _('A number between 1 and 10 is expected') . ')</td>
 			</tr>';
 	}
 	if (!isset($_POST['Heading1'])) {
@@ -400,14 +400,14 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Heading line 1') . ':</td>
-			<td><input type="text" size="16" maxlength="15" name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
+			<td><input type="text" size="16" minlength="0" maxlength="15" name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['Heading2'])) {
 		$_POST['Heading2']='';
 	}
 	echo '<tr>
 			<td>' . _('Heading line 2') . ':</td>
-			<td><input type="text" size="16" maxlength="15" name="Heading2" value="' . $_POST['Heading2'] . '" /></td>
+			<td><input type="text" size="16" minlength="0" maxlength="15" name="Heading2" value="' . $_POST['Heading2'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Calculation') . ':</td>
@@ -487,11 +487,11 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('Numerator Column') . ' #:</td>
-				<td><input type="text" size="4" maxlength="3" name="ColNumerator" value="' . $_POST['ColNumerator'] . '" /></td>
+				<td><input type="text" size="4" minlength="0" maxlength="3" name="ColNumerator" value="' . $_POST['ColNumerator'] . '" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Denominator Column') . ' #:</td>
-				<td><input type="text" size="4" maxlength="3" name="ColDenominator" value="' . $_POST['ColDenominator'] . '" /></td>
+				<td><input type="text" size="4" minlength="0" maxlength="3" name="ColDenominator" value="' . $_POST['ColDenominator'] . '" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Calculation Operator') . ':</td>
@@ -526,7 +526,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Constant') . ':</td>
-				<td><input type="text" size="10" maxlength="10" name="Constant" value="' . $_POST['Constant'] . '" /></td>
+				<td><input type="text" size="10" minlength="0" maxlength="10" name="Constant" value="' . $_POST['Constant'] . '" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Format Type') . ':</td>

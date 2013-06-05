@@ -119,11 +119,11 @@ if (isset($_POST['PrintPDF'])
 			  <table class="selection">';
 
 		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
+				<td><input tabindex="1" type="text" name="FromCriteria" size="20" minlength="0" maxlength="20" value="1" /></td>
 			</tr>';
 
 		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
+				<td><input tabindex="2" type="text" name="ToCriteria" size="20" minlength="0" maxlength="20" value="zzzzzzz" /></td>
 			</tr>';
 
 

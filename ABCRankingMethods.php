@@ -108,7 +108,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="OddTableRows">
 				<td>' . _('Method Description') . '</td>
-				<td><input type="text" size="30" maxlength="40" name="MethodName" value="' . $Description . '" /></td>
+				<td><input type="text" size="30" minlength="0" maxlength="40" name="MethodName" value="' . $Description . '" /></td>
 			</tr>
 		</table>';
 

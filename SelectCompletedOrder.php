@@ -490,14 +490,14 @@ if (!isset($_POST['OrderNumber'])){
 	$_POST['OrderNumber']='';
 }
 echo '<td>' . _('Order Number') . ':</td>
-	<td><input type="text" name="OrderNumber" maxlength="8" size="9" value ="' . $_POST['OrderNumber'] . '" /></td>
+	<td><input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" value ="' . $_POST['OrderNumber'] . '" /></td>
 	<td>' . _('for all orders placed after') . ': </td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'"  name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" /></td>
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'"  name="OrdersAfterDate" minlength="0" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" /></td>
 	<td><input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" /></td>
 	</tr>';
 echo '<tr>
 		<td></td>
-		<td>' . _('Customer Ref') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
+		<td>' . _('Customer Ref') . ':</td><td><input type="text" name="CustomerRef" minlength="0" maxlength="8" size="9" /></td>
 		<td></td>
 		<td colspan="2"><input type="checkbox" ' . $ShowChecked . ' name="completed" />' . _('Show Completed orders only') . '</td></tr>';
 
@@ -526,12 +526,12 @@ if (!isset($SelectedStockItem)) {
 
    echo '</select></td>
 		<td>' . _('Enter text extracts in the description') . ':</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+		<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td><b> ' ._('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
+		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
    </tr>
    <tr><td colspan="4"><div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
 

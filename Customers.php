@@ -456,32 +456,32 @@ if (!isset($DebtorNo)) {
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo'] == 0) {
-		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex="1" type="text" name="DebtorNo" size="11" maxlength="10" /></td></tr>';
+		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex="1" type="text" name="DebtorNo" size="11" minlength="0" maxlength="10" /></td></tr>';
 	} //$_SESSION['AutoDebtorNo'] == 0
 
 	echo '<tr>
 			<td>' . _('Customer Name') . ':</td>
-			<td><input tabindex="2" type="text" name="CustName" size="42" maxlength="40" /></td>
+			<td><input tabindex="2" type="text" name="CustName" size="42" minlength="0" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1 (Street)') . ':</td>
-			<td><input tabindex="3" type="text" name="Address1" size="42" maxlength="40" /></td>
+			<td><input tabindex="3" type="text" name="Address1" size="42" minlength="0" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 2 (Street)') . ':</td>
-			<td><input tabindex="4" type="text" name="Address2" size="42" maxlength="40" /></td>
+			<td><input tabindex="4" type="text" name="Address2" size="42" minlength="0" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-			<td><input tabindex="5" type="text" name="Address3" size="42" maxlength="40" /></td>
+			<td><input tabindex="5" type="text" name="Address3" size="42" minlength="0" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 4 (State/Province)') . ':</td>
-			<td><input tabindex="6" type="text" name="Address4" size="42" maxlength="40" /></td>
+			<td><input tabindex="6" type="text" name="Address4" size="42" minlength="0" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 5 (Postal Code)') . ':</td>
-			<td><input tabindex="7" type="text" name="Address5" size="22" maxlength="20" /></td>
+			<td><input tabindex="7" type="text" name="Address5" size="22" minlength="0" maxlength="20" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -538,29 +538,29 @@ if (!isset($DebtorNo)) {
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr><td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input tabindex="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" value="' . $DateString . '" size="12" maxlength="10" /></td></tr>';
+				<td><input tabindex="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" value="' . $DateString . '" size="12" minlength="0" maxlength="10" /></td></tr>';
 
 	echo '</table></td>
 			<td><table class="selection">
 				<tr>
 					<td>' . _('Discount Percent') . ':</td>
-					<td><input tabindex="11" type="text" class="number" name="Discount" value="0" size="5" maxlength="4" /></td>
+					<td><input tabindex="11" type="text" class="number" name="Discount" value="0" size="5" minlength="0" maxlength="4" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Discount Code') . ':</td>
-					<td><input tabindex="12" type="text" name="DiscountCode" size="3" maxlength="2" /></td>
+					<td><input tabindex="12" type="text" name="DiscountCode" size="3" minlength="0" maxlength="2" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Payment Discount Percent') . ':</td>
-					<td><input tabindex="13" type="text" class ="number" name="PymtDiscount" value="0" size="5" maxlength="4" /></td>
+					<td><input tabindex="13" type="text" class ="number" name="PymtDiscount" value="0" size="5" minlength="0" maxlength="4" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Credit Limit') . ':</td>
-					<td><input tabindex="14" type="text" class="number" name="CreditLimit" value="' . locale_number_format($_SESSION['DefaultCreditLimit'], 0) . '" size="16" maxlength="14" /></td>
+					<td><input tabindex="14" type="text" class="number" name="CreditLimit" value="' . locale_number_format($_SESSION['DefaultCreditLimit'], 0) . '" size="16" minlength="0" maxlength="14" /></td>
 				</tr>
 				<tr>
 					<td>' . _('Tax Reference') . ':</td>
-					<td><input tabindex="15" type="text" name="TaxRef" size="22" maxlength="20" /></td>
+					<td><input tabindex="15" type="text" name="TaxRef" size="22" minlength="0" maxlength="20" /></td>
 				</tr>';
 
 	$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
@@ -740,7 +740,7 @@ else {
 		if ($_SESSION['AutoDebtorNo'] == 0) {
 			echo '<tr>
 					<td>' . _('Customer Code') . ':</td>
-					<td><input ' . (in_array('DebtorNo', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="DebtorNo" value="' . $DebtorNo . '" size="12" maxlength="10" /></td></tr>';
+					<td><input ' . (in_array('DebtorNo', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="DebtorNo" value="' . $DebtorNo . '" size="12" minlength="0" maxlength="10" /></td></tr>';
 		} //$_SESSION['AutoDebtorNo'] == 0
 	}
 	if (isset($_GET['Modify'])) {
@@ -788,27 +788,27 @@ else {
 	else {
 		echo '<tr>
 				<td>' . _('Customer Name') . ':</td>
-				<td><input ' . (in_array('CustName', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="CustName" value="' . $_POST['CustName'] . '" size="42" maxlength="40" /></td>
+				<td><input ' . (in_array('CustName', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="CustName" value="' . $_POST['CustName'] . '" size="42" minlength="0" maxlength="40" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 1 (Street)') . ':</td>
-				<td><input ' . (in_array('Address1', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] . '" /></td>
+				<td><input ' . (in_array('Address1', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address1" size="42" minlength="0" maxlength="40" value="' . $_POST['Address1'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 2 (Street)') . ':</td>
-				<td><input ' . (in_array('Address2', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] . '" /></td>
+				<td><input ' . (in_array('Address2', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address2" size="42" minlength="0" maxlength="40" value="' . $_POST['Address2'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-				<td><input ' . (in_array('Address3', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address3" size="42" maxlength="40" value="' . $_POST['Address3'] . '" /></td>
+				<td><input ' . (in_array('Address3', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address3" size="42" minlength="0" maxlength="40" value="' . $_POST['Address3'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 4 (State/Province)') . ':</td>
-				<td><input ' . (in_array('Address4', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'] . '" /></td>
+				<td><input ' . (in_array('Address4', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address4" size="42" minlength="0" maxlength="40" value="' . $_POST['Address4'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 5 (Postal Code)') . ':</td>
-				<td><input ' . (in_array('Address5', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] . '" /></td>
+				<td><input ' . (in_array('Address5', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Address5" size="42" minlength="0" maxlength="40" value="' . $_POST['Address5'] . '" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Country') . ':</td>
@@ -909,30 +909,30 @@ else {
 			</tr>
 			<tr>
 				<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('ClientSince', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
+				<td><input ' . (in_array('ClientSince', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ClientSince" size="11" minlength="0" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
 			</tr>
 			</table></td>
 			<td><table class="selection">';
 
 		echo '<tr>
 				<td>' . _('Discount Percent') . ':</td>
-				<td><input type="text" name="Discount" class="number" size="5" maxlength="4" value="' . $_POST['Discount'] . '" /></td>
+				<td><input type="text" name="Discount" class="number" size="5" minlength="0" maxlength="4" value="' . $_POST['Discount'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Discount Code') . ':</td>
-				<td><input ' . (in_array('DiscountCode', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="DiscountCode" size="3" maxlength="2" value="' . $_POST['DiscountCode'] . '" /></td>
+				<td><input ' . (in_array('DiscountCode', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="DiscountCode" size="3" minlength="0" maxlength="2" value="' . $_POST['DiscountCode'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Payment Discount Percent') . ':</td>
-				<td><input ' . (in_array('PymtDiscount', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="number" name="PymtDiscount" size="5" maxlength="4" value="' . $_POST['PymtDiscount'] . '" /></td>
+				<td><input ' . (in_array('PymtDiscount', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="number" name="PymtDiscount" size="5" minlength="0" maxlength="4" value="' . $_POST['PymtDiscount'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Credit Limit') . ':</td>
-				<td><input ' . (in_array('CreditLimit', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="number" name="CreditLimit" size="16" maxlength="14" value="' . $_POST['CreditLimit'] . '" /></td>
+				<td><input ' . (in_array('CreditLimit', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="number" name="CreditLimit" size="16" minlength="0" maxlength="14" value="' . $_POST['CreditLimit'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Tax Reference') . ':</td>
-				<td><input type="text" name="TaxRef" size="22" maxlength="20"  value="' . $_POST['TaxRef'] . '" /></td>
+				<td><input type="text" name="TaxRef" size="22" minlength="0" maxlength="20"  value="' . $_POST['TaxRef'] . '" /></td>
 			</tr>';
 	}
 

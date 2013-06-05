@@ -36,7 +36,7 @@ if (isset($_POST['ContractRef']) and $_POST['ContractRef']!='') {
 
 if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
-	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength="20" size="20" />&nbsp;&nbsp;';
+	echo _('Contract Reference') . ': <input type="text" name="ContractRef" minlength="0" maxlength="20" size="20" />&nbsp;&nbsp;';
 	echo '<select name="Status">';
 
 	if (isset($_GET['Status'])){

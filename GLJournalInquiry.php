@@ -22,8 +22,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />'.'</td>
-			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />'.'</td>
+			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" minlength="0" maxlength="11" value="1" />'.'</td>
+			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" minlength="0" maxlength="11" value="' . $MaxJournalNumberUsed . '" />'.'</td>
 		</tr>';
 
 	$sql = "SELECT MIN(trandate) AS fromdate,
@@ -40,8 +40,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Journals Dated Between') . ':</td>
-			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
-			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
+			<td>' . _('From') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="FromTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" minlength="0" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
+			<td>' . _('To') . ':'. '&nbsp;&nbsp;&nbsp;<input type="text" name="ToTransDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" minlength="0" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
 		</tr>';
 
 	echo '</table>';

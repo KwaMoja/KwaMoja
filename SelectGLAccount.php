@@ -82,10 +82,10 @@ if (!isset($AccountID)) {
 	echo '<table class="selection" summary="' . _('Criteria for inquiry') . '">
 		<tr>
 			<td>' . _('Enter extract of text in the Account name') .':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
+			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 			<td><b>' .  _('OR') . '</b></td>
 			<td>' . _('Enter Account No. to search from') . ':</td>
-			<td><input type="text" name="GLCode" size="15" maxlength="18" class="number" /></td>
+			<td><input type="text" name="GLCode" size="15" minlength="0" maxlength="18" class="number" /></td>
 		</tr>
 		</table>
 		<br />';
