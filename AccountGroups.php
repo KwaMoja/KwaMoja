@@ -73,27 +73,19 @@ if (isset($_POST['submit'])) {
 	if ($myrow[0] != 0 and $_POST['SelectedAccountGroup'] == '') {
 		$InputError = 1;
 		prnMsg(_('The account group name already exists in the database'), 'error');
-		$Errors[$i] = 'GroupName';
-		$i++;
 	} //$myrow[0] != 0 and $_POST['SelectedAccountGroup'] == ''
 	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
 		prnMsg(_('The account group name cannot contain the character') . " '&' " . _('or the character') . "' '", 'error');
-		$Errors[$i] = 'GroupName';
-		$i++;
 	} //ContainsIllegalCharacters($_POST['GroupName'])
 	if (mb_strlen($_POST['GroupName']) == 0) {
 		$InputError = 1;
 		prnMsg(_('The account group name must be at least one character long'), 'error');
-		$Errors[$i] = 'GroupName';
-		$i++;
 	} //mb_strlen($_POST['GroupName']) == 0
 	if ($_POST['ParentGroupName'] != '') {
 		if (CheckForRecursiveGroup($_POST['GroupName'], $_POST['ParentGroupName'], $db)) {
 			$InputError = 1;
 			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'), 'error');
-			$Errors[$i] = 'ParentGroupName';
-			$i++;
 		} //CheckForRecursiveGroup($_POST['GroupName'], $_POST['ParentGroupName'], $db)
 		else {
 			$sql = "SELECT pandl,
@@ -117,24 +109,28 @@ if (isset($_POST['submit'])) {
 	if (!ctype_digit($_POST['SectionInAccounts'])) {
 		$InputError = 1;
 		prnMsg(_('The section in accounts must be an integer'), 'error');
-		$Errors[$i] = 'SectionInAccounts';
-		$i++;
 	} //!ctype_digit($_POST['SectionInAccounts'])
 	if (!ctype_digit($_POST['SequenceInTB'])) {
 		$InputError = 1;
 		prnMsg(_('The sequence in the trial balance must be an integer'), 'error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
 	} //!ctype_digit($_POST['SequenceInTB'])
 	if (!ctype_digit($_POST['SequenceInTB']) or $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
 		prnMsg(_('The sequence in the TB must be numeric and less than') . ' 10,000', 'error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
 	} //!ctype_digit($_POST['SequenceInTB']) or $_POST['SequenceInTB'] > 10000
 
+	$sql = "SELECT COUNT(pandl) AS porl
+				FROM accountgroups
+				WHERE sectioninaccounts='" . $_POST['SectionInAccounts'] . "'
+					AND pandl='" . ((int) ($_POST['PandL'] xor 1)) . "'";
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+	if ($myrow['porl'] > 0) {
+		$InputError = 1;
+		prnMsg(_('You are trying to mix Balance Sheet groups with P & L groups within the same AccountSection') , 'error');
+	}
 
-	if ($_POST['GroupName'] != '' and $InputError != 1) {
+	if (isset($_POST['OldGroupName']) and $InputError != 1) {
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		if ($_POST['OldGroupName']!==$_POST['GroupName']) {
 			DB_IgnoreForeignKeys($db);
@@ -221,7 +217,7 @@ elseif (isset($_GET['delete'])) {
 		echo '</td></tr>';
 		echo '<tr>
 				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
-		  </tr>
+			</tr>
 		  </table>';
 
 	} //$myrow['groups'] > 0
@@ -389,7 +385,7 @@ if (!isset($_GET['delete'])) {
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
 				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="GroupName" description="' . _('Account Group Name') . '" id="GroupName" size="50" minlength="1" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+				<td><input tabindex="1" type="text" name="GroupName" id="GroupName" size="50" minlength="1" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
@@ -453,7 +449,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" minlength="1" maxlength="4" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td><input tabindex="5" type="text" minlength="1" maxlength="4" id="SequenceInTB" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
