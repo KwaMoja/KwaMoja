@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+/* $Id: Z_poRebuildDefault.php 5784 2012-12-29 04:00:43Z daintree $*/
 
 /* Steve Kitchen */
 
@@ -14,9 +14,9 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 
-$PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+$PathToDefault		= './locale/en_GB.utf8/LC_MESSAGES/messages.pot';
 $FilesToInclude = '*.php includes/*.inc includes/*.php api/*.php reportwriter/languages/en_US/reports.php';
-$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
+$xgettextCmd		= 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 echo "<br />&nbsp;<a href='" . $RootPath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</a>";
 echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default language file');
@@ -24,14 +24,14 @@ echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default langua
 if (isset($_POST['submit'])) {
 
 	echo '<br /><table><tr><td>';
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* Run xgettext to recreate the default message.po language file */
 
 	prnMsg (_('Rebuilding the default language file ') . '.....<br />', 'info', ' ');
 
-	system($xgettextCmd);
+	system($xgettextCmd, $return);
 
 	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<br />', 'info', ' ');
 
@@ -44,11 +44,11 @@ if (isset($_POST['submit'])) {
 	echo '<div class="centre">';
 	echo '<br />';
 	prnMsg (_('Every new language creates a new translation file from the system default one') . '.<br />' .
-			_('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br />' .
-			_('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br />' .
-			_('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
+          _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br />' .
+          _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br />' .
+          _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
 	echo '<br />';
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="submit" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;';

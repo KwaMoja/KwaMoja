@@ -42,7 +42,7 @@ if (isset($_POST['UpdateLines']) or isset($_POST['Commit'])) {
 				prnMsg(_('The quantity in the supplier units is expected to be numeric. Please re-enter as a number'), 'error');
 			} //!is_numeric(filter_number_format($_POST['SuppQty' . $POLine->LineNo]))
 			else { //ok to update the PO object variables
-				$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->Quantity = round(filter_number_format($_POST['SuppQty'.$POLine->LineNo])*$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->ConversionFactor,$_SESSION['PO'.$identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
+				$_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->Quantity = round(filter_number_format($_POST['SuppQty' . $POLine->LineNo]) * $_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->ConversionFactor, $_SESSION['PO' . $identifier]->LineItems[$POLine->LineNo]->DecimalPlaces);
 			}
 			if (!is_numeric(filter_number_format($_POST['SuppPrice' . $POLine->LineNo]))) {
 				prnMsg(_('The supplier price is expected to be numeric. Please re-enter as a number'), 'error');
@@ -240,11 +240,9 @@ if (isset($_POST['Commit'])) {
 			/* end of the loop round the detail line items on the order */
 			echo '<p />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO' . $identifier]->SupplierName . ' ' . _('has been created'), 'success');
-			if ($_SESSION['PO'.$identifier]->AllowPrintPO==1
-				and ($_SESSION['PO'.$identifier]->Status=='Authorised'
-				or $_SESSION['PO'.$identifier]->Status=='Printed')){
+			if ($_SESSION['PO' . $identifier]->AllowPrintPO == 1 and ($_SESSION['PO' . $identifier]->Status == 'Authorised' or $_SESSION['PO' . $identifier]->Status == 'Printed')) {
 
-				echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+				echo '<br /><div class="centre"><a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
 			}
 		} //$_SESSION['ExistingOrder'] == 0
 		else {
@@ -282,7 +280,7 @@ if (isset($_POST['Commit'])) {
 										deladd4='" . $_SESSION['PO' . $identifier]->DelAdd4 . "',
 										deladd5='" . $_SESSION['PO' . $identifier]->DelAdd5 . "',
 										deladd6='" . $_SESSION['PO' . $identifier]->DelAdd6 . "',
-										deladd6='" . $_SESSION['PO' . $identifier]->Tel . "',
+										tel='" . $_SESSION['PO' . $identifier]->Tel . "',
 										suppdeladdress1='" . $_SESSION['PO' . $identifier]->SuppDelAdd1 . "',
 										suppdeladdress2='" . $_SESSION['PO' . $identifier]->SuppDelAdd2 . "',
 										suppdeladdress3='" . $_SESSION['PO' . $identifier]->SuppDelAdd3 . "',
@@ -399,10 +397,9 @@ if (isset($_POST['Commit'])) {
 
 		$Result = DB_Txn_Commit($db);
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
-		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
-			and in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
+		if ($_SESSION['PO' . $identifier]->Status == 'Authorised' and in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])) {
 
-			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
+			echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO' . $identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO' . $identifier]->DeliveryDate . '">' . _('Receive and Enter Purchase Invoice') . '</a>';
 		} //$_SESSION['PO' . $identifier]->Status == 'Authorised' and in_array(1001, $_SESSION['AllowedPageSecurityTokens'])
 
 		unset($_SESSION['PO' . $identifier]);
@@ -421,7 +418,7 @@ if (isset($_POST['Commit'])) {
 
 if (isset($_GET['Delete'])) {
 	if ($_SESSION['PO' . $identifier]->Some_Already_Received($_GET['Delete']) == 0) {
-		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
+		$_SESSION['PO' . $identifier]->remove_from_order($_GET['Delete']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$_SESSION['PO' . $identifier]->Some_Already_Received($_GET['Delete']) == 0
 	else {
@@ -522,28 +519,7 @@ if (isset($_POST['EnterLine'])) {
 	if ($AllowUpdate == true) {
 		//adding the non-stock item
 
-		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1,
-													'',
-													0, /*Serialised */
-													0, /*Controlled */
-													filter_number_format($_POST['Qty']),
-													$_POST['ItemDescription'],
-													filter_number_format($_POST['Price']),
-													$_POST['SuppliersUnit'],
-													$_POST['GLCode'],
-													$_POST['ReqDelDate'],
-													'',
-													0,
-													'',
-													0,
-													0,
-													$GLAccountName,
-													2,
-													$_POST['SuppliersUnit'],
-													1,
-													1,
-													'',
-													$_POST['AssetID']);
+		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1, '', 0, /*Serialised */ 0, /*Controlled */ filter_number_format($_POST['Qty']), $_POST['ItemDescription'], filter_number_format($_POST['Price']), $_POST['SuppliersUnit'], $_POST['GLCode'], $_POST['ReqDelDate'], '', 0, '', 0, 0, $GLAccountName, 2, $_POST['SuppliersUnit'], 1, 1, '', $_POST['AssetID']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$AllowUpdate == true
 } //isset($_POST['EnterLine'])
@@ -631,28 +607,28 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						$sql = "SELECT discountpercent,
 										discountamount
 								FROM supplierdiscounts
-								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
+								WHERE supplierno= '" . $_SESSION['PO' . $identifier]->SupplierID . "'
 								AND effectivefrom <='" . Date('Y-m-d') . "'
 								AND effectiveto >='" . Date('Y-m-d') . "'
-								AND stockid = '". $ItemCode . "'";
+								AND stockid = '" . $ItemCode . "'";
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
 						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
 						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
-						$DiscountResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+						$DiscountResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 							$ItemDiscountPercent += $DiscountRow['discountpercent'];
 							$ItemDiscountAmount += $DiscountRow['discountamount'];
 						}
 						if ($ItemDiscountPercent != 0) {
-							prnMsg(_('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
+							prnMsg(_('Taken accumulated supplier percentage discounts of') . ' ' . locale_number_format($ItemDiscountPercent * 100, 2) . '%', 'info');
 						}
-						if ($ItemDiscountAmount != 0 ){
-							prnMsg(_('Taken accumulated round sum supplier discount of') .  ' ' . $_SESSION['PO'.$identifier]->CurrCode . ' ' . locale_number_format($ItemDiscountAmount,$_SESSION['PO'.$identifier]->CurrDecimalPlaces) . ' (' . _('per supplier unit') . ')','info');
+						if ($ItemDiscountAmount != 0) {
+							prnMsg(_('Taken accumulated round sum supplier discount of') . ' ' . $_SESSION['PO' . $identifier]->CurrCode . ' ' . locale_number_format($ItemDiscountAmount, $_SESSION['PO' . $identifier]->CurrDecimalPlaces) . ' (' . _('per supplier unit') . ')', 'info');
 						}
-						$PurchPrice = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
- 						$ConversionFactor = $PurchRow['conversionfactor'];
+						$PurchPrice = ($PurchRow['price'] * (1 - $ItemDiscountPercent) - $ItemDiscountAmount) / $PurchRow['conversionfactor'];
+						$ConversionFactor = $PurchRow['conversionfactor'];
 						$SupplierDescription = $PurchRow['suppliers_partno'] . ' - ';
 						if (mb_strlen($PurchRow['supplierdescription']) > 2) {
 							$SupplierDescription .= $PurchRow['supplierdescription'];
@@ -667,7 +643,7 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						 * if > header DeliveryDate then set DeliveryDate to today + leadtime
 						 */
 						$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', $LeadTime);
-						if (Date1GreaterThanDate2($_SESSION['PO'.$identifier]->DeliveryDate,$DeliveryDate)) {
+						if (Date1GreaterThanDate2($_SESSION['PO' . $identifier]->DeliveryDate, $DeliveryDate)) {
 							$DeliveryDate = $_SESSION['PO' . $identifier]->DeliveryDate;
 						} //!Date1GreaterThanDate2($DeliveryDate, $_SESSION['PO' . $identifier]->DeliveryDate)
 					} //DB_num_rows($PurchDataResult) > 0
@@ -765,7 +741,7 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit']
 				<td class="number">' . locale_number_format($POLine->Quantity, $POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
-				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size="8" value="' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
+				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo . '" size="8" value="' . locale_number_format($POLine->ConversionFactor, 'Variable') . '" /></td>
 				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round($POLine->Quantity / $POLine->ConversionFactor, $POLine->DecimalPlaces), $POLine->DecimalPlaces) . '" /></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round(($POLine->Price * $POLine->ConversionFactor), $_SESSION['PO' . $identifier]->CurrDecimalPlaces), $_SESSION['PO' . $identifier]->CurrDecimalPlaces) . '" /></td>
@@ -1211,7 +1187,7 @@ if (isset($SearchResult)) {
 		if (DB_num_rows($PurchDataResult) > 0) {
 			$PurchDataRow = DB_fetch_array($PurchDataResult);
 			$OrderUnits = $PurchDataRow['suppliersuom'];
-			$ConversionFactor = locale_number_format($PurchDataRow['conversionfactor'],'Variable');
+			$ConversionFactor = locale_number_format($PurchDataRow['conversionfactor'], 'Variable');
 		} //DB_num_rows($PurchDataResult) > 0
 		else {
 			$OrderUnits = $myrow['units'];
