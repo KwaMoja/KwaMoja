@@ -265,7 +265,7 @@ echo '<table>
 							<td>' . _('Type') . ':</td>
 							<td><select name="JournalType">';
 
-if ($_POST['JournalType'] == 'Reversing'){
+if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing'){
 	echo '<option selected="selected" value = "Reversing">' . _('Reversing').'</option>';
 	echo '<option value = "Normal">' . _('Normal').'</option>';
 } else {

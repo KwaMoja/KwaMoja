@@ -797,7 +797,7 @@ else {
 
 echo '<tr>
 		<td>' . _('Date Paid') . ':</td>
-		<td><input type="text" name="DatePaid" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" minlength="0" maxlength="10" size="11" onchange="isDate(this, this.value, ' . "'" . $_SESSION['DefaultDateFormat'] . "'" . ')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
+		<td><input type="text" name="DatePaid" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" minlength="1" maxlength="10" size="11" onchange="isDate(this, this.value, ' . "'" . $_SESSION['DefaultDateFormat'] . "'" . ')" value="' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . '" /></td>
 	</tr>';
 
 
@@ -895,11 +895,11 @@ include('includes/GetPaymentMethods.php');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
 payment methods can be modified from the setup tab of the main menu under payment methods*/
 
-if (!isset($_POST['Paymenttype'])){
+if (!isset($_POST['Paymenttype'])) {
 	$_POST['Paymenttype'] = 1;
 }
 
-foreach ($PaytTypes as $PaytID=>$PaytType) {
+foreach ($PaytTypes as $PaytID => $PaytType) {
 	if (isset($_POST['Paymenttype']) and $_POST['Paymenttype'] == $PaytID) {
 		echo '<option selected="selected" value="' . $PaytID . '">' . $PaytType . '</option>';
 	} //isset($_POST['Paymenttype']) and $_POST['Paymenttype'] == $PaytType
@@ -920,7 +920,7 @@ if (!isset($_POST['ChequeNum'])) {
 	$_POST['ChequeNum'] = '';
 } //!isset($_POST['ChequeNum'])
 
-if ($myrow['usepreprintedstationery']==1) {
+if ($myrow['usepreprintedstationery'] == 1) {
 	echo '<tr>
 			<td>' . _('Cheque Number') . ':</td>
 			<td><input type="text" name="ChequeNum" minlength="0" maxlength="8" size="10" value="' . $_POST['ChequeNum'] . '" /></td><td>' . _('(if using pre-printed stationery)') . '</td>
@@ -929,6 +929,10 @@ if ($myrow['usepreprintedstationery']==1) {
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative'] = '';
+} //!isset($_POST['Narrative'])
+
+if (!isset($_POST['Currency'])) {
+	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
 } //!isset($_POST['Narrative'])
 
 echo '<tr>
@@ -943,9 +947,7 @@ echo '<tr>
 	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update') . '" /></div></td>
 	</tr>';
 
-
 echo '</table><br />';
-
 
 if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
