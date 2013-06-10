@@ -299,7 +299,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		if ($result) {
 			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' . _('have been removed from the system and an email sent to') . ' ' . $Email, 'success');
 		} else {
-			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' . _('have been removed from the system and but the email does not sent to') . ' ' . $Email, 'warn');
+			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' . _('have been removed from the system but the email has not been sent to') . ' ' . $Email, 'warn');
 
 		}
 	}
