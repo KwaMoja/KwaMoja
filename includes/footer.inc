@@ -1,7 +1,9 @@
 <?php
+	echo '<div id="mask">
+				<div class="centre"><div id="dialog" name="dialog"></div></div>
+			</div>';
 
 /* $Id$*/
-
 if (isset($Messages) and count($Messages) > 0) {
 	foreach ($Messages as $Message) {
 		$Prefix = '';
@@ -43,6 +45,7 @@ if (isset($Messages) and count($Messages) > 0) {
 }
 
 echo '<br /></div>'; // BodyWrapDiv
+
 echo '</div>'; // BodyDiv
 
 echo '<div id="FooterDiv" class="noPrint">';
@@ -57,7 +60,7 @@ echo '<div id="FooterVersionDiv">';
 echo '</div>';
 
 echo '<div id="FooterTimeDiv">';
-	echo DisplayDateTime();
+echo DisplayDateTime();
 echo '</div>';
 
 echo '</div>'; // FooterWrapDiv

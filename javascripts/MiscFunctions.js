@@ -2,8 +2,36 @@ function defaultControl(c){
 c.select();
 c.focus();
 }
+function makeAlert(message, title) {
+	theme=document.getElementById("Theme").value;
+	document.getElementById("mask").style['display'] = "inline";
+	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
+	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="OK" onClick="hideAlert()" /></div>'
+	document.getElementById("dialog").innerHTML = html;
+	return false;
+}
+function hideAlert(){
+	document.getElementById("dialog").innerHTML = '';
+	document.getElementById("mask").style['display'] = "none";
+	return true;
+}
+function makeConfirm(message, title, url) {
+	document.getElementById("mask").style['display'] = "inline";
+	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
+	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="return hideConfirm(\'\')" />'
+	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="return hideConfirm(\'OK\')" /></a></div></div>'
+	document.getElementById("dialog").innerHTML = html;
+	return false;
+}
+function hideConfirm(result){
+	if (result=='') {
+		document.getElementById("dialog").innerHTML = '';
+		document.getElementById("mask").style['display'] = "none";
+	}
+	return true;
+}
 function isInteger(s) {
-  return (s.toString().search(/^-?[0-9]+$/) == 0);
+return (s.toString().search(/^-?[0-9]+$/) == 0);
 }
 function ReloadForm(fB){
 fB.click();
@@ -23,6 +51,15 @@ function rTN(event){
 	else if ((("0123456789.,-").indexOf(kC)>-1)) return true;
 	else return false;
 }
+function rTI(event){
+	if (window.event) k=window.event.keyCode;
+	else if (event) k=event.which;
+	else return true;
+	kC=String.fromCharCode(k);
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+	else if ((("0123456789").indexOf(kC)>-1)) return true;
+	else return false;
+}
 function assignComboToInput(c,i){
 	i.value=c.value;
 }
@@ -32,13 +69,13 @@ function inArray(v,tA,m){
 			return true;
 		}
 	}
-	alert(m);
+	makeAlert(m, 'Error');
 	return false;
 }
 function isDate(dS,dF){
 	var mA=dS.match(/^(\d{1,2})(\/|-|.)(\d{1,2})(\/|-|.)(\d{4})$/);
 	if (mA==null){
-		alert("Please enter the date in the format "+dF);
+		makeAlert("Please enter the date in the format "+dF, 'Date Error');
 		return false;
 	}
 	if (dF=="d/m/Y"){
@@ -50,21 +87,21 @@ function isDate(dS,dF){
 	}
 	y=mA[5];
 	if (m<1 || m>12){
-		alert("Month must be between 1 and 12");
+		makeAlert("Month must be between 1 and 12", 'Date Error');
 		return false;
 	}
 	if (d<1 || d>31){
-		alert("Day must be between 1 and 31");
+		makeAlert("Day must be between 1 and 31", 'Date Error');
 		return false;
 	}
 	if ((m==4 || m==6 || m==9 || m==11) && d==31){
-		alert("Month "+m+" doesn`t have 31 days");
+		makeAlert("Month "+m+" doesn`t have 31 days", 'Date Error');
 		return false;
 	}
 	if (m==2){
 		var isleap=(y%4==0);
 		if (d>29 || (d==29 && !isleap)){
-			alert("February "+y+" doesn`t have "+d+" days");
+			makeAlert("February "+y+" doesn`t have "+d+" days", 'Date Error');
 			return false;
 		}
 	}
@@ -206,24 +243,27 @@ function changeDate(){
 	isDate(this.value,this.alt);
 }
 function VerifyForm(f) {
+	Clean=true;
+	Alert='';
 	for(var i=0,fLen=f.length;i<fLen;i++){
 		if(f.elements[i].type=='text') {
-			var a=document.getElementById(f.elements[i].id);
-			if ((a.getAttribute("class")=='number') && (!isInteger(parseInt(f.elements[i].value)) || (f.elements[i].value.length==0))) {
-				alert(a.getAttribute("name")+' field must be an integer');
-				return false;
-			}
-			if (a.getAttribute("minlength")>f.elements[i].value.length) {
-				alert(a.getAttribute("name")+' field must be at least '+a.getAttribute("minlength")+' characters long');
-				return false;
-			}
-			if (a.getAttribute("maxlength")<f.elements[i].value.length) {
-				alert(a.getAttribute("name")+' field must be less than '+a.getAttribute("minlength")+' characters long');
-				return false;
+			var a=document.getElementsByName(f.elements[i].name);
+			Class=a[0].getAttribute("class");
+			if ((a[0].getAttribute("minlength")>f.elements[i].value.length)) {
+				if (f.elements[i].value.length==0) {
+					Alert=Alert+'You must input a value in the field '+a[0].getAttribute("name")+'<br />';
+				} else {
+					Alert=Alert+a[0].getAttribute("name")+' field must be at least '+a[0].getAttribute("minlength")+' characters long'+'<br />';
+				}
+				a[0].className=Class+' inputerror';
+				Clean=false;
+			} else {
+				a[0].className=Class;
 			}
 		}
 	}
-	return true;
+	if (Alert!='') {makeAlert(Alert, 'Input Error');}
+	return Clean;
 }
 function initial(){
 	if (document.getElementsByTagName){
@@ -242,6 +282,7 @@ function initial(){
 			ds[i].onchange=changeDate;
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
+		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 	}
 }
 window.onload=initial;

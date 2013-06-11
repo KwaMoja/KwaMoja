@@ -519,7 +519,28 @@ if (isset($_POST['EnterLine'])) {
 	if ($AllowUpdate == true) {
 		//adding the non-stock item
 
-		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1, '', 0, /*Serialised */ 0, /*Controlled */ filter_number_format($_POST['Qty']), $_POST['ItemDescription'], filter_number_format($_POST['Price']), $_POST['SuppliersUnit'], $_POST['GLCode'], $_POST['ReqDelDate'], '', 0, '', 0, 0, $GLAccountName, 2, $_POST['SuppliersUnit'], 1, 1, '', $_POST['AssetID']);
+		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1,
+													'',
+													0, /*Serialised */
+													0, /*Controlled */
+													filter_number_format($_POST['Qty']),
+													$_POST['ItemDescription'],
+													filter_number_format($_POST['Price']),
+													$_POST['SuppliersUnit'],
+													$_POST['GLCode'],
+													$_POST['ReqDelDate'],
+													'',
+													0,
+													'',
+													0,
+													0,
+													$GLAccountName,
+													2,
+													$_POST['SuppliersUnit'],
+													1,
+													1,
+													'',
+													$_POST['AssetID']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$AllowUpdate == true
 } //isset($_POST['EnterLine'])

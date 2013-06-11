@@ -11,7 +11,7 @@
 			$RootPath = '';
 		}
 	}
-
+	$debug=0;
 	$ViewTopic = isset($ViewTopic)?'?ViewTopic=' . $ViewTopic : '';
 	$BookMark = isset($BookMark)? '#' . $BookMark : '';
 	$StrictXHTML=False;
@@ -134,13 +134,16 @@
 			}
 		}
 
-		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return confirm(\''._('Are you sure you wish to logout?').'\');">'._('Logout').'</a></li>';
+		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return makeConfirm(\''._('Are you sure you wish to logout?').'\', \'' . _('Confirm Logout') . '\', \'Logout.php\');">'._('Logout').'</a></li>';
 
 		echo '</ul></div>'; // QuickMenuDiv
 	}
 	echo '</div>'; // HeaderWrapDiv
 	echo '</div>'; // Headerdiv
+
 	echo '<div id="BodyDiv">';
+	echo '<input type="hidden" name="Theme" id="Theme" value="' . $Theme . '" />';
 	echo '<div id="BodyWrapDiv">';
+
 
 ?>

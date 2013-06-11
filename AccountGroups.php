@@ -385,11 +385,11 @@ if (!isset($_GET['delete'])) {
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
 				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="GroupName" id="GroupName" size="50" minlength="1" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+				<td><input tabindex="1" type="text" name="GroupName" size="50" minlength="3" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
-			<td><select tabindex="2" ' . (in_array('ParentGroupName', $Errors) ? 'class="selecterror"' : '') . '  name="ParentGroupName">';
+			<td><select tabindex="2" name="ParentGroupName">';
 
 	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -413,7 +413,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select tabindex="3" ' . (in_array('SectionInAccounts', $Errors) ? 'class="selecterror"' : '') . ' name="SectionInAccounts">';
+			<td><select tabindex="3" name="SectionInAccounts">';
 
 	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -449,7 +449,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" minlength="1" maxlength="4" id="SequenceInTB" name="SequenceInTB" class="number" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td><input tabindex="5" type="text" minlength="1" maxlength="4" name="SequenceInTB" class="integer" value="' . $_POST['SequenceInTB'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
