@@ -47,6 +47,72 @@ function RemoveScript($ScriptName, $db) {
 	}
 }
 
+function NewModule($Link, $Report, $Name, $Sequence, $db) {
+	/*Is module already in table */
+	$sql = "SELECT modulelink FROM modules WHERE modulelink='" . $Link . "'";
+	$result = DB_query($sql, $db);
+	if (DB_num_rows($result)==0) {
+		$sql = "SELECT secroleid FROM securityroles";
+		$result = DB_query($sql, $db);
+		while ($myrow = DB_fetch_array($result)) {
+			$sql = "INSERT INTO `modules` ( `secroleid`,
+											`modulelink`,
+											`reportlink`,
+											`modulename`,
+											`sequence`
+										) VALUES (
+											'" . $myrow['secroleid'] . "',
+											'" . $Link . "',
+											'" . $Report . "',
+											'" . $Name . "',
+											'" . $Sequence . "'
+										)";
+			$response = executeSQL($sql, $db, False);
+			if ($response==0) {
+				OutputResult( _('The module').' '.$Name.' '._('has been inserted') , 'success');
+			} else {
+				OutputResult( _('The module').' '.$Name.' '._('could not be inserted') . '<br />' . $sql , 'error');
+			}
+		}
+	} else {
+		OutputResult( _('The module').' '.$Name.' '._('already exists') , 'info');
+	}
+}
+
+function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence, $db) {
+	/*Is module already in table */
+	$sql = "SELECT modulelink FROM menuitems WHERE modulelink='" . $Link . "' AND menusection='" . $Section . "' AND url='" . $URL . "'";
+	$result = DB_query($sql, $db);
+	if (DB_num_rows($result)==0) {
+		$sql = "SELECT secroleid FROM securityroles";
+		$result = DB_query($sql, $db);
+		while ($myrow = DB_fetch_array($result)) {
+			$sql = "INSERT INTO `menuitems` (`secroleid`,
+												`modulelink`,
+												`menusection`,
+												`caption`,
+												`url`,
+												`sequence`
+											) VALUES (
+												'" . $myrow['secroleid'] . "',
+												'" . $Link . "',
+												'" . $Section . "',
+												'" . $Caption . "',
+												'" . $URL . "',
+												'" . $Sequence . "'
+											)";
+			$response = executeSQL($sql, $db, False);
+			if ($response==0) {
+				OutputResult( _('The menu link').' '.$Caption.' '._('has been inserted') , 'success');
+			} else {
+				OutputResult( _('The menu link').' '.$Caption.' '._('could not be inserted') . '<br />' . $sql , 'error');
+			}
+		}
+	} else {
+		OutputResult( _('The menu link').' '.$Caption.' '._('already exists') , 'info');
+	}
+}
+
 function AddColumn($Column, $Table, $Type, $Null, $Default, $After, $db) {
 	global $SQLFile;
 	if (DB_table_exists($Table, $db)) {
