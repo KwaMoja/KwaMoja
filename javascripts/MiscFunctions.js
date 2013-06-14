@@ -8,6 +8,7 @@ function makeAlert(message, title) {
 	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="OK" onClick="hideAlert()" /></div>'
 	document.getElementById("dialog").innerHTML = html;
+	document.getElementById("mask").style['margin-top'] = -(document.getElementById('dialog').offsetHeight/2);
 	return false;
 }
 function hideAlert(){
@@ -18,8 +19,8 @@ function hideAlert(){
 function makeConfirm(message, title, url) {
 	document.getElementById("mask").style['display'] = "inline";
 	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
-	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="return hideConfirm(\'\')" />'
-	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="return hideConfirm(\'OK\')" /></a></div></div>'
+	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
+	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
 	document.getElementById("dialog").innerHTML = html;
 	return false;
 }
