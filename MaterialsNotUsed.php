@@ -24,9 +24,9 @@ $SQL = "SELECT stockmaster.stockid,
 				WHERE bom.component = stockmaster.stockid )
 		ORDER BY stockmaster.stockid";
 $result = DB_query($SQL, $db);
+echo '<p class="page_title_text" align="center"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
 if (DB_num_rows($result) != 0){
 	$TotalValue = 0;
-	echo '<p class="page_title_text" align="center"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -51,16 +51,16 @@ if (DB_num_rows($result) != 0){
 		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 		$LineValue = $myrow['qoh'] * $myrow['stdcost'];
 		$TotalValue = $TotalValue + $LineValue;
-		
+
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>', 
-				$i, 
-				$CodeLink, 
+				</tr>',
+				$i,
+				$CodeLink,
 				$myrow['description'],
 				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
 				locale_number_format($myrow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -72,14 +72,16 @@ if (DB_num_rows($result) != 0){
 	printf('<td colspan="4">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
-			</tr>', 
+			</tr>',
 			'',
-			_('Total').':', 
+			_('Total').':',
 			locale_number_format($TotalValue,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table>
 			</div>
 			</form>';
+} else {
+	prnMsg( _('There are no raw materials to show in this inquiry'), 'info');
 }
 
 include ('includes/footer.inc');

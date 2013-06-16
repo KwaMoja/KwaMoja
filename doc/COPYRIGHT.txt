@@ -1,0 +1,17 @@
+As pursuant to the Berne convention on copyright, all code included in
+this software is Copyright by the original authors of that code unless
+their rights have been transferred to any other party in writing.
+
+Any attempt by any other parties to lay claim to that copyright is null
+and void.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+You should have received a copy of the GNU General Public License
+along with this program as the file LICENSE.txt; if not, please see
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
