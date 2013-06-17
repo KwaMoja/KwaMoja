@@ -77,6 +77,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 							WHERE debtortrans.type = '" . $_GET['TypeID'] . "'
 								AND debtortrans.transno = '" . $_GET['TransNo'] . "'";
 			$DetailResult = DB_query($DetailSQL, $db);
+			$DebtorTrans = true;
 		} elseif ($_GET['TypeID'] == 20 or $_GET['TypeID'] == 21 or $_GET['TypeID'] == 22) {
 			$DetailSQL = "SELECT supptrans.supplierno,
 								suppliers.suppname
@@ -86,6 +87,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 							WHERE supptrans.type = '" . $_GET['TypeID'] . "'
 								AND supptrans.transno = '" . $_GET['TransNo'] . "'";
 			$DetailResult = DB_query($DetailSQL, $db);
+			$SupplierTrans = true;
 		}
 		$j = 1;
 		while ($TransRow = DB_fetch_array($TransResult)) {
@@ -107,7 +109,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				$Posted = _('No');
 			}
 			if ($DetailResult) {
-				if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
+				if ($DebtorTrans) {
 					$DetailRow = DB_fetch_array($DetailResult); // there can be only one
 					$URL = $RootPath . '/CustomerInquiry.php?CustomerID=' . $DetailRow['debtorno'] . '&amp;TransAfterDate=' . $TranDate;
 					$AccountName .= ' ' . $DetailRow['name'];
