@@ -162,7 +162,7 @@ if (!isset($SelectedArea)) {
 		echo '<td>' . $myrow['areacode'] . '</td>
 				<td>' . $myrow['areadescription'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '&amp;delete=yes">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this area?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				<td><a href="SelectCustomer.php?Area=' . $myrow['areacode'] . '">' . _('View Customers from this Area') . '</a></td>
 			</tr>';
 	}

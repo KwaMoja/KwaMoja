@@ -150,6 +150,7 @@ if (isset($_POST['submit'])) {
 						theme='" . $_POST['Theme'] . "',
 						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
+						restrictlocations='" . $_POST['RestrictLocations'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						blocked='" . $_POST['Blocked'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
@@ -173,6 +174,7 @@ if (isset($_POST['submit'])) {
 						fullaccess,
 						cancreatetender,
 						defaultlocation,
+						restrictlocations,
 						modulesallowed,
 						displayrecordsmax,
 						theme,
@@ -193,10 +195,11 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Access'] . "',
 						'" . $_POST['CanCreateTender'] . "',
 						'" . $_POST['DefaultLocation'] ."',
+						'" . $_POST['RestrictLocations'] ."',
 						'" . $ModulesAllowed . "',
 						'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 						'" . $_POST['Theme'] . "',
-						'". $_POST['UserLanguage'] ."',
+						'" . $_POST['UserLanguage'] ."',
 						'" . $_POST['PDFLanguage'] . "',
 						'" . $_POST['Department'] . "',
 						'" . $_POST['FontSize'] . "')";
@@ -395,6 +398,7 @@ if (isset($SelectedUser)) {
 			fullaccess,
 			cancreatetender,
 			defaultlocation,
+			restrictlocations,
 			modulesallowed,
 			blocked,
 			theme,
@@ -420,6 +424,7 @@ if (isset($SelectedUser)) {
 	$_POST['Access'] = $myrow['fullaccess'];
 	$_POST['CanCreateTender'] = $myrow['cancreatetender'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
+	$_POST['RestrictLocations'] = $myrow['restrictlocations'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
 	$_POST['Theme'] = $myrow['theme'];
 	$_POST['UserLanguage'] = $myrow['language'];
@@ -530,6 +535,19 @@ while ($myrow=DB_fetch_array($result)){
 	}
 }
 
+echo '</select></td>
+	</tr>';
+
+echo '<tr>
+		<td>' . _('Restrict to just this location') . ': </td>
+		<td><select name="RestrictLocations">';
+if (isset($_POST['RestrictLocations']) and $_POST['RestrictLocations']==0){
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
+} else {
+ 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
+}
 echo '</select></td>
 	</tr>';
 

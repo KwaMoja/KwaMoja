@@ -16,7 +16,7 @@ function hideAlert(){
 	document.getElementById("mask").style['display'] = "none";
 	return true;
 }
-function makeConfirm(message, title, link) {
+function MakeConfirm(message, title, link) {
 	url=link.href;
 	theme=document.getElementById("Theme").value;
 	document.getElementById("mask").style['display'] = "inline";
