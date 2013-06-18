@@ -84,6 +84,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 					suppliers.address3,
 					suppliers.address4,
 					suppliers.address5,
+					suppliers.address6,
 					purchorders.comments,
 					purchorders.orddate,
 					purchorders.rate,
@@ -169,8 +170,9 @@ else if ($OrderNo == 'Preview') { // We are previewing the order
 	$POHeader['address1'] = str_pad('', 40, 'x');
 	$POHeader['address2'] = str_pad('', 40, 'x');
 	$POHeader['address3'] = str_pad('', 40, 'x');
-	$POHeader['address4'] = str_pad('', 30, 'x');
-	$POHeader['address5'] = str_pad('', 30, 'x');
+	$POHeader['address4'] = str_pad('', 40, 'x');
+	$POHeader['address5'] = str_pad('', 20, 'x');
+	$POHeader['address6'] = str_pad('', 15, 'x');
 	$POHeader['comments'] = str_pad('', 50, 'x');
 	$POHeader['orddate'] = '1900-01-01';
 	$POHeader['rate'] = '0.0000';

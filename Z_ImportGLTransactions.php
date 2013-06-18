@@ -217,7 +217,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
-			_('This function loads a general ledger from a comma separated variable (csv) file.') . '<br />' .
+			_('This function loads a set of general ledger transactions from a comma separated variable (csv) file.') . '<br />' .
 			_('The file must contain six columns, and the first row should be the following headers:') . '<br />' .
 			$FieldHeadings[0] . ', ' . $FieldHeadings[1] . ', ' . $FieldHeadings[2] . ', ' . $FieldHeadings[3] . ', ' . $FieldHeadings[4] . ', ' . $FieldHeadings[5] . '<br />' .
 			_('followed by rows containing these six fields for each price to be uploaded.') .  '<br />' .

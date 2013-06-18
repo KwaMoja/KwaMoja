@@ -2,7 +2,7 @@
 
 CreateTable('modules',
 "CREATE TABLE `modules` (
-	`secroleid` INT(11) NOT NULL DEFAULT 15,
+	`secroleid` INT(11) NOT NULL DEFAULT 8,
 	`modulelink` VARCHAR(10) NOT NULL DEFAULT '',
 	`reportlink` VARCHAR(4) NOT NULL DEFAULT '',
 	`modulename` VARCHAR(25) NOT NULL DEFAULT '',
@@ -14,7 +14,7 @@ $db);
 
 CreateTable('menuitems',
 "CREATE TABLE `menuitems` (
-	`secroleid` int(11) NOT NULL DEFAULT 15,
+	`secroleid` int(11) NOT NULL DEFAULT 8,
 	`modulelink` VARCHAR(10) NOT NULL DEFAULT '',
 	`menusection` VARCHAR(15) NOT NULL DEFAULT '',
 	`caption` VARCHAR(60) NOT NULL DEFAULT '',

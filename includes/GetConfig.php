@@ -3,17 +3,17 @@
 // $ForceConfigReload to true
 /* $Id$*/
 
-if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['CompanyDefaultsLoaded'])) {
-	global  $db;		// It is global, we may not be.
+if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded'])) {
+	global $db; // It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
-	$ConfigResult = DB_query($sql,$db,$ErrMsg);
-	while( $myrow = DB_fetch_array($ConfigResult) ) {
-		if (is_numeric($myrow['confvalue']) and $myrow['confname']!='DefaultPriceList' and $myrow['confname']!='VersionNumber'){
+	$ConfigResult = DB_query($sql, $db, $ErrMsg);
+	while ($myrow = DB_fetch_array($ConfigResult)) {
+		if (is_numeric($myrow['confvalue']) and $myrow['confname'] != 'DefaultPriceList' and $myrow['confname'] != 'VersionNumber') {
 			//the variable name is given by $myrow[0]
 			$_SESSION[$myrow['confname']] = (double) $myrow['confvalue'];
 		} else {
-			$_SESSION[$myrow['confname']] =  $myrow['confvalue'];
+			$_SESSION[$myrow['confname']] = $myrow['confvalue'];
 		}
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
@@ -22,35 +22,35 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 	/*Maybe we should check config directories exist and try to create if not */
 
 	/*Load the pagesecurity settings from the database */
-	$sql="SELECT script, pagesecurity FROM scripts";
-	$result=DB_query($sql, $db,'','',false,false);
-	if (DB_error_no($db)!=0){
+	$sql = "SELECT script, pagesecurity FROM scripts";
+	$result = DB_query($sql, $db, '', '', false, false);
+	if (DB_error_no($db) != 0) {
 		/* the table may not exist with the pagesecurity field in it if it is an older KwaMoja database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
 		header('Location: Z_UpgradeDatabase.php');
 	}
 	//Populate the PageSecurityArray array for each script's  PageSecurity value
-	while ($myrow=DB_fetch_array($result)) {
-		$_SESSION['PageSecurityArray'][$myrow['script']]=$myrow['pagesecurity'];
+	while ($myrow = DB_fetch_array($result)) {
+		$_SESSION['PageSecurityArray'][$myrow['script']] = $myrow['pagesecurity'];
 	}
 
-	if (!isset($_SESSION['DBUpdateNumber'])){ // the config record for VersionNumber is not yet added
-		$_SESSION['DBUpdateNumber']=-1;
+	if (!isset($_SESSION['DBUpdateNumber'])) { // the config record for VersionNumber is not yet added
+		$_SESSION['DBUpdateNumber'] = -1;
 		header('Location: Z_UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
 	}
 
 	/*
-	 check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
+	check the decimalplaces field exists in currencies - this was added in 4.0 but is required in 4.04 as it is used everywhere as the default decimal places to show on all home currency amounts
 	*/
-	$result = DB_query("SELECT decimalplaces FROM currencies",$db,'','',false,false);
-	if (DB_error_no($db)!=0) { //then decimalplaces not already a field in currencies
+	$result = DB_query("SELECT decimalplaces FROM currencies", $db, '', '', false, false);
+	if (DB_error_no($db) != 0) { //then decimalplaces not already a field in currencies
 		$result = DB_query("ALTER TABLE `currencies`
-							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`",$db);
+							ADD COLUMN `decimalplaces` tinyint(3) NOT NULL DEFAULT 2 AFTER `hundredsname`", $db);
 	}
-/* Also reads all the company data set up in the company record and returns an array */
+	/* Also reads all the company data set up in the company record and returns an array */
 
-	$sql=	"SELECT	coyname,
+	$sql = "SELECT coyname,
 					gstno,
 					regoffice1,
 					regoffice2,
@@ -80,11 +80,11 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 				WHERE coycode=1";
 
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
-	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);
+	$ReadCoyResult = DB_query($sql, $db, $ErrMsg);
 
-	if (DB_num_rows($ReadCoyResult)==0) {
+	if (DB_num_rows($ReadCoyResult) == 0) {
 		echo '<br /><b>';
-		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
+		prnMsg(_('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'), 'error', _('CRITICAL PROBLEM'));
 		exit;
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
@@ -92,7 +92,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
 
-	$sql="SELECT id,
+	$sql = "SELECT id,
 				host,
 				port,
 				heloaddress,
@@ -101,20 +101,20 @@ if(isset($ForceConfigReload) and $ForceConfigReload==true or !isset($_SESSION['C
 				timeout,
 				auth
 			FROM emailsettings";
-	$result=DB_query($sql, $db,'','',false,false);
-	if (DB_error_no($db)==0) {
+	$result = DB_query($sql, $db, '', '', false, false);
+	if (DB_error_no($db) == 0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
-		*/
-		$myrow=DB_fetch_array($result);
+		 */
+		$myrow = DB_fetch_array($result);
 
-		$_SESSION['SMTPSettings']['host']=$myrow['host'];
-		$_SESSION['SMTPSettings']['port']=$myrow['port'];
-		$_SESSION['SMTPSettings']['heloaddress']=$myrow['heloaddress'];
-		$_SESSION['SMTPSettings']['username']=$myrow['username'];
-		$_SESSION['SMTPSettings']['password']=$myrow['password'];
-		$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
-		$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
+		$_SESSION['SMTPSettings']['host'] = $myrow['host'];
+		$_SESSION['SMTPSettings']['port'] = $myrow['port'];
+		$_SESSION['SMTPSettings']['heloaddress'] = $myrow['heloaddress'];
+		$_SESSION['SMTPSettings']['username'] = $myrow['username'];
+		$_SESSION['SMTPSettings']['password'] = $myrow['password'];
+		$_SESSION['SMTPSettings']['timeout'] = $myrow['timeout'];
+		$_SESSION['SMTPSettings']['auth'] = $myrow['auth'];
 	}
 } //end if force reload or not set already
 

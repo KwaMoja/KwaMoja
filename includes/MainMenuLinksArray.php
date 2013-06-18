@@ -1,9 +1,4 @@
 <?php
-$ModuleLink = array();
-$ReportList = array();
-
-/*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array();
 
 $sql = "SELECT `modulelink`,
 				`reportlink` ,
