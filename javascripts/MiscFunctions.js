@@ -16,12 +16,15 @@ function hideAlert(){
 	document.getElementById("mask").style['display'] = "none";
 	return true;
 }
-function makeConfirm(message, title, url) {
+function makeConfirm(message, title, link) {
+	url=link.href;
+	theme=document.getElementById("Theme").value;
 	document.getElementById("mask").style['display'] = "inline";
 	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
 	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
 	document.getElementById("dialog").innerHTML = html;
+	document.getElementById("mask").style['margin-top'] = -(document.getElementById('dialog').offsetHeight/2);
 	return false;
 }
 function hideConfirm(result){

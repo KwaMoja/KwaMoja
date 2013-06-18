@@ -134,7 +134,7 @@
 			}
 		}
 
-		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return makeConfirm(\''._('Are you sure you wish to logout?').'\', \'' . _('Confirm Logout') . '\', \'Logout.php\');">'._('Logout').'</a></li>';
+		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return makeConfirm(\''._('Are you sure you wish to logout?').'\', \'' . _('Confirm Logout') . '\', this);">'._('Logout').'</a></li>';
 
 		echo '</ul></div>'; // QuickMenuDiv
 	}
