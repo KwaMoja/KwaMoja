@@ -163,7 +163,7 @@ if (!isset($SelectedContact)){
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
 					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td></tr>',
+					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return MakeConfirm(\''  . _('Are you sure you wish to delete this contact?') . '\', \'Confirm Delete\', this);">' .  _('Delete') . '</a></td></tr>',
 					$myrow['contact'],
 					$myrow['position'],
 					$myrow['tel'],

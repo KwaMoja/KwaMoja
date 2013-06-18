@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
 				<td>' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
 				<td>' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this payment method?') . '\', \'Confirm Delete\', this);">' . _('Delete') .'</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP

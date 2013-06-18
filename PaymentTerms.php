@@ -203,7 +203,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedTerms=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedTerms=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s?SelectedTerms=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this payment term?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['termsindicator'],
 			$myrow['terms'],

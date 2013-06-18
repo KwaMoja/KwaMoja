@@ -266,7 +266,7 @@ if (!isset($SelectedTabs)){
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '");\'>' . _('Delete') . '</a></td>
+					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return MakeConfirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
 					</tr>',
 					ConvertSQLDate($myrow['2']),
 					$Description['0'],

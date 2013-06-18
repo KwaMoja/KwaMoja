@@ -169,7 +169,7 @@ if(DB_num_rows($result) != 0){
 			<tr><td><?php echo $myrow['groupname']; ?></td>
 
 				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >'. _('Edit').'</a>'; ?></td>
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">'._('Delete'); ?></a></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return MakeConfirm(\'' ._('Are you sure you wish to delete this group?').'\', \'Confirm Delete\', this);">'._('Delete'); ?></a></td>
 			</tr>
 
 <?php
@@ -226,7 +226,7 @@ function GetUsers ($GroupId,$GroupName) {
 ?>
 			<td><?php echo $myrow['userid']; ?></td>
 			<td><?php echo $myrow['realname']; ?></td>
-			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId; ?>" onclick="return confirm('Are you sure to remove this users?'); " /><?php echo _('Remove'); ?></a></td>
+			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId; ?>" onclick="return MakeConfirm('Are you sure to remove this users?', \'Confirm Delete\', this); " /><?php echo _('Remove'); ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>

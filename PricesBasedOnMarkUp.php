@@ -162,7 +162,7 @@ echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '
 				<td><input type="text" name="IncreasePercent" class="number" size="4" minlength="0" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td></tr></table>';
 
 
-echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
+echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
 
 echo '</div>
 	  </form>';

@@ -1026,7 +1026,7 @@ if (!isset($SupplierID)) {
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
 		echo '<br />
 			<div class="centre">
-				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
+				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />';
 		echo '<br />
 			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode($SupplierID) . '">' . _('Review Contact Details') . '</a>
 			</div>';

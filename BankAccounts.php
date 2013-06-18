@@ -221,7 +221,7 @@ if (!isset($SelectedBankAccount)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</a></td>
-				<td><a href="%s?SelectedBankAccount=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="%s?SelectedBankAccount=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this bank account?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['accountcode'],
 			$myrow['accountname'],

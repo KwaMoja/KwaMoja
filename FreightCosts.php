@@ -238,7 +238,7 @@ if (!isset($SelectedFreightCost) and isset($LocationFrom) and isset($ShipperID))
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this freight cost') . '\');">' . _('Delete') . '</a></td></tr>',
+			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this freight cost') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>',
 			$myrow[1],
 			$myrow[2],
 			$myrow[3],

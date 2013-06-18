@@ -150,7 +150,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 					<td class="number">%s</td>
 					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
 					<td>'.$DrillText.'</td>
-					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\');">' . _('Delete') . '</a></td>
+					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					 </tr>',
 					$Level1,
 					$myrow['component'],

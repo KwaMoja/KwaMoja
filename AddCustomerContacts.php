@@ -146,7 +146,7 @@ if (!isset($Id)) {
 				<td><a href="mailto:%s">%s</a></td>
 				<td>%s</td>
 				<td><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">'. _('Delete'). '</a></td></tr>',
+				<td><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this contact?') . '\', \'Confirm Delete\', this);">'. _('Delete'). '</a></td></tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],

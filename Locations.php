@@ -400,7 +400,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['loccode'],
 					$myrow['locationname'],

@@ -187,7 +187,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['categoryid'],
 					$myrow['categorydescription'],

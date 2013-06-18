@@ -132,7 +132,7 @@ while ($myrow = DB_fetch_array($Result,$db)){
 			<td>'.$myrow['tokenid'].'</td>
 			<td>'.htmlspecialchars($myrow['tokenname'],ENT_QUOTES,'UTF-8').'</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedToken=' . $myrow['tokenid'] . '&amp;Action=delete" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this security token?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

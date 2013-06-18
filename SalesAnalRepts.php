@@ -302,7 +302,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td><a href="%s/SalesAnalReptCols.php?ReportID=%s">' . _('Define Columns') . '</a></td>
 			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProducePDF=True">' . _('Make PDF Report') . '</a></td>
 			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
-			<td><a href="%s&amp;SelectedReport=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this report design?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s&amp;SelectedReport=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to remove this report design?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow[0],
 			$myrow[1],

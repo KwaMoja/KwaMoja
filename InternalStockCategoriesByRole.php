@@ -181,7 +181,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['categoryid'],
 			$myrow['categorydescription'],

@@ -135,7 +135,7 @@ if (!isset($Id)) {
 				<td><a href="%s">%s</a></td>
 				<td>%s</td>
 				<td><a href="%sId=%s&DebtorNo=%s">'. _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">'. _('Delete'). '</td></tr>',
+				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this customer note?') . '\', \'Confirm Delete\', this);">'. _('Delete'). '</td></tr>',
 				ConvertSQLDate($myrow['date']),
 				$myrow['note'],
 				$myrow['href'],

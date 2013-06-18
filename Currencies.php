@@ -338,7 +338,7 @@ if (!isset($SelectedCurrency)) {
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td><a href="%s&amp;SelectedCurrency=%s">%s</a></td>
-					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
+					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this currency?') . '\', \'Confirm Delete\', this);">%s</a></td>
 					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
 					</tr>', $ImageFile, $myrow['currabrev'], _($myrow['currency']), $myrow['country'], $myrow['hundredsname'], locale_number_format($myrow['decimalplaces'], 0), $ShowInWebText, locale_number_format($myrow['rate'], 8), locale_number_format(1 / $myrow['rate'], 8), locale_number_format(GetCurrencyRate($myrow['currabrev'], $CurrencyRatesArray), 8), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['currabrev'], _('Edit'), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['currabrev'], _('Delete'), $RootPath, '&amp;CurrencyToShow=' . $myrow['currabrev']);
 		} else {

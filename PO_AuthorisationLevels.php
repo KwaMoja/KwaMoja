@@ -150,7 +150,7 @@ while ($myrow=DB_fetch_array($Result)) {
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
 	'&amp;Currency='.$myrow['currabrev'].'">'._('Edit').'</a></td>
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
-	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">'._('Delete').'</a></td>
+	'&amp;Currency='.$myrow['currabrev'].'" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\', \'Confirm Delete\', this);">'._('Delete').'</a></td>
 		</tr>';
 }
 

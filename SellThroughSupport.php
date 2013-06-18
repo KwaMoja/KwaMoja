@@ -301,7 +301,7 @@ if (isset($SupplierID) AND $Edit == false) {
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%s?SellSupportID=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Edit') . '</a></td>
-					<td><a href="%s?SellSupportID=%s&amp;Delete=1&amp;SupplierID=%s" onclick=\'return confirm("' . _('Are you sure you wish to delete this sell through support record?') . '");\'>' . _('Delete') . '</a></td>
+					<td><a href="%s?SellSupportID=%s&amp;Delete=1&amp;SupplierID=%s" onclick=\'return MakeConfirm("' . _('Are you sure you wish to delete this sell through support record?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
 					</tr>',
 					$ItemDescription,
 					$Customer,

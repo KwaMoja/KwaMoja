@@ -1025,7 +1025,7 @@ if (isset($StockItemsResult)
 		if ($_POST['Quotations']=='Orders_Only'
 			and $AuthRow['cancreate']==0){ //cancreate==0 means can create POs
 
-			echo '<tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
+			echo '<tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return MakeConfirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
 		}
 		echo '<tr><td colspan="9" class="number">';
 		if ($_POST['Quotations']=='Orders_Only'){

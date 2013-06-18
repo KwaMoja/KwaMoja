@@ -172,7 +172,7 @@ if (!isset($SelectedTaxAuthID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedTaxAuthID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedTaxAuthID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="%sSelectedTaxAuthID=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				<td><a href="%sTaxAuthority=%s">' . _('Edit Rates') . '</a></td>
 				</tr>',
 				$myrow[0],

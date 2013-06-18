@@ -144,7 +144,7 @@ if (isset($_POST['Submit'])) {
 				<td>' . $myrow['cpercentage'] . '</td>
 				<td>' . $myrow['zerousage'] . '</td>
 				<td>' . $myrow['months'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedGroupID=' . $myrow['groupid'] . '&amp;Delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this ranking group?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedGroupID=' . $myrow['groupid'] . '&amp;Delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this ranking group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 	}
 	echo '</table>';

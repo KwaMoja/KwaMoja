@@ -72,7 +72,7 @@ if (isset($_POST['Submit'])) {
 				<td>' . $myrow['methodid'] . '</td>
 				<td>' . $myrow['methodname'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedMethodID=' . $myrow['methodid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedMethodID=' . $myrow['methodid'] . '&amp;Delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this ranking method?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedMethodID=' . $myrow['methodid'] . '&amp;Delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this ranking method?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 	}
 	echo '</table>';

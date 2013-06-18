@@ -1480,7 +1480,7 @@ else { //dont require customer selection
 
 			echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" minlength="0" maxlength="10" value="' . $LineDueDate . '" /></td>';
 
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
+			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return MakeConfirm(\'' . _('Are You Sure?') . '\', \'Confirm Delete\', this);">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 				echo $RowStarter;
@@ -1930,7 +1930,7 @@ else { //dont require customer selection
 		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint" name="deleteform">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
+		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 	} //$_SESSION['Items' . $identifier]->ItemsOrdered >= 1
 } //end of else not selecting a customer
 

@@ -275,8 +275,7 @@ if (isset($_POST['process']) or isset($SelectedTabs)) {
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $myrow['counterindex'] . '&amp;SelectedTabs=' .
 					$SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $myrow['counterindex'] . '&amp;SelectedTabs=' .
-					$SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick="return confirm(\'' .
-						_('Are you sure you wish to delete this code and the expense it may have set up?') . '\');">' .
+					$SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this code and the expense it may have set up?') . '\', \'Confirm Delete\', this);">' .
 							_('Delete') . '</a></td>
 				</tr>';
 		} else {

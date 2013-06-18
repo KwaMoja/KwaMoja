@@ -307,7 +307,7 @@ function listall(&$db,$part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL
 				<td>' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
 				<td>' . $displaydate . '</td>
 				<td><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DemandID=' . $myrow['demandid'] . '&amp;StockID=' . $myrow['stockid'].'&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this demand?') . '\', \'Confirm Delete\', this);">' . _('Delete') .'</a></td>
 				</tr>';
 	}
 
@@ -426,7 +426,7 @@ function display(&$db,&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISP
 				<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '" />';
 		// If mrpdemand record exists, display option to delete it
 		if ((isset($DemandID)) and (DB_num_rows($result) > 0)) {
-			echo '<br/><br/><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') . '</a>';
+			echo '<br/><br/><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this demand?') . '\', \'Confirm Delete\', this);">' . _('Or Delete Record') . '</a>';
 		}
 		echo '</div>';
 	}

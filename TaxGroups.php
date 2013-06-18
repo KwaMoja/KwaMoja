@@ -186,7 +186,7 @@ if (!isset($SelectedGroup)) {
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td><a href="%s&amp;SelectedGroup=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedGroup=%s&amp;Delete=1&amp;GroupID=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%s&amp;SelectedGroup=%s&amp;Delete=1&amp;GroupID=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['taxgroupid'],
 					$myrow['taxgroupdescription'],
@@ -377,7 +377,7 @@ if (isset($SelectedGroup)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sSelectedGroup=%s&amp;remove=1&amp;TaxAuthority=%s" onclick="return confirm(\'' . _('Are you sure you wish to remove this tax authority from the group?') . '\');">' . _('Remove') . '</a></td>
+				<td><a href="%sSelectedGroup=%s&amp;remove=1&amp;TaxAuthority=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to remove this tax authority from the group?') . '\', \'Confirm Delete\', this);">' . _('Remove') . '</a></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>',
 				$AvailRow['taxid'],

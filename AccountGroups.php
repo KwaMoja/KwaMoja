@@ -304,7 +304,7 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 			<td>' . $PandLText . '</td>
 			<td>' . $myrow['parentgroupname'] . '</td>';
 		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES, 'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete') . '</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES, 'UTF-8') . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';

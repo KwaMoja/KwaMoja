@@ -506,7 +506,7 @@ if ($NewRecurringOrder=='Yes'){
 
 	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';
 	echo '<hr />';
-	echo '<br /><br /><input type="submit" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
+	echo '<br /><br /><input type="submit" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
 }
 
 echo '</div>';

@@ -345,7 +345,7 @@ if (!isset($SelectedUser)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this user?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['userid'],
 					$myrow['realname'],

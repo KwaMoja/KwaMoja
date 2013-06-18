@@ -404,7 +404,7 @@ if (!isset($SelectedBranch)){
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
-				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>%s</a></td></tr>',
+				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this branch?') . '\', \'Confirm Delete\', this);">%s</a></td></tr>',
 				$myrow[1],
 				$myrow[2],
 				$myrow[5],

@@ -265,7 +265,7 @@ if (isset($_POST['Create'])) {
 			<br />';
 			prnMsg ( _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed'), 'warn');
 			echo '<br />
-				<input tabindex="14" type="submit" name="Delete" value="' . _('Delete Factor') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this factoring company?') . '\');" />
+				<input tabindex="14" type="submit" name="Delete" value="' . _('Delete Factor') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this factoring company?') . '\');" />
 		</div>
 		</div>
 		</form>';

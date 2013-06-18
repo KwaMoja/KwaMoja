@@ -299,7 +299,7 @@ if (!isset($_GET['Edit'])) {
 					<td>%s</td>
 					<td><a href="%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s?StockID=%s&SupplierID=%s&Copy=1&EffectiveFrom=%s">' . _('Copy') . '</a></td>
-					<td><a href="%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s" onclick=\'return confirm("' . _('Are you sure you wish to delete this suppliers price?') . '");\'>' . _('Delete') . '</a></td>
+					<td><a href="%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this suppliers price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['suppname'],
 					locale_number_format($myrow['price'],$UPriceDecimalPlaces),

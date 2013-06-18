@@ -837,7 +837,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		$_SESSION['Items' . $identifier]->TaxGLCodes = $TaxGLCodes;
 		echo '<td class="number">' . locale_number_format($TaxLineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 		echo '<td class="number">' . locale_number_format($SubTotal + $TaxLineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return MakeConfirm(\'' . _('Are You Sure?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 			echo $RowStarter;
@@ -2435,7 +2435,7 @@ if (!isset($_POST['ProcessSale'])) {
 
 	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >= 1) {
-		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
+		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}
 }
 include('includes/footer.inc');

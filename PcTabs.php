@@ -234,7 +234,7 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedTab=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedTab=%s&amp;delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '");\'>' . _('Delete') . '</a></td>
+					<td><a href="%sSelectedTab=%s&amp;delete=yes" onclick=\' return MakeConfirm("' . _('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
 					</tr>',
 					$myrow['tabcode'],
 					$myrow['usercode'],

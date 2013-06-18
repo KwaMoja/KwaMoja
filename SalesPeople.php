@@ -230,7 +230,7 @@ or deletion of the records*/
 			<td class="number">%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">'. _('Edit') . '</a></td>
-			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['salesmancode'],
 			$myrow['salesmanname'],

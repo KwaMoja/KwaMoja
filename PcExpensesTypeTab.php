@@ -184,7 +184,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf('<td>%s</td>
 			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedTab=' . $SelectedTab . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedTab=' . $SelectedTab . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['codeexpense'],
 			$myrow['description'],

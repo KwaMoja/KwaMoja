@@ -1123,7 +1123,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
 				<td>' . stripslashes($PaymentItem->Narrative) . '</td>
 				<td>' . $PaymentItem->Tag . ' - ' . $TagName . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '&amp;Delete=' . $PaymentItem->ID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment analysis item?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '&amp;Delete=' . $PaymentItem->ID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this payment analysis item?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>';
 			$PaymentTotal += $PaymentItem->Amount;
 		} //$_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem

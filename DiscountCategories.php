@@ -222,7 +222,7 @@ if (isset($_POST['selectchoice'])) {
 
 			printf('<td>%s</td>
 					<td>%s - %s</td>
-					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">'. _('Delete') .'</a></td>
+					<td><a href="%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this discount category?') . '\', \'Confirm Delete\', this);">'. _('Delete') .'</a></td>
 					</tr>',
 					$myrow['discountcategory'],
 					$myrow['stockid'],

@@ -219,7 +219,7 @@ if (!isset($SelectedLabelID)) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
+						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 						</tr>',
 						$myrow['description'],
 						$NoOfRows . ' x ' . $NoOfCols,
@@ -244,7 +244,7 @@ if (!isset($SelectedLabelID)) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
+						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 						</tr>',
 						$myrow['description'],
 						$NoOfRows . ' x ' . $NoOfCols,
@@ -492,7 +492,7 @@ if (isset($SelectedLabelID)) {
 						<option value="0">' . _('No') . '</option>';
 			}
 			echo '</select></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $myrow['labelfieldid'] .' onclick="return confirm(\'' . _('Are you sure you wish to delete this label field?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $myrow['labelfieldid'] .' onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label field?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>';
 			$i++;
 		}

@@ -717,7 +717,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 			echo '<td class="number">' . $DisplayTaxAmount . '</td>
 				<td class="number">' . $DisplayGrossLineTotal . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LineItem->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this line item from the credit note?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LineItem->LineNumber . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this line item from the credit note?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>';
 
 			echo $RowStarter;
@@ -896,7 +896,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		}
 		echo '<div class="centre">
 				<input type="submit" name="Update" value="' . _('Update') . '" />
-				<input type="submit" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
+				<input type="submit" name="CancelCredit" value="' . _('Cancel') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
 		if (!isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 			echo '<input type="submit" name="ProcessCredit" value="' . _('Process Credit Note') . '" />
 					<br />';

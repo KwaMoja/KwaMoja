@@ -314,7 +314,7 @@ or deletion of the records*/
 		<td>%s</td>
 		<td>%s</td>
 		<td><a href=\"%s&amp;SelectedAccount=%s\">" . _('Edit') . "</a></td>
-		<td><a href=\"%s&amp;SelectedAccount=%s&amp;delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</a></td>
+		<td><a href=\"%s&amp;SelectedAccount=%s&amp;delete=1\" onclick=\"return MakeConfirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "', \'Confirm Delete\', this);\">" . _('Delete') . "</a></td>
 		</tr>",
 		$myrow[0],
 		htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8'),

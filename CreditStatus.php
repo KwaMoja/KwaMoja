@@ -173,7 +173,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">'. _('Delete') .'</a></td>
+			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\', \'Confirm Delete\', this);">'. _('Delete') .'</a></td>
 			</tr>',
 			$myrow['reasoncode'],
 			$myrow['reasondescription'],

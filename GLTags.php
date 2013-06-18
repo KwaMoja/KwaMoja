@@ -93,7 +93,7 @@ while ($myrow = DB_fetch_array($result,$db)){
 			<td>' . $myrow['tagref'] . '</td>
 			<td>' . $myrow['tagdescription'] . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=delete" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

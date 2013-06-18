@@ -142,7 +142,7 @@ or deletion of the records*/
 		printf('<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedShipper=%s">'. _('Edit').'</a></td>
-			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">'. _('Delete'). '</a></td></tr>',
+			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this shipper?') . '\', \'Confirm Delete\', this);">'. _('Delete'). '</a></td></tr>',
 			$myrow[0],
 			$myrow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' ,

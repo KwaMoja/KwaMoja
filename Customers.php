@@ -1142,7 +1142,7 @@ else {
 					<td><a href="mailto:%s">%s</a></td>
 					<td>%s</td>
 					<td><a href="AddCustomerContacts.php?Id=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 					</tr>', $myrow['contactname'], $myrow['role'], $myrow['phoneno'], $myrow['email'], $myrow['email'], $myrow['notes'], $myrow['contid'], $myrow['debtorno'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['contid'], $myrow['debtorno']);
 		}
 	} //END WHILE LIST LOOP
@@ -1160,7 +1160,7 @@ else {
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
-				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
+				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return MakeConfirm(\'' . _('Are You Sure?') . '\');" />
 			</div>';
 	} //!isset($_GET['Modify'])
 

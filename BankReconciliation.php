@@ -357,7 +357,7 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])){
 				<td class="number"><input type="text" name="BankStatementBalance" minlength="0" maxlength="15" size="15" value="' . locale_number_format($_POST['BankStatementBalance'],$CurrencyRow['currdecimalplaces']) . '" /><td>
 			</tr>
 			<tr>
-				<td colspan="7" align="center"><input type="submit" name="PostExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '" onclick="return confirm(\'' . _('This will create a general ledger journal to write off the exchange difference in the current balance of the account. It is important that the exchange rate above reflects the current value of the bank account currency') . ' - ' . _('Are You Sure?') . '\');" /></td>
+				<td colspan="7" align="center"><input type="submit" name="PostExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '" onclick="return MakeConfirm(\'' . _('This will create a general ledger journal to write off the exchange difference in the current balance of the account. It is important that the exchange rate above reflects the current value of the bank account currency') . ' - ' . _('Are You Sure?') . '\');" /></td>
 			</tr>';
 	}
 

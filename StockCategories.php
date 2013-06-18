@@ -322,7 +322,7 @@ or deletion of the records*/
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</td>
-				<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return confirm("' . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '");">' . _('Delete') . '</td>
+				<td><a href="%sSelectedCategory=%s&delete=yes" onclick="return MakeConfirm("' . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '", \'Confirm Delete\', this);">' . _('Delete') . '</td>
 			</tr>',
 				$myrow['categoryid'],
 				$myrow['categorydescription'],
@@ -634,7 +634,7 @@ if (isset($SelectedCategory)) {
 			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" /></td>';
 		}
 
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td>
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return MakeConfirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</td>
 			</tr>';
 
 		$PropertyCounter++;

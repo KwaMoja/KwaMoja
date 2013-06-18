@@ -737,7 +737,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0){ /*only show return line
 		$_SESSION['Items'.$identifier]->TaxGLCodes=$TaxGLCodes;
 		echo '<td class="number">' . locale_number_format($TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		echo '<td class="number">' . locale_number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '&Delete=' . $ReturnItemLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
+		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier . '&Delete=' . $ReturnItemLine->LineNumber . '" onclick="return MakeConfirm(\'' . _('Are You Sure?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 			echo $RowStarter;
@@ -1830,7 +1830,7 @@ if (!isset($_POST['ProcessReturn'])){
 
   	}
 	if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-  		echo '<br /><div class="centre"><input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" /></div>';
+  		echo '<br /><div class="centre"><input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" /></div>';
 	}
 }
 echo '</form>';

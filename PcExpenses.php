@@ -224,7 +224,7 @@ or deletion of the records*/
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedExpense=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="%sSelectedExpense=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>',
 				$myrow[0],
 				$myrow[1],

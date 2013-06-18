@@ -121,7 +121,7 @@ if (!isset($SelectedRole)) {
 
 		printf('<td>%s</td>
 			<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this role?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['secrolename'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
@@ -218,7 +218,7 @@ if (isset($SelectedRole)) {
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
 			printf('<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
+					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\', \'Confirm Delete\', this);">' . _('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>',

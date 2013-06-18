@@ -180,7 +180,7 @@ while ($myrow = DB_fetch_array($result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['sales_type'],
 			$myrow['discountcategory'],
