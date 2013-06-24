@@ -15,12 +15,14 @@ CreateTable('fixedassettasks',
 )", $db);
 
 NewConfigValue('ShopName', '', $db);
+NewConfigValue('ShopContactUs', '', $db);
 NewConfigValue('ShopPrivacyStatement', '', $db);
 NewConfigValue('ShopFreightPolicy', '', $db);
 NewConfigValue('ShopTermsConditions', '', $db);
 NewConfigValue('ShopDebtorNo', '', $db);
 NewConfigValue('ShopBranchCode', '', $db);
 NewConfigValue('ShopAboutUs', '', $db);
+NewConfigValue('ShopMode', '', $db);
 NewConfigValue('ShopPayPalUser', '', $db);
 NewConfigValue('ShopPayPalPassword', '', $db);
 NewConfigValue('ShopPayPalSignature', '', $db);
@@ -59,7 +61,7 @@ CreateTable('stockdescriptiontranslations',
 AddColumn('language_id', 'debtorsmaster', 'VARCHAR( 10 )', 'NOT NULL', 'en_GB.utf8', 'typeid', $db);
 AddColumn('salesperson', 'debtortrans', 'VARCHAR( 4 )', 'NOT NULL', 'en_GB.utf8', 'packages', $db);
 
-AddIndex('salesperson', 'debtortrans', 'salesperson', $db);
+AddIndex(array('salesperson'), 'debtortrans', 'salesperson', $db);
 
 CreateTable('manufacturers',
 "CREATE TABLE IF NOT EXISTS `manufacturers` (
@@ -84,7 +86,7 @@ $db);
 AddColumn('manufacturers_id', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'stockid', $db);
 AddColumn('featured', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'manufacturers_id', $db);
 
-AddIndex('manufacturers_id', 'salescatprod', 'manufacturers_id', $db);
+AddIndex(array('manufacturers_id'), 'salescatprod', 'manufacturers_id', $db);
 
 UpdateDBNo(basename(__FILE__, '.php'), $db);
 

@@ -153,10 +153,10 @@ function AddIndex($Columns, $Table, $Name, $db) {
 			if ($response==0) {
 				OutputResult( _('The index has been inserted') , 'success');
 			} else {
-				OutputResult( _('The column could not be inserted') , 'error');
+				OutputResult( _('The index could not be inserted') . '<br />' . $sql, 'error');
 			}
 		} else {
-			OutputResult( _('The column already exists') , 'info');
+			OutputResult( _('The index already exists') , 'info');
 		}
 	}
 }

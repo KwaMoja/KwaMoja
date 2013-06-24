@@ -11,16 +11,16 @@ NewMenuItem('FA', 'Maintenance', _('Maintenance Tasks'), '/MaintenanceTasks.php'
 
 NewMenuItem('system', 'Transactions', _('Web-Store Configuration'), '/ShopParameters.php', 21, $db);
 
-NewScript('/MaintenanceTasks.php', 1, $db);
-NewScript('/MaintenanceUserSchedule.php', 1, $db);
-NewScript('/MaintenanceReminders.php', 1, $db);
+NewScript('MaintenanceTasks.php', 1, $db);
+NewScript('MaintenanceUserSchedule.php', 1, $db);
+NewScript('MaintenanceReminders.php', 1, $db);
 
-NewScript('/ImportBankTransAnalysis.php', 11, $db);
-NewScript('/ImportBankTrans.php', 11, $db);
+NewScript('ImportBankTransAnalysis.php', 11, $db);
+NewScript('ImportBankTrans.php', 11, $db);
 
-NewScript('/Manufacturers.php', 15, $db);
-NewScript('/SalesCategoryDescriptions.php', 15, $db);
-NewScript('/ShopParameters.php', 15, $db);
+NewScript('Manufacturers.php', 15, $db);
+NewScript('SalesCategoryDescriptions.php', 15, $db);
+NewScript('ShopParameters.php', 15, $db);
 
 UpdateDBNo(basename(__FILE__, '.php'), $db);
 
