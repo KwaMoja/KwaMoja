@@ -1609,6 +1609,7 @@ else { //dont require customer selection
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo
 						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno=purchorders.orderno
 						WHERE purchorderdetails.completed=0
 						AND purchorders.status<> 'Completed'
 						AND purchorders.status<> 'Rejected'

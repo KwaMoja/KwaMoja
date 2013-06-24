@@ -161,7 +161,7 @@ if (isset($_POST['Submit']) or isset($_POST['EnterMoreItems'])){
 							$ErrorMessage .=_('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '._('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.').'<br />';
 							$_POST['LinesCounter'] -= 10;
 						}
-					}else{
+					} else {
 						$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
 					} //end of accumulated check
 
@@ -189,7 +189,6 @@ if(isset($_POST['Submit']) and $InputError==False){
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
 
 	DB_Txn_Begin($db);
-	$Now = Date('Y-m-d H-i-s');
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ''){
@@ -207,7 +206,7 @@ if(isset($_POST['Submit']) and $InputError==False){
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
 							'" . round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . "',
-							'" . $Now . "',
+							'CURRENT_TIMESTAMP',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];

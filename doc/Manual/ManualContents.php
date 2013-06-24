@@ -25,7 +25,7 @@ $_GET['ViewTopic'] = isset($_GET['ViewTopic'])?$_GET['ViewTopic']:'';
 
 //all sections of manual listed here
 
-echo'  <form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" class="noPrint">';
+echo '<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post" class="noPrint">';
 
 if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) ||
      ((isset($_POST['Submit'])) and(isset($_POST['SelectTableOfContents'])))) {

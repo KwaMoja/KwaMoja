@@ -1242,7 +1242,8 @@ $SOH_DateFields = array ('orddate',
 										ovamount,
 										ovgst,
 										rate,
-										shipvia)
+										shipvia,
+										salesperson)
 									VALUES (
 										'". $InvoiceNo . "',
 										10,
@@ -1257,7 +1258,8 @@ $SOH_DateFields = array ('orddate',
 										'" . $TotalFXNetInvoice . "',
 										'" . $TotalFXTax . "',
 										'" . $OrderHeader['rate'] . "',
-										'" . $OrderHeader['shipvia'] . "')";
+										'" . $OrderHeader['shipvia'] . "',
++										'" . $OrderHeader['salesman'] . "')";
 
 		$Result = api_DB_query($SQL,$db,'','',true);
 

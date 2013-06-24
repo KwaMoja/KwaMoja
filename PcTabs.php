@@ -4,8 +4,8 @@
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Tabs');
 /* KwaMoja manual links before header.inc */
-$ViewTopic= "PettyCash";
-$BookMark = "PCTabSetup";
+$ViewTopic= 'PettyCash';
+$BookMark = 'PCTabSetup';
 include('includes/header.inc');
 
 echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';

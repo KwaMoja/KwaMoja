@@ -29,12 +29,12 @@ if (isset($_POST['Modify'])) {
 	}
 
 	//!!!for the demo only - enable this check so password is not changed
- /*
-	if ($_POST['pass'] != ''){
+
+	if ($AllowDemoMode and $_POST['Password'] != ''){
 		$InputError = 1;
 		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
- */
+
  	$UpdatePassword = 'N';
 
 	if ($_POST['PasswordCheck'] != ''){

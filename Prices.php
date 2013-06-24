@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 
-	if ($myrow[0]!=0) {
+	if ($myrow[0]!=0 and !isset($_POST['OldTypeAbbrev']) and !isset($_POST['OldCurrAbrev'])) {
 		prnMsg( _('This price has already been entered. To change it you should edit it') , 'warn');
 		$InputError =1;
 	}
@@ -244,7 +244,7 @@ if (DB_num_rows($result) > 0) {
 				<td class="number">' .locale_number_format($myrow['price'],$myrow['currdecimalplaces']+1) . '</td>
 				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 				<td>' . $EndDateDisplay . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . $myrow['price'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'],$myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $myrow['stockid'] . '&amp;TypeAbbrev=' .$myrow['typeabbrev'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>';
 
 		} else {

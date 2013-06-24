@@ -153,10 +153,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 				if (DB_num_rows($SetldTrans)>=1) {
 
 					$FontSize=12;
-					$YPos -= $line_height;
+
 					$pdf->addText($Left_Margin+1,$YPos+20,$FontSize, _('Settled Transactions'));
 
-					$YPos -= ($line_height);
+					$YPos -= (2*$line_height);
 
 					$FontSize=10;
 

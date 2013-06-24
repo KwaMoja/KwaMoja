@@ -1077,7 +1077,8 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 									ovgst,
 									ovfreight,
 									rate,
-									invtext)
+									invtext,
+									salesperson)
 								  VALUES ('" . $CreditNo . "',
 								  	'11',
 									'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . "',
@@ -1090,7 +1091,8 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 									'" . -$TaxTotal . "',
 								  	'" . -$_SESSION['CreditItems' . $identifier]->FreightCost . "',
 									'" . $_SESSION['CurrencyRate'] . "',
-									'" . $_POST['CreditText'] . "'
+									'" . $_POST['CreditText'] . "',
+									'" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "'
 									)";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The customer credit note transaction could not be added to the database because');

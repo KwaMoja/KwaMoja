@@ -74,6 +74,9 @@ if (isset($PrintPDF)
 	$FirstPage = true;
 	$line_height=16;
 
+	//Keep a record of the user's language
+	$UserLanguage = $_SESSION['Language'];
+
 	while ($FromTransNo <= filter_number_format($_POST['ToTransNo'])){
 
 	/* retrieve the invoice details from the database to print
@@ -100,6 +103,7 @@ if (isset($PrintPDF)
 							debtorsmaster.currcode,
 							debtorsmaster.invaddrbranch,
 							debtorsmaster.taxref,
+							debtorsmaster.language_id,
 							paymentterms.terms,
 							salesorders.deliverto,
 							salesorders.deladd1,
@@ -171,6 +175,7 @@ if (isset($PrintPDF)
 							debtorsmaster.address6,
 							debtorsmaster.currcode,
 							debtorsmaster.taxref,
+							debtorsmaster.language_id,
 							custbranch.brname,
 							custbranch.braddress1,
 							custbranch.braddress2,
@@ -223,6 +228,11 @@ if (isset($PrintPDF)
 		if (DB_num_rows($result)==1) {
 			$myrow = DB_fetch_array($result);
 			$ExchRate = $myrow['rate'];
+
+			//Change the language to the customer's language
+			$_SESSION['Language'] = $myrow['language_id'];
+			include('includes/LanguageSetup.php');
+
 			if ($InvOrCredit=='Invoice') {
 
 				$sql = "SELECT stockmoves.stockid,
@@ -258,7 +268,7 @@ if (isset($PrintPDF)
 			} // end else
 
 			$result=DB_query($sql,$db);
-			if (DB_error_no($db)!=0) {
+			if (DB_error_no($db)!=0 or DB_num_rows($result)==0) {
 				$Title = _('Transaction Print Error Report');
 				include ('includes/header.inc');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
@@ -267,9 +277,8 @@ if (isset($PrintPDF)
 				}
 				include('includes/footer.inc');
 				exit;
-			}
 
-			if (DB_num_rows($result)>0) {
+			} else {
 
 				$FontSize = 10;
 				$PageNumber = 1;
@@ -289,7 +298,18 @@ if (isset($PrintPDF)
 					$DisplayQty=locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
 
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+3,$YPos,95,$FontSize,$myrow2['stockid']);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,251,$FontSize,$myrow2['description']);
+					//Get translation if it exists
+					$TranslationResult = DB_query("SELECT descriptiontranslation
+													FROM stockdescriptiontranslations
+													WHERE stockid='" . $myrow2['stockid'] . "'
+													AND language_id='" . $myrow['language_id'] ."'",$db);
+
+					if (DB_num_rows($TranslationResult)==1){ //there is a translation
+						$TranslationRow = DB_fetch_array($TranslationResult);
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,251,$FontSize,$TranslationRow['descriptiontranslation']);
+					} else {
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,251,$FontSize,$myrow2['description']);
+					}
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+353,$YPos,96,$FontSize,$DisplayPrice,'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+453,$YPos,95,$FontSize,$DisplayQty,'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+553,$YPos,35,$FontSize,$myrow2['units'],'centre');
@@ -494,6 +514,9 @@ if (isset($PrintPDF)
 
 	}
 	$pdf->__destruct();
+	//Now change the language back to the user's language
+	$_SESSION['Language'] = $UserLanguage;
+	include('includes/LanguageSetup.php');
 
 } else { /*The option to print PDF was not hit */
 

@@ -1332,7 +1332,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 										invtext,
 										shipvia,
 										alloc,
-										settled )
+										settled,
+										salesperson )
+
 			VALUES (
 				'" . $InvoiceNo . "',
 				10,
@@ -1350,7 +1352,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 				'" . $_SESSION['Items' . $identifier]->Comments . "',
 				'" . $_SESSION['Items' . $identifier]->ShipVia . "',
 				'" . ($_SESSION['Items' . $identifier]->total + filter_number_format($_POST['TaxTotal'])) . "',
-				'1')";
+				'1',
+				'" . $_SESSION['Items'.$identifier]->SalesPerson . "')";
+
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
@@ -2147,6 +2151,7 @@ if (!isset($_POST['ProcessSale'])) {
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS QOO
 						FROM purchorderdetails INNER JOIN purchorders
+						ON purchorderdetails.orderno=purchorders.orderno
 						WHERE purchorderdetails.completed=0
 						AND purchorders.status<>'Cancelled'
 						AND purchorders.status<>'Rejected'
@@ -2394,7 +2399,7 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<tr><td><input type="hidden" name="previous" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>';
 			echo '<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
-			echo '</table></div></form>';
+			echo '</table></div>';
 			echo $jsCall;
 
 		} #end if SearchResults to show
@@ -2430,13 +2435,13 @@ if (!isset($_POST['ProcessSale'])) {
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
 		echo '</div>';
-		echo '</form>';
 		echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >= 1) {
 		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}
+	echo '</form>';
 }
 include('includes/footer.inc');
 ?>

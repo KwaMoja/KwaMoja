@@ -239,11 +239,12 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	// comment out except for demo!  Do not want anyopne deleting demo user.
-	/*
-	if ($SelectedUser == 'admin') {
+
+
+	if ($AllowDemoMode AND $SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
-	*/
+
 		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
 		$result=DB_query($sql, $db);
 		if (DB_num_rows($result)!=0) {
@@ -256,7 +257,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('User Deleted'),'info');
 		}
 		unset($SelectedUser);
-	// }
+	}
 
 }
 

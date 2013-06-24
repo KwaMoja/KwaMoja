@@ -54,7 +54,7 @@ echo '<div>
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />
 		<input type="hidden" name="StockID" value="'. $StockID. '" />';
 
-if ($_GET['CreditInvoice']=='Yes' or $_POST['CreditInvoice']=='Yes'){
+if (isset($_GET['CreditInvoice']) or isset($_POST['CreditInvoice'])){
 	$CreditInvoice = '&amp;CreditInvoice=Yes';
 	echo '<input type="hidden" name="CreditInvoice" value="Yes" />';
 } else {

@@ -447,13 +447,32 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . $StockID . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 		//show the item image if it has been uploaded
-		if (isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')) {
-			if ($_SESSION['ShowStockidOnImages'] == "0") {
-				echo '<div class="centre"><img src="' . $RootPath . '/GetStockImage.php?automake=1&amp;textcolor=FFFFF0&amp;bgcolor=007F00&amp;width=120&amp;height=120&amp;StockID=' . $StockID . '&amp;text=""' . '" />';
+		if (function_exists('imagecreatefromjpg')){
+			if ($_SESSION['ShowStockidOnImages'] == '0'){
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+									'&amp;StockID='.urlencode($StockID).
+									'&amp;text='.
+									'&amp;width=100'.
+									'&amp;height=100'.
+									'" alt="" />';
 			} else {
-				echo '<div class="centre"><img src="' . $RootPath . '/GetStockImage.php?automake=1&amp;textcolor=FFFFF0&amp;bgcolor=007F00&amp;StockID=' . $StockID . '&amp;text=' . $StockID . '&amp;width=120&amp;height=120" />';
+			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+									'&amp;StockID='.urlencode($StockID).
+									'&amp;text='. $StockID .
+									'&amp;width=100'.
+									'&amp;height=100'.
+									'" alt="" />';
+			}
+		} else {
+			if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
+			} else {
+				$StockImgLink = _('No Image');
 			}
 		}
+
+		echo '<div class="centre">' . $StockImgLink . '</div>';
+
 		if (($myrow['mbflag'] == 'B') and (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens'])) and $myrow['discontinued'] == 0) {
 			echo '<br />';
 			$SuppResult = DB_query("SELECT suppliers.suppname,

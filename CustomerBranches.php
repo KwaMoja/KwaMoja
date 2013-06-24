@@ -111,26 +111,26 @@ if (isset($_POST['submit'])) {
 			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&amp;key=' . KEY;
 			$request_url = $base_url . '&amp;q=' . urlencode($address);
 			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
-			$coordinates = $xml->Response->Placemark->Point->coordinates;
-			$coordinatesSplit = explode(",", $coordinates);
+			$Coordinates = $xml->Response->Placemark->Point->Coordinates;
+			$CoordinatesSplit = explode(",", $Coordinates);
 			// Format: Longitude, Latitude, Altitude
-			$Latitude = $coordinatesSplit[1];
-			$Longitude = $coordinatesSplit[0];
+			$Latitude = $CoordinatesSplit[1];
+			$Longitude = $CoordinatesSplit[0];
 
-			$status = $xml->Response->Status->code;
-			if (strcmp($status, '200') == 0) {
+			$Status = $xml->Response->Status->code;
+			if (strcmp($Status, '200') == 0) {
 				// Successful geocode
-					$geocode_pending = false;
-				$coordinates = $xml->Response->Placemark->Point->coordinates;
-				$coordinatesSplit = explode(",", $coordinates);
+				$Geocode_Pending = false;
+				$Coordinates = $xml->Response->Placemark->Point->Coordinates;
+				$CoordinatesSplit = explode(",", $Coordinates);
 				// Format: Longitude, Latitude, Altitude
-				$Latitude = $coordinatesSplit[1];
-				$Longitude = $coordinatesSplit[0];
+				$Latitude = $CoordinatesSplit[1];
+				$Longitude = $CoordinatesSplit[0];
 			} else {
 				// failure to geocode
-				$geocode_pending = false;
+				$Geocode_Pending = false;
 				echo '<div class="page_help_text noPrint"><b>' . _('Geocode Notice') . ':</b> ' . _('Address') . ': ' . $address . ' ' . _('failed to geocode');
-				echo _('Received status') . ' ' . $status . '</div>';
+				echo _('Received status') . ' ' . $Status . '</div>';
 			}
 		}
 	}
@@ -351,16 +351,15 @@ if (!isset($SelectedBranch)){
 					custbranch.email,
 					taxgroups.taxgroupdescription,
 					custbranch.disabletrans
-				FROM custbranch,
-					debtorsmaster,
-					areas,
-					salesman,
-					taxgroups
-				WHERE custbranch.debtorno=debtorsmaster.debtorno
-					AND custbranch.area=areas.areacode
-					AND custbranch.salesman=salesman.salesmancode
-					AND custbranch.taxgroupid=taxgroups.taxgroupid
-					AND custbranch.debtorno = '".$DebtorNo."'";
+				FROM custbranch INNER JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+				INNER JOIN areas
+				ON custbranch.area=areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
+				INNER JOIN taxgroups
+				ON custbranch.taxgroupid=taxgroups.taxgroupid
+				WHERE custbranch.debtorno = '".$DebtorNo."'";
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -843,7 +842,8 @@ if (!isset($_GET['delete'])) {
 				<option value="0">' . _('Enabled') . '</option>';
 	}
 
-	echo '	</select></td></tr>';
+	echo '	</select></td>
+		</tr>';
 
 
 	$SQL = "SELECT shipper_id, shippername FROM shippers";
@@ -938,7 +938,7 @@ if (!isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input tabindex="29" type="submit" name="submit" value="' . _('Enter Branch') . '" />
+			<input tabindex="29" type="submit" name="submit" value="' . _('Enter Or Update Branch') . '" />
 		</div>
 		</div>
 		</form>';
