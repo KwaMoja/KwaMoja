@@ -318,6 +318,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div class="page_help_text noPrint">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>'
 										. _('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>'
 										. _('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>'
+										. _('You need access to both locations to do the transfer.') . '<br/>'
 										. _('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
 	$sql = "SELECT defaultlocation FROM www_users WHERE userid='".$_SESSION['UserID']."'";
@@ -328,9 +329,18 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div>
 		  <br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT loccode,
-			locationname
-		FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$resultStkLocs = DB_query($sql,$db);
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
@@ -352,7 +362,8 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	echo '</select></td>
 		</tr>';
-	DB_data_seek($resultStkLocs,0);
+	$sql = "SELECT locationname, loccode FROM locations";
+	$resultStkLocs = DB_query($sql,$db);
 	if (!isset($_POST['ToLocation'])) {
 		$_POST['ToLocation']=$DefaultLocation;
 	}
@@ -416,9 +427,11 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			<td>' . _('Report Type') . ':</td>
 			<td>
-				<select name="ReportType">
-					<option selected="selected" value="Batch">' . _('Create Batch') . '</option>
-					<option value="Report">' . _('Report Only') . '</option>
+				<select name="ReportType">';
+	if ($_SESSION['RestrictLocations']==0) {
+		echo '<option selected="selected" value="Batch">' . _('Create Batch') . '</option>';
+	}
+	echo '<option value="Report">' . _('Report Only') . '</option>
 				</select>
 			</td>
 			<td>&nbsp;</td>

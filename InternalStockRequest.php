@@ -213,11 +213,23 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Location from which to request stock') . ':</td>';
-$sql = "SELECT loccode,
-			locationname
-		FROM locations
-		WHERE internalrequest = 1
-		ORDER BY locationname";
+
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+					WHERE internalrequest = 1
+				ORDER BY locationname";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'
+					AND internalrequest = 1
+				ORDER BY locationname";
+}
 
 $result = DB_query($sql, $db);
 echo '<td><select name="Location">

@@ -109,8 +109,8 @@ if (isset($PrintPDF)
 							debtortrans.ovgst,
 							debtortrans.rate,
 							debtortrans.invtext,
-							debtortrans.consignment,
 							debtortrans.packages,
+							debtortrans.consignment,
 							debtorsmaster.name,
 							debtorsmaster.address1,
 							debtorsmaster.address2,
@@ -152,25 +152,27 @@ if (isset($PrintPDF)
 							debtortrans.debtorno,
 							debtortrans.branchcode,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster
-						ON debtortrans.debtorno=debtorsmaster.debtorno
+						FROM debtortrans
+						INNER JOIN debtorsmaster
+							ON debtortrans.debtorno=debtorsmaster.debtorno
 						INNER JOIN custbranch
-						ON debtortrans.debtorno=custbranch.debtorno
-						AND debtortrans.branchcode=custbranch.branchcode
+							ON debtortrans.debtorno=custbranch.debtorno
+							AND debtortrans.branchcode=custbranch.branchcode
 						INNER JOIN salesorders
-						ON debtortrans.order_ = salesorders.orderno
+							ON debtortrans.order_ = salesorders.orderno
 						INNER JOIN shippers
-						ON debtortrans.shipvia=shippers.shipper_id
+							ON debtortrans.shipvia=shippers.shipper_id
 						INNER JOIN salesman
-						ON custbranch.salesman=salesman.salesmancode
+							ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN locations
-						ON salesorders.fromstkloc=locations.loccode
+							ON salesorders.fromstkloc=locations.loccode
 						INNER JOIN paymentterms
-						ON debtorsmaster.paymentterms=paymentterms.termsindicator
+							ON debtorsmaster.paymentterms=paymentterms.termsindicator
 						INNER JOIN currencies
-						ON debtorsmaster.currcode=currencies.currabrev
+							ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
-						AND debtortrans.transno='" . $FromTransNo . "'";
+							AND debtortrans.transno='" . $FromTransNo . "'
+							AND locations.loccode" . LIKE . "'" . $_POST['LocCode'] . "'";
 
 			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No') {
 				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
@@ -212,25 +214,27 @@ if (isset($PrintPDF)
 							debtortrans.branchcode,
 							paymentterms.terms,
 							currencies.decimalplaces
-						FROM debtortrans INNER JOIN debtorsmaster
-						ON debtortrans.debtorno=debtorsmaster.debtorno
+						FROM debtortrans
+						INNER JOIN debtorsmaster
+							ON debtortrans.debtorno=debtorsmaster.debtorno
 						INNER JOIN custbranch
-						ON debtortrans.debtorno=custbranch.debtorno
-						AND debtortrans.branchcode=custbranch.branchcode
+							ON debtortrans.debtorno=custbranch.debtorno
+							AND debtortrans.branchcode=custbranch.branchcode
 						INNER JOIN salesman
-						ON custbranch.salesman=salesman.salesmancode
+							ON custbranch.salesman=salesman.salesmancode
 						INNER JOIN paymentterms
-						ON debtorsmaster.paymentterms=paymentterms.termsindicator
+							ON debtorsmaster.paymentterms=paymentterms.termsindicator
 						INNER JOIN currencies
-						ON debtorsmaster.currcode=currencies.currabrev
+							ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
-						AND debtortrans.transno='" . $FromTransNo . "'";
+							AND debtortrans.transno='" . $FromTransNo . "'
+							AND debtortrans.transno='" . $FromTransNo . "'
+							AND locations.loccode" . LIKE . "'" . $_POST['LocCode'] . "'";
 
-
-			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No'){
-				$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
+			if (isset($_POST['PrintEDI']) and $_POST['PrintEDI']=='No')	{
+				$sql = $sql . " AND debtorsmaster.ediinvoices=0";
 			}
-		}
+		} // end else
 
 	   $result=DB_query($sql,$db,'','',false,false);
 
@@ -568,7 +572,7 @@ if (isset($PrintPDF)
 					<td>' . _('Print Invoices or Credit Notes') . '</td>
 					<td><select name="InvOrCredit">';
 
-		if ($InvOrCredit=='Invoice' or !isset($InvOrCredit)){
+		if (!isset($InvOrCredit) or $InvOrCredit=='Invoice'){
 
 		   echo '<option selected="selected" value="Invoice">' . _('Invoices') . '</option>';
 		   echo '<option value="Credit">' . _('Credit Notes') . '</option>';
@@ -583,7 +587,7 @@ if (isset($PrintPDF)
 				<td>' . _('Print EDI Transactions') . '</td>
 				<td><select name="PrintEDI">';
 
-		if ($InvOrCredit=='Invoice' or !isset($InvOrCredit)){
+		if (!isset($InvOrCredit) or $InvOrCredit=='Invoice'){
 
 		   echo '<option selected="selected" value="No">' . _('Do not Print PDF EDI Transactions') . '</option>';
 		   echo '<option value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
@@ -594,6 +598,38 @@ if (isset($PrintPDF)
 		   echo '<option selected="selected" value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 
 		}
+
+		echo '</select></td>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Despatch Location') . ': </td>
+				<td><select tabindex="2" name="LocCode">';
+
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations";
+			echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
+		$result = DB_query($sql,$db);
+
+		while ($myrow = DB_fetch_array($result)) {
+			if (isset($_POST['LocCode']) and $myrow['loccode']==$_POST['LocCode']) {
+				echo '<option selected="selected" value="';
+			} else {
+				echo '<option value="';
+			}
+			echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+
+		} //end while loop
+
 
 		echo '</select></td>
 			</tr>';

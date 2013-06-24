@@ -21,9 +21,18 @@ if ($_SESSION['RequirePickingNote']==0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$Title = _('Select Picking Lists');
 	include('includes/header.inc');
-	$sql="SELECT loccode,
-				locationname
-			FROM locations";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations";
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
 	$result=DB_query($sql, $db);
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint" name="form">';

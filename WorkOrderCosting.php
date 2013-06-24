@@ -40,16 +40,31 @@ if (!isset($SelectedWO)) {
 
 
 $ErrMsg = _('Could not retrieve the details of the selected work order');
-$WOResult = DB_query("SELECT workorders.loccode,
-							locations.locationname,
-							workorders.requiredby,
-							workorders.startdate,
-							workorders.closed
-						FROM workorders INNER JOIN locations
-						ON workorders.loccode=locations.loccode
-						WHERE workorders.wo='" . $_POST['WO'] . "'",
-						$db,
-						$ErrMsg);
+if ($_SESSION['RestrictLocations']==0) {
+	$sql="SELECT workorders.loccode,
+				locations.locationname,
+				workorders.requiredby,
+				workorders.startdate,
+				workorders.closed
+			FROM workorders
+			INNER JOIN locations
+				ON workorders.loccode=locations.loccode
+			WHERE workorders.wo='" . $_POST['WO'] . "'";
+} else {
+	$sql="SELECT workorders.loccode,
+				locations.locationname,
+				workorders.requiredby,
+				workorders.startdate,
+				workorders.closed
+			FROM workorders
+			INNER JOIN locations
+				ON workorders.loccode=locations.loccode
+			INNER JOIN www_users
+				ON locations.loccode=www_users.defaultlocation
+			WHERE workorders.wo='" . $_POST['WO'] . "'
+				AND www_users.userid='" . $_SESSION['UserID'] . "'";
+}
+$WOResult = DB_query($sql,$db,$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');

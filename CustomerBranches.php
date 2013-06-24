@@ -754,7 +754,18 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	DB_data_seek($result,0);
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result)==0){

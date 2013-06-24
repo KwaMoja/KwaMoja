@@ -822,8 +822,19 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 					<td>' . _('Goods Returned to Location') . ' :</td>
 					<td><select name="Location">';
 
-			$SQL = "SELECT loccode, locationname FROM locations";
-			$Result = DB_query($SQL, $db);
+			if ($_SESSION['RestrictLocations']==0) {
+				$sql = "SELECT locationname,
+								loccode
+							FROM locations";
+			} else {
+				$sql = "SELECT locationname,
+								loccode
+							FROM locations
+							INNER JOIN www_users
+								ON locations.loccode=www_users.defaultlocation
+							WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+			}
+			$Result = DB_query($sql,$db);
 
 			if (!isset($_POST['Location'])) {
 				$_POST['Location'] = $_SESSION['CreditItems' . $identifier]->Location;

@@ -858,7 +858,18 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$ErrMsg = _('The stock locations could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve stock locations and failed was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -875,7 +886,18 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 
 	echo '</select></td></tr>';
-	$sql = "SELECT code, description FROM workcentres";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT code,
+						description
+					FROM workcentres";
+	} else {
+		$sql = "SELECT code,
+						description
+					FROM workcentres
+					INNER JOIN www_users
+						ON workcentres.location=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result)==0){

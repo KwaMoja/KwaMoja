@@ -205,7 +205,9 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['FontSize'] . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
 	}
-
+	if ($_SESSION['UserID']==$_POST['UserID']) {
+		$_SESSION['RestrictLocations'] = $_POST['RestrictLocations'];
+	}
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The user alterations could not be processed because');

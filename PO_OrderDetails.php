@@ -50,14 +50,16 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 			currencies.decimalplaces AS currdecimalplaces
 		FROM purchorders
 		INNER JOIN locations
-		ON locations.loccode=purchorders.intostocklocation
+			ON locations.loccode=purchorders.intostocklocation
 		INNER JOIN suppliers
-		ON purchorders.supplierno = suppliers.supplierid
+			ON purchorders.supplierno = suppliers.supplierid
 		INNER JOIN currencies
-		ON suppliers.currcode = currencies.currabrev
+			ON suppliers.currcode = currencies.currabrev
 		LEFT JOIN www_users
-		ON purchorders.initiator=www_users.userid
-		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'";
+			ON purchorders.initiator=www_users.userid
+				AND locations.loccode=www_users.defaultlocation
+		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'
+			AND www_users.userid='" . $_SESSION['UserID'] . "'";
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 

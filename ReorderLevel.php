@@ -84,7 +84,7 @@ if (isset($_POST['PrintPDF'])) {
 								FROM purchorders
 								LEFT JOIN purchorderdetails
 								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status !='Cancelled' 
+								WHERE purchorders.status !='Cancelled'
 								AND purchorders.status !='Rejected'
 								AND purchorders.status !='Pending'
 								AND purchorderdetails.itemcode='".$myrow['stockid']."'
@@ -197,24 +197,26 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<br /><form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT loccode,
-			locationname
-		FROM locations";
-	$resultStkLocs = DB_query($sql,$db);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('From Stock Location') . ':</td>
 				<td><select name="StockLocation"> ';
-	if (!isset($_POST['StockLocation'])){
-		$_POST['StockLocation']='All';
-	}
-	if ($_POST['StockLocation']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+		echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 	}
+	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
-		if ($myrow['loccode'] == $_POST['StockLocation']){
+		if (isset($_POST['StockLocation']) and $myrow['loccode'] == $_POST['StockLocation']){
 			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

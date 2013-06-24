@@ -42,39 +42,76 @@ $headers .= 'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n'
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-$sql = "SELECT salesorders.debtorno,
-				salesorders.customerref,
-				salesorders.comments,
-				salesorders.orddate,
-				salesorders.deliverto,
-				salesorders.deladd1,
-				salesorders.deladd2,
-				salesorders.deladd3,
-				salesorders.deladd4,
-				salesorders.deladd5,
-				salesorders.deladd6,
-				salesorders.deliverblind,
-				debtorsmaster.name,
-				debtorsmaster.address1,
-				debtorsmaster.address2,
-				debtorsmaster.address3,
-				debtorsmaster.address4,
-				debtorsmaster.address5,
-				debtorsmaster.address6,
-				shippers.shippername,
-				salesorders.printedpackingslip,
-				salesorders.datepackingslipprinted,
-				locations.locationname,
-				salesorders.deliverydate
-			FROM salesorders,
-				debtorsmaster,
-				shippers,
-				locations
-			WHERE salesorders.debtorno=debtorsmaster.debtorno
-			AND salesorders.shipvia=shippers.shipper_id
-			AND salesorders.fromstkloc=locations.loccode
-			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
-
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT salesorders.debtorno,
+					salesorders.customerref,
+					salesorders.comments,
+					salesorders.orddate,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.deliverblind,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					shippers.shippername,
+					salesorders.printedpackingslip,
+					salesorders.datepackingslipprinted,
+					locations.locationname,
+					salesorders.deliverydate
+				FROM salesorders
+				INNER JOIN debtorsmaster
+					ON salesorders.debtorno=debtorsmaster.debtorno
+				INNER JOIN shippers
+					ON salesorders.shipvia=shippers.shipper_id
+				INNER JOIN locations
+					ON salesorders.fromstkloc=locations.loccode
+				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
+} else {
+	$sql = "SELECT salesorders.debtorno,
+					salesorders.customerref,
+					salesorders.comments,
+					salesorders.orddate,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.deliverblind,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					shippers.shippername,
+					salesorders.printedpackingslip,
+					salesorders.datepackingslipprinted,
+					locations.locationname,
+					salesorders.deliverydate
+				FROM salesorders
+				INNER JOIN debtorsmaster
+					ON salesorders.debtorno=debtorsmaster.debtorno
+				INNER JOIN shippers
+					ON salesorders.shipvia=shippers.shipper_id
+				INNER JOIN locations
+					ON salesorders.fromstkloc=locations.loccode
+			INNER JOIN www_users
+				ON locations.loccode=www_users.defaultlocation
+				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'
+					AND www_users.userid='" . $_SESSION['UserID'] . "'";
+}
 $result = DB_query($sql, $db, $ErrMsg);
 
 //if there are no rows, there's a problem.

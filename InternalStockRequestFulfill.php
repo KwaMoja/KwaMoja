@@ -217,10 +217,22 @@ if (!isset($_POST['Location'])) {
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
 				<td><select name="Location">';
-	$sql = "SELECT loccode, locationname
-			FROM locations
-			WHERE internalrequest = 1
-			ORDER BY locationname";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+						WHERE internalrequest = 1
+					ORDER BY locationname";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'
+						AND internalrequest = 1
+					ORDER BY locationname";
+	}
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_SESSION['Adjustment']->StockLocation)) {

@@ -590,7 +590,18 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select name="StkLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
 $LocnResult = DB_query($sql,$db);
 if (!isset($_SESSION['SPL'.$identifier]->StkLocation) or $_SESSION['SPL'.$identifier]->StkLocation==''){ /*if this is the first time the form loaded set up defaults */
 	$_SESSION['SPL'.$identifier]->StkLocation = $_SESSION['UserStockLocation'];

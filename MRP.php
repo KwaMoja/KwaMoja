@@ -594,11 +594,20 @@ if (isset($_POST['submit'])) {
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>
-				<td><select name="location[]" multiple="multiple">
-					<option value="All" selected="selected">' . _('All') . '</option>';
-	 $sql = "SELECT loccode,
-				locationname
-			   FROM locations";
+				<td><select name="location[]" multiple="multiple">';
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+		echo '<option value="All" selected="selected">' . _('All') . '</option>';
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="';

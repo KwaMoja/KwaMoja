@@ -65,7 +65,19 @@ echo '<tr><td>' . _('Stock Code') . ':<input type="text" name="StockID" size="21
 
 echo _('From Stock Location') . ':<select name="StockLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
@@ -74,18 +86,13 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		} else {
 		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-	}
-}
-if (isset($_POST['StockLocation'])){
-	if ('All'== $_POST['StockLocation']){
-	     echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
-	} else {
-	     echo '<option value="All">' . _('All Locations') . '</option>';
+		 if ($_SESSION['RestrictLocations']==0) {
+			$_POST['StockLocation'] = 'All';
+		} else {
+			$_POST['StockLocation'] = $myrow['loccode'];
+		}
 	}
 }
 echo '</select>';

@@ -107,7 +107,18 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '<table class="selection"><tr><td>';
 	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" minlength="0" maxlength="10" size="10" /> '.
 		_('Into Stock Location').' :<select name="StockLocation"> ';
-	$sql = "SELECT loccode, locationname FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
@@ -126,7 +137,7 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 
 	echo '</select>';
 	echo ' <select name="OpenOrClosed">';
-	if ($_POST['OpenOrClosed']==1){
+	if (isset($_POST['OpenOrClosed']) and $_POST['OpenOrClosed']==1){
 		echo '<option selected="selected" value="1">'. _('Closed Shipments Only')  . '</option>';
 		echo '<option value="0">'. _('Open Shipments Only')  . '</option>';
 	} else {

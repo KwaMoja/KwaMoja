@@ -49,29 +49,50 @@ $line_height=12;
 include('includes/PDFStockTransferHeader.inc');
 
 /*Print out the category totals */
-
-$sql="SELECT stockmoves.stockid,
-			description,
-			transno,
-			stockmoves.loccode,
-			locationname,
-			trandate,
-			qty,
-			reference
-		FROM stockmoves
-		INNER JOIN stockmaster
-		ON stockmoves.stockid=stockmaster.stockid
-		INNER JOIN locations
-		ON stockmoves.loccode=locations.loccode
-		WHERE transno='".$_GET['TransferNo']."'
-		AND qty < 0
-		AND type=16";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql="SELECT stockmoves.stockid,
+				description,
+				transno,
+				stockmoves.loccode,
+				locationname,
+				trandate,
+				qty,
+				reference
+			FROM stockmoves
+			INNER JOIN stockmaster
+				ON stockmoves.stockid=stockmaster.stockid
+			INNER JOIN locations
+				ON stockmoves.loccode=locations.loccode
+			WHERE transno='".$_GET['TransferNo']."'
+				AND qty < 0
+				AND type=16";
+} else {
+	$sql="SELECT stockmoves.stockid,
+				description,
+				transno,
+				stockmoves.loccode,
+				locationname,
+				trandate,
+				qty,
+				reference
+			FROM stockmoves
+			INNER JOIN stockmaster
+				ON stockmoves.stockid=stockmaster.stockid
+			INNER JOIN locations
+				ON stockmoves.loccode=locations.loccode
+			INNER JOIN www_users
+				ON locations.loccode=www_users.defaultlocation
+			WHERE transno='".$_GET['TransferNo']."'
+				AND qty < 0
+				AND www_users.userid='" . $_SESSION['UserID'] . "'
+				AND type=16";
+}
 
 $result=DB_query($sql, $db);
 if (DB_num_rows($result) == 0){
 	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.inc');
-	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
+	prnMsg(_('There was no transfer found at your location with number') . ': ' . $_GET['TransferNo'], 'error');
 	echo '<a href="PDFStockTransfer.php">' . _('Try Again') .'</a>';
 	include ('includes/footer.inc');
 	exit;

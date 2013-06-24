@@ -111,15 +111,28 @@ or deletion of the records*/
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	$sql = "SELECT workcentres.code,
-				workcentres.description,
-				locations.locationname,
-				workcentres.overheadrecoveryact,
-				workcentres.overheadperhour
-			FROM workcentres,
-				locations
-			WHERE workcentres.location = locations.loccode";
-
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT workcentres.code,
+						workcentres.description,
+						locations.locationname,
+						workcentres.overheadrecoveryact,
+						workcentres.overheadperhour
+					FROM workcentres
+					INNER JOIN locations
+						ON workcentres.location = locations.loccode";
+	} else {
+		$sql = "SELECT workcentres.code,
+						workcentres.description,
+						locations.locationname,
+						workcentres.overheadrecoveryact,
+						workcentres.overheadperhour
+					FROM workcentres
+					INNER JOIN locations
+						ON workcentres.location = locations.loccode
+					INNER JOIN  www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 	echo '<table class="selection">
 			<tr>
@@ -207,10 +220,19 @@ if (isset($SelectedWC)) {
 			</tr>';
 }
 
-$SQL = "SELECT locationname,
-				loccode
-		FROM locations";
-$result = DB_query($SQL,$db);
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
+$result = DB_query($sql,$db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';

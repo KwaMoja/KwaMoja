@@ -496,7 +496,18 @@ echo '<tr>
 		<td>' . _('From Stock Location').':</td>
 		<td><select name="StockLocationFrom">';
 
-$sql = "SELECT loccode, locationname FROM locations";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Transfer']->StockLocationFrom)){
@@ -505,7 +516,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		} else {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+	} elseif (isset($_SESSION['Transfer']) and $myrow['loccode']==$_SESSION['UserStockLocation']){
 		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		 $_SESSION['Transfer']->StockLocationFrom=$myrow['loccode'];
 	} else {
@@ -520,7 +531,10 @@ echo '<tr>
 		<td>'. _('To Stock Location').': </td>
 		<td><select name="StockLocationTo"> ';
 
-DB_data_seek($resultStkLocs,0);
+$sql = "SELECT locationname,
+				loccode
+			FROM locations";
+$resultStkLocs = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_SESSION['Transfer']) and isset($_SESSION['Transfer']->StockLocationTo)){

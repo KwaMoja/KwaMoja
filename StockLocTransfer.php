@@ -251,7 +251,18 @@ if(isset($_POST['Submit']) and $InputError==False){
 			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 
-	$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$resultStkLocs = DB_query($sql,$db);
 
 	echo '<tr>
@@ -274,7 +285,10 @@ if(isset($_POST['Submit']) and $InputError==False){
 	}
 	echo '</select></td>';
 
-	DB_data_seek($resultStkLocs,0); //go back to the start of the locations result
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+	$resultStkLocs = DB_query($sql,$db);
 	echo '<td>'._('To Stock Location').':</td>
 			<td><select name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){

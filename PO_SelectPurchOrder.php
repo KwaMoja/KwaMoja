@@ -116,7 +116,18 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
-	$sql = "SELECT loccode, locationname FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
@@ -132,6 +143,9 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 		}
 	}
 	echo '</select> ' . _('Order Status:') .' <select name="Status">';
+	if (!isset($_POST['Status'])) {
+		$_POST['Status']='Pending';
+	}
  	if (!isset($_POST['Status']) or $_POST['Status']=='Pending_Authorised_Completed'){
 		echo '<option selected="selected" value="Pending_Authorised_Completed">' . _('Pending/Authorised/Completed') . '</option>';
 	} else {

@@ -430,7 +430,18 @@ if (isset($_SESSION['Adjustment' . $identifier]) and mb_strlen($_SESSION['Adjust
 echo '<tr><td>' . _('Adjustment to Stock At Location') . ':</td>
 		<td><select name="StockLocation"> ';
 
-$sql = "SELECT loccode, locationname FROM locations";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
 $resultStkLocs = DB_query($sql, $db);
 while ($myrow = DB_fetch_array($resultStkLocs)) {
 	if (isset($_SESSION['Adjustment' . $identifier]->StockLocation)) {

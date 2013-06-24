@@ -1489,8 +1489,19 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 		echo '<tr><td>' . _('Goods returned to location') . '</td><td><select tabindex="'.$j.'" name="Location">';
 
-		$SQL="SELECT loccode, locationname FROM locations";
-		$Result = DB_query($SQL,$db);
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations";
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
+		$Result = DB_query($sql,$db);
 
 		if (!isset($_POST['Location'])){
 			$_POST['Location'] = $_SESSION['CreditItems' . $identifier]->Location;

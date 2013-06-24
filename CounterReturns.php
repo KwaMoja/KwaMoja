@@ -67,11 +67,11 @@ if (!isset($_SESSION['Items' . $identifier])){
 
 	/*Get the default customer-branch combo from the user's default location record */
 	$sql = "SELECT cashsalecustomer,
-				cashsalebranch,
-				locationname,
-				taxprovinceid
-			FROM locations
-			WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
+					cashsalebranch,
+					locationname,
+					taxprovinceid
+				FROM locations
+				WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');

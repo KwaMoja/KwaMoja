@@ -242,13 +242,22 @@ if (isset($_POST['PrintPDF'])
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT loccode,
-						locationname
-				FROM locations";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations";
+			echo '<option value="All">' . _('All Locations') . '</option>';
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
 
 		$LocnResult=DB_query($sql,$db);
 
-		echo '<option value="All">' . _('All Locations') . '</option>';
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';

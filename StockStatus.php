@@ -64,19 +64,37 @@ echo _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . 
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
 
-$sql = "SELECT locstock.loccode,
-				locations.locationname,
-				locstock.quantity,
-				locstock.reorderlevel,
-				locstock.bin,
-				locations.managed
-		FROM locstock INNER JOIN locations
-		ON locstock.loccode=locations.loccode
-		WHERE locstock.stockid = '" . $StockID . "'
-		ORDER BY locations.locationname";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locstock.loccode,
+					locations.locationname,
+					locstock.quantity,
+					locstock.reorderlevel,
+					locstock.bin,
+					locations.managed
+			FROM locstock
+			INNER JOIN locations
+				ON locstock.loccode=locations.loccode
+			WHERE locstock.stockid = '" . $StockID . "'
+			ORDER BY locations.locationname";
+} else {
+	$sql = "SELECT locstock.loccode,
+					locations.locationname,
+					locstock.quantity,
+					locstock.reorderlevel,
+					locstock.bin,
+					locations.managed
+			FROM locstock
+			INNER JOIN locations
+				ON locstock.loccode=locations.loccode
+			INNER JOIN www_users
+				ON locations.loccode=www_users.defaultlocation
+			WHERE locstock.stockid = '" . $StockID . "'
+				AND www_users.userid='" . $_SESSION['UserID'] . "'
+			ORDER BY locations.locationname";
+}
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
-$DbgMsg = _('The SQL that was used to update the stock item and failed was');
+$DbgMsg = _('The SQL that was used to fetch the location details and failed was');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<br />

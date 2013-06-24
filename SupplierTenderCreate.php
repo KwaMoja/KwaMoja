@@ -339,9 +339,18 @@ if (!isset($_SESSION['tender'.$identifier])
 			<td>' . _('Warehouse') . ':</td>
 			<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	$sql = "SELECT loccode,
-					locationname
-				FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$LocnResult = DB_query($sql,$db);
 
 	while ($LocnRow=DB_fetch_array($LocnResult)){

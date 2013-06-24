@@ -45,7 +45,8 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 
 /*read in all the guff from the selected order into the Items cart  */
 
-	$OrderHeaderSQL = "SELECT salesorders.orderno,
+	if ($_SESSION['RestrictLocations']==0) {
+		$OrderHeaderSQL = "SELECT salesorders.orderno,
 								salesorders.debtorno,
 								debtorsmaster.name,
 								salesorders.branchcode,
@@ -74,16 +75,62 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 								currencies.decimalplaces,
 								custbranch.defaultshipvia,
 								custbranch.specialinstructions
-						FROM salesorders INNER JOIN debtorsmaster
-						ON salesorders.debtorno = debtorsmaster.debtorno
+						FROM salesorders
+						INNER JOIN debtorsmaster
+							ON salesorders.debtorno = debtorsmaster.debtorno
 						INNER JOIN custbranch
-						ON salesorders.branchcode = custbranch.branchcode
-						AND salesorders.debtorno = custbranch.debtorno
+							ON salesorders.branchcode = custbranch.branchcode
+							AND salesorders.debtorno = custbranch.debtorno
 						INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
+							ON debtorsmaster.currcode = currencies.currabrev
 						INNER JOIN locations
-						ON locations.loccode=salesorders.fromstkloc
+							ON locations.loccode=salesorders.fromstkloc
 						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'";
+	} else {
+		$OrderHeaderSQL = "SELECT salesorders.orderno,
+								salesorders.debtorno,
+								debtorsmaster.name,
+								salesorders.branchcode,
+								salesorders.customerref,
+								salesorders.comments,
+								salesorders.orddate,
+								salesorders.ordertype,
+								salesorders.shipvia,
+								salesorders.deliverto,
+								salesorders.deladd1,
+								salesorders.deladd2,
+								salesorders.deladd3,
+								salesorders.deladd4,
+								salesorders.deladd5,
+								salesorders.deladd6,
+								salesorders.contactphone,
+								salesorders.contactemail,
+								salesorders.salesperson,
+								salesorders.freightcost,
+								salesorders.deliverydate,
+								debtorsmaster.currcode,
+								salesorders.fromstkloc,
+								locations.taxprovinceid,
+								custbranch.taxgroupid,
+								currencies.rate as currency_rate,
+								currencies.decimalplaces,
+								custbranch.defaultshipvia,
+								custbranch.specialinstructions
+						FROM salesorders
+						INNER JOIN debtorsmaster
+							ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN custbranch
+							ON salesorders.branchcode = custbranch.branchcode
+							AND salesorders.debtorno = custbranch.debtorno
+						INNER JOIN currencies
+							ON debtorsmaster.currcode = currencies.currabrev
+						INNER JOIN locations
+							ON locations.loccode=salesorders.fromstkloc
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE salesorders.orderno = '" . $_GET['OrderNumber']."'
+							AND www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 
 	$ErrMsg = _('The order cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the order header was');
@@ -597,9 +644,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					   		stockmaster.mbflag
 		 			FROM locstock
 		 			INNER JOIN stockmaster
-					ON stockmaster.stockid=locstock.stockid
+						ON stockmaster.stockid=locstock.stockid
 					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
-					AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
+						AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'";
 
 			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL,$db,$ErrMsg);
@@ -617,13 +664,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							   locstock.quantity-(" . $OrderLine->QtyDispatched  . "*bom.quantity) AS qtyleft
 						FROM bom
 						INNER JOIN locstock
-						ON bom.component=locstock.stockid
+							ON bom.component=locstock.stockid
 						INNER JOIN stockmaster
-						ON stockmaster.stockid=bom.component
+							ON stockmaster.stockid=bom.component
 						WHERE bom.parent='" . $OrderLine->StockID . "'
-						AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
-						AND effectiveafter <'" . Date('Y-m-d') . "'
-						AND effectiveto >='" . Date('Y-m-d') . "'";
+							AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
+							AND effectiveafter <'" . Date('Y-m-d') . "'
+							AND effectiveto >='" . Date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL,$db,$ErrMsg);

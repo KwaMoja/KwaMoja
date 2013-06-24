@@ -74,7 +74,19 @@ echo '<tr>
 		<td class="label">' . _('Location where items are to be received into') .':</td>
 		<td><select name="StockLocation" onChange="ReloadForm(Refresh)">';
 
-$LocResult = DB_query("SELECT loccode,locationname FROM locations",$db);
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+				loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
+$LocResult = DB_query($sql,$db);
 
 while ($LocRow = DB_fetch_array($LocResult)){
 	if ($_SESSION['WorkOrder'.$identifier]->LocationCode==$LocRow['loccode']){

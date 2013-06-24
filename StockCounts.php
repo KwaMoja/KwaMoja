@@ -96,7 +96,18 @@ if ($_GET['Action'] == 'Enter'){
 
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr><th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
-	$sql = 'SELECT loccode, locationname FROM locations';
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($result)){

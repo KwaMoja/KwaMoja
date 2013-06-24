@@ -362,18 +362,41 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])){
 
 	if (isset($_POST['ShowGRNS'])){
 
-		$sql = "SELECT grnno,
-						grnbatch,
-						itemcode,
-						itemdescription,
-						deliverydate,
-						qtyrecd,
-						quantityinv,
-						qtyrecd-quantityinv AS qtytoreverse
-				FROM grns
-				WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
-				AND (grns.qtyrecd-grns.quantityinv) >0
-				AND deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT grnno,
+							grnbatch,
+							itemcode,
+							itemdescription,
+							deliverydate,
+							qtyrecd,
+							quantityinv,
+							qtyrecd-quantityinv AS qtytoreverse
+						FROM grns
+						WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
+							AND (grns.qtyrecd-grns.quantityinv) >0
+							AND deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'";
+		} else {
+			$sql = "SELECT grnno,
+							grnbatch,
+							itemcode,
+							itemdescription,
+							deliverydate,
+							qtyrecd,
+							quantityinv,
+							qtyrecd-quantityinv AS qtytoreverse
+						FROM grns
+						INNER JOIN stockmoves
+							ON grns.grnbatch=stockmoves.transno
+							AND stockmoves.type=25
+						INNER JOIN locations
+							ON stockmoves.loccode=locations.loccode
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE grns.supplierid = '" . $_POST['SupplierID'] . "'
+							AND (grns.qtyrecd-grns.quantityinv) >0
+							AND deliverydate>='" . FormatDateForSQL($_POST['RecdAfterDate']) ."'
+							AND www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
 
 		$ErrMsg = _('An error occurred in the attempt to get the outstanding GRNs for') . ' ' . $_POST['SuppName'] . '. ' . _('The message was') . ':';
   		$DbgMsg = _('The SQL that failed was') . ':';

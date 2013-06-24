@@ -54,9 +54,21 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])){
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+		echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 
-	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
+	$result= DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}

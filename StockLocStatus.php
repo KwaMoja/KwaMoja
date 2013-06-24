@@ -14,24 +14,38 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') .
+	'" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$sql = "SELECT loccode,
-			   locationname
-		FROM locations";
-$resultStkLocs = DB_query($sql,$db);
-
-echo '<p class="page_title_text noPrint" >
-		 <img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
-	  </p>';
-
 echo '<table class="selection">
-		<tr>
-			<td>' . _('From Stock Location') . ':</td>
-			<td><select name="StockLocation"> ';
+	 <tr>
+		 <td>' . _('From Stock Location') . ':</td><td><select name="StockLocation">';
+
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	if (!isset($_POST['StockLocation'])) {
+		$_POST['StockLocation']='All';
+	}
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	if (!isset($_POST['StockLocation'])) {
+		$_POST['StockLocation']=$_SESSION['UserStockLocation'];
+	}
+}
+
+$resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation']!='All'){
 		if ($myrow['loccode'] == $_POST['StockLocation']){
@@ -39,9 +53,6 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 		} else {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
-	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
 		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}

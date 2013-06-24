@@ -70,31 +70,64 @@ ie the BOM is recursive otherwise false ie 0 */
 function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 
 		global $ParentMBflag;
-		$sql = "SELECT bom.component,
-						stockmaster.description as itemdescription,
-						locations.locationname,
-						locations.loccode,
-						workcentres.description as workcentrename,
-						workcentres.code as workcentrecode,
-						bom.quantity,
-						bom.effectiveafter,
-						bom.effectiveto,
-						stockmaster.mbflag,
-						bom.autoissue,
-						stockmaster.controlled,
-						locstock.quantity AS qoh,
-						stockmaster.decimalplaces
-				FROM bom INNER JOIN stockmaster
-				ON bom.component=stockmaster.stockid
-				INNER JOIN locations ON
-				bom.loccode = locations.loccode
-				INNER JOIN workcentres
-				ON bom.workcentreadded=workcentres.code
-				INNER JOIN locstock
-				ON bom.loccode=locstock.loccode
-				AND bom.component = locstock.stockid
-				WHERE bom.component='".$Component."'
-				AND bom.parent = '".$Parent."'";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT bom.component,
+							stockmaster.description as itemdescription,
+							locations.locationname,
+							locations.loccode,
+							workcentres.description as workcentrename,
+							workcentres.code as workcentrecode,
+							bom.quantity,
+							bom.effectiveafter,
+							bom.effectiveto,
+							stockmaster.mbflag,
+							bom.autoissue,
+							stockmaster.controlled,
+							locstock.quantity AS qoh,
+							stockmaster.decimalplaces
+						FROM bom
+						INNER JOIN stockmaster
+							ON bom.component=stockmaster.stockid
+						INNER JOIN locations
+							ON bom.loccode = locations.loccode
+						INNER JOIN workcentres
+							ON bom.workcentreadded=workcentres.code
+						INNER JOIN locstock
+							ON bom.loccode=locstock.loccode
+							AND bom.component = locstock.stockid
+						WHERE bom.component='".$Component."'
+							AND bom.parent = '".$Parent."'";
+		} else {
+			$sql = "SELECT bom.component,
+							stockmaster.description as itemdescription,
+							locations.locationname,
+							locations.loccode,
+							workcentres.description as workcentrename,
+							workcentres.code as workcentrecode,
+							bom.quantity,
+							bom.effectiveafter,
+							bom.effectiveto,
+							stockmaster.mbflag,
+							bom.autoissue,
+							stockmaster.controlled,
+							locstock.quantity AS qoh,
+							stockmaster.decimalplaces
+						FROM bom
+						INNER JOIN stockmaster
+							ON bom.component=stockmaster.stockid
+						INNER JOIN locations
+							ON bom.loccode = locations.loccode
+						INNER JOIN workcentres
+							ON bom.workcentreadded=workcentres.code
+						INNER JOIN locstock
+							ON bom.loccode=locstock.loccode
+							AND bom.component = locstock.stockid
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE bom.component='".$Component."'
+							AND bom.parent = '".$Parent."'
+							AND www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
 		$DbgMsg = _('The SQL used to retrieve the components was');
@@ -688,7 +721,19 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<td><select tabindex="2" name="LocCode">';
 
 		DB_free_result($result);
-		$sql = "SELECT locationname, loccode FROM locations";
+
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations";
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
@@ -708,7 +753,19 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<tr>
 				<td>' . _('Work Centre Added') . ': </td><td>';
 
-		$sql = "SELECT code, description FROM workcentres";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT code,
+							description
+						FROM workcentres";
+		} else {
+			$sql = "SELECT code,
+							description
+						FROM workcentres
+						INNER JOIN www_users
+							ON workcentres.location=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+		}
+
 		$result = DB_query($sql,$db);
 
 		if (DB_num_rows($result)==0){

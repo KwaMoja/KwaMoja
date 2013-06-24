@@ -338,7 +338,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 	echo '<tr><td>' . _('Choose Option'). ':</td>
 			  <td><select name="ReportOrClose">';
 
-	if ($_POST['ReportOrClose']=='ReportAndClose'){
+	if (isset($_POST['ReportOrClose']) and $_POST['ReportOrClose']=='ReportAndClose'){
 		echo '<option selected="selected" value="ReportAndClose">'. _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 		echo '<option value="ReportOnly">'. _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 	} else {
@@ -350,7 +350,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])){
 	echo '<tr><td>'. _('Action for Zero Counts') . ':</td>
 			  <td><select name="ZeroCounts">';
 
-	if ($_POST['ZeroCounts'] =='Adjust'){
+	if (isset($_POST['ZeroCounts']) and $_POST['ZeroCounts'] =='Adjust'){
 		echo '<option selected="selected" value="Adjust">'. _('Adjust System stock to Nil') . '</option>';
 		echo '<option value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	} else {

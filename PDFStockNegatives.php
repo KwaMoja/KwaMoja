@@ -15,22 +15,46 @@ $Title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
 $DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
-$sql = "SELECT stockmaster.stockid,
-               stockmaster.description,
-               stockmaster.categoryid,
-               stockmaster.decimalplaces,
-               locstock.loccode,
-               locations.locationname,
-               locstock.quantity
-        FROM stockmaster INNER JOIN locstock 
-        ON stockmaster.stockid=locstock.stockid
-        INNER JOIN locations 
-        ON locstock.loccode = locations.loccode
-        WHERE locstock.quantity < 0
-        ORDER BY locstock.loccode, 
-			stockmaster.categoryid, 
-			stockmaster.stockid,
-			stockmaster.decimalplaces";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.categoryid,
+					stockmaster.decimalplaces,
+					locstock.loccode,
+					locations.locationname,
+					locstock.quantity
+				FROM stockmaster
+				INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+				INNER JOIN locations
+					ON locstock.loccode = locations.loccode
+				WHERE locstock.quantity < 0
+				ORDER BY locstock.loccode,
+						stockmaster.categoryid,
+						stockmaster.stockid,
+						stockmaster.decimalplaces";
+} else {
+	$sql = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.categoryid,
+					stockmaster.decimalplaces,
+					locstock.loccode,
+					locations.locationname,
+					locstock.quantity
+				FROM stockmaster
+				INNER JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+				INNER JOIN locations
+					ON locstock.loccode = locations.loccode
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE locstock.quantity < 0
+					AND www_users.userid='" . $_SESSION['UserID'] . "'
+				ORDER BY locstock.loccode,
+						stockmaster.categoryid,
+						stockmaster.stockid,
+						stockmaster.decimalplaces";
+}
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 

@@ -152,7 +152,18 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select name="StockLocation">';
 
-	$sql = "SELECT loccode, locationname FROM locations";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$resultStkLocs = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
@@ -285,7 +296,7 @@ if (isset($StockItemsResult)) {
 	echo '</table>';
 
 } //end if stock search results to show
-else {
+else if (isset($_POST['SearchOrders'])) {
 	//figure out the SQL required from the inputs available
 
 	if (!isset($_POST['Status']) or $_POST['Status'] == 'Pending_Authorised') {

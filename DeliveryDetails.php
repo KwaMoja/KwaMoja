@@ -992,8 +992,19 @@ if ($_SESSION['Items' . $identifier]->Location == '' or !isset($_SESSION['Items'
 
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query("SELECT locationname,loccode
-							FROM locations", $db, $ErrMsg, $DbgMsg);
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations";
+} else {
+	$sql = "SELECT locationname,
+					loccode
+				FROM locations
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+}
+$StkLocsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 while ($myrow = DB_fetch_array($StkLocsResult)) {
 	if ($_SESSION['Items' . $identifier]->Location == $myrow['loccode']) {

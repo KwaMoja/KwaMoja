@@ -48,23 +48,45 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 	$InputError = false; //ie assume no problems for a start - ever the optomist
 	$ErrMsg = _('Could not retrieve the details of the selected work order item');
-	$WOResult = DB_query("SELECT workorders.loccode,
-								 locations.locationname,
-								 workorders.closed,
-								 stockcategory.wipact,
-								 stockcategory.stockact
-							FROM workorders INNER JOIN locations
-							ON workorders.loccode=locations.loccode
-							INNER JOIN woitems
-							ON workorders.wo=woitems.wo
-							INNER JOIN stockmaster
-							ON woitems.stockid=stockmaster.stockid
-							INNER JOIN stockcategory
-							ON stockmaster.categoryid=stockcategory.categoryid
-							WHERE woitems.stockid='" . $_POST['StockID'] . "'
-							AND woitems.wo='" . $_POST['WO'] . "'",
-							$db,
-							$ErrMsg);
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT workorders.loccode,
+						locations.locationname,
+						workorders.closed,
+						stockcategory.wipact,
+						stockcategory.stockact
+					FROM workorders
+					INNER JOIN locations
+						ON workorders.loccode=locations.loccode
+					INNER JOIN woitems
+						ON workorders.wo=woitems.wo
+					INNER JOIN stockmaster
+						ON woitems.stockid=stockmaster.stockid
+					INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE woitems.stockid='" . $_POST['StockID'] . "'
+						AND woitems.wo='" . $_POST['WO'] . "'";
+	} else {
+		$sql = "SELECT workorders.loccode,
+						locations.locationname,
+						workorders.closed,
+						stockcategory.wipact,
+						stockcategory.stockact
+					FROM workorders
+					INNER JOIN locations
+						ON workorders.loccode=locations.loccode
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					INNER JOIN woitems
+						ON workorders.wo=woitems.wo
+					INNER JOIN stockmaster
+						ON woitems.stockid=stockmaster.stockid
+					INNER JOIN stockcategory
+						ON stockmaster.categoryid=stockcategory.categoryid
+					WHERE woitems.stockid='" . $_POST['StockID'] . "'
+						AND woitems.wo='" . $_POST['WO'] . "'
+						AND www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
+	$WOResult = DB_query($sql, $db, $ErrMsg);
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
@@ -564,7 +586,19 @@ echo '<tr>
 		<td>';
 
 if (!isset($_POST['IssueItem'])){
-	$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
+	$LocResult = DB_query($sql, $db);
 
 	echo '<select name="FromLocation">';
 

@@ -22,26 +22,53 @@ if (isset($_GET['StockID'])) {
 
 
 $ErrMsg = _('Could not retrieve the details of the selected work order item');
-$WOResult = DB_query("SELECT workorders.loccode,
-							 locations.locationname,
-							 workorders.requiredby,
-							 workorders.startdate,
-							 workorders.closed,
-							 stockmaster.description,
-							 stockmaster.decimalplaces,
-							 stockmaster.units,
-							 woitems.qtyreqd,
-							 woitems.qtyrecd
-						FROM workorders INNER JOIN locations
-						ON workorders.loccode=locations.loccode
-						INNER JOIN woitems
-						ON workorders.wo=woitems.wo
-						INNER JOIN stockmaster
-						ON woitems.stockid=stockmaster.stockid
-						WHERE woitems.stockid='" . $StockID . "'
-						AND woitems.wo ='" . $SelectedWO . "'",
-						$db,
-						$ErrMsg);
+
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT workorders.loccode,
+					locations.locationname,
+					workorders.requiredby,
+					workorders.startdate,
+					workorders.closed,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					stockmaster.units,
+					woitems.qtyreqd,
+					woitems.qtyrecd
+				FROM workorders
+				INNER JOIN locations
+					ON workorders.loccode=locations.loccode
+				INNER JOIN woitems
+					ON workorders.wo=woitems.wo
+				INNER JOIN stockmaster
+					ON woitems.stockid=stockmaster.stockid
+				WHERE woitems.stockid='" . $StockID . "'
+					AND woitems.wo ='" . $SelectedWO . "'";
+} else {
+	$sql = "SELECT workorders.loccode,
+					locations.locationname,
+					workorders.requiredby,
+					workorders.startdate,
+					workorders.closed,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					stockmaster.units,
+					woitems.qtyreqd,
+					woitems.qtyrecd
+				FROM workorders
+				INNER JOIN locations
+					ON workorders.loccode=locations.loccode
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				INNER JOIN woitems
+					ON workorders.wo=woitems.wo
+				INNER JOIN stockmaster
+					ON woitems.stockid=stockmaster.stockid
+				WHERE woitems.stockid='" . $StockID . "'
+					AND woitems.wo ='" . $SelectedWO . "'
+					AND www_users.userid='" . $_SESSION['UserID'] . "'";
+}
+
+$WOResult = DB_query($sql, $db, $ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');

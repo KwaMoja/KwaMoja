@@ -39,15 +39,16 @@ if (isset($_POST['PrintPDF'])) {
 					stockmaster.decimalplaces,
 					stockmaster.serialised,
 					stockmaster.controlled
-				FROM locstock INNER JOIN stockmaster
-				ON locstock.stockid=stockmaster.stockid
+				FROM locstock
+				INNER JOIN stockmaster
+					ON locstock.stockid=stockmaster.stockid
 				INNER JOIN locations
-				ON locstock.loccode=locations.loccode
+					ON locstock.loccode=locations.loccode
 				WHERE locstock.quantity <> 0
-				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 				$WhereCategory . "
-				ORDER BY locstock.stockid,
-						locstock.loccode";
+					ORDER BY locstock.stockid,
+							locstock.loccode";
 	} else {
 		// sql to only select parts in more than one location
 		// The SELECT statement at the beginning of the WHERE clause limits the selection to

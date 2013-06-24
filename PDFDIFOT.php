@@ -62,9 +62,22 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError==1){
 
 	 echo '<tr><td>' . _('Inventory Location') . ':</td>
 			<td><select name="Location">';
-	 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$result= DB_query("SELECT loccode, locationname FROM locations",$db);
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+		echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
+
+	$result= DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -109,7 +122,7 @@ if ($_POST['CategoryID']=='All' and $_POST['Location']=='All'){
 			INNER JOIN salesorders ON salesorderdetails.orderno=salesorders.orderno
 			WHERE salesorders.deliverydate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND salesorders.deliverydate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) ."'"
+			AND (TO_DAYS(salesorderdetails.actualdispatchdate) - TO_DAYS(salesorders.deliverydate)) <'" . filter_number_format($_POST['DaysAcceptable']) ."'";
 
 } elseif ($_POST['CategoryID']!='All' and $_POST['Location']=='All') {
 				$sql= "SELECT salesorders.orderno,

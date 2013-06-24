@@ -25,17 +25,36 @@ echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_S
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$sql = "SELECT locstock.loccode,
-				locations.locationname,
-				locstock.quantity,
-				locstock.reorderlevel,
-				stockmaster.decimalplaces
-		FROM locstock INNER JOIN locations
-			ON locstock.loccode=locations.loccode
-			INNER JOIN stockmaster
-			ON locstock.stockid=stockmaster.stockid
-		WHERE locstock.stockid = '" . $StockID . "'
-		ORDER BY locations.locationname";
+if ($_SESSION['RestrictLocations']==0) {
+	$sql = "SELECT locstock.loccode,
+					locations.locationname,
+					locstock.quantity,
+					locstock.reorderlevel,
+					stockmaster.decimalplaces
+				FROM locstock
+				INNER JOIN locations
+					ON locstock.loccode=locations.loccode
+				INNER JOIN stockmaster
+					ON locstock.stockid=stockmaster.stockid
+				WHERE locstock.stockid = '" . $StockID . "'
+				ORDER BY locations.locationname";
+} else {
+	$sql = "SELECT locstock.loccode,
+					locations.locationname,
+					locstock.quantity,
+					locstock.reorderlevel,
+					stockmaster.decimalplaces
+				FROM locstock
+				INNER JOIN locations
+					ON locstock.loccode=locations.loccode
+				INNER JOIN www_users
+					ON locations.loccode=www_users.defaultlocation
+				INNER JOIN stockmaster
+					ON locstock.stockid=stockmaster.stockid
+				WHERE locstock.stockid = '" . $StockID . "'
+					AND www_users.userid='" . $_SESSION['UserID'] . "'
+				ORDER BY locations.locationname";
+}
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that failed was');
@@ -70,9 +89,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k=1;
 	}
 
-	if (isset($_POST['UpdateData']) 
-		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']]) 
-		AND is_numeric(filter_number_format($_POST[$myrow['loccode']])) 
+	if (isset($_POST['UpdateData'])
+		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']])
+		AND is_numeric(filter_number_format($_POST[$myrow['loccode']]))
 		AND filter_number_format($_POST[$myrow['loccode']])>=0){
 
 	   $myrow['reorderlevel'] = filter_number_format($_POST[$myrow['loccode']]);
@@ -108,7 +127,7 @@ echo '</table>
 		<input type="submit" name="UpdateData" value="' . _('Update') . '" />
 		<br />
 		<br />';
-		
+
 echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
 echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
 echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';

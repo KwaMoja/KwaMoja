@@ -18,10 +18,20 @@ if (!(isset($_POST['Search']))) {
 			<td>' . _('Select Location') . '</td>
 			<td>:</td>
 			<td>
-				<select name="Location[]" multiple="multiple">
-					<option value="All" selected="selected">' . _('All') . '</option>';
-	$sql = "SELECT 	loccode,locationname
-			FROM 	locations ORDER BY locationname";
+				<select name="Location[]" multiple="multiple">';
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations";
+		echo '<option value="All" selected="selected">' . _('All') . '</option>';
+	} else {
+		$sql = "SELECT locationname,
+						loccode
+					FROM locations
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$locationresult = DB_query($sql, $db);
 	$i = 0;
 	while ($myrow = DB_fetch_array($locationresult)) {

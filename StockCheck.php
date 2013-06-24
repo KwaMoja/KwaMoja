@@ -294,7 +294,20 @@ if (isset($_POST['PrintPDF'])
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
-		$sql = "SELECT loccode, locationname FROM locations ORDER BY locationname";
+		if ($_SESSION['RestrictLocations']==0) {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						ORDER BY locationname";
+		} else {
+			$sql = "SELECT locationname,
+							loccode
+						FROM locations
+						INNER JOIN www_users
+							ON locations.loccode=www_users.defaultlocation
+						WHERE www_users.userid='" . $_SESSION['UserID'] . "'
+						ORDER BY locationname";
+		}
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){

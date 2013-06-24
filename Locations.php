@@ -360,12 +360,26 @@ then none of the above are true and the list of Locations will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT loccode,
-				locationname,
-				taxprovinces.taxprovincename as description,
-				managed
-			FROM locations INNER JOIN taxprovinces
-			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
+	if ($_SESSION['RestrictLocations']==0) {
+		$sql = "SELECT loccode,
+						locationname,
+						taxprovinces.taxprovincename as description,
+						managed
+					FROM locations
+					INNER JOIN taxprovinces
+						ON locations.taxprovinceid=taxprovinces.taxprovinceid";
+	} else {
+		$sql = "SELECT loccode,
+						locationname,
+						taxprovinces.taxprovincename as description,
+						managed
+					FROM locations
+					INNER JOIN taxprovinces
+						ON locations.taxprovinceid=taxprovinces.taxprovinceid
+					INNER JOIN www_users
+						ON locations.loccode=www_users.defaultlocation
+					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
 	$result = DB_query($sql,$db);
 
 	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
