@@ -106,7 +106,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 					$i++;
 				}
 			}
-			// check if only maintenance users can access webERP
+			// check if only maintenance users can access KwaMoja
 			$sql = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
 			$Maintenance_Result = DB_query($sql, $db);
 			if (DB_num_rows($Maintenance_Result)==0){

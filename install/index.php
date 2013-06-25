@@ -242,7 +242,7 @@ function change_data(type) {
 					if(isset($_SESSION['database_name'])) {
 						echo $_SESSION['database_name'];
 					 } else {
-						echo 'weberpdemo';
+						echo 'kwamojademo';
 					 }
 				 ?>" />
 			</td>

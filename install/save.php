@@ -236,7 +236,7 @@ $config_filename = $path_to_root . '/config.php';
 // only make a new company directory structure if we are kicking off a new company
 // no need to bother if just setting up the demo data
 $CompanyDir = $path_to_root . '/companies/' . $_POST['company_name'];
-if (($_POST['DemoData']==false) or ($_POST['database_name'] != "weberpdemo")){  // Fix? 'Use demo data' when used in conjunction with a new company could be misunderstood. Seems to make more sense to skip the new creation data only if this is set and the name is also that of the default demo. May want to simply check for folder existence.
+if (($_POST['DemoData']==false) or ($_POST['database_name'] != "kwamojademo")){  // Fix? 'Use demo data' when used in conjunction with a new company could be misunderstood. Seems to make more sense to skip the new creation data only if this is set and the name is also that of the default demo. May want to simply check for folder existence.
 	$Result = mkdir($CompanyDir);
 	$Result = mkdir($CompanyDir . '/part_pics');
 	$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');

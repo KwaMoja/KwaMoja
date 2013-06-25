@@ -459,7 +459,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Show in webERP Cart?') . ':</td>
+			<td>' . _('Show in Web Cart?') . ':</td>
 			<td><select name="webcart">';
 
 	if ($_POST['webcart'] == 1) {

@@ -4123,7 +4123,7 @@ INSERT INTO `scripts` VALUES ('Z_ImportGLAccountSections.php',11,'');
 INSERT INTO `scripts` VALUES ('Z_ImportPartCodes.php',11,'Allows inventory items to be imported from a csv');
 INSERT INTO `scripts` VALUES ('Z_ImportStocks.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_index.php',15,'Utility menu page');
-INSERT INTO `scripts` VALUES ('Z_ItemsWithoutPicture.php',15,'Shows the list of curent items without picture in webERP');
+INSERT INTO `scripts` VALUES ('Z_ItemsWithoutPicture.php',15,'Shows the list of curent items without picture in KwaMoja');
 INSERT INTO `scripts` VALUES ('Z_MakeNewCompany.php',15,'');
 INSERT INTO `scripts` VALUES ('Z_MakeStockLocns.php',15,'Utility to make LocStock records for all items and locations if not already set up.');
 INSERT INTO `scripts` VALUES ('Z_poAddLanguage.php',15,'Allows a new language po file to be created');
