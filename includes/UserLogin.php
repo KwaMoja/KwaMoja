@@ -1,7 +1,6 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id$*/
 
 define('UL_OK', 0);
 /* User verified, session initialised */
@@ -99,7 +98,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				$i = 0;
 				$UserIsSysAdmin = FALSE;
 				while ($myrow = DB_fetch_row($Sec_Result)) {
-					if ($myrow[0] == 15){
+					if ($myrow[0] == 15) {
 						$UserIsSysAdmin = TRUE;
 					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
@@ -109,14 +108,14 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 			// check if only maintenance users can access KwaMoja
 			$sql = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
 			$Maintenance_Result = DB_query($sql, $db);
-			if (DB_num_rows($Maintenance_Result)==0){
-				return  UL_CONFIGERR;
+			if (DB_num_rows($Maintenance_Result) == 0) {
+				return UL_CONFIGERR;
 			} else {
 				$myMaintenanceRow = DB_fetch_row($Maintenance_Result);
-				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)){
+				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)) {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
-					return  UL_MAINTENANCE;
+					return UL_MAINTENANCE;
 				}
 			}
 		} else { // Incorrect password

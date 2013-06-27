@@ -1,14 +1,12 @@
 <?php
 
-/* $Id$ */
-
 // User configurable variables
 //---------------------------------------------------
 
 /*DefaultLanguage to use for the login screen and the setup of new users
  *the users language selection will override
  */
-$DefaultLanguage ='en_GB.utf8';
+$DefaultLanguage = 'en_GB.utf8';
 
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = True;
@@ -30,7 +28,7 @@ date_default_timezone_set('Asia/Shanghai');
 // $host is the computer ip address or name where the database is located
 // if the web server is also the database server then 'locahost'
 $host = 'localhost';
-$DBPort=3306;
+$DBPort = 3306;
 //The type of db server being used
 $DBType = 'mysqli';
 //$DBType = 'postgres';
@@ -59,7 +57,7 @@ $DefaultCompany = 'kwamoja';
 $SessionLifeTime = 3600;
 
 //The maximum time that a script can execute for before the web-server should terminate it
-$MaximumExecutionTime =120;
+$MaximumExecutionTime = 120;
 
 //The path to which session files should be stored in the server - useful for some multi-host web servers
 //this can be left commented out
@@ -87,10 +85,10 @@ $DefaultClock = 12;
  * KwaMoja then KwaMoja is the rootpath - notice no additional slashes are necessary.
  */
 
-$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-if (isset($DirectoryLevelsDeep)){
-	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+if (isset($DirectoryLevelsDeep)) {
+	for ($i = 0; $i < $DirectoryLevelsDeep; $i++) {
+		$RootPath = mb_substr($RootPath, 0, strrpos($RootPath, '/'));
 	}
 }
 
@@ -102,9 +100,9 @@ if ($RootPath == "/" or $RootPath == "\\") {
  * This is the default value set in php.ini for most installations but
  * just to be sure it is forced here turning on NOTICES destroys things
  */
-error_reporting (E_ALL && ~E_NOTICE);
+error_reporting(E_ALL && ~E_NOTICE);
 /* For Development Use */
 //error_reporting (-1);
-$debug=0; // 1=debugging mode, 0=producation mode
+$debug = 0; // 1=debugging mode, 0=producation mode
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>

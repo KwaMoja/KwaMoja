@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ImportStocks.php 5746 2012-11-25 11:12:57Z tim_schofield $*/
 
 include('includes/session.inc');
 $Title = _('Import Items');
@@ -10,24 +9,24 @@ include('includes/header.inc');
 // Otherwise, a file upload form is displayed
 
 $FieldHeadings = array(
-	'StockID',         	//  0 'STOCKID',
-	'Description',     	//  1 'DESCRIPTION',
-	'LongDescription', 	//  2 'LONGDESCRIPTION',
-	'CategoryID',      	//  3 'CATEGORYID',
-	'Units',           	//  4 'UNITS',
-	'MBFlag',          	//  5 'MBFLAG',
-	'EOQ',             	//  6 'EOQ',
-	'Discontinued',    	//  7 'DISCONTINUED',
-	'Controlled',      	//  8 'CONTROLLED',
-	'Serialised',      	//  9 'SERIALISED',
-	'Perishable',      	// 10 'PERISHABLE',
-	'Volume',          	// 11 'VOLUME',
-	'KGS',             	// 12 'KGS',
-	'BarCode',         	// 13 'BARCODE',
-	'DiscountCategory',	// 14 'DISCOUNTCATEGORY',
-	'TaxCat',          	// 15 'TAXCAT',
-	'DecimalPlaces',   	// 16 'DECIMALPLACES',
-	'ItemPDF'          	// 17 'ITEMPDF'
+	'StockID', //  0 'STOCKID',
+	'Description', //  1 'DESCRIPTION',
+	'LongDescription', //  2 'LONGDESCRIPTION',
+	'CategoryID', //  3 'CATEGORYID',
+	'Units', //  4 'UNITS',
+	'MBFlag', //  5 'MBFLAG',
+	'EOQ', //  6 'EOQ',
+	'Discontinued', //  7 'DISCONTINUED',
+	'Controlled', //  8 'CONTROLLED',
+	'Serialised', //  9 'SERIALISED',
+	'Perishable', // 10 'PERISHABLE',
+	'Volume', // 11 'VOLUME',
+	'KGS', // 12 'KGS',
+	'BarCode', // 13 'BARCODE',
+	'DiscountCategory', // 14 'DISCOUNTCATEGORY',
+	'TaxCat', // 15 'TAXCAT',
+	'DecimalPlaces', // 16 'DECIMALPLACES',
+	'ItemPDF' // 17 'ITEMPDF'
 );
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
@@ -38,7 +37,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//check file info
 	$FileName = $_FILES['userfile']['name'];
-	$TempName  = $_FILES['userfile']['tmp_name'];
+	$TempName = $_FILES['userfile']['tmp_name'];
 	$FileSize = $_FILES['userfile']['size'];
 
 	//get file handle
@@ -48,8 +47,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$HeadRow = fgetcsv($FileHandle, 10000, ",");
 
 	//check for correct number of fields
-	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+	if (count($HeadRow) != count($FieldHeadings)) {
+		prnMsg(_('File contains ' . count($HeadRow) . ' columns, expected ' . count($FieldHeadings) . '. Try downloading a new template.'), 'error');
 		fclose($FileHandle);
 		include('includes/footer.inc');
 		exit;
@@ -58,8 +57,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	//test header row field name and sequence
 	$head = 0;
 	foreach ($HeadRow as $HeadField) {
-		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$head]) ) {
-			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
+		if (mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$head])) {
+			prnMsg(_('File contains incorrect headers (' . mb_strtoupper($headField) . ' != ' . mb_strtoupper($header[$head]) . '. Try downloading a new template.'), 'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
@@ -72,12 +71,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//loop through file rows
 	$row = 1;
-	while ( ($myrow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while (($myrow = fgetcsv($FileHandle, 10000, ",")) !== FALSE) {
 
 		//check for correct number of fields
 		$FieldCount = count($myrow);
-		if ($FieldCount != $FieldTarget){
-			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+		if ($FieldCount != $FieldTarget) {
+			prnMsg(_($FieldTarget . ' fields required, ' . $FieldCount . ' fields received'), 'error');
 			fclose($FileHandle);
 			include('includes/footer.inc');
 			exit;
@@ -90,94 +89,95 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		//first off check if the item already exists
-		$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
-		$result = DB_query($sql,$db);
+		$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $StockID . "'";
+		$result = DB_query($sql, $db);
 		$testrow = DB_fetch_row($result);
 		if ($testrow[0] != 0) {
 			$InputError = 1;
-			prnMsg (_('Stock item "'. $StockID. '" already exists'),'error');
+			prnMsg(_('Stock item "' . $StockID . '" already exists'), 'error');
 		}
 
 		//next validate inputs are sensible
-		if (!$myrow[1] or mb_strlen($myrow[1]) > 50 OR mb_strlen($myrow[1])==0) {
+		if (!$myrow[1] or mb_strlen($myrow[1]) > 50 OR mb_strlen($myrow[1]) == 0) {
 			$InputError = 1;
-			prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'). ' ("'. implode('","',$myrow). $stockid. '") ','error');
+			prnMsg(_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required') . ' ("' . implode('","', $myrow) . $stockid . '") ', 'error');
 		}
-		if (mb_strlen($myrow[2])==0) {
+		if (mb_strlen($myrow[2]) == 0) {
 			$InputError = 1;
-			prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'),'error');
+			prnMsg(_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'), 'error');
 		}
-		if (mb_strlen($StockID) ==0) {
+		if (mb_strlen($StockID) == 0) {
 			$InputError = 1;
-			prnMsg (_('The Stock Item code cannot be empty'),'error');
+			prnMsg(_('The Stock Item code cannot be empty'), 'error');
 		}
-		if (ContainsIllegalCharacters($StockID) OR mb_strstr($StockID,' ')) {
+		if (ContainsIllegalCharacters($StockID) OR mb_strstr($StockID, ' ')) {
 			$InputError = 1;
-			prnMsg(_('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . _('or a space'). " (". $StockID. ")",'error');
-			$StockID='';
+			prnMsg(_('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . _('or a space') . " (" . $StockID . ")", 'error');
+			$StockID = '';
 		}
-		if (mb_strlen($myrow[4]) >20) {
+		if (mb_strlen($myrow[4]) > 20) {
 			$InputError = 1;
-			prnMsg(_('The unit of measure must be 20 characters or less long'),'error');
+			prnMsg(_('The unit of measure must be 20 characters or less long'), 'error');
 		}
-		if (mb_strlen($myrow[13]) >20) {
+		if (mb_strlen($myrow[13]) > 20) {
 			$InputError = 1;
-			prnMsg(_('The barcode must be 20 characters or less long'),'error');
+			prnMsg(_('The barcode must be 20 characters or less long'), 'error');
 		}
-		if ($myrow[10]!=0 AND $myrow[10]!=1) {
+		if ($myrow[10] != 0 AND $myrow[10] != 1) {
 			$InputError = 1;
-			prnMsg (_('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
+			prnMsg(_('Values in the Perishable field must be either 0 (No) or 1 (Yes)'), 'error');
 		}
 		if (!is_numeric($myrow[11])) {
 			$InputError = 1;
-			prnMsg (_('The volume of the packaged item in cubic metres must be numeric') ,'error');
+			prnMsg(_('The volume of the packaged item in cubic metres must be numeric'), 'error');
 		}
-		if ($myrow[11] <0) {
+		if ($myrow[11] < 0) {
 			$InputError = 1;
-			prnMsg(_('The volume of the packaged item must be a positive number'),'error');
+			prnMsg(_('The volume of the packaged item must be a positive number'), 'error');
 		}
 		if (!is_numeric($myrow[12])) {
 			$InputError = 1;
-			prnMsg(_('The weight of the packaged item in KGs must be numeric'),'error');
+			prnMsg(_('The weight of the packaged item in KGs must be numeric'), 'error');
 		}
-		if ($myrow[12]<0) {
+		if ($myrow[12] < 0) {
 			$InputError = 1;
-			prnMsg(_('The weight of the packaged item must be a positive number'),'error');
+			prnMsg(_('The weight of the packaged item must be a positive number'), 'error');
 		}
 		if (!is_numeric($myrow[6])) {
 			$InputError = 1;
-			prnMsg(_('The economic order quantity must be numeric'),'error');
+			prnMsg(_('The economic order quantity must be numeric'), 'error');
 		}
-		if ($$myrow[6] <0) {
+		if ($$myrow[6] < 0) {
 			$InputError = 1;
-			prnMsg (_('The economic order quantity must be a positive number'),'error');
+			prnMsg(_('The economic order quantity must be a positive number'), 'error');
 		}
-		if ($myrow[8]==0 AND $myrow[9]==1){
+		if ($myrow[8] == 0 AND $myrow[9] == 1) {
 			$InputError = 1;
-			prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
+			prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'), 'error');
 		}
 
 		$mbflag = $myrow[5];
-		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
+		if ($mbflag != 'M' and $mbflag != 'K' and $mbflag != 'A' and $mbflag != 'B' and $mbflag != 'D' and $mbflag != 'G') {
 			$InputError = 1;
-			prnMsg(_('Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), Purchased(B), Dummy(D) or Phantom(G)'),'error');
+			prnMsg(_('Items must be of MBFlag type Manufactured(M), Assembly(A), Kit-Set(K), Purchased(B), Dummy(D) or Phantom(G)'), 'error');
 		}
-		if (($mbflag=='A' OR $mbflag=='K' OR $mbflag=='D' OR $mbflag=='G') AND $myrow[8]==1){
+		if (($mbflag == 'A' OR $mbflag == 'K' OR $mbflag == 'D' OR $mbflag == 'G') AND $myrow[8] == 1) {
 			$InputError = 1;
-			prnMsg(_('Assembly/Kitset/Phantom/Service items cannot also be controlled items') . '. ' . _('Assemblies, Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+			prnMsg(_('Assembly/Kitset/Phantom/Service items cannot also be controlled items') . '. ' . _('Assemblies, Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'), 'error');
 		}
-		if ($myrow[3]==''){
+		if ($myrow[3] == '') {
 			$InputError = 1;
-			prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
+			prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'), 'error');
 		}
-		if ($myrow[17]==''){
+		if ($myrow[17] == '') {
 			$InputError = 1;
-			prnMsg(_('ItemPDF must contain either a filename, or the keyword `none`'),'error');
+			prnMsg(_('ItemPDF must contain either a filename, or the keyword `none`'), 'error');
 		}
 
-		if ($InputError !=1){
-			if ($myrow[9]==1){ /*Not appropriate to have several dp on serial items */
-				$myrow[16]=0;
+		if ($InputError != 1) {
+			if ($myrow[9] == 1) {
+				/*Not appropriate to have several dp on serial items */
+				$myrow[16] = 0;
 			}
 
 			//attempt to insert the stock item
@@ -203,31 +203,31 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					appendfile)
 				VALUES (
 					'$StockID',
-					'" . $myrow[1]	. "',
-					'" . $myrow[2]	. "',
-					'" . $myrow[3]	. "',
-					'" . $myrow[4]	. "',
-					'" . $myrow[5]	. "',
-					"  . $myrow[6]	. ",
-					"  . $myrow[7]	. ",
-					"  . $myrow[8]	. ",
-					"  . $myrow[9]	. ",
-					"  . $myrow[10]	. ",
-					"  . $myrow[11]	. ",
-					"  . $myrow[12]	. ",
-					'" . $myrow[13]	. "',
-					'" . $myrow[14]	. "',
-					"  . $myrow[15]	. ",
-					"  . $myrow[16]	. ",
-					'" . $myrow[17]	. "'
+					'" . $myrow[1] . "',
+					'" . $myrow[2] . "',
+					'" . $myrow[3] . "',
+					'" . $myrow[4] . "',
+					'" . $myrow[5] . "',
+					" . $myrow[6] . ",
+					" . $myrow[7] . ",
+					" . $myrow[8] . ",
+					" . $myrow[9] . ",
+					" . $myrow[10] . ",
+					" . $myrow[11] . ",
+					" . $myrow[12] . ",
+					'" . $myrow[13] . "',
+					'" . $myrow[14] . "',
+					" . $myrow[15] . ",
+					" . $myrow[16] . ",
+					'" . $myrow[17] . "'
 				);
 			";
 
-			$ErrMsg =  _('The item could not be added because');
+			$ErrMsg = _('The item could not be added because');
 			$DbgMsg = _('The SQL that was used to add the item failed was');
-			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no($db) ==0) { //the insert of the new code worked so bang in the stock location records too
+			if (DB_error_no($db) == 0) { //the insert of the new code worked so bang in the stock location records too
 
 				$sql = "INSERT INTO locstock (loccode,
 												stockid)
@@ -235,20 +235,20 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									'" . $StockID . "'
 									FROM locations";
 
-				$ErrMsg =  _('The locations for the item') . ' ' . $StockID .  ' ' . _('could not be added because');
+				$ErrMsg = _('The locations for the item') . ' ' . $StockID . ' ' . _('could not be added because');
 				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-				if (DB_error_no($db) ==0) {
-					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');
+				if (DB_error_no($db) == 0) {
+					prnMsg(_('New Item') . ' ' . $StockID . ' ' . _('has been added to the transaction'), 'info');
 				} else { //location insert failed so set some useful error info
 					$InputError = 1;
-					prnMsg(_($InsResult),'error');
+					prnMsg(_($InsResult), 'error');
 				}
 
 			} else { //item insert failed so set some useful error info
 				$InputError = 1;
-				prnMsg(_($InsResult),'error');
+				prnMsg(_($InsResult), 'error');
 			}
 
 		}
@@ -262,18 +262,18 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
+		prnMsg(_('Failed on row ' . $row . '. Batch import has been rolled back.'), 'error');
 		DB_Txn_Rollback($db);
 	} else { //all good so commit data transaction
 		DB_Txn_Commit($db);
-		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
+		prnMsg(_('Batch Import of') . ' ' . $FileName . ' ' . _('has been completed. All transactions committed to the database.'), 'success');
 	}
 
 	fclose($FileHandle);
 
-} elseif ( isset($_POST['gettemplate']) || isset($_GET['gettemplate']) ) { //download an import template
+} elseif (isset($_POST['gettemplate']) || isset($_GET['gettemplate'])) { //download an import template
 
-	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
+	echo '<br /><br /><br />"' . implode('","', $FieldHeadings) . '"<br /><br /><br />';
 
 } else { //show file upload form
 
@@ -283,17 +283,15 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		<br />
 		<br />';
 	echo '<form onSubmit="return VerifyForm(this);" action="Z_ImportStocks.php" method="post" class="noPrint" enctype="multipart/form-data">';
-    echo '<div class="centre">';
+	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			_('Upload file') . ': <input name="userfile" type="file" />
+	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' . _('Upload file') . ': <input name="userfile" type="file" />
 			<input type="submit" value="' . _('Send File') . '" />
-        </div>
+		</div>
 		</form>';
 
 }
-
 
 include('includes/footer.inc');
 ?>

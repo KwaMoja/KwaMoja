@@ -1,15 +1,12 @@
 <?php
 
-/* $Id: ShopParameters.php 5797 2013-01-26 22:31:34Z daintree $*/
-
 include('includes/session.inc');
 
 $Title = _('Shop Configuration');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Shop Configuration')
-	. '" alt="" />' . $Title. '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Shop Configuration') . '" alt="" />' . $Title . '</p>';
 
 
 if (isset($_POST['submit'])) {
@@ -22,136 +19,137 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if ($InputError !=1){
+	if ($InputError != 1) {
 
 		$SQL = array();
 
-		if ($_SESSION['ShopName'] != $_POST['X_ShopName'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopName']) ."' WHERE confname = 'ShopName'";
+		if ($_SESSION['ShopName'] != $_POST['X_ShopName']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopName']) . "' WHERE confname = 'ShopName'";
 		}
-		if ($_SESSION['ShopPrivacyStatement'] != $_POST['X_ShopPrivacyStatement'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopPrivacyStatement']) ."' WHERE confname = 'ShopPrivacyStatement'";
+		if ($_SESSION['ShopPrivacyStatement'] != $_POST['X_ShopPrivacyStatement']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopPrivacyStatement']) . "' WHERE confname = 'ShopPrivacyStatement'";
 		}
-		if ($_SESSION['ShopFreightPolicy'] != $_POST['X_ShopFreightPolicy'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopFreightPolicy']) ."' WHERE confname = 'ShopFreightPolicy'";
+		if ($_SESSION['ShopFreightPolicy'] != $_POST['X_ShopFreightPolicy']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopFreightPolicy']) . "' WHERE confname = 'ShopFreightPolicy'";
 		}
-		if ($_SESSION['ShopTermsConditions'] != $_POST['X_ShopTermsConditions'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTermsConditions']) ."' WHERE confname = 'ShopTermsConditions'";
+		if ($_SESSION['ShopTermsConditions'] != $_POST['X_ShopTermsConditions']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTermsConditions']) . "' WHERE confname = 'ShopTermsConditions'";
 		}
-		if ($_SESSION['ShopAboutUs'] != $_POST['X_ShopAboutUs'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopAboutUs']) ."' WHERE confname = 'ShopAboutUs'";
+		if ($_SESSION['ShopAboutUs'] != $_POST['X_ShopAboutUs']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopAboutUs']) . "' WHERE confname = 'ShopAboutUs'";
 		}
-		if ($_SESSION['ShopContactUs'] != $_POST['X_ShopContactUs'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopContactUs']) ."' WHERE confname = 'ShopContactUs'";
+		if ($_SESSION['ShopContactUs'] != $_POST['X_ShopContactUs']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopContactUs']) . "' WHERE confname = 'ShopContactUs'";
 		}
-		if ($_SESSION['ShopDebtorNo'] != $_POST['X_ShopDebtorNo'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopDebtorNo']."' WHERE confname = 'ShopDebtorNo'";
+		if ($_SESSION['ShopDebtorNo'] != $_POST['X_ShopDebtorNo']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopDebtorNo'] . "' WHERE confname = 'ShopDebtorNo'";
 		}
-		if ($_SESSION['ShopBranchCode'] != $_POST['X_ShopBranchCode'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopBranchCode']."' WHERE confname = 'ShopBranchCode'";
+		if ($_SESSION['ShopBranchCode'] != $_POST['X_ShopBranchCode']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopBranchCode'] . "' WHERE confname = 'ShopBranchCode'";
 		}
 
-		if ($_SESSION['ShopAllowCreditCards'] != $_POST['X_ShopAllowCreditCards'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowCreditCards']."' WHERE confname = 'ShopAllowCreditCards'";
+		if ($_SESSION['ShopAllowCreditCards'] != $_POST['X_ShopAllowCreditCards']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowCreditCards'] . "' WHERE confname = 'ShopAllowCreditCards'";
 		}
-		if ($_SESSION['ShopAllowPayPal'] != $_POST['X_ShopAllowPayPal'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowPayPal']."' WHERE confname = 'ShopAllowPayPal'";
+		if ($_SESSION['ShopAllowPayPal'] != $_POST['X_ShopAllowPayPal']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowPayPal'] . "' WHERE confname = 'ShopAllowPayPal'";
 		}
-		if ($_SESSION['ShopAllowBankTransfer'] != $_POST['X_ShopAllowBankTransfer'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowBankTransfer']."' WHERE confname = 'ShopAllowBankTransfer'";
+		if ($_SESSION['ShopAllowBankTransfer'] != $_POST['X_ShopAllowBankTransfer']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowBankTransfer'] . "' WHERE confname = 'ShopAllowBankTransfer'";
 		}
-		if ($_SESSION['ShopPayPalSurcharge'] != $_POST['X_ShopPayPalSurcharge'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalSurcharge']."' WHERE confname = 'ShopPayPalSurcharge'";
+		if ($_SESSION['ShopPayPalSurcharge'] != $_POST['X_ShopPayPalSurcharge']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalSurcharge'] . "' WHERE confname = 'ShopPayPalSurcharge'";
 		}
-		if ($_SESSION['ShopBankTransferSurcharge'] != $_POST['X_ShopBankTransferSurcharge'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopBankTransferSurcharge']."' WHERE confname = 'ShopBankTransferSurcharge'";
+		if ($_SESSION['ShopBankTransferSurcharge'] != $_POST['X_ShopBankTransferSurcharge']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopBankTransferSurcharge'] . "' WHERE confname = 'ShopBankTransferSurcharge'";
 		}
-		if ($_SESSION['ShopCreditCardSurcharge'] != $_POST['X_ShopCreditCardSurcharge'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopCreditCardSurcharge']."' WHERE confname = 'ShopCreditCardSurcharge'";
+		if ($_SESSION['ShopCreditCardSurcharge'] != $_POST['X_ShopCreditCardSurcharge']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopCreditCardSurcharge'] . "' WHERE confname = 'ShopCreditCardSurcharge'";
 		}
-		if ($_SESSION['ShopSurchargeStockID'] != $_POST['X_ShopSurchargeStockID'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopSurchargeStockID']."' WHERE confname = 'ShopSurchargeStockID'";
+		if ($_SESSION['ShopSurchargeStockID'] != $_POST['X_ShopSurchargeStockID']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopSurchargeStockID'] . "' WHERE confname = 'ShopSurchargeStockID'";
 		}
-		if ($_SESSION['ShopCreditCardBankAccount'] != $_POST['X_ShopCreditCardBankAccount'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopCreditCardBankAccount']."' WHERE confname = 'ShopCreditCardBankAccount'";
+		if ($_SESSION['ShopCreditCardBankAccount'] != $_POST['X_ShopCreditCardBankAccount']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopCreditCardBankAccount'] . "' WHERE confname = 'ShopCreditCardBankAccount'";
 		}
-		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalBankAccount']."' WHERE confname = 'ShopPayPalBankAccount'";
+		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalBankAccount'] . "' WHERE confname = 'ShopPayPalBankAccount'";
 		}
 
 		if (!$AllowDemoMode) {
-			if ($_SESSION['ShopCreditCardGateway'] != $_POST['X_ShopCreditCardGateway'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopCreditCardGateway']."' WHERE confname = 'ShopCreditCardGateway'";
+			if ($_SESSION['ShopCreditCardGateway'] != $_POST['X_ShopCreditCardGateway']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopCreditCardGateway'] . "' WHERE confname = 'ShopCreditCardGateway'";
 			}
-			if ($_SESSION['ShopPayPalUser'] != $_POST['X_ShopPayPalUser'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalUser']."' WHERE confname = 'ShopPayPalUser'";
+			if ($_SESSION['ShopPayPalUser'] != $_POST['X_ShopPayPalUser']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalUser'] . "' WHERE confname = 'ShopPayPalUser'";
 			}
-			if ($_SESSION['ShopPayPalPassword'] != $_POST['X_ShopPayPalPassword'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalPassword']."' WHERE confname = 'ShopPayPalPassword'";
+			if ($_SESSION['ShopPayPalPassword'] != $_POST['X_ShopPayPalPassword']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalPassword'] . "' WHERE confname = 'ShopPayPalPassword'";
 			}
-			if ($_SESSION['ShopPayPalSignature'] != $_POST['X_ShopPayPalSignature'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalSignature']."' WHERE confname = 'ShopPayPalSignature'";
+			if ($_SESSION['ShopPayPalSignature'] != $_POST['X_ShopPayPalSignature']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalSignature'] . "' WHERE confname = 'ShopPayPalSignature'";
 			}
-			if ($_SESSION['ShopPayPalProUser'] != $_POST['X_ShopPayPalProUser'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalProUser']."' WHERE confname = 'ShopPayPalProUser'";
+			if ($_SESSION['ShopPayPalProUser'] != $_POST['X_ShopPayPalProUser']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalProUser'] . "' WHERE confname = 'ShopPayPalProUser'";
 			}
-			if ($_SESSION['ShopPayPalPassword'] != $_POST['X_ShopPayPalProPassword'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalProPassword']."' WHERE confname = 'ShopPayPalProPassword'";
+			if ($_SESSION['ShopPayPalPassword'] != $_POST['X_ShopPayPalProPassword']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalProPassword'] . "' WHERE confname = 'ShopPayPalProPassword'";
 			}
-			if ($_SESSION['ShopPayPalSignature'] != $_POST['X_ShopPayPalProSignature'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayPalProSignature']."' WHERE confname = 'ShopPayPalProSignature'";
+			if ($_SESSION['ShopPayPalSignature'] != $_POST['X_ShopPayPalProSignature']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalProSignature'] . "' WHERE confname = 'ShopPayPalProSignature'";
 			}
-			if ($_SESSION['ShopPayFlowUser'] != $_POST['X_ShopPayFlowUser'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayFlowUser']."' WHERE confname = 'ShopPayFlowUser'";
+			if ($_SESSION['ShopPayFlowUser'] != $_POST['X_ShopPayFlowUser']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayFlowUser'] . "' WHERE confname = 'ShopPayFlowUser'";
 			}
-			if ($_SESSION['ShopPayFlowPassword'] != $_POST['X_ShopPayFlowPassword'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayFlowPassword']."' WHERE confname = 'ShopPayFlowPassword'";
+			if ($_SESSION['ShopPayFlowPassword'] != $_POST['X_ShopPayFlowPassword']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayFlowPassword'] . "' WHERE confname = 'ShopPayFlowPassword'";
 			}
-			if ($_SESSION['ShopPayFlowVendor'] != $_POST['X_ShopPayFlowVendor'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayFlowVendor']."' WHERE confname = 'ShopPayFlowVendor'";
+			if ($_SESSION['ShopPayFlowVendor'] != $_POST['X_ShopPayFlowVendor']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayFlowVendor'] . "' WHERE confname = 'ShopPayFlowVendor'";
 			}
-			if ($_SESSION['ShopPayFlowMerchant'] != $_POST['X_ShopPayFlowMerchant'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopPayFlowMerchant']."' WHERE confname = 'ShopPayFlowMerchant'";
-			}
-
-
-			if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
+			if ($_SESSION['ShopPayFlowMerchant'] != $_POST['X_ShopPayFlowMerchant']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayFlowMerchant'] . "' WHERE confname = 'ShopPayFlowMerchant'";
 			}
 
-			if ($_SESSION['ShopSwipeHQMerchantID'] != $_POST['X_ShopSwipeHQMerchantID'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopSwipeHQMerchantID']."' WHERE confname = 'ShopSwipeHQMerchantID'";
+
+			if ($_SESSION['ShopMode'] != $_POST['X_ShopMode']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopMode'] . "' WHERE confname = 'ShopMode'";
 			}
-			if ($_SESSION['ShopSwipeHQAPIKey'] != $_POST['X_ShopSwipeHQAPIKey'] ) {
-				$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopSwipeHQAPIKey']."' WHERE confname = 'ShopSwipeHQAPIKey'";
+
+			if ($_SESSION['ShopSwipeHQMerchantID'] != $_POST['X_ShopSwipeHQMerchantID']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopSwipeHQMerchantID'] . "' WHERE confname = 'ShopSwipeHQMerchantID'";
+			}
+			if ($_SESSION['ShopSwipeHQAPIKey'] != $_POST['X_ShopSwipeHQAPIKey']) {
+				$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopSwipeHQAPIKey'] . "' WHERE confname = 'ShopSwipeHQAPIKey'";
 			}
 		} //these options only available in live shop - not the demo.
-			else { //always ensure test mode and PayFlow for demo site
-				$SQL[] = "UPDATE config SET confvalue = 'test' WHERE confname = 'ShopMode'";
-				$SQL[] = "UPDATE config SET confvalue = 'PayPalPro' WHERE confname = 'ShopCreditCardGateway'";
+		else { //always ensure test mode and PayFlow for demo site
+			$SQL[] = "UPDATE config SET confvalue = 'test' WHERE confname = 'ShopMode'";
+			$SQL[] = "UPDATE config SET confvalue = 'PayPalPro' WHERE confname = 'ShopCreditCardGateway'";
 
 		}
-		$ErrMsg =  _('The shop configuration could not be updated because');
+		$ErrMsg = _('The shop configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was:');
-		if (sizeof($SQL) > 0 ) {
+		if (sizeof($SQL) > 0) {
 			$result = DB_Txn_Begin($db);
 			foreach ($SQL as $SqlLine) {
-				$result = DB_query($SqlLine,$db,$ErrMsg,$DbgMsg,true);
+				$result = DB_query($SqlLine, $db, $ErrMsg, $DbgMsg, true);
 			}
 			$result = DB_Txn_Commit($db);
-			prnMsg( _('Shop configuration updated'),'success');
+			prnMsg(_('Shop configuration updated'), 'success');
 
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
 			include($PathPrefix . 'includes/GetConfig.php');
 			$ForceConfigReload = False;
 		}
 	} else {
-		prnMsg( _('Validation failed') . ', ' . _('no updates or deletes took place'),'warn');
+		prnMsg(_('Validation failed') . ', ' . _('no updates or deletes took place'), 'warn');
 	}
 
-} /* end of if submit */
+}
+/* end of if submit */
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table cellpadding="2" class="selection" width="98%">';
@@ -160,7 +158,7 @@ $TableHeader = '<tr>
 					<th>' . _('Shop Configuration Parameter') . '</th>
 					<th>' . _('Value') . '</th>
 					<th>' . _('Notes') . '</th>
-                </tr>';
+				</tr>';
 
 echo '<tr>
 		<th colspan="3">' . _('General Settings') . '</th></tr>';
@@ -181,7 +179,7 @@ echo '<tr>
 	</tr>';
 // Shop Customer Branch
 echo '<tr>
-		<td>'._('Default Web Shop Branch Code').':</td>
+		<td>' . _('Default Web Shop Branch Code') . ':</td>
 		<td><input type="text" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
 		<td>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</td>
 	</tr>';
@@ -218,7 +216,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Allow Payment Surcharges') . ':</td>
 		<td><select name="X_ShopAllowSurcharges">';
-if ($_SESSION['ShopAllowSurcharges'] ==1) {
+if ($_SESSION['ShopAllowSurcharges'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
@@ -229,12 +227,12 @@ echo '</select></td>
 		<td>' . _('Add surcharges for different payment methods.') . '</td>
 	</tr>';
 
-$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'",$db);
+$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'", $db);
 echo '<tr>
 		<td>' . _('Surcharges Stock Item') . ':</td>
 		<td><select name="X_ShopSurchargeStockID">';
-while ($ItemsRow = DB_fetch_array($DummyItemsResult)){
-	if ($_SESSION['ShopSurchargeStockID'] ==$ItemsRow['stockid']) {
+while ($ItemsRow = DB_fetch_array($DummyItemsResult)) {
+	if ($_SESSION['ShopSurchargeStockID'] == $ItemsRow['stockid']) {
 		echo '<option selected="selected" value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . '-' . $ItemsRow['description'] . '</option>';
 	} else {
 		echo '<option value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . '-' . $ItemsRow['description'] . '</option>';
@@ -247,7 +245,7 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Allow Bank Transfer Payment') . ':</td>
 		<td><select name="X_ShopAllowBankTransfer">';
-if ($_SESSION['ShopAllowBankTransfer'] ==1) {
+if ($_SESSION['ShopAllowBankTransfer'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
@@ -266,7 +264,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Allow PayPal Payment') . ':</td>
 		<td><select name="X_ShopAllowPayPal">';
-if ($_SESSION['ShopAllowPayPal'] ==1) {
+if ($_SESSION['ShopAllowPayPal'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
@@ -280,9 +278,9 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Pay Pal Bank Account') . ':</td>
 		<td><select name="X_ShopPayPalBankAccount">';
-$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts",$db);
-while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
-	if ($_SESSION['ShopPayPalBankAccount'] ==$BankAccountRow['accountcode']) {
+$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts", $db);
+while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
+	if ($_SESSION['ShopPayPalBankAccount'] == $BankAccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
 	} else {
 		echo '<option value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
@@ -301,7 +299,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Allow Credit Card Payments') . ':</td>
 		<td><select name="X_ShopAllowCreditCards">';
-if ($_SESSION['ShopAllowCreditCards'] ==1) {
+if ($_SESSION['ShopAllowCreditCards'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
@@ -320,17 +318,17 @@ if ($AllowDemoMode) {
 } else {
 	echo '<select name="X_ShopCreditCardGateway">';
 }
-if ($_SESSION['ShopCreditCardGateway'] =='PayPalPro') {
+if ($_SESSION['ShopCreditCardGateway'] == 'PayPalPro') {
 	echo '<option selected="selected" value="PayPalPro">' . _('PayPal Pro') . '</option>';
 } else {
 	echo '<option value="PayPalPro">' . _('PayPal Pro') . '</option>';
 }
-if ($_SESSION['ShopCreditCardGateway'] =='PayFlow') {
+if ($_SESSION['ShopCreditCardGateway'] == 'PayFlow') {
 	echo '<option selected="selected" value="PayFlow">' . _('PayFlow Pro') . '</option>';
 } else {
 	echo '<option value="PayFlow">' . _('PayFlow Pro') . '</option>';
 }
-if ($_SESSION['ShopCreditCardGateway'] =='SwipeHQ') {
+if ($_SESSION['ShopCreditCardGateway'] == 'SwipeHQ') {
 	echo '<option selected="selected" value="SwipeHQ">' . _('Swipe HQ - New Zealand') . '</option>';
 } else {
 	echo '<option value="SwipeHQ">' . _('Swipe HQ - New Zealand') . '</option>';
@@ -348,9 +346,9 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Credit Card Bank Account') . ':</td>
 		<td><select name="X_ShopCreditCardBankAccount">';
-DB_data_seek($BankAccountsResult,0);
-while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
-	if ($_SESSION['ShopCreditCardBankAccount'] ==$BankAccountRow['accountcode']) {
+DB_data_seek($BankAccountsResult, 0);
+while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
+	if ($_SESSION['ShopCreditCardBankAccount'] == $BankAccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
 	} else {
 		echo '<option value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
@@ -363,18 +361,18 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('Test or Live Mode') . ':</td>
 		<td><select name="X_ShopMode">';
-		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
-			echo '<option selected="selected" value="test">' . _('Test') . '</option>
+if ($_SESSION['ShopMode'] == 'test' OR $AllowDemoMode) {
+	echo '<option selected="selected" value="test">' . _('Test') . '</option>
 				<option value="live">' . _('Live') . '</option>';
-		} else {
-			echo '<option value="test">' . _('Test') . '</option>
+} else {
+	echo '<option value="test">' . _('Test') . '</option>
 				<option selected="selected" value="live">' . _('Live') . '</option>';
-		}
-		echo '</select></td>
+}
+echo '</select></td>
 		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
 	</tr>';
 
-if ($AllowDemoMode){
+if ($AllowDemoMode) {
 	echo '<tr>
 			<td>' . _('Credit card user account details') . '</td>
 			<td colspan="2">' . _('Cannot be set in the demo') . '</td>
@@ -435,7 +433,7 @@ if ($AllowDemoMode){
 	echo '<tr>
 			<td>' . _('SwipeHQ Merchant ID') . ':</td>
 			<td><input type="text" class="noSpecialChars" size="15" maxlength="15" name="X_ShopSwipeHQMerchantID" value="' . $_SESSION['ShopSwipeHQMerchantID'] . '" /></td>
-			<td>' . _('The'). ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('Merchant ID - see SwipeHQ settings -> API credentials') . '</td>
+			<td>' . _('The') . ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('Merchant ID - see SwipeHQ settings -> API credentials') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('SwipeHQ API Key') . ':</td>
@@ -445,7 +443,7 @@ if ($AllowDemoMode){
 } //end of blocked inputs in demo mode
 echo '</table>
 		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
-    </div>
+	</div>
 	</form>';
 
 include('includes/footer.inc');

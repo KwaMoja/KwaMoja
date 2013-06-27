@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/DefineCartClass.php');
 
@@ -57,7 +56,7 @@ if (isset($_GET['NewOrder'])) {
 	$_SESSION['ExistingOrder' . $identifier] = 0;
 	$_SESSION['Items' . $identifier] = new cart;
 
-	if ((isset($SupplierLogin) and $SupplierLogin==0)) { //its a customer logon
+	if ((isset($SupplierLogin) and $SupplierLogin == 0)) { //its a customer logon
 		$_SESSION['Items' . $identifier]->DebtorNo = $_SESSION['CustomerID'];
 		$_SESSION['RequireCustomerSelection'] = 0;
 	} //count($_SESSION['AllowedPageSecurityTokens']) == 1

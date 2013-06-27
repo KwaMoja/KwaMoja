@@ -1,10 +1,11 @@
 <?php
-/* $Id$*/
+
 // Display demo user name and password within login form if $AllowDemoMode is true
+
 include('LanguageSetup.php');
 
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
-	$demo_text = _('login as user') .': <i>' . _('admin') . '</i><br />' ._('with password') . ': <i>' . _('kwamoja') . '</i>';
+	$demo_text = _('login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('kwamoja') . '</i>';
 } elseif (!isset($demo_text)) {
 	$demo_text = _('Please login here');
 }
@@ -18,19 +19,19 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="css/login.css" type="text/css" />
-    <!-- Javascript required for Twitter follow me button-->
-    <script>
-      !function(d,s,id){
-        var js,fjs=d.getElementsByTagName(s)[0];
-        if(!d.getElementById(id)){
-          js=d.createElement(s);
-          js.id=id;
-          js.src="//platform.twitter.com/widgets.js";
-          fjs.parentNode.insertBefore(js,fjs);
-        }
-      }(document,"script","twitter-wjs");
-    </script>
-    <!-- End of Javascript required for Twitter follow me button-->
+	<!-- Javascript required for Twitter follow me button-->
+	<script>
+	  !function(d,s,id){
+		var js,fjs=d.getElementsByTagName(s)[0];
+		if(!d.getElementById(id)){
+		  js=d.createElement(s);
+		  js.id=id;
+		  js.src="//platform.twitter.com/widgets.js";
+		  fjs.parentNode.insertBefore(js,fjs);
+		}
+	  }(document,"script","twitter-wjs");
+	</script>
+	<!-- End of Javascript required for Twitter follow me button-->
 </head>
 <body>
 
@@ -95,13 +96,13 @@ echo _('User name');
 echo _('Password');
 ?>:</label>
 					<input type="password" name="Password" />
-       <div id="demo_text">
-       <?php
+	   <div id="demo_text">
+	   <?php
 if (isset($demo_text)) {
 	echo $demo_text;
 }
 ?>
-       </div>
+	   </div>
 					<button class="button" type="submit" value="<?php
 echo _('Login');
 ?>" name="SubmitUser">

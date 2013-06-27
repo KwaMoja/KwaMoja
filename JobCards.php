@@ -1,5 +1,5 @@
 <?php
-$PageSecurity = 1;
+
 if (!isset($_GET['DebtorNo'])) {
 	// Show Message Box
 	echo "<script type='text/javascript'>";

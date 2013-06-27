@@ -1,26 +1,24 @@
 <?php
 
-$PageSecurity=1;
-
 include('includes/session.inc');
 
-$_SESSION['Updates']['Errors']=0;
-$_SESSION['Updates']['Successes']=0;
-$_SESSION['Updates']['Warnings']=0;
+$_SESSION['Updates']['Errors'] = 0;
+$_SESSION['Updates']['Successes'] = 0;
+$_SESSION['Updates']['Warnings'] = 0;
 
 include('includes/UpgradeDB_' . $DBType . '.inc');
 $Title = _('Install a KwaMoja plugin');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/plugin.png" width="24px" title="' . _('Install Plugin') . '" alt="" />' . _('Install KwaMoja Plugin') . '</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/plugin.png" width="24px" title="' . _('Install Plugin') . '" alt="" />' . _('Install KwaMoja Plugin') . '</p>';
 
 if (isset($_POST['Install'])) {
 	$ZipFile = zip_open('plugins/' . $_POST['Available']);
-	prnMsg( $_POST['Available'] . ' ' . _('appears to be a genuine plugin file.'), 'success');
-	while ($FileName=zip_read($ZipFile)) {
-		$Entry=zip_entry_name($FileName);
-		if($Entry == 'summary.xml') {
+	prnMsg($_POST['Available'] . ' ' . _('appears to be a genuine plugin file.'), 'success');
+	while ($FileName = zip_read($ZipFile)) {
+		$Entry = zip_entry_name($FileName);
+		if ($Entry == 'summary.xml') {
 			$xml = zip_entry_read($FileName);
 			$Summary = new SimpleXMLElement($xml);
 			$PluginName = $Summary->name;
@@ -33,12 +31,12 @@ if (isset($_POST['Install'])) {
 			$Summary->asXML($TempSummary);
 		}
 	}
-	prnMsg( _('Plugin details have been successfully extracted from the file'), 'success');
+	prnMsg(_('Plugin details have been successfully extracted from the file'), 'success');
 	zip_close($ZipFile);
 	$ZipFile = zip_open('plugins/' . $_POST['Available']);
-	while ($FileName=zip_read($ZipFile)) {
-		$Entry=zip_entry_name($FileName);
-		if($Entry == $MenuLinks) {
+	while ($FileName = zip_read($ZipFile)) {
+		$Entry = zip_entry_name($FileName);
+		if ($Entry == $MenuLinks) {
 			$Menus = zip_entry_read($FileName);
 			$TempMenus = tempnam('includes', 'MN');
 			$handle = fopen($TempMenus, "w");
@@ -50,14 +48,14 @@ if (isset($_POST['Install'])) {
 			fwrite($fp, $Text);
 		}
 	}
-	if ($Menus!='') {
-		prnMsg( _('The menu additions have been applied'), 'success');
+	if ($Menus != '') {
+		prnMsg(_('The menu additions have been applied'), 'success');
 	}
 	zip_close($ZipFile);
 	$ZipFile = zip_open('plugins/' . $_POST['Available']);
-	while ($FileName=zip_read($ZipFile)) {
-		$Entry=zip_entry_name($FileName);
-		if($Entry == $DBUpdates) {
+	while ($FileName = zip_read($ZipFile)) {
+		$Entry = zip_entry_name($FileName);
+		if ($Entry == $DBUpdates) {
 			$Updates = zip_entry_read($FileName);
 			$TempDB = tempnam('includes', 'DB');
 			$handle = fopen($TempDB, "w");
@@ -65,14 +63,14 @@ if (isset($_POST['Install'])) {
 			include($TempDB);
 		}
 	}
-	if ($Menus!='') {
-		prnMsg( _('The database changes have been applied'), 'success');
+	if ($Menus != '') {
+		prnMsg(_('The database changes have been applied'), 'success');
 	}
 	zip_close($ZipFile);
 	$ZipFile = zip_open('plugins/' . $_POST['Available']);
-	while ($FileName=zip_read($ZipFile)) {
-		$Entry=zip_entry_name($FileName);
-		if($Entry == $DBRemoves) {
+	while ($FileName = zip_read($ZipFile)) {
+		$Entry = zip_entry_name($FileName);
+		if ($Entry == $DBRemoves) {
 			$Removes = zip_entry_read($FileName);
 			$TempDBRemoves = tempnam('includes', 'DB');
 			$handle = fopen($TempDBRemoves, "w");
@@ -80,18 +78,18 @@ if (isset($_POST['Install'])) {
 		}
 	}
 	zip_close($ZipFile);
-	foreach($Scripts as $Script) {
+	foreach ($Scripts as $Script) {
 		$ZipFile = zip_open('plugins/' . $_POST['Available']);
-		while ($FileName=zip_read($ZipFile)) {
-			$Entry=zip_entry_name($FileName);
-			if($Entry == $Script->name) {
+		while ($FileName = zip_read($ZipFile)) {
+			$Entry = zip_entry_name($FileName);
+			if ($Entry == $Script->name) {
 				$Code = zip_entry_read($FileName, 1048576);
 				$TempName = tempnam('', 'SC');
 				$handle = fopen($TempName, "w");
 				fwrite($handle, $Code);
 				rename($TempName, $Script->name);
 				NewScript($Script->name, $Script->pagesecurity, $db);
-				prnMsg( $Script->name . ' ' . _('has been successfully added to KwaMoja'), 'success');
+				prnMsg($Script->name . ' ' . _('has been successfully added to KwaMoja'), 'success');
 			}
 		}
 		zip_close($ZipFile);
@@ -102,7 +100,7 @@ if (isset($_POST['Install'])) {
 	$Zip->addFile($TempMenus, $MenuLinks);
 	$Zip->addFile($TempDB, $DBUpdates);
 	$Zip->addFile($TempDBRemoves, $DBRemoves);
-	foreach($Scripts as $Script) {
+	foreach ($Scripts as $Script) {
 		$Zip->addFile($Script->name);
 	}
 	$Zip->close();
@@ -111,9 +109,9 @@ if (isset($_POST['Install'])) {
 	unlink($TempDB);
 	unlink($TempDBRemoves);
 	$ForceConfigReload = True;
-	prnMsg( _('The plugin has been successfully installed. You can now use it from the main menu'), 'success');
+	prnMsg(_('The plugin has been successfully installed. You can now use it from the main menu'), 'success');
 } else {
-	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />';
 	if (!isset($_POST['reload'])) {
@@ -128,13 +126,13 @@ if (isset($_POST['Install'])) {
 		foreach ($Plugins as $Plugin) {
 			if (IsPlugin($Plugin)) {
 				$ZipFile = zip_open('plugins/' . $Plugin);
-				while ($FileName=zip_read($ZipFile)) {
-					$Entry=zip_entry_name($FileName);
-					if($Entry == 'summary.xml') {
+				while ($FileName = zip_read($ZipFile)) {
+					$Entry = zip_entry_name($FileName);
+					if ($Entry == 'summary.xml') {
 						$xml = zip_entry_read($FileName);
 						$Summary = new SimpleXMLElement($xml);
 						$PluginName = $Summary->name;
-						if ($Summary->installed==0) {
+						if ($Summary->installed == 0) {
 							echo '<option value="' . $Plugin . '">' . $PluginName . '</option>';
 						}
 					}
@@ -146,9 +144,9 @@ if (isset($_POST['Install'])) {
 			</div>';
 	} else {
 		$ZipFile = zip_open('plugins/' . $_POST['Available']);
-		while ($FileName=zip_read($ZipFile)) {
-			$Entry=zip_entry_name($FileName);
-			if($Entry == 'summary.xml') {
+		while ($FileName = zip_read($ZipFile)) {
+			$Entry = zip_entry_name($FileName);
+			if ($Entry == 'summary.xml') {
 				$xml = zip_entry_read($FileName);
 				$Summary = new SimpleXMLElement($xml);
 				$PluginName = $Summary->name;
@@ -195,9 +193,9 @@ function IsPlugin($File) {
 		return False;
 	}
 	$ZipFile = zip_open('plugins/' . $File);
-	while ($FileName=zip_read($ZipFile)) {
-		$Entry=zip_entry_name($FileName);
-		if($Entry == 'summary.xml') {
+	while ($FileName = zip_read($ZipFile)) {
+		$Entry = zip_entry_name($FileName);
+		if ($Entry == 'summary.xml') {
 			return True;
 		}
 	}
@@ -207,7 +205,7 @@ function IsPlugin($File) {
 function RemoveLine($FileName) {
 	// load the data and delete the line from the array
 	$Lines = file($FileName);
-	$LastLine = sizeof($Lines) - 1 ;
+	$LastLine = sizeof($Lines) - 1;
 	unset($Lines[$LastLine]);
 
 	// write the new data to the file
@@ -216,11 +214,11 @@ function RemoveLine($FileName) {
 	fclose($fp);
 }
 
-function executeSQL($sql, $db, $TrapErrors=False) {
+function executeSQL($sql, $db, $TrapErrors = False) {
 	/* Run an sql statement and return an error code */
 	DB_IgnoreForeignKeys($db);
 	$result = DB_query($sql, $db, '', '', false, $TrapErrors);
-	$ErrorNumber=DB_error_no($db);
+	$ErrorNumber = DB_error_no($db);
 	DB_ReinstateForeignKeys($db);
 	return $ErrorNumber;
 }

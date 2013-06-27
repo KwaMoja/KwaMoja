@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: PO_SelectOSPurchOrder.php 5752 2012-12-05 08:39:15Z daintree $*/
-
 $PricesSecurity = 1000;
 
 include('includes/session.inc');
@@ -152,7 +150,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select name="StockLocation">';
 
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";
@@ -581,6 +579,6 @@ else if (isset($_POST['SearchOrders'])) {
 }
 echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 ?>

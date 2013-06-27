@@ -1,7 +1,5 @@
 <?php
 
-$PageSecurity = 15;
-
 include('includes/session.inc');
 
 $Title = _('Maintain ABC ranking methods');

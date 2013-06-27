@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: NoSalesItems.php 2012-05-12 $*/
-
 include('includes/session.inc');
 $Title = _('No Sales Items Searching');
 include('includes/header.inc');
@@ -19,7 +17,7 @@ if (!(isset($_POST['Search']))) {
 			<td>:</td>
 			<td>
 				<select name="Location[]" multiple="multiple">';
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";

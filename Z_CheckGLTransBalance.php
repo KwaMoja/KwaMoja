@@ -1,8 +1,7 @@
 <?php
-/* $Id$*/
 
 include('includes/session.inc');
-$Title=_('Check Period Sales Ledger Control Account');
+$Title = _('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
 
 echo '<table>';
@@ -30,15 +29,15 @@ $sql = "SELECT gltrans.type,
 		periodno
 	HAVING ABS(SUM(amount))>0.01";
 
-$OutOfWackResult = DB_query($sql,$db);
+$OutOfWackResult = DB_query($sql, $db);
 
 
-$RowCounter =0;
+$RowCounter = 0;
 
-while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
+while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)) {
 
-	if ($RowCounter==18){
-		$RowCounter=0;
+	if ($RowCounter == 18) {
+		$RowCounter = 0;
 		echo $Header;
 	} else {
 		$RowCounter++;
@@ -47,7 +46,7 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 	<td><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $OutOfWackRow['type'] . '&TransNo=' . $OutOfWackRow['typeno'] . '">' . $OutOfWackRow['typename'] . '</a></td>
 	<td class="number">' . $OutOfWackRow['typeno'] . '</td>
 	<td class="number">' . $OutOfWackRow['periodno'] . '</td>
-	<td class="number">' . locale_number_format($OutOfWackRow['nettot'],3) . '</td>
+	<td class="number">' . locale_number_format($OutOfWackRow['nettot'], 3) . '</td>
 	</tr>';
 
 }

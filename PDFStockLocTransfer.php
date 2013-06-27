@@ -1,46 +1,44 @@
 <?php
 
-/* $Id$*/
 include('includes/session.inc');
 $Title = _('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');
 
 if (isset($_POST['TransferNo'])) {
-	$_GET['TransferNo']=$_POST['TransferNo'];
+	$_GET['TransferNo'] = $_POST['TransferNo'];
 }
 
-if (!isset($_GET['TransferNo'])){
+if (!isset($_GET['TransferNo'])) {
 
-	include ('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Reprint transfer docket').'</p><br />';
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
+	include('includes/header.inc');
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Reprint transfer docket') . '</p><br />';
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>
 			<tr>
-				<td>'._('Transfer docket to reprint').'</td>
+				<td>' . _('Transfer docket to reprint') . '</td>
 				<td><input type="text" class="number" size="10" name="TransferNo" /></td>
 			</tr>
 		</table>';
 	echo '<br />
-          <div class="centre">
-			<input type="submit" name="Print" value="' . _('Print') .'" />
-          </div>';
-    echo '</div>
-          </form>';
-	include ('includes/footer.inc');
+		  <div class="centre">
+			<input type="submit" name="Print" value="' . _('Print') . '" />
+		  </div>';
+	echo '</div>
+		  </form>';
+	include('includes/footer.inc');
 	exit;
 }
 
-$pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
+$pdf->addInfo('Title', _('Inventory Location Transfer BOL'));
 $pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
-$FontSize=10;
-$PageNumber=1;
-$line_height=30;
+$FontSize = 10;
+$PageNumber = 1;
+$line_height = 30;
 
-$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>'. _('This page must be called with a location transfer reference number').'.';
+$ErrMsg = _('An error occurred retrieving the items on the transfer') . '.' . '<p>' . _('This page must be called with a location transfer reference number') . '.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
 $sql = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
@@ -59,30 +57,30 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
-$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-if (DB_num_rows($result)==0){
+if (DB_num_rows($result) == 0) {
 
-	include ('includes/header.inc');
-	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
-	include ('includes/footer.inc');
+	include('includes/header.inc');
+	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'), 'error');
+	include('includes/footer.inc');
 	exit;
 }
 
 $TransferRow = DB_fetch_array($result);
 
-include ('includes/PDFStockLocTransferHeader.inc');
-$line_height=30;
-$FontSize=10;
+include('includes/PDFStockLocTransferHeader.inc');
+$line_height = 30;
+$FontSize = 10;
 
 do {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$TransferRow['stockid'], 'left');
-	$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$TransferRow['description'], 'left');
-	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($TransferRow['shipqty'],$TransferRow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($TransferRow['recqty'],$TransferRow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 100, $FontSize, $TransferRow['stockid'], 'left');
+	$LeftOvers = $pdf->addTextWrap(150, $YPos, 200, $FontSize, $TransferRow['description'], 'left');
+	$LeftOvers = $pdf->addTextWrap(350, $YPos, 60, $FontSize, locale_number_format($TransferRow['shipqty'], $TransferRow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap(470, $YPos, 60, $FontSize, locale_number_format($TransferRow['recqty'], $TransferRow['decimalplaces']), 'right');
 
-	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
+	$pdf->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
 
 	$YPos -= $line_height;
 

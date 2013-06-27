@@ -1,17 +1,14 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Supplier Transactions Inquiry');
 include('includes/header.inc');
 
 echo '<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $Title . '
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -26,26 +23,26 @@ $sql = "SELECT typeid,
 		WHERE typeid >= 20
 		AND typeid <= 23";
 
-$resultTypes = DB_query($sql,$db);
+$resultTypes = DB_query($sql, $db);
 
-echo '<option value="All">' ._('All') . '</option>';
-while ($myrow=DB_fetch_array($resultTypes)){
-	if (isset($_POST['TransType'])){
-		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+echo '<option value="All">' . _('All') . '</option>';
+while ($myrow = DB_fetch_array($resultTypes)) {
+	if (isset($_POST['TransType'])) {
+		if ($myrow['typeid'] == $_POST['TransType']) {
+			echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 		}
 	} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 }
 echo '</select></td>';
 
-if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+if (!isset($_POST['FromDate'])) {
+	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m'), 1, Date('Y')));
 }
-if (!isset($_POST['ToDate'])){
+if (!isset($_POST['ToDate'])) {
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<td>' . _('From') . ':</td>
@@ -59,13 +56,13 @@ echo '<td>' . _('From') . ':</td>
 		<input type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
 	</div>
 	<br />
-    </div>
+	</div>
 	</form>';
 
-if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
-   $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
-   $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
-   $sql = "SELECT type,
+if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
+	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
+	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
+	$sql = "SELECT type,
 				transno,
 		   		trandate,
 				duedate,
@@ -86,19 +83,19 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
 			INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 			WHERE ";
 
-   $sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
-	if  ($_POST['TransType']!='All')  {
+	$sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
+	if ($_POST['TransType'] != 'All') {
 		$sql .= " AND type = " . $_POST['TransType'];
 	}
-	$sql .=  " ORDER BY id";
+	$sql .= " ORDER BY id";
 
-   $TransResult = DB_query($sql, $db);
-   $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
-   $DbgMsg =  _('The SQL that failed was');
+	$TransResult = DB_query($sql, $db);
+	$ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+	$DbgMsg = _('The SQL that failed was');
 
-   echo '<table class="selection">';
+	echo '<table class="selection">';
 
-   $tableheader = '<tr>
+	$tableheader = '<tr>
 					<th>' . _('Type') . '</th>
 					<th>' . _('Number') . '</th>
 					<th>' . _('Supp Ref') . '</th>
@@ -115,17 +112,17 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
 	$RowCounter = 1;
 	$k = 0; //row colour counter
 
-	while ($myrow=DB_fetch_array($TransResult)) {
+	while ($myrow = DB_fetch_array($TransResult)) {
 
-		if ($k==1){
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
-			echo '<tr class="EvenTableRows">';;
+			echo '<tr class="EvenTableRows">';
 			$k++;
 		}
 
-		printf ('<td>%s</td>
+		printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -135,17 +132,7 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
-				</tr>',
-				$myrow['typename'],
-				$myrow['transno'],
-				$myrow['suppreference'],
-				ConvertSQLDate($myrow['trandate']),
-				$myrow['supplierno'] . ' - ' . $myrow['suppname'],
-				$myrow['transtext'],
-				ConvertSQLDate($myrow['duedate']),
-				locale_number_format($myrow['rate'],'Variable'),
-				locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
-				$myrow['currcode']);
+				</tr>', $myrow['typename'], $myrow['transno'], $myrow['suppreference'], ConvertSQLDate($myrow['trandate']), $myrow['supplierno'] . ' - ' . $myrow['suppname'], $myrow['transtext'], ConvertSQLDate($myrow['duedate']), locale_number_format($myrow['rate'], 'Variable'), locale_number_format($myrow['totalamt'], $myrow['currdecimalplaces']), $myrow['currcode']);
 
 
 		$GLTransResult = DB_query("SELECT account,
@@ -155,11 +142,9 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
 									FROM gltrans INNER JOIN chartmaster
 									ON gltrans.account=chartmaster.accountcode
 									WHERE type='" . $myrow['type'] . "'
-									AND typeno='" . $myrow['transno'] . "'",
-									$db,
-									_('Could not retrieve the GL transactions for this AP transaction'));
+									AND typeno='" . $myrow['transno'] . "'", $db, _('Could not retrieve the GL transactions for this AP transaction'));
 
-		if (DB_num_rows($GLTransResult)==0){
+		if (DB_num_rows($GLTransResult) == 0) {
 			echo '<tr>
 					<td colspan="10">' . _('There are no GL transactions created for the above AP transaction') . '</td>
 				</tr>';
@@ -173,40 +158,36 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != ''){
 					<th><b>' . _('Local Amount') . '</b></th>
 					<th><b>' . _('Narrative') . '</b></th>
 				</tr>';
-			$CheckGLTransBalance =0;
-			while ($GLTransRow = DB_fetch_array($GLTransResult)){
+			$CheckGLTransBalance = 0;
+			while ($GLTransRow = DB_fetch_array($GLTransResult)) {
 
 				printf('<tr>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
-						</tr>',
-						$GLTransRow['account'],
-						$GLTransRow['accountname'],
-						locale_number_format($GLTransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']),
-						$GLTransRow['narrative']);
+						</tr>', $GLTransRow['account'], $GLTransRow['accountname'], locale_number_format($GLTransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']), $GLTransRow['narrative']);
 
 				$CheckGLTransBalance += $GLTransRow['amount'];
 			}
-			if (round($CheckGLTransBalance,5)!= 0){
+			if (round($CheckGLTransBalance, 5) != 0) {
 				echo '<tr>
-						<td colspan="4" style="background-color:red"><b>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td>
+						<td colspan="4" style="background-color:red"><b>' . _('The GL transactions for this AP transaction are out of balance by') . ' ' . $CheckGLTransBalance . '</b></td>
 					</tr>';
 			}
 			echo '</table></td></tr>';
 		}
 
 		$RowCounter++;
-		if ($RowCounter == 12){
-			$RowCounter=1;
+		if ($RowCounter == 12) {
+			$RowCounter = 1;
 			echo $tableheader;
 		}
-	//end of page full new headings if
+		//end of page full new headings if
 	}
 	//end of while loop
 
- echo '</table>';
+	echo '</table>';
 }
 include('includes/footer.inc');
 ?>

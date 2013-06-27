@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: InternalStockRequest.php 4576 2011-05-27 10:59:20Z daintree $*/
-
 include('includes/DefineStockRequestClass.php');
 
 include('includes/session.inc');
@@ -214,7 +212,7 @@ echo '</select></td>
 	<tr>
 		<td>' . _('Location from which to request stock') . ':</td>';
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations

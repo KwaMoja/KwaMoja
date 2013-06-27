@@ -43,23 +43,23 @@ if (isset($_POST['ProcessStockChange'])) {
 	$result = DB_Txn_Begin($db);
 	echo '<br />' . _('Adding the new stock Category record');
 	$sql = "INSERT INTO stockcategory (categoryid,
-					categorydescription,
-					stocktype,
-					stockact,
-					adjglact,
-					purchpricevaract,
-					materialuseagevarac,
-					wipact)
-			SELECT '" . $_POST['NewStockCategory'] . "',
-				categorydescription,
-					stocktype,
-					stockact,
-					adjglact,
-					purchpricevaract,
-					materialuseagevarac,
-					wipact
-			FROM stockcategory
-			WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
+						categorydescription,
+						stocktype,
+						stockact,
+						adjglact,
+						purchpricevaract,
+						materialuseagevarac,
+						wipact)
+					SELECT '" . $_POST['NewStockCategory'] . "',
+							categorydescription,
+							stocktype,
+							stockact,
+							adjglact,
+							purchpricevaract,
+							materialuseagevarac,
+							wipact
+						FROM stockcategory
+						WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to insert the new stock category record failed');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
@@ -104,7 +104,7 @@ echo '<br />
 			<td><input type="text" name="NewStockCategory" size="20" minlength="0" maxlength="20" /></td>
 		</tr>
 	</table>
-	
+
 		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

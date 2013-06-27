@@ -1,9 +1,8 @@
 <?php
 
-/* $Id$ */
-
-// MRPCalendar.php
-// Maintains the calendar of valid manufacturing dates for MRP
+/* MRPCalendar.php
+ * Maintains the calendar of valid manufacturing dates for MRP
+ */
 
 include('includes/session.inc');
 $Title = _('MRP Calendar');
@@ -253,7 +252,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
-          <div>
+		  <div>
 			<br />
 			<br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -317,7 +316,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</table>
 		<br />
 		<br />
-        </div>
+		</div>
 		</form>';
 
 } // End of function display()

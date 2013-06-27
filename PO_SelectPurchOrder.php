@@ -1,13 +1,11 @@
 <?php
-/* $Id$*/
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Search Purchase Orders');
-include ('includes/header.inc');
+include('includes/header.inc');
 
 echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
-	'</p>';
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') . '</p>';
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
@@ -24,7 +22,7 @@ if (isset($_GET['SelectedSupplier'])) {
 } elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = $_POST['SelectedSupplier'];
 }
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_POST['ResetPart'])) {
@@ -60,7 +58,7 @@ if (isset($_POST['SearchParts'])) {
 			ON stockmaster.stockid = locstock.stockid INNER JOIN purchorderdetails
 			ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=1
-			AND stockmaster.description " . LIKE  . " '" . $SearchString ."'
+			AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -78,7 +76,7 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid = locstock.stockid
 				INNER JOIN purchorderdetails ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE purchorderdetails.completed=1
-			AND stockmaster.stockid " . LIKE  . " '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			GROUP BY stockmaster.stockid,
 				stockmaster.description,
@@ -107,16 +105,16 @@ if (isset($_POST['SearchParts'])) {
 	$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 }
 /* Not appropriate really to restrict search by date since user may miss older
-* ouststanding orders
-* $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
-*/
+ * ouststanding orders
+ * $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
+ */
 if (!isset($OrderNumber) or $OrderNumber == "") {
 	echo '<table class="selection"><tr><td>';
 	if (isset($SelectedStockItem)) {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";
@@ -142,41 +140,41 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select> ' . _('Order Status:') .' <select name="Status">';
+	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
 	if (!isset($_POST['Status'])) {
-		$_POST['Status']='Pending';
+		$_POST['Status'] = 'Pending';
 	}
- 	if (!isset($_POST['Status']) or $_POST['Status']=='Pending_Authorised_Completed'){
+	if (!isset($_POST['Status']) or $_POST['Status'] == 'Pending_Authorised_Completed') {
 		echo '<option selected="selected" value="Pending_Authorised_Completed">' . _('Pending/Authorised/Completed') . '</option>';
 	} else {
 		echo '<option value="Pending_Authorised_Completed">' . _('Pending/Authorised/Completed') . '</option>';
 	}
-	if ($_POST['Status']=='Pending'){
+	if ($_POST['Status'] == 'Pending') {
 		echo '<option selected="selected" value="Pending">' . _('Pending') . '</option>';
 	} else {
 		echo '<option value="Pending">' . _('Pending') . '</option>';
 	}
- 	if ($_POST['Status']=='Authorised'){
+	if ($_POST['Status'] == 'Authorised') {
 		echo '<option selected="selected" value="Authorised">' . _('Authorised') . '</option>';
 	} else {
 		echo '<option value="Authorised">' . _('Authorised') . '</option>';
 	}
-	if ($_POST['Status']=='Completed'){
+	if ($_POST['Status'] == 'Completed') {
 		echo '<option selected="selected" value="Completed">' . _('Completed') . '</option>';
 	} else {
 		echo '<option value="Completed">' . _('Completed') . '</option>';
 	}
-	if ($_POST['Status']=='Cancelled'){
+	if ($_POST['Status'] == 'Cancelled') {
 		echo '<option selected="selected" value="Cancelled">' . _('Cancelled') . '</option>';
 	} else {
 		echo '<option value="Cancelled">' . _('Cancelled') . '</option>';
 	}
-	if ($_POST['Status']=='Rejected'){
+	if ($_POST['Status'] == 'Rejected') {
 		echo '<option selected="selected" value="Rejected">' . _('Rejected') . '</option>';
 	} else {
 		echo '<option value="Rejected">' . _('Rejected') . '</option>';
 	}
- 	echo '</select> <input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" /></td>
+	echo '</select> <input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" /></td>
 		</tr>
 		</table>';
 }
@@ -213,7 +211,7 @@ echo '</select></td>
 		<td colspan="3">
 			<div class="centre">
 				<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-                <input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+				<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
 			</div>
 		</td>
 	</tr>
@@ -242,8 +240,8 @@ if (isset($StockItemsResult)) {
 		}
 		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
 			<td>' . $myrow['description'] . '</td>
-			<td class="number">' . locale_number_format($myrow['qoh'],$myrow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($myrow['qord'],$myrow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['qoh'], $myrow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($myrow['qord'], $myrow['decimalplaces']) . '</td>
 			<td>' . $myrow['units'] . '</td>
 			</tr>';
 		$j++;
@@ -261,17 +259,17 @@ if (isset($StockItemsResult)) {
 else {
 	//figure out the SQL required from the inputs available
 
-	if (!isset($_POST['Status']) or $_POST['Status']=='Pending_Authorised_Completed'){
+	if (!isset($_POST['Status']) or $_POST['Status'] == 'Pending_Authorised_Completed') {
 		$StatusCriteria = " AND (purchorders.status='Pending' OR purchorders.status='Authorised' OR purchorders.status='Printed' OR purchorders.status='Completed') ";
-	}elseif ($_POST['Status']=='Authorised'){
+	} elseif ($_POST['Status'] == 'Authorised') {
 		$StatusCriteria = " AND (purchorders.status='Authorised' OR purchorders.status='Printed')";
-	}elseif ($_POST['Status']=='Pending'){
+	} elseif ($_POST['Status'] == 'Pending') {
 		$StatusCriteria = " AND purchorders.status='Pending' ";
-	}elseif ($_POST['Status']=='Rejected'){
+	} elseif ($_POST['Status'] == 'Rejected') {
 		$StatusCriteria = " AND purchorders.status='Rejected' ";
-	}elseif ($_POST['Status']=='Cancelled'){
+	} elseif ($_POST['Status'] == 'Cancelled') {
 		$StatusCriteria = " AND purchorders.status='Cancelled' ";
-	} elseif($_POST['Status']=='Completed'){
+	} elseif ($_POST['Status'] == 'Completed') {
 		$StatusCriteria = " AND purchorders.status='Completed' ";
 	}
 	if (isset($OrderNumber) and $OrderNumber != '') {
@@ -456,7 +454,8 @@ else {
 		$j = 1;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($PurchOrdersResult)) {
-			if ($k == 1) { /*alternate bgcolour of row for highlighting */
+			if ($k == 1) {
+				/*alternate bgcolour of row for highlighting */
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
 			} else {
@@ -476,9 +475,9 @@ else {
 					<td>' . $FormatedDeliveryDate . '</td>
 					<td>' . $myrow['initiator'] . '</td>
 					<td class="number">' . $FormatedOrderValue . '</td>
-					<td>' . _($myrow['status']) .  '</td>
+					<td>' . _($myrow['status']) . '</td>
 					</tr>';
-				//$myrow['status'] is a string which has gettext translations from PO_Header.php script
+			//$myrow['status'] is a string which has gettext translations from PO_Header.php script
 
 			$j++;
 			if ($j == 12) {
@@ -492,6 +491,6 @@ else {
 	} // end if purchase orders to show
 }
 echo '</div>
-      </form>';
-include ('includes/footer.inc');
+	  </form>';
+include('includes/footer.inc');
 ?>

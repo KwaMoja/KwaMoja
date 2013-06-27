@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Search Customers');
 include('includes/header.inc');
@@ -514,7 +512,7 @@ if (!isset($_POST['CSV'])) {
 	//end if results to show
 } //!isset($_POST['CSV'])
 echo '</div>
-      </form>';
+	  </form>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {

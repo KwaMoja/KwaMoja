@@ -1,46 +1,43 @@
 <?php
 
-/* $Id$*/
-
 /* Common SQL Functions */
 
+function GetNextTransNo($TransType, &$db) {
 
-function GetNextTransNo ($TransType, &$db){
+	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
+	Also updates the transaction number
 
-/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
-Also updates the transaction number
+	10 sales invoice
+	11 sales credit note
+	12 sales receipt
+	etc
+	*
+	*/
 
-10 sales invoice
-11 sales credit note
-12 sales receipt
-etc
-*
-*/
-
-	DB_query("LOCK TABLES systypes WRITE",$db);
+	DB_query("LOCK TABLES systypes WRITE", $db);
 
 	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $TransType . "'";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
-	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
-	$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$DbgMsg = _('The following SQL to retrieve the transaction number was used');
+	$GetTransNoResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 
 	$SQL = "UPDATE systypes SET typeno = '" . ($myrow[0] + 1) . "' WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
-	$DbgMsg =  _('The following SQL to increment the transaction number was used');
-	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$DbgMsg = _('The following SQL to increment the transaction number was used');
+	$UpdTransNoResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-	DB_query("UNLOCK TABLES",$db);
+	DB_query("UNLOCK TABLES", $db);
 
 	return $myrow[0] + 1;
 }
 
 
-function GetStockGLCode ($StockID, &$db){
+function GetStockGLCode($StockID, &$db) {
 
-/*Gets the GL Codes relevant to the stock item account from the stock category record */
+	/*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
 						adjglact,
 						issueglact,
@@ -51,16 +48,16 @@ function GetStockGLCode ($StockID, &$db){
 				ON stockmaster.categoryid=stockcategory.categoryid
 				WHERE stockmaster.stockid = '" . $StockID . "'";
 
-	$ErrMsg =  _('The stock GL codes could not be retrieved because');
+	$ErrMsg = _('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);
 
 	$myrow = DB_fetch_array($GetStkGLResult);
 	return $myrow;
 }
 
-function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
+function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db) {
 
-/*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
+	/*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
 	$QuerySQL = "SELECT taxrate
 				FROM taxauthrates
@@ -69,9 +66,9 @@ function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 				AND taxcatid = '" . $TaxCategory . "'";
 
 	$ErrMsg = _('The tax rate for this item could not be retrieved because');
-	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
+	$GetTaxRateResult = DB_query($QuerySQL, $db, $ErrMsg);
 
-	if (DB_num_rows($GetTaxRateResult)==1){
+	if (DB_num_rows($GetTaxRateResult) == 1) {
 		$myrow = DB_fetch_row($GetTaxRateResult);
 		return $myrow[0];
 	} else {
@@ -81,7 +78,7 @@ function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 
 }
 
-function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
+function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 
 	$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
@@ -100,9 +97,9 @@ function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 
 
 	$ErrMsg = _('The taxes and rate for this tax group could not be retrieved because');
-	$GetTaxesResult = DB_query($SQL,$db,$ErrMsg);
+	$GetTaxesResult = DB_query($SQL, $db, $ErrMsg);
 
-	if (DB_num_rows($GetTaxesResult)>=1){
+	if (DB_num_rows($GetTaxesResult) >= 1) {
 		return $GetTaxesResult;
 	} else {
 		/*The tax group is not defined with rates */
@@ -112,7 +109,7 @@ function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 
 
 
-function GetCreditAvailable($DebtorNo,&$db) {
+function GetCreditAvailable($DebtorNo, &$db) {
 
 	$sql = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.creditlimit,
@@ -123,10 +120,10 @@ function GetCreditAvailable($DebtorNo,&$db) {
 		GROUP BY debtorsmaster.debtorno,
 			debtorsmaster.creditlimit";
 
-	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
+	$ErrMsg = _('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
 
-	if (DB_num_rows($GetAccountBalanceResult)==1){
+	if (DB_num_rows($GetAccountBalanceResult) == 1) {
 
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
 		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
@@ -148,7 +145,7 @@ function GetCreditAvailable($DebtorNo,&$db) {
 				AND salesorderdetails.completed = 0
 				AND salesorders.quotation = 0";
 
-	$ErrMsg =  _('The value of outstanding orders for the customer could not be retrieved because');
+	$ErrMsg = _('The value of outstanding orders for the customer could not be retrieved because');
 	$GetOSOrdersResult = DB_query($sql, $db, $ErrMsg);
 
 	$myrow = DB_fetch_array($GetOSOrdersResult);
@@ -159,15 +156,15 @@ function GetCreditAvailable($DebtorNo,&$db) {
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
-		if ($_SESSION['CompanyRecord']['gllink_stock']==1 and $QOH!=0){
+	if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and $QOH != 0) {
 
-			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-			$StockGLCode = GetStockGLCode($StockID,$db);
+		$CostUpdateNo = GetNextTransNo(35, $db);
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+		$StockGLCode = GetStockGLCode($StockID, $db);
 
-			$ValueOfChange = $QOH * ($NewCost - $OldCost);
+		$ValueOfChange = $QOH * ($NewCost - $OldCost);
 
-			$SQL = "INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
 										periodno,
@@ -182,11 +179,11 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
 							'" . -$ValueOfChange . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-			$SQL = "INSERT INTO gltrans (type,
+		$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
 							periodno,
@@ -198,30 +195,30 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 							'" . Date('Y-m-d') . "',
 							'" . $PeriodNo . "',
 							'" . $StockGLCode['stockact'] . "',
-							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
 							'" . $ValueOfChange . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		}
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+	}
 }
 
 /* Calculates the material cost of a bill of materials, given parent code*/
 function BomMaterialCost($Parent, $db) {
-	$SQL = "SELECT materialcost from stockmaster where stockid='".$Parent."'";
-	$result1 = DB_query($SQL,$db);
+	$SQL = "SELECT materialcost from stockmaster where stockid='" . $Parent . "'";
+	$result1 = DB_query($SQL, $db);
 	$MyRow1 = DB_fetch_row($result1);
 	$OldCost = $MyRow1[0];
-	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$Parent."'";
-	$result1 = DB_query($SQL,$db);
+	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='" . $Parent . "'";
+	$result1 = DB_query($SQL, $db);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
 	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
 	   					FROM bom LEFT JOIN stockmaster
 							 ON bom.component = stockmaster.stockid
-							 WHERE bom.parent='". $Parent . "'";
-	$result = DB_query($SQL,$db);
+							 WHERE bom.parent='" . $Parent . "'";
+	$result = DB_query($SQL, $db);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
 	$Result = DB_Txn_Begin($db);
@@ -234,12 +231,12 @@ function BomMaterialCost($Parent, $db) {
 function UpdateCost($db, $Item) {
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL, $db);
-	while ($MyRow=DB_fetch_array($Result)){
+	while ($MyRow = DB_fetch_array($Result)) {
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
-		$result1 = DB_query($SQL,$db);
-		if (DB_error_no($db)!=0) {
+		$result1 = DB_query($SQL, $db);
+		if (DB_error_no($db) != 0) {
 			return 1;
 		}
 		UpdateCost($db, $NewParent);
@@ -248,7 +245,7 @@ function UpdateCost($db, $Item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
+function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
 
 	// remember, 'G' is for ghost (phantom part type)
 
@@ -305,7 +302,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 							SELECT stockid
 							FROM worequirements
 							WHERE wo = '" . $WO . "'
-							AND parentstockid = '". $ParentID . "'
+							AND parentstockid = '" . $ParentID . "'
 						)
 					) AS g ON g.wo=worequirements.wo
 						AND g.parentstockid=worequirements.parentstockid
@@ -324,38 +321,35 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			AND loccode ='" . $LocCode . "'
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql, $db);
-	while ($MyRow=DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($result)) {
 		WoRealRequirements($db, $WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
 
 }
 
 /*Ensures general ledger entries balance for a given transaction */
-function EnsureGLEntriesBalance ($TransType, $TransTypeNo, $db) {
+function EnsureGLEntriesBalance($TransType, $TransTypeNo, $db) {
 
 	$result = DB_query("SELECT SUM(amount)
 						FROM gltrans
 						WHERE type = '" . $TransType . "'
-						AND typeno = '" . $TransTypeNo . "'",
-						$db);
+						AND typeno = '" . $TransTypeNo . "'", $db);
 	$myrow = DB_fetch_row($result);
 	$Difference = $myrow[0];
-	if (abs($Difference)!=0){
-		if (abs($Difference)>0.1){
-			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
+	if (abs($Difference) != 0) {
+		if (abs($Difference) > 0.1) {
+			prnMsg(_('The general ledger entries created do not balance. See your system administrator'), 'error');
 		} else {
 			$result = DB_query("SELECT counterindex,
 										MAX(amount)
 								FROM gltrans
 								WHERE type = '" . $TransType . "'
 								AND typeno = '" . $TransTypeNo . "'
-								GROUP BY counterindex",
-								$db);
+								GROUP BY counterindex", $db);
 			$myrow = DB_fetch_array($result);
 			$TransToAmend = $myrow['counterindex'];
 			$result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
-								WHERE counterindex = '" . $TransToAmend . "'",
-								$db);
+								WHERE counterindex = '" . $TransToAmend . "'", $db);
 
 		}
 	}

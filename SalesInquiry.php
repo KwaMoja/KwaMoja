@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 // SalesInquiry.php
 // Inquiry on Sales Orders - if Date Type is Order Date, salesorderdetails is the main table
 // if Date Type is Invoice, stockmoves is the main table
@@ -375,8 +374,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							LEFT JOIN areas ON areas.areacode = custbranch.area
 							WHERE salesorders.orddate >='" . $FromDate . "'
 							 AND salesorders.orddate <='" . $ToDate . "'
-							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" . $WherePart . $WhereOrderNo . $WhereDebtorNo . $WhereDebtorName . $WhereLineStatus . $WhereArea . $WhereSalesman . $WhereCategory . "GROUP BY " . $_POST['SummaryType'] .
-							 ",categorydescription
+							 AND salesorders.quotation = '" . $_POST['OrderType'] . "'" . $WherePart . $WhereOrderNo . $WhereDebtorNo . $WhereDebtorName . $WhereLineStatus . $WhereArea . $WhereSalesman . $WhereCategory . "GROUP BY " . $_POST['SummaryType'] . ",categorydescription
 
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'categoryid'
@@ -670,7 +668,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 				<tr>
 					<th colspan="15">
 						<h3>' . _('Sales Inquiry') . '
-							<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+							<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
 						</h3>
 					</th>
 				</tr>';

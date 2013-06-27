@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 
 $Title = _('Process EDI Orders');

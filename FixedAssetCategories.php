@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 
 $Title = _('Fixed Asset Category Maintenance');
@@ -12,13 +10,13 @@ include('includes/header.inc');
 
 echo '<div class="centre">
 	<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
 	</p>
 	</div>';
 
-if (isset($_GET['SelectedCategory'])){
+if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
-} else if (isset($_POST['SelectedCategory'])){
+} else if (isset($_POST['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 
@@ -36,47 +34,42 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category code must be six characters or less long'),'error');
-	} elseif (mb_strlen($_POST['CategoryID'])==0) {
+		prnMsg(_('The Fixed Asset Category code must be six characters or less long'), 'error');
+	} elseif (mb_strlen($_POST['CategoryID']) == 0) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category code must be at least 1 character but less than six characters long'),'error');
-	} elseif (mb_strlen($_POST['CategoryDescription']) >20) {
+		prnMsg(_('The Fixed Asset Category code must be at least 1 character but less than six characters long'), 'error');
+	} elseif (mb_strlen($_POST['CategoryDescription']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category description must be twenty characters or less long'),'error');
+		prnMsg(_('The Fixed Asset Category description must be twenty characters or less long'), 'error');
 	}
 
-	if ($_POST['CostAct'] == $_SESSION['CompanyRecord']['debtorsact']
-			or $_POST['CostAct'] == $_SESSION['CompanyRecord']['creditorsact']
-			or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['debtorsact']
-			or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact']
-			or $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
-			or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
+	if ($_POST['CostAct'] == $_SESSION['CompanyRecord']['debtorsact'] or $_POST['CostAct'] == $_SESSION['CompanyRecord']['creditorsact'] or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['debtorsact'] or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['creditorsact'] or $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact'] or $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']) {
 
-		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
-		$InputError =1;
+		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'), 'error');
+		$InputError = 1;
 	}
 	/*Make an array of the defined bank accounts */
 	$SQL = "SELECT bankaccounts.accountcode
 			FROM bankaccounts INNER JOIN chartmaster
 			ON bankaccounts.accountcode=chartmaster.accountcode";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL, $db);
 	$BankAccounts = array();
-	$i=0;
+	$i = 0;
 
-	while ($Act = DB_fetch_row($result)){
-		$BankAccounts[$i]= $Act[0];
+	while ($Act = DB_fetch_row($result)) {
+		$BankAccounts[$i] = $Act[0];
 		$i++;
 	}
 	if (in_array($_POST['CostAct'], $BankAccounts)) {
-		prnMsg(_('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
-		$InputError=1;
+		prnMsg(_('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'), 'error');
+		$InputError = 1;
 	}
 	if (in_array($_POST['AccumDepnAct'], $BankAccounts)) {
-		prnMsg( _('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'),'error');
-		$InputError=1;
+		prnMsg(_('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'), 'error');
+		$InputError = 1;
 	}
 
-	if (isset($SelectedCategory) and $InputError !=1) {
+	if (isset($SelectedCategory) and $InputError != 1) {
 
 		/*SelectedCategory could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -88,14 +81,14 @@ if (isset($_POST['submit'])) {
 						depnact = '" . $_POST['DepnAct'] . "',
 						disposalact = '" . $_POST['DisposalAct'] . "',
 						accumdepnact = '" . $_POST['AccumDepnAct'] . "'
-				WHERE categoryid = '".$SelectedCategory . "'";
+				WHERE categoryid = '" . $SelectedCategory . "'";
 
 		$ErrMsg = _('Could not update the fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql, $db, $ErrMsg);
 
-		prnMsg(_('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'],'success');
+		prnMsg(_('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'], 'success');
 
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 		$sql = "INSERT INTO fixedassetcategories (categoryid,
 												categorydescription,
@@ -110,8 +103,8 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['DisposalAct'] . "',
 										'" . $_POST['AccumDepnAct'] . "')";
 		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$result = DB_query($sql,$db,$ErrMsg);
-		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
+		$result = DB_query($sql, $db, $ErrMsg);
+		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'], 'success');
 
 	}
 	//run the SQL from either of the above possibilites
@@ -124,31 +117,30 @@ if (isset($_POST['submit'])) {
 	unset($_POST['AccumDepnAct']);
 
 } elseif (isset($_GET['delete'])) {
-//the link to delete a selected record was clicked instead of the submit button
+	//the link to delete a selected record was clicked instead of the submit button
 
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'fixedassets'
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'fixedassets'
 
-	$sql= "SELECT COUNT(*) FROM fixedassets WHERE fixedassets.assetcategoryid='" . $SelectedCategory . "'";
-	$result = DB_query($sql,$db);
+	$sql = "SELECT COUNT(*) FROM fixedassets WHERE fixedassets.assetcategoryid='" . $SelectedCategory . "'";
+	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this fixed asset category because fixed assets have been created using this category') .
-			'<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('fixed assets referring to this category code'),'warn');
+	if ($myrow[0] > 0) {
+		prnMsg(_('Cannot delete this fixed asset category because fixed assets have been created using this category') . '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('fixed assets referring to this category code'), 'warn');
 
 	} else {
-		$sql="DELETE FROM fixedassetcategories WHERE categoryid='" . $SelectedCategory . "'";
-		$result = DB_query($sql,$db);
-		prnMsg(_('The fixed asset category') . ' ' . $SelectedCategory . ' ' . _('has been deleted'),'success');
-		unset ($SelectedCategory);
+		$sql = "DELETE FROM fixedassetcategories WHERE categoryid='" . $SelectedCategory . "'";
+		$result = DB_query($sql, $db);
+		prnMsg(_('The fixed asset category') . ' ' . $SelectedCategory . ' ' . _('has been deleted'), 'success');
+		unset($SelectedCategory);
 	} //end if stock category used in debtor transactions
 }
 
 if (!isset($SelectedCategory) or isset($_POST['submit'])) {
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedCategory will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
-then none of the above are true and the list of stock categorys will be displayed with
-links to delete or edit each. These will call the same page again and allow update/input
-or deletion of the records*/
+	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedCategory will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
+	then none of the above are true and the list of stock categorys will be displayed with
+	links to delete or edit each. These will call the same page again and allow update/input
+	or deletion of the records*/
 
 	$sql = "SELECT categoryid,
 				categorydescription,
@@ -157,7 +149,7 @@ or deletion of the records*/
 				disposalact,
 				accumdepnact
 			FROM fixedassetcategories";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 
 	echo '<br />
 			<table class="selection">';
@@ -170,15 +162,15 @@ or deletion of the records*/
 			<th>' . _('Accum Depn GL') . '</th>
 		  </tr>';
 
-	$k=0; //row colour counter
+	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k=1;
+			$k = 1;
 		}
 		printf('<td>%s</td>
 					<td>%s</td>
@@ -188,17 +180,7 @@ or deletion of the records*/
 					<td class="number">%s</td>
 					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
 					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-					</tr>',
-					$myrow['categoryid'],
-					$myrow['categorydescription'],
-					$myrow['costact'],
-					$myrow['depnact'],
-					$myrow['disposalact'],
-					$myrow['accumdepnact'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$myrow['categoryid'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$myrow['categoryid']);
+					</tr>', $myrow['categoryid'], $myrow['categorydescription'], $myrow['costact'], $myrow['depnact'], $myrow['disposalact'], $myrow['accumdepnact'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['categoryid'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>
@@ -208,16 +190,16 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Show All Fixed Asset Categories') . '</a></div>';
 }
 
-echo '<form onSubmit="return VerifyForm(this);" id="CategoryForm" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form onSubmit="return VerifyForm(this);" id="CategoryForm" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	//editing an existing fixed asset category
-		$sql = "SELECT categoryid,
+	$sql = "SELECT categoryid,
 					categorydescription,
 					costact,
 					depnact,
@@ -226,15 +208,15 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 				FROM fixedassetcategories
 				WHERE categoryid='" . $SelectedCategory . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
 
 	$_POST['CategoryID'] = $myrow['categoryid'];
-	$_POST['CategoryDescription']  = $myrow['categorydescription'];
-	$_POST['CostAct']  = $myrow['costact'];
-	$_POST['DepnAct']  = $myrow['depnact'];
-	$_POST['DisposalAct']  = $myrow['disposalact'];
-	$_POST['AccumDepnAct']  = $myrow['accumdepnact'];
+	$_POST['CategoryDescription'] = $myrow['categorydescription'];
+	$_POST['CostAct'] = $myrow['costact'];
+	$_POST['DepnAct'] = $myrow['depnact'];
+	$_POST['DisposalAct'] = $myrow['disposalact'];
+	$_POST['AccumDepnAct'] = $myrow['accumdepnact'];
 
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
@@ -263,7 +245,7 @@ $sql = "SELECT accountcode,
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
 
-$BSAccountsResult = DB_query($sql,$db);
+$BSAccountsResult = DB_query($sql, $db);
 
 $sql = "SELECT accountcode,
 				 accountname
@@ -272,7 +254,7 @@ $sql = "SELECT accountcode,
 		WHERE accountgroups.pandl!=0
 		ORDER BY accountcode";
 
-$PnLAccountsResult = DB_query($sql,$db);
+$PnLAccountsResult = DB_query($sql, $db);
 
 if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
@@ -286,12 +268,12 @@ echo '<tr>
 		<td>' . _('Fixed Asset Cost GL Code') . ':</td>
 		<td><select name="CostAct">';
 
-while ($myrow = DB_fetch_array($BSAccountsResult)){
+while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
-	if (isset($_POST['CostAct']) and $myrow['accountcode']==$_POST['CostAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
+	if (isset($_POST['CostAct']) and $myrow['accountcode'] == $_POST['CostAct']) {
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')</option>';
 	}
 } //end while loop
 echo '</select></td>
@@ -301,40 +283,40 @@ echo '</select></td>
 		<td><select name="DepnAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['DepnAct']) and $myrow['accountcode']==$_POST['DepnAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
+	if (isset($_POST['DepnAct']) and $myrow['accountcode'] == $_POST['DepnAct']) {
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')</option>';
 	}
 } //end while loop
 echo '</select></td>
 	</tr>';
 
-DB_data_seek($PnLAccountsResult,0);
+DB_data_seek($PnLAccountsResult, 0);
 echo '<tr>
-		<td>' .  _('Profit or Loss on Disposal GL Code:') . '</td>
+		<td>' . _('Profit or Loss on Disposal GL Code:') . '</td>
 		<td><select name="DisposalAct">';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
+	if (isset($_POST['DisposalAct']) and $myrow['accountcode'] == $_POST['DisposalAct']) {
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')' . '</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')' . '</option>';
 	}
 } //end while loop
 echo '</select></td>
 	</tr>';
 
-DB_data_seek($BSAccountsResult,0);
+DB_data_seek($BSAccountsResult, 0);
 echo '<tr>
 		<td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td>
 		<td><select name="AccumDepnAct">';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
-	if (isset($_POST['AccumDepnAct']) and $myrow['accountcode']==$_POST['AccumDepnAct']) {
-		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
+	if (isset($_POST['AccumDepnAct']) and $myrow['accountcode'] == $_POST['AccumDepnAct']) {
+		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')' . '</option>';
 	} else {
-		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
+		echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $myrow['accountcode'] . ')' . '</option>';
 	}
 
 } //end while loop

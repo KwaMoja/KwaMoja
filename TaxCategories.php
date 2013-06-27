@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.inc');
 
@@ -7,10 +6,9 @@ $Title = _('Tax Categories');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . $Title. '</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Supplier Types') . '" alt="" />' . $Title . '</p>';
 
-if ( isset($_GET['SelectedTaxCategory']) ) {
+if (isset($_GET['SelectedTaxCategory'])) {
 	$SelectedTaxCategory = $_GET['SelectedTaxCategory'];
 } elseif (isset($_POST['SelectedTaxCategory'])) {
 	$SelectedTaxCategory = $_POST['SelectedTaxCategory'];
@@ -29,66 +27,66 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['TaxCategoryName'])) {
 		$InputError = 1;
-		prnMsg( _('The tax category name cannot contain the character') . " '&amp;' " . _('or the character') ." ' " . _('or a space') ,'error');
+		prnMsg(_('The tax category name cannot contain the character') . " '&amp;' " . _('or the character') . " ' " . _('or a space'), 'error');
 	}
 	if (trim($_POST['TaxCategoryName']) == '') {
 		$InputError = 1;
-		prnMsg( _('The tax category name may not be empty'), 'error');
+		prnMsg(_('The tax category name may not be empty'), 'error');
 	}
 
-	if ($_POST['SelectedTaxCategory']!='' and $InputError !=1) {
+	if ($_POST['SelectedTaxCategory'] != '' and $InputError != 1) {
 
 		/*SelectedTaxCategory could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
 		$sql = "SELECT count(*) FROM taxcategories
-				WHERE taxcatid <> '" . $SelectedTaxCategory ."'
-				AND taxcatname ".LIKE." '" . $_POST['TaxCategoryName'] . "'";
-		$result = DB_query($sql,$db);
+				WHERE taxcatid <> '" . $SelectedTaxCategory . "'
+				AND taxcatname " . LIKE . " '" . $_POST['TaxCategoryName'] . "'";
+		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		if ( $myrow[0] > 0 ) {
+		if ($myrow[0] > 0) {
 			$InputError = 1;
-			prnMsg( _('The tax category cannot be renamed because another with the same name already exists.'),'error');
+			prnMsg(_('The tax category cannot be renamed because another with the same name already exists.'), 'error');
 		} else {
 			// Get the old name and check that the record still exists
 
 			$sql = "SELECT taxcatname FROM taxcategories
 					WHERE taxcatid = '" . $SelectedTaxCategory . "'";
-			$result = DB_query($sql,$db);
-			if ( DB_num_rows($result) != 0 ) {
+			$result = DB_query($sql, $db);
+			if (DB_num_rows($result) != 0) {
 				// This is probably the safest way there is
 				$myrow = DB_fetch_row($result);
 				$OldTaxCategoryName = $myrow[0];
 				$sql = "UPDATE taxcategories
 						SET taxcatname='" . $_POST['TaxCategoryName'] . "'
-						WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
+						WHERE taxcatname " . LIKE . " '" . $OldTaxCategoryName . "'";
 				$ErrMsg = _('The tax category could not be updated');
-				$result = DB_query($sql,$db,$ErrMsg);
+				$result = DB_query($sql, $db, $ErrMsg);
 			} else {
 				$InputError = 1;
-				prnMsg( _('The tax category no longer exists'),'error');
+				prnMsg(_('The tax category no longer exists'), 'error');
 			}
 		}
 		$msg = _('Tax category name changed');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 		/*SelectedTaxCategory is null cos no item selected on first time round so must be adding a record*/
 		$sql = "SELECT count(*) FROM taxcategories
-				WHERE taxcatname " .LIKE. " '".$_POST['TaxCategoryName'] ."'";
-		$result = DB_query($sql,$db);
+				WHERE taxcatname " . LIKE . " '" . $_POST['TaxCategoryName'] . "'";
+		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		if ( $myrow[0] > 0 ) {
+		if ($myrow[0] > 0) {
 			$InputError = 1;
-			prnMsg( _('The tax category cannot be created because another with the same name already exists'),'error');
+			prnMsg(_('The tax category cannot be created because another with the same name already exists'), 'error');
 		} else {
 			$result = DB_Txn_Begin($db);
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
 					VALUES (
-						'" . $_POST['TaxCategoryName'] ."'
+						'" . $_POST['TaxCategoryName'] . "'
 						)";
 			$ErrMsg = _('The new tax category could not be added');
-			$result = DB_query($sql,$db,$ErrMsg,true);
+			$result = DB_query($sql, $db, $ErrMsg, true);
 
-			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
+			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories', 'taxcatid');
 
 			$sql = "INSERT INTO taxauthrates (taxauthority,
 					dispatchtaxprovince,
@@ -97,63 +95,63 @@ if (isset($_POST['submit'])) {
  					taxprovinces.taxprovinceid,
 					'" . $LastTaxCatID . "'
 				FROM taxauthorities CROSS JOIN taxprovinces";
-			$result = DB_query($sql,$db,$ErrMsg,true);
+			$result = DB_query($sql, $db, $ErrMsg, true);
 
 			$result = DB_Txn_Commit($db);
 		}
 		$msg = _('New tax category added');
 	}
 
-	if ($InputError!=1){
-		prnMsg($msg,'success');
+	if ($InputError != 1) {
+		prnMsg($msg, 'success');
 	}
-	unset ($SelectedTaxCategory);
-	unset ($_POST['SelectedTaxCategory']);
-	unset ($_POST['TaxCategoryName']);
+	unset($SelectedTaxCategory);
+	unset($_POST['SelectedTaxCategory']);
+	unset($_POST['TaxCategoryName']);
 
 } elseif (isset($_GET['delete'])) {
-//the link to delete a selected record was clicked instead of the submit button
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
+	//the link to delete a selected record was clicked instead of the submit button
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax category the ID is just a secure way to find the tax category
 	$sql = "SELECT taxcatname FROM taxcategories
 		WHERE taxcatid = '" . $SelectedTaxCategory . "'";
-	$result = DB_query($sql,$db);
-	if ( DB_num_rows($result) == 0 ) {
+	$result = DB_query($sql, $db);
+	if (DB_num_rows($result) == 0) {
 		// This is probably the safest way there is
-		prnMsg( _('Cannot delete this tax category because it no longer exists'),'warn');
+		prnMsg(_('Cannot delete this tax category because it no longer exists'), 'warn');
 	} else {
 		$myrow = DB_fetch_array($result);
 		$TaxCatName = $myrow['taxcatname'];
-		$sql= "SELECT COUNT(*) FROM stockmaster WHERE taxcatid = '" . $SelectedTaxCategory . "'";
-		$result = DB_query($sql,$db);
+		$sql = "SELECT COUNT(*) FROM stockmaster WHERE taxcatid = '" . $SelectedTaxCategory . "'";
+		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-			prnMsg( _('Cannot delete this tax category because inventory items have been created using this tax category'),'warn');
+		if ($myrow[0] > 0) {
+			prnMsg(_('Cannot delete this tax category because inventory items have been created using this tax category'), 'warn');
 			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
 		} else {
 			$sql = "DELETE FROM taxauthrates WHERE taxcatid  = '" . $SelectedTaxCategory . "'";
-			$result = DB_query($sql,$db);
+			$result = DB_query($sql, $db);
 			$sql = "DELETE FROM taxcategories WHERE taxcatid = '" . $SelectedTaxCategory . "'";
-			$result = DB_query($sql,$db);
-			prnMsg( $TaxCatName . ' ' . _('tax category and any tax rates set for it have been deleted'),'success');
+			$result = DB_query($sql, $db);
+			prnMsg($TaxCatName . ' ' . _('tax category and any tax rates set for it have been deleted'), 'success');
 		}
 	} //end if
-	unset ($SelectedTaxCategory);
-	unset ($_GET['SelectedTaxCategory']);
+	unset($SelectedTaxCategory);
+	unset($_GET['SelectedTaxCategory']);
 	unset($_GET['delete']);
-	unset ($_POST['SelectedTaxCategory']);
-	unset ($_POST['TaxCategoryName']);
+	unset($_POST['SelectedTaxCategory']);
+	unset($_POST['TaxCategoryName']);
 }
 
- if (!isset($SelectedTaxCategory)) {
+if (!isset($SelectedTaxCategory)) {
 
-/* An tax category could be posted when one has been edited and is being updated
-  or GOT when selected for modification
-  SelectedTaxCategory will exist because it was sent with the page in a GET .
-  If its the first time the page has been displayed with no parameters
-  then none of the above are true and the list of account groups will be displayed with
-  links to delete or edit each. These will call the same page again and allow update/input
-  or deletion of the records*/
+	/* An tax category could be posted when one has been edited and is being updated
+	or GOT when selected for modification
+	SelectedTaxCategory will exist because it was sent with the page in a GET .
+	If its the first time the page has been displayed with no parameters
+	then none of the above are true and the list of account groups will be displayed with
+	links to delete or edit each. These will call the same page again and allow update/input
+	or deletion of the records*/
 
 	$sql = "SELECT taxcatid,
 			taxcatname
@@ -161,27 +159,27 @@ if (isset($_POST['submit'])) {
 			ORDER BY taxcatid";
 
 	$ErrMsg = _('Could not get tax categories because');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql, $db, $ErrMsg);
 
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('Tax Categories') . '</th>
 			</tr>';
 
-	$k=0; //row colour counter
+	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
-		if ($k==1){
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
 		echo '<td>' . $myrow[1] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax category?') . '\', \'Confirm Delete\', this);">' . _('Delete') .'</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax category?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -191,15 +189,15 @@ if (isset($_POST['submit'])) {
 
 if (isset($SelectedTaxCategory)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Tax Categories') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Tax Categories') . '</a>
 		</div>';
 }
 
 echo '<br />';
 
-if (! isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -212,20 +210,20 @@ if (! isset($_GET['delete'])) {
 				WHERE taxcatid='" . $SelectedTaxCategory . "'";
 
 		$result = DB_query($sql, $db);
-		if ( DB_num_rows($result) == 0 ) {
-			prnMsg( _('Could not retrieve the requested tax category, please try again.'),'warn');
+		if (DB_num_rows($result) == 0) {
+			prnMsg(_('Could not retrieve the requested tax category, please try again.'), 'warn');
 			unset($SelectedTaxCategory);
 		} else {
 			$myrow = DB_fetch_array($result);
 
-			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
+			$_POST['TaxCategoryName'] = $myrow['taxcatname'];
 
 			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $myrow['taxcatid'] . '" />';
 			echo '<table class="selection">';
 		}
 
-	}  else {
-		$_POST['TaxCategoryName']='';
+	} else {
+		$_POST['TaxCategoryName'] = '';
 		echo '<table class="selection">';
 	}
 	echo '<tr>

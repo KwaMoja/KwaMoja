@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Freight Costs Set Up');
 include('includes/header.inc');

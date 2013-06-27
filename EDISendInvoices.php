@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
@@ -101,10 +99,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 		write the output to a file one line at a time */
 
 		$sql = "SELECT section,
-                       linetext
-                FROM edimessageformat
-                WHERE partnercode='" . $CustDetails['debtorno'] . "'
-                AND messagetype='INVOIC' ORDER BY sequenceno";
+					   linetext
+				FROM edimessageformat
+				WHERE partnercode='" . $CustDetails['debtorno'] . "'
+				AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg = _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
 		$MessageLinesResult = DB_query($sql, $db, $ErrMsg);
 
@@ -224,9 +222,13 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 				if ($_SESSION['SmtpSetting'] == 0) {
 					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
+					$MessageSent = $mail->send(array(
+						$CustDetails['ediaddress']
+					));
 				} else {
-					$MessageSent = SendmailBySmtp($mail, array($CustDetails['ediaddress']));
+					$MessageSent = SendmailBySmtp($mail, array(
+						$CustDetails['ediaddress']
+					));
 				}
 
 				if ($MessageSent == True) {

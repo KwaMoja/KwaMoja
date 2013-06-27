@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 $PricesSecurity = 1000; //don't show pricing info unless security token 1000 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
@@ -224,7 +223,7 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 									WHERE stockid='" . $StockID . "'
 									AND stkcatpropid ='" . $PropertyRow['stkcatpropid'] . "'", $db);
 		$PropValRow = DB_fetch_row($PropValResult);
-		if (DB_num_rows($PropValResult)==0){
+		if (DB_num_rows($PropValResult) == 0) {
 			$PropertyValue = _('Not Set');
 		} else {
 			$PropertyValue = $PropValRow[0];
@@ -235,20 +234,20 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 			case 0:
 			case 1:
 				echo '<td class="select" style="width:60px">' . $PropertyValue;
-			break;
+				break;
 			case 2; //checkbox
 				echo '<td class="select" style="width:60px">';
-				if ($PropertyValue == _('Not Set')){
+				if ($PropertyValue == _('Not Set')) {
 					echo _('Not Set');
-				} elseif ($PropertyValue == 1){
+				} elseif ($PropertyValue == 1) {
 					echo _('Yes');
 				} else {
 					echo _('No');
 				}
-			break;
+				break;
 		} //end switch
-	echo '</td></tr>';
-	$PropertyCounter++;
+		echo '</td></tr>';
+		$PropertyCounter++;
 	} //end loop round properties for the item category
 	echo '</table></td>'; //end of Item Category Property mod
 	echo '<td style="width:15%; vertical-align:top">
@@ -427,24 +426,14 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . $StockID . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 		//show the item image if it has been uploaded
-		if (function_exists('imagecreatefromjpg')){
-			if ($_SESSION['ShowStockidOnImages'] == '0'){
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='.
-									'&amp;width=100'.
-									'&amp;height=100'.
-									'" alt="" />';
+		if (function_exists('imagecreatefromjpg')) {
+			if ($_SESSION['ShowStockidOnImages'] == '0') {
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . '&amp;width=100' . '&amp;height=100' . '" alt="" />';
 			} else {
-			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='. $StockID .
-									'&amp;width=100'.
-									'&amp;height=100'.
-									'" alt="" />';
+				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . $StockID . '&amp;width=100' . '&amp;height=100' . '" alt="" />';
 			}
 		} else {
-			if( isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+			if (isset($StockID) AND file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')) {
 				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg" height="100" width="100" />';
 			} else {
 				$StockImgLink = _('No Image');

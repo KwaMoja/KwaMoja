@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -822,7 +820,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 					<td>' . _('Goods Returned to Location') . ' :</td>
 					<td><select name="Location">';
 
-			if ($_SESSION['RestrictLocations']==0) {
+			if ($_SESSION['RestrictLocations'] == 0) {
 				$sql = "SELECT locationname,
 								loccode
 							FROM locations";
@@ -834,7 +832,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 								ON locations.loccode=www_users.defaultlocation
 							WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 			}
-			$Result = DB_query($sql,$db);
+			$Result = DB_query($sql, $db);
 
 			if (!isset($_POST['Location'])) {
 				$_POST['Location'] = $_SESSION['CreditItems' . $identifier]->Location;

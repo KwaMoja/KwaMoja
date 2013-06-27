@@ -1,8 +1,6 @@
 <?php
 
-/* $Id$*/
-
-include ('includes/session.inc');
+include('includes/session.inc');
 
 $Title = _('Periods Inquiry');
 
@@ -13,16 +11,15 @@ $SQL = "SELECT periodno ,
 		FROM periods
 		ORDER BY periodno";
 
-$ErrMsg =  _('No periods were returned by the SQL because');
-$PeriodsResult = DB_query($SQL,$db,$ErrMsg);
+$ErrMsg = _('No periods were returned by the SQL because');
+$PeriodsResult = DB_query($SQL, $db, $ErrMsg);
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
-		. $Title . '</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 /*show a table of the orders returned by the SQL */
 
 $NumberOfPeriods = DB_num_rows($PeriodsResult);
-$PeriodsInTable = round($NumberOfPeriods/3,0);
+$PeriodsInTable = round($NumberOfPeriods / 3, 0);
 
 $TableHeader = '<tr><th>' . _('Period Number') . '</th>
 					<th>' . _('Date of Last Day') . '</th>
@@ -30,16 +27,16 @@ $TableHeader = '<tr><th>' . _('Period Number') . '</th>
 
 echo '<table><tr>';
 
-for ($i=0;$i<3;$i++) {
+for ($i = 0; $i < 3; $i++) {
 	echo '<td valign="top">';
 	echo '<table cellpadding="2" class="selection">';
 	echo $TableHeader;
-	$k=0;
-	$j=0; 
-	while ($myrow=DB_fetch_array($PeriodsResult)){
-		if ($k==1){
+	$k = 0;
+	$j = 0;
+	while ($myrow = DB_fetch_array($PeriodsResult)) {
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k++;
@@ -48,7 +45,7 @@ for ($i=0;$i<3;$i++) {
 			  <td>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</td>
 			</tr>';
 		$j++;
-		if ($j==$PeriodsInTable){
+		if ($j == $PeriodsInTable) {
 			break;
 		}
 	}

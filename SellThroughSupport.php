@@ -1,13 +1,12 @@
 <?php
-/* $Id: SellThroughSupport.php 5785 2012-12-29 04:47:42Z daintree $*/
 
-include ('includes/session.inc');
+include('includes/session.inc');
 
 $Title = _('Sell Through Support');
 
-include ('includes/header.inc');
+include('includes/header.inc');
 
-if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
+if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
 } elseif (isset($_POST['SupplierID'])) {
 	$SupplierID = trim(mb_strtoupper($_POST['SupplierID']));
@@ -23,41 +22,44 @@ if (isset($_GET['Edit'])) {
 }
 
 
-if (!isset($SupplierID)) { /* Then display all the sell through support for the supplier */
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title  . '</p><br />';
+if (!isset($SupplierID)) {
+	/* Then display all the sell through support for the supplier */
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 }
 
 /*Deleting a supplier sell through support record */
-if (isset($_GET['Delete'])){
+if (isset($_GET['Delete'])) {
 	$Result = DB_query("DELETE FROM sellthroughsupport WHERE id='" . intval($_GET['SellSupportID']) . "'", $db);
-	prnMsg(_('Deleted the supplier sell through support record'),'success');
+	prnMsg(_('Deleted the supplier sell through support record'), 'success');
 }
 
 
-if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($SupplierID)) { /*Validate Inputs */
-	$InputError = 0; /*Start assuming the best */
+if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($SupplierID)) {
+	/*Validate Inputs */
+	$InputError = 0;
+	/*Start assuming the best */
 
-	if (is_numeric(filter_number_format($_POST['RebateAmount']))==false) {
+	if (is_numeric(filter_number_format($_POST['RebateAmount'])) == false) {
 		$InputError = 1;
 		prnMsg(_('The rebate amount entered was not numeric and a number is required.'), 'error');
 		unset($_POST['RebateAmount']);
-	} elseif (filter_number_format($_POST['RebateAmount']) == 0 AND filter_number_format($_POST['RebatePercent'])==0) {
+	} elseif (filter_number_format($_POST['RebateAmount']) == 0 AND filter_number_format($_POST['RebatePercent']) == 0) {
 		prnMsg(_('Both the rebate amount and the rebate percent is zero. One or the other must be a positive number?'), 'error');
 		$InputError = 1;
 
-/*
-	} elseif (mb_strlen($_POST['Narrative'])==0 OR $_POST['Narrative']==''){
+		/*
+		} elseif (mb_strlen($_POST['Narrative'])==0 OR $_POST['Narrative']==''){
 		prnMsg(_('The narrative cannot be empty.'),'error');
 		$InputError = 1;
-*/
-	} elseif (filter_number_format($_POST['RebatePercent'])>100 OR  filter_number_format($_POST['RebatePercent']) < 0) {
-		prnMsg(_('The rebate percent must be greater than zero but less than 100 percent. No changes will be made to this record'),'error');
+		*/
+	} elseif (filter_number_format($_POST['RebatePercent']) > 100 OR filter_number_format($_POST['RebatePercent']) < 0) {
+		prnMsg(_('The rebate percent must be greater than zero but less than 100 percent. No changes will be made to this record'), 'error');
 		$InputError = 1;
-	} elseif (filter_number_format($_POST['RebateAmount']) !=0 AND filter_number_format($_POST['RebatePercent'])!=0) {
-		prnMsg(_('Both the rebate percent and rebate amount are non-zero. Only one or the other can be used.'),'error');
+	} elseif (filter_number_format($_POST['RebateAmount']) != 0 AND filter_number_format($_POST['RebatePercent']) != 0) {
+		prnMsg(_('Both the rebate percent and rebate amount are non-zero. Only one or the other can be used.'), 'error');
 		$InputError = 1;
 	} elseif (Date1GreaterThanDate2($_POST['EffectiveFrom'], $_POST['EffectiveTo'])) {
-		prnMsg(_('The effective to date is prior to the effective from date.'),'error');
+		prnMsg(_('The effective to date is prior to the effective from date.'), 'error');
 		$InputError = 1;
 	}
 
@@ -77,7 +79,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . $_POST['StockID'] . "',
 							'" . $_POST['Narrative'] . "',
 							'" . filter_number_format($_POST['RebateAmount']) . "',
-							'" . filter_number_format($_POST['RebatePercent']/100) . "',
+							'" . filter_number_format($_POST['RebatePercent'] / 100) . "',
 							'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 							'" . FormatDateForSQL($_POST['EffectiveTo']) . "')";
 
@@ -92,7 +94,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 											stockid='" . $_POST['StockID'] . "',
 											narrative='" . $_POST['Narrative'] . "',
 											rebateamount='" . filter_number_format($_POST['RebateAmount']) . "',
-											rebatepercent='" . filter_number_format($_POST['RebatePercent'])/100 . "',
+											rebatepercent='" . filter_number_format($_POST['RebatePercent']) / 100 . "',
 											effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 											effectiveto='" . FormatDateForSQL($_POST['EffectiveTo']) . "'
 							WHERE id='" . $_POST['SellSupportID'] . "'";
@@ -106,7 +108,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 	}
 
 	if ($InputError == 0) {
-	/*  insert took place and need to clear the form  */
+		/*  insert took place and need to clear the form  */
 		unset($_POST['StockID']);
 		unset($_POST['EffectiveFrom']);
 		unset($_POST['DebtorNo']);
@@ -121,7 +123,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_POST['SearchSupplier'])) {
 	if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-		prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
+		prnMsg(_('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info');
 		echo '<br />';
 	}
 	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
@@ -138,7 +140,7 @@ if (isset($_POST['SearchSupplier'])) {
 						suppliers.address2,
 						suppliers.address3
 				FROM suppliers
-				WHERE suppliers.suppname " . LIKE  . " '".$SearchString."'";
+				WHERE suppliers.suppname " . LIKE . " '" . $SearchString . "'";
 
 	} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
 		$SQL = "SELECT suppliers.supplierid,
@@ -155,7 +157,7 @@ if (isset($_POST['SearchSupplier'])) {
 	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
 	$SuppliersResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -170,34 +172,28 @@ if (isset($_POST['SearchSupplier'])) {
 	echo $TableHeader;
 	$k = 0;
 	while ($myrow = DB_fetch_array($SuppliersResult)) {
-		if ($k==1){
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-	   printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+		printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				</tr>',
-				$myrow['supplierid'],
-				$myrow['suppname'],
-				$myrow['currcode'],
-				$myrow['address1'],
-				$myrow['address2'],
-				$myrow['address3']);
-	}//end of while loop
+				</tr>', $myrow['supplierid'], $myrow['suppname'], $myrow['currcode'], $myrow['address1'], $myrow['address2'], $myrow['address3']);
+	} //end of while loop
 	echo '</table>
 			<br/>
 			</form>';
-}//end if results to show
+} //end if results to show
 if (!isset($SupplierID) or isset($_POST['SearchSupplier'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>';
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="3" colspan="4" class="selection">
 			<tr>
@@ -214,13 +210,14 @@ if (!isset($SupplierID) or isset($_POST['SearchSupplier'])) {
 				<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
 			</div>
 		</form>';
-	include ('includes/footer.inc');
+	include('includes/footer.inc');
 	exit;
 }
 
 
 
-if (isset($SupplierID)) { /* Then display all the sell through support for the supplier */
+if (isset($SupplierID)) {
+	/* Then display all the sell through support for the supplier */
 
 	/*Get the supplier details */
 	$SuppResult = DB_query("SELECT suppname,
@@ -228,7 +225,7 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 									decimalplaces
 							FROM suppliers INNER JOIN currencies
 							ON suppliers.currcode=currencies.currabrev
-							WHERE supplierid='" . $SupplierID . "'",$db);
+							WHERE supplierid='" . $SupplierID . "'", $db);
 	$SuppRow = DB_fetch_array($SuppResult);
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Supplier') . ' - ' . $SupplierID . ' - ' . $SuppRow['suppname'] . '</p><br />';
 
@@ -258,14 +255,14 @@ if (isset($SupplierID) AND $Edit == false) {
 			ORDER BY sellthroughsupport.effectivefrom DESC";
 	$ErrMsg = _('The supplier sell through support deals could not be retrieved because');
 	$Result = DB_query($sql, $db, $ErrMsg);
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
 	} else {
 		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . _('Item or Category') . '</th>
 							<th>' . _('Customer') . '</th>
-							<th>' . _('Rebate') . '<br />' .  _('Value') . ' ' . $SuppRow['currcode'] . '</th>
+							<th>' . _('Rebate') . '<br />' . _('Value') . ' ' . $SuppRow['currcode'] . '</th>
 							<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
 							<th>' . _('Narrative') . '</th>
 							<th>' . _('Effective From') . '</th>
@@ -282,12 +279,12 @@ if (isset($SupplierID) AND $Edit == false) {
 				echo '<tr class="OddTableRows">';
 				$k++;
 			}
-			if ($myrow['categoryid']=='') {
+			if ($myrow['categoryid'] == '') {
 				$ItemDescription = $myrow['stockid'] . ' - ' . $myrow['description'];
 			} else {
 				$ItemDescription = _('Any') . ' ' . $myrow['categorydescription'];
 			}
-			if ($myrow['debtorno']==''){
+			if ($myrow['debtorno'] == '') {
 				$Customer = _('All Customers');
 			} else {
 				$Customer = $myrow['debtorno'] . ' - ' . $myrow['name'];
@@ -302,30 +299,18 @@ if (isset($SupplierID) AND $Edit == false) {
 					<td>%s</td>
 					<td><a href="%s?SellSupportID=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Edit') . '</a></td>
 					<td><a href="%s?SellSupportID=%s&amp;Delete=1&amp;SupplierID=%s" onclick=\'return MakeConfirm("' . _('Are you sure you wish to delete this sell through support record?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
-					</tr>',
-					$ItemDescription,
-					$Customer,
-					locale_number_format($myrow['rebateamount'],$SuppRow['decimalplaces']),
-					locale_number_format($myrow['rebatepercent']*100,2),
-					$myrow['narrative'],
-					ConvertSQLDate($myrow['effectivefrom']),
-					ConvertSQLDate($myrow['effectiveto']),
-					htmlspecialchars($_SERVER['PHP_SELF']),
-					$myrow['id'],
-					$SupplierID,
-					htmlspecialchars($_SERVER['PHP_SELF']),
-					$myrow['id'],
-					$SupplierID);
+					</tr>', $ItemDescription, $Customer, locale_number_format($myrow['rebateamount'], $SuppRow['decimalplaces']), locale_number_format($myrow['rebatepercent'] * 100, 2), $myrow['narrative'], ConvertSQLDate($myrow['effectivefrom']), ConvertSQLDate($myrow['effectiveto']), htmlspecialchars($_SERVER['PHP_SELF']), $myrow['id'], $SupplierID, htmlspecialchars($_SERVER['PHP_SELF']), $myrow['id'], $SupplierID);
 		} //end of while loop
 		echo '</table><br/>';
 	} // end of there are sell through support rows to show
 	echo '<br/>';
-} /* Only show the existing supplier sell through support records if one is not being edited */
+}
+/* Only show the existing supplier sell through support records if one is not being edited */
 
 /*Show the input form for new supplier sell through support details */
 if (isset($SupplierID)) { //not selecting a supplier
 	if ($Edit == true) {
-		 $sql = "SELECT id,
+		$sql = "SELECT id,
 						debtorno,
 						rebateamount,
 						rebatepercent,
@@ -344,7 +329,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	$SuppName = $SuppRow['suppname'];
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
 			<table class="selection">';
@@ -354,8 +339,8 @@ if (isset($SupplierID)) { //not selecting a supplier
 		$_POST['StockID'] = $myrow['stockid'];
 		$_POST['CategoryID'] = $myrow['categoryid'];
 		$_POST['Narrative'] = $myrow['narrative'];
-		$_POST['RebatePercent'] = locale_number_format($myrow['rebatepercent']*100,2);
-		$_POST['RebateAmount'] = locale_number_format($myrow['rebateamount'],$SuppRow['decimalplaces']);
+		$_POST['RebatePercent'] = locale_number_format($myrow['rebatepercent'] * 100, 2);
+		$_POST['RebateAmount'] = locale_number_format($myrow['rebateamount'], $SuppRow['decimalplaces']);
 		$_POST['EffectiveFrom'] = ConvertSQLDate($myrow['effectivefrom']);
 		$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
 
@@ -372,29 +357,29 @@ if (isset($SupplierID)) { //not selecting a supplier
 	}
 	if (!isset($_POST['EffectiveTo'])) {
 		/* Default EffectiveTo to the end of the month */
-		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m')+1,0,Date('y')));
+		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
 	}
-	if (!isset($_POST['DebtorNo'])){
-		$_POST['DebtorNo']='';
+	if (!isset($_POST['DebtorNo'])) {
+		$_POST['DebtorNo'] = '';
 	}
-	if (!isset($_POST['Narrative'])){
-		$_POST['Narrative'] ='';
+	if (!isset($_POST['Narrative'])) {
+		$_POST['Narrative'] = '';
 	}
 
 
 	echo '<tr>
 			<td>' . _('Support for Customer') . ':</td>
 			<td><select name="DebtorNo">';
-	if ($_POST['DebtorNo']=='') {
+	if ($_POST['DebtorNo'] == '') {
 		echo '<option selected="selected" value="">' . _('All Customers') . '</option>';
 	} else {
 		echo '<option value="">' . _('All Customers') . '</option>';
 	}
 
-	$CustomerResult = DB_query("SELECT debtorno, name FROM debtorsmaster",$db);
+	$CustomerResult = DB_query("SELECT debtorno, name FROM debtorsmaster", $db);
 
-	while ($CustomerRow = DB_fetch_array($CustomerResult)){
-		if ($CustomerRow['debtorno'] == $_POST['DebtorNo']){
+	while ($CustomerRow = DB_fetch_array($CustomerResult)) {
+		if ($CustomerRow['debtorno'] == $_POST['DebtorNo']) {
 			echo '<option selected="selected" value="' . $CustomerRow['debtorno'] . '">' . $CustomerRow['name'] . '</option>';
 		} else {
 			echo '<option value="' . $CustomerRow['debtorno'] . '">' . $CustomerRow['name'] . '</option>';
@@ -406,16 +391,16 @@ if (isset($SupplierID)) { //not selecting a supplier
 	echo '<tr>
 			<td>' . _('Support Whole Category') . ':</td>
 			<td><select name="CategoryID">';
-	if (isset($_POST['CategoryID']) and $_POST['CategoryID']=='') {
+	if (isset($_POST['CategoryID']) and $_POST['CategoryID'] == '') {
 		echo '<option selected="selected" value="">' . _('Specific Item Only') . '</option>';
 	} else {
 		echo '<option value="">' . _('Specific Item Only') . '</option>';
 	}
 
-	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype='F'",$db);
+	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype='F'", $db);
 
-	while ($CategoriesRow = DB_fetch_array($CategoriesResult)){
-		if (isset($_POST['CategoryID']) and $CategoriesRow['categoryid'] == $_POST['CategoryID']){
+	while ($CategoriesRow = DB_fetch_array($CategoriesResult)) {
+		if (isset($_POST['CategoryID']) and $CategoriesRow['categoryid'] == $_POST['CategoryID']) {
 			echo '<option selected="selected" value="' . $CategoriesRow['categoryid'] . '">' . $CategoriesRow['categorydescription'] . '</option>';
 		} else {
 			echo '<option value="' . $CategoriesRow['categoryid'] . '">' . $CategoriesRow['categorydescription'] . '</option>';
@@ -427,7 +412,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 	echo '<tr>
 			<td>' . _('Support Specific Item') . ':</td>
 			<td><select name="StockID">';
-	if (isset($_POST['StockID']) and $_POST['StockID']=='') {
+	if (isset($_POST['StockID']) and $_POST['StockID'] == '') {
 		echo '<option selected="selected" value="">' . _('Support An Entire Category') . '</option>';
 	} else {
 		echo '<option value="">' . _('Support An Entire Category') . '</option>';
@@ -442,10 +427,10 @@ if (isset($SupplierID)) { //not selecting a supplier
 			AND preferred=1";
 	$ErrMsg = _('Could not retrieve the items that the supplier provides');
 	$DbgMsg = _('The SQL that was used to get the supplier items and failed was');
-	$ItemsResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$ItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-	while ($ItemsRow = DB_fetch_array($ItemsResult)){
-		if ($ItemsRow['stockid'] == $_POST['StockID']){
+	while ($ItemsRow = DB_fetch_array($ItemsResult)) {
+		if ($ItemsRow['stockid'] == $_POST['StockID']) {
 			echo '<option selected="selected" value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . ' - ' . $ItemsRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . ' - ' . $ItemsRow['description'] . '</option>';
@@ -490,5 +475,5 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</form>';
 }
 
-include ('includes/footer.inc');
+include('includes/footer.inc');
 ?>

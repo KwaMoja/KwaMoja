@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 include('includes/session.inc');
@@ -13,7 +13,7 @@ $sql = "SELECT debtortrans.id,
 		ovamount+ovgst AS totamt,
 		SUM(custallocns.Amt) AS totalalloc,
 		debtortrans.alloc
-	FROM debtortrans INNER JOIN custallocns 
+	FROM debtortrans INNER JOIN custallocns
 	ON debtortrans.id=custallocns.transid_allocto
 	WHERE debtortrans.type=10
 	GROUP BY debtortrans.ID,
@@ -22,17 +22,17 @@ $sql = "SELECT debtortrans.id,
 		debtortrans.alloc
 	HAVING SUM(custallocns.amt) < debtortrans.alloc - 1";
 
-$result = DB_query($sql,$db);
+$result = DB_query($sql, $db);
 
-if (DB_num_rows($result)==0){
-	prnMsg(_('There are no inconsistencies with allocations') . ' - ' . _('all is well'),'info');
+if (DB_num_rows($result) == 0) {
+	prnMsg(_('There are no inconsistencies with allocations') . ' - ' . _('all is well'), 'info');
 }
 
-while ($myrow = DB_fetch_array($result)){
+while ($myrow = DB_fetch_array($result)) {
 	$AllocToID = $myrow['id'];
 
 	echo '<br />' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
-	echo '<br />' . _('Original Invoice Total') . ': '. $myrow['totamt'];
+	echo '<br />' . _('Original Invoice Total') . ': ' . $myrow['totamt'];
 	echo '<br />' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
 	echo '<br />' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
 
@@ -45,16 +45,16 @@ while ($myrow = DB_fetch_array($result)){
 				ovamount+ovgst+ovfreight+ovdiscount AS totalamt,
 				custallocns.amt,
 				decimalplaces AS currdecimalplaces
-			FROM debtortrans INNER JOIN custallocns 
+			FROM debtortrans INNER JOIN custallocns
 			ON debtortrans.id=custallocns.transid_allocfrom
 			INNER JOIN debtorsmaster ON
-			debtortrans.debtorno=debtorsmaster.debtorno 
+			debtortrans.debtorno=debtorsmaster.debtorno
 			INNER JOIN currencies ON
 			debtorsmaster.currcode=currencies.currabrev
 			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
 
 	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
-	$TransResult = DB_query($sql,$db,$ErrMsg);
+	$TransResult = DB_query($sql, $db, $ErrMsg);
 
 	echo '<table class="selection">';
 
@@ -71,47 +71,41 @@ while ($myrow = DB_fetch_array($result)){
 	$k = 0; //row colour counter
 	$AllocsTotal = 0;
 
-	while ($myrow1=DB_fetch_array($TransResult)) {
+	while ($myrow1 = DB_fetch_array($TransResult)) {
 
-		if ($k==1){
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
-		if ($myrow1['type']==11){
+		if ($myrow1['type'] == 11) {
 			$TransType = _('Credit Note');
 		} else {
 			$TransType = _('Receipt');
 		}
 		$CurrDecimalPlaces = $myrow1['currdecimalplaces'];
-		
-		printf( '<td>%s</td>
+
+		printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>',
-				$TransType,
-				$myrow1['transno'],
-				$myrow1['reference'],
-				locale_number_format($myrow1['exrate'],4),
-				locale_number_format($myrow1['totalamt'],$CurrDecimalPlaces),
-				locale_number_format($myrow1['amt'],$CurrDecimalPlaces));
-	
+				</tr>', $TransType, $myrow1['transno'], $myrow1['reference'], locale_number_format($myrow1['exrate'], 4), locale_number_format($myrow1['totalamt'], $CurrDecimalPlaces), locale_number_format($myrow1['amt'], $CurrDecimalPlaces));
+
 		$RowCounter++;
-		if ($RowCounter == 12){
-			$RowCounter=1;
+		if ($RowCounter == 12) {
+			$RowCounter = 1;
 			echo $tableheader;
 		}
 		//end of page full new headings if
-		$AllocsTotal +=$myrow1['amt'];
+		$AllocsTotal += $myrow1['amt'];
 	}
 	//end of while loop
-	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td></tr>';
+	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal, $CurrDecimalPlaces) . '</td></tr>';
 	echo '</table>
 		<br />';
 }

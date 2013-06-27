@@ -31,7 +31,7 @@ echo '<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
 	</p>';
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$SQL = "SELECT stockmoves.stockid,
 					stockmaster.description,
 					systypes.typename,

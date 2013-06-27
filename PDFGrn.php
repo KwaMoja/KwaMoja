@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 
 if (isset($_GET['GRNNo'])) {

@@ -1,24 +1,23 @@
 <?php
-/* $Id$*/
 
 include('includes/session.inc');
-$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'",$db);
+$result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'", $db);
 $myrow = DB_fetch_row($result);
 
 include('includes/phplot/phplot.php');
-$graph = new phplot(1000,500);
+$graph = new phplot(1000, 500);
 $graph->SetTitle($myrow[0] . ' ' . _('Usage'));
 $graph->SetXTitle(_('Month'));
 $graph->SetYTitle(_('Quantity'));
 $graph->SetBackgroundColor("wheat");
 $graph->SetTitleColor("blue");
-$graph->SetPlotType="bars";
+$graph->SetPlotType = "bars";
 $graph->SetShading(5);
 $graph->SetDrawYGrid(TRUE);
-$graph->SetMarginsPixels(40,40,40,40);
+$graph->SetMarginsPixels(40, 40, 40, 40);
 $graph->SetDataType('text-data');
 
-if($_GET['StockLocation']=='All'){
+if ($_GET['StockLocation'] == 'All') {
 	$sql = "SELECT periods.periodno,
 			periods.lastdate_in_period,
 			SUM(-stockmoves.qty) AS qtyused
@@ -45,54 +44,67 @@ if($_GET['StockLocation']=='All'){
 		ORDER BY periodno  LIMIT 24";
 }
 $MovtsResult = DB_query($sql, $db);
-if (DB_error_no($db) !=0) {
+if (DB_error_no($db) != 0) {
 	$Title = _('Stock Usage Graph Problem');
-	include ('includes/header.inc');
+	include('includes/header.inc');
 	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
-	if ($debug==1){
-	echo '<br />' . _('The SQL that failed was') . $sql;
+	if ($debug == 1) {
+		echo '<br />' . _('The SQL that failed was') . $sql;
 	}
 	include('includes/footer.inc');
 	exit;
 }
-if (DB_num_rows($MovtsResult)==0){
+if (DB_num_rows($MovtsResult) == 0) {
 	$Title = _('Stock Usage Graph Problem');
-	include ('includes/header.inc');
-	prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
+	include('includes/header.inc');
+	prnMsg(_('There are no movements of this item from the selected location to graph'), 'info');
 	include('includes/footer.inc');
 	exit;
 }
 
 $UsageArray = array();
 $NumberOfPeriodsUsage = DB_num_rows($MovtsResult);
-if ($NumberOfPeriodsUsage!=24){
-	$graph->SetDataColors(
-		array("blue"),  //Data Colors
-		array("black")	//Border Colors
+if ($NumberOfPeriodsUsage != 24) {
+	$graph->SetDataColors(array(
+		"blue"
+	), //Data Colors
+		array(
+		"black"
+	) //Border Colors
 		);
-	for ($i=1;$i++;$i<=$NumberOfPeriodsUsage){
+	for ($i = 1; $i++; $i <= $NumberOfPeriodsUsage) {
 		$UsageRow = DB_fetch_array($MovtsResult);
-		if (!$UsageRow){
+		if (!$UsageRow) {
 			break;
 		} else {
-			$UsageArray[] = array(MonthAndYearFromSQLDate($UsageRow['lastdate_in_period']),$UsageRow['qtyused']);
+			$UsageArray[] = array(
+				MonthAndYearFromSQLDate($UsageRow['lastdate_in_period']),
+				$UsageRow['qtyused']
+			);
 		}
 	}
-}else {
-	$graph->SetDataColors(
-		array("blue","red"),  //Data Colors
-		array("black")	//Border Colors
-	);
-	for ($i=1;$i++;$i<=12){
+} else {
+	$graph->SetDataColors(array(
+		"blue",
+		"red"
+	), //Data Colors
+		array(
+		"black"
+	) //Border Colors
+		);
+	for ($i = 1; $i++; $i <= 12) {
 		$UsageRow = DB_fetch_array($MovtsResult);
-		if (!$UsageRow){
+		if (!$UsageRow) {
 			break;
 		}
-		$UsageArray[] = array(MonthAndYearFromSQLDate($UsageRow['lastdate_in_period']),$UsageRow['qtyused']);
+		$UsageArray[] = array(
+			MonthAndYearFromSQLDate($UsageRow['lastdate_in_period']),
+			$UsageRow['qtyused']
+		);
 	}
-	for ($i=0,$i++;$i<=11;){
+	for ($i = 0, $i++; $i <= 11;) {
 		$UsageRow = DB_fetch_array($MovtsResult);
-		if (!$UsageRow){
+		if (!$UsageRow) {
 			break;
 		}
 		$UsageArray[$i][0] = MonthAndYearFromSQLDate($UsageRow['lastdate_in_period']);
@@ -101,10 +113,14 @@ if ($NumberOfPeriodsUsage!=24){
 }
 //$graph->SetDrawXGrid(TRUE);
 $graph->SetDataValues($UsageArray);
-$graph->SetDataColors(
-	array("blue","red"),  //Data Colors
-	array("black")	//Border Colors
-);
+$graph->SetDataColors(array(
+	"blue",
+	"red"
+), //Data Colors
+	array(
+	"black"
+) //Border Colors
+	);
 
 
 //Draw it

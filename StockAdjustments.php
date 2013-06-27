@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
@@ -430,7 +428,7 @@ if (isset($_SESSION['Adjustment' . $identifier]) and mb_strlen($_SESSION['Adjust
 echo '<tr><td>' . _('Adjustment to Stock At Location') . ':</td>
 		<td><select name="StockLocation"> ';
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations";

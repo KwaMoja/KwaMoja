@@ -1,18 +1,16 @@
 <?php
 
-/* $Id$*/
-
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 
-$_GET['OrderNumber']=(int)$_GET['OrderNumber'];
+$_GET['OrderNumber'] = (int) $_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
 	$Title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
 	include('includes/header.inc');
 	echo '<br /><br /><br />';
-	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.','error');
+	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.', 'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -47,27 +45,27 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
-$ErrMsg =  _('The order cannot be retrieved because');
+$ErrMsg = _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
-$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $db, $ErrMsg, $DbgMsg);
 
-if (DB_num_rows($GetOrdHdrResult)==1) {
+if (DB_num_rows($GetOrdHdrResult) == 1) {
 	echo '<p class="page_title_text noPrint" >
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $myrow['decimalplaces'];
 
-	if ((isset($SupplierLogin) and $SupplierLogin==0) and $myrow['debtorno']!= $_SESSION['CustomerID']) {
-		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
+	if ((isset($SupplierLogin) and $SupplierLogin == 0) and $myrow['debtorno'] != $_SESSION['CustomerID']) {
+		prnMsg(_('Your customer login will only allow you to view your own purchase orders'), 'error');
 		include('includes/footer.inc');
 		exit;
 	}
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="4"><h3>'._('Order Header Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
+				<th colspan="4"><h3>' . _('Order Header Details For Order No') . ' ' . $_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Code') . ':</th>
@@ -122,15 +120,15 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td class="OddTableRows">' . $myrow['freightcost'] . '</td>
 			</tr>
 			<tr>
-				<th style="text-align: left">'._('Comments'). ': </th>
-				<td colspan="3">'.$myrow['comments'] . '</td>
+				<th style="text-align: left">' . _('Comments') . ': </th>
+				<td colspan="3">' . $myrow['comments'] . '</td>
 			</tr>
 			</table>';
 }
 
 /*Now get the line items */
 
-	$LineItemsSQL = "SELECT stkcode,
+$LineItemsSQL = "SELECT stkcode,
 							stockmaster.description,
 							stockmaster.volume,
 							stockmaster.kgs,
@@ -149,20 +147,20 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
-	$ErrMsg =  _('The line items of the order cannot be retrieved because');
-	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
-	$LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
+$ErrMsg = _('The line items of the order cannot be retrieved because');
+$DbgMsg = _('The SQL used to retrieve the line items, that failed was');
+$LineItemsResult = DB_query($LineItemsSQL, $db, $ErrMsg, $DbgMsg);
 
-	if (DB_num_rows($LineItemsResult)>0) {
+if (DB_num_rows($LineItemsResult) > 0) {
 
-		$OrderTotal = 0;
-		$OrderTotalVolume = 0;
-		$OrderTotalWeight = 0;
+	$OrderTotal = 0;
+	$OrderTotalVolume = 0;
+	$OrderTotalWeight = 0;
 
-		echo '<br />
+	echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="9"><h3>'._('Order Line Details For Order No').' '.$_GET['OrderNumber'].'</h3></th>
+				<th colspan="9"><h3>' . _('Order Line Details For Order No') . ' ' . $_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . _('Item Code') . '</th>
@@ -175,50 +173,50 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . _('Qty Del') . '</th>
 				<th>' . _('Last Del') . '</th>
 			</tr>';
-		$k=0;
-		while ($myrow=DB_fetch_array($LineItemsResult)) {
+	$k = 0;
+	while ($myrow = DB_fetch_array($LineItemsResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
+		if ($k == 1) {
+			echo '<tr class="EvenTableRows">';
+			$k = 0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k = 1;
+		}
 
-			if ($myrow['qtyinvoiced']>0){
-				$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
-			} else {
-		  		$DisplayActualDeliveryDate = _('N/A');
-			}
+		if ($myrow['qtyinvoiced'] > 0) {
+			$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
+		} else {
+			$DisplayActualDeliveryDate = _('N/A');
+		}
 
-			echo 	'<td>' . $myrow['stkcode'] . '</td>
+		echo '<td>' . $myrow['stkcode'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . $myrow['quantity'] . '</td>
 				<td>' . $myrow['units'] . '</td>
-				<td class="number">' . locale_number_format($myrow['unitprice'],$CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
-				<td class="number">' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['unitprice'], $CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($myrow['discountpercent'] * 100), 2) . '%' . '</td>
+				<td class="number">' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']), $CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($myrow['qtyinvoiced'], $myrow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
 			</tr>';
 
-			$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));
-			$OrderTotalVolume += ($myrow['quantity'] * $myrow['volume']);
-			$OrderTotalWeight += ($myrow['quantity'] * $myrow['kgs']);
+		$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));
+		$OrderTotalVolume += ($myrow['quantity'] * $myrow['volume']);
+		$OrderTotalWeight += ($myrow['quantity'] * $myrow['kgs']);
 
-		}
-		$DisplayTotal = locale_number_format($OrderTotal,$CurrDecimalPlaces);
-		$DisplayVolume = locale_number_format($OrderTotalVolume,2);
-		$DisplayWeight = locale_number_format($OrderTotalWeight,2);
+	}
+	$DisplayTotal = locale_number_format($OrderTotal, $CurrDecimalPlaces);
+	$DisplayVolume = locale_number_format($OrderTotalVolume, 2);
+	$DisplayWeight = locale_number_format($OrderTotalWeight, 2);
 
-		echo '<tr>
+	echo '<tr>
 				<td colspan="5" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="2" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
 
-		echo '<br />
+	echo '<br />
 			<table class="selection">
 			<tr>
 				<td>' . _('Total Weight') . ':</td>
@@ -227,7 +225,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<td>' . $DisplayVolume . '</td>
 			</tr>
 		</table>';
-	}
+}
 
 include('includes/footer.inc');
 ?>

@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 
 $Title = _('Account Groups');
@@ -127,12 +125,12 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_array($result);
 	if ($myrow['porl'] > 0) {
 		$InputError = 1;
-		prnMsg(_('You are trying to mix Balance Sheet groups with P & L groups within the same AccountSection') , 'error');
+		prnMsg(_('You are trying to mix Balance Sheet groups with P & L groups within the same AccountSection'), 'error');
 	}
 
 	if (isset($_POST['OldGroupName']) and $InputError != 1) {
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		if ($_POST['OldGroupName']!==$_POST['GroupName']) {
+		if ($_POST['OldGroupName'] !== $_POST['GroupName']) {
 			DB_IgnoreForeignKeys($db);
 			$sql = "UPDATE chartmaster SET group_='" . $_POST['GroupName'] . "' WHERE group_='" . $_POST['OldGroupName'] . "'";
 			$ErrMsg = _('An error occurred in renaming the account group');

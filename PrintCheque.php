@@ -1,36 +1,34 @@
 <?php
 
-/* $Id$*/
-
 /*Hard coded for currencies with 2 decimal places */
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 
-if (isset($_GET['identifier'])){
+if (isset($_GET['identifier'])) {
 	$identifier = $_GET['identifier'];
-}else{
-	prnMsg(_('Something was wrong without an identifier, please ask administrator for help'),'error');
+} else {
+	prnMsg(_('Something was wrong without an identifier, please ask administrator for help'), 'error');
 	include('includes/footer.inc');
 	exit;
 }
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Print Cheque'));
 $pdf->addInfo('Subject', _('Print Cheque'));
-$FontSize=10;
-$PageNumber=1;
-$line_height=12;
+$FontSize = 10;
+$PageNumber = 1;
+$line_height = 12;
 
 $result = DB_query("SELECT hundredsname,
 						   decimalplaces,
 						   currency
 					FROM currencies
-					WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'",$db);
+					WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'", $db);
 
-if (DB_num_rows($result) == 0){
-	include ('includes/header.inc');
+if (DB_num_rows($result) == 0) {
+	include('includes/header.inc');
 	prnMsg(_('Can not get hundreds name'), 'warn');
-	include ('includes/footer.inc');
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -40,66 +38,66 @@ $CurrDecimalPlaces = $CurrencyRow['decimalplaces'];
 $CurrencyName = mb_strtolower($CurrencyRow['currency']);
 
 // cheque
-$YPos= $Page_Height-5*$line_height;
-$LeftOvers = $pdf->addTextWrap($Page_Width-75,$YPos,100,$FontSize,$_GET['ChequeNum'], 'left');
-$YPos -= 3*$line_height;
+$YPos = $Page_Height - 5 * $line_height;
+$LeftOvers = $pdf->addTextWrap($Page_Width - 75, $YPos, 100, $FontSize, $_GET['ChequeNum'], 'left');
+$YPos -= 3 * $line_height;
 
 $AmountWords = number_to_words($_SESSION['PaymentDetail' . $identifier]->Amount) . ' ' . $CurrencyName;
-$Cents = intval(round(($_SESSION['PaymentDetail' . $identifier]->Amount - intval($_SESSION['PaymentDetail' . $identifier]->Amount))*100,0));
-if ($Cents > 0){
-	$AmountWords .= ' ' . _('and') . ' ' .  strval($Cents) . ' ' . $HundredsName;
+$Cents = intval(round(($_SESSION['PaymentDetail' . $identifier]->Amount - intval($_SESSION['PaymentDetail' . $identifier]->Amount)) * 100, 0));
+if ($Cents > 0) {
+	$AmountWords .= ' ' . _('and') . ' ' . strval($Cents) . ' ' . $HundredsName;
 } else {
 	$AmountWords .= ' ' . _('only');
 }
 
-$LeftOvers = $pdf->addTextWrap(75,$YPos,475,$FontSize,$AmountWords, 'left');
-$YPos -= 1*$line_height;
-$LeftOvers = $pdf->addTextWrap($Page_Width-225,$YPos,100,$FontSize,$_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
-$LeftOvers = $pdf->addTextWrap($Page_Width-75,$YPos,75,$FontSize,locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount,$CurrDecimalPlaces), 'left');
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 475, $FontSize, $AmountWords, 'left');
+$YPos -= 1 * $line_height;
+$LeftOvers = $pdf->addTextWrap($Page_Width - 225, $YPos, 100, $FontSize, $_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
+$LeftOvers = $pdf->addTextWrap($Page_Width - 75, $YPos, 75, $FontSize, locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount, $CurrDecimalPlaces), 'left');
 
-$YPos -= 1*$line_height;
-$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize,$_SESSION['PaymentDetail' . $identifier]->SuppName, 'left');
-$YPos -= 1*$line_height;
-$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize,$_SESSION['PaymentDetail' . $identifier]->Address1, 'left');
-$YPos -= 1*$line_height;
-$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize,$_SESSION['PaymentDetail' . $identifier]->Address2, 'left');
-$YPos -= 1*$line_height;
+$YPos -= 1 * $line_height;
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 300, $FontSize, $_SESSION['PaymentDetail' . $identifier]->SuppName, 'left');
+$YPos -= 1 * $line_height;
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 300, $FontSize, $_SESSION['PaymentDetail' . $identifier]->Address1, 'left');
+$YPos -= 1 * $line_height;
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 300, $FontSize, $_SESSION['PaymentDetail' . $identifier]->Address2, 'left');
+$YPos -= 1 * $line_height;
 $Address3 = $_SESSION['PaymentDetail' . $identifier]->Address3 . ' ' . $_SESSION['PaymentDetail' . $identifier]->Address4 . ' ' . $_SESSION['PaymentDetail' . $identifier]->Address5 . ' ' . $_SESSION['PaymentDetail' . $identifier]->Address6;
-$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize, $Address3, 'left');
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 300, $FontSize, $Address3, 'left');
 
 
-$YPos -= 2*$line_height;
-$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize, $AmountWords, 'left');
-$LeftOvers = $pdf->addTextWrap(375,$YPos,100,$FontSize, locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount,$CurrDecimalPlaces), 'right');
+$YPos -= 2 * $line_height;
+$LeftOvers = $pdf->addTextWrap(75, $YPos, 300, $FontSize, $AmountWords, 'left');
+$LeftOvers = $pdf->addTextWrap(375, $YPos, 100, $FontSize, locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount, $CurrDecimalPlaces), 'right');
 
 
 // remittance advice 1
-$YPos -= 14*$line_height;
-$LeftOvers = $pdf->addTextWrap(0,$YPos,$Page_Width,$FontSize,_('Remittance Advice'), 'center');
-$YPos -= 2*$line_height;
-$LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,_('DatePaid'), 'left');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,_('Vendor No.'), 'left');
-$LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,_('Cheque No.'), 'left');
-$LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,_('Amount'), 'left');
-$YPos -= 2*$line_height;
-$LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,$_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,$_SESSION['PaymentDetail' . $identifier]->SupplierID, 'left');
-$LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,$_GET['ChequeNum'], 'left');
-$LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount,$CurrDecimalPlaces), 'left');
+$YPos -= 14 * $line_height;
+$LeftOvers = $pdf->addTextWrap(0, $YPos, $Page_Width, $FontSize, _('Remittance Advice'), 'center');
+$YPos -= 2 * $line_height;
+$LeftOvers = $pdf->addTextWrap(25, $YPos, 75, $FontSize, _('DatePaid'), 'left');
+$LeftOvers = $pdf->addTextWrap(100, $YPos, 100, $FontSize, _('Vendor No.'), 'left');
+$LeftOvers = $pdf->addTextWrap(250, $YPos, 75, $FontSize, _('Cheque No.'), 'left');
+$LeftOvers = $pdf->addTextWrap(350, $YPos, 75, $FontSize, _('Amount'), 'left');
+$YPos -= 2 * $line_height;
+$LeftOvers = $pdf->addTextWrap(25, $YPos, 75, $FontSize, $_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
+$LeftOvers = $pdf->addTextWrap(100, $YPos, 100, $FontSize, $_SESSION['PaymentDetail' . $identifier]->SupplierID, 'left');
+$LeftOvers = $pdf->addTextWrap(250, $YPos, 75, $FontSize, $_GET['ChequeNum'], 'left');
+$LeftOvers = $pdf->addTextWrap(350, $YPos, 75, $FontSize, locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount, $CurrDecimalPlaces), 'left');
 
 // remittance advice 2
-$YPos -= 15*$line_height;
-$LeftOvers = $pdf->addTextWrap(0,$YPos,$Page_Width,$FontSize,_('Remittance Advice'), 'center');
-$YPos -= 2*$line_height;
-$LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,_('DatePaid'), 'left');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,_('Vendor No.'), 'left');
-$LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,_('Cheque No.'), 'left');
-$LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,_('Amount'), 'left');
-$YPos -= 2*$line_height;
-$LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,$_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,$_SESSION['PaymentDetail' . $identifier]->SupplierID, 'left');
-$LeftOvers = $pdf->addTextWrap(250,$YPos,75,$FontSize,$_GET['ChequeNum'], 'left');
-$LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount,$CurrDecimalPlaces), 'left');
+$YPos -= 15 * $line_height;
+$LeftOvers = $pdf->addTextWrap(0, $YPos, $Page_Width, $FontSize, _('Remittance Advice'), 'center');
+$YPos -= 2 * $line_height;
+$LeftOvers = $pdf->addTextWrap(25, $YPos, 75, $FontSize, _('DatePaid'), 'left');
+$LeftOvers = $pdf->addTextWrap(100, $YPos, 100, $FontSize, _('Vendor No.'), 'left');
+$LeftOvers = $pdf->addTextWrap(250, $YPos, 75, $FontSize, _('Cheque No.'), 'left');
+$LeftOvers = $pdf->addTextWrap(350, $YPos, 75, $FontSize, _('Amount'), 'left');
+$YPos -= 2 * $line_height;
+$LeftOvers = $pdf->addTextWrap(25, $YPos, 75, $FontSize, $_SESSION['PaymentDetail' . $identifier]->DatePaid, 'left');
+$LeftOvers = $pdf->addTextWrap(100, $YPos, 100, $FontSize, $_SESSION['PaymentDetail' . $identifier]->SupplierID, 'left');
+$LeftOvers = $pdf->addTextWrap(250, $YPos, 75, $FontSize, $_GET['ChequeNum'], 'left');
+$LeftOvers = $pdf->addTextWrap(350, $YPos, 75, $FontSize, locale_number_format($_SESSION['PaymentDetail' . $identifier]->Amount, $CurrDecimalPlaces), 'left');
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf');
 $pdf->__destruct();
@@ -110,7 +108,7 @@ exit;
 function number_to_words($Number) {
 
 	if (($Number < 0) or ($Number > 999999999)) {
-		prnMsg(_('Number is out of the range of numbers that can be expressed in words'),'error');
+		prnMsg(_('Number is out of the range of numbers that can be expressed in words'), 'error');
 		return _('error');
 	}
 
@@ -137,37 +135,41 @@ function number_to_words($Number) {
 		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Hundreds) . ' ' . _('hundred');
 	}
 
-	$Ones = array(	0 => '',
-					1 => _('one'),
-					2 => _('two'),
-					3 => _('three'),
-					4 => _('four'),
-					5 => _('five'),
-					6 => _('six'),
-					7 => _('seven'),
-					8 => _('eight'),
-					9 => _('nine'),
-					10 => _('ten'),
-					11 => _('eleven'),
-					12 => _('twelve'),
-					13 => _('thirteen'),
-					14 => _('fourteen'),
-					15 => _('fifteen'),
-					16 => _('sixteen'),
-					17 => _('seventeen'),
-					18 => _('eighteen'),
-					19 => _('nineteen')	);
+	$Ones = array(
+		0 => '',
+		1 => _('one'),
+		2 => _('two'),
+		3 => _('three'),
+		4 => _('four'),
+		5 => _('five'),
+		6 => _('six'),
+		7 => _('seven'),
+		8 => _('eight'),
+		9 => _('nine'),
+		10 => _('ten'),
+		11 => _('eleven'),
+		12 => _('twelve'),
+		13 => _('thirteen'),
+		14 => _('fourteen'),
+		15 => _('fifteen'),
+		16 => _('sixteen'),
+		17 => _('seventeen'),
+		18 => _('eighteen'),
+		19 => _('nineteen')
+	);
 
-	$Tens = array(	0 => '',
-					1 => '',
-					2 => _('twenty'),
-					3 => _('thirty'),
-					4 => _('forty'),
-					5 => _('fifty'),
-					6 => _('sixty'),
-					7 => _('seventy'),
-					8 => _('eighty'),
-					9 => _('ninety') );
+	$Tens = array(
+		0 => '',
+		1 => '',
+		2 => _('twenty'),
+		3 => _('thirty'),
+		4 => _('forty'),
+		5 => _('fifty'),
+		6 => _('sixty'),
+		7 => _('seventy'),
+		8 => _('eighty'),
+		9 => _('ninety')
+	);
 
 
 	if ($NoOfTens or $NoOfOnes) {
@@ -175,10 +177,9 @@ function number_to_words($Number) {
 			$NumberInWords .= ' ' . _('and') . ' ';
 		}
 
-		if ($NoOfTens < 2){
+		if ($NoOfTens < 2) {
 			$NumberInWords .= $Ones[$NoOfTens * 10 + $NoOfOnes];
-		}
-		else {
+		} else {
 			$NumberInWords .= $Tens[$NoOfTens];
 			if ($NoOfOnes) {
 				$NumberInWords .= '-' . $Ones[$NoOfOnes];
@@ -186,7 +187,7 @@ function number_to_words($Number) {
 		}
 	}
 
-	if (empty($NumberInWords)){
+	if (empty($NumberInWords)) {
 		$NumberInWords = _('zero');
 	}
 

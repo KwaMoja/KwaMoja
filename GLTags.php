@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Maintain General Ledger Tags');
 
@@ -10,60 +8,59 @@ $BookMark = 'GLTags';
 include('includes/header.inc');
 
 if (isset($_GET['SelectedTag'])) {
-	if($_GET['Action']=='delete'){
+	if ($_GET['Action'] == 'delete') {
 		//first off test there are no transactions created with this tag
 		$Result = DB_query("SELECT counterindex
 							FROM gltrans
-							WHERE tag='" . $_GET['SelectedTag'] . "'",$db);
-		if (DB_num_rows($Result)>0){
-			prnMsg(_('This tag cannot be deleted since there are already general ledger transactions created using it.'),'error');
-		} else	{
-			$Result = DB_query("DELETE FROM tags WHERE tagref='" . $_GET['SelectedTag'] . "'",$db);
-			prnMsg(_('The selected tag has been deleted'),'success');
+							WHERE tag='" . $_GET['SelectedTag'] . "'", $db);
+		if (DB_num_rows($Result) > 0) {
+			prnMsg(_('This tag cannot be deleted since there are already general ledger transactions created using it.'), 'error');
+		} else {
+			$Result = DB_query("DELETE FROM tags WHERE tagref='" . $_GET['SelectedTag'] . "'", $db);
+			prnMsg(_('The selected tag has been deleted'), 'success');
 		}
-		$Description='';
+		$Description = '';
 	} else {
-		$sql="SELECT tagref,
+		$sql = "SELECT tagref,
 					tagdescription
 				FROM tags
-				WHERE tagref='".$_GET['SelectedTag']."'";
+				WHERE tagref='" . $_GET['SelectedTag'] . "'";
 
-		$result= DB_query($sql,$db);
-		$myrow = DB_fetch_array($result,$db);
-		$ref=$myrow['tagref'];
+		$result = DB_query($sql, $db);
+		$myrow = DB_fetch_array($result, $db);
+		$ref = $myrow['tagref'];
 		$Description = $myrow['tagdescription'];
 	}
 } else {
-	$Description='';
-	$_GET['SelectedTag']='';
+	$Description = '';
+	$_GET['SelectedTag'] = '';
 }
 
 if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO tags values(NULL, '" . $_POST['Description'] . "')";
-	$result= DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 }
 
 if (isset($_POST['update'])) {
 	$sql = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "'
-		WHERE tagref='".$_POST['reference']."'";
-	$result= DB_query($sql,$db);
+		WHERE tagref='" . $_POST['reference'] . "'";
+	$result = DB_query($sql, $db);
 }
 echo '<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-		_('Print') . '" alt="' . $Title . '" />' . ' ' . $Title . '
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Print') . '" alt="' . $Title . '" />' . ' ' . $Title . '
 	</p>';
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
+echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" id="form">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 	<table class="selection" summary="' . _('Description of tag') . '">
 	<tr>
-		<td>'. _('Description') . '</td>
-		<td><input type="text" size="30" minlength="0" maxlength="30" name="Description" value="'.$Description.'" /></td>
-		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'" />';
+		<td>' . _('Description') . '</td>
+		<td><input type="text" size="30" minlength="0" maxlength="30" name="Description" value="' . $Description . '" /></td>
+		<td><input type="hidden" name="reference" value="' . $_GET['SelectedTag'] . '" />';
 
-if (isset($_GET['Action']) and $_GET['Action']=='edit') {
+if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {
 	echo '<input type="submit" name="update" value="' . _('Update') . '" />';
 } else {
 	echo '<input type="submit" name="submit" value="' . _('Insert') . '" />';
@@ -77,23 +74,23 @@ echo '</td>
 	</form>
 	<table class="selection" summary="' . _('List of existing tags') . '">
 	<tr>
-		<th>'. _('Tag ID') .'</th>
-		<th>'. _('Description'). '</th>
+		<th>' . _('Tag ID') . '</th>
+		<th>' . _('Description') . '</th>
 	</tr>';
 
-$sql="SELECT tagref,
+$sql = "SELECT tagref,
 			tagdescription
 		FROM tags
 		ORDER BY tagref";
 
-$result= DB_query($sql,$db);
+$result = DB_query($sql, $db);
 
-while ($myrow = DB_fetch_array($result,$db)){
+while ($myrow = DB_fetch_array($result, $db)) {
 	echo '<tr>
 			<td>' . $myrow['tagref'] . '</td>
 			<td>' . $myrow['tagdescription'] . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=delete" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $myrow['tagref'] . '&amp;Action=delete" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

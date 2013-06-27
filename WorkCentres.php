@@ -1,15 +1,13 @@
 <?php
-/* $Id$*/
-
 
 include('includes/session.inc');
 $Title = _('Work Centres');
 include('includes/header.inc');
 
-if (isset($_POST['SelectedWC'])){
-	$SelectedWC =$_POST['SelectedWC'];
-} elseif (isset($_GET['SelectedWC'])){
-	$SelectedWC =$_GET['SelectedWC'];
+if (isset($_POST['SelectedWC'])) {
+	$SelectedWC = $_POST['SelectedWC'];
+} elseif (isset($_GET['SelectedWC'])) {
+	$SelectedWC = $_GET['SelectedWC'];
 }
 
 if (isset($_POST['submit'])) {
@@ -24,18 +22,18 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['Code']) < 2) {
 		$InputError = 1;
-		prnMsg(_('The Work Centre code must be at least 2 characters long'),'error');
+		prnMsg(_('The Work Centre code must be at least 2 characters long'), 'error');
 	}
-	if (mb_strlen($_POST['Description'])<3) {
+	if (mb_strlen($_POST['Description']) < 3) {
 		$InputError = 1;
-		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
+		prnMsg(_('The Work Centre description must be at least 3 characters long'), 'error');
 	}
-	if (mb_strstr($_POST['Code'],' ') or ContainsIllegalCharacters($_POST['Code']) ) {
+	if (mb_strstr($_POST['Code'], ' ') or ContainsIllegalCharacters($_POST['Code'])) {
 		$InputError = 1;
-		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
+		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'), 'error');
 	}
 
-	if (isset($SelectedWC) and $InputError !=1) {
+	if (isset($SelectedWC) and $InputError != 1) {
 
 		/*SelectedWC could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -47,9 +45,9 @@ if (isset($_POST['submit'])) {
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
 		$msg = _('The work centre record has been updated');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
-	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
+		/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
 
 		$sql = "INSERT INTO workcentres (code,
 										location,
@@ -66,52 +64,52 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 
-	if ($InputError !=1){
-		$result = DB_query($sql,$db,_('The update/addition of the work centre failed because'));
-		prnMsg($msg,'success');
-		unset ($_POST['Location']);
-		unset ($_POST['Description']);
-		unset ($_POST['Code']);
-		unset ($_POST['OverheadRecoveryAct']);
-		unset ($_POST['OverheadPerHour']);
-		unset ($SelectedWC);
+	if ($InputError != 1) {
+		$result = DB_query($sql, $db, _('The update/addition of the work centre failed because'));
+		prnMsg($msg, 'success');
+		unset($_POST['Location']);
+		unset($_POST['Description']);
+		unset($_POST['Code']);
+		unset($_POST['OverheadRecoveryAct']);
+		unset($_POST['OverheadPerHour']);
+		unset($SelectedWC);
 	}
 
 } elseif (isset($_GET['delete'])) {
-//the link to delete a selected record was clicked instead of the submit button
+	//the link to delete a selected record was clicked instead of the submit button
 
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
 
-	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
-	$result = DB_query($sql,$db);
+	$sql = "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
+	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
-	}  else {
-		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
-		$result = DB_query($sql,$db);
+	if ($myrow[0] > 0) {
+		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('BOM items referring to this work centre code'), 'warn');
+	} else {
+		$sql = "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
+		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
+		if ($myrow[0] > 0) {
+			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'), 'warn');
 		} else {
-			$sql="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
-			$result = DB_query($sql,$db);
-			prnMsg(_('The selected work centre record has been deleted'),'succes');
+			$sql = "DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
+			$result = DB_query($sql, $db);
+			prnMsg(_('The selected work centre record has been deleted'), 'succes');
 		} // end of Contract BOM test
 	} // end of BOM test
 }
 
 if (!isset($SelectedWC)) {
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedWC will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
-then none of the above are true and the list of work centres will be displayed with
-links to delete or edit each. These will call the same page again and allow update/input
-or deletion of the records*/
+	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedWC will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
+	then none of the above are true and the list of work centres will be displayed with
+	links to delete or edit each. These will call the same page again and allow update/input
+	or deletion of the records*/
 	echo '<p class="page_title_text noPrint" >
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT workcentres.code,
 						workcentres.description,
 						locations.locationname,
@@ -133,7 +131,7 @@ or deletion of the records*/
 						ON locations.loccode=www_users.defaultlocation
 					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 	}
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('WC Code') . '</th>
@@ -152,17 +150,8 @@ or deletion of the records*/
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this work centre?') . '\', \'Confirm Delete\', this);">' . _('Delete') .'</a></td>
-				</tr>',
-				$myrow['code'],
-				$myrow['description'],
-				$myrow['locationname'],
-				$myrow['overheadrecoveryact'],
-				$myrow['overheadperhour'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['code'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['code']);
+					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this work centre?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				</tr>', $myrow['code'], $myrow['description'], $myrow['locationname'], $myrow['overheadrecoveryact'], $myrow['overheadperhour'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['code'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['code']);
 	}
 
 	//END WHILE LIST LOOP
@@ -172,12 +161,12 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
 }
 
 echo '<br />
-	<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -198,14 +187,14 @@ if (isset($SelectedWC)) {
 	$_POST['Code'] = $myrow['code'];
 	$_POST['Location'] = $myrow['location'];
 	$_POST['Description'] = $myrow['description'];
-	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
-	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
+	$_POST['OverheadRecoveryAct'] = $myrow['overheadrecoveryact'];
+	$_POST['OverheadPerHour'] = $myrow['overheadperhour'];
 
 	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
 		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
 		<table class="selection">
 			<tr>
-				<td>' ._('Work Centre Code') . ':</td>
+				<td>' . _('Work Centre Code') . ':</td>
 				<td>' . $_POST['Code'] . '</td>
 			</tr>';
 
@@ -220,7 +209,7 @@ if (isset($SelectedWC)) {
 			</tr>';
 }
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations";
@@ -232,7 +221,7 @@ if ($_SESSION['RestrictLocations']==0) {
 					ON locations.loccode=www_users.defaultlocation
 				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 }
-$result = DB_query($sql,$db);
+$result = DB_query($sql, $db);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
@@ -245,7 +234,7 @@ echo '<tr>
 		<td><select name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
+	if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
@@ -271,10 +260,10 @@ $SQL = "SELECT accountcode,
 		WHERE accountgroups.pandl!=0
 		ORDER BY accountcode";
 
-$result = DB_query($SQL,$db);
+$result = DB_query($SQL, $db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
+	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode'] == $_POST['OverheadRecoveryAct']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
@@ -285,13 +274,13 @@ while ($myrow = DB_fetch_array($result)) {
 DB_free_result($result);
 
 if (!isset($_POST['OverheadPerHour'])) {
-	$_POST['OverheadPerHour']=0;
+	$_POST['OverheadPerHour'] = 0;
 }
 
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Overhead Per Hour') . ':</td>
-		<td><input type="text" class="number" name="OverheadPerHour" size="6" minlength="0" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
+		<td><input type="text" class="number" name="OverheadPerHour" size="6" minlength="0" maxlength="6" value="' . $_POST['OverheadPerHour'] . '" />';
 
 echo '</td>
 	</tr>
@@ -302,13 +291,13 @@ echo '<br />
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 
-if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC']=='') {
+if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC'] == '') {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Code);</script>';
 } else {
 	echo '<script  type="text/javascript">defaultControl(document.forms[0].Description);</script>';
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 ?>

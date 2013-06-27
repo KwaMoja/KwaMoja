@@ -1,7 +1,5 @@
 <?php
 
-$PageSecurity = 15;
-
 include('includes/session.inc');
 
 $Title = _('Run stock ranking analysis');
@@ -30,11 +28,11 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql, $db);
 	$Parameters = DB_fetch_array($result);
 
-	$result = DB_query("DROP TABLE IF EXISTS tempabc",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempabc", $db);
 	$sql = "CREATE TEMPORARY TABLE tempabc (
 				stockid varchar(20),
 				consumption INT(11)) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempabc failed because'));
+	$result = DB_query($sql, $db, _('Create of tempabc failed because'));
 
 	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
 
@@ -66,9 +64,9 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql, $db);
 
 	$i = 1;
-	while ($myrow=DB_fetch_array($result)) {
-		switch($i) {
-			case ($i<=$AItems):
+	while ($myrow = DB_fetch_array($result)) {
+		switch ($i) {
+			case ($i <= $AItems):
 				$InsertSQL = "INSERT INTO abcstock VALUES(
 															'" . $_POST['GroupID'] . "',
 															'" . $myrow['stockid'] . "',
@@ -76,7 +74,7 @@ if (isset($_POST['Submit'])) {
 														)";
 				$InsertResult = DB_query($InsertSQL, $db);
 				break;
-			case ($i>$AItems and $i<=($AItems + $BItems)):
+			case ($i > $AItems and $i <= ($AItems + $BItems)):
 				$InsertSQL = "INSERT INTO abcstock VALUES(
 															'" . $_POST['GroupID'] . "',
 															'" . $myrow['stockid'] . "',
@@ -99,7 +97,7 @@ if (isset($_POST['Submit'])) {
 										'" . $Parameters['zerousage'] . "'
 									FROM tempabc
 									WHERE consumption=0)";
-	$result = DB_query ($sql, $db);
+	$result = DB_query($sql, $db);
 
 	$sql = "INSERT INTO abcstock (SELECT '" . $_POST['GroupID'] . "',
 										stockmaster.stockid,
@@ -108,11 +106,11 @@ if (isset($_POST['Submit'])) {
 									LEFT JOIN tempabc
 										ON stockmaster.stockid=tempabc.stockid
 									WHERE consumption is NULL)";
-	$result = DB_query ($sql, $db);
+	$result = DB_query($sql, $db);
 
-	$result = DB_query("DROP TABLE IF EXISTS tempabc",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempabc", $db);
 
-	prnMsg( _('The ABC analysis has been successfully run'), 'success');
+	prnMsg(_('The ABC analysis has been successfully run'), 'success');
 } else {
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="ABCAnalysis">';
@@ -146,7 +144,7 @@ if (isset($_POST['Submit'])) {
 		<div class="centre"><input type="submit" name="Submit" value="Run" />
 	</form>';
 
-	prnMsg( _('Please note if you run an ABC analysis against a ranking group that has been used before, that analysis will be deleted and replaced by this one'), 'warn');
+	prnMsg(_('Please note if you run an ABC analysis against a ranking group that has been used before, that analysis will be deleted and replaced by this one'), 'warn');
 }
 
 include('includes/footer.inc');

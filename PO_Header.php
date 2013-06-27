@@ -1,7 +1,5 @@
 <?php
 
-/* $Id PO_Header.php 4183 2010-12-14 09:30:20Z daintree $ */
-
 include('includes/DefinePOClass.php');
 include('includes/session.inc');
 
@@ -157,9 +155,9 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 			$ErrMsg = _('The order status could not be updated because');
 			$UpdateResult = DB_query($SQL, $db, $ErrMsg);
 
-			if ($_POST['Status']=='Completed' OR $_POST['Status']=='Cancelled' OR $_POST['Status']=='Rejected') {
+			if ($_POST['Status'] == 'Completed' OR $_POST['Status'] == 'Cancelled' OR $_POST['Status'] == 'Rejected') {
 				$SQL = "UPDATE purchorderdetails SET completed=1 WHERE orderno='" . $_SESSION['ExistingOrder'] . "'";
-				$UpdateResult =DB_query($SQL,$db,$ErrMsg);
+				$UpdateResult = DB_query($SQL, $db, $ErrMsg);
 			}
 		} //$OKToUpdateStatus == 1
 	} //end if there is actually a status change the class Status != the POST['Status']
@@ -372,7 +370,7 @@ if (isset($_POST['SearchSuppliers'])) {
 
 if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') and (isset($_SESSION['PO' . $identifier]->SupplierID) and $_SESSION['PO' . $identifier]->SupplierID != '')) {
 	/*The session variables are set but the form variables could have been lost
-	  need to restore the form variables from the session */
+	need to restore the form variables from the session */
 	$_POST['SupplierID'] = $_SESSION['PO' . $identifier]->SupplierID;
 	$_POST['SupplierName'] = $_SESSION['PO' . $identifier]->SupplierName;
 	$_POST['CurrCode'] = $_SESSION['PO' . $identifier]->CurrCode;
@@ -810,7 +808,7 @@ else {
 	echo '</table></td>';
 	//Set up the next column with a sub-table in it too
 	echo '<td style="width:50%" valign="top">
-	    <table class="selection" width="100%">';
+		<table class="selection" width="100%">';
 
 	if ($_SESSION['ExistingOrder'] != 0 and $_SESSION['PO' . $identifier]->Status == 'Printed') {
 		echo '<tr><td><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '&amp;identifier=' . $identifier . '">' . _('Receive this order') . '</a></td></tr>';
@@ -885,7 +883,7 @@ else {
 				<td>' . _('Warehouse') . ':</td>
 				<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";
@@ -1183,6 +1181,6 @@ else {
 /*end of if supplier selected */
 
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 ?>

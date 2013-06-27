@@ -1,7 +1,6 @@
 <?php
-/* $Id$*/
 
-$PaytTypes    = array();
+$PaytTypes = array();
 $ReceiptTypes = array();
 
 $sql = 'SELECT  paymentid,
@@ -11,12 +10,12 @@ $sql = 'SELECT  paymentid,
 			FROM paymentmethods
 			ORDER by paymentname';
 
-$PMResult = DB_query($sql,$db);
-while( $PMrow = DB_fetch_array($PMResult) ) {
-	if ($PMrow['paymenttype']==1) {
+$PMResult = DB_query($sql, $db);
+while ($PMrow = DB_fetch_array($PMResult)) {
+	if ($PMrow['paymenttype'] == 1) {
 		$PaytTypes[$PMrow['paymentid']] = $PMrow['paymentname'];
 	}
-	if ($PMrow['receipttype']==1) {
+	if ($PMrow['receipttype'] == 1) {
 		$ReceiptTypes[$PMrow['paymentid']] = $PMrow['paymentname'];
 	}
 }

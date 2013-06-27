@@ -1,23 +1,21 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Costed Bill Of Material');
 include('includes/header.inc');
 
-if (isset($_GET['StockID'])){
-	$StockID =trim(mb_strtoupper($_GET['StockID']));
-} elseif (isset($_POST['StockID'])){
-	$StockID =trim(mb_strtoupper($_POST['StockID']));
+if (isset($_GET['StockID'])) {
+	$StockID = trim(mb_strtoupper($_GET['StockID']));
+} elseif (isset($_POST['StockID'])) {
+	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
 if (!isset($_POST['StockID'])) {
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
-        <div>
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
+		<div>
 		<br />
 		<div class="page_help_text noPrint">
-			'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to view the costed bill of materials') . '
+			' . _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to view the costed bill of materials') . '
 			<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') . '
 		</div>
 		<br />
@@ -38,18 +36,18 @@ if (!isset($_POST['StockID'])) {
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 }
 
-if (isset($_POST['Search'])){
+if (isset($_POST['Search'])) {
 	// Work around to auto select
-	if ($_POST['Keywords']=='' and $_POST['StockCode']=='') {
-		$_POST['StockCode']='%';
+	if ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
+		$_POST['StockCode'] = '%';
 	}
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
-		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
+		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
-	if ($_POST['Keywords']=='' and $_POST['StockCode']=='') {
-		prnMsg( _('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info' );
+	if ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
+		prnMsg(_('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info');
 	} else {
-		if (mb_strlen($_POST['Keywords'])>0) {
+		if (mb_strlen($_POST['Keywords']) > 0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -71,7 +69,7 @@ if (isset($_POST['Search'])){
 						stockmaster.mbflag
 					ORDER BY stockmaster.stockid";
 
-		} elseif (mb_strlen($_POST['StockCode'])>0){
+		} elseif (mb_strlen($_POST['StockCode']) > 0) {
 			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units,
@@ -79,7 +77,7 @@ if (isset($_POST['Search'])){
 							sum(locstock.quantity) as totalonhand
 					FROM stockmaster INNER JOIN locstock
 					ON stockmaster.stockid = locstock.stockid
-					WHERE stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
+					WHERE stockmaster.stockid " . LIKE . "'%" . $_POST['StockCode'] . "%'
 					AND (stockmaster.mbflag='M'
 						OR stockmaster.mbflag='K'
 						OR stockmaster.mbflag='G'
@@ -93,14 +91,12 @@ if (isset($_POST['Search'])){
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$db,$ErrMsg);
+		$result = DB_query($sql, $db, $ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
 
-if (isset($_POST['Search'])
-	and isset($result)
-	and !isset($SelectedParent)) {
+if (isset($_POST['Search']) and isset($result) and !isset($SelectedParent)) {
 
 	echo '<br />
 			<table class="selection">';
@@ -115,50 +111,45 @@ if (isset($_POST['Search'])
 
 	$j = 1;
 	$k = 0; //row colour counter
-	while ($myrow=DB_fetch_array($result)) {
-		if ($k==1){
+	while ($myrow = DB_fetch_array($result)) {
+		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
-			$k=0;
+			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-		if ($myrow['mbflag']=='A' or $myrow['mbflag']=='K'){
+		if ($myrow['mbflag'] == 'A' or $myrow['mbflag'] == 'K') {
 			$StockOnHand = 'N/A';
 		} else {
-			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
+			$StockOnHand = locale_number_format($myrow['totalonhand'], 2);
 		}
-		$tabindex=$j+4;
-		printf('<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s" /></td>
-		        <td>%s</td>
+		$tabindex = $j + 4;
+		printf('<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="%s" /></td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
-				</tr>',
-				$myrow['stockid'],
-				$myrow['description'],
-				$StockOnHand,
-				$myrow['units'] );
+				</tr>', $myrow['stockid'], $myrow['description'], $StockOnHand, $myrow['units']);
 		$j++;
-//end of page full new headings if
+		//end of page full new headings if
 	}
-//end of while loop
+	//end of while loop
 
 	echo '</table><br />';
 }
 if (!isset($_POST['StockID'])) {
-    echo '</div>
-          </form>';
+	echo '</div>
+		  </form>';
 }
 
-if (isset($StockID) and $StockID!=""){
+if (isset($StockID) and $StockID != "") {
 
 	$result = DB_query("SELECT description,
 								units,
 								labourcost,
 								overheadcost
 						FROM stockmaster
-						WHERE stockid='" . $StockID  . "'",
-						$db);
+						WHERE stockid='" . $StockID . "'", $db);
 	$myrow = DB_fetch_array($result);
 	$ParentLabourCost = $myrow['labourcost'];
 	$ParentOverheadCost = $myrow['overheadcost'];
@@ -177,14 +168,14 @@ if (isset($StockID) and $StockID!=""){
 			AND bom.effectiveto > Now()";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
-	$BOMResult = DB_query ($sql,$db,$ErrMsg);
+	$BOMResult = DB_query($sql, $db, $ErrMsg);
 
-	if (DB_num_rows($BOMResult)==0){
-		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
+	if (DB_num_rows($BOMResult) == 0) {
+		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'), 'warn');
 	} else {
-		echo '<a href="'.$RootPath.'/index.php">'._('Return to Main Menu').'</a>';
+		echo '<a href="' . $RootPath . '/index.php">' . _('Return to Main Menu') . '</a>';
 		echo '<p class="page_title_text noPrint" >
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 				</p>
 				<br />';
 
@@ -204,15 +195,15 @@ if (isset($StockID) and $StockID!=""){
 		echo $TableHeader;
 
 		$j = 1;
-		$k=0; //row colour counter
+		$k = 0; //row colour counter
 
 		$TotalCost = 0;
 
-		while ($myrow=DB_fetch_array($BOMResult)) {
+		while ($myrow = DB_fetch_array($BOMResult)) {
 
-			if ($k==1){
+			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
-				$k=0;
+				$k = 0;
 			} else {
 				echo '<tr class="OddTableRows">';
 				$k++;
@@ -226,12 +217,7 @@ if (isset($StockID) and $StockID!=""){
 					<td class="number">%s</td>
 					<td class="number">%.2f</td>
 					<td class="number">%.2f</td>
-					</tr>',
-					$ComponentLink,
-					$myrow['description'],
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-					$myrow['standardcost'],
-					$myrow['componentcost']);
+					</tr>', $ComponentLink, $myrow['description'], locale_number_format($myrow['quantity'], $myrow['decimalplaces']), $myrow['standardcost'], $myrow['componentcost']);
 
 			$TotalCost += $myrow['componentcost'];
 
@@ -241,23 +227,23 @@ if (isset($StockID) and $StockID!=""){
 		$TotalCost += $ParentLabourCost;
 		echo '<tr>
 			<td colspan="4" class="number"><b>' . _('Labour Cost') . '</b></td>
-			<td class="number"><b>' . locale_number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+			<td class="number"><b>' . locale_number_format($ParentLabourCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 		$TotalCost += $ParentOverheadCost;
 		echo '<tr><td colspan="4" class="number"><b>' . _('Overhead Cost') . '</b></td>
-			<td class="number"><b>' . locale_number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+			<td class="number"><b>' . locale_number_format($ParentOverheadCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 
 		echo '<tr>
 				<td colspan="4" class="number"><b>' . _('Total Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+				<td class="number"><b>' . locale_number_format($TotalCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>';
 
 		echo '</table>';
 	}
 } else { //no stock item entered
-	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');
+	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'), 'info');
 }
 
-if (!isset($_POST['StockID']) or $_POST['StockID']=='') {
+if (!isset($_POST['StockID']) or $_POST['StockID'] == '') {
 	echo '<script type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
 }
 include('includes/footer.inc');

@@ -1,10 +1,9 @@
 <?php
-/**
+/*
  * Author: Ashish Shukla <gmail.com!wahjava>
  *
  * Script to duplicate BoMs.
  */
-/* $Id$*/
 
 include('includes/session.inc');
 
@@ -14,26 +13,26 @@ include('includes/header.inc');
 
 include('includes/SQL_CommonFunctions.inc');
 
-if(isset($_POST['Submit'])) {
+if (isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];
 	$NewOrExisting = $_POST['NewOrExisting'];
 	$NewStockID = '';
 	$InputError = 0; //assume the best
 
-	if($NewOrExisting == 'N') {
+	if ($NewOrExisting == 'N') {
 		$NewStockID = $_POST['ToStockID'];
-		if (mb_strlen($NewStockID)==0 or $NewStockID==''){
+		if (mb_strlen($NewStockID) == 0 or $NewStockID == '') {
 			$InputError = 1;
-			prnMsg(_('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
+			prnMsg(_('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'), 'error');
 		}
 	} else {
 		$NewStockID = $_POST['ExStockID'];
 	}
-	if ($InputError==0){
+	if ($InputError == 0) {
 		$result = DB_Txn_Begin($db);
 
-		if($NewOrExisting == 'N') {
-	      /* duplicate rows into stockmaster */
+		if ($NewOrExisting == 'N') {
+			/* duplicate rows into stockmaster */
 			$sql = "INSERT INTO stockmaster( stockid,
 									categoryid,
 									description,
@@ -62,7 +61,7 @@ if(isset($_POST['Submit'])) {
 									pansize,
 									shrinkfactor,
 									netweight )
-							SELECT '".$NewStockID."' AS stockid,
+							SELECT '" . $NewStockID . "' AS stockid,
 									categoryid,
 									description,
 									longdescription,
@@ -91,7 +90,7 @@ if(isset($_POST['Submit'])) {
 									shrinkfactor,
 									netweight
 							FROM stockmaster
-							WHERE stockid='".$StockID."';";
+							WHERE stockid='" . $StockID . "';";
 			$result = DB_query($sql, $db);
 		} else {
 			$sql = "SELECT lastcostupdate,
@@ -102,7 +101,7 @@ if(isset($_POST['Submit'])) {
 							overheadcost,
 							lowestlevel
 						FROM stockmaster
-						WHERE stockid='".$StockID."';";
+						WHERE stockid='" . $StockID . "';";
 			$result = DB_query($sql, $db);
 
 			$myrow = DB_fetch_row($result);
@@ -115,12 +114,12 @@ if(isset($_POST['Submit'])) {
 					labourcost      = " . $myrow[4] . ",
 					overheadcost    = " . $myrow[5] . ",
 					lowestlevel     = " . $myrow[6] . "
-					WHERE stockid='".$NewStockID."';";
+					WHERE stockid='" . $NewStockID . "';";
 			$result = DB_query($sql, $db);
 		}
 
 		$sql = "INSERT INTO bom
-					SELECT '".$NewStockID."' AS parent,
+					SELECT '" . $NewStockID . "' AS parent,
 							component,
 							workcentreadded,
 							loccode,
@@ -129,17 +128,17 @@ if(isset($_POST['Submit'])) {
 							quantity,
 							autoissue
 					FROM bom
-					WHERE parent='".$StockID."';";
+					WHERE parent='" . $StockID . "';";
 		$result = DB_query($sql, $db);
 
-		if($NewOrExisting == 'N') {
+		if ($NewOrExisting == 'N') {
 			$sql = "INSERT INTO locstock
-		      SELECT loccode,
-					'".$NewStockID."' AS stockid,
+			  SELECT loccode,
+					'" . $NewStockID . "' AS stockid,
 					0 AS quantity,
 					reorderlevel
 				FROM locstock
-				WHERE stockid='".$StockID."'";
+				WHERE stockid='" . $StockID . "'";
 
 			$result = DB_query($sql, $db);
 		}
@@ -148,15 +147,15 @@ if(isset($_POST['Submit'])) {
 
 		UpdateCost($db, $NewStockID);
 
-		header('Location: BOMs.php?Select='.$NewStockID);
+		header('Location: BOMs.php?Select=' . $NewStockID);
 		ob_end_flush();
 	} //end  if there is no input error
 } else {
 
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-    echo '<div>';
+	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT stockid,
@@ -170,8 +169,8 @@ if(isset($_POST['Submit'])) {
 			<tr>
 				<td>' . _('From Stock ID') . '</td>';
 	echo '<td><select name="StockID">';
-	while($myrow = DB_fetch_row($result)) {
-		echo '<option value="'.$myrow[0].'">'.$myrow[0].' -- '.$myrow[1].'</option>';
+	while ($myrow = DB_fetch_row($result)) {
+		echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
 	}
 	echo '</select></td>
 			</tr>';
@@ -188,17 +187,17 @@ if(isset($_POST['Submit'])) {
 
 	if (DB_num_rows($result) > 0) {
 		echo '<tr>
-				<td><input type="radio" name="NewOrExisting" value="E" />'._('To Existing Stock ID') . '</td><td>';
+				<td><input type="radio" name="NewOrExisting" value="E" />' . _('To Existing Stock ID') . '</td><td>';
 		echo '<select name="ExStockID">';
-		while($myrow = DB_fetch_row($result)) {
-			echo '<option value="'.$myrow[0].'">'.$myrow[0].' -- '.$myrow[1].'</option>';
+		while ($myrow = DB_fetch_row($result)) {
+			echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
 		}
 		echo '</select></td></tr>';
 	}
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-          </div>
-          </form>';
+		  </div>
+		  </form>';
 
 	include('includes/footer.inc');
 }

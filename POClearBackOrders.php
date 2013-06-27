@@ -1,7 +1,6 @@
 <?php
-/* $Id: Z_ClearPOBackOrders.php 4466 2011-01-13 09:33:59Z daintree $*/
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Clear purchase orders with quantity on back order');
 include('includes/header.inc');
 
@@ -15,7 +14,7 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 						AND supplierno>= '" . $_POST['FromSupplierNo'] . "'
 						AND supplierno <= '" . $_POST['ToSupplierNo'] . "'";
 	echo $SQL;
-	$result = DB_query($SQL,$db);
+	$result = DB_query($SQL, $db);
 
 }
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';

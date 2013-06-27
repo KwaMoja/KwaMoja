@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/session.inc');
 
@@ -7,24 +6,23 @@ $Title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') .
-	'" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection">
 	 <tr>
 		 <td>  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations";
 	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 	if (!isset($_POST['StockLocation'])) {
-		$_POST['StockLocation']='All';
+		$_POST['StockLocation'] = 'All';
 	}
 } else {
 	$sql = "SELECT locationname,
@@ -34,30 +32,30 @@ if ($_SESSION['RestrictLocations']==0) {
 					ON locations.loccode=www_users.defaultlocation
 				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 	if (!isset($_POST['StockLocation'])) {
-		$_POST['StockLocation']=$_SESSION['UserStockLocation'];
+		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 	}
 }
 
-$resultStkLocs = DB_query($sql,$db);
-while ($myrow=DB_fetch_array($resultStkLocs)){
-	if (isset($_POST['StockLocation']) and $_POST['StockLocation']!='All'){
-		if ($myrow['loccode'] == $_POST['StockLocation']){
-			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+$resultStkLocs = DB_query($sql, $db);
+while ($myrow = DB_fetch_array($resultStkLocs)) {
+	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
+		if ($myrow['loccode'] == $_POST['StockLocation']) {
+			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} else {
-		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
 
 echo '</select>';
 
-if (!isset($_POST['BeforeDate']) or !Is_Date($_POST['BeforeDate'])){
-   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+if (!isset($_POST['BeforeDate']) or !Is_Date($_POST['BeforeDate'])) {
+	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])){
-   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,Date('d'),Date('y')));
+if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])) {
+	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
 echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size="12" minlength="0" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
 echo ' ' . _('But after') . ': <input type="text" name="AfterDate" size="12" minlength="0" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
@@ -91,13 +89,13 @@ $sql = "SELECT stockmoves.stockid,
 			INNER JOIN systypes ON stockmoves.type=systypes.typeid
 			INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
 			WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
-			AND stockmoves.trandate >= '". $SQLAfterDate . "'
+			AND stockmoves.trandate >= '" . $SQLAfterDate . "'
 			AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
 			AND hidemovt=0
 			ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
-$MovtsResult = DB_query($sql, $db,$ErrMsg);
+$MovtsResult = DB_query($sql, $db, $ErrMsg);
 
 echo '<table cellpadding="5" cellspacing="4 "class="selection">';
 $tableheader = '<tr>
@@ -115,22 +113,22 @@ $tableheader = '<tr>
 echo $tableheader;
 
 $j = 1;
-$k=0; //row colour counter
+$k = 0; //row colour counter
 
-while ($myrow=DB_fetch_array($MovtsResult)) {
+while ($myrow = DB_fetch_array($MovtsResult)) {
 
-	if ($k==1){
+	if ($k == 1) {
 		echo '<tr class="OddTableRows">';
-		$k=0;
+		$k = 0;
 	} else {
 		echo '<tr class="EvenTableRows">';
-		$k=1;
+		$k = 1;
 	}
 
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 
-		printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
+	printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -140,25 +138,13 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>',
-				mb_strtoupper($myrow['stockid']),
-				mb_strtoupper($myrow['stockid']),
-				$myrow['typename'],
-				$myrow['transno'],
-				$DisplayTranDate,
-				$myrow['debtorno'],
-				locale_number_format($myrow['qty'],
-				$myrow['decimalplaces']),
-				$myrow['reference'],
-				locale_number_format($myrow['price'],$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($myrow['discountpercent']*100,2),
-				locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+				</tr>', mb_strtoupper($myrow['stockid']), mb_strtoupper($myrow['stockid']), $myrow['typename'], $myrow['transno'], $DisplayTranDate, $myrow['debtorno'], locale_number_format($myrow['qty'], $myrow['decimalplaces']), $myrow['reference'], locale_number_format($myrow['price'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['discountpercent'] * 100, 2), locale_number_format($myrow['newqoh'], $myrow['decimalplaces']));
 	$j++;
-	if ($j == 16){
-		$j=1;
+	if ($j == 16) {
+		$j = 1;
 		echo $tableheader;
 	}
-//end of page full new headings if
+	//end of page full new headings if
 }
 //end of while loop
 

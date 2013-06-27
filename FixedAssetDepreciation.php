@@ -1,5 +1,4 @@
 <?php
-/* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
 include('includes/session.inc');
 $Title = _('Depreciation Journal Entry');
@@ -286,7 +285,7 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false) {
 		</tr>
 		</table>
 		<br />
-        </div>
+		</div>
 		</form>';
 }
 include('includes/footer.inc');

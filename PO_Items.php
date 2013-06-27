@@ -1,7 +1,5 @@
 <?php
 
-/* $Id PO_Items.php 4183 2010-12-14 09:30:20Z daintree $ */
-
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -518,28 +516,7 @@ if (isset($_POST['EnterLine'])) {
 	if ($AllowUpdate == true) {
 		//adding the non-stock item
 
-		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1,
-													'',
-													0, /*Serialised */
-													0, /*Controlled */
-													filter_number_format($_POST['Qty']),
-													$_POST['ItemDescription'],
-													filter_number_format($_POST['Price']),
-													$_POST['SuppliersUnit'],
-													$_POST['GLCode'],
-													$_POST['ReqDelDate'],
-													'',
-													0,
-													'',
-													0,
-													0,
-													$GLAccountName,
-													2,
-													$_POST['SuppliersUnit'],
-													1,
-													1,
-													'',
-													$_POST['AssetID']);
+		$_SESSION['PO' . $identifier]->add_to_order($_SESSION['PO' . $identifier]->LinesOnOrder + 1, '', 0, /*Serialised */ 0, /*Controlled */ filter_number_format($_POST['Qty']), $_POST['ItemDescription'], filter_number_format($_POST['Price']), $_POST['SuppliersUnit'], $_POST['GLCode'], $_POST['ReqDelDate'], '', 0, '', 0, 0, $GLAccountName, 2, $_POST['SuppliersUnit'], 1, 1, '', $_POST['AssetID']);
 		include('includes/PO_UnsetFormVbls.php');
 	} //$AllowUpdate == true
 } //isset($_POST['EnterLine'])
@@ -649,8 +626,8 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 						}
 						$PurchPrice = ($PurchRow['price'] * (1 - $ItemDiscountPercent) - $ItemDiscountAmount) / $PurchRow['conversionfactor'];
 						$ConversionFactor = $PurchRow['conversionfactor'];
-						if ($PurchRow['suppliers_partno']!= $ItemCode){   //only show supplier's part code if not the same as our item code
-							$SupplierDescription = $PurchRow['suppliers_partno'] .' - ';
+						if ($PurchRow['suppliers_partno'] != $ItemCode) { //only show supplier's part code if not the same as our item code
+							$SupplierDescription = $PurchRow['suppliers_partno'] . ' - ';
 						} else {
 							$SupplierDescription = '';
 						}

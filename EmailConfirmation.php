@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -42,7 +40,7 @@ $headers .= 'MIME-Version: 1.0\n' . 'Content-Type: text/html; charset="utf-8"\n'
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT salesorders.debtorno,
 					salesorders.customerref,
 					salesorders.comments,

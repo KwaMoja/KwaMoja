@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 
@@ -302,7 +300,7 @@ if (isset($_POST['CommitBatch'])) {
 
 		echo '<br />Payment amount = ' . $_SESSION['PaymentDetail' . $identifier]->Amount;
 		echo '</div>
-              </form>';
+			  </form>';
 
 	} //(!isset($_POST['ChequePrinted'])) and (!isset($_POST['PaymentCancelled'])) and ($myrow[0] == 1)
 	else {
@@ -941,7 +939,7 @@ echo '<tr>
 	</tr>
 
 
-	        <td><input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" /></td>
+			<td><input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" /></td>
 
 
 	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update') . '" /></div></td>

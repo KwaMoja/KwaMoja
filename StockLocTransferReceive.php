@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -526,7 +525,7 @@ if (isset($_SESSION['Transfer'])) {
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";

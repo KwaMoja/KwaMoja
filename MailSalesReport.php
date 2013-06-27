@@ -1,17 +1,18 @@
 <?php
 
-/* $Id$*/
-/*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
+/* Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
+ *
+ * The intention is that this script is called from cron at intervals defined with a command like:
+ *
+ * /usr/bin/wget http://localhost/web-erp/MailSalesReport.php
+ *
+ * The configuration of this script requires the id of the sales analysis report to send
+ * and an array of the receipients
+ *
+ * The following three variables need to be modified for the report - the company database to use and the receipients
+ * The Sales report to send
+ */
 
-The intention is that this script is called from cron at intervals defined with a command like:
-
-/usr/bin/wget http://localhost/web-erp/MailSalesReport.php
-
-The configuration of this script requires the id of the sales analysis report to send
-and an array of the receipients */
-
-/*The following three variables need to be modified for the report - the company database to use and the receipients */
-/*The Sales report to send */
 $_GET['ReportID'] = 2;
 $AllowAnyone = true;
 include('includes/session.inc');
@@ -34,7 +35,7 @@ include('includes/htmlMimeMail.php');
 $mail = new htmlMimeMail();
 
 if ($Counter > 0) {
-	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file
+	$pdf->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
 	$pdf->__destruct();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
 	$mail->setText(_('Please find herewith sales report'));

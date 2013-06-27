@@ -1,14 +1,16 @@
 <?php
 
-/* $Id$ */
-
-/*
-This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
-*/
+/* This is where the delivery details are confirmed/entered/modified and
+ * the order committed to the database once the place order/modify order
+ * button is hit.
+ */
 
 include('includes/DefineCartClass.php');
 
-/* Session started in header.inc for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
+/* Session started in header.inc for password checking the session will
+ * contain the details of the order from the Cart class object. The details
+ * of the order come from SelectOrderItems.php
+ */
 
 include('includes/session.inc');
 $Title = _('Order Delivery Details');
@@ -553,7 +555,9 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder' 
 					include('includes/htmlMimeMail.php');
 					$mail = new htmlMimeMail();
 					$mail->setSubject($EmailSubject);
-					$result = SendmailBySmtp($mail, array($_SESSION['FactoryManagerEmail']));
+					$result = SendmailBySmtp($mail, array(
+						$_SESSION['FactoryManagerEmail']
+					));
 				}
 
 			} //end if with this sales order there is a shortfall of stock - need to create the WO
@@ -867,10 +871,10 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 
 	foreach ($_SESSION['Items' . $identifier]->LineItems as $StockItem) {
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
-		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
+		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($StockItem->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
+		$DisplayQuantity = locale_number_format($StockItem->Quantity, $StockItem->DecimalPlaces);
+		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100), 2);
 
 
 		if ($k == 1) {
@@ -903,8 +907,8 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 		</tr>
 		</table>';
 
-	$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
-	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
+	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume, 2);
+	$DisplayWeight = locale_number_format($_SESSION['Items' . $identifier]->totalWeight, 2);
 	echo '<br />
 		<table>
 		<tr class="EvenTableRows">
@@ -935,9 +939,9 @@ else {
 	$k = 0; // row colour counter
 	foreach ($_SESSION['Items' . $identifier]->LineItems as $StockItem) {
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
-		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
+		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
+		$DisplayPrice = locale_number_format($StockItem->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
+		$DisplayQuantity = locale_number_format($StockItem->Quantity, $StockItem->DecimalPlaces);
 
 		if ($k == 1) {
 			echo '<tr class="OddTableRows">';
@@ -960,10 +964,10 @@ else {
 
 	} //$_SESSION['Items' . $identifier]->LineItems as $StockItem
 
-	$DisplayTotal = locale_number_format($_SESSION['Items'.$identifier]->total,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+	$DisplayTotal = locale_number_format($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 
-	$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,2);
-	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
+	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume, 2);
+	$DisplayWeight = locale_number_format($_SESSION['Items' . $identifier]->totalWeight, 2);
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Total Weight') . ':</td>
@@ -992,7 +996,7 @@ if ($_SESSION['Items' . $identifier]->Location == '' or !isset($_SESSION['Items'
 
 $ErrMsg = _('The stock locations could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations";
@@ -1131,8 +1135,8 @@ else {
 echo '</select></td></tr>';
 if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip'] == 1) {
 	echo '<tr>
-                               <td>' . _('Reprint packing slip') . ':</td>
-                               <td><select name="ReprintPackingSlip">';
+							   <td>' . _('Reprint packing slip') . ':</td>
+							   <td><select name="ReprintPackingSlip">';
 	echo '<option value="0">' . _('Yes') . '</option>';
 	echo '<option selected="selected" value="1">' . _('No') . '</option>';
 	echo '</select> ' . _('Last printed') . ': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
@@ -1142,8 +1146,8 @@ else {
 }
 
 echo '<tr>
-                               <td>' . _('Charge Freight Cost inc tax') . ':</td>
-                               <td><input type="text" class="number" size="10" minlength="0" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
+							   <td>' . _('Charge Freight Cost inc tax') . ':</td>
+							   <td><input type="text" class="number" size="10" minlength="0" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
 
 if ($_SESSION['DoFreightCalc'] == true) {
 	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
@@ -1155,8 +1159,8 @@ if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['
 } //(!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['Items' . $identifier]->ShipVia)
 
 echo '<tr>
-                               <td>' . _('Freight/Shipper Method') . ':</td>
-                               <td><select name="ShipVia">';
+							   <td>' . _('Freight/Shipper Method') . ':</td>
+							   <td><select name="ShipVia">';
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
@@ -1175,7 +1179,7 @@ echo '</select></td></tr>';
 
 
 echo '<tr><td>' . _('Quotation Only') . ':</td>
-                               <td><select name="Quotation">';
+							   <td><select name="Quotation">';
 if ($_SESSION['Items' . $identifier]->Quotation == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -1199,7 +1203,7 @@ else {
 }
 
 echo '</div>
-      </div>
-      </form>';
+	  </div>
+	  </form>';
 include('includes/footer.inc');
 ?>

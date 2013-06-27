@@ -1,18 +1,16 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 $Title = _('Customer Login Configuration');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-include ('includes/LanguagesArray.php');
+include('includes/LanguagesArray.php');
 
 
-if (!isset($_SESSION['CustomerID'])){
+if (!isset($_SESSION['CustomerID'])) {
 	echo '<br />
 		<br />';
-	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
+	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>', 'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -20,17 +18,16 @@ if (!isset($_SESSION['CustomerID'])){
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
-$sql="SELECT name
+$sql = "SELECT name
 		FROM debtorsmaster
-		WHERE debtorno='".$_SESSION['CustomerID']."'";
+		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 
-$result=DB_query($sql, $db);
-$myrow=DB_fetch_array($result);
-$CustomerName=$myrow['name'];
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+$CustomerName = $myrow['name'];
 
 echo '<p class="page_title_text noPrint" >
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
-	'</p>
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . _(' has been selected') . '</p>
 	<br />';
 
 
@@ -43,26 +40,26 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (mb_strlen($_POST['UserID'])<4){
+	if (mb_strlen($_POST['UserID']) < 4) {
 		$InputError = 1;
-		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
-	} elseif (ContainsIllegalCharacters($_POST['UserID']) or mb_strstr($_POST['UserID'],' ')) {
+		prnMsg(_('The user ID entered must be at least 4 characters long'), 'error');
+	} elseif (ContainsIllegalCharacters($_POST['UserID']) or mb_strstr($_POST['UserID'], ' ')) {
 		$InputError = 1;
-		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
-	} elseif (mb_strlen($_POST['Password'])<5){
-		if (!$SelectedUser){
+		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'), 'error');
+	} elseif (mb_strlen($_POST['Password']) < 5) {
+		if (!$SelectedUser) {
 			$InputError = 1;
-			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+			prnMsg(_('The password entered must be at least 5 characters long'), 'error');
 		}
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
+	} elseif (mb_strstr($_POST['Password'], $_POST['UserID']) != false) {
 		$InputError = 1;
-		prnMsg(_('The password cannot contain the user id'),'error');
-	} elseif ((mb_strlen($_POST['Cust'])>0) and (mb_strlen($_POST['BranchCode'])==0)) {
+		prnMsg(_('The password cannot contain the user id'), 'error');
+	} elseif ((mb_strlen($_POST['Cust']) > 0) and (mb_strlen($_POST['BranchCode']) == 0)) {
 		$InputError = 1;
-		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
+		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'), 'error');
 	}
 
-	if ((mb_strlen($_POST['BranchCode'])>0) and ($InputError !=1)) {
+	if ((mb_strlen($_POST['BranchCode']) > 0) and ($InputError != 1)) {
 		// check that the entered branch is valid for the customer code
 		$sql = "SELECT defaultlocation
 				FROM custbranch
@@ -71,19 +68,19 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-		if (DB_num_rows($result)==0){
-			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'),'error');
+		if (DB_num_rows($result) == 0) {
+			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'), 'error');
 			$InputError = 1;
 		} else {
 			$myrow = DB_fetch_row($result);
 			$InventoryLocation = $myrow[0];
-	}
+		}
 
-	if ($InputError !=1) {
+		if ($InputError != 1) {
 
-		$sql = "INSERT INTO www_users (userid,
+			$sql = "INSERT INTO www_users (userid,
 										realname,
 										customerid,
 										branchcode,
@@ -98,24 +95,24 @@ if (isset($_POST['submit'])) {
 										theme,
 										language)
 									VALUES ('" . $_POST['UserID'] . "',
-											'" . $_POST['RealName'] ."',
-											'" . $_SESSION['CustomerID'] ."',
-											'" . $_POST['BranchCode'] ."',
-											'" . CryptPass($_POST['Password']) ."',
+											'" . $_POST['RealName'] . "',
+											'" . $_SESSION['CustomerID'] . "',
+											'" . $_POST['BranchCode'] . "',
+											'" . CryptPass($_POST['Password']) . "',
 											'" . $_POST['Phone'] . "',
-											'" . $_POST['Email'] ."',
-											'" . $_POST['PageSize'] ."',
+											'" . $_POST['Email'] . "',
+											'" . $_POST['PageSize'] . "',
 											'7',
-											'" . $InventoryLocation ."',
+											'" . $InventoryLocation . "',
 											'1,1,0,0,0,0,0,0',
 											'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 											'" . $_POST['Theme'] . "',
-											'". $_POST['UserLanguage'] ."')";
+											'" . $_POST['UserLanguage'] . "')";
 
 			$ErrMsg = _('The user could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-			prnMsg( _('A new customer login has been created'), 'success' );
+			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			prnMsg(_('A new customer login has been created'), 'success');
 			include('includes/footer.inc');
 			exit;
 		}
@@ -123,7 +120,7 @@ if (isset($_POST['submit'])) {
 
 }
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -134,16 +131,16 @@ echo '<table class="selection">
 		</tr>';
 
 if (!isset($_POST['Password'])) {
-	$_POST['Password']='';
+	$_POST['Password'] = '';
 }
 if (!isset($_POST['RealName'])) {
-	$_POST['RealName']='';
+	$_POST['RealName'] = '';
 }
 if (!isset($_POST['Phone'])) {
-	$_POST['Phone']='';
+	$_POST['Phone'] = '';
 }
 if (!isset($_POST['Email'])) {
-	$_POST['Email']='';
+	$_POST['Email'] = '';
 }
 
 echo '<tr>
@@ -159,73 +156,73 @@ echo '<tr>
 			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Email Address') .':</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] .'" size="32" minlength="0" maxlength="55" /></td>
+			<td>' . _('Email Address') . ':</td>
+			<td><input type="text" name="Email" value="' . $_POST['Email'] . '" size="32" minlength="0" maxlength="55" /></td>
 		</tr>
-        <tr>
+		<tr>
 		<td><input type="hidden" name="Access" value="1" />
 			' . _('Branch Code') . ':</td>
 			<td><select name="BranchCode">';
 
 $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-$result = DB_query($sql,$db);
+$result = DB_query($sql, $db);
 
-while ($myrow=DB_fetch_array($result)){
+while ($myrow = DB_fetch_array($result)) {
 
 	//Set the first available branch as default value when nothing is selected
 	if (!isset($_POST['BranchCode'])) {
-		$_POST['BranchCode']= $myrow['branchcode'];
+		$_POST['BranchCode'] = $myrow['branchcode'];
 	}
 
-	if (isset($_POST['BranchCode']) and $myrow['branchcode'] == $_POST['BranchCode']){
+	if (isset($_POST['BranchCode']) and $myrow['branchcode'] == $_POST['BranchCode']) {
 		echo '<option selected="selected" value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
 	} else {
 		echo '<option value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
-echo '<tr><td>' . _('Reports Page Size') .':</td>
+echo '<tr><td>' . _('Reports Page Size') . ':</td>
 	<td><select name="PageSize">';
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
-	echo '<option selected="selected" value="A4">' . _('A4') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
+	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
 } else {
 	echo '<option value="A4">' . _('A4') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
-	echo '<option selected="selected" value="A3">' . _('A3') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A3') {
+	echo '<option selected="selected" value="A3">' . _('A3') . '</option>';
 } else {
-	echo '<option value="A3">' . _('A3') .'</option>';
+	echo '<option value="A3">' . _('A3') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A3_landscape') {
+	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') .'</option>';
+	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
-	echo '<option selected="selected" value="letter">' . _('Letter') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'letter') {
+	echo '<option selected="selected" value="letter">' . _('Letter') . '</option>';
 } else {
-	echo '<option value="letter">' . _('Letter') .'</option>';
+	echo '<option value="letter">' . _('Letter') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
-	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'letter_landscape') {
+	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape') .'</option>';
+	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
-	echo '<option selected="selected" value="legal">' . _('Legal') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'legal') {
+	echo '<option selected="selected" value="legal">' . _('Legal') . '</option>';
 } else {
-	echo '<option value="legal">' . _('Legal') .'</option>';
+	echo '<option value="legal">' . _('Legal') . '</option>';
 }
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
-	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'legal_landscape') {
+	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') .'</option>';
+	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 }
 
 echo '</select></td>
@@ -236,16 +233,16 @@ echo '</select></td>
 
 $ThemeDirectory = dir('css/');
 
-while (false != ($ThemeName = $ThemeDirectory->read())){
+while (false != ($ThemeName = $ThemeDirectory->read())) {
 
-	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn'){
+	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn') {
 
-		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme']==$ThemeName)) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName .'</option>';
+		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName) {
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme'] == $ThemeName)) {
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName .'</option>';
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
 	}
 }
@@ -256,13 +253,13 @@ echo '</select></td>
 		<td>' . _('Language') . ':</td>
 		<td><select name="UserLanguage">';
 
-foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
-	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
+	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	} else {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	}
 }
 echo '</select></td>
@@ -272,7 +269,7 @@ echo '</select></td>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
+	</div>
 	</form>';
 
 if (isset($_GET['SelectedUser'])) {

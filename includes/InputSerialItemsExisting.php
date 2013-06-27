@@ -1,12 +1,19 @@
 <?php
 
-/* $Id$*/
+/* Input Serial Items - used for inputing serial numbers or batch/roll/bundle
+ * referencesfor controlled items - used in:
+ * - ConfirmDispatchControlledInvoice.php
+ * - GoodsReceivedControlled.php
+ * - StockAdjustments.php
+ * - StockTransfers.php
+ * - CreditItemsControlled.php
+ */
 
-/**
-If the User has selected Keyed Entry, show them this special select list...
-it is just in the way if they are doing file imports
-it also would not be applicable in a PO and possible other situations...
-**/
+/* If the User has selected Keyed Entry, show them this special select list...
+ * it is just in the way if they are doing file imports it also would not
+ * be applicable in a PO and possible other situations...
+ */
+
 if ($_POST['EntryType'] == 'KEYED'){
         /*Also a multi select box for adding bundles to the dispatch without keying */
      $sql = "SELECT serialno, quantity

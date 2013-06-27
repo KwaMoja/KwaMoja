@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: GLTransInquiry.php 6025 2013-06-16 03:14:24Z daintree $*/
-
 include('includes/session.inc');
 $Title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
@@ -149,7 +147,7 @@ if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) {
 							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						} else {
-							$Debit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Debit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						}
 					} else {
@@ -157,7 +155,7 @@ if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) {
 							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						} else {
-							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'],$_SESSION['CompanyRecord']['decimalplaces']);
+							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
 					}
@@ -171,7 +169,7 @@ if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) {
 					}
 					echo '<td>' . $TranDate . '</td>
 								<td>' . MonthAndYearFromSQLDate($TransRow['lastdate_in_period']) . '</td>
-								<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' . $TransRow['accountname']  . ' - ' . $DetailRow['otherparty'] . '</a></td>
+								<td><a href="' . $URL . $DetailRow['otherpartycode'] . $FromDate . '">' . $TransRow['accountname'] . ' - ' . $DetailRow['otherparty'] . '</a></td>
 								<td class="number">' . $Debit . '</td>
 								<td class="number">' . $Credit . '</td>
 								<td>' . $TransRow['narrative'] . '</td>

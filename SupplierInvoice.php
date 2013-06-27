@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: SupplierInvoice.php 5753 2012-12-08 01:41:35Z daintree $ */
-
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
 Also an array of GLCodes objects - only used if the AP - GL link is effective
@@ -39,7 +37,7 @@ else {
 }
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Supplier Invoice') . '" alt="" />
-     ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
+	 ' . ' ' . _('Enter Supplier Invoice:') . ' ' . $SupplierName;
 echo '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID'] != '') {
 	/*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
@@ -948,7 +946,7 @@ if (!isset($_POST['PostInvoice'])) {
 			</div>';
 
 	echo '</div>
-          </form>';
+		  </form>';
 } //!isset($_POST['PostInvoice'])
 else { // $_POST['PostInvoice'] is set so do the postings -and dont show the button to process
 

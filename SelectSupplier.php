@@ -1,25 +1,24 @@
 <?php
-/* $Id$*/
 
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('Search Suppliers');
 
 /* KwaMoja manual links before header.inc */
-$ViewTopic= 'AccountsPayable';
+$ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
 
-include ('includes/header.inc');
-include ('includes/SQL_CommonFunctions.inc');
+include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 if (!isset($_SESSION['SupplierID'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
 }
 if (isset($_GET['SupplierID'])) {
-	$_SESSION['SupplierID']=$_GET['SupplierID'];
+	$_SESSION['SupplierID'] = $_GET['SupplierID'];
 }
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 and isset($_SESSION['SupplierID'])) {
 	$sql = "SELECT * FROM geocode_param WHERE 1";
-	$ErrMsg = _('An error occurred in retrieving the information');;
+	$ErrMsg = _('An error occurred in retrieving the information');
 	$result = DB_query($sql, $db, $ErrMsg);
 	$myrow = DB_fetch_array($result);
 	$sql = "SELECT suppliers.supplierid,
@@ -67,7 +66,8 @@ if (!isset($_POST['PageOffset'])) {
 		$_POST['PageOffset'] = 1;
 	}
 }
-if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
+if (isset($_POST['Select'])) {
+	/*User has hit the button selecting a supplier */
 	$_SESSION['SupplierID'] = $_POST['Select'];
 	unset($_POST['Select']);
 	unset($_POST['Keywords']);
@@ -77,13 +77,10 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Next']);
 	unset($_POST['Previous']);
 }
-if (isset($_POST['Search'])
-	OR isset($_POST['Go'])
-	OR isset($_POST['Next'])
-	OR isset($_POST['Previous'])) {
+if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 
 	if (mb_strlen($_POST['Keywords']) > 0 and mb_strlen($_POST['SupplierCode']) > 0) {
-		prnMsg( _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
+		prnMsg(_('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info');
 	}
 	if ($_POST['Keywords'] == '' and $_POST['SupplierCode'] == '') {
 		$SQL = "SELECT supplierid,
@@ -135,7 +132,8 @@ if (isset($_POST['Search'])
 		$myrow = DB_fetch_row($result);
 		$SingleSupplierReturned = $myrow[0];
 	}
-	if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
+	if (isset($SingleSupplierReturned)) {
+		/*there was only one supplier returned */
 		$_SESSION['SupplierID'] = $SingleSupplierReturned;
 		unset($_POST['Keywords']);
 		unset($_POST['SupplierCode']);
@@ -163,7 +161,8 @@ if (isset($_SESSION['SupplierID'])) {
 			<th style="width:33%">' . _('Supplier Transactions') . '</th>
 			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
 		</tr>';
-	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
+	echo '<tr><td valign="top" class="select">';
+	/* Inquiry Options */
 	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<br />';
@@ -171,17 +170,19 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('View All Purchase Orders') . '</a><br />';
 	wikiLink('Supplier', urlencode(stripslashes($_SESSION['SupplierID'])));
-	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('List all open shipments for') .' '.$SupplierName. '</a>';
+	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('List all open shipments for') . ' ' . $SupplierName . '</a>';
 	echo '<br /><a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Search / Modify / Close Shipments') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Supplier Price List') . '</a>';
-	echo '</td><td valign="top" class="select">'; /* Supplier Transactions */
+	echo '</td><td valign="top" class="select">';
+	/* Supplier Transactions */
 	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Purchase Order for This Supplier') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SupplierInvoice.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Suppliers Invoice') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Suppliers Credit Note') . '</a><br />';
 	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
 	echo '<br />';
 	echo '<br /><a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
-	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
+	echo '</td><td valign="top" class="select">';
+	/* Supplier Maintenance */
 	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a>
 		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Modify Or Delete Supplier Details') . '</a>
 		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Add/Modify/Delete Supplier Contacts') . '</a>
@@ -203,13 +204,14 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<tr>
 			<td valign="top" class="select"></td>
 			<td valign="top" class="select"></td>
-			<td valign="top" class="select">'; /* Supplier Maintenance */
+			<td valign="top" class="select">';
+	/* Supplier Maintenance */
 	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
 	echo '</td>
 		</tr>
 		</table>';
 }
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
@@ -297,15 +299,15 @@ if (isset($_POST['Search'])) {
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
-		echo '<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
-				<td>'.$myrow['suppname'].'</td>
-				<td>'.$myrow['currcode'].'</td>
-				<td>'.$myrow['address1'].'</td>
-				<td>'.$myrow['address2'].'</td>
-				<td>'.$myrow['address3'].'</td>
-				<td>'.$myrow['address4'].'</td>
-				<td>'.$myrow['telephone'].'</td>
-				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
+		echo '<td><input type="submit" name="Select" value="' . $myrow['supplierid'] . '" /></td>
+				<td>' . $myrow['suppname'] . '</td>
+				<td>' . $myrow['currcode'] . '</td>
+				<td>' . $myrow['address1'] . '</td>
+				<td>' . $myrow['address2'] . '</td>
+				<td>' . $myrow['address3'] . '</td>
+				<td>' . $myrow['address4'] . '</td>
+				<td>' . $myrow['telephone'] . '</td>
+				<td><a href="mailto://' . $myrow['email'] . '">' . $myrow['email'] . '</a></td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
 		//end of page full new headings if
@@ -333,7 +335,7 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 	echo '<br />';
 }
 echo '</div>
-      </form>';
+	  </form>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
@@ -345,7 +347,8 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<tr><td colspan="2">';
 			echo '<table width="45%" class="selection">';
 			echo '<tr><th style="width:33%">' . _('Supplier Mapping') . '</th></tr>';
-			echo '</td><td valign="top">'; /* Mapping */
+			echo '</td><td valign="top">';
+			/* Mapping */
 			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></div><br />';
 			echo '</th></tr></table>';
@@ -372,7 +375,8 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<br />';
 			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
-			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
+			echo '<tr><td valign="top" class="select">';
+			/* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($myrow['lastpaiddate'] == 0) {
 				echo _('No payments yet to this supplier.') . '</td>
@@ -384,14 +388,14 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					</tr>';
 			}
 			echo '<tr>
-					<td valign="top" class="select">'._('Last Paid Amount:') . '</td>
+					<td valign="top" class="select">' . _('Last Paid Amount:') . '</td>
 					<td valign="top" class="select">  <b>' . locale_number_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td></tr>';
 			echo '<tr>
-					<td valign="top" class="select">'._('Supplier since:') . '</td>
+					<td valign="top" class="select">' . _('Supplier since:') . '</td>
 					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td>
 					</tr>';
 			echo '<tr>
-					<td valign="top" class="select">'._('Total Spend with this Supplier:') . '</td>
+					<td valign="top" class="select">' . _('Total Spend with this Supplier:') . '</td>
 					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';
@@ -399,5 +403,5 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	}
 }
 echo '<script  type="text/javascript">defaultControl(document.forms[0].SupplierCode);</script>';
-include ('includes/footer.inc');
+include('includes/footer.inc');
 ?>

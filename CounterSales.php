@@ -1,5 +1,4 @@
 <?php
-/* $Id: CounterSales.php 4469 2011-01-15 02:28:37Z daintree $*/
 
 include('includes/DefineCartClass.php');
 
@@ -145,14 +144,14 @@ if (!isset($_SESSION['Items' . $identifier])) {
 			/* now get the branch defaults from the customer branches table CustBranch. */
 
 			$sql = "SELECT custbranch.brname,
-				       custbranch.braddress1,
-				       custbranch.defaultshipvia,
-				       custbranch.deliverblind,
-				       custbranch.specialinstructions,
-				       custbranch.estdeliverydays,
-				       custbranch.salesman,
-				       custbranch.taxgroupid,
-				       custbranch.defaultshipvia
+					   custbranch.braddress1,
+					   custbranch.defaultshipvia,
+					   custbranch.deliverblind,
+					   custbranch.specialinstructions,
+					   custbranch.estdeliverydays,
+					   custbranch.salesman,
+					   custbranch.taxgroupid,
+					   custbranch.defaultshipvia
 				FROM custbranch
 				WHERE custbranch.branchcode='" . $_SESSION['Items' . $identifier]->Branch . "'
 				AND custbranch.debtorno = '" . $_SESSION['Items' . $identifier]->DebtorNo . "'
@@ -664,8 +663,8 @@ if (isset($NewItemArray) and isset($_POST['SelectingOrderItems'])) {
 				if ($myrow['mbflag'] == 'K') {
 					/*It is a kit set item */
 					$sql = "SELECT bom.component,
-	        					bom.quantity
-		          			FROM bom
+								bom.quantity
+				  			FROM bom
 							WHERE bom.parent='" . $NewItem . "'
 							AND bom.effectiveto > '" . Date('Y-m-d') . "'
 							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
@@ -749,19 +748,19 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		<table width="90%" cellpadding="2">
 		<tr style="background-color:#800000">';
 	echo '<th>' . _('Item Code') . '</th>
-   	      <th>' . _('Item Description') . '</th>
-	      <th>' . _('Quantity') . '</th>
-	      <th>' . _('QOH') . '</th>
-	      <th>' . _('Unit') . '</th>
-	      <th>' . _('Price') . '</th>';
+   		  <th>' . _('Item Description') . '</th>
+		  <th>' . _('Quantity') . '</th>
+		  <th>' . _('QOH') . '</th>
+		  <th>' . _('Unit') . '</th>
+		  <th>' . _('Price') . '</th>';
 	if (in_array(1000, $_SESSION['AllowedPageSecurityTokens'])) {
 		echo '<th>' . _('Discount') . '</th>
 			  <th>' . _('GP %') . '</th>';
 	}
 	echo '<th>' . _('Net') . '</th>
-	      <th>' . _('Tax') . '</th>
-	      <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
-	      </tr>';
+		  <th>' . _('Tax') . '</th>
+		  <th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+		  </tr>';
 
 	$_SESSION['Items' . $identifier]->total = 0;
 	$_SESSION['Items' . $identifier]->totalVolume = 0;
@@ -1105,7 +1104,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 
 		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
-		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
+		$InsertQryResult = DB_query($HeaderSQL, $db, $ErrMsg, $DbgMsg, true);
 
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderlineno,
 																orderno,
@@ -1353,7 +1352,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != '') {
 				'" . $_SESSION['Items' . $identifier]->ShipVia . "',
 				'" . ($_SESSION['Items' . $identifier]->total + filter_number_format($_POST['TaxTotal'])) . "',
 				'1',
-				'" . $_SESSION['Items'.$identifier]->SalesPerson . "')";
+				'" . $_SESSION['Items' . $identifier]->SalesPerson . "')";
 
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');

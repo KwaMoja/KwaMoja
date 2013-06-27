@@ -1,5 +1,5 @@
 <?php
-$CountriesArray =  array();
+$CountriesArray = array();
 
 $CountriesArray[] = '';
 $CountriesArray['AD'] = _('Andorra');

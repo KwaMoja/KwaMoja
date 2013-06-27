@@ -1,18 +1,17 @@
 <?php
 
-/* $Id$*/
-/*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
-
-The intention is that this script is called from cron at intervals defined with a command like:
-
-/usr/bin/wget http://localhost/web-erp/MailSalesReport.php
-
-The configuration of this script requires the id of the sales analysis report to send
-and an array of the receipients and the company database to use*/
+/* Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
+ *
+ * The intention is that this script is called from cron at intervals defined with a command like:
+ *
+ * /usr/bin/wget http://localhost/web-erp/MailSalesReport.php
+ *
+ * The configuration of this script requires the id of the sales analysis report to send
+ * and an array of the receipients and the company database to use
+ */
 
 /*The Sales report to send */
 $ReportID = 4;
-
 
 /* ----------------------------------------------------------------------------------------------*/
 

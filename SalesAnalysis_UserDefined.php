@@ -1,22 +1,19 @@
 <?php
 
-/* $Id$ */
-
-
 include('includes/session.inc');
 
-if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
+if (!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
 	echo '<html><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . _('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
 	exit;
 }
 
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 
-if (isset($_GET['ProducePDF'])){
+if (isset($_GET['ProducePDF'])) {
 
-	include ('includes/PDFSalesAnalysis.inc');
+	include('includes/PDFSalesAnalysis.inc');
 
-	if ($Counter >0) {
+	if ($Counter > 0) {
 		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
 		$pdf->__destruct();
 	} else {
@@ -29,21 +26,22 @@ if (isset($_GET['ProducePDF'])){
 		include('includes/footer.inc');
 		exit;
 	}
-} /* end if we wanted a PDF file */
+}
+/* end if we wanted a PDF file */
 
 
 
-if ($_GET['ProduceCVSFile']==True){
+if ($_GET['ProduceCVSFile'] == True) {
 
 	include('includes/CSVSalesAnalysis.inc');
 
 	$Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.inc');
 
-	 echo 'http://' . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
-	 echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv">';
+	echo 'http://' . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">';
 
-	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') . '<br />';
-	 include('includes/footer.inc');
+	echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') . '<br />';
+	include('includes/footer.inc');
 }
 ?>

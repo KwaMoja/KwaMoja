@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -12,24 +10,24 @@ The reason that it is in this seperate file is because it is used within a loop 
 items into the cart as well as plain vanilla items outside of the kitset loop
 */
 
-$AlreadyOnThisOrder =0;
+$AlreadyOnThisOrder = 0;
 
-if (count($_SESSION['Items'.$identifier]->LineItems)>0
-	and $_SESSION['SO_AllowSameItemMultipleTimes']==0){
+if (count($_SESSION['Items' . $identifier]->LineItems) > 0 and $_SESSION['SO_AllowSameItemMultipleTimes'] == 0) {
 
-	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderItem) {
+	foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderItem) {
 
-	/* do a loop round the items on the order to see that the item
-	is not already on this order */
+		/* do a loop round the items on the order to see that the item
+		is not already on this order */
 
-		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
+		if (strcasecmp($OrderItem->StockID, $NewItem) == 0) {
 			$AlreadyOnThisOrder = 1;
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('is already on this order the system is set up to prevent the same item being on the order more than once. However you can change the quantity ordered of the existing line if necessary'));
-	   		}
-	} /* end of the foreach loop to look for preexisting items of the same code */
+		}
+	}
+	/* end of the foreach loop to look for preexisting items of the same code */
 }
 
-if ($AlreadyOnThisOrder!=1){
+if ($AlreadyOnThisOrder != 1) {
 
 	$sql = "SELECT stockmaster.description,
 				stockmaster.longdescription,
@@ -49,67 +47,60 @@ if ($AlreadyOnThisOrder!=1){
 				stockmaster.taxcatid
 			FROM stockmaster INNER JOIN locstock
 			ON stockmaster.stockid=locstock.stockid
-			WHERE locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
-			AND stockmaster.stockid = '". $NewItem . "'";
+			WHERE locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'
+			AND stockmaster.stockid = '" . $NewItem . "'";
 
 	$ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
-	$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result1 = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	if (DB_num_rows($result1)==0){
-		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
+	if (DB_num_rows($result1) == 0) {
+		prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('could not be found in the database') . ' - ' . _('it has not been added to the order'), 'warn', _('Item Does Not Exist'));
 
-	} elseif ($myItemRow = DB_fetch_array($result1)){
+	} elseif ($myItemRow = DB_fetch_array($result1)) {
 
-		if ($myItemRow['discontinued']==1){
-			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
+		if ($myItemRow['discontinued'] == 1) {
+			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'), 'error', _('Obsolete Item'));
 
-		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
-			and $myItemRow['standardcost']>0
-			and ($myItemRow['mbflag']=='B'
-			or $myItemRow['mbflag']=='M'))
-			or ($_SESSION['AllowSalesOfZeroCostItems'] == false
-			and ($myItemRow['mbflag']=='A'
-			or $myItemRow['mbflag']=='D'
-			or $myItemRow['mbflag']=='K'))
-			or $_SESSION['AllowSalesOfZeroCostItems']==true) {
+		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false and $myItemRow['standardcost'] > 0 and ($myItemRow['mbflag'] == 'B' or $myItemRow['mbflag'] == 'M')) or ($_SESSION['AllowSalesOfZeroCostItems'] == false and ($myItemRow['mbflag'] == 'A' or $myItemRow['mbflag'] == 'D' or $myItemRow['mbflag'] == 'K')) or $_SESSION['AllowSalesOfZeroCostItems'] == true) {
 
-		/*these checks above ensure that the item has a cost if the
-		config.php variable AllowSalesOfZeroCostItems is set to false */
+			/*these checks above ensure that the item has a cost if the
+			config.php variable AllowSalesOfZeroCostItems is set to false */
 
-		   	if ($_SESSION['ExistingOrder' . $identifier]!=0){
+			if ($_SESSION['ExistingOrder' . $identifier] != 0) {
 				$UpdateDB = 'Yes';
-				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'",$db);
+				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM salesorderdetails WHERE orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'", $db);
 				$MaxNumRow = DB_fetch_row($result);
 				if ($MaxNumRow[0] != '' and $MaxNumRow[0] >= 0) {
-					$NewLineNo = $MaxNumRow[0]+1;
+					$NewLineNo = $MaxNumRow[0] + 1;
 				} else {
 					$NewLineNo = 0;
 				}
 			} else {
 				$UpdateDB = 'No';
-				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
+				$NewLineNo = -1;
+				/* this is ok b/c CartClass will change to the correct line no */
 			}
 
-			if (isset($StockItem) and $myItemRow['discountcategory'] != '' ){
-				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
-				$QuantityOfDiscCat =0;
+			if (isset($StockItem) and $myItemRow['discountcategory'] != '') {
+				$DiscCatsDone[$Counter] = $StockItem->DiscCat;
+				$QuantityOfDiscCat = 0;
 				$result = DB_query("SELECT MAX(discountrate) AS discount
 										FROM discountmatrix
-										WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
+										WHERE salestype='" . $_SESSION['Items' . $identifier]->DefaultSalesType . "'
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
-										AND quantitybreak <" . $NewItemQty,$db);
+										AND quantitybreak <" . $NewItemQty, $db);
 				$DiscCatRow = DB_fetch_row($result);
 				if ($DiscCatRow[0] != '' and $DiscCatRow[0] > 0) {
 					$Discount = $DiscCatRow[0];
 				} else {
 					$Discount = 0;
 				}
-			} elseif (!isset($Discount)){
+			} elseif (!isset($Discount)) {
 				$Discount = 0;
 			}
 
-			$Price = GetPrice($NewItem, $_SESSION['Items'.$identifier]->DebtorNo,$_SESSION['Items'.$identifier]->Branch, $db);
+			$Price = GetPrice($NewItem, $_SESSION['Items' . $identifier]->DebtorNo, $_SESSION['Items' . $identifier]->Branch, $db);
 
 			/* Need to check for sell through support deals */
 
@@ -120,20 +111,20 @@ if ($AlreadyOnThisOrder!=1){
 					INNER JOIN currencies
 						ON currencies.currabrev=suppliers.currcode
 					WHERE stockid='" . $NewItem . "'
-					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+					AND (debtorno='" . $_SESSION['Items' . $identifier]->DebtorNo . "'
 						OR debtorno='')
 					AND effectivefrom <='" . Date('Y-m-d') . "'
 					AND effectiveto >='" . Date('Y-m-d') . "'";
-			$SellSuppResult = DB_query($sql,$db);
+			$SellSuppResult = DB_query($sql, $db);
 			$SellSupportDiscount = 0;
 			$SellSupportPercent = 0;
 			/*Only the highest discount is taken - it is not accumulated ? */
-			if (DB_num_rows($SellSuppResult) > 0){
-				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
-					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+			if (DB_num_rows($SellSuppResult) > 0) {
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)) {
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent) {
 						$SellSupportPercent = $SellSupportRow['rebatepercent'];
 					}
-					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount){
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportAmount) {
 						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
 					}
 				}
@@ -150,92 +141,65 @@ if ($AlreadyOnThisOrder!=1){
 					INNER JOIN currencies
 					ON currencies.currabrev=suppliers.currcode
 					WHERE stockmaster.stockid='" . $NewItem . "'
-					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
+					AND (debtorno='" . $_SESSION['Items' . $identifier]->DebtorNo . "'
 						OR debtorno='')
 					AND effectivefrom <='" . Date('Y-m-d') . "'
 					AND effectiveto >='" . Date('Y-m-d') . "'";
-			$SellSuppResult = DB_query($sql,$db);
+			$SellSuppResult = DB_query($sql, $db);
 			/*Only the highest discount is taken - it is not accumulated ? */
-			if (DB_num_rows($SellSuppResult) > 0){
-				while ($SellSupportRow = DB_fetch_array($SellSuppResult)){
-					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent){
+			if (DB_num_rows($SellSuppResult) > 0) {
+				while ($SellSupportRow = DB_fetch_array($SellSuppResult)) {
+					if ($SellSupportRow['rebatepercent'] > $SellSupportPercent) {
 						$SellSupportPercent = $SellSupportRow['rebatepercent'];
 					}
-					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportDiscount){
+					if ($SellSupportRow['rebateinfunctionalcurrency'] > $SellSupportDiscount) {
 						$SellSupportDiscount = $SellSupportRow['rebateinfunctionalcurrency'];
 					}
 				}
 			}
-			if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault'] and $SellSupportDiscount != 0) {
+			if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault'] and $SellSupportDiscount != 0) {
 				/* Customer currency is not the same as the functional/home currency so need to convert the rebate amount */
 				/* Would be better to have the currency rate held in the cart object so only have to run this query once - this is a hack for this purpose! */
-				$CurrResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items'.$identifier]->DefaultCurrency . "'",$db);
+				$CurrResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['Items' . $identifier]->DefaultCurrency . "'", $db);
 				$CurrRow = DB_fetch_array($CurrResult);
 				$SellSupportDiscount *= $CurrRow['rate'];
 			}
 			/*Convert the Sell through support discount to a percentage and add it to the $SellSupportPercent */
-			if ($Price > 0){
-				$SellSupportPercent += ($SellSupportDiscount/$Price);
+			if ($Price > 0) {
+				$SellSupportPercent += ($SellSupportDiscount / $Price);
 			}
-			if ($SellSupportPercent >0){
+			if ($SellSupportPercent > 0) {
 				$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
-				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent * 100, 2), 'info');
 			}
 
 			$WithinCreditLimit = true;
 
-			if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
-			  	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
+			if ($_SESSION['Items' . $identifier]->SpecialInstructions) {
+				prnMsg($_SESSION['Items' . $identifier]->SpecialInstructions, 'warn');
 			}
-			if ($_SESSION['CheckCreditLimits'] > 0 and $AlreadyWarnedAboutCredit==false){
+			if ($_SESSION['CheckCreditLimits'] > 0 and $AlreadyWarnedAboutCredit == false) {
 				/*Check credit limits is 1 for warn	and 2 for prohibit sales */
-				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
+				$_SESSION['Items' . $identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1 - $Discount)), $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 
-				if ($_SESSION['CheckCreditLimits']==1 and $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					prnMsg(_('The customer account will breach their credit limit'),'warn');
+				if ($_SESSION['CheckCreditLimits'] == 1 and $_SESSION['Items' . $identifier]->CreditAvailable <= 0) {
+					prnMsg(_('The customer account will breach their credit limit'), 'warn');
 					$AlreadyWarnedAboutCredit = true;
-				} elseif ($_SESSION['CheckCreditLimits']==2 and $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
+				} elseif ($_SESSION['CheckCreditLimits'] == 2 and $_SESSION['Items' . $identifier]->CreditAvailable <= 0) {
+					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'), 'warn');
 					$WithinCreditLimit = false;
 					$AlreadyWarnedAboutCredit = true;
 				}
 			}
 
-			if ($WithinCreditLimit == true){
-				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
-															$NewItemQty,
-															$myItemRow['description'],
-															$myItemRow['longdescription'],
-															$Price,
-															$Discount,
-															$myItemRow['units'],
-															$myItemRow['volume'],
-															$myItemRow['kgs'],
-															$myItemRow['quantity'],
-															$myItemRow['mbflag'],
-															NULL, /*Actual Dispatch Date */
-															0, /*Qty Invoiced */
-															$myItemRow['discountcategory'],
-															0, /*Controlled - dont care */
-															$myItemRow['serialised'], /* need to know for autocreation wos */
-															$myItemRow['decimalplaces'],
-															'', /*Narrative - none yet */
-															$UpdateDB,
-															$NewLineNo,
-															$myItemRow['taxcatid'],
-															'',
-															$NewItemDue,
-															$NewPOLine,
-															$myItemRow['standardcost'],
-															$myItemRow['eoq'],
-															$myItemRow['nextserialno'],
-															$ExRate,
-															$identifier);
+			if ($WithinCreditLimit == true) {
+				$_SESSION['Items' . $identifier]->add_to_cart($NewItem, $NewItemQty, $myItemRow['description'], $myItemRow['longdescription'], $Price, $Discount, $myItemRow['units'], $myItemRow['volume'], $myItemRow['kgs'], $myItemRow['quantity'], $myItemRow['mbflag'], NULL, /*Actual Dispatch Date */ 0, /*Qty Invoiced */ $myItemRow['discountcategory'], 0, /*Controlled - dont care */ $myItemRow['serialised'], /* need to know for autocreation wos */ $myItemRow['decimalplaces'], '', /*Narrative - none yet */ $UpdateDB, $NewLineNo, $myItemRow['taxcatid'], '', $NewItemDue, $NewPOLine, $myItemRow['standardcost'], $myItemRow['eoq'], $myItemRow['nextserialno'], $ExRate, $identifier);
 
 			}
-		 } else {
-			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
-		 }
+		} else {
+			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'), 'warn');
+		}
 	}
-} /* end of if not already on the order */
+}
+/* end of if not already on the order */
 ?>

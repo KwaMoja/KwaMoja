@@ -1,7 +1,6 @@
 <?php
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
-/* $Id$*/
 
 if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	global $db; // It is global, we may not be.

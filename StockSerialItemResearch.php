@@ -9,7 +9,6 @@ echo '<p class="page_title_text noPrint" >
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	  </p>';
 
-
 //validate the submission
 if (isset($_POST['serialno'])) {
 	$SerialNo = trim($_POST['serialno']);
@@ -18,8 +17,6 @@ if (isset($_POST['serialno'])) {
 } else {
 	$SerialNo = '';
 }
-
-
 
 echo '<div class="centre">
 <br />
@@ -35,7 +32,6 @@ echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" si
 echo '<script  type="text/javascript">
 		document.getElementById("serialno").focus();
 	</script>';
-
 
 if ($SerialNo!='') {
 	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server

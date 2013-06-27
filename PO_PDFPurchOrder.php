@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: PO_PDFPurchOrder.php 5752 2012-12-05 08:39:15Z daintree $*/
-
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
@@ -221,7 +219,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				FROM purchorderdetails LEFT JOIN stockmaster
 					ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE orderno ='" . $OrderNo . "'
-				ORDER BY itemcode";     /*- ADDED: Sort by our item code -*/
+				ORDER BY itemcode";
+		/*- ADDED: Sort by our item code -*/
 		$result = DB_query($sql, $db);
 	} //$OrderNo != 'Preview'
 	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {

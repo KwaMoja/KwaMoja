@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.inc');
@@ -7,55 +7,54 @@ $Title = _('MRP Create Demands');
 include('includes/header.inc');
 
 if (isset($_POST['submit'])) {
-   // Create mrpdemands based on sales order history
+	// Create mrpdemands based on sales order history
 
-	$InputError=0;
+	$InputError = 0;
 
-	if (isset($_POST['FromDate']) and !Is_Date($_POST['FromDate'])){
+	if (isset($_POST['FromDate']) and !Is_Date($_POST['FromDate'])) {
 		$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
-		$InputError=1;
+		$InputError = 1;
 		unset($_POST['FromDate']);
 	}
-	if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
+	if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])) {
 		$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
-		$InputError=1;
+		$InputError = 1;
 		unset($_POST['ToDate']);
 	}
-	if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and
-		 Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])){
-			$msg = _('The date to must be after the date from');
-			$InputError=1;
-			unset($_POST['ToDate']);
-			unset($_POST['FromoDate']);
+	if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])) {
+		$msg = _('The date to must be after the date from');
+		$InputError = 1;
+		unset($_POST['ToDate']);
+		unset($_POST['FromoDate']);
 	}
-	if (isset($_POST['DistDate']) and !Is_Date($_POST['DistDate'])){
-		$msg = _('The distribution start date must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
-		$InputError=1;
+	if (isset($_POST['DistDate']) and !Is_Date($_POST['DistDate'])) {
+		$msg = _('The distribution start date must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$InputError = 1;
 		unset($_POST['DistDate']);
 	}
-	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))){
+	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))) {
 		$msg = _('The quantity below which no demand will be created must be numeric');
-		$InputError=1;
+		$InputError = 1;
 	}
-	if (!is_numeric(filter_number_format($_POST['Multiplier']))){
+	if (!is_numeric(filter_number_format($_POST['Multiplier']))) {
 		$msg = _('The multiplier is expected to be a positive number');
-		$InputError=1;
+		$InputError = 1;
 	}
 
-	if ($InputError==1){
-		prnMsg($msg,'error');
+	if ($InputError == 1) {
+		prnMsg($msg, 'error');
 	}
 
 	$WhereCategory = " ";
-	if ($_POST['CategoryID']!='All') {
+	if ($_POST['CategoryID'] != 'All') {
 		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['CategoryID'] . "' ";
 	}
 	$WhereLocation = " ";
-	if ($_POST['Location']!='All') {
+	if ($_POST['Location'] != 'All') {
 		$WhereLocation = " AND salesorders.fromstkloc ='" . $_POST['Location'] . "' ";
 	}
 
-	$sql= "SELECT salesorderdetails.stkcode,
+	$sql = "SELECT salesorderdetails.stkcode,
 				  SUM(salesorderdetails.quantity) AS totqty,
 				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced,
 				  SUM(salesorderdetails.quantity * salesorderdetails.unitprice ) AS totextqty
@@ -63,14 +62,14 @@ if (isset($_POST['submit'])) {
 				 ON salesorders.orderno = salesorderdetails.orderno
 			INNER JOIN stockmaster
 				 ON salesorderdetails.stkcode = stockmaster.stockid
-			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) ."'
-			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) .  "'
+			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
 			" . $WhereLocation . "
 			" . $WhereCategory . "
 			AND salesorders.quotation=0
 			GROUP BY salesorderdetails.stkcode";
 	//echo "<br />$sql<br />";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 	// To get the quantity per period, get the whole number amount of the total quantity divided
 	// by the number of periods and also get the remainder from that calculation. Put the whole
 	// number quantity into each entry of the periodqty array, and add 1 to the periodqty array
@@ -97,12 +96,12 @@ if (isset($_POST['submit'])) {
 
 	// Create array of dates based on DistDate and adding either weeks or months
 	$FormatedDistdate = FormatDateForSQL($_POST['DistDate']);
-	if (mb_strpos($FormatedDistdate,"/")) {
-		list($yyyy,$mm,$dd) = explode("/",$FormatedDistdate);
-	} else if (mb_strpos($FormatedDistdate,"-")) {
-		list($yyyy,$mm,$dd) = explode("-",$FormatedDistdate);
-	} else if (mb_strpos($FormatedDistdate,".")) {
-		list($yyyy,$mm,$dd) = explode(".",$FormatedDistdate);
+	if (mb_strpos($FormatedDistdate, "/")) {
+		list($yyyy, $mm, $dd) = explode("/", $FormatedDistdate);
+	} else if (mb_strpos($FormatedDistdate, "-")) {
+		list($yyyy, $mm, $dd) = explode("-", $FormatedDistdate);
+	} else if (mb_strpos($FormatedDistdate, ".")) {
+		list($yyyy, $mm, $dd) = explode(".", $FormatedDistdate);
 	}
 
 	$datearray[0] = $FormatedDistdate;
@@ -111,24 +110,24 @@ if (isset($_POST['submit'])) {
 					  FROM mrpcalendar
 						LEFT JOIN mrpcalendar as cal2
 						  ON mrpcalendar.daynumber = cal2.daynumber
-					  WHERE mrpcalendar.calendardate = '".$datearray[0]."'
+					  WHERE mrpcalendar.calendardate = '" . $datearray[0] . "'
 						AND cal2.manufacturingflag='1'
 						GROUP BY cal2.calendardate";
-	$resultdate = DB_query($calendarsql,$db);
-	$myrowdate=DB_fetch_array($resultdate);
+	$resultdate = DB_query($calendarsql, $db);
+	$myrowdate = DB_fetch_array($resultdate);
 	// If find date based on manufacturing calendar, change date in array
-	if ($myrowdate[0] != 0){
+	if ($myrowdate[0] != 0) {
 		$datearray[0] = $myrowdate[1];
 	}
 
-	$date = date('Y-m-d',mktime(0,0,0,$mm,$dd,$yyyy));
-	for ($i = 1; $i <= ( $_POST['PeriodNumber'] - 1); $i++) {
+	$date = date('Y-m-d', mktime(0, 0, 0, $mm, $dd, $yyyy));
+	for ($i = 1; $i <= ($_POST['PeriodNumber'] - 1); $i++) {
 		if ($_POST['Period'] == 'weekly') {
 			$date = strtotime(date('Y-m-d', strtotime($date)) . ' + 1 week');
 		} else {
 			$date = strtotime(date('Y-m-d', strtotime($date)) . ' + 1 month');
 		}
-		$datearray[$i] = date('Y-m-d',$date);
+		$datearray[$i] = date('Y-m-d', $date);
 		// Following sql finds daynumber for the calculated date and finds
 		// a valid manufacturing date for the daynumber. There is only one valid manufacturing date
 		// for each daynumber, but there could be several non-manufacturing dates for the
@@ -137,16 +136,16 @@ if (isset($_POST['submit'])) {
 						  FROM mrpcalendar
 							LEFT JOIN mrpcalendar as cal2
 							  ON mrpcalendar.daynumber = cal2.daynumber
-						  WHERE mrpcalendar.calendardate = '".$datearray[$i]."'
+						  WHERE mrpcalendar.calendardate = '" . $datearray[$i] . "'
 							AND cal2.manufacturingflag='1'
 							GROUP BY cal2.calendardate";
-		$resultdate = DB_query($calendarsql,$db);
-		$myrowdate=DB_fetch_array($resultdate);
+		$resultdate = DB_query($calendarsql, $db);
+		$myrowdate = DB_fetch_array($resultdate);
 		// If find date based on manufacturing calendar, change date in array
-		if ($myrowdate[0] != 0){
+		if ($myrowdate[0] != 0) {
 			$datearray[$i] = $myrowdate[1];
 		}
-		$date = date('Y-m-d',$date);
+		$date = date('Y-m-d', $date);
 	}
 
 	$TotalRecords = 0;
@@ -170,7 +169,7 @@ if (isset($_POST['submit'])) {
 
 			$i = 0;
 			foreach ($PeriodQty as $demandqty) {
-					$sql = "INSERT INTO mrpdemands (stockid,
+				$sql = "INSERT INTO mrpdemands (stockid,
 									mrpdemandtype,
 									quantity,
 									duedate)
@@ -178,22 +177,21 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['MRPDemandtype'] . "',
 									'" . $demandqty . "',
 									'" . $datearray[$i] . "')";
-					$insertresult = DB_query($sql,$db);
-					$i++;
-					$TotalRecords++;
+				$insertresult = DB_query($sql, $db);
+				$i++;
+				$TotalRecords++;
 
 			} // end of foreach for INSERT
 		} // end of if that checks exludeqty, ExcludeAmount
 
 	} //end while loop
 
-	prnMsg( $TotalRecords . ' ' . _('records have been created'),'success');
+	prnMsg($TotalRecords . ' ' . _('records have been created'), 'success');
 
 } // end if submit has been pressed
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
-	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">
@@ -203,9 +201,9 @@ echo '<table class="selection">
 $sql = "SELECT mrpdemandtype,
 				description
 		FROM mrpdemandtypes";
-$result = DB_query($sql,$db);
+$result = DB_query($sql, $db);
 while ($myrow = DB_fetch_array($result)) {
-	 echo '<option value="' . $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' .$myrow['description'] . '</option>';
+	echo '<option value="' . $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' . $myrow['description'] . '</option>';
 } //end while loop
 echo '</select></td></tr>';
 echo '<tr><td>' . _('Inventory Category') . ':</td>
@@ -214,16 +212,16 @@ echo '<option selected="selected" value="All">' . _('All Stock Categories') . '<
 $sql = "SELECT categoryid,
 			   categorydescription
 		FROM stockcategory";
-$result = DB_query($sql,$db);
+$result = DB_query($sql, $db);
 while ($myrow = DB_fetch_array($result)) {
-	echo '<option value="'. $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' .$myrow['categorydescription'] . '</option>';
+	echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 } //end while loop
 echo '</select></td>
 		</tr>';
 echo '<tr><td>' . _('Inventory Location') . ':</td>
 		<td><select name="Location">';
 
-if ($_SESSION['RestrictLocations']==0) {
+if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
 					loccode
 				FROM locations";
@@ -236,37 +234,37 @@ if ($_SESSION['RestrictLocations']==0) {
 					ON locations.loccode=www_users.defaultlocation
 				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 }
-$result= DB_query($sql, $db);
-while ($myrow=DB_fetch_array($result)){
+$result = DB_query($sql, $db);
+while ($myrow = DB_fetch_array($result)) {
 	echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 }
 echo '</select></td></tr>';
 if (!isset($_POST['FromDate'])) {
-	$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
+	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])) {
-	$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['DistDate'])) {
-	$_POST['DistDate']=date($_SESSION['DefaultDateFormat']);
+	$_POST['DistDate'] = date($_SESSION['DefaultDateFormat']);
 }
 echo '<tr>
 		<td>' . _('From Sales Date') . ':</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;' . _('To Sales Date') . ':<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Start Date For Distribution') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="DistDate" size="10" value="' . $_POST['DistDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DistDate" size="10" value="' . $_POST['DistDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>
 		<td><select name="Period">
 			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
-			<option value="monthly">' . _('Monthly') .'</option>
+			<option value="monthly">' . _('Monthly') . '</option>
 			</select></td>
 	</tr>
 	<tr>
-		<td>' . _('Number of Periods') .':</td>
+		<td>' . _('Number of Periods') . ':</td>
 		<td><input type ="text" class="number" name="PeriodNumber" size="4" value="1" /></td>
 	</tr>
 	<tr>
@@ -278,7 +276,7 @@ echo '<tr>
 		<td><input type ="text" class="number" name="ExcludeAmount" size="8" value="0" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Multiplier') .':</td>
+		<td>' . _('Multiplier') . ':</td>
 		<td><input type="text" class="number" name="Multiplier" size="2" value="1" /></td>
 	</tr>
 	<tr>
@@ -287,7 +285,7 @@ echo '<tr>
 	</table>
 	<br />
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Submit') .  '" />
+		<input type="submit" name="submit" value="' . _('Submit') . '" />
 	</div>';
 echo '</div>
 	  </form>';

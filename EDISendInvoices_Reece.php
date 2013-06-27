@@ -1,9 +1,5 @@
 <?php
 
-/* $Revision: 1.9 $ */
-
-$PageSecurity = 15;
-
 include('includes/session.inc');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
@@ -310,9 +306,13 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				$mail->addAttachment($attachment, 'EDI_INV_' . $TransNo . '.txt', 'application/txt');
 				if ($_SESSION['SmtpSetting'] == 0) {
 					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
+					$MessageSent = $mail->send(array(
+						$CustDetails['ediaddress']
+					));
 				} else {
-					$MessageSent = SendmailBySmtp($mail, array($CustDetails['ediaddress']));
+					$MessageSent = SendmailBySmtp($mail, array(
+						$CustDetails['ediaddress']
+					));
 				}
 
 				if ($MessageSent == True) {

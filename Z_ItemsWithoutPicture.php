@@ -1,9 +1,9 @@
 <?php
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
-include ('includes/session.inc');
+include('includes/session.inc');
 $Title = _('List of Items without picture');
-include ('includes/header.inc');
+include('includes/header.inc');
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockcategory.categorydescription
@@ -16,15 +16,15 @@ $SQL = "SELECT stockmaster.stockid,
 					stockmaster.stockid";
 $result = DB_query($SQL, $db);
 $PrintHeader = TRUE;
-if (DB_num_rows($result) != 0){
+if (DB_num_rows($result) != 0) {
 	echo '<p class="page_title_text noPrint"  align="center"><strong>' . _('Current Items without picture in KwaMoja') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$k = 0; //row colour counter
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
-		if(!file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
-			if($PrintHeader){
+		if (!file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
+			if ($PrintHeader) {
 				$TableHeader = '<tr>
 									<th>' . '#' . '</th>
 									<th>' . _('Category') . '</th>
@@ -46,12 +46,7 @@ if (DB_num_rows($result) != 0){
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-				</tr>',
-					$i,
-					$myrow['categorydescription'],
-					$CodeLink,
-					$myrow['description']
-				);
+				</tr>', $i, $myrow['categorydescription'], $CodeLink, $myrow['description']);
 			$i++;
 		}
 	}
@@ -59,5 +54,5 @@ if (DB_num_rows($result) != 0){
 	</div>
 	</form>';
 }
-include ('includes/footer.inc');
+include('includes/footer.inc');
 ?>

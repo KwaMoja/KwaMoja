@@ -1,5 +1,4 @@
 <?php
-/* $Id$*/
 
 /*Class to hold stock transfer records */
 
@@ -11,22 +10,19 @@ class StockTransfer {
 	Var $StockLocationTo;
 	Var $StockLocationToName;
 	Var $TranDate;
-	Var $TransferItem; /*Array of LineItems */
+	Var $TransferItem;
+	/*Array of LineItems */
 
-	function StockTransfer($TrfID,
-				$StockLocationFrom,
-				$StockLocationFromName,
-				$StockLocationTo,
-				$StockLocationToName,
-				$TranDate )	{
+	function StockTransfer($TrfID, $StockLocationFrom, $StockLocationFromName, $StockLocationTo, $StockLocationToName, $TranDate) {
 
 		$this->TrfID = $TrfID;
 		$this->StockLocationFrom = $StockLocationFrom;
 		$this->StockLocationFromName = $StockLocationFromName;
-		$this->StockLocationTo =$StockLocationTo;
-		$this->StockLocationToName =$StockLocationToName;
+		$this->StockLocationTo = $StockLocationTo;
+		$this->StockLocationToName = $StockLocationToName;
 		$this->TranDate = $TranDate;
-		$this->TransferItem=array(); /*Array of LineItem s */
+		$this->TransferItem = array();
+		/*Array of LineItem s */
 	}
 }
 
@@ -41,16 +37,10 @@ class LineItem {
 	var $Serialised;
 	var $DecimalPlaces;
 	var $Perishable;
-	var $SerialItems; /*array to hold controlled items*/
-//Constructor
-	function LineItem($StockID,
-			$ItemDescription,
-			$Quantity,
-			$PartUnit,
-			$Controlled,
-			$Serialised,
-			$Perishable,
-			$DecimalPlaces){
+	var $SerialItems;
+	/*array to hold controlled items*/
+	//Constructor
+	function LineItem($StockID, $ItemDescription, $Quantity, $PartUnit, $Controlled, $Serialised, $Perishable, $DecimalPlaces) {
 
 		$this->StockID = $StockID;
 		$this->ItemDescription = $ItemDescription;
@@ -60,7 +50,7 @@ class LineItem {
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->Perishable = $Perishable;
 		$this->ShipQty = $Quantity;
-		if ($this->Controlled==1){
+		if ($this->Controlled == 1) {
 			$this->Quantity = 0;
 		} else {
 			$this->Quantity = $Quantity;

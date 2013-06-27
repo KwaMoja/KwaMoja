@@ -1,7 +1,4 @@
 <?php
-/* $Id$*/
-
-//$PageSecurity = 2;
 
 include('includes/session.inc');
 
@@ -9,12 +6,11 @@ $Title = _('Stock Check Sheets Entry');
 
 include('includes/header.inc');
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
-	_('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
@@ -23,57 +19,57 @@ if (isset($_POST['Action'])) {
 	$_GET['Action'] = $_POST['Action'];
 }
 
-if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){
+if ($_GET['Action'] != 'View' and $_GET['Action'] != 'Enter') {
 	$_GET['Action'] = 'Enter';
 }
 
 echo '<table class="selection"><tr>';
-if ($_GET['Action']=='View'){
+if ($_GET['Action'] == 'View') {
 	echo '<td><a href="' . $RootPath . '/StockCounts.php?&amp;Action=Enter">' . _('Resuming Entering Counts') . '</a> </td><td>' . _('Viewing Entered Counts') . '</td>';
 } else {
-	echo '<td>'._('Entering Counts') .'</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
+	echo '<td>' . _('Entering Counts') . '</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . _('View Entered Counts') . '</a></td>';
 }
 echo '</tr></table><br />';
 
-if ($_GET['Action'] == 'Enter'){
+if ($_GET['Action'] == 'Enter') {
 
-	if (isset($_POST['EnterCounts'])){
+	if (isset($_POST['EnterCounts'])) {
 
-		$Added=0;
-		for ($i=1;$i<=10;$i++){
-			$InputError =False; //always assume the best to start with
+		$Added = 0;
+		for ($i = 1; $i <= 10; $i++) {
+			$InputError = False; //always assume the best to start with
 
 			$Quantity = 'Qty_' . $i;
 			$BarCode = 'BarCode_' . $i;
 			$StockID = 'StockID_' . $i;
 			$Reference = 'Ref_' . $i;
 
-			if (strlen($_POST[$BarCode])>0){
+			if (strlen($_POST[$BarCode]) > 0) {
 				$sql = "SELECT stockmaster.stockid
 								FROM stockmaster
-								WHERE stockmaster.barcode='". $_POST[$BarCode] ."'";
+								WHERE stockmaster.barcode='" . $_POST[$BarCode] . "'";
 
 				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-				$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
-				$myrow=DB_fetch_array($KitResult);
+				$KitResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+				$myrow = DB_fetch_array($KitResult);
 
 				$_POST[$StockID] = strtoupper($myrow['stockid']);
 			}
 
-			if (mb_strlen($_POST[$StockID])>0){
-				if (!is_numeric($_POST[$Quantity])){
-					prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
-					$InputError=True;
+			if (mb_strlen($_POST[$StockID]) > 0) {
+				if (!is_numeric($_POST[$Quantity])) {
+					prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'), 'warn');
+					$InputError = True;
 				}
-			$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
-				$result = DB_query($SQL,$db);
-				if (DB_num_rows($result)==0){
-					prnMsg( _('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
+				$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
+				$result = DB_query($SQL, $db);
+				if (DB_num_rows($result) == 0) {
+					prnMsg(_('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'), 'warn');
 					$InputError = True;
 				}
 
-				if ($InputError==False){
+				if ($InputError == False) {
 					$Added++;
 					$sql = "INSERT INTO stockcounts (stockid,
 									loccode,
@@ -85,18 +81,18 @@ if ($_GET['Action'] == 'Enter'){
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
-					$EnterResult = DB_query($sql, $db,$ErrMsg);
+					$EnterResult = DB_query($sql, $db, $ErrMsg);
 				}
 			}
 		} // end of loop
-		prnMsg($Added . _(' Stock Counts Entered'), 'success' );
+		prnMsg($Added . _(' Stock Counts Entered'), 'success');
 		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
 
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr><th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
-	if ($_SESSION['RestrictLocations']==0) {
+	echo '<tr><th colspan="3">' . _('Stock Check Counts at Location') . ':<select name="Location">';
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations";
@@ -108,11 +104,11 @@ if ($_GET['Action'] == 'Enter'){
 						ON locations.loccode=www_users.defaultlocation
 					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 	}
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 
-	while ($myrow=DB_fetch_array($result)){
+	while ($myrow = DB_fetch_array($result)) {
 
-		if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']){
+		if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -126,7 +122,7 @@ if ($_GET['Action'] == 'Enter'){
 			<th>' . _('Reference') . '</th>
 		</tr>';
 
-	for ($i=1;$i<=10;$i++){
+	for ($i = 1; $i <= 10; $i++) {
 
 		echo '<tr>
 				<td><input type="text" name="BarCode_' . $i . '" minlength="0" maxlength="20" size="20" /></td>
@@ -143,16 +139,16 @@ if ($_GET['Action'] == 'Enter'){
 				<input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" />
 			</div>';
 
-//END OF action=ENTER
-} elseif ($_GET['Action']=='View'){
+	//END OF action=ENTER
+} elseif ($_GET['Action'] == 'View') {
 
-	if (isset($_POST['DEL']) and is_array($_POST['DEL']) ){
-		foreach ($_POST['DEL'] as $id=>$val){
-			if ($val == 'on'){
-				$sql = "DELETE FROM stockcounts WHERE id='".$id."'";
-				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
-				$EnterResult = DB_query($sql, $db,$ErrMsg);
-				prnMsg( _('Deleted Id #') . ' ' . $id, 'success');
+	if (isset($_POST['DEL']) and is_array($_POST['DEL'])) {
+		foreach ($_POST['DEL'] as $id => $val) {
+			if ($val == 'on') {
+				$sql = "DELETE FROM stockcounts WHERE id='" . $id . "'";
+				$ErrMsg = _('Failed to delete StockCount ID #') . ' ' . $i;
+				$EnterResult = DB_query($sql, $db, $ErrMsg);
+				prnMsg(_('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}
 	}
@@ -168,23 +164,23 @@ if ($_GET['Action'] == 'Enter'){
 		<th>" . _('Qty Counted') . "</th>
 		<th>" . _('Reference') . "</th>
 		<th>" . _('Delete?') . '</th></tr>';
-	while ($myrow=DB_fetch_array($result)){
+	while ($myrow = DB_fetch_array($result)) {
 		echo "<tr>
-			<td>".$myrow['stockid']."</td>
-			<td>".$myrow['loccode']."</td>
-			<td>".$myrow['qtycounted']."</td>
-			<td>".$myrow['reference']."</td>
+			<td>" . $myrow['stockid'] . "</td>
+			<td>" . $myrow['loccode'] . "</td>
+			<td>" . $myrow['qtycounted'] . "</td>
+			<td>" . $myrow['reference'] . "</td>
 			<td>";
-        echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" minlength="0" maxlength="20" size="20" /></td></tr>';
+		echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" minlength="0" maxlength="20" size="20" /></td></tr>';
 
 	}
 	echo '</table><br /><div class="centre"><input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" /></div>';
 
-//END OF action=VIEW
+	//END OF action=VIEW
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 include('includes/footer.inc');
 
 ?>

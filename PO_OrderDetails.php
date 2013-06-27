@@ -1,23 +1,21 @@
 <?php
 
-/* $Id$*/
-
 include('includes/session.inc');
 
 if (isset($_GET['OrderNo'])) {
-	$Title = _('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
-	$_GET['OrderNo']=(int)$_GET['OrderNo'];
+	$Title = _('Reviewing Purchase Order Number') . ' ' . $_GET['OrderNo'];
+	$_GET['OrderNo'] = (int) $_GET['OrderNo'];
 } else {
 	$Title = _('Reviewing A Purchase Order');
 }
 include('includes/header.inc');
 
-if (isset($_GET['FromGRNNo'])){
+if (isset($_GET['FromGRNNo'])) {
 
-	$SQL= "SELECT purchorderdetails.orderno
+	$SQL = "SELECT purchorderdetails.orderno
 		FROM purchorderdetails INNER JOIN grns
 		ON purchorderdetails.podetailitem=grns.podetailitem
-		WHERE grns.grnno='" . $_GET['FromGRNNo'] ."'";
+		WHERE grns.grnno='" . $_GET['FromGRNNo'] . "'";
 
 	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
 	$OrderResult = DB_query($SQL, $db, $ErrMsg);
@@ -30,11 +28,11 @@ if (isset($_GET['FromGRNNo'])){
 if (!isset($_GET['OrderNo'])) {
 
 	echo '<br /><br />';
-	prnMsg( _('This page must be called with a purchase order number to review'), 'error');
+	prnMsg(_('This page must be called with a purchase order number to review'), 'error');
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-		<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+		<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.inc');
 	exit;
@@ -58,72 +56,71 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 		LEFT JOIN www_users
 			ON purchorders.initiator=www_users.userid
 				AND locations.loccode=www_users.defaultlocation
-		WHERE purchorders.orderno = '" . $_GET['OrderNo'] ."'
+		WHERE purchorders.orderno = '" . $_GET['OrderNo'] . "'
 			AND www_users.userid='" . $_SESSION['UserID'] . "'";
 
-$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $db, $ErrMsg);
 
-if (DB_num_rows($GetOrdHdrResult)!=1) {
+if (DB_num_rows($GetOrdHdrResult) != 1) {
 	echo '<br /><br />';
-	if (DB_num_rows($GetOrdHdrResult) == 0){
-		prnMsg ( _('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . _('Please look up another one') . '. ' . _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either 0 or several purchase orders'), 'error');
+	if (DB_num_rows($GetOrdHdrResult) == 0) {
+		prnMsg(_('Unable to locate this PO Number') . ' ' . $_GET['OrderNo'] . '. ' . _('Please look up another one') . '. ' . _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either 0 or several purchase orders'), 'error');
 	} else {
-		prnMsg ( _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
+		prnMsg(_('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
 	}
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-		<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+		<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
 		</td></tr></table>';
 
 	include('includes/footer.inc');
 	exit;
 }
- // the checks all good get the order now
+// the checks all good get the order now
 
 $myrow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
-echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
-		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection" cellpadding="2">';
-echo '<tr><th colspan="8"><b>'. _('Order Header Details'). '</b></th></tr>';
-echo '<tr><td style="text-align:left">' . _('Supplier Code'). '</td><td><a href="SelectSupplier.php?SupplierID='.urlencode(stripslashes($myrow['supplierid'])).'">' . $myrow['supplierid'] . '</a></td>
-	<td style="text-align:left">' . _('Supplier Name'). '</td><td><a href="SelectSupplier.php?SupplierID='.urlencode(stripslashes($myrow['supplierid'])).'">' . $myrow['suppname'] . '</a></td></tr>';
+echo '<tr><th colspan="8"><b>' . _('Order Header Details') . '</b></th></tr>';
+echo '<tr><td style="text-align:left">' . _('Supplier Code') . '</td><td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['supplierid'] . '</a></td>
+	<td style="text-align:left">' . _('Supplier Name') . '</td><td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['suppname'] . '</a></td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Ordered On'). '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
-	<td style="text-align:left">' . _('Delivery Address 1'). '</td><td>' . $myrow['deladd1'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Ordered On') . '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+	<td style="text-align:left">' . _('Delivery Address 1') . '</td><td>' . $myrow['deladd1'] . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Order Currency'). '</td><td>' . $myrow['currcode'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 2'). '</td><td>' . $myrow['deladd2'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Order Currency') . '</td><td>' . $myrow['currcode'] . '</td>
+	<td style="text-align:left">' . _('Delivery Address 2') . '</td><td>' . $myrow['deladd2'] . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Exchange Rate'). '</td><td>' . $myrow['rate'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 3'). '</td><td>' . $myrow['deladd3'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Exchange Rate') . '</td><td>' . $myrow['rate'] . '</td>
+	<td style="text-align:left">' . _('Delivery Address 3') . '</td><td>' . $myrow['deladd3'] . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Deliver Into Location'). '</td><td>' . $myrow['locationname'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 4'). '</td><td>' . $myrow['deladd4'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Deliver Into Location') . '</td><td>' . $myrow['locationname'] . '</td>
+	<td style="text-align:left">' . _('Delivery Address 4') . '</td><td>' . $myrow['deladd4'] . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Initiator'). '</td><td>' . $myrow['realname'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 5'). '</td><td>' . $myrow['deladd5'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Initiator') . '</td><td>' . $myrow['realname'] . '</td>
+	<td style="text-align:left">' . _('Delivery Address 5') . '</td><td>' . $myrow['deladd5'] . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Requisition Ref'). '.</td><td>' . $myrow['requisitionno'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 6'). '</td><td>' . $myrow['deladd6'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Requisition Ref') . '.</td><td>' . $myrow['requisitionno'] . '</td>
+	<td style="text-align:left">' . _('Delivery Address 6') . '</td><td>' . $myrow['deladd6'] . '</td></tr>';
 
 
-echo '<tr><td style="text-align:left">'. _('Printing') . '</td><td colspan="3">';
+echo '<tr><td style="text-align:left">' . _('Printing') . '</td><td colspan="3">';
 
-if ($myrow['dateprinted'] == ''){
-	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print') .'</a>]';
+if ($myrow['dateprinted'] == '') {
+	echo '<i>' . _('Not yet printed') . '</i> &nbsp; &nbsp; ';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo=' . $_GET['OrderNo'] . '">' . _('Print') . '</a>]';
 } else {
-	echo _('Printed on').' '. ConvertSQLDate($myrow['dateprinted']). '&nbsp; &nbsp;';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print a Copy') .'</a>]';
+	echo _('Printed on') . ' ' . ConvertSQLDate($myrow['dateprinted']) . '&nbsp; &nbsp;';
+	echo '[<a href="PO_PDFPurchOrder.php?OrderNo=' . $_GET['OrderNo'] . '">' . _('Print a Copy') . '</a>]';
 }
 
-echo  '</td></tr>';
-echo '<tr><td style="text-align:left">'. _('Status') . '</td><td>'. _($myrow['status']) . '</td></tr>';
+echo '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Status') . '</td><td>' . _($myrow['status']) . '</td></tr>';
 
-echo '<tr><td style="text-align:left">' . _('Comments'). '</td><td colspan="3">' . $myrow['comments'] . '</td></tr>';
+echo '<tr><td style="text-align:left">' . _('Comments') . '</td><td colspan="3">' . $myrow['comments'] . '</td></tr>';
 
 echo '</table>';
 
@@ -137,84 +134,76 @@ $LineItemsSQL = "SELECT purchorderdetails.*,
 				FROM purchorderdetails
 				LEFT JOIN stockmaster
 				ON purchorderdetails.itemcode=stockmaster.stockid
-				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] ."'
-				ORDER BY itemcode";     /*- ADDED: Sort by our item code -*/
+				WHERE purchorderdetails.orderno = '" . $_GET['OrderNo'] . "'
+				ORDER BY itemcode";
+/*- ADDED: Sort by our item code -*/
 
-$LineItemsResult = DB_query($LineItemsSQL,$db, $ErrMsg);
+$LineItemsResult = DB_query($LineItemsSQL, $db, $ErrMsg);
 
 
 echo '<table class="selection" cellpadding="0">';
-echo '<tr><th colspan="8"><b>'. _('Order Line Details'). '</b></th></tr>';
+echo '<tr><th colspan="8"><b>' . _('Order Line Details') . '</b></th></tr>';
 echo '<tr>
-		<td>' . _('Item Code'). '</td>
-		<td>' . _('Item Description'). '</td>
-		<td>' . _('Ord Qty'). '</td>
-		<td>' . _('Qty Recd'). '</td>
-		<td>' . _('Qty Inv'). '</td>
-		<td>' . _('Ord Price'). '</td>
-		<td>' . _('Chg Price'). '</td>
-		<td>' . _('Reqd Date'). '</td>
+		<td>' . _('Item Code') . '</td>
+		<td>' . _('Item Description') . '</td>
+		<td>' . _('Ord Qty') . '</td>
+		<td>' . _('Qty Recd') . '</td>
+		<td>' . _('Qty Inv') . '</td>
+		<td>' . _('Ord Price') . '</td>
+		<td>' . _('Chg Price') . '</td>
+		<td>' . _('Reqd Date') . '</td>
 	</tr>';
 
-$k =0;  //row colour counter
-$OrderTotal=0;
-$RecdTotal=0;
+$k = 0; //row colour counter
+$OrderTotal = 0;
+$RecdTotal = 0;
 
-while ($myrow=DB_fetch_array($LineItemsResult)) {
+while ($myrow = DB_fetch_array($LineItemsResult)) {
 
 	$OrderTotal += ($myrow['quantityord'] * $myrow['unitprice']);
 	$RecdTotal += ($myrow['quantityrecd'] * $myrow['unitprice']);
 
 	$DisplayReqdDate = ConvertSQLDate($myrow['deliverydate']);
-	if ($myrow['decimalplaces']!=NULL){
+	if ($myrow['decimalplaces'] != NULL) {
 		$DecimalPlaces = $myrow['decimalplaces'];
 	} else {
 		$DecimalPlaces = 2;
 	}
 	// if overdue and outstanding quantities, then highlight as so
-	if (($myrow['quantityord'] - $myrow['quantityrecd'] > 0)
-	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
-		 	echo '<tr class="OsRow">';
+	if (($myrow['quantityord'] - $myrow['quantityrecd'] > 0) AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)) {
+		echo '<tr class="OsRow">';
 	} else {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
+		if ($k == 1) {
+			echo '<tr class="EvenTableRows">';
+			$k = 0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k = 1;
 		}
 	}
 
-	printf ('<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td>%s</td>
-		</tr>' ,
-		$myrow['itemcode'],
-		$myrow['itemdescription'],
-		locale_number_format($myrow['quantityord'],$DecimalPlaces),
-		locale_number_format($myrow['quantityrecd'],$DecimalPlaces),
-		locale_number_format($myrow['qtyinvoiced'],$DecimalPlaces),
-		locale_number_format($myrow['unitprice'],$CurrDecimalPlaces),
-		locale_number_format($myrow['actprice'],$CurrDecimalPlaces),
-		$DisplayReqdDate);
+	printf('<td>%s</td>
+			<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td>%s</td>
+		</tr>', $myrow['itemcode'], $myrow['itemdescription'], locale_number_format($myrow['quantityord'], $DecimalPlaces), locale_number_format($myrow['quantityrecd'], $DecimalPlaces), locale_number_format($myrow['qtyinvoiced'], $DecimalPlaces), locale_number_format($myrow['unitprice'], $CurrDecimalPlaces), locale_number_format($myrow['actprice'], $CurrDecimalPlaces), $DisplayReqdDate);
 
 }
 
 echo '<tr><td><br /></td>
 	</tr>
-	<tr><td colspan="4" class="number">' . _('Total Order Value Excluding Tax') .'</td>
-	<td colspan="2" class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<tr><td colspan="4" class="number">' . _('Total Order Value Excluding Tax') . '</td>
+	<td colspan="2" class="number">' . locale_number_format($OrderTotal, $CurrDecimalPlaces) . '</td></tr>';
 echo '<tr>
 	<td colspan="4" class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
-	<td colspan="2" class="number">' . locale_number_format($RecdTotal,$CurrDecimalPlaces) . '</td></tr>';
+	<td colspan="2" class="number">' . locale_number_format($RecdTotal, $CurrDecimalPlaces) . '</td></tr>';
 echo '</table>';
 
 echo '<br />';
 
-include ('includes/footer.inc');
+include('includes/footer.inc');
 ?>

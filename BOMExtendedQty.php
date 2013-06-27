@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 
 include('includes/session.inc');
@@ -9,26 +7,26 @@ include('includes/session.inc');
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Quantity Extended BOM Listing'));
-	$pdf->addInfo('Subject',_('Quantity Extended BOM Listing'));
-	$FontSize=9;
-	$PageNumber=1;
-	$line_height=12;
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+	$pdf->addInfo('Title', _('Quantity Extended BOM Listing'));
+	$pdf->addInfo('Subject', _('Quantity Extended BOM Listing'));
+	$FontSize = 9;
+	$PageNumber = 1;
+	$line_height = 12;
+	PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 
 	if (!$_POST['Quantity'] or !is_numeric(filter_number_format($_POST['Quantity']))) {
 		$_POST['Quantity'] = 1;
 	}
 
-	$result = DB_query("DROP TABLE IF EXISTS tempbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
-	$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
+	$result = DB_query("DROP TABLE IF EXISTS tempbom", $db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom", $db);
+	$result = DB_query("DROP TABLE IF EXISTS passbom2", $db);
 	$sql = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				extendedqpa double,
 				sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$db,$ErrMsg);
+	$result = DB_query($sql, $db, $ErrMsg);
 
 	$sql = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
@@ -40,7 +38,7 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,$db,_('Create of tempbom failed because'));
+	$result = DB_query($sql, $db, _('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -55,7 +53,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveto >= CURRENT_DATE
 			  AND bom.effectiveafter <= CURRENT_DATE";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 
 	$LevelCounter = 2;
 	// $LevelCounter is the level counter
@@ -71,8 +69,7 @@ if (isset($_POST['PrintPDF'])) {
 				quantity)
 			SELECT bom.parent,
 					 bom.component,
-					 CONCAT(bom.parent,bom.component) AS sortpart,"
-					 . $LevelCounter . " as level,
+					 CONCAT(bom.parent,bom.component) AS sortpart," . $LevelCounter . " as level,
 					 bom.workcentreadded,
 					 bom.loccode,
 					 bom.effectiveafter,
@@ -82,7 +79,7 @@ if (isset($_POST['PrintPDF'])) {
 			WHERE bom.parent ='" . $_POST['Part'] . "'
 			AND bom.effectiveto >= CURRENT_DATE
 			AND bom.effectiveafter <= CURRENT_DATE";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter finds there are more components that are used as
@@ -114,16 +111,16 @@ if (isset($_POST['PrintPDF'])) {
 			 WHERE bom.parent = passbom.part
 			  AND bom.effectiveto >= CURRENT_DATE
 			  AND bom.effectiveafter <= CURRENT_DATE";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql, $db);
 
-		$result = DB_query("DROP TABLE IF EXISTS passbom2",$db);
-		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2",$db);
-		$result = DB_query("DROP TABLE IF EXISTS passbom",$db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom2", $db);
+		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2", $db);
+		$result = DB_query("DROP TABLE IF EXISTS passbom", $db);
 
 		$sql = "CREATE TEMPORARY TABLE passbom (part char(20),
 												extendedqpa decimal(10,3),
 												sortpart text) DEFAULT CHARSET=utf8";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql, $db);
 
 		$sql = "INSERT INTO passbom (part,
 									extendedqpa,
@@ -136,35 +133,35 @@ if (isset($_POST['PrintPDF'])) {
 									ON bom.parent = passbom2.part
 									WHERE bom.effectiveto >= CURRENT_DATE
 										AND bom.effectiveafter <= CURRENT_DATE";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql, $db);
 
 		$sql = "SELECT COUNT(bom.parent) AS components
 					FROM bom
 					INNER JOIN passbom
 					ON bom.parent = passbom.part
 					GROUP BY passbom.part";
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql, $db);
 
 		$myrow = DB_fetch_array($result);
 		$ComponentCounter = $myrow['components'];
 
 	} // End of while $ComponentCounter > 0
 
-	if (DB_error_no($db) !=0) {
+	if (DB_error_no($db) != 0) {
 		$Title = _('Quantity Extended BOM Listing') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
-		prnMsg( _('The Quantiy Extended BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg($db),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		prnMsg(_('The Quantiy Extended BOM Listing could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		if ($debug == 1) {
 			echo '<br />' . $sql;
 		}
 		include('includes/footer.inc');
 		exit;
 	}
 
-	$Tot_Val=0;
+	$Tot_Val = 0;
 	$fill = false;
-	$pdf->SetFillColor(224,235,255);
+	$pdf->SetFillColor(224, 235, 255);
 	$sql = "SELECT tempbom.component,
 				   SUM(tempbom.quantity) as quantity,
 				   stockmaster.description,
@@ -197,9 +194,9 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.description,
 					   stockmaster.decimalplaces,
 					   stockmaster.mbflag";
-	$result = DB_query($sql,$db);
+	$result = DB_query($sql, $db);
 	$ListCount = DB_num_rows($result);
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result, $db)) {
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
@@ -207,52 +204,54 @@ if (isset($_POST['PrintPDF'])) {
 		// and False to set to transparent
 		$Difference = $myrow['quantity'] - ($myrow['qoh'] + $myrow['poqty'] + $myrow['woqty']);
 		if (($_POST['Select'] == 'All') or ($Difference > 0)) {
-			$YPos -=$line_height;
-			$FontSize=8;
+			$YPos -= $line_height;
+			$FontSize = 8;
 			// Use to alternate between lines with transparent and painted background
-			if ($_POST['Fill'] == 'yes'){
-				$fill=!$fill;
+			if ($_POST['Fill'] == 'yes') {
+				$fill = !$fill;
 			}
-			$pdf->addTextWrap($Left_Margin+1,$YPos,90,$FontSize,$myrow['component'],'',0,$fill);
-			$pdf->addTextWrap(140,$YPos,30,$FontSize,$myrow['mbflag'],'',0,$fill);
-			$pdf->addTextWrap(170,$YPos,140,$FontSize,$myrow['description'],'',0,$fill);
-			$pdf->addTextWrap(310,$YPos,50,$FontSize,locale_number_format($myrow['quantity'],$myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(360,$YPos,40,$FontSize,locale_number_format($myrow['qoh'],$myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(400,$YPos,40,$FontSize,locale_number_format($myrow['poqty'],$myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(440,$YPos,40,$FontSize,locale_number_format($myrow['woqty'],$myrow['decimalplaces']),'right',0,$fill);
-			$pdf->addTextWrap(480,$YPos,50,$FontSize,locale_number_format($Difference,$myrow['decimalplaces']),'right',0,$fill);
+			$pdf->addTextWrap($Left_Margin + 1, $YPos, 90, $FontSize, $myrow['component'], '', 0, $fill);
+			$pdf->addTextWrap(140, $YPos, 30, $FontSize, $myrow['mbflag'], '', 0, $fill);
+			$pdf->addTextWrap(170, $YPos, 140, $FontSize, $myrow['description'], '', 0, $fill);
+			$pdf->addTextWrap(310, $YPos, 50, $FontSize, locale_number_format($myrow['quantity'], $myrow['decimalplaces']), 'right', 0, $fill);
+			$pdf->addTextWrap(360, $YPos, 40, $FontSize, locale_number_format($myrow['qoh'], $myrow['decimalplaces']), 'right', 0, $fill);
+			$pdf->addTextWrap(400, $YPos, 40, $FontSize, locale_number_format($myrow['poqty'], $myrow['decimalplaces']), 'right', 0, $fill);
+			$pdf->addTextWrap(440, $YPos, 40, $FontSize, locale_number_format($myrow['woqty'], $myrow['decimalplaces']), 'right', 0, $fill);
+			$pdf->addTextWrap(480, $YPos, 50, $FontSize, locale_number_format($Difference, $myrow['decimalplaces']), 'right', 0, $fill);
 		}
-		if ($YPos < $Bottom_Margin + $line_height){
-			PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+		if ($YPos < $Bottom_Margin + $line_height) {
+			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 		}
 
-	} /*end while loop */
+	}
+	/*end while loop */
 
-	$FontSize =10;
-	$YPos -= (2*$line_height);
+	$FontSize = 10;
+	$YPos -= (2 * $line_height);
 
-	if ($YPos < $Bottom_Margin + $line_height){
-		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+	if ($YPos < $Bottom_Margin + $line_height) {
+		PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 	}
 	if ($ListCount == 0) {
 		$Title = _('Print Indented BOM Listing Error');
 		include('includes/header.inc');
-		prnMsg(_('There were no items for the selected assembly'),'error');
+		prnMsg(_('There were no items for the selected assembly'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_BOM_Extended_Qty_' . date('Y-m-d').'.pdf');
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_BOM_Extended_Qty_' . date('Y-m-d') . '.pdf');
 		$pdf->__destruct();
 	}
 
-} else { /*The option to print PDF was not hit so display form */
+} else {
+	/*The option to print PDF was not hit so display form */
 
-	$Title=_('Quantity Extended BOM Listing');
+	$Title = _('Quantity Extended BOM Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">
+	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
@@ -290,51 +289,49 @@ if (isset($_POST['PrintPDF'])) {
 
 	include('includes/footer.inc');
 
-} /*end of else not PrintPDF */
+}
+/*end of else not PrintPDF */
 
 
-function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin) {
+function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
 
 	/*PDF page header for BOMExtendedQTY report */
-	if ($PageNumber>1){
+	if ($PageNumber > 1) {
 		$pdf->newPage();
 	}
-	$line_height=12;
-	$FontSize=9;
-	$YPos= $Page_Height-$Top_Margin-5;
+	$line_height = 12;
+	$FontSize = 9;
+	$YPos = $Page_Height - $Top_Margin - 5;
 
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -=$line_height;
+	$YPos -= $line_height;
 
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Extended Quantity BOM Listing For	   ')
-		. mb_strtoupper($_POST['Part']));
-	$pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,160,$FontSize,_('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -=$line_height;
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Build Quantity:  ') . locale_number_format($_POST['Quantity'],'Variable'),'left');
+	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('Extended Quantity BOM Listing For	   ') . mb_strtoupper($_POST['Part']));
+	$pdf->addTextWrap($Page_Width - $Right_Margin - 140, $YPos, 160, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber, 'left');
+	$YPos -= $line_height;
+	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('Build Quantity:  ') . locale_number_format($_POST['Quantity'], 'Variable'), 'left');
 
-	$YPos -=(2*$line_height);
+	$YPos -= (2 * $line_height);
 
 	/*set up the headings */
-	$Xpos = $Left_Margin+1;
+	$Xpos = $Left_Margin + 1;
 
-	$pdf->addTextWrap(310,$YPos,50,$FontSize,_('Build'), 'center');
-	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('On Hand'), 'right');
-	$pdf->addTextWrap(400,$YPos,40,$FontSize,_('P.O.'), 'right');
-	$pdf->addTextWrap(440,$YPos,40,$FontSize,_('W.O.'), 'right');
-	$YPos -=$line_height;
-	$pdf->addTextWrap($Xpos,$YPos,90,$FontSize,_('Part Number'), 'left');
-	$pdf->addTextWrap(140,$YPos,30,$FontSize,_('M/B'), 'left');
-	$pdf->addTextWrap(170,$YPos,140,$FontSize,_('Part Description'), 'left');
-	$pdf->addTextWrap(310,$YPos,50,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(400,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(440,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(480,$YPos,50,$FontSize,_('Shortage'), 'right');
+	$pdf->addTextWrap(310, $YPos, 50, $FontSize, _('Build'), 'center');
+	$pdf->addTextWrap(360, $YPos, 40, $FontSize, _('On Hand'), 'right');
+	$pdf->addTextWrap(400, $YPos, 40, $FontSize, _('P.O.'), 'right');
+	$pdf->addTextWrap(440, $YPos, 40, $FontSize, _('W.O.'), 'right');
+	$YPos -= $line_height;
+	$pdf->addTextWrap($Xpos, $YPos, 90, $FontSize, _('Part Number'), 'left');
+	$pdf->addTextWrap(140, $YPos, 30, $FontSize, _('M/B'), 'left');
+	$pdf->addTextWrap(170, $YPos, 140, $FontSize, _('Part Description'), 'left');
+	$pdf->addTextWrap(310, $YPos, 50, $FontSize, _('Quantity'), 'right');
+	$pdf->addTextWrap(360, $YPos, 40, $FontSize, _('Quantity'), 'right');
+	$pdf->addTextWrap(400, $YPos, 40, $FontSize, _('Quantity'), 'right');
+	$pdf->addTextWrap(440, $YPos, 40, $FontSize, _('Quantity'), 'right');
+	$pdf->addTextWrap(480, $YPos, 50, $FontSize, _('Shortage'), 'right');
 
-	$YPos =$YPos - (2*$line_height);
+	$YPos = $YPos - (2 * $line_height);
 	$PageNumber++;
 } // End of PrintHeader function
 ?>

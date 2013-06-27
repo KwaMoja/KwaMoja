@@ -1,33 +1,33 @@
 <?php
-/* $Id$*/
+
 /*Code to replace [Variables] in Message LineText with the value of the variable itself */
 
-	$PositionPointer = 0;
-	$NewLineText ='';
-	/* now get each occurence of [ in the line */
-	while (mb_strpos ($MsgLineText,'[',$PositionPointer)!=False){
-		$LastPositionPointer = $PositionPointer;
-		$PositionPointer = mb_strpos ($MsgLineText,'[',$PositionPointer);
-
-		$NewLineText = $NewLineText .  mb_substr($MsgLineText,$LastPositionPointer,$PositionPointer-$LastPositionPointer);
-
-		$LastPositionPointer = $PositionPointer;
-		$PositionPointer = mb_strpos ($MsgLineText,']',$PositionPointer);
-
-		$VariableName = mb_substr($MsgLineText,$LastPositionPointer+1,$PositionPointer-$LastPositionPointer-1);
-
-		$PositionPointer++;
-
-		echo '<BR>' . _('The variable') . ' - ' . $VariableName . ' ' . _('is set to') . ' ' . $$VariableName;
-
-		$NewLineText = $NewLineText . $$VariableName;
-
-	}
-	/* now add the text from the last ] to the end of the line */
+$PositionPointer = 0;
+$NewLineText = '';
+/* now get each occurence of [ in the line */
+while (mb_strpos($MsgLineText, '[', $PositionPointer) != False) {
 	$LastPositionPointer = $PositionPointer;
-	$NewLineText = $NewLineText .  mb_substr($MsgLineText,$LastPositionPointer);
+	$PositionPointer = mb_strpos($MsgLineText, '[', $PositionPointer);
 
-	echo "<BR>$NewLineText";
+	$NewLineText = $NewLineText . mb_substr($MsgLineText, $LastPositionPointer, $PositionPointer - $LastPositionPointer);
 
-	fputs($fp, $NewLineText . "\n");
+	$LastPositionPointer = $PositionPointer;
+	$PositionPointer = mb_strpos($MsgLineText, ']', $PositionPointer);
+
+	$VariableName = mb_substr($MsgLineText, $LastPositionPointer + 1, $PositionPointer - $LastPositionPointer - 1);
+
+	$PositionPointer++;
+
+	echo '<BR>' . _('The variable') . ' - ' . $VariableName . ' ' . _('is set to') . ' ' . $$VariableName;
+
+	$NewLineText = $NewLineText . $$VariableName;
+
+}
+/* now add the text from the last ] to the end of the line */
+$LastPositionPointer = $PositionPointer;
+$NewLineText = $NewLineText . mb_substr($MsgLineText, $LastPositionPointer);
+
+echo "<BR>$NewLineText";
+
+fputs($fp, $NewLineText . "\n");
 ?>

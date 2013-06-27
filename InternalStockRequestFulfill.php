@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: InternalStockRequestFulfill.php  $*/
-
 include('includes/session.inc');
 
 $Title = _('Fulfil Stock Requests');
@@ -217,7 +215,7 @@ if (!isset($_POST['Location'])) {
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
 				<td><select name="Location">';
-	if ($_SESSION['RestrictLocations']==0) {
+	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
 					FROM locations

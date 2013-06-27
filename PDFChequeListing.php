@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$*/
-
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
 

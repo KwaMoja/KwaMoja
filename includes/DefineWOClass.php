@@ -1,5 +1,5 @@
 <?php
-/* $Id$ */
+
 /* Definition of the Works Order class to hold all the information for a purchase order and delivery
  */
 
@@ -51,7 +51,7 @@ Class WorkOrder {
 	}
 
 	function ItemByStockID($StockID) {
-		for ($i=1; $i<=$this->NumberOfItems; $i++) {
+		for ($i = 1; $i <= $this->NumberOfItems; $i++) {
 			if (isset($this->Items[$i]) and $this->Items[$i]->StockID == $StockID) {
 				return $i;
 			}
@@ -62,8 +62,8 @@ Class WorkOrder {
 	function Save() {
 		global $db;
 
-		if ($this->OrderNumber == 0){
-			$this->OrderNumber = GetNextTransNo(40,$db);
+		if ($this->OrderNumber == 0) {
+			$this->OrderNumber = GetNextTransNo(40, $db);
 			$sql = "INSERT INTO workorders (wo,
 											loccode,
 											requiredby,
@@ -73,7 +73,7 @@ Class WorkOrder {
 											'" . $this->OrderNumber . "',
 											'" . $this->LocationCode . "',
 											'" . FormatDateForSQL($this->RequiredBy) . "',
-											'" . FormatDateForSQL($this->StartDate). "',
+											'" . FormatDateForSQL($this->StartDate) . "',
 											'" . $this->CostIssued . "'
 										)";
 		} else {
@@ -83,8 +83,8 @@ Class WorkOrder {
 											costissued='" . $this->CostIssued . "'
 										WHERE wo='" . $this->OrderNumber . "'";
 		}
-		$UpdateWOResult = DB_query($sql,$db);
-		foreach ($this->Items as $i=>$Item) {
+		$UpdateWOResult = DB_query($sql, $db);
+		foreach ($this->Items as $i => $Item) {
 			$Item->Save($this->OrderNumber);
 		}
 	}
@@ -123,12 +123,7 @@ Class WorkOrder {
 			$NumberOfOutputs = DB_num_rows($WOItemsResult);
 			$i = 1;
 			while ($WOItem = DB_fetch_array($WOItemsResult)) {
-				$this->Items[$i] = new WOItem($WOItem['stockid'],
-											$WOItem['qtyreqd'],
-											$WOItem['qtyrecd'],
-											$WOItem['nextlotsnref'],
-											$this->LocationCode,
-											$i);
+				$this->Items[$i] = new WOItem($WOItem['stockid'], $WOItem['qtyreqd'], $WOItem['qtyrecd'], $WOItem['nextlotsnref'], $this->LocationCode, $i);
 				$i++;
 			}
 			$this->NumberOfItems = $i;
@@ -164,10 +159,9 @@ Class WOItem {
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.parent
 									WHERE bom.parent='" . $StockID . "'
-										AND bom.loccode='" . $LocationCode . "'",
-						 $db);
+										AND bom.loccode='" . $LocationCode . "'", $db);
 		$StockRow = DB_fetch_array($StockResult);
-		$StandardCost = $StockRow['cost']*$QuantityRequired;
+		$StandardCost = $StockRow['cost'] * $QuantityRequired;
 		$Description = $StockRow['description'];
 		$DecimalPlaces = $StockRow['decimalplaces'];
 		$Controlled = $StockRow['controlled'];
@@ -198,16 +192,9 @@ Class WOItem {
 									INNER JOIN stockmaster
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $StockID . "'
-										AND bom.loccode='" . $LocationCode . "'",
-								$db);
+										AND bom.loccode='" . $LocationCode . "'", $db);
 		while ($BOMRow = DB_fetch_array($BOMResult, $db)) {
-			$this->AddRequirements( $BOMRow['component'],
-									$BOMRow['quantity']*$QuantityRequired,
-									$BOMRow['materialcost']+$BOMRow['labourcost']+$BOMRow['overheadcost'],
-									$BOMRow['autoissue'],
-									$BOMRow['description'],
-									$BOMRow['decimalplaces']
-								);
+			$this->AddRequirements($BOMRow['component'], $BOMRow['quantity'] * $QuantityRequired, $BOMRow['materialcost'] + $BOMRow['labourcost'] + $BOMRow['overheadcost'], $BOMRow['autoissue'], $BOMRow['description'], $BOMRow['decimalplaces']);
 		}
 	}
 
@@ -221,7 +208,7 @@ Class WOItem {
 							AND stockid='" . $this->StockID . "'";
 		$CheckResult = DB_query($CheckSQL, $db);
 
-		if (DB_num_rows($CheckResult) == 0){
+		if (DB_num_rows($CheckResult) == 0) {
 			$sql = "INSERT INTO woitems (wo,
 										stockid,
 										qtyreqd,
@@ -245,20 +232,13 @@ Class WOItem {
 										AND stockid='" . $this->StockID . "'";
 		}
 		$UpdateItems = DB_query($sql, $db);
-		foreach ($this->Requirements as $i=>$Requirement) {
+		foreach ($this->Requirements as $i => $Requirement) {
 			$Requirement->Save($OrderNumber);
 		}
 	}
 
 	function AddRequirements($StockID, $Quantity, $StandardCost, $AutoIssue, $Description, $DecimalPlaces) {
-		$this->Requirements[$this->NumberOfRequirements + 1] = new WORequirement($this->StockID,
-																				$StockID,
-																				$Quantity,
-																				$StandardCost,
-																				$AutoIssue,
-																				$Description,
-																				$DecimalPlaces
-																			);
+		$this->Requirements[$this->NumberOfRequirements + 1] = new WORequirement($this->StockID, $StockID, $Quantity, $StandardCost, $AutoIssue, $Description, $DecimalPlaces);
 		$this->NumberOfRequirements++;
 	}
 
@@ -280,15 +260,14 @@ Class WOItem {
 									INNER JOIN stockmaster
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $this->StockID . "'
-										AND bom.loccode='" . $LocationCode . "'",
-								$db);
+										AND bom.loccode='" . $LocationCode . "'", $db);
 		while ($BOMRow = DB_fetch_array($BOMResult, $db)) {
 			$this->Requirements[$this->RequirementByStockID($this->StockID, $BOMRow['component'])]->Quantity = $BOMRow['quantity'];
 		}
 	}
 
 	function RequirementByStockID($Parent, $StockID) {
-		for ($i=1; $i<=$this->NumberOfRequirements; $i++) {
+		for ($i = 1; $i <= $this->NumberOfRequirements; $i++) {
 			if ($this->Requirements[$i]->StockID == $StockID and $this->Requirements[$i]->ParentStockID == $Parent) {
 				return $i;
 			}
@@ -329,7 +308,7 @@ Class WORequirement {
 							AND stockid='" . $this->StockID . "'";
 		$CheckResult = DB_query($CheckSQL, $db);
 
-		if (DB_num_rows($CheckResult) == 0){
+		if (DB_num_rows($CheckResult) == 0) {
 			$sql = "INSERT INTO worequirements (wo,
 												parentstockid,
 												stockid,

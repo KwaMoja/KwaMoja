@@ -1,5 +1,5 @@
 <?php
-/* $Id$*/
+
 //
 // +----------------------------------------------------------------------+
 // | PHP Version 4														|
@@ -18,94 +18,94 @@
 // +----------------------------------------------------------------------+
 
 /**
-*
-*  Raw mime encoding class
-*
-* What is it?
-*   This class enables you to manipulate and build
-*   a mime email from the ground up.
-*
-* Why use this instead of mime.php?
-*   mime.php is a userfriendly api to this class for
-*   people who aren't interested in the internals of
-*   mime mail. This class however allows full control
-*   over the email.
-*
-* Eg.
-*
-* // Since multipart/mixed has no real body, (the body is
-* // the subpart), we set the body argument to blank.
-*
-* $params['content_type'] = 'multipart/mixed';
-* $email = new Mail_mimePart('', $params);
-*
-* // Here we add a text part to the multipart we have
-* // already. Assume $body contains plain text.
-*
-* $params['content_type'] = 'text/plain';
-* $params['encoding']	 = '7bit';
-* $text = $email->addSubPart($body, $params);
-*
-* // Now add an attachment. Assume $attach is
-* the contents of the attachment
-*
-* $params['content_type'] = 'application/zip';
-* $params['encoding']	 = 'base64';
-* $params['disposition']  = 'attachment';
-* $params['dfilename']	= 'example.zip';
-* $attach =& $email->addSubPart($body, $params);
-*
-* // Now build the email. Note that the encode
-* // function returns an associative array containing two
-* // elements, body and headers. You will need to add extra
-* // headers, (eg. Mime-Version) before sending.
-*
-* $email = $message->encode();
-* $email['headers'][] = 'Mime-Version: 1.0';
-*
-*
-* Further examples are available at http://www.phpguru.org
-*
-* TODO:
-*  - Set encode() to return the $obj->encoded if encode()
-*	has already been run. Unless a flag is passed to specifically
-*	re-build the message.
-*
-* @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.3 $
-* @package Mail
-*/
+ *
+ *  Raw mime encoding class
+ *
+ * What is it?
+ *   This class enables you to manipulate and build
+ *   a mime email from the ground up.
+ *
+ * Why use this instead of mime.php?
+ *   mime.php is a userfriendly api to this class for
+ *   people who aren't interested in the internals of
+ *   mime mail. This class however allows full control
+ *   over the email.
+ *
+ * Eg.
+ *
+ * // Since multipart/mixed has no real body, (the body is
+ * // the subpart), we set the body argument to blank.
+ *
+ * $params['content_type'] = 'multipart/mixed';
+ * $email = new Mail_mimePart('', $params);
+ *
+ * // Here we add a text part to the multipart we have
+ * // already. Assume $body contains plain text.
+ *
+ * $params['content_type'] = 'text/plain';
+ * $params['encoding']	 = '7bit';
+ * $text = $email->addSubPart($body, $params);
+ *
+ * // Now add an attachment. Assume $attach is
+ * the contents of the attachment
+ *
+ * $params['content_type'] = 'application/zip';
+ * $params['encoding']	 = 'base64';
+ * $params['disposition']  = 'attachment';
+ * $params['dfilename']	= 'example.zip';
+ * $attach =& $email->addSubPart($body, $params);
+ *
+ * // Now build the email. Note that the encode
+ * // function returns an associative array containing two
+ * // elements, body and headers. You will need to add extra
+ * // headers, (eg. Mime-Version) before sending.
+ *
+ * $email = $message->encode();
+ * $email['headers'][] = 'Mime-Version: 1.0';
+ *
+ *
+ * Further examples are available at http://www.phpguru.org
+ *
+ * TODO:
+ *  - Set encode() to return the $obj->encoded if encode()
+ *	has already been run. Unless a flag is passed to specifically
+ *	re-build the message.
+ *
+ * @author  Richard Heyes <richard@phpguru.org>
+ * @version $Revision: 1.3 $
+ * @package Mail
+ */
 
 class Mail_mimePart {
 
-   /**
-	* The encoding type of this part
-	* @var string
-	*/
+	/**
+	 * The encoding type of this part
+	 * @var string
+	 */
 	var $_encoding;
 
-   /**
-	* An array of subparts
-	* @var array
-	*/
+	/**
+	 * An array of subparts
+	 * @var array
+	 */
 	var $_subparts;
 
-   /**
-	* The output of this part after being built
-	* @var string
-	*/
+	/**
+	 * The output of this part after being built
+	 * @var string
+	 */
 	var $_encoded;
 
-   /**
-	* Headers for this part
-	* @var array
-	*/
+	/**
+	 * Headers for this part
+	 * @var array
+	 */
 	var $_headers;
 
-   /**
-	* The body of this part (not encoded)
-	* @var string
-	*/
+	/**
+	 * The body of this part (not encoded)
+	 * @var string
+	 */
 	var $_body;
 
 	/**
@@ -124,8 +124,7 @@ class Mail_mimePart {
 	 *				  charset	  - Character set to use
 	 * @access public
 	 */
-	function Mail_mimePart($body = '', $params = array())
-	{
+	function Mail_mimePart($body = '', $params = array()) {
 		if (!defined('MAIL_MIMEPART_CRLF')) {
 			define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);
 		}
@@ -182,9 +181,9 @@ class Mail_mimePart {
 		}
 
 		// Assign stuff to member variables
-		$this->_encoded  = array();
-		$this->_headers  = $headers;
-		$this->_body	 = $body;
+		$this->_encoded = array();
+		$this->_headers = $headers;
+		$this->_body = $body;
 	}
 
 	/**
@@ -202,7 +201,7 @@ class Mail_mimePart {
 		$encoded =& $this->_encoded;
 
 		if (!empty($this->_subparts)) {
-			srand((double)microtime()*1000000);
+			srand((double) microtime() * 1000000);
 			$boundary = '=_' . md5(uniqid(rand()) . microtime());
 			$this->_headers['Content-Type'] .= ';' . MAIL_MIMEPART_CRLF . "\t" . 'boundary="' . $boundary . '"';
 
@@ -216,9 +215,7 @@ class Mail_mimePart {
 				$subparts[] = implode(MAIL_MIMEPART_CRLF, $headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
 			}
 
-			$encoded['body'] = '--' . $boundary . MAIL_MIMEPART_CRLF .
-							   implode('--' . $boundary . MAIL_MIMEPART_CRLF, $subparts) .
-							   '--' . $boundary.'--' . MAIL_MIMEPART_CRLF;
+			$encoded['body'] = '--' . $boundary . MAIL_MIMEPART_CRLF . implode('--' . $boundary . MAIL_MIMEPART_CRLF, $subparts) . '--' . $boundary . '--' . MAIL_MIMEPART_CRLF;
 
 		} else {
 			$encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding) . MAIL_MIMEPART_CRLF;
@@ -291,33 +288,32 @@ class Mail_mimePart {
 	 *
 	 * @access private
 	 */
-	function _quotedPrintableEncode($input , $line_max = 76) {
-		$lines  = preg_split("/\r?\n/", $input);
-		$eol	= MAIL_MIMEPART_CRLF;
+	function _quotedPrintableEncode($input, $line_max = 76) {
+		$lines = preg_split("/\r?\n/", $input);
+		$eol = MAIL_MIMEPART_CRLF;
 		$escape = '=';
 		$output = '';
 
-		while (list(, $line) = each($lines)){
+		while (list(, $line) = each($lines)) {
 
-			$linlen	 = mb_strlen($line);
+			$linlen = mb_strlen($line);
 			$newline = '';
 
 			for ($i = 0; $i < $linlen; $i++) {
 				$char = mb_substr($line, $i, 1);
-				$dec  = ord($char);
+				$dec = ord($char);
 
-				if (($dec == 32) and ($i == ($linlen - 1))){	// convert space at eol only
+				if (($dec == 32) and ($i == ($linlen - 1))) { // convert space at eol only
 					$char = '=20';
 
-				} elseif ($dec == 9) {
-					; // Do nothing if a tab.
-				} elseif (($dec == 61) or ($dec < 32 ) or ($dec > 126)) {
+				} elseif ($dec == 9) { // Do nothing if a tab.
+				} elseif (($dec == 61) or ($dec < 32) or ($dec > 126)) {
 					$char = $escape . mb_strtoupper(sprintf('%02s', dechex($dec)));
 				}
 
-				if ((mb_strlen($newline) + mb_strlen($char)) >= $line_max) {		// MAIL_MIMEPART_CRLF is not counted
-					$output  .= $newline . $escape . $eol;					// soft line break; " =\r\n" is okay
-					$newline  = '';
+				if ((mb_strlen($newline) + mb_strlen($char)) >= $line_max) { // MAIL_MIMEPART_CRLF is not counted
+					$output .= $newline . $escape . $eol; // soft line break; " =\r\n" is okay
+					$newline = '';
 				}
 				$newline .= $char;
 			} // end of for

@@ -1,7 +1,5 @@
 <?php
 
-/* $Id$ */
-
 include('includes/session.inc');
 
 $Title = _('Customer Maintenance');
@@ -149,20 +147,20 @@ if (isset($_POST['submit'])) {
 			$myrow = DB_fetch_array($result);
 
 			if ($myrow[0] == 0) {
-			  $sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+				$sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
 												address1='" . $_POST['Address1'] . "',
 												address2='" . $_POST['Address2'] . "',
-												address3='" . $_POST['Address3'] ."',
+												address3='" . $_POST['Address3'] . "',
 												address4='" . $_POST['Address4'] . "',
 												address5='" . $_POST['Address5'] . "',
 												address6='" . $_POST['Address6'] . "',
 												currcode='" . $_POST['CurrCode'] . "',
-												clientsince='" . $SQL_ClientSince. "',
+												clientsince='" . $SQL_ClientSince . "',
 												holdreason='" . $_POST['HoldReason'] . "',
 												paymentterms='" . $_POST['PaymentTerms'] . "',
-												discount='" . filter_number_format($_POST['Discount'])/100 . "',
+												discount='" . filter_number_format($_POST['Discount']) / 100 . "',
 												discountcode='" . $_POST['DiscountCode'] . "',
-												pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
+												pymtdiscount='" . filter_number_format($_POST['PymtDiscount']) / 100 . "',
 												creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
 												salestype = '" . $_POST['SalesType'] . "',
 												invaddrbranch='" . $_POST['AddrInvBranch'] . "',
@@ -176,23 +174,23 @@ if (isset($_POST['submit'])) {
 				$CurrSQL = "SELECT currcode
 					  		FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
-			  $CurrResult = DB_query($CurrSQL,$db);
-			  $CurrRow = DB_fetch_array($CurrResult);
-			  $OldCurrency = $CurrRow[0];
+				$CurrResult = DB_query($CurrSQL, $db);
+				$CurrRow = DB_fetch_array($CurrResult);
+				$OldCurrency = $CurrRow[0];
 
-			  $sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+				$sql = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
 												address1='" . $_POST['Address1'] . "',
 												address2='" . $_POST['Address2'] . "',
-												address3='" . $_POST['Address3'] ."',
+												address3='" . $_POST['Address3'] . "',
 												address4='" . $_POST['Address4'] . "',
 												address5='" . $_POST['Address5'] . "',
 												address6='" . $_POST['Address6'] . "',
 												clientsince='" . $SQL_ClientSince . "',
 												holdreason='" . $_POST['HoldReason'] . "',
 												paymentterms='" . $_POST['PaymentTerms'] . "',
-												discount='" . filter_number_format($_POST['Discount'])/100 . "',
+												discount='" . filter_number_format($_POST['Discount']) / 100 . "',
 												discountcode='" . $_POST['DiscountCode'] . "',
-												pymtdiscount='" . filter_number_format($_POST['PymtDiscount'])/100 . "',
+												pymtdiscount='" . filter_number_format($_POST['PymtDiscount']) / 100 . "',
 												creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
 												salestype = '" . $_POST['SalesType'] . "',
 												invaddrbranch='" . $_POST['AddrInvBranch'] . "',
@@ -488,14 +486,14 @@ if (!isset($DebtorNo)) {
 		</tr>';
 
 	if (!isset($_POST['Address6']) AND $CountryName == '') {
-		 $_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
+		$_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
 	}
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
-		if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
+		if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 		} //!isset($_POST['Address6']) and $CountryName == ""
 		else {
@@ -641,16 +639,16 @@ if (!isset($DebtorNo)) {
 			<td>' . _('Language') . ':</td>
 			<td><select name="LanguageID">';
 
-	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
-		$_POST['LanguageID']=$_SESSION['Language'];
+	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID'] == '') {
+		$_POST['LanguageID'] = $_SESSION['Language'];
 	}
 
-	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+	foreach ($LanguagesArray as $LanguageCode => $LanguageName) {
+		if ($_POST['LanguageID'] == $LanguageCode) {
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
 		} else {
-			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
-	}
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
+		}
 	}
 	echo '</select></td>
 			</tr>';
@@ -800,7 +798,7 @@ else {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
+			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 			elseif (!isset($_POST['Address6']) and $CountryName == "") {
@@ -842,7 +840,7 @@ else {
 				<td>' . _('Country') . ':</td>
 				<td><select name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
+			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 			elseif (!isset($_POST['Address6']) and $CountryName == "") {
@@ -1044,15 +1042,15 @@ else {
 			<td>' . _('Language') . ':</td>
 			<td><select name="LanguageID">';
 
-	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
-		$_POST['LanguageID']=$_SESSION['Language'];
+	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID'] == '') {
+		$_POST['LanguageID'] = $_SESSION['Language'];
 	}
 
-	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-		if ($_POST['LanguageID'] == $LanguageCode){
-			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+	foreach ($LanguagesArray as $LanguageCode => $LanguageName) {
+		if ($_POST['LanguageID'] == $LanguageCode) {
+			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
 		} else {
-			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] .'</option>';
+			echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -1061,10 +1059,10 @@ else {
 			<td>' . _('Require Customer PO Line on SO') . ':</td>';
 	if (isset($_GET['Modify'])) {
 		if ($_POST['CustomerPOLine'] == 0) {
-			echo '<td>'._('No') . '</td>';
+			echo '<td>' . _('No') . '</td>';
 		} //$_POST['CustomerPOLine'] == 0
 		else {
-			echo '<td>'._('Yes') . '</td>';
+			echo '<td>' . _('Yes') . '</td>';
 		}
 	} else {
 		echo '<td><select name="CustomerPOLine">';
@@ -1081,7 +1079,7 @@ else {
 	echo '</tr>';
 
 	if (isset($_GET['Modify'])) {
-		if ($_POST['InvAddrBranch']==0){
+		if ($_POST['InvAddrBranch'] == 0) {
 			echo '<tr>
 					<td>' . _('Invoice Addressing') . ':</td>
 					<td>' . _('Address to HO') . '</td>
