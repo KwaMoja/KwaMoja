@@ -8,7 +8,8 @@ function makeAlert(message, title) {
 	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="OK" onClick="hideAlert()" /></div>'
 	document.getElementById("dialog").innerHTML = html;
-	document.getElementById("mask").style['margin-top'] = -(document.getElementById('dialog').offsetHeight/2);
+	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight/2)+"px";
+	document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
 	return false;
 }
 function hideAlert(){
@@ -24,7 +25,8 @@ function MakeConfirm(message, title, link) {
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
 	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
 	document.getElementById("dialog").innerHTML = html;
-	document.getElementById("mask").style['margin-top'] = -(document.getElementById('dialog').offsetHeight/2);
+	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight/2)+"px";
+	document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
 	return false;
 }
 function hideConfirm(result){

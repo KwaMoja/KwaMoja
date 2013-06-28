@@ -1,6 +1,6 @@
 <?php
 echo '<div id="mask">
-				<div class="centre"><div id="dialog" name="dialog"></div></div>
+				<div id="dialog" name="dialog"></div>
 			</div>';
 
 
