@@ -426,7 +426,7 @@ if (isset($_SESSION['Adjustment' . $identifier]) and mb_strlen($_SESSION['Adjust
 }
 
 echo '<tr><td>' . _('Adjustment to Stock At Location') . ':</td>
-		<td><select name="StockLocation"> ';
+		<td><select minlength="0" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -487,7 +487,7 @@ echo '</td></tr>';
 //Select the tag
 echo '<tr>
 		<td>' . _('Select Tag') . '</td>
-		<td><select name="tag">';
+		<td><select minlength="0" name="tag">';
 
 $SQL = "SELECT tagref,
 				tagdescription

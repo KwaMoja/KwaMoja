@@ -837,7 +837,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 	echo '</td></tr>';
 	echo '<tr>
 			<td>' . _('Category') . ':</td>
-			<td><select name="CategoryID" >';
+			<td><select minlength="0" name="CategoryID" >';
 
 	$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 	$ErrMsg = _('The stock categories could not be retrieved because');
@@ -872,7 +872,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 
 	echo '<tr>
 			<td>' . _('Location') . ':</td>
-			<td><select name="LocCode" >';
+			<td><select minlength="0" name="LocCode" >';
 	while ($myrow = DB_fetch_array($result)) {
 		if (!isset($_SESSION['Contract' . $identifier]->LocCode) or $myrow['loccode'] == $_SESSION['Contract' . $identifier]->LocCode) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -904,7 +904,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 	}
 	echo '<tr><td>' . _('Default Work Centre') . ': </td><td>';
 
-	echo '<select name="DefaultWorkCentre">';
+	echo '<select minlength="0" name="DefaultWorkCentre">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DefaultWorkCentre']) and $myrow['code'] == $_POST['DefaultWorkCentre']) {

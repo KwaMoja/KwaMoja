@@ -133,7 +133,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		</tr>
 		<tr>
 			<td>' . _('Balances As At') . ':</td>
-			<td><select name="PeriodEnd">';
+			<td><select minlength="0" name="PeriodEnd">';
 
 	$sql = "SELECT periodno,
 					lastdate_in_period

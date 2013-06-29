@@ -243,7 +243,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Account Group') . ':</td>
-			<td><select name="Group">';
+			<td><select minlength="0" name="Group">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Group']) and $myrow[0] == $_POST['Group']) {

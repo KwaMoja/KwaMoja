@@ -30,7 +30,7 @@ $result = DB_query($SQL, $db);
 
 // CurrencyToShow Currency Picker
 echo '<tr>
-			<td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
+			<td><select minlength="0" name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
 
 DB_data_seek($result, 0);
 while ($myrow = DB_fetch_array($result)) {

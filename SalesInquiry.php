@@ -891,7 +891,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Report Type') . ':</td>
-			<td><select name="ReportType">
+			<td><select minlength="0" name="ReportType">
 				<option selected="selected" value="Detail">' . _('Detail') . '</option>
 				<option value="Summary">' . _('Summary') . '</option>
 			</select></td>
@@ -901,7 +901,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Order Type') . ':</td>
-			<td><select name="OrderType">
+			<td><select minlength="0" name="OrderType">
 				<option selected="selected" value="0">' . _('Sales Order') . '</option>
 				<option value="1">' . _('Quotation') . '</option>
 			</select></td>
@@ -910,7 +910,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Date Type') . ':</td>
-			<td><select name="DateType">
+			<td><select minlength="0" name="DateType">
 				<option selected="selected" value="Order">' . _('Order Date') . '</option>
 				<option value="Invoice">' . _('Invoice Date') . '</option>
 			</select></td>
@@ -919,7 +919,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Invoice Type') . ':</td>
-			<td><select name="InvoiceType">
+			<td><select minlength="0" name="InvoiceType">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="10">' . _('Sales Invoice') . '</option>
 				<option value="11">' . _('Credit Note') . '</option>
@@ -939,7 +939,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	} //!isset($_POST['PartNumber'])
 	echo '<tr>
 			<td>' . _('Stock Code') . ':</td>
-			<td><select name="PartNumberOp">
+			<td><select minlength="0" name="PartNumberOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
@@ -951,7 +951,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	} //!isset($_POST['DebtorNo'])
 	echo '<tr>
 			<td>' . _('Customer Code') . ':</td>
-			<td><select name="DebtorNoOp">
+			<td><select minlength="0" name="DebtorNoOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
@@ -963,7 +963,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	} //!isset($_POST['DebtorName'])
 	echo '<tr>
 			<td>' . _('Customer Name') . ':</td>
-			<td><select name="DebtorNameOp">
+			<td><select minlength="0" name="DebtorNameOp">
 				<option selected="selected" value="LIKE">' . _('Begins With') . '</option>
 				<option value="Equals">' . _('Equals') . '</option>
 			</select></td>
@@ -982,7 +982,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Line Item Status') . ':</td>
-			<td><select name="LineStatus">
+			<td><select minlength="0" name="LineStatus">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="Completed">' . _('Completed') . '</option>
 				<option value="Open">' . _('Not Completed') . '</option>
@@ -992,7 +992,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Stock Categories') . ':</td>
-			<td><select name="Category">';
+			<td><select minlength="0" name="Category">';
 
 	$CategoryResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory", $db);
 	echo '<option selected="selected" value="All">' . _('All Categories') . '</option>';
@@ -1004,7 +1004,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('For Sales Person') . ':</td>
-			<td><select name="Salesman">';
+			<td><select minlength="0" name="Salesman">';
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$sql .= " WHERE salesmancode='" . $_SESSION['SalesmanLogin'] . "'";
@@ -1020,7 +1020,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	// Use name='Areas[]' multiple - if want to create an array for Areas and allow multiple selections
 	echo '<tr><td>' . _('For Sales Areas') . ':</td>
-				<td><select name="Area">';
+				<td><select minlength="0" name="Area">';
 	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas", $db);
 	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
 	while ($myrow = DB_fetch_array($AreasResult)) {
@@ -1031,7 +1031,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr>
 			<td>' . _('Sort By') . ':</td>
-			<td><select name="SortBy">
+			<td><select minlength="0" name="SortBy">
 				<option selected="selected" value="salesorderdetails.orderno">' . _('Order Number') . '</option>
 				<option value="salesorderdetails.stkcode">' . _('Stock Code') . '</option>
 				<option value="debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Code') . '</option>
@@ -1048,7 +1048,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr><td>' . _('Summary Type') . ':</td>
-			<td><select name="SummaryType">
+			<td><select minlength="0" name="SummaryType">
 				<option selected="selected" value="orderno">' . _('Order Number') . '</option>
 				<option value="transno">' . _('Transaction Number') . '</option>
 				<option value="stkcode">' . _('Stock Code') . '</option>

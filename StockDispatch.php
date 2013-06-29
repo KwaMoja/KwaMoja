@@ -347,7 +347,7 @@ if (isset($_POST['PrintPDF'])) {
 		 </tr>';
 	echo '<tr>
 			  <td>' . _('From Stock Location') . ':</td>
-			  <td><select name="FromLocation"> ';
+			  <td><select minlength="0" name="FromLocation"> ';
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if ($myrow['loccode'] == $_POST['FromLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -364,7 +364,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	echo '<tr>
 			<td>' . _('To Stock Location') . ':</td>
-			<td><select name="ToLocation"> ';
+			<td><select minlength="0" name="ToLocation"> ';
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if ($myrow['loccode'] == $_POST['ToLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -389,7 +389,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<tr>
 			<td>' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+			<td><select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
@@ -411,7 +411,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			<td>' . _('Dispatch Strategy:') . ':</td>
 			<td>
-				<select name="Strategy">
+				<select minlength="0" name="Strategy">
 					<option selected="selected" value="All">' . _('Items needed at TO location with overstock at FROM location') . '</option>
 					<option value="OverFrom">' . _('Items with overstock at FROM location') . '</option>
 				</select>
@@ -422,7 +422,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			<td>' . _('Report Type') . ':</td>
 			<td>
-				<select name="ReportType">';
+				<select minlength="0" name="ReportType">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		echo '<option selected="selected" value="Batch">' . _('Create Batch') . '</option>';
 	}
@@ -436,7 +436,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			<td>' . _('Template') . ':</td>
 			<td>
-				<select name="template">
+				<select minlength="0" name="template">
 					<option selected="selected" value="fullprices">' . _('Full with Prices') . '</option>
 					<option value="full">' . _('Full') . '</option>
 					<option value="standard">' . _('Standard') . '</option>

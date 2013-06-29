@@ -424,7 +424,7 @@ echo '<tr>
 
 echo '<tr>
 	<td>' . _('Frequency of Recurrence') . ':</td>
-	<td><select name="Frequency">';
+	<td><select minlength="0" name="Frequency">';
 
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 52) {
 	echo '<option selected="selected" value="52">' . _('Weekly') . '</option>';
@@ -467,7 +467,7 @@ echo '</select></td></tr>';
 if ($_SESSION['Items' . $identifier]->AllDummyLineItems() == true) {
 
 	echo '<tr><td>' . _('Invoice Automatically') . ':</td>
-		<td><select name="AutoInvoice">';
+		<td><select minlength="0" name="AutoInvoice">';
 	if ($_POST['AutoInvoice'] == 0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';

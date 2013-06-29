@@ -38,7 +38,7 @@ $TokenResult = DB_query($TokenSql, $db);
 while ($myrow = DB_fetch_array($result)) {
 	echo '<tr>
 			<td>' . $myrow['script'] . '</td>
-			<td><select name="' . $myrow['script'] . '">';
+			<td><select minlength="0" name="' . $myrow['script'] . '">';
 	while ($myTokenRow = DB_fetch_array($TokenResult)) {
 		if ($myTokenRow['tokenid'] == $myrow['pagesecurity']) {
 			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';

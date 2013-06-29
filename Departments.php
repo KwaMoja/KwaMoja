@@ -237,7 +237,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Authoriser') . '</td>
-			<td><select name="Authoriser">';
+			<td><select minlength="0" name="Authoriser">';
 	$UserSQL = "SELECT userid FROM www_users";
 	$UserResult = DB_query($UserSQL, $db);
 	while ($myrow = DB_fetch_array($UserResult)) {

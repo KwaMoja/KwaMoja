@@ -145,7 +145,7 @@ if (!isset($SelectedTabs)) {
 	echo '<br /><table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tabs for User ') . $_SESSION['UserID'] . ':</td>
-				<td><select name="SelectedTabs">';
+				<td><select minlength="0" name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -333,7 +333,7 @@ if (!isset($SelectedTabs)) {
 		echo '<br /><table class="selection">'; //Main table
 		echo '<tr><td>' . _('Date Of Expense') . ':</td>
 				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" minlength="0" maxlength="10" value="' . $_POST['Date'] . '" /></td></tr>';
-		echo '<tr><td>' . _('Code Of Expense') . ':</td><td><select name="SelectedExpense">';
+		echo '<tr><td>' . _('Code Of Expense') . ':</td><td><select minlength="0" name="SelectedExpense">';
 
 		DB_free_result($result);
 

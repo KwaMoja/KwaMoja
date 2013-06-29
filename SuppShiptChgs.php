@@ -113,7 +113,7 @@ echo '<tr>
 		<td>' . _('Shipment Selection') . ':
 			<br /> ' . _('If you know the code enter it above') . '
 			<br />' . _('otherwise select the shipment from the list') . '</td>
-		<td><select name="ShiptSelection">';
+		<td><select minlength="0" name="ShiptSelection">';
 
 $sql = "SELECT shiptref,
 				vessel,

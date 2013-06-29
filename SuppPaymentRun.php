@@ -266,7 +266,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('For Suppliers Trading in') . ':</td>
-			<td><select name="Currency">';
+			<td><select minlength="0" name="Currency">';
 
 	$sql = "SELECT currency, currabrev FROM currencies";
 	$result = DB_query($sql, $db);
@@ -316,7 +316,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Pay From Account') . ':</td>
-			<td><select name="BankAccount">';
+			<td><select minlength="0" name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -342,7 +342,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Payment Type') . ':</td>
-			<td><select name="PaytType">';
+			<td><select minlength="0" name="PaytType">';
 
 	/* The array PaytTypes is set up in config.php for user modification
 	Payment types can be modified by editing that file */

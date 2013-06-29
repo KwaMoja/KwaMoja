@@ -589,7 +589,7 @@ if (isset($_POST['submit'])) {
 			</tr>
 			<tr>
 				<td>' . _('Location') . '</td>
-				<td><select name="location[]" multiple="multiple">';
+				<td><select minlength="0" name="location[]" multiple="multiple">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode

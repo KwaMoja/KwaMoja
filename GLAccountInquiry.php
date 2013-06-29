@@ -58,7 +58,7 @@ $DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m'), 0, Date('Y')));
 /*Show a form to allow input of criteria for TB to show */
 echo '<table class="selection" summary="' . _('Inquiry Selection Criteria') . '">
 		<tr>
-			<td>' . _('Account') . ':</td><td><select name="Account">';
+			<td>' . _('Account') . ':</td><td><select minlength="0" name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 $Account = DB_query($sql, $db);
 while ($myrow = DB_fetch_array($Account, $db)) {
@@ -75,7 +75,7 @@ echo '</select>
 //Select the tag
 echo '<tr>
 		<td>' . _('Select Tag') . ':</td>
-			<td><select name="tag">';
+			<td><select minlength="0" name="tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -91,7 +91,7 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
 	}
 }
-echo '</select></td></tr><tr> <td>' . _('For Period range') . ':</td><td><select name="Period[]" size="12" multiple="multiple">';
+echo '</select></td></tr><tr> <td>' . _('For Period range') . ':</td><td><select minlength="0" name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql, $db);
 $id = 0;

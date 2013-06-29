@@ -262,12 +262,12 @@ if (isset($_POST['PrintPDF'])) {
 		  <div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
-	echo '<tr><td>' . _('Consolidation') . ':</td><td><select name="Consolidation">';
+	echo '<tr><td>' . _('Consolidation') . ':</td><td><select minlength="0" name="Consolidation">';
 	echo '<option selected="selected" value="None">' . _('None') . '</option>';
 	echo '<option value="Weekly">' . _('Weekly') . '</option>';
 	echo '<option value="Monthly">' . _('Monthly') . '</option>';
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Print Option') . ':</td><td><select name="Fill">';
+	echo '<tr><td>' . _('Print Option') . ':</td><td><select minlength="0" name="Fill">';
 	echo '<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>';
 	echo '<option value="no">' . _('Plain Print') . '</option>';
 	echo '</select></td></tr>';

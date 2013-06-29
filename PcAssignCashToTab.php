@@ -158,7 +158,7 @@ if (!isset($SelectedTabs)) {
 	echo '<br /><table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tab To Assign Cash') . ':</td>
-			<td><select name="SelectedTabs">';
+			<td><select minlength="0" name="SelectedTabs">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="';

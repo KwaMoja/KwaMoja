@@ -398,7 +398,7 @@ function display(&$db, &$StockID, &$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DI
 		// Generate selections for Demand Type
 		echo '<tr>
 				<td>' . _('Demand Type') . '</td>
-				<td><select name="MRPDemandtype">';
+				<td><select minlength="0" name="MRPDemandtype">';
 
 		$sql = "SELECT mrpdemandtype,
 						description

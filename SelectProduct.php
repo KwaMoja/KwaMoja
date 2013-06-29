@@ -516,7 +516,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 echo '<table class="selection"><tr>';
 echo '<td>' . _('In Stock Category') . ':';
-echo '<select name="StockCat">';
+echo '<select minlength="0" name="StockCat">';
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = '';
 }
@@ -736,7 +736,7 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select minlength="0" name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {

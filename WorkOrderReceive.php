@@ -808,7 +808,7 @@ echo '<table class="selection">
 			<td>' . _('Date Received') . ':</td>
 		 	<td>' . Date($_SESSION['DefaultDateFormat']) . '</td>
 			<td>' . _('Received Into') . ':</td>
-			<td><select name="IntoLocation">';
+			<td><select minlength="0" name="IntoLocation">';
 
 
 if (!isset($_POST['IntoLocation'])) {

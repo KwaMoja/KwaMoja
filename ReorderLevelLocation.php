@@ -159,7 +159,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Location') . ':</td>
-				<td><select name="StockLocation"> ';
+				<td><select minlength="0" name="StockLocation"> ';
 
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -174,7 +174,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	$result1 = DB_query($SQL, $db);
 
 	echo '<tr><td>' . _('Category') . ':</td>
-				<td><select name="StockCat">';
+				<td><select minlength="0" name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -187,7 +187,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 		  </tr>';
 	echo '<tr>
 			<td>' . _('Order By') . ':</td>
-			<td><select name="Sequence">
+			<td><select minlength="0" name="Sequence">
 				<option value="1">' . _('Total Invoiced') . '</option>
 				<option value="2">' . _('Item Code') . '</option>
 				</select></td>

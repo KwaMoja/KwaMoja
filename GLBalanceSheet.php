@@ -26,7 +26,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	echo '<br /><table class="selection" summary="' . _('Criteria for report') . '">
 			<tr>
 				<td>' . _('Select the balance date') . ':</td>
-				<td><select name="BalancePeriodEnd">';
+				<td><select minlength="0" name="BalancePeriodEnd">';
 
 	$periodno = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $periodno . "'";
@@ -49,7 +49,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 	echo '<tr>
 			<td>' . _('Detail Or Summary') . ':</td>
-			<td><select name="Detail">
+			<td><select minlength="0" name="Detail">
 				<option value="Summary">' . _('Summary') . '</option>
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 			</select></td>

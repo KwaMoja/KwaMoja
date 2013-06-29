@@ -292,7 +292,7 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<tr><td>' . _('User Name') . ':</td>
-			<td><select name="SelectUser">';
+			<td><select minlength="0" name="SelectUser">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -314,7 +314,7 @@ if (!isset($_GET['delete'])) {
 	DB_free_result($result);
 
 	echo '<tr><td>' . _('Type Of Tab') . ':</td>
-			<td><select name="SelectTabs">';
+			<td><select minlength="0" name="SelectTabs">';
 
 	$SQL = "SELECT typetabcode,
 					typetabdescription
@@ -337,7 +337,7 @@ if (!isset($_GET['delete'])) {
 	DB_free_result($result);
 
 	echo '<tr><td>' . _('Currency') . ':</td>
-			<td><select name="SelectCurrency">';
+			<td><select minlength="0" name="SelectCurrency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
 
@@ -364,7 +364,7 @@ if (!isset($_GET['delete'])) {
 			<td><input type="text" class="number" name="TabLimit" size="12" minlength="0" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Assigner') . ':</td>
-			<td><select name="SelectAssigner">';
+			<td><select minlength="0" name="SelectAssigner">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -386,7 +386,8 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	DB_free_result($result);
 
-	echo '<tr><td>' . _('Authoriser') . ":</td><td><select name='SelectAuthoriser'>";
+	echo '<tr>
+			<td>' . _('Authoriser') . ':</td><td><select minlength="0" name="SelectAuthoriser">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -408,8 +409,9 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	DB_free_result($result);
 
-	echo '<tr><td>' . _('GL Account Cash Assignment') . ':</td>
-			<td><select name="GLAccountCash">';
+	echo '<tr>
+			<td>' . _('GL Account Cash Assignment') . ':</td>
+			<td><select minlength="0" name="GLAccountCash">';
 
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
@@ -433,7 +435,7 @@ if (!isset($_GET['delete'])) {
 	DB_free_result($result);
 
 	echo '<tr><td>' . _('GL Account Petty Cash Tab') . ':</td>
-			<td><select name="GLAccountPcashTab">';
+			<td><select minlength="0" name="GLAccountPcashTab">';
 
 	$SQL = "SELECT accountcode, accountname
 			FROM chartmaster

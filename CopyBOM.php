@@ -168,7 +168,7 @@ if (isset($_POST['Submit'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('From Stock ID') . '</td>';
-	echo '<td><select name="StockID">';
+	echo '<td><select minlength="0" name="StockID">';
 	while ($myrow = DB_fetch_row($result)) {
 		echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
 	}
@@ -188,7 +188,7 @@ if (isset($_POST['Submit'])) {
 	if (DB_num_rows($result) > 0) {
 		echo '<tr>
 				<td><input type="radio" name="NewOrExisting" value="E" />' . _('To Existing Stock ID') . '</td><td>';
-		echo '<select name="ExStockID">';
+		echo '<select minlength="0" name="ExStockID">';
 		while ($myrow = DB_fetch_row($result)) {
 			echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
 		}

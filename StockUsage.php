@@ -56,7 +56,7 @@ if ($myrow[2] == 'K' OR $myrow[2] == 'A' OR $myrow[2] == 'D') {
 
 echo '<tr><td>' . _('Stock Code') . ':<input type="text" name="StockID" size="21" minlength="0" maxlength="20" value="' . $StockID . '" />';
 
-echo _('From Stock Location') . ':<select name="StockLocation">';
+echo _('From Stock Location') . ':<select minlength="0" name="StockLocation">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

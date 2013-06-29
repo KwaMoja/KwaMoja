@@ -197,7 +197,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 	<tr>
 		<td>' . _('Demand Type') . ':</td>
-		<td><select name="MRPDemandtype">';
+		<td><select minlength="0" name="MRPDemandtype">';
 $sql = "SELECT mrpdemandtype,
 				description
 		FROM mrpdemandtypes";
@@ -207,7 +207,7 @@ while ($myrow = DB_fetch_array($result)) {
 } //end while loop
 echo '</select></td></tr>';
 echo '<tr><td>' . _('Inventory Category') . ':</td>
-		<td><select name="CategoryID">';
+		<td><select minlength="0" name="CategoryID">';
 echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
 $sql = "SELECT categoryid,
 			   categorydescription
@@ -219,7 +219,7 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</select></td>
 		</tr>';
 echo '<tr><td>' . _('Inventory Location') . ':</td>
-		<td><select name="Location">';
+		<td><select minlength="0" name="Location">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -258,7 +258,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>
-		<td><select name="Period">
+		<td><select minlength="0" name="Period">
 			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
 			<option value="monthly">' . _('Monthly') . '</option>
 			</select></td>

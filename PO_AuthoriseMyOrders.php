@@ -85,7 +85,7 @@ while ($myrow = DB_fetch_array($result)) {
 				<td>' . ConvertSQLDate($myrow['orddate']) . '</td>
 				<td><a href="mailto:' . $myrow['email'] . '">' . $myrow['realname'] . '</td>
 				<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-				<td><select name="status' . $myrow['orderno'] . '">
+				<td><select minlength="0" name="status' . $myrow['orderno'] . '">
 					<option selected="selected" value="Pending">' . _('Pending') . '</option>
 					<option value="Authorised">' . _('Authorised') . '</option>
 					<option value="Rejected">' . _('Rejected') . '</option>

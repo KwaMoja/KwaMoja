@@ -289,7 +289,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Date to Upload B/Fwd Assets To:') . '</td>
-				<td><select name="DateToEnter">';
+				<td><select minlength="0" name="DateToEnter">';
 	$PeriodsResult = DB_query("SELECT lastdate_in_period FROM periods ORDER BY periodno", $db);
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)) {
 		echo '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';

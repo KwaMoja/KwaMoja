@@ -28,7 +28,7 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Bank Account') . ':</td>
-			<td><select name="BankAccount">';
+			<td><select minlength="0" name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -61,7 +61,7 @@ if (!isset($_POST['Show'])) {
 		<tr>
 			<td>' . _('Show Transactions') . '</td>
 			<td>
-				<select name="ShowType">
+				<select minlength="0" name="ShowType">
 					<option value="All">' . _('All') . '</option>
 					<option value="Unmatched">' . _('Unmatched') . '</option>
 					<option value="Matched">' . _('Matched') . '</option>

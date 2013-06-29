@@ -42,7 +42,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransDate" minlength="0" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat'], mktime(date('m'), date('Y'), date('d') + 1)) . '" /></td>
 		</tr>';
 	echo '<tr><td>' . _('From Warehouse') . ' : ' . '</td>
-			<td><select name="loccode">';
+			<td><select minlength="0" name="loccode">';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}

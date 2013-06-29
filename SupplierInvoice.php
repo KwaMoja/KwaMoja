@@ -857,7 +857,7 @@ if (!isset($_POST['PostInvoice'])) {
 
 	echo '<tr>
 			<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') . '" /></td>
-			<td><select name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
+			<td><select minlength="0" name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
 	if (isset($_POST['OverRideTax']) and $_POST['OverRideTax'] == 'Man') {
 		echo '<option value="Auto">' . _('Automatic') . '</option>

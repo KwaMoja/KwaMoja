@@ -20,7 +20,7 @@ if (!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) {
 
 
 	/*Show a form to allow input of criteria for TB to show */
-	echo '<table><tr><td>' . _('Select Period From') . ':</td><td><select name="FromPeriod">';
+	echo '<table><tr><td>' . _('Select Period From') . ':</td><td><select minlength="0" name="FromPeriod">';
 
 	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
 	$Periods = DB_query($sql, $db);
@@ -38,7 +38,7 @@ if (!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) {
 
 	$DefaultToPeriod = (int) ($MaxPrdrow[0] - 1);
 
-	echo '<tr><td>' . _('Select Period To') . ':</td><td><select name="ToPeriod">';
+	echo '<tr><td>' . _('Select Period To') . ':</td><td><select minlength="0" name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods, 0);
 

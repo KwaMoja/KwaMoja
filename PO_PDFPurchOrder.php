@@ -392,7 +392,7 @@ else {
 	echo '<table>
 		 <tr>
 			 <td>' . _('Print or Email the Order') . '</td>
-			 <td><select name="PrintOrEmail">';
+			 <td><select minlength="0" name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
@@ -412,7 +412,7 @@ else {
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Show Amounts on the Order') . '</td><td>
-		<select name="ShowAmounts">';
+		<select minlength="0" name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
 	} //!isset($_POST['ShowAmounts'])
@@ -434,7 +434,7 @@ else {
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 		$ContactsResult = DB_query($SQL, $db, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<tr><td>' . _('Email to') . ':</td><td><select name="EmailTo">';
+			echo '<tr><td>' . _('Email to') . ':</td><td><select minlength="0" name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 and mb_strpos($ContactDetails['email'], '@') > 0) {
 					if ($_POST['EmailTo'] == $ContactDetails['email']) {

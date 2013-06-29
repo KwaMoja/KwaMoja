@@ -36,7 +36,7 @@ echo '<br />';
 echo '<table summary="' . _('General ledger account election') . '">
 		<tr>
 			<td>' . _('Select GL Account') . ':</td>
-			<td><select name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
+			<td><select minlength="0" name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
 				accountname

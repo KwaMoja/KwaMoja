@@ -219,7 +219,7 @@ if (isset($_POST['module'])) {
 		echo '<table>';
 
 		echo '<tr><td>' . _('Select the module to edit') . '</td>';
-		echo '<td><select name="module">';
+		echo '<td><select minlength="0" name="module">';
 		for ($i = 0; $i < $NumberOfModules; $i++) {
 			echo '<option>' . $AvailableModules[$i] . '</option>';
 		}

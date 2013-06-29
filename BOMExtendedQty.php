@@ -265,14 +265,14 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr>
 			<td>' . _('Selection Option') . ':</td>
-			<td><select name="Select">
+			<td><select minlength="0" name="Select">
 				<option selected="selected" value="All">' . _('Show All Parts') . '</option>
 				<option value="Shortages">' . _('Only Show Shortages') . '</option>
 			</select></td>
 		</tr>
 		<tr>
 			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+			<td><select minlength="0" name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
 			</select></td>

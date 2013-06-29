@@ -369,7 +369,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	echo '<tr>
 			<td>' . _('Support for Customer') . ':</td>
-			<td><select name="DebtorNo">';
+			<td><select minlength="0" name="DebtorNo">';
 	if ($_POST['DebtorNo'] == '') {
 		echo '<option selected="selected" value="">' . _('All Customers') . '</option>';
 	} else {
@@ -390,7 +390,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	echo '<tr>
 			<td>' . _('Support Whole Category') . ':</td>
-			<td><select name="CategoryID">';
+			<td><select minlength="0" name="CategoryID">';
 	if (isset($_POST['CategoryID']) and $_POST['CategoryID'] == '') {
 		echo '<option selected="selected" value="">' . _('Specific Item Only') . '</option>';
 	} else {
@@ -411,7 +411,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	echo '<tr>
 			<td>' . _('Support Specific Item') . ':</td>
-			<td><select name="StockID">';
+			<td><select minlength="0" name="StockID">';
 	if (isset($_POST['StockID']) and $_POST['StockID'] == '') {
 		echo '<option selected="selected" value="">' . _('Support An Entire Category') . '</option>';
 	} else {

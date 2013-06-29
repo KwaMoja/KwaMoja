@@ -44,7 +44,7 @@ if (!isset($_POST['supplierid'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Supplier') . '</td>
-				<td><select name=supplierid>';
+				<td><select minlength="0" name=supplierid>';
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['supplierid'] . '">' . $myrow['suppname'] . '</option>';
 		}

@@ -279,7 +279,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 		echo '<table class="selection" summary="' . _('Print Price Labels') . '">';
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
-				<td><select name="LabelID">';
+				<td><select minlength="0" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels", $db);
 		while ($LabelRow = DB_fetch_array($LabelResult)) {
@@ -289,7 +289,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 			</tr>
 			<tr>
 				<td>' . _('From Inventory Category Code') . ':</td>
-				<td><select name="FromCriteria">';
+				<td><select minlength="0" name="FromCriteria">';
 
 		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid", $db);
 		while ($myrow = DB_fetch_array($CatResult)) {
@@ -301,7 +301,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select name="ToCriteria">';
+				<td><select minlength="0" name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult, 0);
@@ -315,7 +315,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('For Sales Type/Price List') . ':</td>
-				<td><select name="SalesType">';
+				<td><select minlength="0" name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult = DB_query($sql, $db);
 
@@ -330,7 +330,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('For Currency') . ':</td>
-				<td><select name="Currency">';
+				<td><select minlength="0" name="Currency">';
 		$sql = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult = DB_query($sql, $db);
 

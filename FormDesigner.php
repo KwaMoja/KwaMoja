@@ -27,7 +27,7 @@ function SimpleTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes = FontSizes();
-	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select name="' . $key['id'] . 'FontSize">';
+	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select minlength="0" name="' . $key['id'] . 'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize == $key->FontSize) {
 			echo '<option selected="selected" value="' . $FontSize . '">' . $FontSize . '</option>';
@@ -47,7 +47,7 @@ function MultiTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes = FontSizes();
-	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select name="' . $key['id'] . 'FontSize">';
+	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select minlength="0" name="' . $key['id'] . 'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize == $key->FontSize) {
 			echo '<option selected="selected" value="' . $FontSize . '">' . $FontSize . '</option>';
@@ -69,7 +69,7 @@ function DataTextLine($key) {
 	 * given in the object $key
 	 */
 	$FontSizes = FontSizes();
-	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select name="' . $key['id'] . 'FontSize">';
+	echo '<td class="number">' . _('Font Size') . ' = ' . '</td><td><select minlength="0" name="' . $key['id'] . 'FontSize">';
 	foreach ($FontSizes as $FontSize) {
 		if ($FontSize == $key->FontSize) {
 			echo '<option selected="selected" value="' . $FontSize . '">' . $FontSize . '</option>';
@@ -144,7 +144,7 @@ if (empty($_POST['FormName'])) {
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr>';
-	echo '<td>' . _('Select the form to edit') . '</td><td><select name="FormName">';
+	echo '<td>' . _('Select the form to edit') . '</td><td><select minlength="0" name="FormName">';
 	/* Iterate throght the appropriate companies FormDesigns/ directory
 	 * and extract the form name from each of the xml files found */
 	if ($handle = opendir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/')) {
@@ -189,7 +189,7 @@ echo '<input name="FormName" type="hidden" value="' . $_POST['FormName'] . '" />
 echo '<table width="95%" border="1">'; //Start of outer table
 echo '<tr><th style="width:33%">' . _('Form Name') . '<input type="text" name="formname" value="' . $FormDesign['name'] . '" /></th>';
 /* Select the paper size/orientation */
-echo '<th style="width:33%">' . _('Paper Size') . '<select name="PaperSize">';
+echo '<th style="width:33%">' . _('Paper Size') . '<select minlength="0" name="PaperSize">';
 foreach ($Papers as $Paper) {
 	if (mb_substr($Paper, -8) == 'Portrait') {
 		$PaperValue = mb_substr($Paper, 0, mb_strlen($Paper) - 9);

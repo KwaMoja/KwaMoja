@@ -973,7 +973,7 @@ echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
-		<td><select name="CategoryID" onchange="ReloadForm(ItemForm.UpdateCategories)">';
+		<td><select minlength="0" name="CategoryID" onchange="ReloadForm(ItemForm.UpdateCategories)">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -1044,7 +1044,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Units of Measure') . ':</td>
-		<td><select ' . (in_array('Description', $Errors) ? 'class="selecterror"' : '') . '  name="Units">';
+		<td><select minlength="0" ' . (in_array('Description', $Errors) ? 'class="selecterror"' : '') . '  name="Units">';
 
 $sql = "SELECT unitname FROM unitsofmeasure ORDER by unitname";
 $UOMResult = DB_query($sql, $db);
@@ -1065,7 +1065,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Assembly, Kit, Manufactured or Service/Labour') . ':</td>
-		<td><select name="MBFlag">';
+		<td><select minlength="0" name="MBFlag">';
 if (!isset($_POST['MBFlag']) or $_POST['MBFlag'] == 'A') {
 	echo '<option selected="selected" value="A">' . _('Assembly') . '</option>';
 } else {
@@ -1103,7 +1103,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Current or Obsolete') . ':</td>
-		<td><select name="Discontinued">';
+		<td><select minlength="0" name="Discontinued">';
 
 if ($_POST['Discontinued'] == 0) {
 	echo '<option selected="selected" value="0">' . _('Current') . '</option>';
@@ -1120,7 +1120,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Batch, Serial or Lot Control') . ':</td>
-		<td><select name="Controlled">';
+		<td><select minlength="0" name="Controlled">';
 
 if ($_POST['Controlled'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No Control') . '</option>';
@@ -1134,7 +1134,7 @@ if ($_POST['Controlled'] == 1) {
 }
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Serialised') . ':</td><td><select ' . (in_array('Serialised', $Errors) ? 'class="selecterror"' : '') . '  name="Serialised">';
+echo '<tr><td>' . _('Serialised') . ':</td><td><select minlength="0" ' . (in_array('Serialised', $Errors) ? 'class="selecterror"' : '') . '  name="Serialised">';
 
 if ($_POST['Serialised'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -1159,7 +1159,7 @@ if ($_POST['Serialised'] == 1 and $_POST['MBFlag'] == 'M') {
 
 echo '<tr>
 		<td>' . _('Perishable') . ':</td>
-		<td><select name="Perishable">';
+		<td><select minlength="0" name="Perishable">';
 
 if (!isset($_POST['Perishable']) or $_POST['Perishable'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -1200,7 +1200,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Tax Category') . ':</td>
-		<td><select name="TaxCat">';
+		<td><select minlength="0" name="TaxCat">';
 $sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $result = DB_query($sql, $db);
 
@@ -1291,7 +1291,7 @@ if (DB_num_rows($PropertiesResult) > 0) {
 				break;
 			case 1; //select box
 				$OptionValues = explode(',', $PropertyRow['defaultvalue']);
-				echo '<select name="PropValue' . $PropertyCounter . '">';
+				echo '<select minlength="0" name="PropValue' . $PropertyCounter . '">';
 				foreach ($OptionValues as $PropertyOptionValue) {
 					if ($PropertyOptionValue == $PropertyValue) {
 						echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';

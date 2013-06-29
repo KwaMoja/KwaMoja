@@ -794,7 +794,7 @@ else {
 	if ($_SESSION['PO' . $identifier]->AllowPrintPO == 0 and empty($_POST['RePrint'])) {
 		echo '<tr>
 				<td>' . _('Allow Reprint') . ':</td>
-				<td><select name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
+				<td><select minlength="0" name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
 					<option selected="selected" value="0">' . _('No') . '</option>
 					<option value="1">' . _('Yes') . '</option>
 				</select></td>';
@@ -822,7 +822,7 @@ else {
 	else {
 		echo '<tr>
 				<td>' . _('Status') . ' :  </td>
-				<td><select name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
+				<td><select minlength="0" name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
 
 		switch ($_SESSION['PO' . $identifier]->Status) {
 			case 'Pending':
@@ -881,7 +881,7 @@ else {
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Warehouse') . ':</td>
-				<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
+				<td><select minlength="0" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -1027,7 +1027,7 @@ else {
 			<td><input type="text" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_SESSION['PO' . $identifier]->Tel . '" /></td>
 		</tr>
 		<tr>
-			<td>' . _('Delivery By') . ':</td><td><select name="DeliveryBy">';
+			<td>' . _('Delivery By') . ':</td><td><select minlength="0" name="DeliveryBy">';
 
 	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers", $db);
 
@@ -1050,7 +1050,7 @@ else {
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Supplier Selection') . ':</td>
-				<td><select name="Keywords" onchange="ReloadForm(form1.SearchSuppliers)">';
+				<td><select minlength="0" name="Keywords" onchange="ReloadForm(form1.SearchSuppliers)">';
 
 	$SuppCoResult = DB_query("SELECT supplierid, suppname FROM suppliers ORDER BY suppname", $db);
 
@@ -1069,7 +1069,7 @@ else {
 
 	echo '<tr>
 				<td>' . _('Supplier Contact') . ':</td>
-				<td><select name="SupplierContact">';
+				<td><select minlength="0" name="SupplierContact">';
 
 	$sql = "SELECT contact FROM suppliercontacts WHERE supplierid='" . $_POST['Select'] . "'";
 	$SuppCoResult = DB_query($sql, $db);
@@ -1118,7 +1118,7 @@ else {
 
 	echo '<tr>
 			<td>' . _('Payment Terms') . ':</td>
-			<td><select name="PaymentTerms">';
+			<td><select minlength="0" name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['termsindicator'] == $_SESSION['PO' . $identifier]->PaymentTerms) {

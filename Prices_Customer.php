@@ -318,7 +318,7 @@ $result = DB_query($sql, $db);
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Branch') . ':</td>
-			<td><select name="Branch">';
+			<td><select minlength="0" name="Branch">';
 if ($myrow['branchcode'] == '') {
 	echo '<option selected="selected" value="">' . _('All branches') . '</option>';
 } else {

@@ -38,7 +38,7 @@ if (!isset($_POST['FromDate'])) {
 
 	echo '<tr><td>' . _('Transaction type') . '</td><td>';
 
-	echo '<select name="TransType">';
+	echo '<select minlength="0" name="TransType">';
 
 	echo '<option value="10">' . _('Sales Invoice') . '</option>
 			<option value="11">' . _('Sales Credit Note') . '</option>
@@ -69,7 +69,7 @@ if (!isset($_POST['FromDate'])) {
 
 	echo '<tr>
 			<td>' . _('For Stock Location') . ':</td>
-			<td><select name="StockLocation">';
+			<td><select minlength="0" name="StockLocation">';
 
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {

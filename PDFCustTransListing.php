@@ -35,7 +35,7 @@ if (!isset($_POST['Date'])) {
 			</tr>';
 
 	echo '<tr><td>' . _('Transaction type') . '</td>
-			<td><select name="TransType">
+			<td><select minlength="0" name="TransType">
 				<option value="10">' . _('Invoices') . '</option>
 				<option value="11">' . _('Credit Notes') . '</option>
 				<option value="12">' . _('Receipts') . '</option>';

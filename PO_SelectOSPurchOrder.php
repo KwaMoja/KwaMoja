@@ -148,7 +148,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
-				<select name="StockLocation">';
+				<select minlength="0" name="StockLocation">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -179,7 +179,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	} //$myrow = DB_fetch_array($resultStkLocs)
-	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
+	echo '</select> ' . _('Order Status:') . ' <select minlength="0" name="Status">';
 	if (!isset($_POST['Status']) or $_POST['Status'] == 'Pending_Authorised') {
 		echo '<option selected="selected" value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
 	} //!isset($_POST['Status']) or $_POST['Status'] == 'Pending_Authorised'
@@ -225,7 +225,7 @@ echo '<br />
 		<tr>';
 
 echo '<td>' . _('Select a stock category') . ':
-		<select name="StockCat">';
+		<select minlength="0" name="StockCat">';
 
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {

@@ -152,7 +152,7 @@ if (isset($_POST['PrintPDF'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Selection') . ':</td>
-			<td><select name="Selection">
+			<td><select minlength="0" name="Selection">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>
 				</select></td>
@@ -174,7 +174,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<tr>
 			<td>' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+			<td><select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}

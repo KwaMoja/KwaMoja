@@ -622,7 +622,7 @@ if (!isset($SuppliersResult)) {
 		</tr>
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
-			<td><select name="Preferred">';
+			<td><select minlength="0" name="Preferred">';
 
 	if (isset($_POST['Preferred']) and $_POST['Preferred'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>

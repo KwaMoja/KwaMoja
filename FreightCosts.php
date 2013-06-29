@@ -33,7 +33,7 @@ if (!isset($LocationFrom) or !isset($ShipperID)) {
 	echo '<table class="selection">
 		<tr>
 			<td>' . _('Select A Freight Company to set up costs for') . '</td>
-			<td><select name="ShipperID">';
+			<td><select minlength="0" name="ShipperID">';
 
 	while ($myrow = DB_fetch_array($ShipperResults)) {
 		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
@@ -41,7 +41,7 @@ if (!isset($LocationFrom) or !isset($ShipperID)) {
 	echo '</select></td></tr>
 			<tr>
 				<td>' . _('Select the warehouse') . ' (' . _('ship from location') . ')</td>
-				<td><select name="LocationFrom">';
+				<td><select minlength="0" name="LocationFrom">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,

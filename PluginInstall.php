@@ -119,7 +119,7 @@ if (isset($_POST['Install'])) {
 		echo '<div class="page_help_text noPrint">' . _('Select the plugin that you wish to install from the list below.') . '</div>';
 		echo '<br /><div class="centre">
 				<div class="box_header">' . _('Available plugins') . '</div>
-				<select multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
+				<select minlength="0" multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
 
 		$Plugins = scandir('plugins/');
 

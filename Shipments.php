@@ -321,7 +321,7 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 
 if (!isset($_SESSION['Shipment']->StockLocation)) {
 
-	echo _('Stock Location') . ': <select name="StockLocation">';
+	echo _('Stock Location') . ': <select minlength="0" name="StockLocation">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,

@@ -253,7 +253,7 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr>
 			<td>' . _('Levels') . ':</td>
-			<td><select name="Levels">
+			<td><select minlength="0" name="Levels">
 				<option selected="selected" value="All">' . _('All Levels') . '</option>
 				<option value="One">' . _('One Level') . '</option>
 				</select>
@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr>
 			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+			<td><select minlength="0" name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
 				</select>

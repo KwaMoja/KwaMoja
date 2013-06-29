@@ -128,7 +128,7 @@ if (!isset($StockID)) {
 		if (isset($SelectedStockItem)) {
 			echo _('For the item') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
-		echo _('Work Order number') . ': <input type="text" name="WO" minlength="0" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
+		echo _('Work Order number') . ': <input type="text" name="WO" minlength="0" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select minlength="0" name="StockLocation"> ';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,
@@ -160,7 +160,7 @@ if (!isset($StockID)) {
 		}
 
 		echo '</select> &nbsp;&nbsp;';
-		echo '<select name="ClosedOrOpen">';
+		echo '<select minlength="0" name="ClosedOrOpen">';
 
 		if (isset($_GET['ClosedOrOpen']) and $_GET['ClosedOrOpen'] == 'Closed_Only') {
 			$_POST['ClosedOrOpen'] = 'Closed_Only';
@@ -192,7 +192,7 @@ if (!isset($StockID)) {
 			</tr>
 			<tr>
 				<td>' . _('Select a stock category') . ':
-	  			<select name="StockCat">';
+	  			<select minlength="0" name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';

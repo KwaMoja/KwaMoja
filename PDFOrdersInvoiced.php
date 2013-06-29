@@ -46,7 +46,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	$result = DB_query($sql, $db);
 
 
-	echo '<select name="CategoryID">';
+	echo '<select minlength="0" name="CategoryID">';
 	echo '<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -54,7 +54,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select name="Location">';
+	echo '<tr><td>' . _('Inventory Location') . ':</td><td><select minlength="0" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode

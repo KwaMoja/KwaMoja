@@ -411,7 +411,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Currency') . ':</td>
-				<td><select name="Abbreviation">';
+				<td><select minlength="0" name="Abbreviation">';
 		foreach ($CurrenciesArray as $CurrencyAbbreviation => $Currency) {
 			echo '<option value="' . $CurrencyAbbreviation . '">' . $CurrencyAbbreviation . '-' . $Currency['Currency'] . '</option>';
 		}
@@ -458,7 +458,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Show in Web Cart?') . ':</td>
-			<td><select name="webcart">';
+			<td><select minlength="0" name="webcart">';
 
 	if ($_POST['webcart'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';

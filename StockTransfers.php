@@ -481,7 +481,7 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and mb_strlen
 
 echo '<tr>
 		<td>' . _('From Stock Location') . ':</td>
-		<td><select name="StockLocationFrom">';
+		<td><select minlength="0" name="StockLocationFrom">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -516,7 +516,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('To Stock Location') . ': </td>
-		<td><select name="StockLocationTo"> ';
+		<td><select minlength="0" name="StockLocationTo"> ';
 
 $sql = "SELECT locationname,
 				loccode

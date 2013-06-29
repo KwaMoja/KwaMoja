@@ -584,7 +584,7 @@ if (isset($_POST['Commit'])) {
 
 /*Show the header information for modification */
 
-echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select name="StkLocation">';
+echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select minlength="0" name="StkLocation">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -704,7 +704,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
-		<td><select name="StkCat">';
+		<td><select minlength="0" name="StkCat">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');

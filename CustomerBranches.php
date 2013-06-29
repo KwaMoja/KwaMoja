@@ -636,7 +636,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['BrAddress6'])) {
 		$_POST['BrAddress6'] = '';
 	}
-	echo '<td><select name="BrAddress6">';
+	echo '<td><select minlength="0" name="BrAddress6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['BrAddress6']) and ($_POST['BrAddress6'] == $CountryName)) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -690,7 +690,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Salesperson') . ':</td>
-			<td><select tabindex="13" name="Salesman">';
+			<td><select minlength="0" tabindex="13" name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Salesman']) and $myrow['salesmancode'] == $_POST['Salesman']) {
@@ -719,7 +719,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sales Area') . ':</td>
-			<td><select tabindex="14" name="Area">';
+			<td><select minlength="0" tabindex="14" name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode'] == $_POST['Area']) {
 			echo '<option selected="selected" value="';
@@ -759,7 +759,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Draw Stock From') . ':</td>
-			<td><select tabindex="15" name="DefaultLocation">';
+			<td><select minlength="0" tabindex="15" name="DefaultLocation">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DefaultLocation']) and $myrow['loccode'] == $_POST['DefaultLocation']) {
@@ -811,7 +811,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Tax Group') . ':</td>
-			<td><select tabindex="19" name="TaxGroup">';
+			<td><select minlength="0" tabindex="19" name="TaxGroup">';
 
 	while ($myrow = DB_fetch_array($TaxGroupResults)) {
 		if (isset($_POST['TaxGroup']) and $myrow['taxgroupid'] == $_POST['TaxGroup']) {
@@ -827,7 +827,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Transactions on this branch') . ':</td>
-			<td><select tabindex="20" name="DisableTrans">';
+			<td><select minlength="0" tabindex="20" name="DisableTrans">';
 	if (isset($_POST['DisableTrans']) and $_POST['DisableTrans'] == 0) {
 		echo '<option selected="selected" value="0">' . _('Enabled') . '</option>
 				<option value="1">' . _('Disabled') . '</option>';
@@ -851,7 +851,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Default freight/shipper method') . ':</td>
-			<td><select tabindex="21" name="DefaultShipVia">';
+			<td><select minlength="0" tabindex="21" name="DefaultShipVia">';
 	while ($myrow = DB_fetch_array($ShipperResults)) {
 		if (isset($_POST['DefaultShipVia']) and $myrow['shipper_id'] == $_POST['DefaultShipVia']) {
 			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
@@ -868,7 +868,7 @@ if (!isset($_GET['delete'])) {
 	company logo and address on the packlist */
 	echo '<tr>
 			<td>' . _('Default Packlist') . ':</td>
-			<td><select tabindex="22" name="DeliverBlind">';
+			<td><select minlength="0" tabindex="22" name="DeliverBlind">';
 	if ($_POST['DeliverBlind'] == 2) {
 		echo '<option value="1">' . _('Show company details and logo') . '</option>
 				<option selected="selected"  value="2">' . _('Hide company details and logo') . '</option>';

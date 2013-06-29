@@ -315,7 +315,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	}
 	echo '<tr>
 			<td>' . _('Warehouse') . ':</td>
-			<td><select name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
+			<td><select minlength="0" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -567,7 +567,7 @@ if (isset($_POST['SearchSupplier'])) {
 	}
 	if ($ListPageMax > 1) {
 		echo '<br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-		echo '<select name="PageOffset">';
+		echo '<select minlength="0" name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
@@ -647,7 +647,7 @@ if (isset($_POST['Items'])) {
 	}
 	echo '<table class="selection">
 		<tr>
-			<td>' . _('In Stock Category') . ':<select name="StockCat">';
+			<td>' . _('In Stock Category') . ':<select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}

@@ -755,7 +755,7 @@ echo '<br />
 	<table class="selection" summary="' . _('Select batch header details') . '">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
+		 <td><select minlength="0" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -789,7 +789,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Currency') . ':</td>
-		<td><select tabindex="3" name="Currency" onchange="ReloadForm(form1.BatchInput)">';
+		<td><select minlength="0" tabindex="3" name="Currency" onchange="ReloadForm(form1.BatchInput)">';
 
 if (!isset($_SESSION['ReceiptBatch']->Currency)) {
 	$_SESSION['ReceiptBatch']->Currency = $_SESSION['CompanyRecord']['currencydefault'];
@@ -857,7 +857,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency != $_SESSION['CompanyRecord']['cu
 
 echo '<tr>
 		<td>' . _('Receipt Type') . ':</td>
-		<td><select tabindex="6" name="ReceiptType">';
+		<td><select minlength="0" tabindex="6" name="ReceiptType">';
 
 include('includes/GetPaymentMethods.php');
 /* The array ReceiptTypes is defined from the setup tab of the main menu under payment methods - the array is populated from the include file GetPaymentMethods.php */
@@ -1007,7 +1007,7 @@ if (isset($_POST['GLEntry']) and isset($_SESSION['ReceiptBatch'])) {
 	//Select the tag
 	echo '<tr>
 			<td>' . _('Select Tag') . ':</td>
-			<td><select name="tag">';
+			<td><select minlength="0" name="tag">';
 
 	$SQL = "SELECT tagref,
 					tagdescription
@@ -1030,7 +1030,7 @@ if (isset($_POST['GLEntry']) and isset($_SESSION['ReceiptBatch'])) {
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr>
 			<td>' . _('GL Account') . ':</td>
-			<td><select tabindex="8" name="GLCode">';
+			<td><select minlength="0" tabindex="8" name="GLCode">';
 
 	$SQL = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 	$result = DB_query($SQL, $db);

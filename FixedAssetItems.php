@@ -498,7 +498,7 @@ if (!isset($New)) { //ie not new at all!
 
 echo '<tr>
 		<td>' . _('Asset Category') . ':</td>
-		<td><select name="AssetCategoryID">';
+		<td><select minlength="0" name="AssetCategoryID">';
 
 $sql = "SELECT categoryid, categorydescription FROM fixedassetcategories";
 $ErrMsg = _('The asset categories could not be retrieved because');
@@ -532,7 +532,7 @@ $result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<tr>
 		<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+		<td><select minlength="0" name="AssetLocation">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['AssetLocation'] == $myrow['locationid']) {
@@ -554,7 +554,7 @@ echo '</select>
 	</tr>
 	<tr>
 		<td>' . _('Depreciation Type') . ':</td>
-		<td><select name="DepnType">';
+		<td><select minlength="0" name="DepnType">';
 
 if (!isset($_POST['DepnType'])) {
 	$_POST['DepnType'] = 0; //0 = Straight line - 1 = Diminishing Value

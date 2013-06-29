@@ -129,7 +129,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<th style="text-align:left">' . _('Parent Location') . '</th>
-		<td><select name="ParentLocationID">';
+		<td><select minlength="0" name="ParentLocationID">';
 
 $sql = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $result = DB_query($sql, $db);

@@ -179,7 +179,7 @@ if (!$FoundTheSupplierRole) {
 
 
 echo '<tr><td>' . _('Default Location') . ':</td>
-	<td><select name="DefaultLocation">';
+	<td><select minlength="0" name="DefaultLocation">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -206,7 +206,7 @@ while ($myrow = DB_fetch_array($result)) {
 }
 
 echo '<tr><td>' . _('Reports Page Size') . ':</td>
-	<td><select name="PageSize">';
+	<td><select minlength="0" name="PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -253,7 +253,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+	<td><select minlength="0" name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -276,7 +276,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 	<td>' . _('Language') . ':</td>
-	<td><select name="UserLanguage">';
+	<td><select minlength="0" name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {

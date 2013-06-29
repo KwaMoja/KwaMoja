@@ -246,14 +246,14 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	$result1 = DB_query($SQL, $db);
 	echo '<tr>
 			<td>' . _('Category') . ':</td>
-			<td><select name="StockCat">';
+			<td><select minlength="0" name="StockCat">';
 	echo '<option value="all">' . _('All Categories') . '</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('Price') . '
-				<select name="Comparator">
+				<select minlength="0" name="Comparator">
 				<option value="1">' . _('Less than or equal to') . '</option>
 				<option value="2">' . _('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting'] == 1) {
@@ -267,7 +267,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	echo '<td><input type="text" class="number" name="Margin" minlength="0" maxlength="8" size="8" value="' . $_POST['Margin'] . '" /></td></tr>';
 	$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes", $db);
 	echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
-		<td><select name="SalesType">';
+		<td><select minlength="0" name="SalesType">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SalesType'] == $myrow['typeabbrev']) {
 			echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -279,7 +279,7 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 	$result = DB_query("SELECT currency, currabrev FROM currencies", $db);
 	echo '</select></td></tr>
 		<tr><td>' . _('Currency') . ':</td>
-		<td><select name="CurrCode">';
+		<td><select minlength="0" name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
 			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';

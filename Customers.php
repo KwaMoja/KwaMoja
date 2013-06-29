@@ -491,7 +491,7 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
-			<td><select name="Address6">';
+			<td><select minlength="0" name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -511,7 +511,7 @@ if (!isset($DebtorNo)) {
 	} //DB_num_rows($result) == 0
 	else {
 		echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
-			   <td><select tabindex="9" name="SalesType">';
+			   <td><select minlength="0" tabindex="9" name="SalesType">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -532,7 +532,7 @@ if (!isset($DebtorNo)) {
 	else {
 		echo '<tr>
 				<td>' . _('Customer Type') . ':</td>
-				<td><select tabindex="9" name="typeid">';
+				<td><select minlength="0" tabindex="9" name="typeid">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -577,7 +577,7 @@ if (!isset($DebtorNo)) {
 	else {
 		echo '<tr>
 				<td>' . _('Payment Terms') . ':</td>
-				<td><select tabindex="15" name="PaymentTerms">';
+				<td><select minlength="0" tabindex="15" name="PaymentTerms">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
@@ -588,7 +588,7 @@ if (!isset($DebtorNo)) {
 	}
 	echo '<tr>
 			<td>' . _('Credit Status') . ':</td>
-			<td><select tabindex="16" name="HoldReason">';
+			<td><select minlength="0" tabindex="16" name="HoldReason">';
 
 	$result = DB_query("SELECT reasoncode, reasondescription FROM holdreasons", $db);
 	if (DB_num_rows($result) == 0) {
@@ -620,7 +620,7 @@ if (!isset($DebtorNo)) {
 		} //!isset($_POST['CurrCode'])
 		echo '<tr>
 				<td>' . _('Customer Currency') . ':</td>
-				<td><select tabindex="17" name="CurrCode">';
+				<td><select minlength="0" tabindex="17" name="CurrCode">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['CurrCode'] == $myrow['currabrev']) {
 				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
@@ -637,7 +637,7 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr>
 			<td>' . _('Language') . ':</td>
-			<td><select name="LanguageID">';
+			<td><select minlength="0" name="LanguageID">';
 
 	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID'] == '') {
 		$_POST['LanguageID'] = $_SESSION['Language'];
@@ -655,7 +655,7 @@ if (!isset($DebtorNo)) {
 
 	echo '<tr>
 			<td>' . _('Customer PO Line on SO') . ':</td>
-			<td><select tabindex="18" name="CustomerPOLine">
+			<td><select minlength="0" tabindex="18" name="CustomerPOLine">
 				<option selected="selected" value="0">' . _('No') . '</option>
 				<option value="1">' . _('Yes') . '</option>
 				</select>
@@ -663,7 +663,7 @@ if (!isset($DebtorNo)) {
 		</tr>
 		<tr>
 			<td>' . _('Invoice Addressing') . ':</td>
-			<td><select tabindex="19" name="AddrInvBranch">
+			<td><select minlength="0" tabindex="19" name="AddrInvBranch">
 				<option selected="selected" value="0">' . _('Address to HO') . '</option>
 				<option value="1">' . _('Address to Branch') . '</option>
 				</select>
@@ -796,7 +796,7 @@ else {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Country') . ':</td>
-				<td><select name="Address6">';
+				<td><select minlength="0" name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
 			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -838,7 +838,7 @@ else {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Country') . ':</td>
-				<td><select name="Address6">';
+				<td><select minlength="0" name="Address6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
 			if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -863,7 +863,7 @@ else {
 	else {
 		$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes", $db);
 		echo '<tr><td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
-			<td><select name="SalesType">';
+			<td><select minlength="0" name="SalesType">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['SalesType'] == $myrow['typeabbrev']) {
 				echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
@@ -889,7 +889,7 @@ else {
 		$result = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename", $db);
 		echo '<tr>
 				<td>' . _('Customer Type') . ':</td>
-				<td><select name="typeid">';
+				<td><select minlength="0" name="typeid">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['typeid'] == $myrow['typeid']) {
 				echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -974,7 +974,7 @@ else {
 		$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 		echo '<tr>
 				<td>' . _('Payment Terms') . ':</td>
-				<td><select name="PaymentTerms">';
+				<td><select minlength="0" name="PaymentTerms">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['PaymentTerms'] == $myrow['termsindicator']) {
 				echo '<option selected="selected" value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
@@ -1000,7 +1000,7 @@ else {
 		$result = DB_query("SELECT reasoncode, reasondescription FROM holdreasons", $db);
 		echo '<tr>
 				<td>' . _('Credit Status') . ':</td>
-				<td><select name="HoldReason">';
+				<td><select minlength="0" name="HoldReason">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['HoldReason'] == $myrow['reasoncode']) {
 				echo '<option selected="selected" value="' . $myrow['reasoncode'] . '">' . $myrow['reasondescription'] . '</option>';
@@ -1025,7 +1025,7 @@ else {
 		$result = DB_query("SELECT currency, currabrev FROM currencies", $db);
 		echo '<tr>
 				<td>' . _('Customers Currency') . ':</td>
-				<td><select name="CurrCode">';
+				<td><select minlength="0" name="CurrCode">';
 		while ($myrow = DB_fetch_array($result)) {
 			if ($_POST['CurrCode'] == $myrow['currabrev']) {
 				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
@@ -1040,7 +1040,7 @@ else {
 	}
 	echo '<tr>
 			<td>' . _('Language') . ':</td>
-			<td><select name="LanguageID">';
+			<td><select minlength="0" name="LanguageID">';
 
 	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID'] == '') {
 		$_POST['LanguageID'] = $_SESSION['Language'];
@@ -1065,7 +1065,7 @@ else {
 			echo '<td>' . _('Yes') . '</td>';
 		}
 	} else {
-		echo '<td><select name="CustomerPOLine">';
+		echo '<td><select minlength="0" name="CustomerPOLine">';
 		if ($_POST['CustomerPOLine'] == 0) {
 			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 			echo '<option value="1">' . _('Yes') . '</option>';
@@ -1095,7 +1095,7 @@ else {
 	else {
 		echo '<tr>
 				<td>' . _('Invoice Addressing') . ':</td>
-				<td><select name="AddrInvBranch">';
+				<td><select minlength="0" name="AddrInvBranch">';
 		if ($_POST['InvAddrBranch'] == 0) {
 			echo '<option selected="selected" value="0">' . _('Address to HO') . '</option>';
 			echo '<option value="1">' . _('Address to Branch') . '</option>';

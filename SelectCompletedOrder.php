@@ -511,7 +511,7 @@ if (!isset($SelectedStockItem)) {
 	echo '<br />
 		<div><table class="selection">';
 	echo '<tr><td>' . _('Select a stock category') . ':';
-	echo '<select name="StockCat">';
+	echo '<select minlength="0" name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {

@@ -166,7 +166,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking method') . '</td>
-				<td><select name="MethodID">';
+				<td><select minlength="0" name="MethodID">';
 
 	$sql = "SELECT methodid,
 					methodname
@@ -196,7 +196,7 @@ if (isset($_POST['Submit'])) {
 		</tr>
 		<tr class="EvenTableRows">
 			<td>' . _('If zero movement in period put itmes in') . '</td>
-			<td><select name="ZeroUsage">';
+			<td><select minlength="0" name="ZeroUsage">';
 
 	echo '<option value="C">C</option>
 		<option value="D">D</option>';

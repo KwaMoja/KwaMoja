@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			<table class="selection">
 			<tr>
 				<td>' . _('From Inventory Category Code') . ':</td>
-				<td><select name="FromCriteria">';
+				<td><select minlength="0" name="FromCriteria">';
 
 		$sql = "SELECT categoryid,
 					categorydescription
@@ -224,7 +224,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select name="ToCriteria">';
+				<td><select minlength="0" name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult, 0);
@@ -237,7 +237,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
-				<td><select name="Location">';
+				<td><select minlength="0" name="Location">';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,
@@ -264,7 +264,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Summary or Detailed Report') . ':</td>
-				<td><select name="DetailedReport">
+				<td><select minlength="0" name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select></td>

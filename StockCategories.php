@@ -415,7 +415,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Stock Type') . ':</td>
-		<td><select name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
+		<td><select minlength="0" name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
 if (isset($_POST['StockType']) and $_POST['StockType'] == 'F') {
 	echo '<option selected="selected" value="F">' . _('Finished Goods') . '</option>';
 } else {
@@ -448,7 +448,7 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 	$Result = $BSAccountsResult;
 	echo '<tr><td>' . _('Stock GL Code');
 }
-echo ':</td><td><select name="StockAct">';
+echo ':</td><td><select minlength="0" name="StockAct">';
 
 while ($myrow = DB_fetch_array($Result)) {
 
@@ -462,7 +462,7 @@ DB_data_seek($PnLAccountsResult, 0);
 DB_data_seek($BSAccountsResult, 0);
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select name="WIPAct">';
+echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select minlength="0" name="WIPAct">';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
@@ -478,7 +478,7 @@ DB_data_seek($BSAccountsResult, 0);
 
 echo '<tr>
 		<td>' . _('Stock Adjustments GL Code') . ':</td>
-		<td><select name="AdjGLAct">';
+		<td><select minlength="0" name="AdjGLAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['AdjGLAct']) and $myrow['accountcode'] == $_POST['AdjGLAct']) {
@@ -493,7 +493,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Internal Stock Issues GL Code') . ':</td>
-		<td><select name="IssueGLAct">';
+		<td><select minlength="0" name="IssueGLAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['IssueGLAct']) and $myrow['accountcode'] == $_POST['IssueGLAct']) {
@@ -508,7 +508,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Price Variance GL Code') . ':</td>
-		<td><select name="PurchPriceVarAct">';
+		<td><select minlength="0" name="PurchPriceVarAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode'] == $_POST['PurchPriceVarAct']) {
@@ -530,7 +530,7 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 	echo _('Usage Variance GL Code');
 }
 echo ':</td>
-		<td><select name="MaterialUseageVarAc">';
+		<td><select minlength="0" name="MaterialUseageVarAc">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['MaterialUseageVarAc']) and $myrow['accountcode'] == $_POST['MaterialUseageVarAc']) {
@@ -580,7 +580,7 @@ if (isset($SelectedCategory)) {
 		echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="' . $myrow['stkcatpropid'] . '" />';
 		echo '<tr>
 				<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" minlength="0" maxlength="100" value="' . $myrow['label'] . '" /></td>
-				<td><select name="PropControlType' . $PropertyCounter . '">';
+				<td><select minlength="0" name="PropControlType' . $PropertyCounter . '">';
 		if ($myrow['controltype'] == 0) {
 			echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
 		} else {
@@ -627,7 +627,7 @@ if (isset($SelectedCategory)) {
 	echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value="NewProperty" />';
 	echo '<tr>
 			<td><input type="text" name="PropLabel' . $PropertyCounter . '" size="50" minlength="0" maxlength="100" /></td>
-			<td><select name="PropControlType' . $PropertyCounter . '">
+			<td><select minlength="0" name="PropControlType' . $PropertyCounter . '">
 				<option selected="selected" value="0">' . _('Text Box') . '</option>
 				<option value="1">' . _('Select Box') . '</option>
 				<option value="2">' . _('Check Box') . '</option>

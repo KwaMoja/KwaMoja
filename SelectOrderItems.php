@@ -1680,7 +1680,7 @@ else { //dont require customer selection
 		echo '<div class="page_help_text noPrint">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">
 				<tr>
-					<td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
+					<td><b>' . _('Select a Stock Category') . ': </b><select minlength="0" tabindex="1" name="StockCat">';
 
 		if (!isset($_POST['StockCat']) or $_POST['StockCat'] == 'All') {
 			echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -1910,7 +1910,7 @@ else { //dont require customer selection
 							<td><input type="text" name="poline" size="21" minlength="0" maxlength="20" /></td></tr>';
 		} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
 		echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
-						<td><select name="AssetToDisposeOf">';
+						<td><select minlength="0" name="AssetToDisposeOf">';
 		$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'", $db);
 		echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 		while ($AssetRow = DB_fetch_array($AssetsResult)) {

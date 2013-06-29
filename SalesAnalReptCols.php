@@ -389,7 +389,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Calculation') . ':</td>
-			<td><select name="Calculation">';
+			<td><select minlength="0" name="Calculation">';
 	if (!isset($_POST['Calculation'])) {
 		$_POST['Calculation'] = 0;
 	}
@@ -408,7 +408,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('From Period') . ':</td>
-				<td><select name="PeriodFrom">';
+				<td><select minlength="0" name="PeriodFrom">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql, $db, $ErrMsg);
@@ -424,7 +424,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('ToPeriod') . ':</td>
-				<td><select name="PeriodTo">';
+				<td><select minlength="0" name="PeriodTo">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql, $db, $ErrMsg);
@@ -440,13 +440,13 @@ if (!isset($_GET['delete'])) {
 
 		echo '<tr>
 				<td>' . _('Data to show') . ':</td>
-				<td><select name="DataType">';
+				<td><select minlength="0" name="DataType">';
 		DataOptions($_POST['DataType']);
 		echo '</select></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('Budget or Actual') . ':</td>
-				<td><select name="BudgetOrActual">';
+				<td><select minlength="0" name="BudgetOrActual">';
 		if ($_POST['BudgetOrActual'] == 0) {
 			echo '<option selected="selected" value="0">' . _('Budget') . '</option>';
 			echo '<option value="1">' . _('Actual') . '</option>';
@@ -475,7 +475,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Calculation Operator') . ':</td>
-				<td><select name="CalcOperator">';
+				<td><select minlength="0" name="CalcOperator">';
 		if ($_POST['CalcOperator'] == '/') {
 			echo '<option selected="selected" value="/">' . _('Numerator Divided By Denominator') . '</option>';
 		} else {
@@ -510,7 +510,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Format Type') . ':</td>
-				<td><select name="ValFormat">';
+				<td><select minlength="0" name="ValFormat">';
 		if ($_POST['ValFormat'] == 'N') {
 			echo '<option selected="selected" value="N">' . _('Numeric') . '</option>';
 			echo '<option value="P">' . _('Percentage') . '</option>';

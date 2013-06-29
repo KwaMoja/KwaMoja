@@ -14,7 +14,7 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 
 echo '<table class="selection">
 	 <tr>
-		 <td>  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
+		 <td>  ' . _('From Stock Location') . ':<select minlength="0" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

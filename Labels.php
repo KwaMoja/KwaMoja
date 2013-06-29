@@ -298,7 +298,7 @@ echo '<table class="selection" summary="' . _('Outside container for label diagr
 				</tr>
 				<tr>
 					<td>' . _('Label Paper Size') . ':</td>
-					<td><select name="PaperSize" onchange="ReloadForm(submit)" >';
+					<td><select minlength="0" name="PaperSize" onchange="ReloadForm(submit)" >';
 
 if (!isset($_POST['PaperSize'])) {
 	echo '<option selected="selected" value="custom">' . _('Custom Size') . '</option>';
@@ -425,7 +425,7 @@ if (isset($SelectedLabelID)) {
 			}
 
 			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $myrow['labelfieldid'] . '" />
-			<td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
+			<td><select minlength="0" name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
 			if ($myrow['fieldvalue'] == 'itemcode') {
 				echo '<option selected="selected" value="itemcode">' . _('Item Code') . '</option>';
 			} else {
@@ -450,7 +450,7 @@ if (isset($SelectedLabelID)) {
 				<td><input type="text" name="VPos' . $i . '" size="4" minlength="0" maxlength="4" value="' . $myrow['vpos'] . '" /></td>
 				<td><input type="text" name="HPos' . $i . '" size="4" minlength="0" maxlength="4" value="' . $myrow['hpos'] . '" /></td>
 				<td><input type="text" name="FontSize' . $i . '" size="4" minlength="0" maxlength="4" value="' . $myrow['fontsize'] . '" /></td>
-				<td><select name="Barcode' . $i . '" onchange="ReloadForm(submit)">';
+				<td><select minlength="0" name="Barcode' . $i . '" onchange="ReloadForm(submit)">';
 			if ($myrow['barcode'] == 0) {
 				echo '<option selected="selected" value="0">' . _('No') . '</option>
 						<option value="1">' . _('Yes') . '</option>';
@@ -470,7 +470,7 @@ if (isset($SelectedLabelID)) {
 	echo '<input type="hidden" name="NoOfFieldsDefined" value="' . $i . '" />';
 
 	echo '<tr>
-		<td><select name="FieldName">
+		<td><select minlength="0" name="FieldName">
 			<option value="itemcode">' . _('Item Code') . '</option>
 			<option value="itemdescription">' . _('Item Descrption') . '</option>
 			<option value="barcode">' . _('Item Barcode') . '</option>
@@ -479,7 +479,7 @@ if (isset($SelectedLabelID)) {
 		<td><input type="text" size="4" minlength="0" maxlength="4" name="VPos" /></td>
 		<td><input type="text" size="4" minlength="0" maxlength="4" name="HPos" /></td>
 		<td><input type="text" size="4" minlength="0" maxlength="4" name="FontSize" /></td>
-		<td><select name="Barcode">
+		<td><select minlength="0" name="Barcode">
 			<option value="1">' . _('Yes') . '</option>
 			<option selected="selected" value="0">' . _('No') . '</option>
 			</select></td>

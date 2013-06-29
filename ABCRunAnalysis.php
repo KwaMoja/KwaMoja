@@ -124,7 +124,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking group') . '</td>
-				<td><select name="GroupID">';
+				<td><select minlength="0" name="GroupID">';
 
 	$sql = "SELECT groupid,
 					groupname

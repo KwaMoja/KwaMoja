@@ -231,7 +231,7 @@ echo '<tr>
 		<td><input type="text" name="Description" size="21" minlength="0" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
-		<td><select name="Location">';
+		<td><select minlength="0" name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
@@ -250,7 +250,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Overhead Recovery GL Account') . ':</td>
-		<td><select name="OverheadRecoveryAct">';
+		<td><select minlength="0" name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,

@@ -199,7 +199,7 @@ elseif (isset($_GET['delete'])) {
 		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
 				<td>' . _('Parent Group') . ':' . '</td>
-				<td><select tabindex="2" ' . (in_array('ParentGroupName', $Errors) ? 'class="selecterror"' : '') . '  name="DestinyAccountGroup">';
+				<td><select minlength="0" tabindex="2" ' . (in_array('ParentGroupName', $Errors) ? 'class="selecterror"' : '') . '  name="DestinyAccountGroup">';
 
 		$sql = "SELECT groupname FROM accountgroups";
 		$GroupResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -387,7 +387,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 	echo '<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
-			<td><select tabindex="2" name="ParentGroupName">';
+			<td><select minlength="0" tabindex="2" name="ParentGroupName">';
 
 	$sql = "SELECT groupname FROM accountgroups";
 	$groupresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -411,7 +411,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select tabindex="3" name="SectionInAccounts">';
+			<td><select minlength="0" tabindex="3" name="SectionInAccounts">';
 
 	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -428,7 +428,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select tabindex="4" name="PandL">';
+			<td><select minlength="0" tabindex="4" name="PandL">';
 
 	if ($_POST['PandL'] != 0) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';

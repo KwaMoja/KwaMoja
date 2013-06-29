@@ -159,7 +159,7 @@ if (!isset($_POST['GLCode'])) {
 
 echo '<tr>
 		<td>' . _('Select Tag') . ':</td>
-		<td><select name="Tag">';
+		<td><select minlength="0" name="Tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -187,7 +187,7 @@ echo '<tr>
 	<td>' . _('Account Selection') . ':
 		<br />(' . _('If you know the code enter it above') . '
 		<br />' . _('otherwise select the account from the list') . ')</td>
-	<td><select name="AcctSelection">';
+	<td><select minlength="0" name="AcctSelection">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 

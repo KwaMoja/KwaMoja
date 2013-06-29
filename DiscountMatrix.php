@@ -94,7 +94,7 @@ $result = DB_query($sql, $db);
 
 echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
 
-echo '<select tabindex="1" name="SalesType">';
+echo '<select minlength="0" tabindex="1" name="SalesType">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev'] == $_POST['SalesType']) {
@@ -112,7 +112,7 @@ $result = DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<tr>
 			<td>' . _('Discount Category Code') . ': </td>
-			<td><select name="DiscountCategory">';
+			<td><select minlength="0" name="DiscountCategory">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['discountcategory'] == $_POST['DiscCat']) {

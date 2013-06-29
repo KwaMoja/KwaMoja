@@ -74,7 +74,7 @@ if (isset($_POST['selectchoice'])) {
 	if (DB_num_rows($result) > 0) {
 		echo '<table class="selection"><tr><td>' . _('Discount Category Code') . ': </td>';
 
-		echo '<td><select name="DiscCat" onchange="ReloadForm(update.select)">';
+		echo '<td><select minlength="0" name="DiscCat" onchange="ReloadForm(update.select)">';
 
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['discountcategory'] == $_POST['DiscCat']) {
@@ -167,7 +167,7 @@ if (isset($_POST['selectchoice'])) {
 				categorydescription
 				FROM stockcategory";
 		$result = DB_query($sql, $db);
-		echo '<td><select name="stockcategory">';
+		echo '<td><select minlength="0" name="stockcategory">';
 		while ($myrow = DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		}
@@ -242,7 +242,7 @@ if (!isset($_POST['selectchoice'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Update discount category for') . '</td>';
-	echo '<td><select name="ChooseOption" onchange="ReloadForm(choose.selectchoice)">';
+	echo '<td><select minlength="0" name="ChooseOption" onchange="ReloadForm(choose.selectchoice)">';
 	echo '<option value="1">' . _('a single stock item') . '</option>';
 	echo '<option value="2">' . _('a complete stock category') . '</option>';
 	echo '</select></td></tr>

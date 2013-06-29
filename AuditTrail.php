@@ -44,7 +44,7 @@ echo '<tr><td>' . _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] . '</td>
 
 // Show user selections
 echo '<tr><td>' . _('User ID') . '</td>
-		<td><select tabindex="3" name="SelectedUser">';
+		<td><select minlength="0" tabindex="3" name="SelectedUser">';
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $users[0] == $_POST['SelectedUser']) {
@@ -57,7 +57,7 @@ echo '</select></td></tr>';
 
 // Show table selections
 echo '<tr><td>' . _('Table ') . '</td>
-		<td><select tabindex="4" name="SelectedTable">';
+		<td><select minlength="0" tabindex="4" name="SelectedTable">';
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0] == $_POST['SelectedTable']) {

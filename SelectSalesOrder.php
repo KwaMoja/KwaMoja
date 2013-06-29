@@ -523,7 +523,7 @@ if (!isset($StockID)) {
 				<td>' . _('Order number') . ': </td>
 				<td><input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /></td>
 				<td>' . _('From Stock Location') . ':</td>
-				<td><select name="StockLocation"> ';
+				<td><select minlength="0" name="StockLocation"> ';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,
@@ -555,7 +555,7 @@ if (!isset($StockID)) {
 		}
 
 		echo '</select></td>
-			<td><select name="Quotations">';
+			<td><select minlength="0" name="Quotations">';
 
 		if (isset($_GET['Quotations']) and $_GET['Quotations'] == 'Quotes_Only') {
 			$_POST['Quotations'] = 'Quotes_Only';
@@ -590,7 +590,7 @@ if (!isset($StockID)) {
 		</tr>
 		<tr>
 	  		<td>' . _('Select a stock category') . ':
-	  			<select name="StockCat">';
+	  			<select minlength="0" name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';

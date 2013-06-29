@@ -265,7 +265,7 @@ if (isset($_POST['Submit']) and $InputError == False) {
 
 	echo '<tr>
 			<td>' . _('From Stock Location') . ':</td>
-			<td><select name="FromStockLocation">';
+			<td><select minlength="0" name="FromStockLocation">';
 
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['FromStockLocation'])) {
@@ -288,7 +288,7 @@ if (isset($_POST['Submit']) and $InputError == False) {
 				FROM locations";
 	$resultStkLocs = DB_query($sql, $db);
 	echo '<td>' . _('To Stock Location') . ':</td>
-			<td><select name="ToStockLocation">';
+			<td><select minlength="0" name="ToStockLocation">';
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['ToStockLocation'])) {
 			if ($myrow['loccode'] == $_POST['ToStockLocation']) {

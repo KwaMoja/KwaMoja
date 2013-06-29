@@ -198,7 +198,7 @@ if ($myrow['messagetype'] != '') {
 
 echo '<tr><td>' . _('Section') . ':</td>';
 echo '<td>';
-echo '<select tabindex="2" name="Section">';
+echo '<select minlength="0" tabindex="2" name="Section">';
 
 if ($_POST['Section'] == 'Heading') {
 	echo '<option selected="selected" value="Heading">' . _('Heading') . '</option>';

@@ -793,7 +793,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 				<table class="selection">
 				<tr>
 					<td>' . _('Credit Note Type') . ' :</td>
-					<td><select name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
+					<td><select minlength="0" name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
 
 		if (!isset($_POST['CreditType']) or $_POST['CreditType'] == 'Return') {
 			echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>
@@ -818,7 +818,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 			echo '<tr>
 					<td>' . _('Goods Returned to Location') . ' :</td>
-					<td><select name="Location">';
+					<td><select minlength="0" name="Location">';
 
 			if ($_SESSION['RestrictLocations'] == 0) {
 				$sql = "SELECT locationname,
@@ -851,7 +851,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 			/* the goods are to be written off to somewhere */
 
 			echo '<tr><td>' . _('Write off the cost of the goods to') . '</td>
-					<td><select name=WriteOffGLCode>';
+					<td><select minlength="0" name=WriteOffGLCode>';
 
 			$SQL = "SELECT accountcode,
 						accountname
@@ -873,7 +873,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		}
 		echo '<tr>
 				<td>' . _('Sales person') . ':</td>
-				<td><select name="SalesPerson">';
+				<td><select minlength="0" name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1", $db);
 		if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin'] != NULL) {
 			$_SESSION['CreditItems' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -931,7 +931,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		echo '<br />
 				<table class="selection">
 				<tr>
-					<td>' . _('Select a stock category') . ':&nbsp;<select name="StockCat">';
+					<td>' . _('Select a stock category') . ':&nbsp;<select minlength="0" name="StockCat">';
 
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		while ($myrow1 = DB_fetch_array($result1)) {

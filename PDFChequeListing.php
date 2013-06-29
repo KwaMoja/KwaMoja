@@ -48,7 +48,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 	$result = DB_query($sql, $db);
 
 
-	echo '<select name="BankAccount">';
+	echo '<select minlength="0" name="BankAccount">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
@@ -59,7 +59,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 
 	echo '<tr>
 				<td>' . _('Email the report off') . ':</td>
-				<td><select name="Email">
+				<td><select minlength="0" name="Email">
 					<option selected="selected" value="No">' . _('No') . '</option>
 					<option value="Yes">' . _('Yes') . '</option>
 				</select></td>

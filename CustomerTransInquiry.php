@@ -20,7 +20,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Type') . ':</td>
-			<td><select tabindex="1" name="TransType"> ';
+			<td><select minlength="0" tabindex="1" name="TransType"> ';
 
 $sql = "SELECT typeid,
 				typename

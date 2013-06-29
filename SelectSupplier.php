@@ -252,7 +252,7 @@ if (isset($_POST['Search'])) {
 	}
 	if ($ListPageMax > 1) {
 		echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
-		echo '<select name="PageOffset">';
+		echo '<select minlength="0" name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
@@ -318,7 +318,7 @@ if (isset($_POST['Search'])) {
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {
 	echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
-	echo '<select name="PageOffset">';
+	echo '<select minlength="0" name="PageOffset">';
 	$ListPage = 1;
 	while ($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {

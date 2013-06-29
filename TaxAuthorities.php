@@ -243,7 +243,7 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Input tax GL Account') . ':</td>
-			<td><select name="PurchTaxGLCode">';
+			<td><select minlength="0" name="PurchTaxGLCode">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['PurchTaxGLCode']) and $myrow['accountcode'] == $_POST['PurchTaxGLCode']) {
@@ -262,7 +262,7 @@ DB_data_seek($result, 0);
 
 echo '<tr>
 		<td>' . _('Output tax GL Account') . ':</td>
-		<td><select name="TaxGLCode">';
+		<td><select minlength="0" name="TaxGLCode">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['TaxGLCode']) and $myrow['accountcode'] == $_POST['TaxGLCode']) {

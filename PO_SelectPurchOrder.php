@@ -113,7 +113,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	if (isset($SelectedStockItem)) {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
-	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select name="StockLocation"> ';
+	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select minlength="0" name="StockLocation"> ';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -140,7 +140,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
+	echo '</select> ' . _('Order Status:') . ' <select minlength="0" name="Status">';
 	if (!isset($_POST['Status'])) {
 		$_POST['Status'] = 'Pending';
 	}
@@ -190,7 +190,7 @@ echo '<br />
 			<td>';
 echo _('To search for purchase orders for a specific part use the part selection facilities below') . '</td></tr>';
 echo '<tr>
-		<td>' . _('Select a stock category') . ':<select name="StockCat">';
+		<td>' . _('Select a stock category') . ':<select minlength="0" name="StockCat">';
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
 		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';

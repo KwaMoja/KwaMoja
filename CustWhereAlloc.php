@@ -16,7 +16,7 @@ echo '<p class="page_title_text noPrint" >
 	<table class="selection" summary="' . _('Select criteria for the where used inquiry') . '">
 	<tr>
 		<td>' . _('Type') . ':</td>
-		<td><select tabindex="1" name="TransType"> ';
+		<td><select minlength="0" tabindex="1" name="TransType"> ';
 
 if (!isset($_POST['TransType'])) {
 	$_POST['TransType'] = '10';

@@ -464,7 +464,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>
-				<td><select tabindex="3" name="All_Or_Overdues">
+				<td><select minlength="0" tabindex="3" name="All_Or_Overdues">
 					<option selected="selected" value="All">' . _('All customers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					<option value="HeldOnly">' . _('Held accounts only') . '</option>
@@ -473,7 +473,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('Only Show Customers Of') . ':' . '</td>
-				<td><select tabindex="4" name="Salesman">';
+				<td><select minlength="0" tabindex="4" name="Salesman">';
 
 		$sql = "SELECT salesmancode, salesmanname FROM salesman";
 		if ($_SESSION['SalesmanLogin'] != '') {
@@ -490,7 +490,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('Only show customers trading in') . ':' . '</td>
-				<td><select tabindex="5" name="Currency">';
+				<td><select minlength="0" tabindex="5" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 
@@ -506,7 +506,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('Summary or detailed report') . ':' . '</td>
-				<td><select tabindex="6" name="DetailedReport">
+				<td><select minlength="0" tabindex="6" name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select>

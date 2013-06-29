@@ -253,7 +253,7 @@ $result = DB_query($sql, $db);
 
 echo '<table class="selection">
 		<tr><td>' . _('Area') . ':</td>
-			<td><select tabindex="1" name="Area">
+			<td><select minlength="0" tabindex="1" name="Area">
 				<option value="AN">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
@@ -274,7 +274,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Stock Category') . ':</td>
-		<td><select tabindex="2" name="StkCat">
+		<td><select minlength="0" tabindex="2" name="StkCat">
 			<option value="ANY">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
@@ -296,7 +296,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
-		<td><select tabindex="3" name="SalesType">
+		<td><select minlength="0" tabindex="3" name="SalesType">
 			<option value="AN">' . _('Any Other') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
@@ -313,7 +313,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Post to GL account') . ':</td>
-		<td><select tabindex="4" name="GLCode">';
+		<td><select minlength="0" tabindex="4" name="GLCode">';
 
 DB_free_result($result);
 $sql = "SELECT chartmaster.accountcode,

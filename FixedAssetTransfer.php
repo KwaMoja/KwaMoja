@@ -38,7 +38,7 @@ if (isset($_GET['AssetID'])) {
 
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('In Asset Category') . ': </td>';
-	echo '<td><select name="AssetCat">';
+	echo '<td><select minlength="0" name="AssetCat">';
 
 	if (!isset($_POST['AssetCat'])) {
 		$_POST['AssetCat'] = '';
@@ -66,7 +66,7 @@ if (isset($_GET['AssetID'])) {
 
 
 	<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+		<td><select minlength="0" name="AssetLocation">';
 	if (!isset($_POST['AssetLocation'])) {
 		$_POST['AssetLocation'] = 'ALL';
 	}
@@ -173,7 +173,7 @@ if (isset($_POST['Search'])) {
 				<td class="number">' . locale_number_format($myrow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($myrow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td>' . $myrow['ItemAssetLocation'] . '</td>';
-		echo '<td><select name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move' . $myrow['assetid'] . ')">';
+		echo '<td><select minlength="0" name="Location' . $myrow['assetid'] . '" onchange="ReloadForm(Move' . $myrow['assetid'] . ')">';
 		$ThisDropDownName = 'Location' . $myrow['assetid'];
 		while ($LocationRow = DB_fetch_array($LocationResult)) {
 

@@ -36,7 +36,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 
 	echo '<table class="selection" summary="' . _('Criteria for the sales graph') . '">
 			<tr><td>' . _('Select Period From:') . '</td>
-			<td><select name="FromPeriod">';
+			<td><select minlength="0" name="FromPeriod">';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
@@ -72,7 +72,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 
 	echo '<tr>
 			<td>' . _('Select Period To:') . '</td>
-			<td><select name="ToPeriod">';
+			<td><select minlength="0" name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods, 0);
 
@@ -93,7 +93,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 	}
 	echo '<tr>
 			<td>' . _('For Sales Area/Region:') . '</td>
-			<td><select name="SalesArea">';
+			<td><select minlength="0" name="SalesArea">';
 	if ($_POST['SalesArea'] == 'All') {
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	} else {
@@ -115,7 +115,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 	}
 	echo '<tr>
 			<td>' . _('For Stock Category:') . '</td>
-			<td><select name="CategoryID">';
+			<td><select minlength="0" name="CategoryID">';
 	if ($_POST['CategoryID'] == 'All') {
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	} else {
@@ -132,7 +132,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 
 	echo '<tr>
 			<td>' . _('For Sales Person:') . '</td>
-			<td><select name="SalesmanCode">';
+			<td><select minlength="0" name="SalesmanCode">';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	if ($_SESSION['SalesmanLogin'] != '') {
@@ -156,7 +156,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 		</tr>';
 
 	echo '<tr><td>' . _('Graph Type') . '</td>';
-	echo '<td><select name="GraphType">';
+	echo '<td><select minlength="0" name="GraphType">';
 	echo '<option value="bars">' . _('Bar Graph') . '</option>';
 	echo '<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>';
 	echo '<option value="lines">' . _('Line Graph') . '</option>';

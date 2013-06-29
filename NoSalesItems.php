@@ -16,7 +16,7 @@ if (!(isset($_POST['Search']))) {
 			<td>' . _('Select Location') . '</td>
 			<td>:</td>
 			<td>
-				<select name="Location[]" multiple="multiple">';
+				<select minlength="0" name="Location[]" multiple="multiple">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -47,7 +47,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td width="150">' . _('Select Customer Type') . '</td>
 			<td>:</td>
-			<td><select name="Customers">';
+			<td><select minlength="0" name="Customers">';
 
 	$sql = "SELECT typename,
 					typeid
@@ -68,7 +68,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td width="150">' . _('In Stock Category') . ' </td>
 			<td>:</td>
-			<td><select name="StockCat">';
+			<td><select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}

@@ -163,7 +163,7 @@ if (!isset($_POST['AssetID'])) {
 
 echo '<tr>
 		<td>' . _('Asset to Maintain') . ':</td>
-		<td><select name="AssetID">';
+		<td><select minlength="0" name="AssetID">';
 $AssetSQL = "SELECT assetid, description FROM fixedassets";
 $AssetResult = DB_query($AssetSQL, $db);
 while ($myrow = DB_fetch_array($AssetResult)) {
@@ -188,7 +188,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Responsible') . ':</td>
-		<td><select name="UserResponsible">';
+		<td><select minlength="0" name="UserResponsible">';
 $UserSQL = "SELECT userid FROM www_users";
 $UserResult = DB_query($UserSQL, $db);
 while ($myrow = DB_fetch_array($UserResult)) {
@@ -203,7 +203,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Manager') . ':</td>
-		<td><select name="Manager">';
+		<td><select minlength="0" name="Manager">';
 if ($_POST['Manager'] == '') {
 	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
 } else {

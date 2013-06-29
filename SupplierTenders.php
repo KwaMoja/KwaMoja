@@ -156,7 +156,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('Select option for tendering') . '</td>
-			<td><select name="TenderType">
+			<td><select minlength="0" name="TenderType">
 				<option value="1">' . _('View or Amend outstanding offers from') . ' ' . $Supplier . '</option>
 				<option value="2">' . _('Create a new offer from') . ' ' . $Supplier . '</option>
 				<option value="3">' . _('View any open tenders without an offer from') . ' ' . $Supplier . '</option>
@@ -363,7 +363,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType'] == 2 AND !isset($_POST[
 	}
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}

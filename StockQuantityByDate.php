@@ -18,7 +18,7 @@ $resultStkLocs = DB_query($sql, $db);
 echo '<table class="selection">
 	<tr>
 		<td>' . _('For Stock Category') . ':</td>
-		<td><select name="StockCategory">
+		<td><select minlength="0" name="StockCategory">
 			<option value="All">' . _('All') . '</option>';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
@@ -49,7 +49,7 @@ if ($_SESSION['RestrictLocations'] == 0) {
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<td>' . _('For Stock Location') . ':</td>
-	<td><select name="StockLocation"> ';
+	<td><select minlength="0" name="StockLocation"> ';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {

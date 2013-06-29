@@ -599,7 +599,7 @@ if (!isset($_POST['IssueItem'])){
 	}
 	$LocResult = DB_query($sql, $db);
 
-	echo '<select name="FromLocation">';
+	echo '<select minlength="0" name="FromLocation">';
 
 	if (!isset($_POST['FromLocation'])){
 		$_POST['FromLocation']=$WORow['loccode'];
@@ -690,7 +690,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 		$result1 = DB_query($SQL,$db);
 
 	echo '<table class="selection">
-			<tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
+			<tr><td>' . _('Select a stock category') . ':<select minlength="0" name="StockCat">';
 
 	if (!isset($_POST['StockCat'])){
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -838,7 +838,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 					</tr>';
 			} else {
 				echo '<tr>
-						<td><select name="SerialNos[]" multiple="multiple">';
+						<td><select minlength="0" name="SerialNos[]" multiple="multiple">';
 				while ($SerialNoRow = DB_fetch_array($SerialNoResult)){
 					if (in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
 						echo '<option selected="selected" value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';

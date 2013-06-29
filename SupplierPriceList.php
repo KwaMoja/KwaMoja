@@ -15,7 +15,7 @@ if (isset($_POST['StockSearch'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	echo '<table class="selection"><tr>';
 	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -238,7 +238,7 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select minlength="0" name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -536,7 +536,7 @@ if (isset($_POST['SupplierID'])) {
 				<td><input type="hidden" value="' . $_POST['Select'] . '" name="StockID0" />' . $_POST['Select'] . '</td>
 				<td>' . $StockRow['description'] . '</td>
 				<td><input type="text" class="number" size="11" value="0.0000" name="Price0" /></td>
-				<td><select name="SuppUOM0">';
+				<td><select minlength="0" name="SuppUOM0">';
 		while ($UOMRow = DB_fetch_array($UOMResult)) {
 			if ($UOMRow['unitname'] == $StRowoc['units']) {
 				echo '<option selected="selected" value="' . $UOMRow['unitname'] . '">' . $UOMRow['unitname'] . '</option>';
@@ -563,7 +563,7 @@ if (isset($_POST['SupplierID'])) {
 				<td><input type="hidden" value="' . $myrow['stockid'] . '" name="StockID' . $RowCounter . '" />' . $myrow['stockid'] . '</td>
 				<td>' . $myrow['description'] . '</td>
 				<td><input type="text" class="number" size="11" value="' . $myrow['price'] . '" name="Price' . $RowCounter . '" /></td>
-				<td><select name="SuppUOM' . $RowCounter . '">';
+				<td><select minlength="0" name="SuppUOM' . $RowCounter . '">';
 		DB_data_seek($UOMResult, 0);
 		while ($UOMRow = DB_fetch_array($UOMResult)) {
 			if ($UOMRow['unitname'] == $myrow['suppliersuom']) {

@@ -988,7 +988,7 @@ echo '<br />
 
 echo '<tr>
 	<td>' . _('Deliver from the warehouse at') . ':</td>
-	<td><select name="Location">';
+	<td><select minlength="0" name="Location">';
 
 if ($_SESSION['Items' . $identifier]->Location == '' or !isset($_SESSION['Items' . $identifier]->Location)) {
 	$_SESSION['Items' . $identifier]->Location = $DefaultStockLocation;
@@ -1097,7 +1097,7 @@ if (isset($SupplierLogin) and $SupplierLogin == 0) {
 else {
 	echo '<tr>
 				<td>' . _('Sales person') . ':</td>
-				<td><select name="SalesPerson">';
+				<td><select minlength="0" name="SalesPerson">';
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1", $db);
 	if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin'] != NULL) {
 		$_SESSION['Items' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -1120,7 +1120,7 @@ else {
 
 	echo '<tr>
 				<td>' . _('Packlist Type') . ':</td>
-				<td><select name="DeliverBlind">';
+				<td><select minlength="0" name="DeliverBlind">';
 
 	if ($_SESSION['Items' . $identifier]->DeliverBlind == 2) {
 		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
@@ -1136,7 +1136,7 @@ echo '</select></td></tr>';
 if (isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip'] == 1) {
 	echo '<tr>
 							   <td>' . _('Reprint packing slip') . ':</td>
-							   <td><select name="ReprintPackingSlip">';
+							   <td><select minlength="0" name="ReprintPackingSlip">';
 	echo '<option value="0">' . _('Yes') . '</option>';
 	echo '<option selected="selected" value="1">' . _('No') . '</option>';
 	echo '</select> ' . _('Last printed') . ': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
@@ -1160,7 +1160,7 @@ if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['
 
 echo '<tr>
 							   <td>' . _('Freight/Shipper Method') . ':</td>
-							   <td><select name="ShipVia">';
+							   <td><select minlength="0" name="ShipVia">';
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
@@ -1179,7 +1179,7 @@ echo '</select></td></tr>';
 
 
 echo '<tr><td>' . _('Quotation Only') . ':</td>
-							   <td><select name="Quotation">';
+							   <td><select minlength="0" name="Quotation">';
 if ($_SESSION['Items' . $identifier]->Quotation == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';

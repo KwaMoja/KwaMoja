@@ -31,7 +31,7 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 	/*Show a form to allow input of criteria for Tabs to show */
 	echo '<table class="selection">';
-	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select name="SelectedTabs">';
+	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select minlength="0" name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs

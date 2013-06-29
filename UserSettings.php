@@ -130,7 +130,7 @@ echo '<tr>
 
 echo '<tr>
 	<td>' . _('Language') . ':</td>
-	<td><select name="Language">';
+	<td><select minlength="0" name="Language">';
 
 if (!isset($_POST['Language'])) {
 	$_POST['Language'] = $_SESSION['Language'];
@@ -149,7 +149,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+	<td><select minlength="0" name="Theme">';
 
 $Themes = scandir('css/');
 
@@ -204,7 +204,7 @@ if (!isset($_POST['PDFLanguage'])) {
 
 echo '<tr>
 		<td>' . _('Screen Font Size') . ':</td>
-		<td><select name="FontSize">';
+		<td><select minlength="0" name="FontSize">';
 if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize'] == 0) {
 	echo '<option selected="selected" value="0">' . _('Small') . '</option>';
 	echo '<option value="1">' . _('Medium') . '</option>';
@@ -223,7 +223,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('PDF Language Support') . ': </td>
-		<td><select name="PDFLanguage">';
+		<td><select minlength="0" name="PDFLanguage">';
 
 for ($i = 0; $i < count($PDFLanguages); $i++) {
 	if ($_POST['PDFLanguage'] == $i) {

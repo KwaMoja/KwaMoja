@@ -291,7 +291,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	echo '<table class="selection" summary="' . _('Criteria for report') . '">';
 
 	echo '<tr><td>' . _('Tax Authority To Report On:') . ':</td>
-			<td><select name="TaxAuthority">';
+			<td><select minlength="0" name="TaxAuthority">';
 
 	$result = DB_query("SELECT taxid, description FROM taxauthorities", $db);
 	while ($myrow = DB_fetch_array($result)) {
@@ -300,14 +300,14 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('Return Covering') . ':</td>
-			<td><select name="NoOfPeriods">
+			<td><select minlength="0" name="NoOfPeriods">
 			<option value="1">' . _('One Month') . '</option>' . '<option selected="selected" value="2">' . _('Two Months') . '</option>' . '<option value="3">' . _('Quarter') . '</option>' . '<option value="6">' . _('Six Months') . '</option>' . '</select></td>
 		</tr>';
 
 
 	echo '<tr>
 			<td>' . _('Return To') . ':</td>
-			<td><select name="ToPeriod">';
+			<td><select minlength="0" name="ToPeriod">';
 
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))), $db);
 
@@ -331,7 +331,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 
 	echo '<tr>
 			<td>' . _('Detail Or Summary Only') . ':</td>
-			<td><select name="DetailOrSummary">
+			<td><select minlength="0" name="DetailOrSummary">
 				<option value="Detail">' . _('Detail and Summary') . '</option>
 				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
 			</select></td>

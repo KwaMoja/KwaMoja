@@ -91,7 +91,7 @@ if ($_GET['Action'] == 'Enter') {
 
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr><th colspan="3">' . _('Stock Check Counts at Location') . ':<select name="Location">';
+	echo '<tr><th colspan="3">' . _('Stock Check Counts at Location') . ':<select minlength="0" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode

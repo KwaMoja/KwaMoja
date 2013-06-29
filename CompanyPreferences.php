@@ -285,7 +285,7 @@ $result = DB_query("SELECT currabrev, currency FROM currencies", $db);
 
 echo '<tr>
 		<td>' . _('Home Currency') . ':</td>
-		<td><select tabindex="13" name="CurrencyDefault">';
+		<td><select minlength="0" tabindex="13" name="CurrencyDefault">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault'] == $myrow['currabrev']) {
@@ -309,7 +309,7 @@ $result = DB_query("SELECT accountcode,
 
 echo '<tr>
 		<td>' . _('Debtors Control GL Account') . ':</td>
-		<td><select tabindex="14" name="DebtorsAct">';
+		<td><select minlength="0" tabindex="14" name="DebtorsAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct'] == $myrow[0]) {
@@ -326,7 +326,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Creditors Control GL Account') . ':</td>
-		<td><select tabindex="15" name="CreditorsAct">';
+		<td><select minlength="0" tabindex="15" name="CreditorsAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct'] == $myrow[0]) {
@@ -343,7 +343,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Payroll Net Pay Clearing GL Account') . ':</td>
-		<td><select tabindex="16" name="PayrollAct">';
+		<td><select minlength="0" tabindex="16" name="PayrollAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct'] == $myrow[0]) {
@@ -360,7 +360,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Goods Received Clearing GL Account') . ':</td>
-		<td><select tabindex="17" name="GRNAct">';
+		<td><select minlength="0" tabindex="17" name="GRNAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct'] == $myrow[0]) {
@@ -376,7 +376,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Retained Earning Clearing GL Account') . ':</td>
-		<td><select tabindex="18" name="RetainedEarnings">';
+		<td><select minlength="0" tabindex="18" name="RetainedEarnings">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings'] == $myrow[0]) {
@@ -393,7 +393,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Freight Re-charged GL Account') . ':</td>
-		<td><select tabindex="19" name="FreightAct">';
+		<td><select minlength="0" tabindex="19" name="FreightAct">';
 
 $result = DB_query("SELECT accountcode,
 						accountname
@@ -417,7 +417,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Sales Exchange Variances GL Account') . ':</td>
-		<td><select tabindex="20" name="ExchangeDiffAct">';
+		<td><select minlength="0" tabindex="20" name="ExchangeDiffAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct'] == $myrow[0]) {
@@ -434,7 +434,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Purchases Exchange Variances GL Account') . ':</td>
-		<td><select tabindex="21" name="PurchasesExchangeDiffAct">';
+		<td><select minlength="0" tabindex="21" name="PurchasesExchangeDiffAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct'] == $myrow[0]) {
@@ -451,7 +451,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Payment Discount GL Account') . ':</td>
-		<td><select tabindex="22" name="PytDiscountAct">';
+		<td><select minlength="0" tabindex="22" name="PytDiscountAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct'] == $myrow[0]) {
@@ -468,7 +468,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Create GL entries for accounts receivable transactions') . ':</td>
-		<td><select tabindex="23" name="GLLink_Debtors">';
+		<td><select minlength="0" tabindex="23" name="GLLink_Debtors">';
 
 if ($_POST['GLLink_Debtors'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -483,7 +483,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Create GL entries for accounts payable transactions') . ':</td>
-		<td><select tabindex="24" name="GLLink_Creditors">';
+		<td><select minlength="0" tabindex="24" name="GLLink_Creditors">';
 
 if ($_POST['GLLink_Creditors'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -498,7 +498,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Create GL entries for stock transactions') . ':</td>
-		<td><select tabindex="25" name="GLLink_Stock">';
+		<td><select minlength="0" tabindex="25" name="GLLink_Stock">';
 
 if ($_POST['GLLink_Stock'] == '0') {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';

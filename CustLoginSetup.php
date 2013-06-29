@@ -162,7 +162,7 @@ echo '<tr>
 		<tr>
 		<td><input type="hidden" name="Access" value="1" />
 			' . _('Branch Code') . ':</td>
-			<td><select name="BranchCode">';
+			<td><select minlength="0" name="BranchCode">';
 
 $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 $result = DB_query($sql, $db);
@@ -182,7 +182,7 @@ while ($myrow = DB_fetch_array($result)) {
 }
 echo '</select></td></tr>';
 echo '<tr><td>' . _('Reports Page Size') . ':</td>
-	<td><select name="PageSize">';
+	<td><select minlength="0" name="PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -229,7 +229,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Theme') . ':</td>
-		<td><select name="Theme">';
+		<td><select minlength="0" name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -251,7 +251,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Language') . ':</td>
-		<td><select name="UserLanguage">';
+		<td><select minlength="0" name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {

@@ -591,7 +591,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Tax Province') . ':' . '</td>
-			<td><select name="TaxProvince">';
+			<td><select minlength="0" name="TaxProvince">';
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces", $db);
 	while ($myrow = DB_fetch_array($TaxProvinceResult)) {
@@ -614,7 +614,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
-			<td><select name="InternalRequest">';
+			<td><select minlength="0" name="InternalRequest">';
 	if (isset($_POST['InternalRequest']) and $_POST['InternalRequest'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {

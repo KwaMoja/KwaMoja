@@ -33,7 +33,7 @@ echo '<br />
 		<table class="selection">';
 echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" minlength="0" maxlength="20" />';
 
-echo '  ' . _('From Stock Location') . ':<select name="StockLocation"> ';
+echo '  ' . _('From Stock Location') . ':<select minlength="0" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

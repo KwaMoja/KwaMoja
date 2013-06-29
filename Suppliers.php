@@ -685,7 +685,7 @@ if (!isset($SupplierID)) {
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
-			<td><select name="Address6">';
+			<td><select minlength="0" name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -708,7 +708,7 @@ if (!isset($SupplierID)) {
 			<td><input type="text" name="Email" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
-			<td><select name="SupplierType">';
+			<td><select minlength="0" name="SupplierType">';
 	$result = DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
@@ -731,7 +731,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
 	echo '<tr><td>' . _('Payment Terms') . ':</td>
-			<td><select name="PaymentTerms">';
+			<td><select minlength="0" name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['termsindicator'] . '">' . $myrow['terms'] . '</option>';
@@ -742,7 +742,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
 	echo '<tr><td>' . _('Factor Company') . ':</td>
-			<td><select name="FactorID">';
+			<td><select minlength="0" name="FactorID">';
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $myrow['id']) {
@@ -763,7 +763,7 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '<tr><td>' . _('Supplier Currency') . ':</td>
-			<td><select name="CurrCode">';
+			<td><select minlength="0" name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']) {
 			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
@@ -775,14 +775,14 @@ if (!isset($SupplierID)) {
 
 	echo '</select></td></tr>
 			<tr><td>' . _('Remittance Advice') . ':</td>
-				<td><select name="Remittance">';
+				<td><select minlength="0" name="Remittance">';
 	echo '<option value="0">' . _('Not Required') . '</option>';
 	echo '<option value="1">' . _('Required') . '</option>';
 
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Tax Group') . ':</td>
-			<td><select name="TaxGroup">';
+			<td><select minlength="0" name="TaxGroup">';
 
 	DB_data_seek($result, 0);
 
@@ -888,7 +888,7 @@ if (!isset($SupplierID)) {
 
 	echo '<tr>
 			<td>' . _('Country') . ':</td>
-			<td><select name="Address6">';
+			<td><select minlength="0" name="Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -908,7 +908,7 @@ if (!isset($SupplierID)) {
 	echo '<tr><td>' . _('Email Address') . ':</td>
 			<td><input ' . (in_array('Name', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Email" value="' . $_POST['Email'] . '" size="42" minlength="0" maxlength="40" /></td></tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
-			<td><select name="SupplierType">';
+			<td><select minlength="0" name="SupplierType">';
 	$result = DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['SupplierType'] == $myrow['typeid']) {
@@ -931,7 +931,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query("SELECT terms, termsindicator FROM paymentterms", $db);
 
 	echo '<tr><td>' . _('Payment Terms') . ':</td>
-			<td><select name="PaymentTerms">';
+			<td><select minlength="0" name="PaymentTerms">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['PaymentTerms'] == $myrow['termsindicator']) {
@@ -946,7 +946,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query("SELECT id, coyname FROM factorcompanies", $db);
 
 	echo '<tr><td>' . _('Factor Company') . ':</td>
-			<td><select name="FactorID">';
+			<td><select minlength="0" name="FactorID">';
 	echo '<option value="0">' . _('None') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['FactorID'] == $myrow['id']) {
@@ -962,7 +962,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query("SELECT currency, currabrev FROM currencies", $db);
 
 	echo '<tr><td>' . _('Supplier Currency') . ':</td>
-			<td><select name="CurrCode">';
+			<td><select minlength="0" name="CurrCode">';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['currabrev']) {
 			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
@@ -974,7 +974,7 @@ if (!isset($SupplierID)) {
 
 	echo '</select></td></tr>
 		<tr><td>' . _('Remittance Advice') . ':</td>
-			<td><select name="Remittance">';
+			<td><select minlength="0" name="Remittance">';
 
 	if ($_POST['Remittance'] == 0) {
 		echo '<option selected="selected" value="0">' . _('Not Required') . '</option>';
@@ -988,7 +988,7 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Tax Group') . ':</td>
-			<td><select name="TaxGroup">';
+			<td><select minlength="0" name="TaxGroup">';
 
 	DB_data_seek($result, 0);
 

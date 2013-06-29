@@ -478,7 +478,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Security Role') . ':</td>
-		<td><select name="Access">';
+		<td><select minlength="0" name="Access">';
 
 foreach ($SecurityRoles as $SecKey => $SecVal) {
 	if (isset($_POST['Access']) and $SecKey == $_POST['Access']) {
@@ -491,7 +491,7 @@ echo '</select>';
 echo '<input type="hidden" name="ID" value="' . $_SESSION['UserID'] . '" /></td>
 	</tr>';
 
-echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select name="CanCreateTender">';
+echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select minlength="0" name="CanCreateTender">';
 
 if (isset($_POST['CanCreateTender']) and $_POST['CanCreateTender'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -504,7 +504,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Default Location') . ':</td>
-		<td><select name="DefaultLocation">';
+		<td><select minlength="0" name="DefaultLocation">';
 
 $sql = "SELECT loccode, locationname FROM locations";
 $result = DB_query($sql, $db);
@@ -522,7 +522,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Restrict to just this location') . ': </td>
-		<td><select name="RestrictLocations">';
+		<td><select minlength="0" name="RestrictLocations">';
 if (isset($_POST['RestrictLocations']) and $_POST['RestrictLocations'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
@@ -559,7 +559,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Restrict to Sales Person') . ':</td>
-		<td><select name="Salesman">';
+		<td><select minlength="0" name="Salesman">';
 
 $sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1";
 $result = DB_query($sql, $db);
@@ -583,7 +583,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Reports Page Size') . ':</td>
-		<td><select name="PageSize">';
+		<td><select minlength="0" name="PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -631,7 +631,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Theme') . ':</td>
-		<td><select name="Theme">';
+		<td><select minlength="0" name="Theme">';
 
 $Themes = scandir('css/');
 
@@ -653,7 +653,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Language') . ':</td>
-		<td><select name="UserLanguage">';
+		<td><select minlength="0" name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {
@@ -675,7 +675,7 @@ foreach ($ModuleList as $ModuleName) {
 
 	echo '<tr>
 			<td>' . _('Display') . ' ' . $ModuleName . ' ' . _('module') . ': </td>
-			<td><select name="Module_' . $i . '">';
+			<td><select minlength="0" name="Module_' . $i . '">';
 	if ($ModulesAllowed[$i] == 0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';
@@ -693,7 +693,7 @@ if (!isset($_POST['PDFLanguage'])) {
 
 echo '<tr>
 		<td>' . _('PDF Language Support') . ': </td>
-		<td><select name="PDFLanguage">';
+		<td><select minlength="0" name="PDFLanguage">';
 for ($i = 0; $i < count($PDFLanguages); $i++) {
 	if ($_POST['PDFLanguage'] == $i) {
 		echo '<option selected="selected" value="' . $i . '">' . $PDFLanguages[$i] . '</option>';
@@ -715,7 +715,7 @@ $sql = "SELECT departmentid,
 		ORDER BY description";
 
 $result = DB_query($sql, $db);
-echo '<td><select name="Department">';
+echo '<td><select minlength="0" name="Department">';
 if ((isset($_POST['Department']) and $_POST['Department'] == '0') or !isset($_POST['Department'])) {
 	echo '<option selected="selected" value="0">' . _('Any Internal Department') . '</option>';
 } else {
@@ -735,7 +735,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Status') . ':</td>
-		<td><select name="Blocked">';
+		<td><select minlength="0" name="Blocked">';
 if (isset($_POST['Blocked']) and $_POST['Blocked'] == 0) {
 	echo '<option selected="selected" value="0">' . _('Open') . '</option>';
 	echo '<option value="1">' . _('Blocked') . '</option>';
@@ -750,7 +750,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Screen Font Size') . ':</td>
-		<td><select name="FontSize">';
+		<td><select minlength="0" name="FontSize">';
 if (isset($_POST['FontSize']) and $_POST['FontSize'] == 0) {
 	echo '<option selected="selected" value="0">' . _('Small') . '</option>';
 	echo '<option value="1">' . _('Medium') . '</option>';

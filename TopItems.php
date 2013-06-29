@@ -19,7 +19,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
-			<td><select name="Location">';
+			<td><select minlength="0" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -43,7 +43,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Customer Type') . '</td>
 			<td>:</td>
-			<td><select name="Customers">';
+			<td><select minlength="0" name="Customers">';
 
 	$sql = "SELECT typename,
 					typeid
@@ -66,7 +66,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('In Stock Category') . ' </td>
 			<td>:</td>
-			<td><select name="StockCat">';
+			<td><select minlength="0" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
@@ -89,7 +89,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Order By ') . ' </td>
 			<td>:</td>
-			<td><select name="Sequence">
+			<td><select minlength="0" name="Sequence">
 				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
 				<option value="valuesales">' . _('Value of Sales') . '</option>
 				</select></td>

@@ -102,7 +102,7 @@ $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 echo '<tr><td>' . _('Bank Account') . ':</td>
-		<td><select tabindex="1" name="BankAccount">';
+		<td><select minlength="0" tabindex="1" name="BankAccount">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>

@@ -48,7 +48,7 @@ echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_S
 		<table class="selection">
 		<tr>
 			<td>' . _('In Asset Category') . ':</td>
-			<td><select name="AssetCategory">';
+			<td><select minlength="0" name="AssetCategory">';
 
 if (!isset($_POST['AssetCategory'])) {
 	$_POST['AssetCategory'] = 'ALL';
@@ -78,7 +78,7 @@ echo '</td>
 	</tr>
 	<tr>
 		<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+		<td><select minlength="0" name="AssetLocation">';
 
 if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
@@ -235,7 +235,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select minlength="0" name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {

@@ -141,7 +141,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('Balances As At') . ':</td>
-				<td><select tabindex="3" name="PeriodEnd">';
+				<td><select minlength="0" tabindex="3" name="PeriodEnd">';
 
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$Periods = DB_query($sql, $db, _('Could not retrieve period data because'), _('The SQL that failed to get the period data was'));

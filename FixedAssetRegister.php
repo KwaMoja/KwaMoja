@@ -257,7 +257,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Asset Category') . '</th>
-			<td><select name="AssetCategory">
+			<td><select minlength="0" name="AssetCategory">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetCategory']) and $myrow['categoryid'] == $_POST['AssetCategory']) {
@@ -272,7 +272,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$result = DB_query($sql, $db);
 	echo '<tr>
 			<th>' . _('Asset Location') . '</th>
-			<td><select name="AssetLocation">
+			<td><select minlength="0" name="AssetLocation">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetLocation']) and $myrow['locationid'] == $_POST['AssetLocation']) {
@@ -287,7 +287,7 @@ if (isset($_POST['submit']) or isset($_POST['pdf']) or isset($_POST['csv'])) {
 	$result = DB_query($sql, $db);
 	echo '<tr>
 			<th>' . _('Asset') . '</th>
-			<td><select name="AssetID">
+			<td><select minlength="0" name="AssetID">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetID']) and $myrow['assetid'] == $_POST['AssetID']) {

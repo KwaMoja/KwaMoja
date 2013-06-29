@@ -106,7 +106,7 @@ if (!isset($SelectedRole)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
-	echo '<tr><td>' . _('Select User Role') . ':</td><td><select name="SelectedRole">';
+	echo '<tr><td>' . _('Select User Role') . ':</td><td><select minlength="0" name="SelectedRole">';
 
 	$SQL = "SELECT secroleid,
 					secrolename
@@ -188,7 +188,7 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 
 		echo '<br /><table  class="selection">'; //Main table
 
-		echo '<tr><td>' . _('Select Stock Category Code') . ':</td><td><select name="SelectedCategory">';
+		echo '<tr><td>' . _('Select Stock Category Code') . ':</td><td><select minlength="0" name="SelectedCategory">';
 
 		$SQL = "SELECT categoryid,
 						categorydescription

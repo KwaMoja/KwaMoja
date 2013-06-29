@@ -781,7 +781,7 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<td><input type="text" name="ItemDescription" size="40" /></td></tr>';
 	echo '<tr>
 			<td>' . _('General Ledger Code') . '</td>';
-	echo '<td><select name="GLCode">';
+	echo '<td><select minlength="0" name="GLCode">';
 	$sql = "SELECT accountcode,
 				  accountname
 				FROM chartmaster
@@ -794,7 +794,7 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('OR Asset ID') . '</td>
-			<td><select name="AssetID">';
+			<td><select minlength="0" name="AssetID">';
 	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC", $db);
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)) {
@@ -1095,7 +1095,7 @@ if (!isset($_GET['Edit'])) {
 				<th colspan="3"><h3>' . _('Search For Stock Items') . ':</h3></th>';
 
 	echo '</tr>
-			<tr><td>' . _('Item Category') . ': <select name="StockCat">';
+			<tr><td>' . _('Item Category') . ': <select minlength="0" name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 

@@ -274,7 +274,7 @@ if (isset($SelectedBankAccount) and !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Bank Account GL Code') . ':</td>
-				<td><select tabindex="1" ' . (in_array('AccountCode', $Errors) ? 'class="selecterror"' : '') . ' name="AccountCode">';
+				<td><select minlength="0" tabindex="1" ' . (in_array('AccountCode', $Errors) ? 'class="selecterror"' : '') . ' name="AccountCode">';
 
 	$sql = "SELECT accountcode,
 					accountname
@@ -328,7 +328,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Currency Of Account') . ': </td>
-		<td><select tabindex="5" name="CurrCode">';
+		<td><select minlength="0" tabindex="5" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) or $_POST['CurrCode'] == '') {
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -350,7 +350,7 @@ echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Default for Invoices') . ': </td>
-		<td><select tabindex="6" name="DefAccount">';
+		<td><select minlength="0" tabindex="6" name="DefAccount">';
 
 if (!isset($_POST['DefAccount']) or $_POST['DefAccount'] == '') {
 	$_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];

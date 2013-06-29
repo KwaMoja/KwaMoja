@@ -249,7 +249,7 @@ echo '<table>
 							<td>' . _('Date to Process Journal') . ':</td>
 							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" minlength="0" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
 							<td>' . _('Type') . ':</td>
-							<td><select name="JournalType">';
+							<td><select minlength="0" name="JournalType">';
 
 if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
@@ -285,7 +285,7 @@ echo '<tr>
 
 //Select the tag
 echo '<tr>
-		<td><select name="tag">';
+		<td><select minlength="0" name="tag">';
 
 $SQL = "SELECT tagref,
 				tagdescription
@@ -315,7 +315,7 @@ $sql = "SELECT accountcode,
 		ORDER BY accountcode";
 
 $result = DB_query($sql, $db);
-echo '<td><select name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
+echo '<td><select minlength="0" name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
 echo '<option value="">' . _('Select a general ledger account code') . '</option>';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $myrow['accountcode']) {

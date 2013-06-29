@@ -87,7 +87,7 @@ echo '<input type="hidden" name="Type" value="' . $Type . '" />';
 echo '<table class="selection" summary="' . _('Selection Criteria for inquiry') . '">
 		<tr>
 			<td>' . _('Bank Account') . ':</td>
-			<td colspan="3"><select tabindex="1" name="BankAccount">';
+			<td colspan="3"><select minlength="0" tabindex="1" name="BankAccount">';
 
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql, $db);
@@ -122,7 +122,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td colspan="3">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</td>
-		<td><select tabindex="4" name="Ostg_or_All">';
+		<td><select minlength="0" tabindex="4" name="Ostg_or_All">';
 
 if (isset($_POST['Ostg_or_All']) and $_POST['Ostg_or_All'] == 'All') {
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
@@ -136,7 +136,7 @@ echo '</select></td>
 
 echo '<tr>
 	<td colspan="3">' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</td>
-	<td><select tabindex="5" name="First20_or_All">';
+	<td><select minlength="0" tabindex="5" name="First20_or_All">';
 if (isset($_POST['First20_or_All']) and $_POST['First20_or_All'] == 'All') {
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
 	echo '<option value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';

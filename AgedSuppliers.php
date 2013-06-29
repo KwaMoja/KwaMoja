@@ -293,14 +293,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>
-				<td><select tabindex="3" name="All_Or_Overdues">
+				<td><select minlength="0" tabindex="3" name="All_Or_Overdues">
 					<option selected="selected" value="All">' . _('All suppliers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					</select></td>
 			</tr>
 			<tr>
 				<td>' . _('For suppliers trading in') . ':' . '</td>
-				<td><select tabindex="4" name="Currency">';
+				<td><select minlength="0" tabindex="4" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 		$result = DB_query($sql, $db);
@@ -316,7 +316,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			</tr>
 			<tr>
 				<td>' . _('Summary or Detailed Report') . ':' . '</td>
-				<td><select tabindex="5" name="DetailedReport">
+				<td><select minlength="0" tabindex="5" name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
 					</select></td>

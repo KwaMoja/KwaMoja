@@ -266,7 +266,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<table class="selection">';
 
 		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
-					<td><select name="FromCriteria">';
+					<td><select minlength="0" name="FromCriteria">';
 
 		$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 		$CatResult = DB_query($sql, $db);
@@ -277,7 +277,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select name="ToCriteria">';
+				<td><select minlength="0" name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult, 0);
@@ -289,7 +289,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('For Inventory in Location') . ':</td>
-				<td><select name="Location">';
+				<td><select minlength="0" name="Location">';
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,
 							loccode
@@ -315,7 +315,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Action for Stock Check Freeze') . ':</td>
-				<td><select name="MakeStkChkData">';
+				<td><select minlength="0" name="MakeStkChkData">';
 
 		if (!isset($_POST['MakeStkChkData'])) {
 			$_POST['MakeStkChkData'] = 'PrintOnly';

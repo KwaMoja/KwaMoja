@@ -542,7 +542,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 
 		echo '<div class="centre"><p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</p></div>';
 		echo '<table class="table1">
-				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select name="InvOrCredit">';
+				<tr><td>' . _('Print Invoices or Credit Notes') . '</td><td><select minlength="0" name="InvOrCredit">';
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 
 			echo '<option selected="selected" value="Invoice">' . _('Invoices') . '</option>';
@@ -553,7 +553,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 		}
 
 		echo '</select></td></tr>';
-		echo '<tr><td>' . _('Print EDI Transactions') . '</td><td><select name="PrintEDI">';
+		echo '<tr><td>' . _('Print EDI Transactions') . '</td><td><select minlength="0" name="PrintEDI">';
 
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 
@@ -569,7 +569,7 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 		echo '</select></td></tr>';
 		echo '<tr>
 				<td>' . _('Despatch Location') . ': </td>
-				<td><select tabindex="2" name="LocCode">';
+				<td><select minlength="0" tabindex="2" name="LocCode">';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,

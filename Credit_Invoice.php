@@ -1455,7 +1455,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	echo '<br /><table class="selection">';
 
 	echo '<tr><td>' . _('Credit Note Type') . '</td>
-			<td><select tabindex="' . $j . '" name="CreditType">';
+			<td><select minlength="0" tabindex="' . $j . '" name="CreditType">';
 
 	if (!isset($_POST['CreditType']) or $_POST['CreditType'] == 'Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
@@ -1477,7 +1477,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 		/*if the credit note is a return of goods then need to know which location to receive them into */
 
-		echo '<tr><td>' . _('Goods returned to location') . '</td><td><select tabindex="' . $j . '" name="Location">';
+		echo '<tr><td>' . _('Goods returned to location') . '</td><td><select minlength="0" tabindex="' . $j . '" name="Location">';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,
@@ -1510,7 +1510,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	} elseif ($_POST['CreditType'] == 'WriteOff') {
 		/* the goods are to be written off to somewhere */
 
-		echo '<tr><td>' . _('Write off the cost of the goods to') . '</td><td><select tabindex="' . $j . '" name="WriteOffGLCode">';
+		echo '<tr><td>' . _('Write off the cost of the goods to') . '</td><td><select minlength="0" tabindex="' . $j . '" name="WriteOffGLCode">';
 
 		$SQL = "SELECT accountcode,
 					accountname
@@ -1534,7 +1534,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	$j++;
 	echo '<tr>
 			<td>' . _('Sales person') . ':</td>
-			<td><select tabindex="' . $j . '" name="SalesPerson">';
+			<td><select minlength="0" tabindex="' . $j . '" name="SalesPerson">';
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1", $db);
 	/* SalesPerson will be set because it is an invoice being credited and the order salesperson would/should have been retrieved */
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {

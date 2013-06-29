@@ -337,7 +337,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Current?') . ':</td>
-			<td><select name="Current">';
+			<td><select minlength="0" name="Current">';
 	if ($_POST['Current'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {

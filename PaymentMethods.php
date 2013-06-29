@@ -266,28 +266,28 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	echo '<tr>
 		<td>' . _('Use For Payments') . ':' . '</td>
-		<td><select name="ForPayment">
+		<td><select minlength="0" name="ForPayment">
 			<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') . ' value="1">' . _('Yes') . '</option>
 			<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') . ' value="0">' . _('No') . '</option>
 			</select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Use For Receipts') . ':' . '</td>
-			<td><select name="ForReceipt">
+			<td><select minlength="0" name="ForReceipt">
 				<option' . ($_POST['ForReceipt'] ? ' selected="selected"' : '') . ' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['ForReceipt'] ? '' : ' selected="selected"') . ' value="0">' . _('No') . '</option>
 			</select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Use Pre-printed Stationery') . ':' . '</td>
-			<td><select name="UsePrePrintedStationery">
+			<td><select minlength="0" name="UsePrePrintedStationery">
 				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected="selected"' : '') . ' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['UsePrePrintedStationery'] == 1 ? '' : ' selected="selected"') . ' value="0">' . _('No') . '</option>
 				</select></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Open POS Cash Drawer for Sale') . ':' . '</td>
-			<td><select name="OpenCashDrawer">
+			<td><select minlength="0" name="OpenCashDrawer">
 				<option' . ($_POST['OpenCashDrawer'] ? ' selected="selected"' : '') . ' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected="selected"') . ' value="0">' . _('No') . '</option>
 			</select></td>

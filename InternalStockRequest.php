@@ -199,7 +199,7 @@ if ($_SESSION['AllowedDepartment'] == 0) {
 			ORDER BY description";
 }
 $result = DB_query($sql, $db);
-echo '<td><select name="Department">';
+echo '<td><select minlength="0" name="Department">';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_SESSION['Request']->Department) and $_SESSION['Request']->Department == $myrow['departmentid']) {
 		echo '<option selected="True" value="' . $myrow['departmentid'] . '">' . htmlspecialchars($myrow['description'], ENT_QUOTES, 'UTF-8') . '</option>';
@@ -230,7 +230,7 @@ if ($_SESSION['RestrictLocations'] == 0) {
 }
 
 $result = DB_query($sql, $db);
-echo '<td><select name="Location">
+echo '<td><select minlength="0" name="Location">
 		<option value="">' . _('Select a Location') . '</option>';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_SESSION['Request']->Location) and $_SESSION['Request']->Location == $myrow['loccode']) {
@@ -332,7 +332,7 @@ if (DB_num_rows($result1) == 0) {
 }
 echo '<table class="selection">
 	<tr>
-		<td>' . _('In Stock Category') . ':<select name="StockCat">';
+		<td>' . _('In Stock Category') . ':<select minlength="0" name="StockCat">';
 
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = '';
@@ -542,7 +542,7 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select minlength="0" name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {

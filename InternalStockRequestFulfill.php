@@ -214,7 +214,7 @@ if (!isset($_POST['Location'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
-				<td><select name="Location">';
+				<td><select minlength="0" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -341,7 +341,7 @@ if (isset($_POST['Location'])) {
 					<td class="number"><input type="text" class="number" name="' . $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value="' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" /></td>
 					<td>' . $LineRow['uom'] . '</td>
 					<td><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>
-					<td><select name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '">';
+					<td><select minlength="0" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '">';
 
 			$SQL = "SELECT tagref,
 							tagdescription

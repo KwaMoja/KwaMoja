@@ -767,7 +767,7 @@ $AccountsResults = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 echo '<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><select name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
+		<td><select minlength="0" name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -801,7 +801,7 @@ echo '<tr>
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 	echo '<tr><td>' . _('Currency of Payment') . ':</td>
-			<td><select name="Currency" onchange="ReloadForm(UpdateHeader)">';
+			<td><select minlength="0" name="Currency" onchange="ReloadForm(UpdateHeader)">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$result = DB_query($SQL, $db);
 
@@ -887,7 +887,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 echo '<tr>
 		<td>' . _('Payment type') . ':</td>
 		<input type="submit" visibility="hidden" name="UpdatePmtType" value="Update" />
-		<td><select name="Paymenttype" onchange="return ReloadForm(UpdatePmtType)">';
+		<td><select minlength="0" name="Paymenttype" onchange="return ReloadForm(UpdatePmtType)">';
 
 include('includes/GetPaymentMethods.php');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
@@ -956,7 +956,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	//Select the Tag
 	echo '<tr>
 			<td>' . _('Select Tag') . ':</td>
-			<td><select name="Tag">';
+			<td><select minlength="0" name="Tag">';
 
 	$SQL = "SELECT tagref,
 				tagdescription
@@ -992,7 +992,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 
 	echo '<tr>
 			<td>' . _('Select GL Group') . ':</td>
-			<td><select name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
+			<td><select minlength="0" name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
 
 	$SQL = "SELECT groupname
 			FROM accountgroups
@@ -1036,7 +1036,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 
 	echo '<tr>
 			<td>' . _('Select GL Account') . ':</td>
-			<td><select name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
+			<td><select minlength="0" name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
 
 	$result = DB_query($SQL, $db);
 	if (DB_num_rows($result) == 0) {

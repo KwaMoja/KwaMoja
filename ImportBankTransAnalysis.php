@@ -124,7 +124,7 @@ $AllowGLAnalysis = true;
 if ($_SESSION['Trans'][$TransID]->Amount < 0) { //its a payment
 	echo '<tr>
 			<td>' . _('Payment to Supplier Account') . ':</td>
-			<td><select name="SupplierID" onChange="ReloadForm(form1.Update)">';
+			<td><select minlength="0" name="SupplierID" onChange="ReloadForm(form1.Update)">';
 
 	$result = DB_query("SELECT supplierid,
 								suppname
@@ -155,7 +155,7 @@ if ($_SESSION['Trans'][$TransID]->Amount < 0) { //its a payment
 } else { //its a receipt
 	echo '<tr>
 			<td>' . _('Receipt to Customer Account') . ':</td>
-			<td><select name="DebtorNo" onChange="ReloadForm(form1.Update)">';
+			<td><select minlength="0" name="DebtorNo" onChange="ReloadForm(form1.Update)">';
 
 	$result = DB_query("SELECT debtorno,
 								name
@@ -259,7 +259,7 @@ if ($AllowGLAnalysis == false) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Account Selection') . ':<br />(' . _('If you know the code enter it above') . '<br />' . _('otherwise select the account from the list') . ')</td>
-			<td><select name="AcctSelection">';
+			<td><select minlength="0" name="AcctSelection">';
 
 	$result = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode", $db);
 	echo '<option value=""></option>';
@@ -293,7 +293,7 @@ if ($AllowGLAnalysis == false) {
 
 	//Select the tag
 	echo '<tr><td>' . _('Tag') . '</td>
-			<td><select name="GLTag">';
+			<td><select minlength="0" name="GLTag">';
 
 	$SQL = "SELECT tagref,
 					tagdescription

@@ -129,7 +129,7 @@ echo '<table>
 		</tr>';
 echo '<tr>
 		<td>' . _('Contract Selection') . ':<br />' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</td>
-		<td><select name="ContractSelection">';
+		<td><select minlength="0" name="ContractSelection">';
 
 $sql = "SELECT contractref, name
 		FROM contracts INNER JOIN debtorsmaster

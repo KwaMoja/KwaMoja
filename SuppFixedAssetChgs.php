@@ -121,7 +121,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td><b>' . _('OR') . ' </b>' . _('Select from list') . ':</td>
-		<td><select name="AssetSelection">';
+		<td><select minlength="0" name="AssetSelection">';
 
 $sql = "SELECT assetid,
 			description

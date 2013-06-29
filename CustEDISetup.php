@@ -95,7 +95,7 @@ echo '<tr><td>' . _('Customer Name') . ':</td>
 		<td>' . $myrow['name'] . '</td>
 		</tr>';
 echo '<tr><td>' . _('Enable Sending of EDI Invoices') . ':</td>
-		<td><select tabindex="1" name="EDIInvoices">';
+		<td><select minlength="0" tabindex="1" name="EDIInvoices">';
 
 if ($myrow['ediinvoices'] == 0) {
 
@@ -110,7 +110,7 @@ echo '</select><a href="' . $RootPath . '/EDIMessageFormat.php?MessageType=INVOI
 	</tr>';
 
 echo '<tr><td>' . _('Enable Receiving of EDI Orders') . ':</td>
-	<td><select tabindex="2" name="EDIOrders">';
+	<td><select minlength="0" tabindex="2" name="EDIOrders">';
 
 if ($myrow['ediorders'] == 0) {
 
@@ -128,7 +128,7 @@ echo '<tr><td>' . _('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference', $Errors) ? 'class="inputerror"' : '') . ' tabindex="3" type="text" name="EDIReference" size="20" minlength="0" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('EDI Communication Method') . ':</td>
-	<td><select tabindex="4" name="EDITransport" >';
+	<td><select minlength="0" tabindex="4" name="EDITransport" >';
 
 if ($myrow['editransport'] == 'email') {
 	echo '<option selected="selected" value="email">' . _('Email Attachments') . '</option>';

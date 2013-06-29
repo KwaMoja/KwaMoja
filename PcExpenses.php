@@ -289,7 +289,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Account Code') . ':</td>
-			<td><select name="GLAccount">';
+			<td><select minlength="0" name="GLAccount">';
 
 	DB_free_result($result);
 	$SQL = "SELECT accountcode,
@@ -313,7 +313,7 @@ if (!isset($_GET['delete'])) {
 	//Select the tag
 	echo '<tr>
 			<td>' . _('Tag') . ':</td>
-			<td><select name="Tag">';
+			<td><select minlength="0" name="Tag">';
 
 	$SQL = "SELECT tagref,
 					tagdescription

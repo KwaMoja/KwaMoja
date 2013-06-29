@@ -386,7 +386,7 @@ if ($result and DB_num_rows($result)) {
 			</tr>
 			<tr>
 				<td>' . _('Select Inv. Item') . ':</td>
-				<td><select name="AddStockID">';
+				<td><select minlength="0" name="AddStockID">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (!array_keys($StockIDs, $myrow['stockid'])) {
@@ -398,7 +398,7 @@ if ($result and DB_num_rows($result)) {
 			</tr>
 			<tr>
 			<td>' . _('Select Manufacturer/Brand') . ':</td>
-			<td><select name="Brand">
+			<td><select minlength="0" name="Brand">
 			 <option value="">' . _('Select Brand') . '</option>';
 	$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers", $db);
 	while ($myrow = DB_fetch_array($BrandResult)) {

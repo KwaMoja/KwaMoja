@@ -72,7 +72,7 @@ echo '<table class="selection">
 
 echo '<tr>
 		<td class="label">' . _('Location where items are to be received into') . ':</td>
-		<td><select name="StockLocation" onChange="ReloadForm(Refresh)">';
+		<td><select minlength="0" name="StockLocation" onChange="ReloadForm(Refresh)">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -230,7 +230,7 @@ $result1 = DB_query($SQL, $db);
 
 echo '<table class="search" id="ItemSelect">
 		<tr>
-			<td>' . _('Select a stock category') . ':<select name="StockCat">';
+			<td>' . _('Select a stock category') . ':<select minlength="0" name="StockCat">';
 
 if (!isset($_POST['StockCat'])) {
 	echo '<option selected="True" value="All">' . _('All') . '</option>';

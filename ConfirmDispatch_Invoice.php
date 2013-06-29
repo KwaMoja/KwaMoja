@@ -1700,7 +1700,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	$j++;
 	echo '<tr>
 			<td>' . _('Action For Balance') . ':</td>
-			<td><select tabindex="' . $j . '" name="BOPolicy"><option selected="selected" value="BO">' . _('Automatically put balance on back order') . '</option><option value="CAN">' . _('Cancel any quantities not delivered') . '</option></select></td>
+			<td><select minlength="0" tabindex="' . $j . '" name="BOPolicy"><option selected="selected" value="BO">' . _('Automatically put balance on back order') . '</option><option value="CAN">' . _('Cancel any quantities not delivered') . '</option></select></td>
 		</tr>';
 	$j++;
 	echo '<tr>

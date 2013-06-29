@@ -289,7 +289,7 @@ $result = DB_query($SQL, $db);
 echo '<br /><table class="selection">';
 echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
 echo '<tr><td>' . _('Currency') . ':</td>
-		<td><select name="CurrAbrev">';
+		<td><select minlength="0" name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev'] == $_POST['CurrAbrev']) {
 		echo '<option selected="selected" value="';
@@ -304,7 +304,7 @@ DB_free_result($result);
 echo '</select>	</td></tr>
 		<tr>
 			<td>' . _('Sales Type Price List') . ':</td>
-			<td><select name="TypeAbbrev">';
+			<td><select minlength="0" name="TypeAbbrev">';
 
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($SQL, $db);

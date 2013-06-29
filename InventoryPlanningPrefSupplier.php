@@ -470,7 +470,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">';
 
 	echo '<tr><td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+			<td><select minlength="0" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -493,7 +493,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Months Buffer Stock to Hold') . ':</td>
-			<td><select name="NumberMonthsHolding">';
+			<td><select minlength="0" name="NumberMonthsHolding">';
 
 	if (!isset($_POST['NumberMonthsHolding'])) {
 		$_POST['NumberMonthsHolding'] = 1;

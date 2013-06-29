@@ -105,7 +105,7 @@ echo '<tr>
 	<tr>
 		<td>' . _('Authorisation Required') . '</td>
 		<td>
-			<select name="Auth"  onchange="ReloadForm(reload);">';
+			<select minlength="0" name="Auth"  onchange="ReloadForm(reload);">';
 if ($myrow['auth'] == 1) {
 	echo '<option selected="selected" value="1">' . _('True') . '</option>';
 	echo '<option value="0">' . _('False') . '</option>';

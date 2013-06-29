@@ -69,7 +69,7 @@ echo '<form method="post" name="BranchDetails" onSubmit="return SubmitForm(this,
 		<div class="box">
 			<input type="submit" name="SubmitBranchDetails" style="display: none;" />
 			<div class="box_header">' . _('Select a Customer') . '</div>
-			<select size="15" class="box bloc" id="customers" name="DebtorNo" onChange="ReloadForm(SubmitBranchDetails)">';
+			<select minlength="0" size="15" class="box bloc" id="customers" name="DebtorNo" onChange="ReloadForm(SubmitBranchDetails)">';
 CustomerBox($db);
 echo '</select>
 		</div>
@@ -82,7 +82,7 @@ echo '<form method="post" name="Details" onSubmit="return SubmitForm(this, \'opt
 		<div class="box">
 			<input type="submit" name="SubmitAllDetails" style="display: none;" />
 			<div class="box_header">' . _('Select a Branch') . '</div>
-			<select size="15" class="box bloc" id="branches" name="BranchNo" onChange="ReloadForm(SubmitAllDetails)">';
+			<select minlength="0" size="15" class="box bloc" id="branches" name="BranchNo" onChange="ReloadForm(SubmitAllDetails)">';
 BranchBox($db);
 echo '</select>
 		</div>

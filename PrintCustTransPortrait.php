@@ -572,7 +572,7 @@ if (isset($PrintPDF) and $PrintPDF != '' and isset($FromTransNo) and isset($InvO
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Print Invoices or Credit Notes') . '</td>
-					<td><select name="InvOrCredit">';
+					<td><select minlength="0" name="InvOrCredit">';
 
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 
@@ -587,7 +587,7 @@ if (isset($PrintPDF) and $PrintPDF != '' and isset($FromTransNo) and isset($InvO
 
 		echo '<tr>
 				<td>' . _('Print EDI Transactions') . '</td>
-				<td><select name="PrintEDI">';
+				<td><select minlength="0" name="PrintEDI">';
 
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 
@@ -605,7 +605,7 @@ if (isset($PrintPDF) and $PrintPDF != '' and isset($FromTransNo) and isset($InvO
 			</tr>';
 		echo '<tr>
 				<td>' . _('Despatch Location') . ': </td>
-				<td><select tabindex="2" name="LocCode">';
+				<td><select minlength="0" tabindex="2" name="LocCode">';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$sql = "SELECT locationname,

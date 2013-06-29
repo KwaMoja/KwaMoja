@@ -320,7 +320,7 @@ if (isset($_POST['CustType'])) {
 	} //DB_num_rows($result2) == 0
 	else {
 		// If OK show select box with option selected
-		echo '<select name="CustType">
+		echo '<select minlength="0" name="CustType">
 				<option value="ALL">' . _('Any') . '</option>';
 		while ($myrow = DB_fetch_array($result2)) {
 			if ($_POST['CustType'] == $myrow['typename']) {
@@ -345,7 +345,7 @@ else {
 	} //DB_num_rows($result2) == 0
 	else {
 		// if OK show select box with available options to choose
-		echo '<select name="CustType">
+		echo '<select minlength="0" name="CustType">
 				<option value="ALL">' . _('Any') . '</option>';
 		while ($myrow = DB_fetch_array($result2)) {
 			echo '<option value="' . $myrow['typename'] . '">' . $myrow['typename'] . '</option>';
@@ -367,7 +367,7 @@ if (DB_num_rows($result2) == 0) {
 } //DB_num_rows($result2) == 0
 else {
 	// if OK show select box with available options to choose
-	echo '<select name="Area">';
+	echo '<select minlength="0" name="Area">';
 	echo '<option value="ALL">' . _('Any') . '</option>';
 	while ($myrow = DB_fetch_array($result2)) {
 		if (isset($_POST['Area']) and $_POST['Area'] == $myrow['areacode']) {
@@ -407,7 +407,7 @@ if (isset($result)) {
 		echo '<input type="hidden" name="PageOffset" value="' . $_POST['PageOffset'] . '" />';
 		if ($ListPageMax > 1) {
 			echo '<br /><div class="centre">&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select name="PageOffset1">';
+			echo '<select minlength="0" name="PageOffset1">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -492,7 +492,7 @@ if (isset($result)) {
 if (!isset($_POST['CSV'])) {
 	if (isset($ListPageMax) and $ListPageMax > 1) {
 		echo '<br /><div class="centre">&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-		echo '<select name="PageOffset2">';
+		echo '<select minlength="0" name="PageOffset2">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {

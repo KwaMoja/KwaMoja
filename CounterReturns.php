@@ -786,7 +786,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		</tr>';
 	echo '<tr>
 			<td style="color:red">' . _('Sales person') . ':</td>
-			<td><select name="SalesPerson">';
+			<td><select minlength="0" name="SalesPerson">';
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1", $db);
 	if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin'] != NULL) {
 		$_SESSION['Items' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -814,7 +814,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 
 	echo '<tr>
 			<td style="color:red">' . _('Payment Type') . ':</td>
-			<td><select name="PaymentMethod">';
+			<td><select minlength="0" name="PaymentMethod">';
 	while ($PaymentMethodRow = DB_fetch_array($PaymentMethodsResult)) {
 		if (isset($_POST['PaymentMethod']) and $_POST['PaymentMethod'] == $PaymentMethodRow['paymentid']) {
 			echo '<option selected="selected" value="' . $PaymentMethodRow['paymentid'] . '">' . $PaymentMethodRow['paymentname'] . '</option>';
@@ -1624,7 +1624,7 @@ if (!isset($_POST['ProcessReturn'])) {
 		echo '<div class="page_help_text noPrint">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<table class="selection">
 				<tr>
-					<td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
+					<td><b>' . _('Select a Stock Category') . ': </b><select minlength="0" tabindex="1" name="StockCat">';
 
 		if (!isset($_POST['StockCat'])) {
 			echo '<option selected="selected" value="All">' . _('All') . '</option>';

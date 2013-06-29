@@ -295,7 +295,7 @@ if (!isset($_GET['Edit'])) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
 	echo '<table class="selection">
 			<tr></tr>
-			<tr><td><select name="StockCat">';
+			<tr><td><select minlength="0" name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
