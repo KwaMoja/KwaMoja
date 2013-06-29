@@ -23,10 +23,10 @@ if (!isset($_POST['TransType'])) {
 }
 if ($_POST['TransType'] == 10) {
 	echo '<option selected="selected" value="10">' . _('Invoices') . '</option>
-			<option value="12">' . _('Receipts') . '</option>';
+			<option value="12">' . _('Negative Receipts (Payments)') . '</option>';
 } else {
 	echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-	echo '<option selected="selected" value="12">' . _('Receipts') . '</option>
+	echo '<option selected="selected" value="12">' . _('Negative Receipts (Payments)') . '</option>
 			<option selected="selected" value="10">' . _('Invoices') . '</option>';
 }
 
@@ -91,6 +91,12 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 
 		if (DB_num_rows($TransResult) == 0) {
 			prnMsg(_('There are no allocations made against this transaction'), 'info');
+
+			if ($myrow['totamt'] < 0 and $_POST['TransType'] == 12){
+					prnMsg(_('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
+			} else {
+				prnMsg(_('There are no allocations made against this transaction'),'info');
+			}
 		} else {
 			echo '<br />
 				<table class="selection" summary="' . _('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . '">';

@@ -644,7 +644,7 @@ foreach ($CountriesArray as $CountryEntry => $CountryName) {
 	echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry ? 'selected="selected" ' : '') . ' value="' . $CountryEntry . '">' . $CountryName . '</option>';
 }
 echo '</select></td>
-	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table.') . '</td></tr>';
+	<td>' . _('This parameter is only effective if Do Freight Calculation is set to Yes.') .'</td></tr>';
 
 // StandardCostDecimalPlaces
 echo '<tr style="outline: 1px solid"><td>' . _('Standard Cost Decimal Places') . ':</td>

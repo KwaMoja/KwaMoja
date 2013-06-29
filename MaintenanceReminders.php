@@ -59,7 +59,7 @@ $sql = "SELECT 	description,
 		INNER JOIN fixedassets
 		ON fixedassettasks.assetid=fixedassets.assetid
 		INNER JOIN www_users
-		ON fixedassettasks.personresponsible=www_users.userid
+		ON fixedassettasks.userresponsible=www_users.userid
 		WHERE ADDDATE(lastcompleted,frequencydays)> CURDATE()
 		ORDER BY manager";
 
