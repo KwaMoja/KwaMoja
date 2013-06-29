@@ -190,7 +190,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Contact Note') . '</td>';
 	if (isset($_POST['Note'])) {
-		echo '<td><textarea name="Note" rows="3" cols="32">' . $_POST['Note'] . '</textarea></td>
+		echo '<td><textarea name="Note" rows="3" minlength="1" cols="32">' . $_POST['Note'] . '</textarea></td>
 			</tr>';
 	} else {
 		echo '<td><textarea name="Note" rows="3" cols="32"></textarea></td>
@@ -211,7 +211,7 @@ if (!isset($_GET['delete'])) {
 		echo '<td><input type="text" name="date" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . ConvertSQLDate($_POST['date']) . '" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="date" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" size="10" minlength="0" maxlength="10" /></td>
+		echo '<td><input type="text" name="date" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . date($_SESSION['DefaultDateFormat']) . '" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>

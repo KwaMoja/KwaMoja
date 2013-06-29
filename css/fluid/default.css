@@ -170,6 +170,9 @@ select{
 select:hover{
 background:lightblue;
 }
+select.inputerror {
+background:#FFA4A4;
+}
 select.selecterror{
 background-color:#fddbdb;
 }

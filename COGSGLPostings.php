@@ -313,7 +313,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Post to GL account') . ':</td>
-		<td><select minlength="0" tabindex="4" name="GLCode">';
+		<td><select minlength="1" tabindex="4" name="GLCode">';
 
 DB_free_result($result);
 $sql = "SELECT chartmaster.accountcode,
@@ -327,6 +327,7 @@ $sql = "SELECT chartmaster.accountcode,
 			chartmaster.accountname";
 $result = DB_query($sql, $db);
 
+echo '<option value=""></option>';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['GLCode']) and $myrow['accountcode'] == $_POST['GLCode']) {
 		echo '<option selected="selected" value="';

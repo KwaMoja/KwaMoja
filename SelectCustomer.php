@@ -238,7 +238,9 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 	echo '<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><br />';
 	echo '<a href="' . $RootPath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><br />';
-	echo '<a href="' . $RootPath . '/CustLoginSetup.php">' . _('Customer Login Configuration') . '</a>';
+	echo '<a href="' . $RootPath . '/CustLoginSetup.php">' . _('Customer Login Configuration') . '</a><br />';
+	echo '<a href="' . $RootPath . '/AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add a customer contact') . '</a><br />';
+	echo '<a href="' . $RootPath . '/AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add a note on this customer') . '</a>';
 	echo '</td>';
 	echo '</tr></table><br />';
 } //$_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST['CSV'])

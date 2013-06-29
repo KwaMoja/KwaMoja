@@ -112,8 +112,8 @@ if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
 		}
 
 		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
-			  <td><input type="text" class="number" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity, 'Variable') . '" /></td>
-			  <td><input type="text" class="number" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+			  <td><input type="text" class="number" maxlength="11" minlength="1" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity, 'Variable') . '" /></td>
+			  <td><input type="text" class="number" maxlength="11" minlength="1" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
 			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $ContractReqtID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this contract requirement?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			  </tr>';

@@ -223,7 +223,7 @@ if (!isset($_GET['delete'])) {
 			<table class="selection">
 			<tr>
 				<td>' . _('Status Code') . ':</td>
-				<td><input ' . (in_array('ReasonCode', $Errors) ? 'class="inputerror"' : '') . ' tabindex="1" type="text" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" size="3" minlength="0" maxlength="2" /></td>
+				<td><input tabindex="1" type="text" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" size="3" minlength="1" maxlength="2" /></td>
 			</tr>';
 	}
 
@@ -232,7 +232,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input ' . (in_array('ReasonDescription', $Errors) ? 'class="inputerror"' : '') . ' tabindex="2" type="text" name="ReasonDescription" value="' . $_POST['ReasonDescription'] . '" size="28" minlength="0" maxlength="30" /></td>
+			<td><input tabindex="2" type="text" name="ReasonDescription" value="' . $_POST['ReasonDescription'] . '" size="28" minlength="1" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Disallow Invoices') . '</td>';

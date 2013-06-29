@@ -160,13 +160,17 @@ foreach ($_SESSION['Contract' . $identifier]->ContractReqts as $Requirement) {
 		</tr>';
 	$OtherReqtsBudget += ($Requirement->CostPerUnit * $Requirement->Quantity);
 }
-echo '<tr><th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsBudget, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
+echo '<tr>
+		<th colspan="3" align="right"><b>' . _('Budgeted Other Costs') . '</b></th>
+		<th class="number"><b>' . locale_number_format($OtherReqtsBudget, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
+	</tr>
 	</table></td>';
 
 //Now other requirements actual in a sub table
 echo '<td colspan="6">
 			<table class="selection">
-			<tr><th>' . _('Supplier') . '</th>
+			<tr>
+				<th>' . _('Supplier') . '</th>
 				<th>' . _('Reference') . '</th>
 				<th>' . _('Date') . '</th>
 				<th>' . _('Requirement') . '</th>
@@ -195,21 +199,27 @@ while ($OtherChargesRow = DB_fetch_array($OtherChargesResult)) {
 	} else {
 		$Anticipated = _('Yes');
 	}
-	echo '<tr><td>' . $OtherChargesRow['supplierno'] . '</td>
+	echo '<tr>
+			<td>' . $OtherChargesRow['supplierno'] . '</td>
 			<td>' . $OtherChargesRow['suppreference'] . '</td>
 			<td>' . ConvertSQLDate($OtherChargesRow['trandate']) . '</td>
 			<td>' . $OtherChargesRow['narrative'] . '</td>
 			<td class="number">' . locale_number_format($OtherChargesRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . $Anticipated . '</td>
-			</tr>';
+		</tr>';
 	$OtherReqtsActual += $OtherChargesRow['amount'];
 }
-echo '<tr><th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th><th class="number"><b>' . locale_number_format($OtherReqtsActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></th></tr>
+echo '<tr>
+		<th colspan="4" align="right"><b>' . _('Actual Other Costs') . '</b></th>
+		<th class="number"><b>' . locale_number_format($OtherReqtsActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></th>
+	</tr>
 	</table></td></tr>';
-echo '<tr><td colspan="5"><b>' . _('Total Budget Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsBudget + $ContractBOMBudget, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-					<td colspan="5"><b>' . _('Total Actual Contract Cost') . '</b></td>
-					<td class="number"><b>' . locale_number_format($OtherReqtsActual + $ContractBOMActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+echo '<tr>
+		<td colspan="5"><b>' . _('Total Budget Contract Cost') . '</b></td>
+		<td class="number"><b>' . locale_number_format($OtherReqtsBudget + $ContractBOMBudget, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		<td colspan="5"><b>' . _('Total Actual Contract Cost') . '</b></td>
+		<td class="number"><b>' . locale_number_format($OtherReqtsActual + $ContractBOMActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+	</tr>';
 
 echo '</table>';
 

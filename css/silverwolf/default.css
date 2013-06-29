@@ -258,6 +258,9 @@ background-color: transparent;
 
 select{
 }
+select.inputerror {
+background:#FFA4A4;
+}
 .EvenTableRows{
 background-color:#ccc;
 }

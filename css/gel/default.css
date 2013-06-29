@@ -339,6 +339,9 @@ textarea.texterror { /* used */
 select.selecterror { /* used */
 	background-color: #fddbdb;
 }
+select.inputerror {
+background:#FFA4A4;
+}
 .OsRow { /* used */
 	background-color: #234567;
 	color: white;

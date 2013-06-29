@@ -5,10 +5,11 @@ c.focus();
 function makeAlert(message, title) {
 	theme=document.getElementById("Theme").value;
 	document.getElementById("mask").style['display'] = "inline";
-	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
+	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+
+		'</div><img style="float: left;vertical-align:middle" src="css/'+theme+'/images/alert.png" /><div id="dialog_main">'+message;
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="OK" onClick="hideAlert()" /></div>'
 	document.getElementById("dialog").innerHTML = html;
-	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight/2)+"px";
+	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight)+"px";
 	document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
 	return false;
 }
@@ -25,7 +26,7 @@ function MakeConfirm(message, title, link) {
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
 	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
 	document.getElementById("dialog").innerHTML = html;
-	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight/2)+"px";
+	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight)+"px";
 	document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
 	return false;
 }
@@ -265,6 +266,22 @@ function VerifyForm(f) {
 				Clean=false;
 			} else {
 				a[0].className=Class;
+			}
+		}
+		if(f.elements[i].type=='select-one') {
+			Class=f.elements[i].getAttribute("class");
+			if ((f.elements[i].getAttribute("minlength")>0) && (f.elements[i].value.length==0)) {
+				Alert=Alert+'You must make a selection in the field '+f.elements[i].getAttribute("name")+'<br />';
+				f.elements[i].className=Class+' inputerror';
+				Clean=false;
+			}
+		}
+		if(f.elements[i].type=='password') {
+			Class=f.elements[i].getAttribute("class");
+			if ((f.elements[i].getAttribute("minlength")>0) && (f.elements[i].value.length==0)) {
+				Alert=Alert+'You must make a selection in the field '+f.elements[i].getAttribute("name")+'<br />';
+				f.elements[i].className=Class+' inputerror';
+				Clean=false;
 			}
 		}
 	}

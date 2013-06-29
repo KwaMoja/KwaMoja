@@ -158,15 +158,15 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Group ID') . '</td>
-				<td><input type="text" size="3" class="number" name="GroupID" /></td>
+				<td><input type="text" size="3" minlength="1" class="number" name="GroupID" /></td>
 			</tr>
 			<tr class="OddTableRows">
 				<td>' . _('Group Description') . '</td>
-				<td><input type="text" size="30" minlength="0" maxlength="40" name="GroupName" value="" /></td>
+				<td><input type="text" size="30" minlength="5" maxlength="40" name="GroupName" value="" /></td>
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking method') . '</td>
-				<td><select minlength="0" name="MethodID">';
+				<td><select minlength="1" name="MethodID">';
 
 	$sql = "SELECT methodid,
 					methodname
@@ -184,15 +184,15 @@ if (isset($_POST['Submit'])) {
 
 	echo '<tr class="OddTableRows">
 			<td>' . _('Percentage in A Category') . '</td>
-			<td><input type="text" size="3" class="number" name="APercent" value="10" /></td>
+			<td><input minlength="1" type="text" size="3" class="integer" name="APercent" value="10" /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td>' . _('Percentage in B Category') . '</td>
-			<td><input type="text" size="3" class="number" name="BPercent" value="30" /></td>
+			<td><input minlength="1" type="text" size="3" class="integer" name="BPercent" value="30" /></td>
 		</tr>
 		<tr class="OddTableRows">
 			<td>' . _('Percentage in C Category') . '</td>
-			<td><input type="text" size="3" class="number" name="CPercent" value="60" /></td>
+			<td><input minlength="1" type="text" size="3" class="integer" name="CPercent" value="60" /></td>
 		</tr>
 		<tr class="EvenTableRows">
 			<td>' . _('If zero movement in period put itmes in') . '</td>
@@ -207,7 +207,7 @@ if (isset($_POST['Submit'])) {
 
 	echo '<tr class="OddTableRows">
 			<td>' . _('Months of Movement to include') . '</td>
-			<td><input type="text" size="3" class="number" name="Months" value="12" /></td>
+			<td><input minlength="1" type="text" size="3" class="number" name="Months" value="12" /></td>
 		</tr>';
 
 	echo '</table>';

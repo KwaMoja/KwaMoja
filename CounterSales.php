@@ -794,15 +794,15 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier=' . $identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 			<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" minlength="0" maxlength="6" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" minlength="1" maxlength="6" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 			<td class="number">' . locale_number_format($OrderLine->QOHatLoc, $OrderLine->DecimalPlaces) . '</td>
 			<td>' . $OrderLine->Units . '</td>';
 		if (in_array(1000, $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" minlength="0" maxlength="16" value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" minlength="0" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100), 2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" minlength="0" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" /></td>';
+			echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" minlength="1" maxlength="16" value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" minlength="1" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100), 2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="3" minlength="1" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" /></td>';
 		} else {
 			echo '<td class="number">' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '"  value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" />
 				<input type="hidden" name="Discount_' . $OrderLine->LineNumber . '" value="' . locale_number_format(($OrderLine->DiscountPercent * 100), 2) . '" />
@@ -817,18 +817,20 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		$i = 0; // initialise the number of taxes iterated through
 		$TaxLineTotal = 0; //initialise tax total for the line
 
-		foreach ($OrderLine->Taxes as $Tax) {
-			if (empty($TaxTotals[$Tax->TaxAuthID])) {
-				$TaxTotals[$Tax->TaxAuthID] = 0;
+		if (sizeOf($OrderLine->Taxes) > 0) {
+			foreach ($OrderLine->Taxes as $Tax) {
+				if (empty($TaxTotals[$Tax->TaxAuthID])) {
+					$TaxTotals[$Tax->TaxAuthID] = 0;
+				}
+				if ($Tax->TaxOnTax == 1) {
+					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
+					$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
+				} else {
+					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
+					$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
+				}
+				$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 			}
-			if ($Tax->TaxOnTax == 1) {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-				$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-			} else {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
-				$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
-			}
-			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 		}
 
 		$TaxTotal += $TaxLineTotal;
@@ -939,7 +941,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 	}
 	echo '<tr>
 			<td>' . _('Amount Paid') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" minlength="0" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" name="AmountPaid" minlength="1" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table
@@ -2393,6 +2395,7 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" />';
 			echo '<input type="hidden" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" />';
 			echo '<input type="hidden" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" />';
+			echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items' . $identifier]->SalesPerson . '" />';
 			echo '</td></tr>';
 
 			echo '<tr><td><input type="hidden" name="previous" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>';
@@ -2414,6 +2417,7 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" />';
 			echo '<input type="hidden" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" />';
 			echo '<input type="hidden" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" />';
+			echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items' . $identifier]->SalesPerson . '" />';
 		}
 		echo '<table border="1">
 				<tr>';

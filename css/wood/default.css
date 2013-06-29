@@ -369,6 +369,9 @@ background-color:#fddbdb;
 select.selecterror{
 background-color:#fddbdb;
 }
+select.inputerror {
+background:#FFA4A4;
+}
 .OsRow{
 background-color:#234567;
 color:white;

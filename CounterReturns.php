@@ -706,13 +706,13 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		echo '<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier=' . $identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
 			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" minlength="0" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity, $ReturnItemLine->DecimalPlaces) . '" />';
+		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" size="6" minlength="1" maxlength="6" value="' . locale_number_format($ReturnItemLine->Quantity, $ReturnItemLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 				<td>' . $ReturnItemLine->Units . '</td>
-				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" size="16" minlength="0" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" size="5" minlength="0" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100), 2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" size="3" minlength="0" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent, 2) . '" /></td>
+				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" size="16" minlength="1" maxlength="16" value="' . locale_number_format($ReturnItemLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" size="5" minlength="1" maxlength="4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100), 2) . '" /></td>
+				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" size="3" minlength="1" maxlength="40" value="' . locale_number_format($ReturnItemLine->GPPercent, 2) . '" /></td>
 				<td class="number">' . locale_number_format($SubTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $ReturnItemLine->ItemDue;
 		$_SESSION['Items' . $identifier]->LineItems[$ReturnItemLine->LineNumber]->ItemDue = $LineDueDate;
@@ -720,18 +720,20 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		$i = 0; // initialise the number of taxes iterated through
 		$TaxLineTotal = 0; //initialise tax total for the line
 
-		foreach ($ReturnItemLine->Taxes as $Tax) {
-			if (empty($TaxTotals[$Tax->TaxAuthID])) {
-				$TaxTotals[$Tax->TaxAuthID] = 0;
+		if (sizeOf($ReturnItemLine->Taxes) > 0) {
+			foreach ($ReturnItemLine->Taxes as $Tax) {
+				if (empty($TaxTotals[$Tax->TaxAuthID])) {
+					$TaxTotals[$Tax->TaxAuthID] = 0;
+				}
+				if ($Tax->TaxOnTax == 1) {
+					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
+					$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
+				} else {
+					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
+					$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
+				}
+				$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 			}
-			if ($Tax->TaxOnTax == 1) {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-				$TaxLineTotal += ($Tax->TaxRate * ($SubTotal + $TaxLineTotal));
-			} else {
-				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $SubTotal);
-				$TaxLineTotal += ($Tax->TaxRate * $SubTotal);
-			}
-			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 		}
 
 		$TaxTotal += $TaxLineTotal;
@@ -835,7 +837,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 	}
 	echo '<tr>
 			<td style="color:red">' . _('Paid to Customer') . ':</td>
-			<td><input type="text" class="number" name="AmountPaid" minlength="0" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
+			<td><input type="text" class="number" name="AmountPaid" minlength="1" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; //end the sub table in the second column of master table

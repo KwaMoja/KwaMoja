@@ -256,7 +256,9 @@ select {
 select:hover { /* drop down */
 background:#9ffffb;
 }
-
+select.inputerror {
+background:#FFA4A4;
+}
 textarea{
 }
 textarea:hover{

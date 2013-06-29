@@ -56,12 +56,6 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'AccountName';
 		$i++;
 	}
-	if (trim($_POST['BankAccountNumber']) == '') {
-		$InputError = 1;
-		prnMsg(_('The bank account number may not be empty.'), 'error');
-		$Errors[$i] = 'AccountNumber';
-		$i++;
-	}
 	if (mb_strlen($_POST['BankAccountNumber']) > 50) {
 		$InputError = 1;
 		prnMsg(_('The bank account number must be fifty characters or less long'), 'error');
@@ -274,7 +268,7 @@ if (isset($SelectedBankAccount) and !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Bank Account GL Code') . ':</td>
-				<td><select minlength="0" tabindex="1" ' . (in_array('AccountCode', $Errors) ? 'class="selecterror"' : '') . ' name="AccountCode">';
+				<td><select minlength="1" tabindex="1" ' . (in_array('AccountCode', $Errors) ? 'class="selecterror"' : '') . ' name="AccountCode">';
 
 	$sql = "SELECT accountcode,
 					accountname
@@ -282,7 +276,7 @@ if (isset($SelectedBankAccount) and !isset($_GET['delete'])) {
 			ON chartmaster.group_ = accountgroups.groupname
 			WHERE accountgroups.pandl = 0
 			ORDER BY accountcode";
-
+	echo '<option value=""></option>';
 	$result = DB_query($sql, $db);
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AccountCode']) and $myrow['accountcode'] == $_POST['AccountCode']) {
@@ -312,19 +306,19 @@ if (!isset($_POST['BankAddress'])) {
 
 echo '<tr>
 		<td>' . _('Bank Account Name') . ': </td>
-		<td><input tabindex="2" ' . (in_array('AccountName', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" minlength="0" maxlength="50" /></td>
+		<td><input tabindex="2" type="text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" size="40" minlength="1" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account Code') . ': </td>
-		<td><input tabindex="3" ' . (in_array('AccountCode', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size="40" minlength="0" maxlength="50" /></td>
+		<td><input tabindex="3" type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size="40" minlength="0" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Account Number') . ': </td>
-		<td><input tabindex="3" ' . (in_array('AccountNumber', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" minlength="0" maxlength="50" /></td>
+		<td><input tabindex="3" type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" minlength="0" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Bank Address') . ': </td>
-		<td><input tabindex="4" ' . (in_array('BankAddress', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" minlength="0" maxlength="50" /></td>
+		<td><input tabindex="4" type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" minlength="0" maxlength="50" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Currency Of Account') . ': </td>

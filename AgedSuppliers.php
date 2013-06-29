@@ -11,6 +11,20 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$PageNumber = 0;
 	$line_height = 12;
 
+	$sql = "SELECT min(supplierid) AS fromcriteria,
+					max(supplierid) AS tocriteria
+				FROM suppliers";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
+	if ($_POST['FromCriteria']=='') {
+		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+	}
+	if ($_POST['ToCriteria']=='') {
+		$_POST['Toriteria'] = $myrow['tocriteria'];
+	}
+
 	/*Now figure out the aged analysis for the Supplier range under review */
 
 	if ($_POST['All_Or_Overdues'] == 'All') {
@@ -279,17 +293,24 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		/*if $FromCriteria is not set then show a form to allow input	*/
 
+		$sql = "SELECT min(supplierid) AS fromcriteria,
+						max(supplierid) AS tocriteria
+					FROM suppliers";
+
+		$result = DB_query($sql, $db);
+		$myrow = DB_fetch_array($result);
+
 		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
 			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
 				<td>' . _('From Supplier Code') . ':</td>
-				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
+				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Supplier Code') . ':</td>
-				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>

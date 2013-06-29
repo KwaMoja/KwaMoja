@@ -411,10 +411,11 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select minlength="0" tabindex="3" name="SectionInAccounts">';
+			<td><select minlength="1" tabindex="3" name="SectionInAccounts">';
 
 	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	echo '<option value=""></option>';
 	while ($secrow = DB_fetch_array($secresult)) {
 		if ($_POST['SectionInAccounts'] == $secrow['sectionid']) {
 			echo '<option selected="selected" value="' . $secrow['sectionid'] . '">' . $secrow['sectionname'] . ' (' . $secrow['sectionid'] . ')</option>';
@@ -428,17 +429,18 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select minlength="0" tabindex="4" name="PandL">';
+			<td><select minlength="1" tabindex="4" name="PandL">';
 
-	if ($_POST['PandL'] != 0) {
+	echo '<option selected="selected" value=""></option>';
+	if ($_POST['PandL'] === 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
-	} //$_POST['PandL'] != 0
+	} //$_POST['PandL'] === 1
 	else {
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	if ($_POST['PandL'] == 0) {
+	if ($_POST['PandL'] === 0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
-	} //$_POST['PandL'] == 0
+	} //$_POST['PandL'] === 0
 	else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}

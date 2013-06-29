@@ -426,7 +426,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Country'])) {
 		$_POST['Country'] = '';
 	}
-	echo '<input ' . (in_array('Country', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Country" size="30" minlength="0" maxlength="50" value="' . $_POST['Country'] . '" /></td>
+	echo '<input type="text" name="Country" size="30" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Hundredths Name') . ':</td>
@@ -434,7 +434,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName'] = '';
 	}
-	echo '<input ' . (in_array('HundredsName', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="HundredsName" size="10" minlength="0" maxlength="15" value="' . $_POST['HundredsName'] . '" /></td>
+	echo '<input type="text" name="HundredsName" size="10" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Decimal Places to Display') . ':</td>
@@ -442,7 +442,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces'] = '';
 	}
-	echo '<input ' . (in_array('DecimalPlaces', $Errors) ? 'class="inputerror"' : 'class="number"') . ' type="text" name="DecimalPlaces" size="2" minlength="0" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" /></td>
+	echo '<input type="text" name="DecimalPlaces" size="2" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Exchange Rate') . ':</td>
@@ -450,7 +450,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate'] = '';
 	}
-	echo '<input ' . (in_array('ExchangeRate', $Errors) ? 'class="inputerror"' : '') . ' type="text" class="number" name="ExchangeRate" size="10" minlength="0" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
+	echo '<input type="text" class="number" name="ExchangeRate" size="10" minlength="1" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['webcart'])) {
 		$_POST['webcart'] = 1;

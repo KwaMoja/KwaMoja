@@ -12,6 +12,13 @@ echo '<p class="page_title_text noPrint" >
 
 if (isset($_POST['Submit'])) {
 
+	if (!isset($_POST['GroupID']) or $_POST['GroupID']=='') {
+		prnMsg( _('You must select an analysis group to use'), 'error');
+		echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Return to selection criteria') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+
 	$result = DB_query("DELETE FROM abcstock WHERE groupid='" . $_POST['GroupID'] . "'", $db);
 
 	/*Firstly get the parameters needed */
@@ -124,7 +131,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking group') . '</td>
-				<td><select minlength="0" name="GroupID">';
+				<td><select minlength="1" name="GroupID">';
 
 	$sql = "SELECT groupid,
 					groupname

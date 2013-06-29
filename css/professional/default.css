@@ -253,6 +253,9 @@ select.selecterror {
 select:hover{
 	background:lightblue;
 }
+select.inputerror {
+background:#FFA4A4;
+}
 
 p.good {
     font-weight: bold;

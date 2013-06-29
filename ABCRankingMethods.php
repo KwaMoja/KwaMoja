@@ -90,7 +90,7 @@ if (isset($_POST['Submit'])) {
 		$Description = $myrow['methodname'];
 	} else {
 		echo '<input type="hidden" name="Mode" value="New" />';
-		$IDInput = '<input type="text" size="3" class="number" name="MethodID" />';
+		$IDInput = '<input type="text" minlength="1" size="3" class="number" name="MethodID" />';
 		$Description = '';
 	}
 
@@ -106,7 +106,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="OddTableRows">
 				<td>' . _('Method Description') . '</td>
-				<td><input type="text" size="30" minlength="0" maxlength="40" name="MethodName" value="' . $Description . '" /></td>
+				<td><input type="text" size="30" minlength="1" maxlength="40" name="MethodName" value="' . $Description . '" /></td>
 			</tr>
 		</table>';
 
