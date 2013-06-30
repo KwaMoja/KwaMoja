@@ -36,7 +36,7 @@ if (!isset($_POST['TransNo'])) {
 	$_POST['TransNo'] = '';
 }
 echo '<td>' . _('Transaction Number') . ':</td>
-		<td><input class="number" tabindex="2" type="text" name="TransNo" minlength="0" maxlength="10" size="10" value="' . $_POST['TransNo'] . '" /></td>
+		<td><input class="number" tabindex="2" type="text" name="TransNo" minlength="1" maxlength="10" size="10" value="' . $_POST['TransNo'] . '" /></td>
 	</tr>
 	</table>
 	<br />
@@ -163,7 +163,7 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 		} // end if there are allocations against the transaction
 	} //got the ID of the transaction to find allocations for
 }
-echo '</div>';
+
 include('includes/footer.inc');
 
 ?>

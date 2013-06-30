@@ -103,13 +103,13 @@ if (isset($_POST['selectchoice'])) {
 		echo '<table class="selection"><tr><td>' . _('Discount Category Code') . ':</td><td>';
 
 		if (isset($_POST['DiscCat'])) {
-			echo '<input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" value="' . $_POST['DiscCat'] . '" /></td>
+			echo '<input type="text" name="DiscountCategory" minlength="1" maxlength="2" size="2" value="' . $_POST['DiscCat'] . '" /></td>
 				<td>' . _('OR') . '</td>
 				<td></td>
 				<td>' . _('OR') . '</td>
 				</tr>';
 		} else {
-			echo '<input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" /></td>
+			echo '<input type="text" name="DiscountCategory" minlength="1" maxlength="2" size="2" /></td>
 				<td>' . _('OR') . '</td>
 				<td></td>
 				<td>' . _('OR') . '</td>
@@ -161,7 +161,7 @@ if (isset($_POST['selectchoice'])) {
 		echo '<table class="selection">
 				<tr>
 				<td>' . _('Assign discount category') . '</td>';
-		echo '<td><input type="text" name="DiscountCategory" minlength="0" maxlength="2" size="2" /></td>';
+		echo '<td><input type="text" name="DiscountCategory" minlength="1" maxlength="2" size="2" /></td>';
 		echo '<td>' . _('to all items in stock category') . '</td>';
 		$sql = "SELECT categoryid,
 				categorydescription
@@ -231,7 +231,6 @@ if (isset($_POST['selectchoice'])) {
 	} else {
 		/* $_POST['DiscCat'] ==0 */
 
-		echo '</div><br />';
 		prnMsg(_('There are currently no discount categories defined') . '. ' . _('Enter a two character abbreviation for the discount category and the stock code to which this category will apply to. Discount rules can then be applied to this discount category'), 'info');
 	}
 }
@@ -249,8 +248,7 @@ if (!isset($_POST['selectchoice'])) {
 		</table>
 		<br />';
 	echo '<div class="centre"><input type="submit" name="selectchoice" value="' . _('Select') . '" /></div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 }
 
 include('includes/footer.inc');

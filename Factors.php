@@ -202,7 +202,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Factor company Name') . ':</td>
-			<td><input tabindex="1" type="text" name="FactorName" size="42" minlength="0" maxlength="40" value="' . $_POST['FactorName'] . '" /></td>
+			<td><input tabindex="1" type="text" name="FactorName" size="42" minlength="1" maxlength="40" value="' . $_POST['FactorName'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1') . ':</td>

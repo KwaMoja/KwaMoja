@@ -229,14 +229,14 @@ if (!isset($_GET['delete'])) {
 	} else {
 		echo '<table class="selection">';
 		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="11" class="number" minlength="0" maxlength="20" /></td>
+					<td><input type="text" name="AccountCode" size="11" class="number" minlength="1" maxlength="20" /></td>
 				</tr>';
 	}
 
 	if (!isset($_POST['AccountName'])) {
 		$_POST['AccountName'] = '';
 	}
-	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" minlength="0" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
+	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
 	$sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);

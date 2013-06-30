@@ -983,12 +983,12 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' . _('Deliver To') . ':</td>
-		<td><input type="text" size="42" minlength="0" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
+		<td><input type="text" size="42" minlength="1" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
 	</tr>';
 
 echo '<tr>
 	<td>' . _('Deliver from the warehouse at') . ':</td>
-	<td><select minlength="0" name="Location">';
+	<td><select minlength="1" name="Location">';
 
 if ($_SESSION['Items' . $identifier]->Location == '' or !isset($_SESSION['Items' . $identifier]->Location)) {
 	$_SESSION['Items' . $identifier]->Location = $DefaultStockLocation;
@@ -1049,7 +1049,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 1') . ':</td>
-		<td><input type="text" size="42" minlength="0" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items' . $identifier]->DelAdd1 . '" /></td>
+		<td><input type="text" size="42" minlength="1" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items' . $identifier]->DelAdd1 . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Delivery Address 2') . ':</td>

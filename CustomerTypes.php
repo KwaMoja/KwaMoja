@@ -252,7 +252,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['typename'] = '';
 	}
 	echo '<tr><td>' . _('Type Name') . ':</td>
-		<td><input type="text" name="typename" value="' . $_POST['typename'] . '" /></td></tr>';
+		<td><input type="text" name="typename" minlength="1" maxlength="100" value="' . $_POST['typename'] . '" /></td></tr>';
 
 	echo '</table>'; // close main table
 

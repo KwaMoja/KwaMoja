@@ -11,6 +11,20 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$PageNumber = 0;
 	$line_height = 12;
 
+	$sql = "SELECT min(debtorno) AS fromcriteria,
+					max(debtorno) AS tocriteria
+				FROM debtorsmaster";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
+	if ($_POST['FromCriteria']=='') {
+		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+	}
+	if ($_POST['ToCriteria']=='') {
+		$_POST['Toriteria'] = $myrow['tocriteria'];
+	}
+
 	/*Get the date of the last day in the period selected */
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd'] . "'";
@@ -122,6 +136,13 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	include('includes/header.inc');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Debtor Balances') . '" alt="' . _('Debtor Balances') . '" />' . ' ' . $Title . '</p><br />';
 
+	$sql = "SELECT min(debtorno) AS fromcriteria,
+					max(debtorno) AS tocriteria
+				FROM debtorsmaster";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 		/*if $FromCriteria is not set then show a form to allow input	*/
@@ -133,11 +154,11 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 		echo '<tr>
 				<td>' . _('From Customer Code') . ':</td>
-				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="1" /></td>
+				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="zzzzzz" /></td>
+				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Balances As At') . ':</td>

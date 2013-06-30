@@ -233,7 +233,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" minlength="0" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
+				<td><input type="text" name="CategoryID" size="7" minlength="1" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
 			</tr>';
 }
 
@@ -262,7 +262,7 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<tr>
 		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" minlength="0" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+		<td><input type="text" name="CategoryDescription" size="22" minlength="1" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Fixed Asset Cost GL Code') . ':</td>

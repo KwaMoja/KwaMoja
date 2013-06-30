@@ -119,13 +119,13 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="hidden" name="LocationID" value="' . $LocationID . '" />';
 	echo '<td>' . $LocationID . '</td>';
 } else {
-	echo '<td><input type="text" name="LocationID" size="6" value="' . $LocationID . '" /></td>
+	echo '<td><input type="text" name="LocationID" minlength="1" maxlength="6" size="6" value="' . $LocationID . '" /></td>
 		</tr>';
 }
 
 echo '<tr>
 		<th style="text-align:left">' . _('Location Description') . '</th>
-		<td><input type="text" name="LocationDescription" size="20" value="' . $LocationDescription . '" /></td>
+		<td><input type="text" name="LocationDescription"minlength="1" maxlength="20" size="20" value="' . $LocationDescription . '" /></td>
 	</tr>
 	<tr>
 		<th style="text-align:left">' . _('Parent Location') . '</th>

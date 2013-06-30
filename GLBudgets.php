@@ -199,10 +199,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		echo '<td><input type="text" readonly="true" class="number" size="12" name="' . $i . 'last" value="' . locale_number_format($Budget[$CurrentYearEndPeriod - (24 - $i)], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
 		echo '<th>' . $PeriodEnd[$CurrentYearEndPeriod - (12 - $i)] . '</th>';
 		echo '<td class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod - (12 - $i)], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
-		echo '<td><input type="text" class="number" size="12" name="' . $i . 'this" value="' . locale_number_format($Budget[$CurrentYearEndPeriod - (12 - $i)], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
+		echo '<td><input type="text" class="number" minlength="1" maxlength="12" size="12" name="' . $i . 'this" value="' . locale_number_format($Budget[$CurrentYearEndPeriod - (12 - $i)], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
 		echo '<th>' . $PeriodEnd[$CurrentYearEndPeriod + ($i)] . '</th>';
 		echo '<td class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
-		echo '<td><input type="text" class="number" size="12" name="' . $i . 'next" value="' . locale_number_format($Budget[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
+		echo '<td><input type="text" class="number" minlength="1" maxlength="12" size="12" name="' . $i . 'next" value="' . locale_number_format($Budget[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
 		echo '</tr>';
 		$LastYearActual = $LastYearActual + $Actual[$CurrentYearEndPeriod - (24 - $i)];
 		$LastYearBudget = $LastYearBudget + $Budget[$CurrentYearEndPeriod - (24 - $i)];

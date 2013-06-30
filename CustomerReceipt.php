@@ -561,37 +561,19 @@ if (isset($_POST['CommitBatch'])) {
 if (isset($_POST['Search'])) {
 	/*Will only be true if clicked to search for a customer code */
 
-	if ($_POST['Keywords'] and $_POST['CustCode']) {
-		$msg = _('Customer name keywords have been used in preference to the customer code extract entered');
-	}
-	if ($_POST['Keywords'] == '' and $_POST['CustCode'] == '' and $_POST['CustInvNo'] == '') {
+	if (mb_strlen($_POST['Keywords']) >= 0) {
+		//insert wildcard characters in spaces
+		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-		$msg = _('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
-	} else {
-		if (mb_strlen($_POST['Keywords']) > 0) {
-			//insert wildcard characters in spaces
-			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-
-			$SQL = "SELECT debtorsmaster.debtorno,
+		$SQL = "SELECT DISTINCT debtorsmaster.debtorno,
 						debtorsmaster.name
 					FROM debtorsmaster
+					LEFT JOIN debtortrans
+						ON debtorsmaster.debtorno=debtortrans.debtorno
 					WHERE debtorsmaster.name " . LIKE . " '" . $SearchString . "'
-					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
-
-		} elseif (mb_strlen($_POST['CustCode']) > 0) {
-			$SQL = "SELECT debtorsmaster.debtorno,
-						debtorsmaster.name
-					FROM debtorsmaster
-					WHERE debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
-		} elseif (mb_strlen($_POST['CustInvNo']) > 0) {
-			$SQL = "SELECT debtortrans.debtorno,
-						debtorsmaster.name
-					FROM debtorsmaster LEFT JOIN debtortrans
-					ON debtorsmaster.debtorno=debtortrans.debtorno
-					WHERE debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'
-					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'";
-		}
+						AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch']->Currency . "'
+						AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
+						AND debtortrans.transno " . LIKE . " '%" . $_POST['CustInvNo'] . "%'";
 
 		$CustomerSearchResult = DB_query($SQL, $db, '', '', false, false);
 		if (DB_error_no($db) != 0) {
@@ -755,7 +737,7 @@ echo '<br />
 	<table class="selection" summary="' . _('Select batch header details') . '">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select minlength="0" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
+		 <td><select minlength="1" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -1070,13 +1052,13 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 	}
 	echo '<tr>
 			<td>' . _('Amount of Receipt') . ':</td>
-			<td><input tabindex="9" type="text" name="Amount" minlength="0" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
+			<td><input tabindex="9" type="text" name="Amount" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['GLEntry'])) {
 		echo '<tr>
 				<td>' . _('Amount of Discount') . ':</td>
-				<td><input tabindex="10" type="text" name="Discount" minlength="0" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
+				<td><input tabindex="10" type="text" name="Discount" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
 	} else {
 		echo '<input tabindex="11" type="hidden" name="Discount" value="0" />';
 	}

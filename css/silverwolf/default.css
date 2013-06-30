@@ -248,6 +248,9 @@ border-right-style:solid;
 input.number{
 text-align:right;
 }
+input.integer{
+text-align: right;
+}
 input.image{
 border-width:0px;
 background-color:transparent;
