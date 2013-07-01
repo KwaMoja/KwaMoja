@@ -213,7 +213,7 @@ if (!isset($SelectedManufacturer)) {
 					<td><a target="_blank" href="%s">%s</a></td>
 					<td>%s</td>
 					<td><a href="%sSelectedManufacturer=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedManufacturer=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this brand?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="%sSelectedManufacturer=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this brand?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>',
 					$myrow['manufacturers_id'],
 					$myrow['manufacturers_name'],
@@ -238,7 +238,7 @@ echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -277,7 +277,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['ManufacturersName'] = '';
 	}
 	if (!isset($_POST['ManufacturersURL'])) {
-		$_POST['ManufacturersURL'] = ' ';
+		$_POST['ManufacturersURL'] = '';
 	}
 	if (!isset($_POST['ManufacturersImage'])) {
 		$_POST['ManufacturersImage'] = '';
@@ -285,11 +285,11 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Brand Name') . ':' . '</td>
-			<td><input type="text" name="ManufacturersName" value="' . $_POST['ManufacturersName'] . '" size="32" minlength="0" maxlength="32" /></td>
+			<td><input type="text" name="ManufacturersName" value="' . $_POST['ManufacturersName'] . '" size="32" minlength="1" maxlength="32" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Brand URL') . ':' . '</td>
-			<td><input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" minlength="0" maxlength="50" /></td>
+			<td><input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" minlength="1" maxlength="50" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Brand Image File (.jpg)') . ':</td>

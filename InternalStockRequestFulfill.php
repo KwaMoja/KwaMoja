@@ -214,7 +214,8 @@ if (!isset($_POST['Location'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
-				<td><select minlength="0" name="Location">';
+				<td><select minlength="1" name="Location">
+					<option value="">' . _('Select a Location') . '</option>';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -239,9 +240,6 @@ if (!isset($_POST['Location'])) {
 			} else {
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
-		} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-			$_POST['StockLocation'] = $myrow['loccode'];
 		} else {
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}

@@ -57,7 +57,7 @@ echo '<br />
 	<table class="selection" summary="' . _('Description of tag') . '">
 	<tr>
 		<td>' . _('Description') . '</td>
-		<td><input type="text" size="30" minlength="0" maxlength="30" name="Description" value="' . $Description . '" /></td>
+		<td><input type="text" size="30" minlength="1" maxlength="30" name="Description" value="' . $Description . '" /></td>
 		<td><input type="hidden" name="reference" value="' . $_GET['SelectedTag'] . '" />';
 
 if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {

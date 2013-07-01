@@ -148,7 +148,7 @@ if (!isset($_GET['Edit'])) { //display the input form
 		<label for="MailGroup"><?php
 	echo _('Mail Group');
 ?></label>
-			<input type="text" name="MailGroup" minlength="0" maxlength="100" size="20" />
+			<input type="text" name="MailGroup" minlength="1" maxlength="100" size="20" />
 			<input type="hidden" name="Clean" value="1" />
 			<input type="submit" name="Enter" value="<?php
 	echo _('Submit');
@@ -260,7 +260,7 @@ function GetUsers($GroupId, $GroupName) {
 ?></td>
 			<td><a href="<?php
 				echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?UserId=' . $myrow['userid'] . '&amp;GroupName=' . $GroupName . '&amp;Remove=1&amp;GroupId=' . $GroupId;
-?>" onclick="return MakeConfirm('Are you sure to remove this users?', \'Confirm Delete\', this); " /><?php
+?>" onclick="return MakeConfirm('Are you sure you want to remove this user?', \'Confirm Delete\', this); " /><?php
 				echo _('Remove');
 ?></a></td>
 			<td>&nbsp;</td>

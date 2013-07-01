@@ -16,6 +16,8 @@ parse the data in the line of text from the flat file to read the bank transacti
 if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text noPrint" >
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/upload.png" title="' . _('Receive') . '" alt="" />' . $Title  . '</p>';
 	echo '<table>
 			 <tr>
 				 <td>' . _('MT940 format Bank Statement File to import') . '</td>

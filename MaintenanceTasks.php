@@ -117,7 +117,7 @@ while ($myrow = DB_fetch_array($Result)) {
 echo '</table><br /><br />';
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form1">';
+echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form1">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
@@ -163,7 +163,7 @@ if (!isset($_POST['AssetID'])) {
 
 echo '<tr>
 		<td>' . _('Asset to Maintain') . ':</td>
-		<td><select minlength="0" name="AssetID">';
+		<td><select minlength="1" name="AssetID">';
 $AssetSQL = "SELECT assetid, description FROM fixedassets";
 $AssetResult = DB_query($AssetSQL, $db);
 while ($myrow = DB_fetch_array($AssetResult)) {
@@ -183,12 +183,12 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Days Before Task Due') . ':</td>
-		<td><input type="text" class="number" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
+		<td><input type="text" class="number" name="FrequencyDays" size="5" minlength="1" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Responsible') . ':</td>
-		<td><select minlength="0" name="UserResponsible">';
+		<td><select minlength="1" name="UserResponsible">';
 $UserSQL = "SELECT userid FROM www_users";
 $UserResult = DB_query($UserSQL, $db);
 while ($myrow = DB_fetch_array($UserResult)) {

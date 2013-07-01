@@ -106,7 +106,7 @@ if (!isset($SelectedRole)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
-	echo '<tr><td>' . _('Select User Role') . ':</td><td><select minlength="0" name="SelectedRole">';
+	echo '<tr><td>' . _('Select User Role') . ':</td><td><select minlength="1" name="SelectedRole">';
 
 	$SQL = "SELECT secroleid,
 					secrolename
