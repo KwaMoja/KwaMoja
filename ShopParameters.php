@@ -47,7 +47,15 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopBranchCode'] != $_POST['X_ShopBranchCode']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopBranchCode'] . "' WHERE confname = 'ShopBranchCode'";
 		}
-
+		if ($_SESSION['ShopShowOnlyAvailableItems'] != $_POST['X_ShopShowOnlyAvailableItems'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowOnlyAvailableItems']."' WHERE confname = 'ShopShowOnlyAvailableItems'";
+		}
+		if ($_SESSION['ShopShowQOHColumn'] != $_POST['X_ShopShowQOHColumn'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowQOHColumn']."' WHERE confname = 'ShopShowQOHColumn'";
+		}
+		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
+		}
 		if ($_SESSION['ShopAllowCreditCards'] != $_POST['X_ShopAllowCreditCards']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowCreditCards'] . "' WHERE confname = 'ShopAllowCreditCards'";
 		}
@@ -214,9 +222,37 @@ echo '<tr>
 		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . '</td>
 	</tr>';
 echo '<tr>
+		<td>' . _('Show Only Items With Available Stock') . ':</td>
+		<td><select name="X_ShopShowOnlyAvailableItems">';
+if ($_SESSION['ShopShowOnlyAvailableItems'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">' . _('No') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option value="1">' . _('Yes') . '</option>';
+}
+echo '</select></td>
+		<td>' . _('Shows only items with QOH > 0 thus avoiding the Arriving Soon items.') . '</td>
+	</tr>';
+
+echo '<tr>
+		<td>' . _('Show/Hide QOH column') . ':</td>
+		<td><select name="X_ShopShowQOHColumn">';
+if ($_SESSION['ShopShowQOHColumn'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
+	echo '<option value="0">' . _('Hide') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
+	echo '<option value="1">' . _('Show') . '</option>';
+}
+echo '</select></td>
+		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want customers to know how many stock do you currently hold.') . '</td>
+	</tr>';
+
+echo '<tr>
 		<td>' . _('Allow Payment Surcharges') . ':</td>
 		<td><select minlength="0" name="X_ShopAllowSurcharges">';
-if ($_SESSION['ShopAllowSurcharges'] == 1) {
+if ($_SESSION['ShopAllowSurcharges'] == "1") {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {
