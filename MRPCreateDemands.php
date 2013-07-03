@@ -277,7 +277,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Multiplier') . ':</td>
-		<td><input type="text" class="number" name="Multiplier" size="2" value="1" /></td>
+		<td><input type="text" class="integer" name="Multiplier" minlength="1" maxlength="2" size="2" value="1" /></td>
 	</tr>
 	<tr>
 		<td></td>

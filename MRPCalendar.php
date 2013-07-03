@@ -261,9 +261,9 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" minlength="0" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" minlength="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
 			<tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" minlength="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr><td></td></tr>
 		<tr><td></td></tr>
@@ -310,7 +310,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		<table class="selection">
 		<tr>
 			<td>' . _('Change Date Status') . ':</td>
-			<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" minlength="0" maxlength="12" value="' . $_POST['ChangeDate'] . '" /></td>
+			<td><input type="text" name="ChangeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="10" minlength="10" maxlength="10" value="' . $_POST['ChangeDate'] . '" /></td>
 			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
 		</tr>
 		</table>
