@@ -40,8 +40,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0
-				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
+				AND stockcategory.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockcategory.categoryid <= '" . $_POST['ToCriteria'] . "'
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	} else {
@@ -60,8 +60,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 				WHERE stockmaster.stockid=locstock.stockid
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND locstock.quantity!=0
-				AND stockcategory.categorydescription >= '" . $_POST['FromCriteria'] . "'
-				AND stockcategory.categorydescription <= '" . $_POST['ToCriteria'] . "'
+				AND stockcategory.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockcategory.categoryid <= '" . $_POST['ToCriteria'] . "'
 				AND locstock.loccode = '" . $_POST['Location'] . "'
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
@@ -217,7 +217,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		$CatResult = DB_query($sql, $db);
 		while ($myrow = DB_fetch_array($CatResult)) {
-			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		DB_data_seek($CatResult, 0);
 
 		while ($myrow = DB_fetch_array($CatResult)) {
-			echo '<option value="' . $myrow['categorydescription'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
+			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . ' - ' . $myrow['categoryid'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
