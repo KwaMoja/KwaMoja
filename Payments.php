@@ -767,7 +767,7 @@ $AccountsResults = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 echo '<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><select minlength="0" name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
+		<td><select minlength="1" name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -801,7 +801,7 @@ echo '<tr>
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 	echo '<tr><td>' . _('Currency of Payment') . ':</td>
-			<td><select minlength="0" name="Currency" onchange="ReloadForm(UpdateHeader)">';
+			<td><select minlength="1" name="Currency" onchange="ReloadForm(UpdateHeader)">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$result = DB_query($SQL, $db);
 
@@ -863,7 +863,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Paym
 	} //$_POST['Currency'] != $_POST['PreviousCurrency'] and isset($SuggestedExRate)
 	echo '<tr>
 			<td>' . _('Payment Exchange Rate') . ':</td>
-			<td><input class="number" type="text" name="ExRate" minlength="0" maxlength="10" size="12" value="' . $_POST['ExRate'] . '" /></td>
+			<td><input class="number" type="text" name="ExRate" minlength="1" maxlength="10" size="12" value="' . $_POST['ExRate'] . '" /></td>
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '. 1 ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->Currency . '</i></td>
 		</tr>';
 } //$_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['PaymentDetail' . $identifier]->Currency and isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)
@@ -880,7 +880,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 	} //$_POST['FunctionalExRate'] == 1 and isset($SuggestedFunctionalExRate)
 	echo '<tr>
 			<td>' . _('Functional Exchange Rate') . ':</td>
-			<td><input type="text" name="FunctionalExRate" minlength="0" maxlength="10" size="12" value="' . $_POST['FunctionalExRate'] . '" /></td>
+			<td><input type="text" name="FunctionalExRate" minlength="1" maxlength="10" size="12" value="' . $_POST['FunctionalExRate'] . '" /></td>
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') . '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['PaymentDetail' . $identifier]->AccountCurrency . '</i></td>
 		</tr>';
 } //$_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] and isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)
@@ -1058,7 +1058,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 
 	echo '<tr>
 			<td>' . _('Cheque/Voucher Number') . '</td>
-			<td><input type="text" name="Cheque" minlength="0" maxlength="12" size="12" /></td>
+			<td><input type="text" name="Cheque" minlength="1" maxlength="12" size="12" /></td>
 		</tr>';
 
 	if (isset($_POST['GLNarrative'])) {
@@ -1077,7 +1077,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	if (isset($_POST['GLAmount'])) {
 		echo '<tr>
 				<td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail' . $identifier]->Currency . '):</td>
-				<td><input type="text" name="GLAmount" minlength="0" maxlength="12" size="12" class="number" value="' . $_POST['GLAmount'] . '" /></td>
+				<td><input type="text" name="GLAmount" minlength="1" maxlength="12" size="12" class="number" value="' . $_POST['GLAmount'] . '" /></td>
 			</tr>';
 	} //isset($_POST['GLAmount'])
 	else {

@@ -262,7 +262,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Payment Method') . ':' . '</td>
-			<td><input type="text" ' . (in_array('MethodName', $Errors) ? 'class="inputerror"' : '') . ' name="MethodName" size="30" minlength="0" maxlength="30" value="' . $_POST['MethodName'] . '" /></td>
+			<td><input type="text" name="MethodName" size="30" minlength="1" maxlength="30" value="' . $_POST['MethodName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 		<td>' . _('Use For Payments') . ':' . '</td>

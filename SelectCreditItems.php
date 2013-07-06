@@ -68,59 +68,35 @@ if (isset($_POST['CancelCredit'])) {
 
 if (isset($_POST['SearchCust']) and $_SESSION['RequireCustomerSelection'] == 1) {
 
-	if ($_POST['Keywords'] and $_POST['CustCode']) {
-		prnMsg(_('Customer name keywords have been used in preference to the customer code extract entered'), 'info');
+	$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+
+	$SQL = "SELECT	debtorsmaster.name,
+					custbranch.debtorno,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode
+				FROM custbranch
+				INNER JOIN debtorsmaster
+					ON custbranch.debtorno=debtorsmaster.debtorno
+				WHERE debtorsmaster.name " . LIKE . " '" . $SearchString . "'
+					AND custbranch.debtorno " . LIKE . "'%" . $_POST['CustCode'] . "%'
+					AND custbranch.disabletrans='0'";
+
+	$ErrMsg = _('Customer branch records requested cannot be retrieved because');
+	$DbgMsg = _('SQL used to retrieve the customer details was');
+	$result_CustSelect = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+
+	if (DB_num_rows($result_CustSelect) == 1) {
+		$myrow = DB_fetch_array($result_CustSelect);
+		$SelectedCustomer = trim($myrow['debtorno']);
+		$SelectedBranch = trim($myrow['branchcode']);
+		$_POST['JustSelectedACustomer'] = 'Yes';
+	} elseif (DB_num_rows($result_CustSelect) == 0) {
+		prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'), 'info');
 	}
-	if ($_POST['Keywords'] == '' and $_POST['CustCode'] == '') {
-		prnMsg(_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search'), 'info');
-	} else {
-		if (mb_strlen($_POST['Keywords']) > 0) {
-			//insert wildcard characters in spaces
-			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-			$SQL = "SELECT	debtorsmaster.name,
-								custbranch.debtorno,
-								custbranch.brname,
-								custbranch.contactname,
-								custbranch.phoneno,
-								custbranch.faxno,
-								custbranch.branchcode
-							FROM custbranch
-							INNER JOIN debtorsmaster
-							ON custbranch.debtorno=debtorsmaster.debtorno
-							WHERE custbranch.brname " . LIKE . " '" . $SearchString . "'
-							AND custbranch.disabletrans='0'";
-
-		} elseif (mb_strlen($_POST['CustCode']) > 0) {
-
-			$SQL = "SELECT 	debtorsmaster.name,
-								custbranch.debtorno,
-								custbranch.brname,
-								custbranch.contactname,
-								custbranch.phoneno,
-								custbranch.faxno,
-								custbranch.branchcode
-							FROM custbranch
-							INNER JOIN debtorsmaster
-							ON custbranch.debtorno=debtorsmaster.debtorno
-							WHERE custbranch.debtorno " . LIKE . "'%" . $_POST['CustCode'] . "%'
-							AND custbranch.disabletrans='0'";
-		}
-
-		$ErrMsg = _('Customer branch records requested cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the customer details was');
-		$result_CustSelect = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-
-
-		if (DB_num_rows($result_CustSelect) == 1) {
-			$myrow = DB_fetch_array($result_CustSelect);
-			$SelectedCustomer = trim($myrow['debtorno']);
-			$SelectedBranch = trim($myrow['branchcode']);
-		} elseif (DB_num_rows($result_CustSelect) == 0) {
-			prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'), 'info');
-		}
-
-	}
 	/*one of keywords or custcode was more than a zero length string */
 }
 /*end of if search button for customers was hit*/
@@ -662,16 +638,16 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 									<td title="' . $LineItem->LongDescription . '">' . $LineItem->ItemDescription . '</td>';
 
 			if ($LineItem->Controlled == 0) {
-				echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" minlength="0" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity, $LineItem->DecimalPlaces), $LineItem->DecimalPlaces) . '" /></td>';
+				echo '<td><input type="text" class="number" name="Quantity_' . $LineItem->LineNumber . '" minlength="1" maxlength="6" size="6" value="' . locale_number_format(round($LineItem->Quantity, $LineItem->DecimalPlaces), $LineItem->DecimalPlaces) . '" /></td>';
 			} else {
 				echo '<td class="number"><a href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LineItem->LineNumber . '&identifier=' . $identifier . '">' . locale_number_format($LineItem->Quantity, $LineItem->DecimalPlaces) . '</a>
                       <input type="hidden" name="Quantity_' . $LineItem->LineNumber . '" value="' . locale_number_format(round($LineItem->Quantity, $LineItem->DecimalPlaces), $LineItem->DecimalPlaces) . '" /></td>';
 			}
 
 			echo '<td>' . $LineItem->Units . '</td>
-			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" minlength="0" maxlength="12" value="' . locale_number_format($LineItem->Price, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
+			<td><input type="text" class="number" name="Price_' . $LineItem->LineNumber . '" size="10" minlength="1" maxlength="12" value="' . locale_number_format($LineItem->Price, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
 			<td><input type="CheckBox" name="Gross" value="false" /></td>
-			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" minlength="0" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100), 'Variable') . '" />%</td>
+			<td><input type="text" class="number" name="Discount_' . $LineItem->LineNumber . '" size="3" minlength="1" maxlength="3" value="' . locale_number_format(($LineItem->DiscountPercent * 100), 'Variable') . '" />%</td>
 			<td class="number">' . $DisplayLineTotal . '</td>';
 
 
@@ -695,7 +671,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 				if ($i > 0) {
 					echo '<br />';
 				}
-				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" minlength="0" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate * 100, 'Variable') . '" />';
+				echo '<input type="text" class="number" name="' . $LineItem->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" minlength="1" maxlength="4" size="4" value="' . locale_number_format($Tax->TaxRate * 100, 'Variable') . '" />';
 				$i++;
 				if ($Tax->TaxOnTax == 1) {
 					$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
@@ -734,7 +710,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 				<td colspan="5"></td>';
 
 		echo '<td colspan="2" class="number">' . _('Credit Freight') . '</td>
-			<td><input type="text" class="number" size="6" minlength="0" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>';
+			<td><input type="text" class="number" size="6" minlength="1" maxlength="6" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>';
 
 		$FreightTaxTotal = 0; //initialise tax total
 
@@ -757,7 +733,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 				echo '<br />';
 			}
 
-			echo '<input type="text" class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' minlength="0" maxlength="4" size="4" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100), 'Variable') . '" />';
+			echo '<input type="text" class="number" name=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' minlength="1" maxlength="4" size="4" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100), 'Variable') . '" />';
 
 			if ($FreightTaxLine->TaxOnTax == 1) {
 				$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
@@ -793,7 +769,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 				<table class="selection">
 				<tr>
 					<td>' . _('Credit Note Type') . ' :</td>
-					<td><select minlength="0" name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
+					<td><select minlength="1" name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
 
 		if (!isset($_POST['CreditType']) or $_POST['CreditType'] == 'Return') {
 			echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>
@@ -818,7 +794,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 			echo '<tr>
 					<td>' . _('Goods Returned to Location') . ' :</td>
-					<td><select minlength="0" name="Location">';
+					<td><select minlength="1" name="Location">';
 
 			if ($_SESSION['RestrictLocations'] == 0) {
 				$sql = "SELECT locationname,
@@ -850,8 +826,9 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		} elseif ($_POST['CreditType'] == 'WriteOff') {
 			/* the goods are to be written off to somewhere */
 
-			echo '<tr><td>' . _('Write off the cost of the goods to') . '</td>
-					<td><select minlength="0" name=WriteOffGLCode>';
+			echo '<tr>
+					<td>' . _('Write off the cost of the goods to') . '</td>
+					<td><select minlength="1" name=WriteOffGLCode>';
 
 			$SQL = "SELECT accountcode,
 						accountname
@@ -873,7 +850,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		}
 		echo '<tr>
 				<td>' . _('Sales person') . ':</td>
-				<td><select minlength="0" name="SalesPerson">';
+				<td><select minlength="1" name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1", $db);
 		if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin'] != NULL) {
 			$_SESSION['CreditItems' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -892,7 +869,8 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		if (!isset($_POST['CreditText'])) {
 			$_POST['CreditText'] = '';
 		}
-		echo '<tr><td>' . _('Credit Note Text') . ' :</td>
+		echo '<tr>
+				<td>' . _('Credit Note Text') . ' :</td>
 		  		<td><textarea name="CreditText" COLS="31" rows="5">' . $_POST['CreditText'] . '</textarea></td>
 			</tr>
 			</table><br />';

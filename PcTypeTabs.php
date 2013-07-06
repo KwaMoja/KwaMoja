@@ -224,7 +224,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Type Of Tab') . ':</td>
-					<td><input type="text" ' . (in_array('TypeTabCode', $Errors) ? 'class="inputerror"' : '') . ' name="TypeTabCode" /></td>
+					<td><input type="text" minlegth="1" maxlength="20" name="TypeTabCode" /></td>
 				</tr>';
 
 	}
@@ -234,7 +234,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description Of Type of Tab') . ':</td>
-			<td><input type="text" name="TypeTabDescription" size="50" minlength="0" maxlength="49" value="' . $_POST['TypeTabDescription'] . '" /></td>
+			<td><input type="text" name="TypeTabDescription" size="50" minlength="1" maxlength="50" value="' . $_POST['TypeTabDescription'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; // close main table

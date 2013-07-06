@@ -129,23 +129,24 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 /*Now get the line items */
 
 $LineItemsSQL = "SELECT stkcode,
-							stockmaster.description,
-							stockmaster.volume,
-							stockmaster.kgs,
-							stockmaster.decimalplaces,
-							stockmaster.mbflag,
-							stockmaster.units,
-							stockmaster.discountcategory,
-							stockmaster.controlled,
-							stockmaster.serialised,
-							unitprice,
-							quantity,
-							discountpercent,
-							actualdispatchdate,
-							qtyinvoiced
-						FROM salesorderdetails INNER JOIN stockmaster
+						stockmaster.description,
+						stockmaster.volume,
+						stockmaster.kgs,
+						stockmaster.decimalplaces,
+						stockmaster.mbflag,
+						stockmaster.units,
+						stockmaster.discountcategory,
+						stockmaster.controlled,
+						stockmaster.serialised,
+						unitprice,
+						quantity,
+						discountpercent,
+						actualdispatchdate,
+						qtyinvoiced
+					FROM salesorderdetails
+					INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
-						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
+					WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
 $ErrMsg = _('The line items of the order cannot be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the line items, that failed was');

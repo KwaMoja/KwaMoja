@@ -173,11 +173,11 @@ if (isset($_POST['PrintPDF'])) {
 				<table class="selection">
 					<tr>
 						<td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" minlength="0" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" minlength="1" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 					</tr>
 					<tr>
 						<td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" minlength="1" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 					</tr>
 				</table>
 				<br />

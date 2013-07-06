@@ -300,8 +300,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 	$result = DB_query($SQL, $db);
 
-	echo '<tr><td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
-		<td><select minlength="0" name="SelectedTabs">';
+	echo '<tr>
+			<td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
+			<td><select minlength="1" name="SelectedTabs">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SelectTabs']) and $myrow['tabcode'] == $_POST['SelectTabs']) {

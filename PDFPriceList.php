@@ -255,9 +255,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
-		  <td><select minlength="0" name="FromCriteria">';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('From Inventory Category Code') . ':</td>
+					<td><select minlength="1" name="FromCriteria">';
 
 		$sql = 'SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult = DB_query($sql, $db);
@@ -277,8 +278,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>
-		  <td><select minlength="0" name="SalesType">';
+		echo '<tr>
+				<td>' . _('For Sales Type/Price List') . ':</td>
+				<td><select minlength="0" name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult = DB_query($sql, $db);
 
@@ -287,21 +289,28 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		}
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Show Gross Profit %') . ':</td>
-		  <td><select minlength="0" name="ShowGPPercentages">';
+		echo '<tr>
+				<td>' . _('Show Gross Profit %') . ':</td>
+				<td><select minlength="1" name="ShowGPPercentages">';
 		echo '<option selected="selected" value="No">' . _('Prices Only') . '</option>';
 		echo '<option value="Yes">' . _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
 
-		echo '<tr><td>' . _('Price Listing Type') . ':</td><td><select minlength="0" name="CustomerSpecials">';
-		echo '<option selected="selected" value="Sales Type Prices">' . _('Default Sales Type Prices') . '</option>';
-		echo '<option value="Customer Special Prices Only">' . _('Customer Special Prices Only') . '</option>';
-		echo '<option value="Full Description">' . _('Full Description') . '</option>';
-		echo '</select></td></tr>';
+		echo '<tr>
+				<td>' . _('Price Listing Type') . ':</td>
+				<td>
+					<select minlength="1" name="CustomerSpecials">
+						<option selected="selected" value="Sales Type Prices">' . _('Default Sales Type Prices') . '</option>
+						<option value="Customer Special Prices Only">' . _('Customer Special Prices Only') . '</option>
+						<option value="Full Description">' . _('Full Description') . '</option>
+					</select>
+				</td>
+			</tr>';
 
-		echo '<tr><td>' . _('Effective As At') . ':</td>';
-		echo '<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-		echo '</td></tr>';
+		echo '<tr>
+				<td>' . _('Effective As At') . ':</td>
+				<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			</tr>';
 
 		echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
 		echo '</div>

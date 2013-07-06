@@ -239,13 +239,14 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
-		echo '<tr><td>' . _('Type Code') . ':</td><td>';
-
-		// We dont allow the user to change an existing type code
-
-		echo $_POST['TypeAbbrev'] . '</td></tr>';
+		echo '<table class="selection">
+				<tr>
+					<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
+				</tr>';
+		echo '<tr>
+				<td>' . _('Type Code') . ':</td>
+				<td>' . $_POST['TypeAbbrev'] . '</td>
+			</tr>';
 
 	} else {
 
@@ -254,14 +255,15 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" ' . (in_array('SalesType', $Errors) ? 'class="inputerror"' : '') . ' size="3" minlength="0" maxlength="2" name="TypeAbbrev" /></td></tr>';
+				<td><input type="text" size="3" minlength="1" maxlength="2" name="TypeAbbrev" /></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type'] = '';
 	}
-	echo '<tr><td>' . _('Sales Type Name') . ':</td>
-			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Sales Type Name') . ':</td>
+			<td><input type="text" minlength="1" maxlength="40" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
 
 	echo '</table>'; // close main table
 

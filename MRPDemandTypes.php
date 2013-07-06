@@ -114,7 +114,7 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 		printf('<tr><td>%s</td>
 				<td>%s</td>
 				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedDT=%s&amp;delete=yes">' . _('Delete') . '</a></td>
+				<td><a href="%sSelectedDT=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
 	}
 
@@ -161,7 +161,7 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Demand Type') . ':</td>
-				<td><input type="text" name="MRPDemandType" size="6" minlength="0" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
+				<td><input type="text" name="MRPDemandType" size="6" minlength="1" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
 			</tr>';
 }
 
@@ -171,7 +171,7 @@ if (!isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Demand Type Description') . ':</td>
-		<td><input type="text" name="Description" size="31" minlength="0" maxlength="30" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="31" minlength="1" maxlength="30" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	</table>
 	<br />

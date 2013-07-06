@@ -89,7 +89,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SetAll'])) and isset($_POST['F
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
 				<td class="number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
-				<td><input type="input" name="Qty' . $i . '" size="4" class="number" value="' . locale_number_format($_POST['Qty' . $i], 0) . '" /></td>
+				<td><input type="text" minlength="1" maxlength="4" name="Qty' . $i . '" size="4" class="number" value="' . locale_number_format($_POST['Qty' . $i], 0) . '" /></td>
 			</tr>';
 		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
 			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
@@ -279,7 +279,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 		echo '<table class="selection" summary="' . _('Print Price Labels') . '">';
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
-				<td><select minlength="0" name="LabelID">';
+				<td><select minlength="1" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels", $db);
 		while ($LabelRow = DB_fetch_array($LabelResult)) {
@@ -289,7 +289,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 			</tr>
 			<tr>
 				<td>' . _('From Inventory Category Code') . ':</td>
-				<td><select minlength="0" name="FromCriteria">';
+				<td><select minlength="1" name="FromCriteria">';
 
 		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid", $db);
 		while ($myrow = DB_fetch_array($CatResult)) {
@@ -301,7 +301,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select minlength="0" name="ToCriteria">';
+				<td><select minlength="1" name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult, 0);
@@ -315,7 +315,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('For Sales Type/Price List') . ':</td>
-				<td><select minlength="0" name="SalesType">';
+				<td><select minlength="1" name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult = DB_query($sql, $db);
 
@@ -345,7 +345,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		echo '<tr>
 				<td>' . _('Effective As At') . ':</td>
-				<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" minlength="1" maxlength="10" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
 		echo '</table>

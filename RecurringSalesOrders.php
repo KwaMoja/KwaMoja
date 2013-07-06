@@ -406,7 +406,7 @@ if (!isset($_POST['StartDate'])) {
 if ($NewRecurringOrder == 'Yes') {
 	echo '<tr>
 	<td>' . _('Start Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" size="11" minlength="0" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" size="11" minlength="1" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
 } else {
 	echo '<tr>
 	<td>' . _('Last Recurrence') . ':</td>
@@ -420,11 +420,11 @@ if (!isset($_POST['StopDate'])) {
 
 echo '<tr>
 	<td>' . _('Finish Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StopDate" size="11" minlength="0" maxlength="10" value="' . $_POST['StopDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StopDate" size="11" minlength="1" maxlength="10" value="' . $_POST['StopDate'] . '" /></td></tr>';
 
 echo '<tr>
 	<td>' . _('Frequency of Recurrence') . ':</td>
-	<td><select minlength="0" name="Frequency">';
+	<td><select minlength="1" name="Frequency">';
 
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 52) {
 	echo '<option selected="selected" value="52">' . _('Weekly') . '</option>';
@@ -467,7 +467,7 @@ echo '</select></td></tr>';
 if ($_SESSION['Items' . $identifier]->AllDummyLineItems() == true) {
 
 	echo '<tr><td>' . _('Invoice Automatically') . ':</td>
-		<td><select minlength="0" name="AutoInvoice">';
+		<td><select minlength="1" name="AutoInvoice">';
 	if ($_POST['AutoInvoice'] == 0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';

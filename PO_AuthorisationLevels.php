@@ -169,7 +169,9 @@ if (isset($_GET['Edit'])) {
 	echo '<tr><td>' . _('User ID') . '</td><td>' . $_GET['UserID'] . '</td></tr>';
 	echo '<input type="hidden" name="UserID" value="' . $_GET['UserID'] . '" />';
 } else {
-	echo '<tr><td>' . _('User ID') . '</td><td><select minlength="0" name="UserID">';
+	echo '<tr>
+			<td>' . _('User ID') . '</td>
+			<td><select minlength="1" name="UserID">';
 	$usersql = "SELECT userid FROM www_users";
 	$userresult = DB_query($usersql, $db);
 	while ($myrow = DB_fetch_array($userresult)) {
@@ -208,7 +210,9 @@ if (isset($_GET['Edit'])) {
 		</tr>';
 	echo '<input type="hidden" name="CurrCode" value="' . $Currency . '" />';
 } else {
-	echo '<tr><td>' . _('Currency') . '</td><td><select minlength="0" name="CurrCode">';
+	echo '<tr>
+			<td>' . _('Currency') . '</td>
+			<td><select minlength="1" name="CurrCode">';
 	$currencysql = "SELECT currabrev,currency FROM currencies";
 	$currencyresult = DB_query($currencysql, $db);
 	while ($myrow = DB_fetch_array($currencyresult)) {
@@ -243,7 +247,7 @@ if ($OffHold == 1) {
 
 echo '<tr>
 		<td>' . _('User can authorise orders up to :') . '</td>';
-echo '<td><input type="text" name="AuthLevel" size="11" class="number" value="' . locale_number_format($AuthLevel, $CurrDecimalPlaces) . '" /></td>
+echo '<td><input type="text" name="AuthLevel" minlength="1" maxlength="11" size="11" class="number" value="' . locale_number_format($AuthLevel, $CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 

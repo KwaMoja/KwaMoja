@@ -416,16 +416,28 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
 		/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
+		$sql = "SELECT min(debtorno) AS fromcriteria,
+						max(debtorno) AS tocriteria
+					FROM debtorsmaster";
+
+		$result = DB_query($sql, $db);
+		$myrow = DB_fetch_array($result);
+
 		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table class="selection">';
-		echo '<tr><td>' . _('Starting Customer statement to print (Customer code)') . '
-			</td><td><input type="text" minlength="0" maxlength="6" size="7" name="FromCust" value="1" /></td></tr>
-			<tr><td>' . _('Ending Customer statement to print (Customer code)') . '</td><td>
-				<input type="text" minlength="0" maxlength="6" size="7" name="ToCust" value="zzzzzz" /></td></tr></table>
-				<br /><div class="centre">
+		echo '<tr>
+				<td>' . _('Starting Customer statement to print (Customer code)') . ' </td>
+				<td><input type="text" minlength="1" maxlength="20" size="7" name="FromCust" value="' . $myrow['fromcriteria'] . '" /></td>
+			</tr>
+			<tr>
+				<td>' . _('Ending Customer statement to print (Customer code)') . '</td>
+				<td><input type="text" minlength="1" maxlength="20" size="7" name="ToCust" value="' . $myrow['tocriteria'] . '" /></td>
+			</tr>
+		</table>';
+		echo '<br /><div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print All Statements in the Range Selected') . '" />
 			</div>';
 		echo '</div>

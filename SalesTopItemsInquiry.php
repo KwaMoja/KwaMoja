@@ -102,7 +102,7 @@ echo ' /></td>
 		</tr>
 		<tr>
 		<td>' . _('Number to Display') . ':</td>
-		<td><input type="text" class="number" name="NoToDisplay" size="4" minlength="0" maxlength="4" value="' . $_POST['NoToDisplay'] . '"  /></td>
+		<td><input type="text" class="number" name="NoToDisplay" size="4" minlength="1" maxlength="4" value="' . $_POST['NoToDisplay'] . '"  /></td>
 		</tr>
 	</table>
 	</td></tr>

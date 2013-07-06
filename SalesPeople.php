@@ -285,7 +285,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>
-					<td><input type="text" ' . (in_array('SalesmanCode', $Errors) ? 'class="inputerror"' : '') . ' name="SalesmanCode" size="3" minlength="0" maxlength="3" /></td>
+					<td><input type="text" name="SalesmanCode" size="3" minlength="1" maxlength="3" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['SalesmanName'])) {
@@ -312,7 +312,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Salesperson Name') . ':</td>
-			<td><input type="text" ' . (in_array('SalesmanName', $Errors) ? 'class="inputerror"' : '') . ' name="SalesmanName"  size="30" minlength="0" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
+			<td><input type="text" name="SalesmanName"  size="30" minlength="1" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
@@ -324,7 +324,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 1') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate1" size="5" minlength="0" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
+			<td><input type="text" class="number" name="CommissionRate1" size="5" minlength="1" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Breakpoint') . ':</td>
@@ -332,12 +332,12 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 2') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate2" size="5" minlength="0" maxlength="5" value="' . $_POST['CommissionRate2'] . '" /></td>
+			<td><input type="text" class="number" name="CommissionRate2" size="5" minlength="1" maxlength="5" value="' . $_POST['CommissionRate2'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Current?') . ':</td>
-			<td><select minlength="0" name="Current">';
+			<td><select minlength="1" name="Current">';
 	if ($_POST['Current'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {

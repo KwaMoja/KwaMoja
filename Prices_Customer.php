@@ -199,7 +199,7 @@ echo '<table><tr><td valign="top">';
 echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
-	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';
+	prnMsg( _('There are no default prices set up for this part'), 'info');
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -242,7 +242,7 @@ $result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
-	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
+	prnMsg( _('There are no special prices set up for this part'), 'info');
 } else {
 	/*THERE IS ALREADY A spl price setup */
 	echo '<tr><th>' . _('Special Price') . '</th><th>' . _('Branch') . '</th></tr>';
@@ -260,15 +260,15 @@ if (DB_num_rows($result) == 0) {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 		echo '<tr style="background-color:#CCCCCC">
-			<td class="number">' . locale_number_format($myrow['price'], $CurrDecimalPlaces) . '</td>
-			<td>' . $Branch . '</td>
-			<td>' . $myrow['units'] . '</td>
-			<td class="number">' . $myrow['conversionfactor'] . '</td>
-			<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-			<td>' . $EndDateDisplay . '</td>
-	 		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '&amp;Price=' . $myrow['price'] . '&amp;Branch=' . $myrow['branchcode'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '&amp;Branch=' . $myrow['branchcode'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-		</tr>';
+				<td class="number">' . locale_number_format($myrow['price'], $CurrDecimalPlaces) . '</td>
+				<td>' . $Branch . '</td>
+				<td>' . $myrow['units'] . '</td>
+				<td class="number">' . $myrow['conversionfactor'] . '</td>
+				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+				<td>' . $EndDateDisplay . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '&amp;Price=' . $myrow['price'] . '&amp;Branch=' . $myrow['branchcode'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '&amp;Branch=' . $myrow['branchcode'] . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP
@@ -318,15 +318,12 @@ $result = DB_query($sql, $db);
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Branch') . ':</td>
-			<td><select minlength="0" name="Branch">';
-if ($myrow['branchcode'] == '') {
-	echo '<option selected="selected" value="">' . _('All branches') . '</option>';
-} else {
-	echo '<option value="">' . _('All branches') . '</option>';
-}
+			<td>
+				<select minlength="0" name="Branch">
+					<option value="">' . _('All branches') . '</option>';
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['branchcode'] == $_GET['Branch']) {
+	if (isset($_GET['Branch']) and $myrow['branchcode'] == $_GET['Branch']) {
 		echo '<option selected="selected" value="' . $myrow['branchcode'] . '">' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	} else {
 		echo '<option value="' . $myrow['branchcode'] . '">' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
@@ -335,14 +332,14 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="0" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
+		<td><input type="text" name="StartDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="1" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('End Date') . ':</td>
-		<td><input type="text" name="EndDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="0" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
+		<td><input type="text" name="EndDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="1" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
-		  <td><input type="text" class="number" name="Price" size="11" minlength="0" maxlength="10" value="' . locale_number_format($_POST['Price'], 2) . '" /></td>
+		  <td><input type="text" class="number" name="Price" size="11" minlength="1" maxlength="10" value="' . locale_number_format($_POST['Price'], 2) . '" /></td>
 		</tr>
 	</table>';
 

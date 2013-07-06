@@ -54,10 +54,10 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 	echo '</select></td></tr>';
 	echo '<tr><td>' . _('From Date :') . '</td><td>';
-	echo '<input tabindex="2" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="FromDate" minlength="0" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
+	echo '<input tabindex="2" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="FromDate" minlength="1" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
 	echo '</td></tr>';
 	echo '<tr><td>' . _('To Date:') . '</td><td>';
-	echo '<input tabindex="3" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="ToDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
+	echo '<input tabindex="3" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="ToDate" minlength="1" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
 	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type="submit" name="ShowTB" value="' . _('Show HTML') . '" />';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';
@@ -280,10 +280,11 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		$Balance['0'] = 0;
 	}
 
-	echo '<tr><td>' . _('Balance before ') . '' . $_POST['FromDate'] . '</td>
-				<td>:</td>
-				<td>' . locale_number_format($Balance['0'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td>
-			</tr>';
+	echo '<tr>
+			<td>' . _('Balance before ') . '' . $_POST['FromDate'] . '</td>
+			<td>:</td>
+			<td>' . locale_number_format($Balance['0'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td>
+		</tr>';
 
 	$SqlBalanceNotAut = "SELECT SUM(amount)
 			FROM pcashdetails
@@ -381,8 +382,10 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		$Amount[0] = 0;
 	}
 
-	echo '<tr><td colspan="2" style="text-align:right">' . _('Balance At') . ' ' . $_POST['ToDate'] . ':</td>
-				<td>' . locale_number_format($Amount[0], $_SESSION['CompanyRecord']['decimalplaces']) . ' </td><td>' . $Tabs['currency'] . '</td></tr>';
+	echo '<tr>
+			<td colspan="2" style="text-align:right">' . _('Balance At') . ' ' . $_POST['ToDate'] . ':</td>
+			<td>' . locale_number_format($Amount[0], $_SESSION['CompanyRecord']['decimalplaces']) . ' </td><td>' . $Tabs['currency'] . '</td>
+		</tr>';
 
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';

@@ -742,12 +742,12 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit']
 				<td class="number">' . locale_number_format($POLine->Quantity, $POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
-				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo . '" size="8" value="' . locale_number_format($POLine->ConversionFactor, 'Variable') . '" /></td>
-				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round($POLine->Quantity / $POLine->ConversionFactor, $POLine->DecimalPlaces), $POLine->DecimalPlaces) . '" /></td>
+				<td><input type="text" class="number" minlength="1" maxlength="8" name="ConversionFactor' . $POLine->LineNo . '" size="8" value="' . locale_number_format($POLine->ConversionFactor, 'Variable') . '" /></td>
+				<td><input type="text" class="number" minlength="1" maxlength="10" name="SuppQty' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round($POLine->Quantity / $POLine->ConversionFactor, $POLine->DecimalPlaces), $POLine->DecimalPlaces) . '" /></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round(($POLine->Price * $POLine->ConversionFactor), $_SESSION['PO' . $identifier]->CurrDecimalPlaces), $_SESSION['PO' . $identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input type="text" class="number" minlength="1" maxlength="10" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . locale_number_format(round(($POLine->Price * $POLine->ConversionFactor), $_SESSION['PO' . $identifier]->CurrDecimalPlaces), $_SESSION['PO' . $identifier]->CurrDecimalPlaces) . '" /></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ReqDelDate' . $POLine->LineNo . '" size="10" value="' . $POLine->ReqDelDate . '" /></td>';
+				<td><input type="text" class="date" minlength="1" maxlength="10" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ReqDelDate' . $POLine->LineNo . '" size="10" value="' . $POLine->ReqDelDate . '" /></td>';
 			if ($POLine->QtyReceived != 0 and $POLine->Completed != 1) {
 				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} //$POLine->QtyReceived != 0 and $POLine->Completed != 1
@@ -794,7 +794,7 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('OR Asset ID') . '</td>
-			<td><select minlength="0" name="AssetID">';
+			<td><select minlength="1" name="AssetID">';
 	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC", $db);
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)) {
@@ -810,19 +810,19 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '</select><a href="FixedAssetItems.php" target=_blank>' . _('New Fixed Asset') . '</a></td></tr>
 		<tr>
 			<td>' . _('Quantity to purchase') . '</td>
-			<td><input type="text" class="number" name="Qty" size="10" value="1" /></td>
+			<td><input type="text" class="number" name="Qty" minlength="1" maxlength="10" size="10" value="1" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Price per item') . '</td>
-			<td><input type="text" class="number" name="Price" size="10" /></td>
+			<td><input type="text" minlength="1" maxlength="10" class="number" name="Price" size="10" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Unit') . '</td>
-			<td><input type="text" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td>
+			<td><input type="text" minlength="1" maxlength="10" name="SuppliersUnit" size="10" value="' . _('each') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . '</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ReqDelDate" size="11" value="' . $_SESSION['PO' . $identifier]->DeliveryDate . '" /></td>
+			<td><input type="text" class="date" minlength="1" maxlength="10" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ReqDelDate" size="11" value="' . $_SESSION['PO' . $identifier]->DeliveryDate . '" /></td>
 		</tr>
 		</table>
 		<div class="centre">
@@ -1200,7 +1200,7 @@ if (isset($SearchResult)) {
 			<td class="number">' . $ConversionFactor . '</td>
 			<td>' . $OrderUnits . '</td>
 			<td>' . $ImageSource . '</td>
-			<td><input class="number" type="text" size="6" value="0" name="NewQty' . $j . '" /></td>
+			<td><input class="number" type="text" size="6" minlength="1" maxlength="11" value="0" name="NewQty' . $j . '" /></td>
 			<input type="hidden" name="StockID' . $j . '" . value="' . $myrow['stockid'] . '" />
 			</tr>';
 		$j++;

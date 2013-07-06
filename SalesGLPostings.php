@@ -292,9 +292,10 @@ if (!isset($_GET['delete'])) {
 
 	echo '<br /><table class="selection">
 		<tr>
-		<td>' . _('Area') . ':</td>
-		<td><select minlength="0" name="Area">
-			<option value="AN">' . _('Any Other') . '</option>';
+			<td>' . _('Area') . ':</td>
+			<td>
+				<select minlength="1" name="Area">
+					<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode'] == $_POST['Area']) {
@@ -314,9 +315,11 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 
-	echo '<tr><td>' . _('Stock Category') . ':</td>
-		<td><select minlength="0" name="StkCat">
-			<option value="ANY">' . _('Any Other') . '</option>';
+	echo '<tr>
+			<td>' . _('Stock Category') . ':</td>
+			<td>
+				<select minlength="1" name="StkCat">
+					<option value="ANY">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -340,8 +343,9 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL, $db);
 
 
-	echo '<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
-		<td><select minlength="0" name="SalesType">';
+	echo '<tr>
+			<td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
+			<td><select minlength="1" name="SalesType">';
 	echo '<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -357,8 +361,9 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 
-	echo '<tr><td>' . _('Post Sales to GL Account') . ':</td>
-			<td><select minlength="0" name="SalesGLCode">';
+	echo '<tr>
+			<td>' . _('Post Sales to GL Account') . ':</td>
+			<td><select minlength="1" name="SalesGLCode">';
 
 	DB_free_result($result);
 	$SQL = "SELECT chartmaster.accountcode,
@@ -385,8 +390,10 @@ if (!isset($_GET['delete'])) {
 	DB_data_seek($result, 0);
 
 	echo '</select></td></tr>
-		<tr><td>' . _('Post Discount to GL Account') . ':</td>
-			<td><select minlength="0" name="DiscountGLCode">';
+		<tr>
+			<td>' . _('Post Discount to GL Account') . ':</td>
+			<td>
+				<select minlength="1" name="DiscountGLCode">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DiscountGLCode']) and $myrow['accountcode'] == $_POST['DiscountGLCode']) {

@@ -29,25 +29,26 @@ if (!isset($_POST['FromDate'])) {
 	echo '<table class="selection">';
 	echo '<tr>
 				<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="FromDate" minlength="0" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" name="FromDate" minlength="1" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 	echo '<tr>
 				<td>' . _('Enter the date to which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="ToDate" minlength="0" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" name="ToDate" minlength="1" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
-	echo '<tr><td>' . _('Transaction type') . '</td><td>';
-
-	echo '<select minlength="0" name="TransType">';
-
-	echo '<option value="10">' . _('Sales Invoice') . '</option>
-			<option value="11">' . _('Sales Credit Note') . '</option>
-			<option value="16">' . _('Location Transfer') . '</option>
-			<option value="17">' . _('Stock Adjustment') . '</option>
-			<option value="25">' . _('Purchase Order Delivery') . '</option>
-			<option value="26">' . _('Work Order Receipt') . '</option>
-			<option value="28">' . _('Work Order Issue') . '</option>
-			</select></td>
+	echo '<tr>
+			<td>' . _('Transaction type') . '</td>
+			<td>
+				<select minlength="1" name="TransType">
+					<option value="10">' . _('Sales Invoice') . '</option>
+					<option value="11">' . _('Sales Credit Note') . '</option>
+					<option value="16">' . _('Location Transfer') . '</option>
+					<option value="17">' . _('Stock Adjustment') . '</option>
+					<option value="25">' . _('Purchase Order Delivery') . '</option>
+					<option value="26">' . _('Work Order Receipt') . '</option>
+					<option value="28">' . _('Work Order Issue') . '</option>
+				</select>
+			</td>
 		</tr>';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
@@ -69,7 +70,7 @@ if (!isset($_POST['FromDate'])) {
 
 	echo '<tr>
 			<td>' . _('For Stock Location') . ':</td>
-			<td><select minlength="0" name="StockLocation">';
+			<td><select minlength="1" name="StockLocation">';
 
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {

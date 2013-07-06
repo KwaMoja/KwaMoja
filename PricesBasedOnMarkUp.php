@@ -41,7 +41,7 @@ $result = DB_query($SQL, $db);
 
 echo '<tr>
 		<td>' . _('Select the price list currency to update') . ':</td>
-		<td><select minlength="0" name="CurrCode">';
+		<td><select minlength="1" name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])) {
 	echo '<option selected="selected" value="0">' . _('No Price List Currency Selected') . '</option>';
@@ -63,13 +63,14 @@ if ($_SESSION['WeightedAverageCosting'] == 1) {
 	$CostingBasis = _('Standard Costs');
 }
 
-echo '<tr><td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
-				<td><select minlength="0" name="CostType">';
-if ($_POST['CostType'] == 'PreferredSupplier') {
+echo '<tr>
+		<td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
+		<td><select minlength="1" name="CostType">';
+if (isset($_POST['CostType']) and $_POST['CostType'] == 'PreferredSupplier') {
 	echo ' <option selected="selected" value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
 			<option value="StandardCost">' . $CostingBasis . '</option>
 			<option value="OtherPriceList">' . _('Another Price List') . '</option>';
-} elseif ($_POST['CostType'] == 'StandardCost') {
+} elseif (isset($_POST['CostType']) and $_POST['CostType'] == 'StandardCost') {
 	echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
 			<option selected="selected" value="StandardCost">' . $CostingBasis . '</option>
 			<option value="OtherPriceList">' . _('Another Price List') . '</option>';
@@ -83,8 +84,9 @@ echo '</select></td></tr>';
 DB_data_seek($PricesResult, 0);
 
 if (isset($_POST['CostType']) and $_POST['CostType'] == 'OtherPriceList') {
-	echo '<tr><td>' . _('Select the Base Price List to Use') . ':</td>
-							<td><select minlength="0" name="BasePriceList">';
+	echo '<tr>
+			<td>' . _('Select the Base Price List to Use') . ':</td>
+			<td><select minlength="1" name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) or $_POST['BasePriceList'] == '0') {
 		echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
@@ -99,8 +101,9 @@ if (isset($_POST['CostType']) and $_POST['CostType'] == 'OtherPriceList') {
 	echo '</select></td></tr>';
 }
 
-echo '<tr><td>' . _('Stock Category From') . ':</td>
-				<td><select minlength="0" name="StkCatFrom">';
+echo '<tr>
+		<td>' . _('Stock Category From') . ':</td>
+		<td><select minlength="1" name="StkCatFrom">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 
@@ -121,7 +124,7 @@ DB_data_seek($result, 0);
 
 echo '<tr>
 		<td>' . _('Stock Category To') . ':</td>
-		<td><select minlength="0" name="StkCatTo">';
+		<td><select minlength="1" name="StkCatTo">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid'] == $_POST['StkCatTo']) {
@@ -144,21 +147,29 @@ if (!isset($_POST['PriceEndDate'])) {
 	$_POST['PriceEndDate'] = DateAdd(date($_SESSION['DefaultDateFormat']), 'y', 1);
 }
 
-echo '<tr><td>' . _('Rounding Factor') . ':</td>
-				<td><input type="text" class="number" name="RoundingFactor" size="6" minlength="0" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td></tr>';
+echo '<tr>
+		<td>' . _('Rounding Factor') . ':</td>
+		<td><input type="text" class="number" name="RoundingFactor" size="6" minlength="1" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td>
+	</tr>';
 
-echo '<tr><td>' . _('New Price To Be Effective From') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" minlength="0" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td></tr>';
+echo '<tr>
+		<td>' . _('New Price To Be Effective From') . ':</td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" minlength="1" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td>
+	</tr>';
 
-echo '<tr><td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" minlength="0" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td></tr>';
+echo '<tr>
+		<td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" minlength="1" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td>
+	</tr>';
 
 if (!isset($_POST['IncreasePercent'])) {
 	$_POST['IncreasePercent'] = 0;
 }
 
-echo '<tr><td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
-				<td><input type="text" name="IncreasePercent" class="number" size="4" minlength="0" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td></tr></table>';
+echo '<tr>
+		<td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
+		<td><input type="text" name="IncreasePercent" class="number" size="4" minlength="1" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td>
+	</tr></table>';
 
 
 echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';

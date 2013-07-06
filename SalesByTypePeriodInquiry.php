@@ -22,11 +22,13 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">
-		<tr><td valign="top">
-		<table>';
+		<tr>
+			<td valign="top">
+				<table>';
 
-echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
-		</tr>
+echo '<tr>
+		<th colspan="2" class="centre">' . _('Date Selection') . '</th>
+	</tr>
 	<tr>
 		<td>' . _('Custom Range') . ':</td>
 		<td><input type="radio" name="DateRange" value="Custom" ';

@@ -43,7 +43,7 @@ while ($myrow = DB_fetch_array($result)) {
 		if ($myTokenRow['tokenid'] == $myrow['pagesecurity']) {
 			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
 		} else {
-			echo '<option value="' . $mytokenrow['tokenid'] . '">' . $mytokenrow['tokenname'] . '</option>';
+			echo '<option value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
 		}
 	}
 	echo '</select></td>

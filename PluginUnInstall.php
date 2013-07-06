@@ -114,7 +114,7 @@ if (isset($_POST['UnInstall'])) {
 		echo '<div class="page_help_text noPrint">' . _('Select the plugin that you wish to remove from the list below.') . '</div>';
 		echo '<br /><div class="centre">
 				<div class="box_header">' . _('Installed plugins') . '</div>
-				<select minlength="0" multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
+				<select minlength="1" multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
 
 		$Plugins = scandir('plugins/');
 

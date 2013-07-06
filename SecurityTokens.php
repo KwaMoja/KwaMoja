@@ -94,17 +94,17 @@ echo '<br />
 
 if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {
 	echo '<td>' . _('Description') . '</td>
-		<td><input type="text" size="50" minlength="0" maxlength="50" name="TokenDescription" value="' . $_POST['TokenDescription'] . '" /></td>
+		<td><input type="text" size="50" minlength="1" maxlength="50" name="TokenDescription" value="' . $_POST['TokenDescription'] . '" /></td>
 		<td><input type="hidden" name="TokenID" value="' . $_GET['SelectedToken'] . '" />
 			<input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {
 	echo '<td>' . _('Token ID') . '</td>
-			<td><input class="number" size="6" minlength="0" maxlength="4" type="text" name="TokenID" value="' . $_POST['TokenID'] . '" /></td>
+			<td><input class="number" size="6" minlength="1" maxlength="4" type="text" name="TokenID" value="' . $_POST['TokenID'] . '" /></td>
 		</tr>
 		<tr>
-		<td>' . _('Description') . '</td>
-		<td><input type="text" size="50" minlength="0" maxlength="50" name="TokenDescription" value="' . $_POST['TokenDescription'] . '" /></td>
-		<td><input type="submit" name="Submit" value="' . _('Insert') . '" />';
+			<td>' . _('Description') . '</td>
+			<td><input type="text" size="50" minlength="1" maxlength="50" name="TokenDescription" value="' . $_POST['TokenDescription'] . '" /></td>
+			<td><input type="submit" name="Submit" value="' . _('Insert') . '" />';
 }
 
 echo '</td>

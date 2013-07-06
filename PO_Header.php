@@ -758,7 +758,7 @@ else {
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" minlength="1" maxlength="10" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['Initiator'])) {
@@ -794,10 +794,12 @@ else {
 	if ($_SESSION['PO' . $identifier]->AllowPrintPO == 0 and empty($_POST['RePrint'])) {
 		echo '<tr>
 				<td>' . _('Allow Reprint') . ':</td>
-				<td><select minlength="0" name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
-					<option selected="selected" value="0">' . _('No') . '</option>
-					<option value="1">' . _('Yes') . '</option>
-				</select></td>';
+				<td>
+					<select minlength="1" name="RePrint" onchange="ReloadForm(form1.AllowRePrint)">
+						<option selected="selected" value="0">' . _('No') . '</option>
+						<option value="1">' . _('Yes') . '</option>
+					</select>
+				</td>';
 		echo '<td><input type="submit" name="AllowRePrint" value="Update" /></td></tr>';
 	} //$_SESSION['PO' . $identifier]->AllowPrintPO == 0 and empty($_POST['RePrint'])
 	elseif ($Printed) {
@@ -822,7 +824,7 @@ else {
 	else {
 		echo '<tr>
 				<td>' . _('Status') . ' :  </td>
-				<td><select minlength="0" name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
+				<td><select minlength="1" name="Status" onchange="ReloadForm(form1.UpdateStatus)">';
 
 		switch ($_SESSION['PO' . $identifier]->Status) {
 			case 'Pending':
@@ -858,7 +860,7 @@ else {
 
 		echo '<tr>
 				<td>' . _('Status Comment') . ':</td>
-				<td><input type="text" name="StatusComments" size="50" /></td>
+				<td><input type="text" minlength="0" maxlength="50" name="StatusComments" size="50" /></td>
 			</tr>
 			<tr>
 				<td colspan="2">' . html_entity_decode($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '</td>
@@ -872,7 +874,6 @@ else {
 
 	echo '<tr>
 			<th><h3>' . _('Warehouse Info') . '</h3></th>
-		<!--    <th><h3>' . _('Delivery To') . '</h3></th> -->
 			<th><h3>' . _('Supplier Info') . '</h3></th>
 		</tr>
 		<tr><td valign="top">';
@@ -881,7 +882,7 @@ else {
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Warehouse') . ':</td>
-				<td><select minlength="0" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
+				<td><select minlength="1" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -1050,7 +1051,7 @@ else {
 	echo '<table class="selection" width="100%">
 			<tr>
 				<td>' . _('Supplier Selection') . ':</td>
-				<td><select minlength="0" name="Keywords" onchange="ReloadForm(form1.SearchSuppliers)">';
+				<td><select minlength="1" name="Keywords" onchange="ReloadForm(form1.SearchSuppliers)">';
 
 	$SuppCoResult = DB_query("SELECT supplierid, suppname FROM suppliers ORDER BY suppname", $db);
 

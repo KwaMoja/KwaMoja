@@ -307,7 +307,7 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Category Name') . ':</td>
-			<td><input type="text" name="SalesCatName" size="20" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td>
+			<td><input type="text" name="SalesCatName" size="20" minlength="1" maxlength="20" value="' . $_POST['SalesCatName'] . '" /></td>
 		</tr>';
 // Image upload only if we have a selected category
 if (isset($SelectedCategory)) {
@@ -386,7 +386,7 @@ if ($result and DB_num_rows($result)) {
 			</tr>
 			<tr>
 				<td>' . _('Select Inv. Item') . ':</td>
-				<td><select minlength="0" name="AddStockID">';
+				<td><select minlength="1" name="AddStockID">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (!array_keys($StockIDs, $myrow['stockid'])) {

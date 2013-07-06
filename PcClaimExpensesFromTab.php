@@ -145,7 +145,7 @@ if (!isset($SelectedTabs)) {
 	echo '<br /><table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tabs for User ') . $_SESSION['UserID'] . ':</td>
-				<td><select minlength="0" name="SelectedTabs">';
+				<td><select minlength="1" name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -167,7 +167,11 @@ if (!isset($SelectedTabs)) {
 	echo '</table>'; // close main table
 	DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<br />
+			<div class="centre">
+				<input type="submit" name="Process" value="' . _('Accept') . '" />
+				<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			</div>';
 	echo '</div>';
 	echo '</form>';
 
@@ -183,8 +187,11 @@ if (!isset($SelectedTabs)) {
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<br /><table class="selection">';
-		echo '<tr><th colspan="8"><h3>' . _('Petty Cash Tab') . ' ' . $SelectedTabs . '</h3></th></tr>';
-		echo '<tr><th colspan="8">' . _('Detail Of Movements For Last ') . ': ';
+		echo '<tr>
+				<th colspan="8"><h3>' . _('Petty Cash Tab') . ' ' . $SelectedTabs . '</h3></th>
+			</tr>
+			<tr>
+				<th colspan="8">' . _('Detail Of Movements For Last ') . ': ';
 
 
 		if (!isset($Days)) {
@@ -201,7 +208,7 @@ if (!isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $myrow['decimalplaces'];
 
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="0" maxlength="3" size="4" /> ' . _('Days');
+		echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="1" maxlength="3" size="4" /> ' . _('Days');
 		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
 		echo '</th></tr>';
 
@@ -291,8 +298,10 @@ if (!isset($SelectedTabs)) {
 			$Amount['0'] = 0;
 		}
 
-		echo '<tr><td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-					<td class="number">' . locale_number_format($Amount['0'], $CurrDecimalPlaces) . '</td></tr>';
+		echo '<tr>
+				<td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
+				<td class="number">' . locale_number_format($Amount['0'], $CurrDecimalPlaces) . '</td>
+			</tr>';
 
 
 		echo '</table>';
@@ -331,9 +340,12 @@ if (!isset($SelectedTabs)) {
 		}
 
 		echo '<br /><table class="selection">'; //Main table
-		echo '<tr><td>' . _('Date Of Expense') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" minlength="0" maxlength="10" value="' . $_POST['Date'] . '" /></td></tr>';
-		echo '<tr><td>' . _('Code Of Expense') . ':</td><td><select minlength="0" name="SelectedExpense">';
+		echo '<tr>
+				<td>' . _('Date Of Expense') . ':</td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" minlength="1" maxlength="10" value="' . $_POST['Date'] . '" /></td>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Code Of Expense') . ':</td><td><select minlength="1" name="SelectedExpense">';
 
 		DB_free_result($result);
 
@@ -363,8 +375,10 @@ if (!isset($SelectedTabs)) {
 			$_POST['Amount'] = 0;
 		}
 
-		echo '<tr><td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="amount" size="12" minlength="0" maxlength="11" value="' . $_POST['Amount'] . '" /></td></tr>';
+		echo '<tr>
+				<td>' . _('Amount') . ':</td>
+				<td><input type="text" class="number" name="amount" size="12" minlength="1" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
+			</tr>';
 
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
@@ -377,8 +391,10 @@ if (!isset($SelectedTabs)) {
 			$_POST['Receipt'] = '';
 		}
 
-		echo '<tr><td>' . _('Receipt') . ':</td>
-				<td><input type="text" name="Receipt" size="50" minlength="0" maxlength="49" value="' . $_POST['Receipt'] . '" /></td></tr>';
+		echo '<tr>
+				<td>' . _('Receipt') . ':</td>
+				<td><input type="text" name="Receipt" size="50" minlength="0" maxlength="49" value="' . $_POST['Receipt'] . '" /></td>
+			</tr>';
 		echo '</table>'; // close main table
 
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';

@@ -19,7 +19,7 @@ if (!isset($_GET['TransferNo'])) {
 	echo '<table>
 			<tr>
 				<td>' . _('Transfer docket to reprint') . '</td>
-				<td><input type="text" class="number" size="10" name="TransferNo" /></td>
+				<td><input type="text" class="integer" minlength="1" maxlength="10" size="10" name="TransferNo" /></td>
 			</tr>
 		</table>';
 	echo '<br />

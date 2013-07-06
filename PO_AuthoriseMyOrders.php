@@ -85,12 +85,14 @@ while ($myrow = DB_fetch_array($result)) {
 				<td>' . ConvertSQLDate($myrow['orddate']) . '</td>
 				<td><a href="mailto:' . $myrow['email'] . '">' . $myrow['realname'] . '</td>
 				<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-				<td><select minlength="0" name="status' . $myrow['orderno'] . '">
-					<option selected="selected" value="Pending">' . _('Pending') . '</option>
-					<option value="Authorised">' . _('Authorised') . '</option>
-					<option value="Rejected">' . _('Rejected') . '</option>
-					<option value="Cancelled">' . _('Cancelled') . '</option>
-					</select></td>
+				<td>
+					<select minlength="1" name="status' . $myrow['orderno'] . '">
+						<option selected="selected" value="Pending">' . _('Pending') . '</option>
+						<option value="Authorised">' . _('Authorised') . '</option>
+						<option value="Rejected">' . _('Rejected') . '</option>
+						<option value="Cancelled">' . _('Cancelled') . '</option>
+					</select>
+				</td>
 			</tr>';
 		echo '<input type="hidden" name="comment" value="' . htmlspecialchars($myrow['stat_comment'], ENT_QUOTES, 'UTF-8') . '" />';
 		$LineSQL = "SELECT purchorderdetails.*,

@@ -267,13 +267,13 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
-				<td><input type="text" name="TermsIndicator"' . (in_array('TermsIndicator', $Errors) ? 'class="inputerror"' : '') . ' value="' . $_POST['TermsIndicator'] . '" size="3" minlength="0" maxlength="2" /></td>
+				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" minlength="1" maxlength="2" /></td>
 			</tr>';
 	}
 
 	echo '<tr>
 			<td>' . _('Terms Description') . ':</td>
-			<td><input type="text"' . (in_array('Terms', $Errors) ? 'class="inputerror"' : '') . ' name="Terms" value="' . $_POST['Terms'] . '" size="35" minlength="0" maxlength="40" /></td>
+			<td><input type="text" name="Terms" value="' . $_POST['Terms'] . '" size="35" minlength="1" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Due After A Given No. Of Days') . ':</td>
@@ -284,7 +284,7 @@ if (!isset($_GET['delete'])) {
 	echo '  /></td>
 		</tr>
 		<tr><td>' . _('Days (Or Day In Following Month)') . ':</td>
-			<td><input type="text"' . (in_array('DayNumber', $Errors) ? 'class="inputerror"' : '') . ' name="DayNumber" class="number"  size="4" minlength="0" maxlength="3" value="';
+			<td><input type="text" name="DayNumber" class="number"  size="4" minlength="0" maxlength="3" value="';
 	if ($DaysBeforeDue != 0) {
 		echo locale_number_format($DaysBeforeDue, 0);
 	} else {

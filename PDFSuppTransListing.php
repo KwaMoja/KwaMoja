@@ -27,12 +27,12 @@ if (!isset($_POST['Date'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" minlength="0" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" name="Date" minlength="1" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
 	echo '<tr>
 			<td>' . _('Transaction type') . '</td>
-			<td><select minlength="0" name="TransType">
+			<td><select minlength="1" name="TransType">
 				<option value="20">' . _('Invoices') . '</option>
 				<option value="21">' . _('Credit Notes') . '</option>
 				<option value="22">' . _('Payments') . '</option>

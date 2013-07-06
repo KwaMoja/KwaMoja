@@ -110,7 +110,9 @@ if (!isset($SelectedTab)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">'; //Main table
 
-	echo '<tr><td>' . _('Select Type of Tab') . ':</td><td><select minlength="0" name="SelectedTab">';
+	echo '<tr>
+			<td>' . _('Select Type of Tab') . ':</td>
+			<td><select minlength="1" name="SelectedTab">';
 
 	$SQL = "SELECT typetabcode,
 					typetabdescription
@@ -192,7 +194,9 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 
 		echo '<br /><table  class="selection">'; //Main table
 
-		echo '<tr><td>' . _('Select Expense Code') . ':</td><td><select minlength="0" name="SelectedExpense">';
+		echo '<tr>
+				<td>' . _('Select Expense Code') . ':</td>
+				<td><select minlength="1" name="SelectedExpense">';
 
 		$SQL = "SELECT codeexpense,
 						description

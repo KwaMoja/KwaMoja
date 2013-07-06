@@ -116,7 +116,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'], $myrow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($TotQtyRow['qty'], $myrow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($myrow['quantity'], $myrow['decimalplaces']) . '</td>
-			<td><input type="text" class="number" name="ReorderLevel' . $i . '" minlength="0" maxlength="10" size="10" value="' . locale_number_format($myrow['reorderlevel'], 0) . '" />
+			<td><input type="text" class="number" name="ReorderLevel' . $i . '" minlength="1" maxlength="10" size="10" value="' . locale_number_format($myrow['reorderlevel'], 0) . '" />
 			<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" /></td>
 			<td><input type="text" name="BinLocation' . $i . '" minlength="0" maxlength="10" size="10" value="' . $myrow['bin'] . '" /></td>
 			</tr> ';
@@ -174,7 +174,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	$result1 = DB_query($SQL, $db);
 
 	echo '<tr><td>' . _('Category') . ':</td>
-				<td><select minlength="0" name="StockCat">';
+				<td><select minlength="1" name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
@@ -183,7 +183,7 @@ if (isset($_POST['submit']) or isset($_POST['Update'])) {
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('Number Of Days Sales') . ':</td>
-			<td><input type="text" class="number" name="NumberOfDays" minlength="0" maxlength="3" size="4" value="0" /></td>
+			<td><input type="text" class="number" name="NumberOfDays" minlength="1" maxlength="3" size="4" value="0" /></td>
 		  </tr>';
 	echo '<tr>
 			<td>' . _('Order By') . ':</td>
