@@ -245,6 +245,10 @@ background-color: transparent;
 input:hover{
 background:#9ffffb;
 }
+input:required, select:required, textarea:required {
+        background-color:lightyellow;
+ }
+
 input.image:hover{
 background-color: transparent;
 }

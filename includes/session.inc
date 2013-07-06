@@ -43,7 +43,7 @@ include($PathPrefix . 'includes/DateFunctions.inc');
 // Uncomment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
 
-if (!isset($_SESSION['AttemptsCounter'])) {
+if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode==true){
 	$_SESSION['AttemptsCounter'] = 0;
 } //!isset($_SESSION['AttemptsCounter'])
 

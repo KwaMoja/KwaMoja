@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 	if (isset($Id) and $InputError != 1) {
 
 		$sql = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
-									date='" . FormatDateForSQL($_POST['date']) . "',
+									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
 									href='" . $_POST['Href'] . "',
 									priority='" . $_POST['Priority'] . "'
 				WHERE debtorno ='" . $DebtorNo . "'
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $DebtorNo . "',
 						'" . $_POST['Href'] . "',
 						'" . $_POST['Note'] . "',
-						'" . FormatDateForSQL($_POST['date']) . "',
+						'" . FormatDateForSQL($_POST['NoteDate']) . "',
 						'" . $_POST['Priority'] . "')";
 		$msg = _('The contact notes record has been added');
 	}
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 		unset($Id);
 		unset($_POST['Note']);
 		unset($_POST['Noteid']);
-		unset($_POST['date']);
+		unset($_POST['NoteDate']);
 		unset($_POST['Href']);
 		unset($_POST['Priority']);
 	}
@@ -172,7 +172,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Noteid'] = $myrow['noteid'];
 		$_POST['Note'] = $myrow['note'];
 		$_POST['Href'] = $myrow['href'];
-		$_POST['date'] = $myrow['date'];
+		$_POST['NoteDate'] = $myrow['date'];
 		$_POST['Priority'] = $myrow['priority'];
 		$_POST['debtorno'] = $myrow['debtorno'];
 		echo '<input type="hidden" name="Id" value="' . $Id . '" />';
@@ -208,19 +208,19 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Date') . '</td>';
 	if (isset($_POST['date'])) {
-		echo '<td><input type="text" name="date" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . ConvertSQLDate($_POST['date']) . '" size="10" minlength="0" maxlength="10" /></td>
+		echo '<td><input type="text" name="NoteDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . ConvertSQLDate($_POST['date']) . '" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="date" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . date($_SESSION['DefaultDateFormat']) . '" size="10" minlength="0" maxlength="10" /></td>
+		echo '<td><input type="text" name="NoteDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" value="' . date($_SESSION['DefaultDateFormat']) . '" size="10" minlength="0" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>
 			<td>' . _('Priority') . '</td>';
 	if (isset($_POST['Priority'])) {
-		echo '<td><input type="text" name="Priority" value="' . $_POST['Priority'] . '" size="1" minlength="0" maxlength="3" /></td>
+		echo '<td><input type="text" class=integer" name="Priority" value="' . $_POST['Priority'] . '" size="1" minlength="0" maxlength="3" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="Priority" size="1" minlength="0" maxlength="3" /></td>
+		echo '<td><input type="text" class="integer" name="Priority" size="1" minlength="0" maxlength="3" /></td>
 			</tr>';
 	}
 	echo '<tr>

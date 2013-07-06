@@ -319,18 +319,28 @@ if (isset($_POST['submit'])) {
 					prnMsg(_('Cannot delete this branch because users exist that refer to it') . '. ' . _('Purge old users first'), 'warn');
 					echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('users referring to this Branch/customer');
 				} else {
+						// Check if there are any contract that refer to this branch code
+					$sql= "SELECT COUNT(*) FROM contracts WHERE contracts.branchcode='".$SelectedBranch."' AND contracts.debtorno = '".$DebtorNo."'";
 
-					$sql = "DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
-					$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
-					$result = DB_query($sql, $db, $ErrMsg);
-					if (DB_error_no($db) == 0) {
-						prnMsg(_('Branch Deleted'), 'success');
+					$result = DB_query($sql,$db);
+					$myrow = DB_fetch_row($result);
+
+					if ($myrow[0]>0) {
+						prnMsg(_('Cannot delete this branch because contract have been created that refer to it') . '. ' . _('Purge old contracts first'),'warn');
+						echo '<br />'._('There are').' ' . $myrow[0] . ' '._('contracts referring to this branch/customer');
+					} else {
+						$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
+						$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
+							$result = DB_query($sql,$db,$ErrMsg);
+						if (DB_error_no($db)==0){
+							prnMsg(_('Branch Deleted'),'success');
+						}
 					}
 				}
 			}
-		}
-	} //end ifs to test if the branch can be deleted
+		} //end ifs to test if the branch can be deleted
 
+	}
 }
 if (!isset($SelectedBranch)) {
 

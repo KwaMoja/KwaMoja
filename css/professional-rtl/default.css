@@ -240,6 +240,9 @@ input.small {
 input.inputerror {
 	background-color: #fddbdb;
 }
+input:required, select:required, textarea:required {
+        background-color:lightyellow;
+ }
 
 /* for buttons ***HJ***/
 button{

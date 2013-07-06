@@ -53,8 +53,18 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopShowQOHColumn'] != $_POST['X_ShopShowQOHColumn'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowQOHColumn']."' WHERE confname = 'ShopShowQOHColumn'";
 		}
-		if ($_SESSION['ShopAdditionalStockLocations'] != $_POST['X_ShopAdditionalStockLocations'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAdditionalStockLocations']."' WHERE confname = 'ShopAdditionalStockLocations'";
+		if (isset($_POST['X_ShopStockLocations'])) {
+			$ShopStockLocations = '';
+			foreach ($_POST['X_ShopStockLocations'] as $Location){
+				$ShopStockLocations .= $Location .',';
+			}
+			$ShopStockLocations = mb_substr($ShopStockLocations,0,mb_strlen($ShopStockLocations)-1);
+			if ($_SESSION['ShopStockLocations'] != $ShopStockLocations){
+				$SQL[] = "UPDATE config SET confvalue='" . $ShopStockLocations . "' WHERE confname='ShopStockLocations'";
+			}
+		}
+		if ($_SESSION['ShopShowLeftCategoryMenu'] != $_POST['X_ShopShowLeftCategoryMenu'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowLeftCategoryMenu']."' WHERE confname = 'ShopShowLeftCategoryMenu'";
 		}
 		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
@@ -273,10 +283,39 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Additional Stock Locations') . ':</td>
-		<td><input type="text" size="80" maxlength="100" name="X_ShopAdditionalStockLocations" value="' . $_SESSION['ShopAdditionalStockLocations'] . '" /></td>
-		<td>' . _('List of additional stock location codes, sepparated by comma. Web-Stote will consider stock at the default customer location plus these ones.
-		Leave empty if only will consider default customer location. Example: LOC01, LOC02, LOC03') . '</td>
+		<td>' . _('Show/Hide Left Column Menu') . ':</td>
+		<td><select name="X_ShopShowLeftCategoryMenu">';
+if ($_SESSION['ShopShowLeftCategoryMenu'] == '1') {
+	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
+	echo '<option value="0">' . _('Hide') . '</option>';
+} else {
+	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
+	echo '<option value="1">' . _('Show') . '</option>';
+}
+echo '</select></td>
+		<td>' . _('Shows / Hides the vertical sales categories menu on the left column.') . '</td>
+	</tr>';
+
+if (mb_strlen($_SESSION['ShopStockLocations'])>1){
+	$ShopStockLocations = explode(',',$_SESSION['ShopStockLocations']);
+} else {
+	$ShopStockLocations = array();
+}
+
+echo '<tr>
+		<td>' . _('Stock Locations') . ':</td>
+		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
+$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
+while ($LocRow = DB_fetch_array($LocResult)){
+	if (in_array($LocRow['loccode'],$ShopStockLocations)){
+		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+	} else {
+		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+	}
+}
+echo '</select></td>
+		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') .
+		'</td>
 	</tr>';
 
 echo '<tr>
