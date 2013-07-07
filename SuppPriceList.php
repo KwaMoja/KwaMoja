@@ -217,7 +217,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Supplier') . ':</td>
-				<td><select minlength="0" name="supplier"> ';
+				<td><select minlength="1" name="supplier"> ';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['supplierid']) and ($myrow['supplierid'] == $_POST['supplierid'])) {
 			echo '<option selected="selected" value="' . $myrow['supplierid'] . '">' . $myrow['supplierid'] . ' - ' . $myrow['suppname'] . '</option>';
@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF'])) {
 	$result = DB_query($sql, $db);
 	echo '<tr>
 			<td>' . _('Category') . ':</td>
-			<td><select minlength="0" name="category"> ';
+			<td><select minlength="1" name="category"> ';
 	echo '<option value="all">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['categoryid']) and ($myrow['categoryid'] == $_POST['categoryid'])) {
@@ -246,7 +246,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<tr>
 			<td>' . _('Price List') . ':</td>
-			<td><select minlength="0" name="price">
+			<td><select minlength="1" name="price">
 				<option value="all">' . _('All Prices') . '</option>
 				<option value="current">' . _('Only Current Price') . '</option>
 				</select>

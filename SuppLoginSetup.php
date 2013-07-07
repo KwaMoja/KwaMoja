@@ -108,7 +108,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" size="22" minlength="0" maxlength="20" /></td>
+			<td><input type="text" name="UserID" size="22" minlength="1" maxlength="20" /></td>
 		</tr>';
 
 
@@ -126,7 +126,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" minlength="0" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Full Name') . ':</td>
@@ -178,8 +178,9 @@ if (!$FoundTheSupplierRole) {
 }
 
 
-echo '<tr><td>' . _('Default Location') . ':</td>
-	<td><select minlength="0" name="DefaultLocation">';
+echo '<tr>
+		<td>' . _('Default Location') . ':</td>
+		<td><select minlength="1" name="DefaultLocation">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

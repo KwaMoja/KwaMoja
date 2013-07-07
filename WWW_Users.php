@@ -430,7 +430,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input type="text" name="UserID" size="22" minlength="0" maxlength="20" /></td>
+				<td><input type="text" name="UserID" size="22" minlength="1" maxlength="20" /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -462,11 +462,11 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" minlength="0" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" minlength="0" maxlength="35" /></td>
+		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" minlength="1" maxlength="35" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
@@ -474,7 +474,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') . ':</td>
-		<td><input type="text" name="Email" value="' . $_POST['Email'] . '" size="32" minlength="0" maxlength="55" /></td>
+		<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" minlength="0" maxlength="55" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Security Role') . ':</td>

@@ -239,11 +239,11 @@ if (!isset($_POST['Description'])) {
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Tax Type Description') . ':</td>
-			<td><input type="text" name="Description" size="21" minlength="0" maxlength="40" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" name="Description" size="21" minlength="1" maxlength="40" value="' . $_POST['Description'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Input tax GL Account') . ':</td>
-			<td><select minlength="0" name="PurchTaxGLCode">';
+			<td><select minlength="1" name="PurchTaxGLCode">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['PurchTaxGLCode']) and $myrow['accountcode'] == $_POST['PurchTaxGLCode']) {
@@ -262,7 +262,7 @@ DB_data_seek($result, 0);
 
 echo '<tr>
 		<td>' . _('Output tax GL Account') . ':</td>
-		<td><select minlength="0" name="TaxGLCode">';
+		<td><select minlength="1" name="TaxGLCode">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['TaxGLCode']) and $myrow['accountcode'] == $_POST['TaxGLCode']) {

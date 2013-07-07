@@ -932,8 +932,8 @@ if ($WORow['controlled'] == 1) { //controlled
 					if (($i / 5 - intval($i / 5)) == 0) {
 						echo '</tr><tr>';
 					}
-					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" /></td>
-						  <td><input type="textbox" class="number" name="Qty' . $i . '" />
+					echo '<td><input type="text" minlength="1" maxlength="10" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" /></td>
+						  <td><input type="text" minlength="1" maxlength="10" class="number" name="Qty' . $i . '" />
 						  		<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '" />
 						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1], 'Variable') . '" /></td>
 						  	</tr>';
@@ -966,7 +966,7 @@ if ($WORow['controlled'] == 1) { //controlled
 	echo '<tr>
 			<td><input type="hidden" name="CountOfInputs" value="1" /></td>
 			<td>' . _('Quantity Received') . ':</td>
-			<td><input type="text" class="number" name="Qty" /></td>
+			<td><input type="text" minlength="1" maxlength="10" class="number" name="Qty" /></td>
 		</tr>
 		</table>';
 	echo '<br />

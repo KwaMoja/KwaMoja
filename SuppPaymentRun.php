@@ -238,6 +238,12 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	}
 
 	/* show form to allow input	*/
+	$sql = "SELECT min(supplierid) AS fromcriteria,
+					max(supplierid) AS tocriteria
+				FROM suppliers";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<div>';
@@ -245,28 +251,28 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	echo '<table class="selection">';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria']) < 1) {
-		$DefaultFromCriteria = '1';
+		$DefaultFromCriteria = $myrow['fromcriteria'];
 	} else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
 	if (!isset($_POST['ToCriteria']) or mb_strlen($_POST['ToCriteria']) < 1) {
-		$DefaultToCriteria = 'zzzzzzz';
+		$DefaultToCriteria = $myrow['tocriteria'];
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
+			<td><input type="text" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
 		  </tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
+			<td><input type="text" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
 		 </tr>';
 
 
 	echo '<tr>
 			<td>' . _('For Suppliers Trading in') . ':</td>
-			<td><select minlength="0" name="Currency">';
+			<td><select minlength="1" name="Currency">';
 
 	$sql = "SELECT currency, currabrev FROM currencies";
 	$result = DB_query($sql, $db);
@@ -288,7 +294,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	}
 	echo '<tr>
 			<td>' . _('Exchange Rate') . ':</td>
-			<td><input type="text" class="number" name="ExRate" minlength="0" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" /></td>
+			<td><input type="text" class="number" name="ExRate" minlength="1" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" /></td>
 		  </tr>';
 
 	if (!isset($_POST['AmountsDueBy'])) {
@@ -299,7 +305,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Payments Due To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="AmountsDueBy" minlength="0" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="AmountsDueBy" minlength="1" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
 		  </tr>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
@@ -316,7 +322,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Pay From Account') . ':</td>
-			<td><select minlength="0" name="BankAccount">';
+			<td><select minlength="1" name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -342,7 +348,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Payment Type') . ':</td>
-			<td><select minlength="0" name="PaytType">';
+			<td><select minlength="1" name="PaytType">';
 
 	/* The array PaytTypes is set up in config.php for user modification
 	Payment types can be modified by editing that file */

@@ -163,7 +163,7 @@ if (!isset($_POST['SecRoleName'])) {
 }
 echo '<tr>
 		<td>' . _('Role') . ':</td>
-		<td><input type="text" name="SecRoleName" size="40" minlength="0" maxlength="40" value="' . $_POST['SecRoleName'] . '" /></td>
+		<td><input type="text" name="SecRoleName" size="40" minlength="1" maxlength="40" value="' . $_POST['SecRoleName'] . '" /></td>
 	</tr>';
 echo '</table>
 	<br />

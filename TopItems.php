@@ -43,7 +43,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Customer Type') . '</td>
 			<td>:</td>
-			<td><select minlength="0" name="Customers">';
+			<td><select minlength="1" name="Customers">';
 
 	$sql = "SELECT typename,
 					typeid
@@ -89,7 +89,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Order By ') . ' </td>
 			<td>:</td>
-			<td><select minlength="0" name="Sequence">
+			<td><select minlength="1" name="Sequence">
 				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
 				<option value="valuesales">' . _('Value of Sales') . '</option>
 				</select></td>
@@ -98,18 +98,18 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	minlength="0" maxlength="8" value="30" /></td>
+			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	minlength="1" maxlength="8" value="30" /></td>
 		 </tr>';
 	//Stock in days less than
 	echo '<tr>
 			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="MaxDaysOfStock" size="8"	minlength="0" maxlength="8" value="999" /></td>
+			<td><input class="number" tabindex="4" type="text" name="MaxDaysOfStock" size="8" minlength="1" maxlength="8" value="999" /></td>
 			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	minlength="0" maxlength="8" value="100" /></td>
+			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	minlength="1" maxlength="8" value="100" /></td>
 		 </tr>
 		 <tr>
 			<td></td>
