@@ -841,7 +841,7 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 	if ($New == 1) {
 		echo '<tr>
 				<td>' . _('Item Code') . ':</td>
-				<td><input ' . (in_array('StockID', $Errors) ? 'class="inputerror"' : '') . '  type="text" value="' . $StockID . '" name="StockID" size="21" maxlength="20" /></td>
+				<td><input type="text" value="' . $StockID . '" name="StockID" size="21" minlength="1" maxlength="20" /></td>
 			</tr>';
 	} else {
 		echo '<tr>
@@ -908,9 +908,10 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 		$_POST['Description_' . str_replace('.', '_', $myrow['language_id'])] = $myrow['descriptiontranslation'];
 	}
 
-	echo '<tr><td>' . _('Item Code') . ':</td>
+	echo '<tr>
+			<td>' . _('Item Code') . ':</td>
 			<td>' . $StockID . '<input type="hidden" name="StockID" value="' . $StockID . '" /></td>
-			</tr>';
+		</tr>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<tr>
@@ -926,7 +927,7 @@ if (isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('short') . '):</td>
-		<td><input ' . (in_array('Description', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="Description" size="52" minlength="0" maxlength="50" value="' . $Description . '" /></td>
+		<td><input type="text" name="Description" size="52" minlength="1" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
@@ -938,7 +939,7 @@ foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
 		}
 		echo '<tr>
 			<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
-			<td><input type="text" name="' . $PostVariableName . '" size="52" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
+			<td><input type="text" name="' . $PostVariableName . '" size="52" minlength="1" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
 		</tr>';
 	}
 }
@@ -950,7 +951,7 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('long') . '):</td>
-		<td><textarea ' . (in_array('LongDescription', $Errors) ? 'class="texterror"' : '') . '  name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
+		<td><textarea ' . (in_array('LongDescription', $Errors) ? 'class="texterror"' : '') . ' minlength="1" name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
 	</tr>
 	<tr>
 		<td>' . _('Image File (.jpg)') . ':</td>
@@ -973,7 +974,7 @@ echo '</tr>';
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
-		<td><select minlength="0" name="CategoryID" onchange="ReloadForm(ItemForm.UpdateCategories)">';
+		<td><select minlength="1" name="CategoryID" onchange="ReloadForm(ItemForm.UpdateCategories)">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');

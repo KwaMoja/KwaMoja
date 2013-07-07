@@ -535,8 +535,8 @@ if (isset($_POST['SupplierID'])) {
 		echo '<tr bgcolor="#847F7F">
 				<td><input type="hidden" value="' . $_POST['Select'] . '" name="StockID0" />' . $_POST['Select'] . '</td>
 				<td>' . $StockRow['description'] . '</td>
-				<td><input type="text" class="number" size="11" value="0.0000" name="Price0" /></td>
-				<td><select minlength="0" name="SuppUOM0">';
+				<td><input type="text" class="number" minlength="1" maxlength="11" size="11" value="0.0000" name="Price0" /></td>
+				<td><select minlength="1" name="SuppUOM0">';
 		while ($UOMRow = DB_fetch_array($UOMResult)) {
 			if ($UOMRow['unitname'] == $StRowoc['units']) {
 				echo '<option selected="selected" value="' . $UOMRow['unitname'] . '">' . $UOMRow['unitname'] . '</option>';
@@ -546,13 +546,13 @@ if (isset($_POST['SupplierID'])) {
 		}
 		DB_data_seek($UOMResult, 0);
 		echo '</select></td>
-				<td><input type="text" class="number" size="11" value="1" name="ConversionFactor0" /></td>
+				<td><input type="text" minlength="1" maxlength="11" class="number" size="11" value="1" name="ConversionFactor0" /></td>
 				<td><input type="text" size="30" minlength="0" maxlength="50" value="" name="SupplierDescription0" /></td>
-				<td><input type="text" class="number" size="11" value="1" name="LeadTime0" /></td>';
+				<td><input type="text" class="number" minlength="1" maxlength="11" size="11" value="1" name="LeadTime0" /></td>';
 		echo '<td><input type="checkbox" name="Preferred0" /></td>';
-		echo '<td><input type="text" class="date" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom0" /></td>
+		echo '<td><input type="text" class="date" minlength="1" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="EffectiveFrom0" /></td>
 				<td><input type="text" size="20" minlength="0" maxlength="50" value="" name="SupplierPartNo0" /></td>
-				<td><input type="text" class="number" size="11" value="1" name="MinOrderQty0" /></td>
+				<td><input type="text" class="number" minlength="1" maxlength="11" size="11" value="1" name="MinOrderQty0" /></td>
 				<td><button type="submit" style="width:100%;text-align:left" name="Insert"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/tick.png" alt="" /></button></td>
 			</tr>';
 	}

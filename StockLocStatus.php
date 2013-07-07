@@ -70,8 +70,9 @@ if (DB_num_rows($result1) == 0) {
 	exit;
 }
 
-echo '<tr><td>' . _('In Stock Category') . ':</td>
-		<td><select minlength="0" name="StockCat">';
+echo '<tr>
+		<td>' . _('In Stock Category') . ':</td>
+		<td><select minlength="1" name="StockCat">';
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = 'All';
 }
@@ -90,8 +91,9 @@ while ($myrow1 = DB_fetch_array($result1)) {
 
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Shown Only Items Where') . ':</td>
-		<td><select minlength="0" name="BelowReorderQuantity">';
+echo '<tr>
+		<td>' . _('Shown Only Items Where') . ':</td>
+		<td><select minlength="1" name="BelowReorderQuantity">';
 if (!isset($_POST['BelowReorderQuantity'])) {
 	$_POST['BelowReorderQuantity'] = 'All';
 }

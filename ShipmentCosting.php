@@ -668,7 +668,7 @@ if (isset($_GET['Close'])) {
 
 	if ($_SESSION['WeightedAverageCosting'] == 0) {
 		/* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
-		echo _('Update Standard Costs') . ':<select minlength="0" name="UpdateCost">
+		echo _('Update Standard Costs') . ':<select minlength="1" name="UpdateCost">
 					<option selected="selected" value="Yes">' . _('Yes') . '</option>
 					<option value="No">' . _('No') . '</option>
 					</select>';

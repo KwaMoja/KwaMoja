@@ -136,7 +136,8 @@ if (isset($_GET['HoldType']) and isset($_GET['HoldTrans'])) {
 }
 
 echo '<table width="90%" class="selection">
-		<tr><th>' . _('Total Balance') . '</th>
+		<tr>
+			<th>' . _('Total Balance') . '</th>
 			<th>' . _('Current') . '</th>
 			<th>' . _('Now Due') . '</th>
 			<th>' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
@@ -157,7 +158,7 @@ echo '<br />
 		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" minlength="0" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" minlength="1" maxlength="10" size="10" />
 		<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
 	</div>
 	</form>

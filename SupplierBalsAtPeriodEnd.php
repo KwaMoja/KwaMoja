@@ -13,6 +13,20 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$PageNumber = 0;
 	$line_height = 12;
 
+	$sql = "SELECT min(supplierid) AS fromcriteria,
+					max(supplierid) AS tocriteria
+				FROM suppliers";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
+	if ($_POST['FromCriteria']=='') {
+		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+	}
+	if ($_POST['ToCriteria']=='') {
+		$_POST['Toriteria'] = $myrow['tocriteria'];
+	}
+
 	/*Now figure out the aged analysis for the Supplier range under review */
 
 	$SQL = "SELECT suppliers.supplierid,
@@ -109,12 +123,19 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$Title = _('Supplier Balances At A Period End');
 	include('includes/header.inc');
 
+	$sql = "SELECT min(supplierid) AS fromcriteria,
+					max(supplierid) AS tocriteria
+				FROM suppliers";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
-		$_POST['FromCriteria'] = '1';
+		$_POST['FromCriteria'] = $myrow['fromcriteria'];
 	}
 	if (!isset($_POST['ToCriteria'])) {
-		$_POST['ToCriteria'] = 'zzzzzz';
+		$_POST['ToCriteria'] = $myrow['fromcriteria'];
 	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
@@ -125,15 +146,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
+			<td><input type="text" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
+			<td><input type="text" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Balances As At') . ':</td>
-			<td><select minlength="0" name="PeriodEnd">';
+			<td><select minlength="1" name="PeriodEnd">';
 
 	$sql = "SELECT periodno,
 					lastdate_in_period

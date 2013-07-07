@@ -156,7 +156,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('Select option for tendering') . '</td>
-			<td><select minlength="0" name="TenderType">
+			<td><select minlength="1" name="TenderType">
 				<option value="1">' . _('View or Amend outstanding offers from') . ' ' . $Supplier . '</option>
 				<option value="2">' . _('Create a new offer from') . ' ' . $Supplier . '</option>
 				<option value="3">' . _('View any open tenders without an offer from') . ' ' . $Supplier . '</option>
@@ -312,11 +312,11 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] != 3 and isset($_SESSIO
 			echo '<input type="hidden" name="StockID' . $LineItems->LineNo . '" value="' . $LineItems->StockID . '" />';
 			echo '<td>' . $LineItems->StockID . '</td>
 					<td>' . $LineItems->ItemDescription . '</td>
-					<td><input type="text" class="number" name="Qty' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '" /></td>
+					<td><input type="text" class="number" minlength="1" maxlebgth="11" name="Qty' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '" /></td>
 					<td>' . $LineItems->Units . '</td>
-					<td><input type="text" class="number" name="Price' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Price, 2, '.', '') . '" /></td>
+					<td><input type="text" class="number" minlength="1" maxlebgth="11" name="Price' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Price, 2, '.', '') . '" /></td>
 					<td class="number">' . locale_number_format($LineItems->Price * $LineItems->Quantity, 2) . '</td>
-					<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="expirydate' . $LineItems->LineNo . '" value="' . $LineItems->ExpiryDate . '" /></td>
+					<td><input type="text" size="11" minlength="1" maxlebgth="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="expirydate' . $LineItems->LineNo . '" value="' . $LineItems->ExpiryDate . '" /></td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
 				</tr>';
 		}
@@ -513,13 +513,13 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 			if ($MyItemRow['suppliersuom'] == '') {
 				$MyItemRow['suppliersuom'] = $MyItemRow['units'];
 			}
-			echo '<td><input type="text" class="number" size="10" name="Qty' . $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
+			echo '<td><input type="text" class="number" minlength="1" maxlength="10" size="10" name="Qty' . $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
 				<input type="hidden" name="UOM' . $i . '" value="' . $MyItemRow['units'] . '" />
 				<input type="hidden" name="DecimalPlaces' . $i . '" value="' . $MyItemRow['decimalplaces'] . '" />
 				<td>' . $MyItemRow['suppliersuom'] . '</td>
 				<td>' . $myrow[1] . '</td>
-				<td><input type="text" class="number" size="10" name="Price' . $i . '" value="0.00" /></td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="RequiredByDate' . $i . '" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
+				<td><input type="text" class="number" minlength="1" maxlength="10" size="10" name="Price' . $i . '" value="0.00" /></td>
+				<td><input type="text" class="date" minlength="1" maxlength="10" alt="' . $_SESSION['DefaultDateFormat'] . '" name="RequiredByDate' . $i . '" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
 				</tr>';
 			$i++;
 		}

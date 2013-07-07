@@ -170,7 +170,11 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedShipper" value="' . $SelectedShipper . '" />';
 		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';
-		echo '<br /><table class="selection"><tr><td>' . _('Shipper Code') . ':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
+		echo '<br /><table class="selection">
+						<tr>
+							<td>' . _('Shipper Code') . ':</td>
+							<td>' . $_POST['Shipper_ID'] . '</td>
+						</tr>';
 	} else {
 		echo '<br />
 			<table class="selection">';
@@ -181,7 +185,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr><td>' . _('Shipper Name') . ':</td>
 			<td>
-				<input type="text" name="ShipperName"' . (in_array('ShipperName', $Errors) ? 'class="inputerror"' : '') . ' value="' . $_POST['ShipperName'] . '" size="35" minlength="0" maxlength="40" />
+				<input type="text" name="ShipperName" value="' . $_POST['ShipperName'] . '" size="35" minlength="1" maxlength="40" />
 			</td>
 		</tr>
 

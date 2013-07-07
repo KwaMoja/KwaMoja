@@ -481,7 +481,7 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription) and mb_strlen
 
 echo '<tr>
 		<td>' . _('From Stock Location') . ':</td>
-		<td><select minlength="0" name="StockLocationFrom">';
+		<td><select minlength="1" name="StockLocationFrom">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -516,7 +516,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('To Stock Location') . ': </td>
-		<td><select minlength="0" name="StockLocationTo"> ';
+		<td><select minlength="1" name="StockLocationTo"> ';
 
 $sql = "SELECT locationname,
 				loccode
@@ -547,9 +547,9 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled) and $_SESSION['Tra
 
 	echo '<td class="number"><input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /><a href="' . $RootPath . '/StockTransferControlled.php?StockLocationFrom=' . $_SESSION['Transfer']->StockLocationFrom . '">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
-	echo '<td><input type="text" class="number" name="Quantity" size="12" minlength="0" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
+	echo '<td><input type="text" class="number" name="Quantity" size="12" minlength="1" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
 } else {
-	echo '<td><input type="text" class="number" name="Quantity" size="12" minlength="0" maxlength="12" value="0" /></td>
+	echo '<td><input type="text" class="number" name="Quantity" size="12" minlength="1" maxlength="12" value="0" /></td>
 		</tr>';
 }
 

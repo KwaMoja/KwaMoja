@@ -30,10 +30,11 @@ if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 3, Date('d'), Date('y')));
 }
 echo '<br />
-		<table class="selection">';
-echo '<tr><th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" minlength="0" maxlength="20" />';
+		<table class="selection">
+			<tr>
+				<th colspan="10">' . _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" minlength="1" maxlength="20" />';
 
-echo '  ' . _('From Stock Location') . ':<select minlength="0" name="StockLocation"> ';
+echo '  ' . _('From Stock Location') . ':<select minlength="1" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -67,7 +68,11 @@ while ($myrow = DB_fetch_array($resultStkLocs)) {
 echo '</select></th>
 	</tr>';
 echo '<tr>
-		<th colspan="10">' . _('Show Movements between') . ': <input type="text" name="AfterDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" minlength="0" maxlength="12" value="' . $_POST['AfterDate'] . '" /> ' . _('and') . ': <input type="text" name="BeforeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" minlength="0" maxlength="12" value="' . $_POST['BeforeDate'] . '" /><input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" /></th>
+		<th colspan="10">' . _('Show Movements between') . ':
+			<input type="text" name="AfterDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" minlength="1" maxlength="12" value="' . $_POST['AfterDate'] . '" /> ' . _('and') . ':
+			<input type="text" name="BeforeDate" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" minlength="1" maxlength="12" value="' . $_POST['BeforeDate'] . '" />
+			<input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" />
+		</th>
 	</tr>';
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);

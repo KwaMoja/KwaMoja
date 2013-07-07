@@ -279,9 +279,9 @@ echo '<table class="selection">
 
 echo '<tr>
 		<td>' . _('Vessel Name /Transport Agent') . ': </td>
-		<td colspan="3"><input type="text" name="Vessel" minlength="0" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
+		<td colspan="3"><input type="text" name="Vessel" minlength="1" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
 		<td>' . _('Voyage Ref / Consignment Note') . ': </td>
-		<td><input type="text" name="VoyageRef" minlength="0" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
+		<td><input type="text" name="VoyageRef" minlength="1" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
 if (isset($_SESSION['Shipment']->ETA)) {
@@ -292,9 +292,9 @@ if (isset($_SESSION['Shipment']->ETA)) {
 
 echo '<tr><td>' . _('Expected Arrival Date (ETA)') . ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  minlength="0" maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  minlength="1" maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" minlength="0" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>' . _('Into') . ' ';
 
@@ -321,7 +321,7 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 
 if (!isset($_SESSION['Shipment']->StockLocation)) {
 
-	echo _('Stock Location') . ': <select minlength="0" name="StockLocation">';
+	echo _('Stock Location') . ': <select minlength="1" name="StockLocation">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -373,7 +373,9 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 	/* Always display all shipment lines */
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="9"><h3>' . _('Order Lines On This Shipment') . '</h3></th></tr>';
+	echo '<tr>
+			<th colspan="9"><h3>' . _('Order Lines On This Shipment') . '</h3></th>
+		</tr>';
 
 	$TableHeader = '<tr>
 						<th>' . _('Order') . '</th>
@@ -417,7 +419,7 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 			<td class="number">' . locale_number_format($LnItm->QtyInvoiced, $LnItm->DecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($LnItm->StdCostUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this item?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 	} //for each line on the shipment
 	echo '</table>';
@@ -429,7 +431,7 @@ echo '<br />
 		</div>';
 
 if (!isset($_POST['StockLocation'])) {
-	$_POST['StockLocation'] = $_SESSION['DefaultLocation'];
+	$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 }
 
 $sql = "SELECT purchorderdetails.podetailitem,

@@ -276,15 +276,15 @@ echo '<br />
 		<table class="selection">';
 echo '<tr>
 		<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
-		<td><input type="text" size="20" minlength="0" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+		<td><input type="text" size="20" minlength="1" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)) {
 	$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y')));
 }
 echo '<td style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="0" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" minlength="1" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td style="color:red">' . _('Exchange Rate') . ':</td>
-		<td><input type="text" class="number" size="11" minlength="0" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate, 'Variable') . '" /></td>
+		<td><input type="text" class="number" size="11" minlength="1" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate, 'Variable') . '" /></td>
 	</tr>
 	</table>';
 
@@ -320,20 +320,24 @@ if (count($_SESSION['SuppTrans']->GRNs) > 0) {
 
 	foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 
-		echo '<tr><td>' . $EnteredGRN->GRNNo . '</td>
-			<td>' . $EnteredGRN->ItemCode . '</td>
-			<td>' . $EnteredGRN->ItemDescription . '</td>
-			<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv, 2) . '</td>
-			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td></tr>';
+		echo '<tr>
+				<td>' . $EnteredGRN->GRNNo . '</td>
+				<td>' . $EnteredGRN->ItemCode . '</td>
+				<td>' . $EnteredGRN->ItemDescription . '</td>
+				<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv, 2) . '</td>
+				<td class="number">' . locale_number_format($EnteredGRN->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+				<td>
+			</tr>';
 
 		$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
 	}
 
-	echo '<tr><td colspan="5" class="number">' . _('Total Value of Goods Credited') . ':</td>
-		<td class="number"><U>' . locale_number_format($TotalGRNValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</U></td></tr>';
+	echo '<tr>
+			<td colspan="5" class="number">' . _('Total Value of Goods Credited') . ':</td>
+			<td class="number"><u>' . locale_number_format($TotalGRNValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</u></td>
+		</tr>';
 	echo '</table>
 		<br />';
 }
@@ -379,18 +383,22 @@ if (count($_SESSION['SuppTrans']->Assets) > 0) {
 		<tr>
 			<th colspan="3">' . _('Fixed Asset Credits') . '</th>
 		</tr>';
-	$TableHeader = '<tr><th>' . _('Asset ID') . '</th>
+	$TableHeader = '<tr>
+						<th>' . _('Asset ID') . '</th>
 						<th>' . _('Description') . '</th>
-						<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th></tr>';
+						<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					</tr>';
 	echo $TableHeader;
 
 	$TotalAssetValue = 0;
 
 	foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset) {
 
-		echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
+		echo '<tr>
+				<td>' . $EnteredAsset->AssetID . '</td>
 				<td>' . $EnteredAsset->Description . '</td>
-				<td class="number">' . locale_number_format($EnteredAsset->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td></tr>';
+				<td class="number">' . locale_number_format($EnteredAsset->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			</tr>';
 
 		$TotalAssetValue += $EnteredAsset->Amount;
 
@@ -416,7 +424,8 @@ if (count($_SESSION['SuppTrans']->Contracts) > 0) {
 			<tr>
 				<th colspan="3">' . _('Contract Charges') . '</th>
 			</tr>';
-	$TableHeader = '<tr><th>' . _('Contract') . '</th>
+	$TableHeader = '<tr>
+						<th>' . _('Contract') . '</th>
 						<th>' . _('Narrative') . '</th>
 						<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
@@ -426,7 +435,8 @@ if (count($_SESSION['SuppTrans']->Contracts) > 0) {
 	$i = 0;
 	foreach ($_SESSION['SuppTrans']->Contracts as $Contract) {
 
-		echo '<tr><td>' . $Contract->ContractRef . '</td>
+		echo '<tr>
+				<td>' . $Contract->ContractRef . '</td>
 				<td>' . $Contract->Narrative . '</td>
 				<td class="number">' . locale_number_format($Contract->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>';
@@ -440,9 +450,11 @@ if (count($_SESSION['SuppTrans']->Contracts) > 0) {
 		}
 	}
 
-	echo '<tr><td class="number" colspan="2" style="color:red">' . _('Total Credited against Contracts') . ':</td>
+	echo '<tr>
+			<td class="number" colspan="2" style="color:red">' . _('Total Credited against Contracts') . ':</td>
 			<td class="number">' . locale_number_format($TotalContractsValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			</tr></table><br />';
+		</tr>
+	</table><br />';
 }
 
 
@@ -472,7 +484,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 					<td>' . $EnteredGLCode->Narrative . '</td>
 					<td>' . $EnteredGLCode->Tag . ' - ' . $EnteredGLCode->TagName . '</td>
 					<td class="number">' . locale_number_format($EnteredGLCode->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-					</tr>';
+				</tr>';
 
 			$TotalGLValue += $EnteredGLCode->Amount;
 
@@ -517,12 +529,15 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 	echo '<table class="selection">
 			<tr>
 				<td style="color:red">' . _('Credit Amount in Supplier Currency') . ':</td>
-		  	<td colspan="2" class="number"><input type="text" size="12" minlength="0" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td></tr>';
+				<td colspan="2" class="number">
+					<input type="text" size="12" minlength="1" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+				</td>
+			</tr>';
 }
 
 echo '<tr>
 		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Change Tax Calculation Method') . '" /></td>
-		<td><select minlength="0" name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
+		<td><select minlength="1" name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
 if ($_POST['OverRideTax'] == 'Man') {
 	echo '<option value="Auto">' . _('Automatic') . '</option>
@@ -551,7 +566,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 	if (!isset($_POST['OverRideTax']) OR $_POST['OverRideTax'] == 'Auto') {
 
-		echo ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" minlength="0" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100, 2) . '" />%';
+		echo ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" minlength="1" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100, 2) . '" />%';
 
 		/*Now recaluclate the tax depending on the method */
 		if ($Tax->TaxOnTax == 1) {
@@ -577,7 +592,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 
 		echo '</td>
-				<td><input type="text" class="number" size="12" minlength="0" maxlength="12" name="TaxAmount' . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
+				<td><input type="text" class="number" size="12" minlength="1" maxlength="12" name="TaxAmount' . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
 
 	}
 

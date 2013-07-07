@@ -18,8 +18,9 @@ $resultStkLocs = DB_query($sql, $db);
 echo '<table class="selection">
 	<tr>
 		<td>' . _('For Stock Category') . ':</td>
-		<td><select minlength="0" name="StockCategory">
-			<option value="All">' . _('All') . '</option>';
+		<td>
+			<select minlength="1" name="StockCategory">
+				<option value="All">' . _('All') . '</option>';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
 	if (isset($_POST['StockCategory']) and $_POST['StockCategory'] != 'All') {
@@ -49,7 +50,7 @@ if ($_SESSION['RestrictLocations'] == 0) {
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<td>' . _('For Stock Location') . ':</td>
-	<td><select minlength="0" name="StockLocation"> ';
+	<td><select minlength="1" name="StockLocation"> ';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -72,7 +73,7 @@ if (!isset($_POST['OnHandDate'])) {
 }
 
 echo '<td>' . _('On-Hand On Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size="12" minlength="0" maxlength="12" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size="12" minlength="1" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
 echo '<tr>
 		<td colspan="6">
 		<div class="centre">
@@ -88,17 +89,17 @@ $TotalQuantity = 0;
 if (isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 	if ($_POST['StockCategory'] == 'All') {
 		$sql = "SELECT stockid,
-								 description,
-								 decimalplaces
-						 FROM stockmaster
-						 WHERE (mbflag='M' OR mbflag='B')";
+						 description,
+						 decimalplaces
+					 FROM stockmaster
+					 WHERE (mbflag='M' OR mbflag='B')";
 	} else {
 		$sql = "SELECT stockid,
-								 description,
-								 decimalplaces
-						 FROM stockmaster
-						 WHERE categoryid = '" . $_POST['StockCategory'] . "'
-						 AND (mbflag='M' OR mbflag='B')";
+						description,
+						decimalplaces
+					 FROM stockmaster
+					 WHERE categoryid = '" . $_POST['StockCategory'] . "'
+					 AND (mbflag='M' OR mbflag='B')";
 	}
 
 	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');

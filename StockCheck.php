@@ -265,8 +265,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 
-		echo '<tr><td>' . _('From Inventory Category Code') . ':</td>
-					<td><select minlength="0" name="FromCriteria">';
+		echo '<tr>
+				<td>' . _('From Inventory Category Code') . ':</td>
+				<td><select minlength="1" name="FromCriteria">';
 
 		$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 		$CatResult = DB_query($sql, $db);
@@ -277,7 +278,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('To Inventory Category Code') . ':</td>
-				<td><select minlength="0" name="ToCriteria">';
+				<td><select minlength="1" name="ToCriteria">';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult, 0);
@@ -315,7 +316,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Action for Stock Check Freeze') . ':</td>
-				<td><select minlength="0" name="MakeStkChkData">';
+				<td><select minlength="1" name="MakeStkChkData">';
 
 		if (!isset($_POST['MakeStkChkData'])) {
 			$_POST['MakeStkChkData'] = 'PrintOnly';

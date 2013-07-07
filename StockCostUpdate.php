@@ -118,12 +118,22 @@ echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_S
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding="2" class="selection">';
-echo '<tr><th colspan="2">' . _('Item Code') . ':<input type="text" name="StockID" value="' . $StockID . '"  minlength="0" maxlength="20" />';
-echo '<input type="submit" name="Show" value="' . _('Show Cost Details') . '" /></th></tr>';
-echo '<tr><th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th></tr>';
-echo '<tr><th colspan="2">' . _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] . '</th></tr>';
-echo '<tr><th colspan="2">' . _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate']) . '</th></tr>';
+echo '<table cellpadding="2" class="selection">
+		<tr>
+			<th colspan="2">' . _('Item Code') . ':
+				<input type="text" name="StockID" value="' . $StockID . '"  minlength="1" maxlength="20" />
+				<input type="submit" name="Show" value="' . _('Show Cost Details') . '" />
+			</th>
+		</tr>
+		<tr>
+			<th colspan="2">' . $StockID . ' - ' . $myrow['description'] . '</th>
+		</tr>
+		<tr>
+			<th colspan="2">' . _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . ' ' . $myrow['units'] . '</th>
+		</tr>
+		<tr>
+			<th colspan="2">' . _('Last Cost update on') . ': ' . ConvertSQLDate($myrow['lastcostupdate']) . '</th>
+		</tr>';
 
 if (($myrow['mbflag'] == 'D' and $myrow['stocktype'] != 'L') or $myrow['mbflag'] == 'A' or $myrow['mbflag'] == 'K') {
 	echo '</div>

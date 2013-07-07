@@ -481,7 +481,7 @@ if ($Controlled == 1) {
 				[<a href="' . $RootPath . '/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier=' . $identifier . '">' . _('Remove') . '</a>]
 				[<a href="' . $RootPath . '/StockAdjustmentsControlled.php?AdjType=ADD&identifier=' . $identifier . '">' . _('Add') . '</a>]';
 } else {
-	echo '<input type="text" class="number" name="Quantity" size="12" minlength="0" maxlength="12" value="' . locale_number_format($Quantity, $DecimalPlaces) . '" />';
+	echo '<input type="text" class="number" name="Quantity" size="12" minlength="1" maxlength="12" value="' . locale_number_format($Quantity, $DecimalPlaces) . '" />';
 }
 echo '</td></tr>';
 //Select the tag

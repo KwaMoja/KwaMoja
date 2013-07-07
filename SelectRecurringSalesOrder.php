@@ -16,7 +16,7 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 echo '<table class="selection">
 		<tr>
 			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
-			<td>' . '<select minlength="0" name="StockLocation">';
+			<td>' . '<select minlength="1" name="StockLocation">';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

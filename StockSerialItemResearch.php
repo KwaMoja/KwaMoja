@@ -24,7 +24,7 @@ echo '<div class="centre">
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" minlength="0" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
+echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" minlength="1" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
 <br />
 </div>
 </form>';
@@ -33,7 +33,7 @@ echo '<script  type="text/javascript">
 		document.getElementById("serialno").focus();
 	</script>';
 
-if ($SerialNo!='') {
+if ($SerialNo != '') {
 	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server
 	if (mb_strstr($SerialNo,'%')){
 		while(mb_strstr($SerialNo,'%%'))	{

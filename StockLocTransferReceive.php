@@ -483,7 +483,7 @@ if (isset($_SESSION['Transfer'])) {
 		if ($TrfLine->Controlled == 1) {
 			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath . '/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 		} else {
-			echo '<td><input type="text" class="number" name="Qty' . $i . '" minlength="0" maxlength="10" size="auto" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';
+			echo '<td><input type="text" class="number" name="Qty' . $i . '" minlength="1" maxlength="10" size="auto" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
@@ -543,7 +543,7 @@ if (isset($_SESSION['Transfer'])) {
 	echo '<tr>
 			<td>' . _('Select Location Receiving Into') . ':</td>
 			<td>';
-	echo '<select minlength="0" name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
+	echo '<select minlength="1" name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
 	if (!isset($_POST['RecLocation'])) {
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}
@@ -574,11 +574,14 @@ if (isset($_SESSION['Transfer'])) {
 		$LocResult = DB_query($LocSql, $db);
 		$LocRow = DB_fetch_array($LocResult);
 		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><h3>' . _('Pending Transfers Into') . ' ' . $LocRow['locationname'] . '</h3></th></tr>';
 		echo '<tr>
-			<th>' . _('Transfer Ref') . '</th>
-			<th>' . _('Transfer From') . '</th>
-			<th>' . _('Dispatch Date') . '</th></tr>';
+				<th colspan="4"><h3>' . _('Pending Transfers Into') . ' ' . $LocRow['locationname'] . '</h3></th>
+			</tr>';
+		echo '<tr>
+				<th>' . _('Transfer Ref') . '</th>
+				<th>' . _('Transfer From') . '</th>
+				<th>' . _('Dispatch Date') . '</th>
+			</tr>';
 		$k = 0;
 		while ($myrow = DB_fetch_array($TrfResult)) {
 
