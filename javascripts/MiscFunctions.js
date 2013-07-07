@@ -40,6 +40,10 @@ function hideConfirm(result){
 function isInteger(s) {
 return (s.toString().search(/^-?[0-9]+$/) == 0);
 }
+function validateEmail(email) {
+var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+return re.test(email);
+}
 function ReloadForm(fB){
 fB.click();
 }
@@ -280,6 +284,14 @@ function VerifyForm(f) {
 			Class=f.elements[i].getAttribute("class");
 			if ((f.elements[i].getAttribute("minlength")>0) && (f.elements[i].value.length==0)) {
 				Alert=Alert+'You must make a selection in the field '+f.elements[i].getAttribute("name")+'<br />';
+				f.elements[i].className=Class+' inputerror';
+				Clean=false;
+			}
+		}
+		if(f.elements[i].type=='email') {
+			Class=f.elements[i].getAttribute("class");
+			if ((f.elements[i].value.length>0) && (!validateEmail(f.elements[i].value))) {
+				Alert=Alert+'You have not entered a valid email address <br />';
 				f.elements[i].className=Class+' inputerror';
 				Clean=false;
 			}

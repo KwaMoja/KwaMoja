@@ -705,7 +705,7 @@ if (!isset($SupplierID)) {
 			<td><input type="text" name="Fax" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input type="text" name="Email" size="30" minlength="1" maxlength="40" /></td>
+			<td><input type="email" name="Email" size="30" minlength="1" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select minlength="0" name="SupplierType">';
@@ -934,7 +934,7 @@ if (!isset($SupplierID)) {
 		</tr>';
 	echo '<tr>
 			<td>' . _('Email Address') . ':</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] . '" size="42" minlength="0" maxlength="40" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Supplier Type') . ':</td>

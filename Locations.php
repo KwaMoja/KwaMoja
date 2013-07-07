@@ -587,7 +587,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':' . '</td>
-			<td><input type="text" name="Email" value="' . $_POST['Email'] . '" size="31" minlength="0" maxlength="55" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="31" minlength="0" maxlength="55" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Tax Province') . ':' . '</td>

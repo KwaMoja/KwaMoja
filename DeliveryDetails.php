@@ -1076,7 +1076,7 @@ echo '<tr>
 		<td><input type="text" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="text" size="40" minlength="0" maxlength="38" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" /></td>
+		<td>' . _('Contact Email') . ':</td><td><input type="email" size="40" minlength="0" maxlength="38" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Customer Reference') . ':</td>

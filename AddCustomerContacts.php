@@ -226,10 +226,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Email') . '</td>';
 	if (isset($_POST['ContactEmail'])) {
-		echo '<td><input type="text" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" minlength="0" maxlength="55" /></td>
+		echo '<td><input type="email" name="ContactEmail" value="' . $_POST['ContactEmail'] . '" size="55" minlength="0" maxlength="55" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="ContactEmail" size="55" minlength="0" maxlength="55" /></td>
+		echo '<td><input type="email" name="ContactEmail" size="55" minlength="0" maxlength="55" /></td>
 			</tr>';
 	}
 	echo '<tr>

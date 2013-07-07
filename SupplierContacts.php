@@ -259,7 +259,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td><a href="Mailto:' . $_POST['Email'] . '">' . _('Email') . ':</a></td>
-			<td><input type="text" name="Email" size="51" minlength="0" maxlength="50" value="' . $_POST['Email'] . '" /></td>
+			<td><input type="email" name="Email" size="51" minlength="0" maxlength="50" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>
 		<br />';

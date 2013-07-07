@@ -277,7 +277,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Email Address') . ':</td>
-		<td><input tabindex="12" type="text" name="Email" size="50" minlength="0" maxlength="55" value="' . $_POST['Email'] . '" /></td>
+		<td><input tabindex="12" type="email" name="Email" size="50" minlength="0" maxlength="55" value="' . $_POST['Email'] . '" /></td>
 	</tr>';
 
 

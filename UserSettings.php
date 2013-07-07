@@ -193,7 +193,7 @@ if (!isset($_POST['email'])) {
 	$_POST['email'] = $myrow['email'];
 }
 
-echo '<td><input type="text" name="email" size="40" value="' . $_POST['email'] . '" /></td>
+echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] . '" /></td>
 	</tr>';
 
 if (!isset($_POST['PDFLanguage'])) {

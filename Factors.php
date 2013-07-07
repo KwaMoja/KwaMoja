@@ -241,7 +241,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':</td>
-			<td><input tabindex="11" type="text" name="Email" size="55" minlength="0" maxlength="55" value="' . $_POST['Email'] . '" /></td>
+			<td><input tabindex="11" type="email" name="Email" size="55" minlength="0" maxlength="55" value="' . $_POST['Email'] . '" /></td>
 		</tr>
 		</table>';
 }

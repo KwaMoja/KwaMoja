@@ -877,7 +877,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		<td><input type="text" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
 	</tr>';
 
-	echo '<tr><td>' . _('Contact Email') . ':</td><td><input type="text" size="25" minlength="0" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
+	echo '<tr><td>' . _('Contact Email') . ':</td><td><input type="email" size="25" minlength="0" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Customer Reference') . ':</td>
 		<td><input type="text" size="25" minlength="0" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items' . $identifier]->CustRef) . '" /></td>
