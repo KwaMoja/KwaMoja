@@ -274,8 +274,8 @@ if (isset($_POST['Search'])) {
 		<br />
 		<table cellpadding="2">';
 	$tableheader = '<tr>
-				  		<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
+				  		<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Address 1') . '</th>
 						<th>' . _('Address 2') . '</th>

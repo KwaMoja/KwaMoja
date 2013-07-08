@@ -132,6 +132,9 @@ background-color:#cccce5;
 color:#330000;
 text-align:right;
 }
+th.SortableColumn {
+cursor: s-resize;
+}
 td{
 text-align:left;
 }

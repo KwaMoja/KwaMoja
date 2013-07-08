@@ -429,9 +429,9 @@ if (isset($result)) {
 		echo '<br />
 				<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Customer Name') . '</th>
-							<th>' . _('Branch') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer Name') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
 							<th>' . _('Contact') . '</th>
 							<th>' . _('Type') . '</th>
 							<th>' . _('Phone') . '</th>

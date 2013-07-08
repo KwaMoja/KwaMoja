@@ -144,6 +144,9 @@ text-align:right;
 background-color:#B06161;
 color:white;
 }
+th.SortableColumn {
+cursor: s-resize;
+}
 td{
 text-align:left;
 }
