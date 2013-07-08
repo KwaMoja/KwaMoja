@@ -583,7 +583,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code') . ':</td>
-					<td><input ' . (in_array('BranchCode', $Errors) ? 'class="inputerror"' : '') . ' tabindex="1" type="text" name="BranchCode" size="12" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input ' . (in_array('BranchCode', $Errors) ? 'class="inputerror"' : '') . ' tabindex="1" type="text" name="BranchCode" size="12" required="required" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -598,7 +598,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['BrName'])) {
 		$_POST['BrName'] = '';
 	}
-	echo '<td><input tabindex="2" type="text" name="BrName" size="41" minlength="1" maxlength="40" value="' . $_POST['BrName'] . '" /></td>
+	echo '<td><input tabindex="2" type="text" name="BrName" size="41" required="required" minlength="1" maxlength="40" value="' . $_POST['BrName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Branch Contact') . ':</td>';

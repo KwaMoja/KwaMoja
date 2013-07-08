@@ -262,17 +262,17 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	}
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
 		  </tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
 		 </tr>';
 
 
 	echo '<tr>
 			<td>' . _('For Suppliers Trading in') . ':</td>
-			<td><select minlength="1" name="Currency">';
+			<td><select required="required" minlength="1" name="Currency">';
 
 	$sql = "SELECT currency, currabrev FROM currencies";
 	$result = DB_query($sql, $db);
@@ -294,7 +294,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	}
 	echo '<tr>
 			<td>' . _('Exchange Rate') . ':</td>
-			<td><input type="text" class="number" name="ExRate" minlength="1" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" /></td>
+			<td><input type="text" class="number" name="ExRate" required="required" minlength="1" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" /></td>
 		  </tr>';
 
 	if (!isset($_POST['AmountsDueBy'])) {
@@ -305,7 +305,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Payments Due To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="AmountsDueBy" minlength="1" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="AmountsDueBy" required="required" minlength="1" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
 		  </tr>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
@@ -322,7 +322,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Pay From Account') . ':</td>
-			<td><select minlength="1" name="BankAccount">';
+			<td><select required="required" minlength="1" name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -348,7 +348,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	echo '<tr>
 			<td>' . _('Payment Type') . ':</td>
-			<td><select minlength="1" name="PaytType">';
+			<td><select required="required" minlength="1" name="PaytType">';
 
 	/* The array PaytTypes is set up in config.php for user modification
 	Payment types can be modified by editing that file */

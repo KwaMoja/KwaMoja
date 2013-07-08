@@ -284,7 +284,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Tab Code') . ':</td>
-					<td><input type="text" minlength="1" maxlength="20" name="TabCode" /></td>
+					<td><input type="text" required="required" minlength="1" maxlength="20" name="TabCode" /></td>
 				</tr>';
 
 	}
@@ -295,7 +295,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('User Name') . ':</td>
-			<td><select minlength="1" name="SelectUser">';
+			<td><select required="required" minlength="1" name="SelectUser">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -318,7 +318,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Type Of Tab') . ':</td>
-			<td><select minlength="1" name="SelectTabs">';
+			<td><select required="required" minlength="1" name="SelectTabs">';
 
 	$SQL = "SELECT typetabcode,
 					typetabdescription
@@ -342,7 +342,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Currency') . ':</td>
-			<td><select minlength="1" name="SelectCurrency">';
+			<td><select required="required" minlength="1" name="SelectCurrency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
 
@@ -367,10 +367,10 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Limit Of Tab') . ':</td>
-			<td><input type="text" class="number" name="TabLimit" size="12" minlength="1" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
+			<td><input type="text" class="number" name="TabLimit" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
 
 	echo '<tr><td>' . _('Assigner') . ':</td>
-			<td><select minlength="1" name="SelectAssigner">';
+			<td><select required="required" minlength="1" name="SelectAssigner">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -394,7 +394,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Authoriser') . ':</td>
-			<td><select minlength="1" name="SelectAuthoriser">';
+			<td><select required="required" minlength="1" name="SelectAuthoriser">';
 
 	$SQL = "SELECT userid,
 					realname
@@ -418,7 +418,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('GL Account Cash Assignment') . ':</td>
-			<td><select minlength="1" name="GLAccountCash">';
+			<td><select required="required" minlength="1" name="GLAccountCash">';
 
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
@@ -443,7 +443,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('GL Account Petty Cash Tab') . ':</td>
-			<td><select minlength="1" name="GLAccountPcashTab">';
+			<td><select required="required" minlength="1" name="GLAccountPcashTab">';
 
 	$SQL = "SELECT accountcode, accountname
 			FROM chartmaster

@@ -255,7 +255,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
 		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" size="3" minlength="1" maxlength="2" name="TypeAbbrev" /></td></tr>';
+				<td><input type="text" size="3" required="required" minlength="1" maxlength="2" name="TypeAbbrev" /></td></tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
@@ -263,7 +263,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Sales Type Name') . ':</td>
-			<td><input type="text" minlength="1" maxlength="40" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
+			<td><input type="text" required="required" minlength="1" maxlength="40" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td></tr>';
 
 	echo '</table>'; // close main table
 

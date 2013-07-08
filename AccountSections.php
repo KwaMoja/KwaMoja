@@ -248,7 +248,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Section Number') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="SectionID" class="number" size="4" minlength="1" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
+				<td><input tabindex="1" type="text" name="SectionID" class="number" size="4" required="required" minlength="1" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
 			</tr>';
 	}
 	echo '<tr><td>' . _('Section Description') . ':' . '</td>

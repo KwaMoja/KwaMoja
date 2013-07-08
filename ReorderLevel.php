@@ -195,7 +195,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('From Stock Location') . ':</td>
-				<td><select minlength="1" name="StockLocation"> ';
+				<td><select required="required" minlength="1" name="StockLocation"> ';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<tr>
 			<td>' . _('In Stock Category') . ':</td>
-			<td><select minlength="1" name="StockCat">';
+			<td><select required="required" minlength="1" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}

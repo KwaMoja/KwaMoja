@@ -260,7 +260,7 @@ if (count($_SESSION['Contract' . $identifier]->ContractBOM) > 0) {
 
 		echo '<td>' . $ContractComponent->StockID . '</td>
 			  <td>' . $ContractComponent->ItemDescription . '</td>
-			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" minlength="1" maxlength="11" size="11" value="' . locale_number_format($ContractComponent->Quantity, $ContractComponent->DecimalPlaces) . '" /></td>
+			  <td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" required="required" minlength="1" maxlength="11" size="11" value="' . locale_number_format($ContractComponent->Quantity, $ContractComponent->DecimalPlaces) . '" /></td>
 			  <td>' . $ContractComponent->UOM . '</td>
 			  <td class="number">' . locale_number_format($ContractComponent->ItemCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			  <td class="number">' . $DisplayLineTotal . '</td>

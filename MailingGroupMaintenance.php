@@ -148,7 +148,7 @@ if (!isset($_GET['Edit'])) { //display the input form
 		<label for="MailGroup"><?php
 	echo _('Mail Group');
 ?></label>
-			<input type="text" name="MailGroup" minlength="1" maxlength="100" size="20" />
+			<input type="text" name="MailGroup" required="required" minlength="1" maxlength="100" size="20" />
 			<input type="hidden" name="Clean" value="1" />
 			<input type="submit" name="Enter" value="<?php
 	echo _('Submit');

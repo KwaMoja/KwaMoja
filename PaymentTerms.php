@@ -267,13 +267,13 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
-				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" minlength="1" maxlength="2" /></td>
+				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" required="required" minlength="1" maxlength="2" /></td>
 			</tr>';
 	}
 
 	echo '<tr>
 			<td>' . _('Terms Description') . ':</td>
-			<td><input type="text" name="Terms" value="' . $_POST['Terms'] . '" size="35" minlength="1" maxlength="40" /></td>
+			<td><input type="text" name="Terms" value="' . $_POST['Terms'] . '" size="35" required="required" minlength="1" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Due After A Given No. Of Days') . ':</td>

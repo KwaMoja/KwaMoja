@@ -166,7 +166,7 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_POST['Proce
 			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" value="' . locale_number_format($LnItm->ReceiveQty, $LnItm->DecimalPlaces) . '" /><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty, $LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
-			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" minlength="1" maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQty, $LnItm->DecimalPlaces), $LnItm->DecimalPlaces) . '" /></td>';
+			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" required="required" minlength="1" maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQty, $LnItm->DecimalPlaces), $LnItm->DecimalPlaces) . '" /></td>';
 		}
 		echo '<td><input type="checkbox" name="Complete_' . $LnItm->LineNo . '"';
 		if ($LnItm->Completed == 1) {

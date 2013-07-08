@@ -241,7 +241,7 @@ input.inputerror {
 	background-color: #fddbdb;
 }
 input:required, select:required, textarea:required {
-        background-color:lightyellow;
+        background-color:#B2B2B2;
  }
 
 /* for buttons ***HJ***/

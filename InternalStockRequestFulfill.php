@@ -214,7 +214,7 @@ if (!isset($_POST['Location'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Choose a location to issue requests from') . '</td>
-				<td><select minlength="1" name="Location">
+				<td><select required="required" minlength="1" name="Location">
 					<option value="">' . _('Select a Location') . '</option>';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,

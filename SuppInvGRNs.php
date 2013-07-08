@@ -230,9 +230,9 @@ if (isset($_GET['Modify'])) {
 		<td>' . $GRNTmp->GRNNo . '</td>
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
 		<td class="number">' . locale_number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv, $GRNTmp->DecimalPlaces) . '</td>
-		<td><input type="text" class="number" name="This_QuantityInv" value="' . locale_number_format($GRNTmp->This_QuantityInv, 'Variable') . '" size="11" minlength="1" maxlength="10" /></td>
+		<td><input type="text" class="number" name="This_QuantityInv" value="' . locale_number_format($GRNTmp->This_QuantityInv, 'Variable') . '" size="11" required="required" minlength="1" maxlength="10" /></td>
 		<td class="number">' . locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-		<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($GRNTmp->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" minlength="1" maxlength="10" /></td>
+		<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($GRNTmp->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" required="required" minlength="1" maxlength="10" /></td>
 	</tr>';
 	echo '</table>';
 

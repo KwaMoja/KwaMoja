@@ -483,7 +483,7 @@ if (isset($_SESSION['Transfer'])) {
 		if ($TrfLine->Controlled == 1) {
 			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath . '/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 		} else {
-			echo '<td><input type="text" class="number" name="Qty' . $i . '" minlength="1" maxlength="10" size="auto" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';
+			echo '<td><input type="text" class="number" name="Qty' . $i . '" required="required" minlength="1" maxlength="10" size="auto" value="' . locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
@@ -543,7 +543,7 @@ if (isset($_SESSION['Transfer'])) {
 	echo '<tr>
 			<td>' . _('Select Location Receiving Into') . ':</td>
 			<td>';
-	echo '<select minlength="1" name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
+	echo '<select required="required" minlength="1" name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
 	if (!isset($_POST['RecLocation'])) {
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}

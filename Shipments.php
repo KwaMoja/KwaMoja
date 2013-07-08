@@ -279,9 +279,9 @@ echo '<table class="selection">
 
 echo '<tr>
 		<td>' . _('Vessel Name /Transport Agent') . ': </td>
-		<td colspan="3"><input type="text" name="Vessel" minlength="1" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
+		<td colspan="3"><input type="text" name="Vessel" required="required" minlength="1" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
 		<td>' . _('Voyage Ref / Consignment Note') . ': </td>
-		<td><input type="text" name="VoyageRef" minlength="1" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
+		<td><input type="text" name="VoyageRef" required="required" minlength="1" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
 if (isset($_SESSION['Shipment']->ETA)) {
@@ -292,9 +292,9 @@ if (isset($_SESSION['Shipment']->ETA)) {
 
 echo '<tr><td>' . _('Expected Arrival Date (ETA)') . ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  minlength="1" maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  required="required" minlength="1" maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>' . _('Into') . ' ';
 
@@ -321,7 +321,7 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 
 if (!isset($_SESSION['Shipment']->StockLocation)) {
 
-	echo _('Stock Location') . ': <select minlength="1" name="StockLocation">';
+	echo _('Stock Location') . ': <select required="required" minlength="1" name="StockLocation">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,

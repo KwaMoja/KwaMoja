@@ -158,7 +158,7 @@ echo '<br />
 		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 echo '<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" minlength="1" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" required="required" minlength="1" maxlength="10" size="10" />
 		<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
 	</div>
 	</form>

@@ -380,7 +380,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 	echo '<tr>
 			<td>' . _('For Sales Areas') . ':</td>
-			<td><select minlength="1" name="Areas[]" multiple="multiple">';
+			<td><select required="required" minlength="1" name="Areas[]" multiple="multiple">';
 
 	$sql = "SELECT areacode, areadescription FROM areas";
 	$AreasResult = DB_query($sql, $db);
@@ -393,7 +393,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('For Sales folk') . ':</td>
-			<td><select minlength="1" name="SalesPeople[]" multiple="multiple">';
+			<td><select required="required" minlength="1" name="SalesPeople[]" multiple="multiple">';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
 	if ($_SESSION['SalesmanLogin'] != '') {
@@ -409,7 +409,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('Level Of Activity') . ':</td>
-			<td><select minlength="1" name="Activity">
+			<td><select required="required" minlength="1" name="Activity">
 				<option selected="selected" value="All">' . _('All customers') . '</option>
 				<option value="GreaterThan">' . _('Sales Greater Than') . '</option>
 				<option value="LessThan">' . _('Sales Less Than') . '</option>

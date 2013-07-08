@@ -159,11 +159,11 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['PaymentDate'])) {
@@ -174,7 +174,7 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 
 	echo '<tr>
 			<td>' . _('Date Of Payment') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" minlength="1" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" required="required" minlength="1" maxlength="11" size="12" value="' . $DefaultDate . '" /></td>
 		</tr>';
 
 	echo '</table>

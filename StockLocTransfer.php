@@ -265,7 +265,7 @@ if (isset($_POST['Submit']) and $InputError == False) {
 
 	echo '<tr>
 			<td>' . _('From Stock Location') . ':</td>
-			<td><select minlength="1" name="FromStockLocation">';
+			<td><select required="required" minlength="1" name="FromStockLocation">';
 
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['FromStockLocation'])) {
@@ -288,7 +288,7 @@ if (isset($_POST['Submit']) and $InputError == False) {
 				FROM locations";
 	$resultStkLocs = DB_query($sql, $db);
 	echo '<td>' . _('To Stock Location') . ':</td>
-			<td><select minlength="1" name="ToStockLocation">';
+			<td><select required="required" minlength="1" name="ToStockLocation">';
 	while ($myrow = DB_fetch_array($resultStkLocs)) {
 		if (isset($_POST['ToStockLocation'])) {
 			if ($myrow['loccode'] == $_POST['ToStockLocation']) {
@@ -340,8 +340,8 @@ if (isset($_POST['Submit']) and $InputError == False) {
 			$k++;
 
 			echo '<tr>
-				<td><input type="text" name="StockID' . $j . '" size="21"  minlength="1" maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-				<td><input type="text" name="StockQTY' . $j . '" size="10" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i], 'Variable') . '" /></td>
+				<td><input type="text" name="StockID' . $j . '" size="21"  required="required" minlength="1" maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+				<td><input type="text" name="StockQTY' . $j . '" size="10" required="required" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i], 'Variable') . '" /></td>
 				<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j . '" /></td>
 			</tr>';
 			$j++;
@@ -360,8 +360,8 @@ if (isset($_POST['Submit']) and $InputError == False) {
 			$_POST['StockQTY' . $j] = 0;
 		}
 		echo '<tr>
-			<td><input type="text" name="StockID' . $j . '" size="21"  minlength="1" maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
-			<td><input type="text" name="StockQTY' . $j . '" size="10" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+			<td><input type="text" name="StockID' . $j . '" size="21"  required="required" minlength="1" maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
+			<td><input type="text" name="StockQTY' . $j . '" size="10" required="required" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
 		</tr>';
 		$j++;
 	}

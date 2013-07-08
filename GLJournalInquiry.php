@@ -22,8 +22,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" minlength="1" maxlength="11" value="1" />' . '</td>
-			<td>' . _('To') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" minlength="1" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '</td>
+			<td>' . _('From') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" required="required" minlength="1" maxlength="11" value="1" />' . '</td>
+			<td>' . _('To') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" required="required" minlength="1" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '</td>
 		</tr>';
 
 	$sql = "SELECT MIN(trandate) AS fromdate,

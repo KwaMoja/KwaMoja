@@ -411,7 +411,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select minlength="1" tabindex="3" name="SectionInAccounts">';
+			<td><select required="required" minlength="1" tabindex="3" name="SectionInAccounts">';
 
 	$sql = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
 	$secresult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
@@ -429,7 +429,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select minlength="1" tabindex="4" name="PandL">';
+			<td><select required="required" minlength="1" tabindex="4" name="PandL">';
 
 	echo '<option selected="selected" value=""></option>';
 	if ($_POST['PandL'] === 1) {
@@ -449,7 +449,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" minlength="1" maxlength="4" name="SequenceInTB" class="integer" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td><input tabindex="5" type="text" required="required" minlength="1" maxlength="4" name="SequenceInTB" class="integer" value="' . $_POST['SequenceInTB'] . '" /></td>
 		</tr>';
 
 	echo '<tr>

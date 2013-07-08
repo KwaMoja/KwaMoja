@@ -180,14 +180,14 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
-		<td><input type="text" name="GLCode" size="12" minlength="1" maxlength="11" value="' . $_POST['GLCode'] . '" />
+		<td><input type="text" name="GLCode" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['GLCode'] . '" />
 		<input type="hidden" name="JobRef" value="" /></td>
 	</tr>';
 echo '<tr>
 	<td>' . _('Account Selection') . ':
 		<br />(' . _('If you know the code enter it above') . '
 		<br />' . _('otherwise select the account from the list') . ')</td>
-	<td><select minlength="1" name="AcctSelection">';
+	<td><select required="required" minlength="1" name="AcctSelection">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 
@@ -210,7 +210,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" class="number" name="Amount" size="12" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 if (!isset($_POST['Narrative'])) {

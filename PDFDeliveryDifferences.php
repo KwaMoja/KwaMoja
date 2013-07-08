@@ -27,11 +27,11 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="ToDate" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="ToDate" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Inventory Category') . '</td>
@@ -46,7 +46,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	$result = DB_query($sql, $db);
 
 
-	echo '<select minlength="1" name="CategoryID">
+	echo '<select required="required" minlength="1" name="CategoryID">
 			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -58,7 +58,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 
 	echo '<tr>
 			<td>' . _('Inventory Location') . ':</td>
-			<td><select minlength="1" name="Location">';
+			<td><select required="required" minlength="1" name="Location">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -82,7 +82,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 
 	echo '<tr>
 				<td>' . _('Email the report off') . ':</td>
-				<td><select minlength="1" name="Email">
+				<td><select required="required" minlength="1" name="Email">
 					<option selected="selected" value="No">' . _('No') . '</option>
 					<option value="Yes">' . _('Yes') . '</option>
 					</select></td>

@@ -258,7 +258,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('From Inventory Category Code') . ':</td>
-					<td><select minlength="1" name="FromCriteria">';
+					<td><select required="required" minlength="1" name="FromCriteria">';
 
 		$sql = 'SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult = DB_query($sql, $db);
@@ -291,7 +291,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Show Gross Profit %') . ':</td>
-				<td><select minlength="1" name="ShowGPPercentages">';
+				<td><select required="required" minlength="1" name="ShowGPPercentages">';
 		echo '<option selected="selected" value="No">' . _('Prices Only') . '</option>';
 		echo '<option value="Yes">' . _('Show GP % too') . '</option>';
 		echo '</select></td></tr>';
@@ -299,7 +299,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<tr>
 				<td>' . _('Price Listing Type') . ':</td>
 				<td>
-					<select minlength="1" name="CustomerSpecials">
+					<select required="required" minlength="1" name="CustomerSpecials">
 						<option selected="selected" value="Sales Type Prices">' . _('Default Sales Type Prices') . '</option>
 						<option value="Customer Special Prices Only">' . _('Customer Special Prices Only') . '</option>
 						<option value="Full Description">' . _('Full Description') . '</option>

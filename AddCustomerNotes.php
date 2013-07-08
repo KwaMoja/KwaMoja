@@ -190,7 +190,7 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Contact Note') . '</td>';
 	if (isset($_POST['Note'])) {
-		echo '<td><textarea name="Note" rows="3" minlength="1" cols="32">' . $_POST['Note'] . '</textarea></td>
+		echo '<td><textarea name="Note" rows="3" required="required" minlength="1" cols="32">' . $_POST['Note'] . '</textarea></td>
 			</tr>';
 	} else {
 		echo '<td><textarea name="Note" rows="3" cols="32"></textarea></td>

@@ -112,7 +112,7 @@ if (!isset($SelectedTab)) {
 
 	echo '<tr>
 			<td>' . _('Select Type of Tab') . ':</td>
-			<td><select minlength="1" name="SelectedTab">';
+			<td><select required="required" minlength="1" name="SelectedTab">';
 
 	$SQL = "SELECT typetabcode,
 					typetabdescription
@@ -196,7 +196,7 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 
 		echo '<tr>
 				<td>' . _('Select Expense Code') . ':</td>
-				<td><select minlength="1" name="SelectedExpense">';
+				<td><select required="required" minlength="1" name="SelectedExpense">';
 
 		$SQL = "SELECT codeexpense,
 						description

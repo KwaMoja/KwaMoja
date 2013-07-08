@@ -146,15 +146,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
+			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Balances As At') . ':</td>
-			<td><select minlength="1" name="PeriodEnd">';
+			<td><select required="required" minlength="1" name="PeriodEnd">';
 
 	$sql = "SELECT periodno,
 					lastdate_in_period

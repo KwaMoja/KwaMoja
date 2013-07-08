@@ -229,7 +229,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 		</tr>';
 	echo '<tr>
 			<td>' . _('Delivery Must Be Made Before') . '</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" minlength="1" maxlength="10" name="RequiredByDate" size="11" value="' . ConvertSQLDate($_SESSION['tender' . $identifier]->RequiredByDate) . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" required="required" minlength="1" maxlength="10" name="RequiredByDate" size="11" value="' . ConvertSQLDate($_SESSION['tender' . $identifier]->RequiredByDate) . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['StkLocation']) or $_POST['StkLocation'] == '') {
@@ -315,7 +315,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	}
 	echo '<tr>
 			<td>' . _('Warehouse') . ':</td>
-			<td><select minlength="1" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
+			<td><select required="required" minlength="1" name="StkLocation" onchange="ReloadForm(form1.LookupDeliveryAddress)">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
@@ -567,7 +567,7 @@ if (isset($_POST['SearchSupplier'])) {
 	}
 	if ($ListPageMax > 1) {
 		echo '<br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-		echo '<select minlength="1" name="PageOffset">';
+		echo '<select required="required" minlength="1" name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
@@ -647,7 +647,7 @@ if (isset($_POST['Items'])) {
 	}
 	echo '<table class="selection">
 		<tr>
-			<td>' . _('In Stock Category') . ':<select minlength="1" name="StockCat">';
+			<td>' . _('In Stock Category') . ':<select required="required" minlength="1" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -856,7 +856,7 @@ if (isset($_POST['Search'])) {
 					<td>' . $myrow['description'] . '</td>
 					<td>' . $myrow['units'] . '</td>
 					<td>' . $ImageSource . '</td>
-					<td><input class="number" type="text" minlength="1" maxlength="10" size="6" value="0" name="Qty' . $i . '" /></td>
+					<td><input class="number" type="text" required="required" minlength="1" maxlength="10" size="6" value="0" name="Qty' . $i . '" /></td>
 					<input type="hidden" value="' . $myrow['units'] . '" name="UOM' . $i . '" />
 					<input type="hidden" value="' . $myrow['stockid'] . '" name="StockID' . $i . '" />
 					</tr>';

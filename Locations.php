@@ -499,7 +499,7 @@ if (!isset($_GET['delete'])) {
 				</tr>';
 		echo '<tr>
 				<td>' . _('Location Code') . ':</td>
-				<td><input type="text" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" minlength="1" maxlength="5" /></td>
+				<td><input type="text" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" required="required" minlength="1" maxlength="5" /></td>
 			</tr>';
 	}
 	if (!isset($_POST['LocationName'])) {
@@ -547,7 +547,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Location Name') . ':' . '</td>
-			<td><input type="text" name="LocationName" value="' . $_POST['LocationName'] . '" size="51" minlength="1" maxlength="50" /></td>
+			<td><input type="text" name="LocationName" value="' . $_POST['LocationName'] . '" size="51" required="required" minlength="1" maxlength="50" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Contact for deliveries') . ':' . '</td>

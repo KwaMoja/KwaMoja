@@ -199,7 +199,7 @@ if ($_SESSION['AllowedDepartment'] == 0) {
 			ORDER BY description";
 }
 $result = DB_query($sql, $db);
-echo '<td><select minlength="1" name="Department">
+echo '<td><select required="required" minlength="1" name="Department">
 		<option value="">' . _('Select a Department') . '</option>';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_SESSION['Request']->Department) and $_SESSION['Request']->Department == $myrow['departmentid']) {
@@ -231,7 +231,7 @@ if ($_SESSION['RestrictLocations'] == 0) {
 }
 
 $result = DB_query($sql, $db);
-echo '<td><select minlength="1" name="Location">
+echo '<td><select required="required" minlength="1" name="Location">
 		<option value="">' . _('Select a Location') . '</option>';
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_SESSION['Request']->Location) and $_SESSION['Request']->Location == $myrow['loccode']) {

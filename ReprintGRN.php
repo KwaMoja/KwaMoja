@@ -19,7 +19,7 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Enter a Purchase Order Number') . '</td>
-			<td>' . '<input type="text" name="PONumber" minlength="1" maxlength="7" class="number" size="7" value="' . $_POST['PONumber'] . '" /></td>
+			<td>' . '<input type="text" name="PONumber" required="required" minlength="1" maxlength="7" class="number" size="7" value="' . $_POST['PONumber'] . '" /></td>
 		</tr>
 		<tr>
 			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>

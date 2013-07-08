@@ -33,11 +33,11 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y'))) . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Inventory Category') . '</td>
@@ -47,7 +47,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 	$result = DB_query($sql, $db);
 
 
-	echo '<select minlength="1" name="CategoryID">';
+	echo '<select required="required" minlength="1" name="CategoryID">';
 	echo '<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -56,7 +56,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Inventory Location') . ':</td><td><select minlength="1" name="Location">';
+			<td>' . _('Inventory Location') . ':</td><td><select required="required" minlength="1" name="Location">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -79,7 +79,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 
 	echo '<tr>
 			<td>' . _('Back Order Only') . ':</td>
-			<td><select minlength="1" name="BackOrders">
+			<td><select required="required" minlength="1" name="BackOrders">
 					<option selected="selected" value="Yes">' . _('Only Show Back Orders') . '</option>
 					<option value="No">' . _('Show All Orders') . '</option>
 				</select>

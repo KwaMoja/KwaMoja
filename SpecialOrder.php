@@ -699,12 +699,12 @@ if (!isset($_POST['ItemDescription'])) {
 echo '<table>';
 echo '<tr>
 		<td>' . _('Ordered item Description') . ':</td>
-		<td><input type="text" name="ItemDescription" size="40" minlength="1" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
+		<td><input type="text" name="ItemDescription" size="40" required="required" minlength="1" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Category') . ':</td>
-		<td><select minlength="1" name="StkCat">';
+		<td><select required="required" minlength="1" name="StkCat">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -726,7 +726,7 @@ $_POST['Qty'] = 1;
 
 echo '<tr>
 		<td>' . _('Order Quantity') . ':</td>
-		<td><input type="text" class="number" size="7" minlength="1" maxlength="6" name="Qty" value="' . locale_number_format($_POST['Qty'], 'Variable') . '" /></td>
+		<td><input type="text" class="number" size="7" required="required" minlength="1" maxlength="6" name="Qty" value="' . locale_number_format($_POST['Qty'], 'Variable') . '" /></td>
 	</tr>';
 
 if (!isset($_POST['Cost'])) {
@@ -734,7 +734,7 @@ if (!isset($_POST['Cost'])) {
 }
 echo '<tr>
 		<td>' . _('Unit Cost') . ':</td>
-		<td><input type="text" class="number" size="15" minlength="1" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'], $_SESSION['SPL' . $identifier]->SuppCurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" size="15" required="required" minlength="1" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'], $_SESSION['SPL' . $identifier]->SuppCurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 if (!isset($_POST['Price'])) {
@@ -742,7 +742,7 @@ if (!isset($_POST['Price'])) {
 }
 echo '<tr>
 		<td>' . _('Unit Price') . ':</td>
-		<td><input type="text" class="number" size="15" minlength="1" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'], $_SESSION['SPL' . $identifier]->CustCurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" size="15" required="required" minlength="1" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'], $_SESSION['SPL' . $identifier]->CustCurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 /*Default the required delivery date to tomorrow as a starting point */

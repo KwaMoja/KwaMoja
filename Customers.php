@@ -457,12 +457,12 @@ if (!isset($DebtorNo)) {
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo'] == 0) {
-		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex="1" type="text" name="DebtorNo" size="11" minlength="1" maxlength="10" /></td></tr>';
+		echo '<tr><td>' . _('Customer Code') . ':</td><td><input tabindex="1" type="text" name="DebtorNo" size="11" required="required" minlength="1" maxlength="10" /></td></tr>';
 	} //$_SESSION['AutoDebtorNo'] == 0
 
 	echo '<tr>
 			<td>' . _('Customer Name') . ':</td>
-			<td><input tabindex="2" type="text" name="CustName" size="42" minlength="1" maxlength="40" /></td>
+			<td><input tabindex="2" type="text" name="CustName" size="42" required="required" minlength="1" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1 (Street)') . ':</td>
@@ -766,7 +766,7 @@ else {
 		if ($_SESSION['AutoDebtorNo'] == 0) {
 			echo '<tr>
 					<td>' . _('Customer Code') . ':</td>
-					<td><input type="text" name="DebtorNo" value="' . $DebtorNo . '" size="12" minlength="1" maxlength="10" /></td></tr>';
+					<td><input type="text" name="DebtorNo" value="' . $DebtorNo . '" size="12" required="required" minlength="1" maxlength="10" /></td></tr>';
 		} //$_SESSION['AutoDebtorNo'] == 0
 	}
 	if (isset($_GET['Modify'])) {
@@ -814,7 +814,7 @@ else {
 	else {
 		echo '<tr>
 				<td>' . _('Customer Name') . ':</td>
-				<td><input type="text" name="CustName" value="' . $_POST['CustName'] . '" size="42" minlength="1" maxlength="40" /></td>
+				<td><input type="text" name="CustName" value="' . $_POST['CustName'] . '" size="42" required="required" minlength="1" maxlength="40" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Address Line 1 (Street)') . ':</td>

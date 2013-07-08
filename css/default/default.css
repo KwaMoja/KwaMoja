@@ -176,7 +176,7 @@ background-color: transparent;
 input:hover{
 }
 input:required, select:required, textarea:required {
-        background-color:lightyellow;
+        background-color:#C0C3FF;
  }
 
 select{

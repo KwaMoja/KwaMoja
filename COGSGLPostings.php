@@ -313,7 +313,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Post to GL account') . ':</td>
-		<td><select minlength="1" tabindex="4" name="GLCode">';
+		<td><select required="required" minlength="1" tabindex="4" name="GLCode">';
 
 DB_free_result($result);
 $sql = "SELECT chartmaster.accountcode,

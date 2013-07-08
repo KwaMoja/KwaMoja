@@ -246,7 +246,7 @@ input:hover{
 background:#9ffffb;
 }
 input:required, select:required, textarea:required {
-        background-color:lightyellow;
+        background-color:#C0C3FF;
  }
 
 input.image:hover{

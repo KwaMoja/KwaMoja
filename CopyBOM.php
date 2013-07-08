@@ -176,7 +176,7 @@ if (isset($_POST['Submit'])) {
 			</tr>';
 	echo '<tr>
 			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
-	echo '<td><input type="text" minlength="1" maxlength="20" name="ToStockID" /></td></tr>';
+	echo '<td><input type="text" required="required" minlength="1" maxlength="20" name="ToStockID" /></td></tr>';
 
 	$sql = "SELECT stockid,
 					description

@@ -14,7 +14,7 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 
 echo '<table class="selection">
 	 <tr>
-		 <td>  ' . _('From Stock Location') . ':<select minlength="1" name="StockLocation"> ';
+		 <td>  ' . _('From Stock Location') . ':<select required="required" minlength="1" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,
@@ -57,8 +57,8 @@ if (!isset($_POST['BeforeDate']) or !Is_Date($_POST['BeforeDate'])) {
 if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
-echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size="12" minlength="1" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
-echo ' ' . _('But after') . ': <input type="text" name="AfterDate" size="12" minlength="1" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
+echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size="12" required="required" minlength="1" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
+echo ' ' . _('But after') . ': <input type="text" name="AfterDate" size="12" required="required" minlength="1" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
 echo '</td>
 	 </tr>
 	 </table>

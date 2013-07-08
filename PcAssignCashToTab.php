@@ -226,7 +226,7 @@ if (isset($_POST['process']) or isset($SelectedTabs)) {
 		echo '<table class="selection">';
 		echo '<tr><th colspan="8">' . _('Detail Of PC Tab Movements For Last') . ': ';
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="1" maxlength="3" size="4" /> ' . _('Days');
+		echo '<input type="text" class="number" name="Days" value="' . $Days . '" required="required" minlength="1" maxlength="3" size="4" /> ' . _('Days');
 		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
 		echo '</th></tr>';
 		echo '<tr>
@@ -350,7 +350,7 @@ if (isset($_POST['process']) or isset($SelectedTabs)) {
 		echo '<tr>
 				<td>' . _('Cash Assignation Date') . ':</td>';
 
-		echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" minlength="1" maxlength="10" value="' . $_POST['Date'] . '" /></td></tr>';
+		echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['Date'] . '" /></td></tr>';
 
 
 		if (!isset($_POST['Amount'])) {
@@ -359,7 +359,7 @@ if (isset($_POST['process']) or isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $CurrDecimalPlaces) . '" /></td>
+				<td><input type="text" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $CurrDecimalPlaces) . '" /></td>
 			</tr>';
 
 		if (!isset($_POST['Notes'])) {

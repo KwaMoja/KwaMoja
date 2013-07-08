@@ -19,7 +19,7 @@ echo '<table class="selection">
 	<tr>
 		<td>' . _('For Stock Category') . ':</td>
 		<td>
-			<select minlength="1" name="StockCategory">
+			<select required="required" minlength="1" name="StockCategory">
 				<option value="All">' . _('All') . '</option>';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
@@ -50,7 +50,7 @@ if ($_SESSION['RestrictLocations'] == 0) {
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<td>' . _('For Stock Location') . ':</td>
-	<td><select minlength="1" name="StockLocation"> ';
+	<td><select required="required" minlength="1" name="StockLocation"> ';
 
 while ($myrow = DB_fetch_array($resultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -73,7 +73,7 @@ if (!isset($_POST['OnHandDate'])) {
 }
 
 echo '<td>' . _('On-Hand On Date') . ':</td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size="12" minlength="1" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
+	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="OnHandDate" size="12" required="required" minlength="1" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td></tr>';
 echo '<tr>
 		<td colspan="6">
 		<div class="centre">

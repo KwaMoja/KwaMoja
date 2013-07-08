@@ -105,9 +105,6 @@ input.okButton:active {
 input.okButton:hover {
 	background-color:lightsteelblue;
 }
-input:required, select:required, textarea:required {
-        background-color:lightyellow;
- }
 
 a {
 	text-decoration: none;
@@ -176,12 +173,12 @@ div.centre {
   text-align:center;
 }
 input{
-  	background: url(images/input.png) #eee;
+  	background: #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
 }
 input:hover{
-	background: url(images/inputh.png) #eee;
+	background: #eee;
 	color:#000;
 	border: 1px 1px 1px 1px #000 solid;
 }
@@ -203,12 +200,15 @@ select {
 	color:#111;
 }
 textarea{
-  	background: url(images/input.png) #eee;
+  	background: #eee;
 	color:#000;
 	border: 0px 0px 1px 1px #000 dashed;
 }
 textarea:hover{
 }
+input:required, select:required, textarea:required {
+        background-color:#D1D1D5;
+ }
 .EvenTableRows {
 	background-color: #CCCCCC;
 }

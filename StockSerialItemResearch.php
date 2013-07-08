@@ -24,7 +24,7 @@ echo '<div class="centre">
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" minlength="1" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
+echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" required="required" minlength="1" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
 <br />
 </div>
 </form>';

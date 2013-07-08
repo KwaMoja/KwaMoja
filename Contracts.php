@@ -944,13 +944,13 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 	}
 	echo '<tr>
 			<td>' . _('Gross Profit') . ' %:</td>
-			<td><input class="number" type="text" name="Margin" size="6" minlength="1" maxlength="6" value="' . locale_number_format($_SESSION['Contract' . $identifier]->Margin, 2) . '" /></td>
+			<td><input class="number" type="text" name="Margin" size="6" required="required" minlength="1" maxlength="6" value="' . locale_number_format($_SESSION['Contract' . $identifier]->Margin, 2) . '" /></td>
 		</tr>';
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract' . $identifier]->CurrCode) {
 		echo '<tr>
 				<td>' . $_SESSION['Contract' . $identifier]->CurrCode . ' ' . _('Exchange Rate') . ':</td>
-				<td><input class="number" type="text" name="ExRate" size="10" minlength="1" maxlength="10" value="' . locale_number_format($_SESSION['Contract' . $identifier]->ExRate, 'Variable') . '" /></td>
+				<td><input class="number" type="text" name="ExRate" size="10" required="required" minlength="1" maxlength="10" value="' . locale_number_format($_SESSION['Contract' . $identifier]->ExRate, 'Variable') . '" /></td>
 			</tr>';
 	} else {
 		echo '<input type="hidden" name="ExRate" value="' . locale_number_format($_SESSION['Contract' . $identifier]->ExRate, 'Variable') . '" />';

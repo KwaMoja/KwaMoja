@@ -737,7 +737,7 @@ echo '<br />
 	<table class="selection" summary="' . _('Select batch header details') . '">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select minlength="1" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
+		 <td><select required="required" minlength="1" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -1052,13 +1052,13 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 	}
 	echo '<tr>
 			<td>' . _('Amount of Receipt') . ':</td>
-			<td><input tabindex="9" type="text" name="Amount" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
+			<td><input tabindex="9" type="text" name="Amount" required="required" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Amount'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['GLEntry'])) {
 		echo '<tr>
 				<td>' . _('Amount of Discount') . ':</td>
-				<td><input tabindex="10" type="text" name="Discount" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
+				<td><input tabindex="10" type="text" name="Discount" required="required" minlength="1" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" /> ' . _('agreed prompt payment discount is') . ' ' . $DisplayDiscountPercent . '</td></tr>';
 	} else {
 		echo '<input tabindex="11" type="hidden" name="Discount" value="0" />';
 	}

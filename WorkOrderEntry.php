@@ -156,7 +156,7 @@ if ($_SESSION['WorkOrder' . $identifier]->NumberOfItems > 0) {
 		if ($WOItem->Controlled == 1 and $_SESSION['DefineControlledOnWOEntry'] == 1) {
 			echo '<td class="number">' . locale_number_format($_POST['OutputQty' . $i], $_POST['DecimalPlaces' . $i]) . '</td>';
 		} else {
-			echo '<td><input type="text" class="number" name="OutputQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityRequired - $WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" size="10" minlength="1" maxlength="10" /></td>';
+			echo '<td><input type="text" class="number" name="OutputQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityRequired - $WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" size="10" required="required" minlength="1" maxlength="10" /></td>';
 		}
 		echo '<td class="number"><input type="hidden" name="RecdQty' . $WOItem->LineNumber . '" value="' . locale_number_format($WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '" />' . locale_number_format($WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '</td>
 		  		<td class="number">' . locale_number_format($WOItem->QuantityRequired - $WOItem->QuantityReceived, $WOItem->DecimalPlaces) . '</td>';
@@ -360,7 +360,7 @@ if (isset($SearchResult)) {
 						<td>%s</td>
 						<td>%s</td>
 						<input type="hidden" name="StockID' . $LineNumber . '" value="%s" />
-						<td><input type="text" minlength="1" maxlength="11" class="number" name="Quantity' . $LineNumber . '" value="0" /></td>
+						<td><input type="text" required="required" minlength="1" maxlength="11" class="number" name="Quantity' . $LineNumber . '" value="0" /></td>
 						</tr>', $myrow['stockid'], $myrow['description'], $myrow['units'], $ImageSource, $myrow['stockid']);
 			} //end if not already on work order
 			$LineNumber++;

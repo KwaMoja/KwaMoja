@@ -236,7 +236,7 @@ if (isset($_POST['PrintPDF'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Part') . ':</td>
-			<td><input type ="text" name="Part" minlength="1" maxlength="20" size="20" /></td>
+			<td><input type ="text" name="Part" required="required" minlength="1" maxlength="20" size="20" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Print Option') . ':</td>

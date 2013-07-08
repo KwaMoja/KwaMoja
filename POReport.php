@@ -1363,7 +1363,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	echo '<tr>
 			<td>' . _('Supplier Name') . ':</td>
 			<td>
-				<select minlength="1" name="SupplierNameOp">
+				<select required="required" minlength="1" name="SupplierNameOp">
 					<option selected="selected" value="LIKE">' . _('Begins With') . '</option>
 					<option value="Equals">' . _('Equals') . '</option>
 				</select>&nbsp;&nbsp;
@@ -1386,7 +1386,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	echo '<tr>
 			<td>' . _('Line Item Status') . ':</td>
 			<td>
-				<select minlength="1" name="LineStatus">
+				<select required="required" minlength="1" name="LineStatus">
 					<option selected="selected" value="All">' . _('All') . '</option>
 					<option value="Completed">' . _('Completed') . '</option>
 					<option value="Open">' . _('Not Completed') . '</option>
@@ -1397,7 +1397,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Stock Categories') . ':</td>
-			<td><select minlength="1" name="Category">';
+			<td><select required="required" minlength="1" name="Category">';
 	$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 	$CategoryResult = DB_query($sql, $db);
 	echo '<option selected="selected" value="All">' . _('All Categories') . '</option>';
@@ -1412,7 +1412,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	echo '<tr>
 			<td>' . _('Sort By') . ':</td>
 			<td>
-				<select minlength="1" name="SortBy">
+				<select required="required" minlength="1" name="SortBy">
 					<option selected="selected" value="purchorderdetails.orderno">' . _('Order Number') . '</option>
 					<option value="purchorderdetails.itemcode">' . _('Part Number') . '</option>
 					<option value="suppliers.supplierid,purchorderdetails.orderno">' . _('Supplier Number') . '</option>
@@ -1428,7 +1428,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 	echo '<tr>
 			<td>' . _('Summary Type') . ':</td>
 			<td>
-				<select minlength="1" name="SummaryType">
+				<select required="required" minlength="1" name="SummaryType">
 					<option selected="selected" value="orderno">' . _('Order Number') . '</option>
 					<option value="itemcode">' . _('Part Number') . '</option>
 					<option value="extprice">' . _('Extended Price') . '</option>

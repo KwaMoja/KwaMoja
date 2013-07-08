@@ -107,7 +107,7 @@ input.okButton:hover {
 	background-color:#556699;
 }
 input:required, select:required, textarea:required {
-        background-color:lightyellow;
+        background-color:#C8FFA1;
  }
 
 /*** default styles ***/

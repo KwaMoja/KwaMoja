@@ -221,7 +221,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Contact Name') . ':</td>
-					<td><input type="text" name="Contact" size="41" minlength="1" maxlength="40" value="' . $_POST['Contact'] . '" /></td>
+					<td><input type="text" name="Contact" size="41" required="required" minlength="1" maxlength="40" value="' . $_POST['Contact'] . '" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['Position'])) {

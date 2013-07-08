@@ -92,20 +92,20 @@ echo '<input type="hidden" name="MailServerSetting" value="' . $MailServerSettin
 echo '<table class="selection">';
 echo '<tr>
 		<td>' . _('Server Host Name') . '</td>
-		<td><input type="text" name="Host" minlength="1" maxlength="50" value="' . $myrow['host'] . '" /></td>
+		<td><input type="text" name="Host" required="required" minlength="1" maxlength="50" value="' . $myrow['host'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('SMTP port') . '</td>
-		<td><input type="text" name="Port" minlength="1" maxlength="4" size="4" class="number" value="' . $myrow['port'] . '" /></td>
+		<td><input type="text" name="Port" required="required" minlength="1" maxlength="4" size="4" class="number" value="' . $myrow['port'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Helo Command') . '</td>
-		<td><input type="text" name="HeloAddress" minlength="1" maxlength="10" value="' . $myrow['heloaddress'] . '" /></td>
+		<td><input type="text" name="HeloAddress" required="required" minlength="1" maxlength="10" value="' . $myrow['heloaddress'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Authorisation Required') . '</td>
 		<td>
-			<select minlength="1" name="Auth"  onchange="ReloadForm(reload);">';
+			<select required="required" minlength="1" name="Auth"  onchange="ReloadForm(reload);">';
 if ($myrow['auth'] == 1) {
 	echo '<option selected="selected" value="1">' . _('True') . '</option>';
 	echo '<option value="0">' . _('False') . '</option>';
@@ -119,11 +119,11 @@ echo '</select>
 if ($myrow['auth'] == 1) {
 	echo '<tr>
 			<td>' . _('User Name') . '</td>
-			<td><input type="text" name="UserName" minlength="1" maxlength="20" value="' . $myrow['username'] . '" /></td>
+			<td><input type="text" name="UserName" required="required" minlength="1" maxlength="20" value="' . $myrow['username'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Password') . '</td>
-			<td><input type="password" name="Password" minlength="1" maxlength="20" value="' . $myrow['password'] . '" /></td>
+			<td><input type="password" name="Password" required="required" minlength="1" maxlength="20" value="' . $myrow['password'] . '" /></td>
 		</tr>';
 } else {
 	echo '<input type="hidden" name="UserName" value="' . $myrow['username'] . '" />
@@ -131,7 +131,7 @@ if ($myrow['auth'] == 1) {
 }
 echo '<tr>
 		<td>' . _('Timeout (seconds)') . '</td>
-		<td><input type="text" size="5" name="Timeout" minlength="1" maxlength="4" class="integer" value="' . $myrow['timeout'] . '" /></td>
+		<td><input type="text" size="5" name="Timeout" required="required" minlength="1" maxlength="4" class="integer" value="' . $myrow['timeout'] . '" /></td>
 	</tr>
 	<tr>
 		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>

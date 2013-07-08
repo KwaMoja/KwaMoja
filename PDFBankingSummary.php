@@ -29,7 +29,7 @@ if (!isset($_POST['BatchNo'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection" summary="' . _('Details of the batch to be re-printed') . '">';
 	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
-	echo '<td><select minlength="1" name="BatchNo">';
+	echo '<td><select required="required" minlength="1" name="BatchNo">';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['transno'] . '">' . _('Batch') . ' ' . $myrow['transno'] . ' - ' . ConvertSqlDate($myrow['transdate']) . '</option>';
 	}

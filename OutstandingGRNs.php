@@ -268,11 +268,11 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult) > 0) {
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromCriteria" minlength="1" maxlength="20" value="' . $myrow['fromcriteria'] . '" /></td>
+			<td><input type="text" name="FromCriteria" required="required" minlength="1" maxlength="20" value="' . $myrow['fromcriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" name="ToCriteria" minlength="1" maxlength="20" value="' . $myrow['tocriteria'] . '" /></td>
+			<td><input type="text" name="ToCriteria" required="required" minlength="1" maxlength="20" value="' . $myrow['tocriteria'] . '" /></td>
 		</tr>
 		</table>
 		<br />

@@ -441,23 +441,23 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 	echo '<tr>
 			<td>' . _('Narrative') . ':</td>
-			<td><input type="text" name="Narrative" minlength="1" maxlength="20" size="21" value="' . $_POST['Narrative'] . '" /></td>
+			<td><input type="text" name="Narrative" required="required" minlength="1" maxlength="20" size="21" value="' . $_POST['Narrative'] . '" /></td>
 		</tr>
 		 <tr>
 			<td>' . _('Rebate value per unit') . ' (' . $SuppRow['currcode'] . '):</td>
-			<td><input type="text" class="number" name="RebateAmount" minlength="1" maxlength="12" size="12" value="' . $_POST['RebateAmount'] . '" /></td>
+			<td><input type="text" class="number" name="RebateAmount" required="required" minlength="1" maxlength="12" size="12" value="' . $_POST['RebateAmount'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Rebate Percent') . ':</td>
-			<td><input type="text" class="number" name="RebatePercent" minlength="1" maxlength="5" size="6" value="' . $_POST['RebatePercent'] . '" />%</td>
+			<td><input type="text" class="number" name="RebatePercent" required="required" minlength="1" maxlength="5" size="6" value="' . $_POST['RebatePercent'] . '" />%</td>
 		</tr>
 		<tr>
 			<td>' . _('Support Start Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Support End Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveTo" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveTo'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveTo" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveTo'] . '" /></td>
 		</tr>
 		</table>
 		<br />

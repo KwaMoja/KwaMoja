@@ -161,7 +161,7 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Demand Type') . ':</td>
-				<td><input type="text" name="MRPDemandType" size="6" minlength="1" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
+				<td><input type="text" name="MRPDemandType" size="6" required="required" minlength="1" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
 			</tr>';
 }
 
@@ -171,7 +171,7 @@ if (!isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Demand Type Description') . ':</td>
-		<td><input type="text" name="Description" size="31" minlength="1" maxlength="30" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="31" required="required" minlength="1" maxlength="30" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	</table>
 	<br />

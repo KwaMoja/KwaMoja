@@ -205,7 +205,7 @@ if (isset($SelectedWC)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" size="6" minlength="1" maxlength="5" value="' . $_POST['Code'] . '" /></td>
+				<td><input type="text" name="Code" size="6" required="required" minlength="1" maxlength="5" value="' . $_POST['Code'] . '" /></td>
 			</tr>';
 }
 
@@ -228,10 +228,10 @@ if (!isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="text" name="Description" size="21" minlength="1" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="21" required="required" minlength="1" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
-		<td><select minlength="1" name="Location">';
+		<td><select required="required" minlength="1" name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
@@ -250,7 +250,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Overhead Recovery GL Account') . ':</td>
-		<td><select minlength="1" name="OverheadRecoveryAct">';
+		<td><select required="required" minlength="1" name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,
@@ -280,7 +280,7 @@ if (!isset($_POST['OverheadPerHour'])) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Overhead Per Hour') . ':</td>
-		<td><input type="text" class="number" name="OverheadPerHour" size="6" minlength="1" maxlength="6" value="' . $_POST['OverheadPerHour'] . '" />';
+		<td><input type="text" class="number" name="OverheadPerHour" size="6" required="required" minlength="1" maxlength="6" value="' . $_POST['OverheadPerHour'] . '" />';
 
 echo '</td>
 	</tr>

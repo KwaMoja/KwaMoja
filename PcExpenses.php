@@ -274,7 +274,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Expense') . ':</td>
-					<td><input type="text" name="CodeExpense" minlength="1" maxlength="20" /></td>
+					<td><input type="text" name="CodeExpense" required="required" minlength="1" maxlength="20" /></td>
 				</tr>';
 
 	}
@@ -284,12 +284,12 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input type="text" name="Description" size="50" minlength="1" maxlength="50" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" name="Description" size="50" required="required" minlength="1" maxlength="50" value="' . $_POST['Description'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Account Code') . ':</td>
-			<td><select minlength="1" name="GLAccount">';
+			<td><select required="required" minlength="1" name="GLAccount">';
 
 	DB_free_result($result);
 	$SQL = "SELECT accountcode,

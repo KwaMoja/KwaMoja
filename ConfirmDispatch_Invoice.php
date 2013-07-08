@@ -359,13 +359,13 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		if (isset($_POST['ProcessInvoice'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched" minlength="1" maxlength="11"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched" required="required" minlength="1" maxlength="11"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessInvoice'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input tabindex="' . $j . '" type="text" class="number" name="' . $LnItm->LineNumber . '_QtyDispatched" minlength="1" maxlength="12" size="12" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
+			echo '<td class="number"><input tabindex="' . $j . '" type="text" class="number" name="' . $LnItm->LineNumber . '_QtyDispatched" required="required" minlength="1" maxlength="12" size="12" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
 		}
 	}
 	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent * 100, 2) . '%';
@@ -402,7 +402,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		if (isset($_POST['ProcessInvoice'])) {
 			echo $Tax->TaxRate * 100;
 		} else {
-			echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" minlength="1" maxlength="4" size="4" value="' . $Tax->TaxRate * 100 . '" />';
+			echo '<input type="text" class="number" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" required="required" minlength="1" maxlength="4" size="4" value="' . $Tax->TaxRate * 100 . '" />';
 		}
 		$i++;
 		if ($Tax->TaxOnTax == 1) {
@@ -501,14 +501,14 @@ if (!isset($_POST['ChargeFreightCost'])) {
 if ($_SESSION['Items' . $identifier]->Any_Already_Delivered() == 1 and (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_POST['ChargeFreightCost'] == 0)) {
 
 	echo '<td colspan="2" class="number">' . _('Charge Freight Cost inc Tax') . '</td>
-		<td><input tabindex="' . $j . '" type="text" class="number" size="10" minlength="1" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
+		<td><input tabindex="' . $j . '" type="text" class="number" size="10" required="required" minlength="1" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
 	$_SESSION['Items' . $identifier]->FreightCost = 0;
 } else {
 	echo '<td colspan="2" class="number">' . _('Charge Freight Cost inc Tax') . '</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
-		echo '<td class="number"><input tabindex="' . $j . '" type="text" class="number" size="10" minlength="1" maxlength="12" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>';
+		echo '<td class="number"><input tabindex="' . $j . '" type="text" class="number" size="10" required="required" minlength="1" maxlength="12" name="ChargeFreightCost" value="' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>';
 	}
 	$_POST['ChargeFreightCost'] = locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 }
@@ -537,7 +537,7 @@ foreach ($_SESSION['Items' . $identifier]->FreightTaxes as $FreightTaxLine) {
 	if (isset($_POST['ProcessInvoice'])) {
 		echo $FreightTaxLine->TaxRate * 100;
 	} else {
-		echo '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" minlength="1" maxlength="4" size="4" value="' . locale_number_format($FreightTaxLine->TaxRate * 100, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" />';
+		echo '<input type="text" class="number" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" required="required" minlength="1" maxlength="4" size="4" value="' . locale_number_format($FreightTaxLine->TaxRate * 100, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" />';
 	}
 
 	if ($FreightTaxLine->TaxOnTax == 1) {
@@ -1684,7 +1684,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	echo '<table class="selection">
 		<tr>
 			<td>' . _('Date On Invoice') . ':</td>
-			<td><input tabindex="' . $j . '" type="text" minlength="1" maxlength="10" size="15" name="DispatchDate" value="' . $DefaultDispatchDate . '" id="datepicker" alt="' . $_SESSION['DefaultDateFormat'] . '" class="date" /></td>
+			<td><input tabindex="' . $j . '" type="text" required="required" minlength="1" maxlength="10" size="15" name="DispatchDate" value="' . $DefaultDispatchDate . '" id="datepicker" alt="' . $_SESSION['DefaultDateFormat'] . '" class="date" /></td>
 		</tr>';
 	$j++;
 	echo '<tr>
@@ -1701,7 +1701,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	echo '<tr>
 			<td>' . _('Action For Balance') . ':</td>
 			<td>
-				<select minlength="1" tabindex="' . $j . '" name="BOPolicy">
+				<select required="required" minlength="1" tabindex="' . $j . '" name="BOPolicy">
 					<option selected="selected" value="BO">' . _('Automatically put balance on back order') . '</option>
 					<option value="CAN">' . _('Cancel any quantities not delivered') . '</option>
 				</select>

@@ -24,7 +24,7 @@ if (!isset($_GET['TransferNo'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Print Stock Transfer Note') . ' : ' . '</td>
-				<td><input type="text" class="integer"  name="TransferNo" minlength="1" maxlength="10" size="11" /></td>
+				<td><input type="text" class="integer"  name="TransferNo" required="required" minlength="1" maxlength="10" size="11" /></td>
 			</tr>
 			</table>';
 		echo '<br />

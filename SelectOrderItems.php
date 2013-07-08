@@ -1436,7 +1436,7 @@ else { //dont require customer selection
 			echo $RowStarter;
 			echo '<td>';
 			if ($_SESSION['Items' . $identifier]->DefaultPOLine == 1) { //show the input field only if required
-				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" minlength="1" maxlength="20" value="' . $OrderLine->POLine . '" /></td><td>';
+				echo '<input tabindex="1" type="text" name="POLine_' . $OrderLine->LineNumber . '" size="20" required="required" minlength="1" maxlength="20" value="' . $OrderLine->POLine . '" /></td><td>';
 			} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
 			else {
 				echo '<input type="hidden" name="POLine_' . $OrderLine->LineNumber . '" value="" />';
@@ -1445,7 +1445,7 @@ else { //dont require customer selection
 			echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier=' . $identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" minlength="1" maxlength="6" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
+			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" required="required" minlength="1" maxlength="6" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
 			if ($QtyRemain != $QtyOrdered) {
 				echo '<br />' . locale_number_format($OrderLine->QtyInv, $OrderLine->DecimalPlaces) . ' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . ' ' . _('invoiced');
 			} //$QtyRemain != $QtyOrdered
@@ -1455,13 +1455,13 @@ else { //dont require customer selection
 
 			if (in_array(1000, $_SESSION['AllowedPageSecurityTokens'])) {
 				/*OK to display with discount if it is an internal user with appropriate permissions */
-				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" minlength="1" maxlength="16" value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
-					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" minlength="1" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100), 2) . '" /></td>
-					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" minlength="1" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" /></td>';
+				echo '<td><input class="number" type="text" name="Price_' . $OrderLine->LineNumber . '" size="16" required="required" minlength="1" maxlength="16" value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
+					<td><input class="number" type="text" name="Discount_' . $OrderLine->LineNumber . '" size="5" required="required" minlength="1" maxlength="4" value="' . locale_number_format(($OrderLine->DiscountPercent * 100), 2) . '" /></td>
+					<td><input class="number" type="text" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" required="required" minlength="1" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" /></td>';
 			} //in_array(1000, $_SESSION['AllowedPageSecurityTokens'])
 			else {
 				echo '<td class="number">' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
-				echo '<input class="number" type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" minlength="1" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" />';
+				echo '<input class="number" type="hidden" name="GPPercent_' . $OrderLine->LineNumber . '" size="4" required="required" minlength="1" maxlength="40" value="' . locale_number_format($OrderLine->GPPercent, 2) . '" />';
 				echo '<input type="hidden" name="Price_' . $OrderLine->LineNumber . '" value="' . locale_number_format($OrderLine->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>';
 			}
 			if ($_SESSION['Items' . $identifier]->Some_Already_Delivered($OrderLine->LineNumber)) {
@@ -1477,7 +1477,7 @@ else { //dont require customer selection
 				$_SESSION['Items' . $identifier]->LineItems[$OrderLine->LineNumber]->ItemDue = $LineDueDate;
 			} //!Is_Date($OrderLine->ItemDue)
 
-			echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" minlength="1" maxlength="10" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" required="required" minlength="1" maxlength="10" value="' . $LineDueDate . '" /></td>';
 
 			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return MakeConfirm(\'' . _('Are You Sure?') . '\', \'Confirm Delete\', this);">' . $RemTxt . '</a></td></tr>';
 
@@ -1659,7 +1659,7 @@ else { //dont require customer selection
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" minlength="1" maxlength="10" size="6" name="OrderQty' . $i . '" value="0" />
+						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" required="required" minlength="1" maxlength="10" size="6" name="OrderQty' . $i . '" value="0" />
 						<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 						</td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $QOHRow['decimalplaces']), locale_number_format($DemandQty, $QOHRow['decimalplaces']), locale_number_format($OnOrder, $QOHRow['decimalplaces']), locale_number_format($Available, $QOHRow['decimalplaces']));
@@ -1843,7 +1843,7 @@ else { //dont require customer selection
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" size="6" minlength="1" maxlength="10" name="OrderQty' . $i . '" value="0" />
+						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" size="6" required="required" minlength="1" maxlength="10" name="OrderQty' . $i . '" value="0" />
 						<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 						</td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $QOHRow['decimalplaces']), locale_number_format($DemandQty, $QOHRow['decimalplaces']), locale_number_format($OnOrder, $QOHRow['decimalplaces']), locale_number_format($Available, $QOHRow['decimalplaces']));

@@ -202,7 +202,7 @@ if (!isset($_GET['delete'])) {
 		echo '<td><input type="text" name="ContactName" value="' . $_POST['ContactName'] . '" size="35" minlength="0" maxlength="40" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" name="ContactName" size="35" minlength="1" maxlength="40" /></td>
+		echo '<td><input type="text" name="ContactName" size="35" required="required" minlength="1" maxlength="40" /></td>
 			</tr>';
 	}
 	echo '<tr>

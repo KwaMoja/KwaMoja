@@ -392,7 +392,7 @@ else {
 	echo '<table>
 		 <tr>
 			 <td>' . _('Print or Email the Order') . '</td>
-			 <td><select minlength="1" name="PrintOrEmail">';
+			 <td><select required="required" minlength="1" name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
@@ -413,7 +413,7 @@ else {
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('Show Amounts on the Order') . '</td>
-			<td><select minlength="1" name="ShowAmounts">';
+			<td><select required="required" minlength="1" name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
 	} //!isset($_POST['ShowAmounts'])

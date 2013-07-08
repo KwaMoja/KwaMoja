@@ -145,7 +145,7 @@ if (!isset($SelectedTabs)) {
 	echo '<br /><table class="selection">'; //Main table
 
 	echo '<tr><td>' . _('Petty Cash Tabs for User ') . $_SESSION['UserID'] . ':</td>
-				<td><select minlength="1" name="SelectedTabs">';
+				<td><select required="required" minlength="1" name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -208,7 +208,7 @@ if (!isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $myrow['decimalplaces'];
 
 		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
-		echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="1" maxlength="3" size="4" /> ' . _('Days');
+		echo '<input type="text" class="number" name="Days" value="' . $Days . '" required="required" minlength="1" maxlength="3" size="4" /> ' . _('Days');
 		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
 		echo '</th></tr>';
 
@@ -342,10 +342,10 @@ if (!isset($SelectedTabs)) {
 		echo '<br /><table class="selection">'; //Main table
 		echo '<tr>
 				<td>' . _('Date Of Expense') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" minlength="1" maxlength="10" value="' . $_POST['Date'] . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['Date'] . '" /></td>
 			</tr>';
 		echo '<tr>
-				<td>' . _('Code Of Expense') . ':</td><td><select minlength="1" name="SelectedExpense">';
+				<td>' . _('Code Of Expense') . ':</td><td><select required="required" minlength="1" name="SelectedExpense">';
 
 		DB_free_result($result);
 
@@ -377,7 +377,7 @@ if (!isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="amount" size="12" minlength="1" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
+				<td><input type="text" class="number" name="amount" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
 			</tr>';
 
 		if (!isset($_POST['Notes'])) {

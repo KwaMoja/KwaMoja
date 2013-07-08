@@ -222,7 +222,7 @@ if ($InputError != 1) {
 
 echo '<tr>
 		<td>' . _('Name') . ' (' . _('to appear on reports') . '):</td>
-		<td><input tabindex="1" type="text" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" size="52" minlength="1" maxlength="50" /></td>
+		<td><input tabindex="1" type="text" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" size="52" required="required" minlength="1" maxlength="50" /></td>
 	</tr>';
 
 echo '<tr>

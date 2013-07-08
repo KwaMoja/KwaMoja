@@ -128,11 +128,11 @@ if (DB_num_rows($result) > 0) {
 
 echo '<tr>
 		<td>' . _('Quantity Break') . '</td>
-		<td><input class="number" tabindex="3" type="text" name="QuantityBreak" size="10" minlength="1" maxlength="10" /></td>
+		<td><input class="number" tabindex="3" type="text" name="QuantityBreak" size="10" required="required" minlength="1" maxlength="10" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Discount Rate') . ' (%):</td>
-		<td><input class="number" tabindex="4" type="text" name="DiscountRate" size="5" minlength="1" maxlength="5" /></td>
+		<td><input class="number" tabindex="4" type="text" name="DiscountRate" size="5" required="required" minlength="1" maxlength="5" /></td>
 	</tr>
 	</table>
 	<br />

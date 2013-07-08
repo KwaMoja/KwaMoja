@@ -293,7 +293,7 @@ echo '<br />
 			</tr>';
 echo '<tr>
 		<td>' . _('Currency') . ':</td>
-		<td><select minlength="1" name="CurrAbrev">';
+		<td><select required="required" minlength="1" name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)) {
 	if ($myrow['currabrev'] == $_POST['CurrAbrev']) {
 		echo '<option selected="selected" value="';
@@ -308,7 +308,7 @@ DB_free_result($result);
 echo '</select>	</td></tr>
 		<tr>
 			<td>' . _('Sales Type Price List') . ':</td>
-			<td><select minlength="1" name="TypeAbbrev">';
+			<td><select required="required" minlength="1" name="TypeAbbrev">';
 
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($SQL, $db);
@@ -334,16 +334,16 @@ if (!isset($_POST['EndDate'])) {
 }
 echo '<tr>
 		<td>' . _('Price Effective From Date') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" size="10" minlength="1" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="StartDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Price Effective To Date') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EndDate" size="10" minlength="1" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EndDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
 	</tr>';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 echo '<tr><td>' . _('Price') . ':</td>
 		  <td>
-		  <input type="text" class="number" name="Price" size="12" minlength="1" maxlength="11" value="';
+		  <input type="text" class="number" name="Price" size="12" required="required" minlength="1" maxlength="11" value="';
 if (isset($_POST['Price'])) {
 	echo $_POST['Price'];
 }

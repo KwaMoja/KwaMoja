@@ -234,7 +234,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description Of Type of Tab') . ':</td>
-			<td><input type="text" name="TypeTabDescription" size="50" minlength="1" maxlength="50" value="' . $_POST['TypeTabDescription'] . '" /></td>
+			<td><input type="text" name="TypeTabDescription" size="50" required="required" minlength="1" maxlength="50" value="' . $_POST['TypeTabDescription'] . '" /></td>
 		</tr>';
 
 	echo '</table>'; // close main table

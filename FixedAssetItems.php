@@ -458,7 +458,7 @@ if (isset($_POST['Description'])) {
 
 echo '<tr>
 		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-		<td><input type="text" name="Description" size="52" minlength="1" maxlength="50" value="' . $Description . '" /></td>
+		<td><input type="text" name="Description" size="52" required="required" minlength="1" maxlength="50" value="' . $Description . '" /></td>
 	</tr>';
 
 if (isset($_POST['LongDescription'])) {
@@ -571,7 +571,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Depreciation Rate') . ':</td>
-		<td><input type="text" class="integer" name="DepnRate" size="4" minlength="1" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
+		<td><input type="text" class="integer" name="DepnRate" size="4" required="required" minlength="1" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
 	</tr>
 	</table>';
 

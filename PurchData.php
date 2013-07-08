@@ -577,11 +577,11 @@ if (!isset($SuppliersResult)) {
 		</tr>
 		<tr>
 			<td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-			<td><input type="text" class="number" name="Price" minlength="1" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td>
+			<td><input type="text" class="number" name="Price" required="required" minlength="1" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Price Effective From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Our Unit of Measure') . ':</td>';
@@ -598,7 +598,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Conversion Factor (to our UOM)') . ':</td>
-			<td><input type="text" class="number" name="ConversionFactor" minlength="1" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
+			<td><input type="text" class="number" name="ConversionFactor" required="required" minlength="1" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Stock Code') . ':</td>
@@ -606,7 +606,7 @@ if (!isset($SuppliersResult)) {
 		</tr>
 		<tr>
 			<td>' . _('MinOrderQty') . ':</td>
-			<td><input type="text" class="number" name="MinOrderQty" minlength="1" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td>
+			<td><input type="text" class="number" name="MinOrderQty" required="required" minlength="1" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Supplier Stock Description') . ':</td>
@@ -618,11 +618,11 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-			<td><input type="text" class="number" name="LeadTime" minlength="1" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
+			<td><input type="text" class="number" name="LeadTime" required="required" minlength="1" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
-			<td><select minlength="1" name="Preferred">';
+			<td><select required="required" minlength="1" name="Preferred">';
 
 	if (isset($_POST['Preferred']) and $_POST['Preferred'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>

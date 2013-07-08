@@ -378,7 +378,7 @@ if (isset($SelectedCategory)) {
 			</tr>
 			<tr>
 				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" minlength="1" maxlength="6" value="" /></td>
+				<td><input type="text" name="CategoryID" size="7" required="required" minlength="1" maxlength="6" value="" /></td>
 			</tr>';
 }
 
@@ -409,13 +409,13 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<tr>
 		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" minlength="1" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
+		<td><input type="text" name="CategoryDescription" size="22" required="required" minlength="1" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
 	</tr>';
 
 
 echo '<tr>
 		<td>' . _('Stock Type') . ':</td>
-		<td><select minlength="1" name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
+		<td><select required="required" minlength="1" name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
 if (isset($_POST['StockType']) and $_POST['StockType'] == 'F') {
 	echo '<option selected="selected" value="F">' . _('Finished Goods') . '</option>';
 } else {
@@ -448,7 +448,7 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 	$Result = $BSAccountsResult;
 	echo '<tr><td>' . _('Stock GL Code');
 }
-echo ':</td><td><select minlength="1" name="StockAct">';
+echo ':</td><td><select required="required" minlength="1" name="StockAct">';
 
 while ($myrow = DB_fetch_array($Result)) {
 
@@ -462,7 +462,7 @@ DB_data_seek($PnLAccountsResult, 0);
 DB_data_seek($BSAccountsResult, 0);
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select minlength="1" name="WIPAct">';
+echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select required="required" minlength="1" name="WIPAct">';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
@@ -478,7 +478,7 @@ DB_data_seek($BSAccountsResult, 0);
 
 echo '<tr>
 		<td>' . _('Stock Adjustments GL Code') . ':</td>
-		<td><select minlength="1" name="AdjGLAct">';
+		<td><select required="required" minlength="1" name="AdjGLAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['AdjGLAct']) and $myrow['accountcode'] == $_POST['AdjGLAct']) {
@@ -493,7 +493,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Internal Stock Issues GL Code') . ':</td>
-		<td><select minlength="1" name="IssueGLAct">';
+		<td><select required="required" minlength="1" name="IssueGLAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['IssueGLAct']) and $myrow['accountcode'] == $_POST['IssueGLAct']) {
@@ -508,7 +508,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Price Variance GL Code') . ':</td>
-		<td><select minlength="1" name="PurchPriceVarAct">';
+		<td><select required="required" minlength="1" name="PurchPriceVarAct">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode'] == $_POST['PurchPriceVarAct']) {
@@ -530,7 +530,7 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 	echo _('Usage Variance GL Code');
 }
 echo ':</td>
-		<td><select minlength="1" name="MaterialUseageVarAc">';
+		<td><select required="required" minlength="1" name="MaterialUseageVarAc">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['MaterialUseageVarAc']) and $myrow['accountcode'] == $_POST['MaterialUseageVarAc']) {

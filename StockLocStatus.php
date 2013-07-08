@@ -72,7 +72,7 @@ if (DB_num_rows($result1) == 0) {
 
 echo '<tr>
 		<td>' . _('In Stock Category') . ':</td>
-		<td><select minlength="1" name="StockCat">';
+		<td><select required="required" minlength="1" name="StockCat">';
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = 'All';
 }
@@ -93,7 +93,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 		<td>' . _('Shown Only Items Where') . ':</td>
-		<td><select minlength="1" name="BelowReorderQuantity">';
+		<td><select required="required" minlength="1" name="BelowReorderQuantity">';
 if (!isset($_POST['BelowReorderQuantity'])) {
 	$_POST['BelowReorderQuantity'] = 'All';
 }

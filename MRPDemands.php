@@ -375,7 +375,7 @@ function display(&$db, &$StockID, &$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DI
 			echo '<table class="selection">
 					<tr>
 						<td>' . _('Part Number') . ':</td>
-						<td><input type="text" name="StockID" size="21" minlength="1" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
+						<td><input type="text" name="StockID" size="21" required="required" minlength="1" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
 					</tr>';
 		}
 
@@ -389,11 +389,11 @@ function display(&$db, &$StockID, &$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DI
 		}
 
 		echo '<tr><td>' . _('Quantity') . ':</td>
-				<td><input type="text" name="Quantity" class="number" size="6" minlength="1" maxlength="6" value="' . $_POST['Quantity'] . '" /></td>
+				<td><input type="text" name="Quantity" class="number" size="6" required="required" minlength="1" maxlength="6" value="' . $_POST['Quantity'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Due Date') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Duedate" size="12" minlength="1" maxlength="12" value="' . $_POST['Duedate'] . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Duedate" size="12" required="required" minlength="1" maxlength="12" value="' . $_POST['Duedate'] . '" /></td>
 			</tr>';
 		// Generate selections for Demand Type
 		echo '<tr>
