@@ -452,7 +452,7 @@ if (!isset($_POST['X_ItemDescriptionLanguages'])) {
 }
 echo '<tr style="outline: 1px solid">
 		<td>' . _('Languages to Maintain Translations for Item Descriptions') . ':</td>
-		<td><select required="required" minlength="1" name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
+		<td><select minlength="0" name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
 echo '<option value="">' . _('None') . '</option>';
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['X_ItemDescriptionLanguages']) AND in_array($LanguageEntry, $_POST['X_ItemDescriptionLanguages'])) {
@@ -1036,7 +1036,7 @@ echo '<td>' . _('Choose which Status messages to keep in your log file.') . '</t
 
 //Path to keep log files in
 echo '<tr style="outline: 1px solid"><td>' . _('Path to log files') . ':</td>
-	<td><input type="text" name="X_LogPath" size="40" required="required" minlength="1" maxlength="79" value="' . $_SESSION['LogPath'] . '" /></td><td>' . _('The path to the directory where the log files will be stored. Note the apache user must have write permissions on this directory.') . '</td>
+	<td><input type="text" name="X_LogPath" size="40" minlength="0" maxlength="79" value="' . $_SESSION['LogPath'] . '" /></td><td>' . _('The path to the directory where the log files will be stored. Note the apache user must have write permissions on this directory.') . '</td>
 </tr>';
 
 //DefineControlledOnWOEntry

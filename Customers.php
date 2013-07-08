@@ -775,23 +775,23 @@ else {
 				<td>' . $_POST['CustName'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 1 (Street)') . ':</td>
+				<td>' . _('Address Line 1') . ':</td>
 				<td>' . $_POST['Address1'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 2 (Suburb/City)') . ':</td>
+				<td>' . _('Address Line 2 (Street)') . ':</td>
 				<td>' . $_POST['Address2'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 3 (State/Province)') . ':</td>
+				<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 				<td>' . $_POST['Address3'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 4 (Postal Code)') . ':</td>
+				 <td>' . _('Address Line 4 (State/Province)') . ':</td>
 				<td>' . $_POST['Address4'] . '</td>
 			</tr>
 			<tr>
-				<td>' . _('Address Line 5') . ':</td>
+				<td>' . _('Address Line 5 (Postal Code)') . ':</td>
 				<td>' . $_POST['Address5'] . '</td>
 			</tr>';
 		echo '<tr>

@@ -451,7 +451,15 @@ was not fully delivered the first time ?? */
 
 if (!isset($_SESSION['Items' . $identifier]->FreightCost)) {
 	if ($_SESSION['DoFreightCalc'] == True) {
-		list($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->BrAdd2, $_SESSION['Items' . $identifier]->BrAdd3, $_SESSION['Items' . $identifier]->totalVolume, $_SESSION['Items' . $identifier]->totalWeight, $_SESSION['Items' . $identifier]->Location, $db);
+		list($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items' . $identifier]->total,
+															$_SESSION['Items' . $identifier]->BrAdd2,
+															$_SESSION['Items' . $identifier]->BrAdd3,
+															$_SESSION['Items' . $identifier]->BrAdd4,
+															$_SESSION['Items' . $identifier]->BrAdd5,
+															$_SESSION['Items' . $identifier]->BrAdd6,
+															$_SESSION['Items' . $identifier]->totalVolume,
+															$_SESSION['Items' . $identifier]->totalWeight,
+															$_SESSION['Items' . $identifier]->Location, $db);
 		$_SESSION['Items' . $identifier]->ShipVia = $BestShipper;
 	}
 	if (is_numeric($FreightCost)) {
