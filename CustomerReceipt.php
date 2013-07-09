@@ -1111,8 +1111,8 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Customer Name') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer Name') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$j = 1;

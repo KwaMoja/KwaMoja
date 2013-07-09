@@ -637,11 +637,11 @@ if (isset($PrintPDF) and $PrintPDF != '' and isset($FromTransNo) and isset($InvO
 			</tr>';
 		echo '<tr>
 				<td>' . _('Start invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" minlength="0" maxlength="6" size="7" name="FromTransNo" /></td>
+				<td><input class="number" type="text" required="required" minlength="1" maxlength="6" size="7" name="FromTransNo" /></td>
 			</tr>';
 		echo '<tr>
 				<td>' . _('End invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" minlength="0" maxlength="6" size="7" name="ToTransNo" /></td>
+				<td><input class="number" type="text" required="required" minlength="1" maxlength="6" size="7" name="ToTransNo" /></td>
 			</tr>
 			</table>';
 		echo '<div class="centre">

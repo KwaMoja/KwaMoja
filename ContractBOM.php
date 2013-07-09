@@ -344,8 +344,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1">';
 
 	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 						<th>' . _('Units') . '</th>
 						<th>' . _('Image') . '</th>
 						<th>' . _('Quantity') . '</th>

@@ -445,13 +445,14 @@ if (isset($SuppliersResult)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table cellpadding="2" class="selection">';
-	$TableHeader = '<tr><th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . _('Address 1') . '</th>
-				<th>' . _('Address 2') . '</th>
-				<th>' . _('Address 3') . '</th>
-			</tr>';
+	$TableHeader = '<tr>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
+						<th>' . _('Currency') . '</th>
+						<th>' . _('Address 1') . '</th>
+						<th>' . _('Address 2') . '</th>
+						<th>' . _('Address 3') . '</th>
+					</tr>';
 	echo $TableHeader;
 	$k = 0;
 	while ($myrow = DB_fetch_array($SuppliersResult)) {

@@ -294,7 +294,7 @@ echo '<tr><td>' . _('Expected Arrival Date (ETA)') . ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
 	echo '<td><input type="text" name="ETA" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  required="required" minlength="1" maxlength="10" size="10" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ETA" required="required" minlength="1" maxlength="10" size="10" value="' . DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', 1) . '" /></td>';
 }
 echo '<td>' . _('Into') . ' ';
 

@@ -109,13 +109,13 @@ if (isset($_POST['CheckCode'])) {
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Stock Code') . '</th>
-				<th>' . _('Stock Description') . '</th>
+				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Stock Code') . '</th>
+				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Stock Description') . '</th>
 			</tr>';
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 		echo '<tr>
-				<td>' . $myrow[0] . '</td>
-				<td>' . $myrow[1] . '</td>
+				<td>' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
 				<td><a href="StockAdjustments.php?StockID=' . $myrow[0] . '&amp;Description=' . $myrow[1] . '">' . _('Adjust') . '</a>
 			</tr>';
 	}
@@ -401,11 +401,13 @@ echo '<br />
 if (!isset($_GET['Description'])) {
 	$_GET['Description'] = '';
 }
-echo '<tr><td>' . _('Stock Code') . ':</td><td>';
+echo '<tr>
+		<td>' . _('Stock Code') . ':</td>
+		<td>';
 if (isset($StockID)) {
-	echo '<input type="text" name="StockID" size="21" value="' . $StockID . '" minlength="0" maxlength="20" /></td></tr>';
+	echo '<input type="text" name="StockID" size="21" required="required" value="' . $StockID . '" minlength="1" maxlength="20" /></td></tr>';
 } else {
-	echo '<input type="text" name="StockID" size="21" value="" minlength="0" maxlength="20" /></td></tr>';
+	echo '<input type="text" name="StockID" size="21" required="required" value="" minlength="1" maxlength="20" /></td></tr>';
 }
 echo '<tr>
 		<td>' . _('Partial Description') . ':</td>
@@ -426,7 +428,7 @@ if (isset($_SESSION['Adjustment' . $identifier]) and mb_strlen($_SESSION['Adjust
 }
 
 echo '<tr><td>' . _('Adjustment to Stock At Location') . ':</td>
-		<td><select minlength="0" name="StockLocation"> ';
+		<td><select required="required" minlength="1" name="StockLocation"> ';
 
 if ($_SESSION['RestrictLocations'] == 0) {
 	$sql = "SELECT locationname,

@@ -762,8 +762,8 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 		echo '<br /><table cellpadding="2" class="selection">';
 
 		$TableHeader = '<tr>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Branch') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
+							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
 							<th>' . _('Contact') . '</th>
 							<th>' . _('Phone') . '</th>
 							<th>' . _('Fax') . '</th>
@@ -829,7 +829,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 				<td>';
 	if ($_SESSION['Contract' . $identifier]->Status == 0) {
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
-		echo '<input type="text" name="ContractRef" size="21" minlength="3" maxlength="20" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />';
+		echo '<input type="text" name="ContractRef" size="21" required="required" minlength="3" maxlength="20" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />';
 	} else {
 		/*Just show the contract Ref - dont allow modification */
 		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />' . $_SESSION['Contract' . $identifier]->ContractRef;

@@ -438,9 +438,10 @@ if (isset($_SESSION['Transfer'])) {
 			<th colspan="7"><h3>' . _('Location Transfer Reference') . ' #' . $_SESSION['Transfer']->TrfID . ' ' . _('from') . ' ' . $_SESSION['Transfer']->StockLocationFromName . ' ' . _('to') . ' ' . $_SESSION['Transfer']->StockLocationToName . '</h3></th>
 		</tr>';
 
-	$tableheader = '<tr>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Item Description') . '</th>
+	$tableheader = '<tbody>
+					<tr>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Item Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Item Description') . '</th>
 						<th>' . _('Quantity Dispatched') . '</th>
 						<th>' . _('Quantity Received') . '</th>
 						<th>' . _('Quantity To Receive') . '</th>
@@ -506,7 +507,7 @@ if (isset($_SESSION['Transfer'])) {
 	}
 	/*end of foreach TransferItem */
 
-	echo '</table>
+	echo '</tbody></table>
 		<br />
 		<div class="centre">
 			<input type="submit" name="ProcessTransfer" value="' . _('Process Inventory Transfer') . '" />

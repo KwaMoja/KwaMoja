@@ -162,8 +162,8 @@ if (isset($_POST['SearchSupplier'])) {
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Address 1') . '</th>
 						<th>' . _('Address 2') . '</th>
