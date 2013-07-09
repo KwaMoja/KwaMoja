@@ -268,7 +268,7 @@ if (isset($SelectedBankAccount) and !isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Bank Account GL Code') . ':</td>
-				<td><select required="required" minlength="1" tabindex="1" ' . (in_array('AccountCode', $Errors) ? 'class="selecterror"' : '') . ' name="AccountCode">';
+				<td><select required="required" minlength="1" tabindex="1" name="AccountCode">';
 
 	$sql = "SELECT accountcode,
 					accountname

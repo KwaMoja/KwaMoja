@@ -199,7 +199,7 @@ elseif (isset($_GET['delete'])) {
 		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
 				<td>' . _('Parent Group') . ':' . '</td>
-				<td><select minlength="0" tabindex="2" ' . (in_array('ParentGroupName', $Errors) ? 'class="selecterror"' : '') . '  name="DestinyAccountGroup">';
+				<td><select minlength="0" tabindex="2" name="DestinyAccountGroup">';
 
 		$sql = "SELECT groupname FROM accountgroups";
 		$GroupResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);

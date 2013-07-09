@@ -583,7 +583,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code') . ':</td>
-					<td><input ' . (in_array('BranchCode', $Errors) ? 'class="inputerror"' : '') . ' tabindex="1" type="text" name="BranchCode" size="12" required="required" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input tabindex="1" type="text" name="BranchCode" size="12" required="required" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}

@@ -1032,20 +1032,20 @@ if (!isset($_POST['NextSerialNo'])) {
 
 echo '<tr>
 		<td>' . _('Economic Order Quantity') . ':</td>
-		<td><input ' . (in_array('EOQ', $Errors) ? 'class="inputerror"' : '') . '   type="text" class="number" name="EOQ" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['EOQ'], 'Variable') . '" /></td></tr>';
+		<td><input type="text" class="number" name="EOQ" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['EOQ'], 'Variable') . '" /></td></tr>';
 
 echo '<tr>
 		<td>' . _('Packaged Volume (metres cubed)') . ':</td>
-		<td><input ' . (in_array('Volume', $Errors) ? 'class="inputerror"' : '') . '   type="text" class="number" name="Volume" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['Volume'], 'Variable') . '" /></td>
+		<td><input type="text" class="number" name="Volume" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['Volume'], 'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input ' . (in_array('KGS', $Errors) ? 'class="inputerror"' : '') . '   type="text" class="number" name="KGS" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['KGS'], 'Variable') . '" /></td>
+		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input type="text" class="number" name="KGS" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['KGS'], 'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Units of Measure') . ':</td>
-		<td><select minlength="0" ' . (in_array('Description', $Errors) ? 'class="selecterror"' : '') . '  name="Units">';
+		<td><select minlength="0" name="Units">';
 
 $sql = "SELECT unitname FROM unitsofmeasure ORDER by unitname";
 $UOMResult = DB_query($sql, $db);
@@ -1135,7 +1135,7 @@ if ($_POST['Controlled'] == 1) {
 }
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Serialised') . ':</td><td><select minlength="0" ' . (in_array('Serialised', $Errors) ? 'class="selecterror"' : '') . '  name="Serialised">';
+echo '<tr><td>' . _('Serialised') . ':</td><td><select minlength="0" name="Serialised">';
 
 if ($_POST['Serialised'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -1153,7 +1153,7 @@ echo '</select><i>' . _('Note') . ', ' . _('this has no effect if the item is no
 if ($_POST['Serialised'] == 1 and $_POST['MBFlag'] == 'M') {
 	echo '<tr>
 			<td>' . _('Next Serial No (>0 for auto numbering)') . ':</td>
-			<td><input ' . (in_array('NextSerialNo', $Errors) ? 'class="inputerror"' : '') . ' type="text" name="NextSerialNo" size="15" minlength="0" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></tr>';
+			<td><input  type="text" name="NextSerialNo" size="15" minlength="0" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></tr>';
 } else {
 	echo '<tr><td><input type="hidden" name="NextSerialNo" value="0" /></td></tr>';
 }
@@ -1186,7 +1186,7 @@ if (isset($_POST['BarCode'])) {
 }
 echo '<tr>
 		<td>' . _('Bar Code') . ':</td>
-		<td><input ' . (in_array('BarCode', $Errors) ? 'class="inputerror"' : '') . '  type="text" name="BarCode" size="22" minlength="0" maxlength="20" value="' . $BarCode . '" /></td>
+		<td><input type="text" name="BarCode" size="22" minlength="0" maxlength="20" value="' . $BarCode . '" /></td>
 	</tr>';
 
 if (isset($_POST['DiscountCategory'])) {

@@ -951,7 +951,7 @@ if (!isset($SupplierID)) {
 
 	echo '<tr>
 			<td>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-			<td><input ' . (in_array('SupplierSince', $Errors) ? 'class="inputerror"' : '') . '  size="12" required="required" minlength="1" maxlength="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td>
+			<td><input size="12" required="required" minlength="1" maxlength="10" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Bank Particulars') . ':</td>
