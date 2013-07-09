@@ -2106,8 +2106,9 @@ if (!isset($_POST['ProcessSale'])) {
 			echo _('Frequently Ordered Items') . '</p><br />';
 			echo '<div class="page_help_text noPrint">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
 			echo '<table class="table1">';
-			$TableHeader = '<tr><th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
+			$TableHeader = '<tr>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 								<th>' . _('Units') . '</th>
 								<th>' . _('On Hand') . '</th>
 								<th>' . _('On Demand') . '</th>
@@ -2284,9 +2285,10 @@ if (!isset($_POST['ProcessSale'])) {
 					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>
 					<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td>
 				</tr>';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-					   			<th>' . _('Description') . '</th>
+			$TableHeader = '<tbody>
+							<tr>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>
@@ -2379,7 +2381,7 @@ if (!isset($_POST['ProcessSale'])) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" size="6" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number"  tabindex="' . strval($j + 7) . '" required="required" minlength="1" type="text" size="6" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>', $myrow['stockid'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $myrow['decimalplaces']), locale_number_format($DemandQty, $myrow['decimalplaces']), locale_number_format($OnOrder, $myrow['decimalplaces']), locale_number_format($Available, $myrow['decimalplaces']), $i, $i, $myrow['stockid']);
 				if ($j == 1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
@@ -2389,7 +2391,7 @@ if (!isset($_POST['ProcessSale'])) {
 				#end of page full new headings if
 			}
 			#end of while loop
-			echo '<tr><td>';
+			echo '</tbody><tr><td>';
 			echo '<input type="hidden" name="CustRef" value="' . $_SESSION['Items' . $identifier]->CustRef . '" />';
 			echo '<input type="hidden" name="Comments" value="' . $_SESSION['Items' . $identifier]->Comments . '" />';
 			echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" />';

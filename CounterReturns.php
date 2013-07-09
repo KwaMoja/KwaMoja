@@ -1701,15 +1701,17 @@ if (!isset($_POST['ProcessReturn'])) {
 					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Return Item(s)') . '" /></td>
 					<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td>
 				</tr>';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-					   			<th>' . _('Description') . '</th>
+			$TableHeader = '<tbody>
+							<tr>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>
 					   			<th>' . _('On Order') . '</th>
 					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th></tr>';
+					   			<th>' . _('Quantity') . '</th>
+					   		</tr>';
 			echo $TableHeader;
 			$i = 0;
 			$k = 0; //row colour counter
@@ -1794,7 +1796,7 @@ if (!isset($_POST['ProcessReturn'])) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-						<td><input class="number"  tabindex="' . strval($j + 7) . '" type="text" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
+						<td><input class="number" required="required" minlength="1" maxlength="11" tabindex="' . strval($j + 7) . '" type="text" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $myrow['decimalplaces']), locale_number_format($DemandQty, $myrow['decimalplaces']), locale_number_format($OnOrder, $myrow['decimalplaces']), locale_number_format($Available, $myrow['decimalplaces']), $i, $i, $myrow['stockid']);
 				if ($j == 1) {
 					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
@@ -1804,11 +1806,12 @@ if (!isset($_POST['ProcessReturn'])) {
 				#end of page full new headings if
 			}
 			#end of while loop
-			echo '<input type="hidden" name="CustRef" value="' . $_SESSION['Items' . $identifier]->CustRef . '" />';
+			echo '</tbody><input type="hidden" name="CustRef" value="' . $_SESSION['Items' . $identifier]->CustRef . '" />';
 			echo '<input type="hidden" name="Comments" value="' . $_SESSION['Items' . $identifier]->Comments . '" />';
 			echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" />';
 			echo '<input type="hidden" name="PhoneNo" value="' . $_SESSION['Items' . $identifier]->PhoneNo . '" />';
 			echo '<input type="hidden" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" />';
+			echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items' . $identifier]->SalesPerson . '" />';
 
 			echo '<tr><td><input type="hidden" name="previous" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>';

@@ -1741,9 +1741,10 @@ else { //dont require customer selection
 			echo '<tr><td colspan="1"><input type="hidden" name="PreviousList" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 8) . '" type="submit" name="Previous" value="' . _('Previous') . '" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 9) . '" type="submit" value="' . _('Add to Sales Order') . '" /></td>';
 			echo '<td colspan="1"><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 10) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-					   			<th>' . _('Description') . '</th>
+			$TableHeader = '<tbody>
+							<tr>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>
@@ -1855,7 +1856,7 @@ else { //dont require customer selection
 				//end of page full new headings if
 			} //$myrow = DB_fetch_array($SearchResult)
 			//end of while loop
-			echo '<tr><td><input type="hidden" name="PreviousList" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Previous" value="' . _('Previous') . '" /></td>';
+			echo '</tbody><tr><td><input type="hidden" name="PreviousList" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Previous" value="' . _('Previous') . '" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sales Order') . '" /></td>';
 			echo '<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
 			echo '</table>

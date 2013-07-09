@@ -616,8 +616,8 @@ if (!isset($StockID)) {
 
 		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Units') . '</th>
 					</tr>';
@@ -869,14 +869,15 @@ if (!isset($StockID)) {
 			$AuthRow = DB_fetch_array($AuthResult);
 
 			echo '<table cellpadding="2" width="95%" class="selection">';
+			echo '<tbody>';
 
 			if (isset($_POST['Quotations']) and $_POST['Quotations'] == 'Orders_Only') {
 				$tableheader = '<tr>
-								<th>' . _('Modify') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
-								<th>' . _('Customer') . '</th>
-								<th>' . _('Branch') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
 								<th>' . _('Cust Order') . ' #</th>
 								<th>' . _('Order Date') . '</th>
 								<th>' . _('Req Del Date') . '</th>
@@ -891,10 +892,10 @@ if (!isset($StockID)) {
 			} else {
 				/* displaying only quotations */
 				$tableheader = '<tr>
-								<th>' . _('Modify') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th>' . _('Customer') . '</th>
-								<th>' . _('Branch') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
+								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
 								<th>' . _('Cust Ref') . ' #</th>
 								<th>' . _('Quote Date') . '</th>
 								<th>' . _('Req Del Date') . '</th>
@@ -909,7 +910,6 @@ if (!isset($StockID)) {
 			$j = 1;
 			$k = 0; //row colour counter
 			$OrdersTotal = 0;
-
 			while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 
 
@@ -996,6 +996,7 @@ if (!isset($StockID)) {
 				}
 				//end of page full new headings if
 			} //end while loop through orders to display
+			echo '</tbody>';
 			if ($_POST['Quotations'] == 'Orders_Only' and $AuthRow['cancreate'] == 0) { //cancreate==0 means can create POs
 
 				echo '<tr><td colspan="11" class="number"><input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return MakeConfirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" /></td</tr>';
