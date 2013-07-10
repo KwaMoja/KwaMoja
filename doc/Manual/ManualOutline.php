@@ -292,7 +292,8 @@ $TOC_Array = array (
 								 'Creating a fixed asset',
 								 'Selecting fixed assets',
 								 'Depreciation run',
-								 'Fixed asset schedule'
+								 'Fixed asset schedule',
+								 'Maintenance tasks'
 								),
 	'ReportBuilder'     => array('SQL Report Writer',
 								 'Report writer introduction',

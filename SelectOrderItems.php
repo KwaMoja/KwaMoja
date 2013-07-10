@@ -198,7 +198,7 @@ if (isset($_GET['ModifyOrderNumber']) and $_GET['ModifyOrderNumber'] != '') {
 								stockmaster.description,
 								stockmaster.longdescription,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								stockmaster.units,
 								stockmaster.serialised,
 								stockmaster.nextserialno,
@@ -230,7 +230,7 @@ if (isset($_GET['ModifyOrderNumber']) and $_GET['ModifyOrderNumber'] != '') {
 		if (DB_num_rows($LineItemsResult) > 0) {
 			while ($myrow = DB_fetch_array($LineItemsResult)) {
 				if ($myrow['completed'] == 0) {
-					$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['kgs'], $myrow['qohatloc'], $myrow['mbflag'], $myrow['actualdispatchdate'], $myrow['qtyinvoiced'], $myrow['discountcategory'], 0, /*Controlled*/ $myrow['serialised'], $myrow['decimalplaces'], $myrow['narrative'], 'No', /* Update DB */ $myrow['orderlineno'], 0, '', ConvertSQLDate($myrow['itemdue']), $myrow['poline'], $myrow['standardcost'], $myrow['eoq'], $myrow['nextserialno'], $ExRate, $identifier);
+					$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['grossweight'], $myrow['qohatloc'], $myrow['mbflag'], $myrow['actualdispatchdate'], $myrow['qtyinvoiced'], $myrow['discountcategory'], 0, /*Controlled*/ $myrow['serialised'], $myrow['decimalplaces'], $myrow['narrative'], 'No', /* Update DB */ $myrow['orderlineno'], 0, '', ConvertSQLDate($myrow['itemdue']), $myrow['poline'], $myrow['standardcost'], $myrow['eoq'], $myrow['nextserialno'], $ExRate, $identifier);
 
 					/*Just populating with existing order - no DBUpdates */
 				} //$myrow['completed'] == 0

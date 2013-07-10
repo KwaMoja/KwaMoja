@@ -111,7 +111,7 @@ if (isset($_GET['NewRecurringOrder'])) {
 									stockmaster.description,
 									stockmaster.longdescription,
 									stockmaster.volume,
-									stockmaster.kgs,
+									stockmaster.grossweight,
 									stockmaster.units,
 									recurrsalesorderdetails.unitprice,
 									recurrsalesorderdetails.quantity,
@@ -132,7 +132,7 @@ if (isset($_GET['NewRecurringOrder'])) {
 			if (DB_num_rows($LineItemsResult) > 0) {
 
 				while ($myrow = DB_fetch_array($LineItemsResult)) {
-					$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['kgs'], $myrow['qohatloc'], $myrow['mbflag'], '', 0, $myrow['discountcategory'], 0, /*Controlled*/ 0, /*Serialised */ $myrow['decimalplaces'], $myrow['narrative']);
+					$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['grossweight'], $myrow['qohatloc'], $myrow['mbflag'], '', 0, $myrow['discountcategory'], 0, /*Controlled*/ 0, /*Serialised */ $myrow['decimalplaces'], $myrow['narrative']);
 					/*Just populating with existing order - no DBUpdates */
 
 				}

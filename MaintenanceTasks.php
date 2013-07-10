@@ -2,7 +2,11 @@
 
 include('includes/session.inc');
 
-$Title = _('Maintenance Tasks');
+$Title = _('Fixed Asset Maintenance Tasks');
+
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetMaintenance';
+
 include('includes/header.inc');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';

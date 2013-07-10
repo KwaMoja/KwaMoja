@@ -333,8 +333,8 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 	if (isset($StockItemDetails['volume'])) {
 		$Errors = VerifyVolume($StockItemDetails['volume'], sizeof($Errors), $Errors);
 	}
-	if (isset($StockItemDetails['kgs'])) {
-		$Errors = VerifyKgs($StockItemDetails['kgs'], sizeof($Errors), $Errors);
+	if (isset($StockItemDetails['grossweight'])) {
+		$Errors = VerifyKgs($StockItemDetails['grossweight'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['barcode'])) {
 		$Errors = VerifyBarCode($StockItemDetails['barcode'], sizeof($Errors), $Errors);
@@ -452,8 +452,8 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 	if (isset($StockItemDetails['volume'])) {
 		$Errors = VerifyVolume($StockItemDetails['volume'], sizeof($Errors), $Errors);
 	}
-	if (isset($StockItemDetails['kgs'])) {
-		$Errors = VerifyKgs($StockItemDetails['kgs'], sizeof($Errors), $Errors);
+	if (isset($StockItemDetails['grossweight'])) {
+		$Errors = VerifyKgs($StockItemDetails['grossweight'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['barcode'])) {
 		$Errors = VerifyBarCode($StockItemDetails['barcode'], sizeof($Errors), $Errors);

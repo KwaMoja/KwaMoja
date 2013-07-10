@@ -131,7 +131,7 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 $LineItemsSQL = "SELECT stkcode,
 						stockmaster.description,
 						stockmaster.volume,
-						stockmaster.kgs,
+						stockmaster.grossweight,
 						stockmaster.decimalplaces,
 						stockmaster.mbflag,
 						stockmaster.units,
@@ -204,7 +204,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 		$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));
 		$OrderTotalVolume += ($myrow['quantity'] * $myrow['volume']);
-		$OrderTotalWeight += ($myrow['quantity'] * $myrow['kgs']);
+		$OrderTotalWeight += ($myrow['quantity'] * $myrow['grossweight']);
 
 	}
 	$DisplayTotal = locale_number_format($OrderTotal, $CurrDecimalPlaces);

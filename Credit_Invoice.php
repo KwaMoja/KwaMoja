@@ -112,7 +112,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 								stockmaster.description,
 								stockmaster.longdescription,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								stockmaster.mbflag,
 								stockmaster.controlled,
 								stockmaster.serialised,
@@ -145,7 +145,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 
 				$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 
-				$_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['price'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['kgs'], 0, $myrow['mbflag'], $myrow['trandate'], 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], $myrow['narrative'], 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']);
+				$_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['price'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['grossweight'], 0, $myrow['mbflag'], $myrow['trandate'], 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], $myrow['narrative'], 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']);
 
 				$_SESSION['CreditItems' . $identifier]->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
 

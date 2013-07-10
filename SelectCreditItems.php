@@ -426,7 +426,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 					    		stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								(materialcost+labourcost+overheadcost) AS standardcost,
 								stockmaster.mbflag,
 								stockmaster.decimalplaces,
@@ -444,7 +444,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 					$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 
-					if ($_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], $NewItemQty, $myrow['description'], $myrow['longdescription'], GetPrice($_POST['NewItem'], $_SESSION['CreditItems' . $identifier]->DebtorNo, $_SESSION['CreditItems' . $identifier]->Branch, $db), 0, $myrow['units'], $myrow['volume'], $myrow['kgs'], 0, $myrow['mbflag'], Date($_SESSION['DefaultDateFormat']), 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], '', 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']) == 1) {
+					if ($_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], $NewItemQty, $myrow['description'], $myrow['longdescription'], GetPrice($_POST['NewItem'], $_SESSION['CreditItems' . $identifier]->DebtorNo, $_SESSION['CreditItems' . $identifier]->Branch, $db), 0, $myrow['units'], $myrow['volume'], $myrow['grossweight'], 0, $myrow['mbflag'], Date($_SESSION['DefaultDateFormat']), 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], '', 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']) == 1) {
 
 						$_SESSION['CreditItems' . $identifier]->GetTaxes($LineNumber);
 
@@ -562,7 +562,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 								stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								stockmaster.mbflag,
 								stockmaster.discountcategory,
 								stockmaster.controlled,
@@ -580,7 +580,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 				$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 				/*validate the data returned before adding to the items to credit */
-				if ($_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], 1, $myrow['description'], $myrow['longdescription'], GetPrice($_POST['NewItem'], $_SESSION['CreditItems' . $identifier]->DebtorNo, $_SESSION['CreditItems' . $identifier]->Branch, $db), 0, $myrow['units'], $myrow['volume'], $myrow['kgs'], 0, $myrow['mbflag'], Date($_SESSION['DefaultDateFormat']), 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], '', 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']) == 1) {
+				if ($_SESSION['CreditItems' . $identifier]->add_to_cart($myrow['stockid'], 1, $myrow['description'], $myrow['longdescription'], GetPrice($_POST['NewItem'], $_SESSION['CreditItems' . $identifier]->DebtorNo, $_SESSION['CreditItems' . $identifier]->Branch, $db), 0, $myrow['units'], $myrow['volume'], $myrow['grossweight'], 0, $myrow['mbflag'], Date($_SESSION['DefaultDateFormat']), 0, $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], '', 'No', -1, $myrow['taxcatid'], '', '', '', $myrow['standardcost']) == 1) {
 
 					$_SESSION['CreditItems' . $identifier]->GetTaxes($LineNumber);
 

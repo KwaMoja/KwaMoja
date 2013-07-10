@@ -398,8 +398,7 @@ if (isset($SearchResult)) {
 		</div>';
 } #end if SearchResults to show
 
-echo '<hr />
-	</div>
+echo '</div>
 	</form>';
 include('includes/footer.inc');
 ?>

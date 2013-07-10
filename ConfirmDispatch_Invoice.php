@@ -186,7 +186,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 								stockmaster.controlled,
 								stockmaster.serialised,
 								stockmaster.volume,
-								stockmaster.kgs,
+								stockmaster.grossweight,
 								stockmaster.units,
 								stockmaster.decimalplaces,
 								stockmaster.mbflag,
@@ -216,7 +216,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 
 			while ($myrow = DB_fetch_array($LineItemsResult)) {
 
-				$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['kgs'], 0, $myrow['mbflag'], $myrow['actualdispatchdate'], $myrow['qtyinvoiced'], $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], htmlspecialchars_decode($myrow['narrative']), 'No', $myrow['orderlineno'], $myrow['taxcatid'], '', $myrow['itemdue'], $myrow['poline'], $myrow['standardcost']);
+				$_SESSION['Items' . $identifier]->add_to_cart($myrow['stkcode'], $myrow['quantity'], $myrow['description'], $myrow['longdescription'], $myrow['unitprice'], $myrow['discountpercent'], $myrow['units'], $myrow['volume'], $myrow['grossweight'], 0, $myrow['mbflag'], $myrow['actualdispatchdate'], $myrow['qtyinvoiced'], $myrow['discountcategory'], $myrow['controlled'], $myrow['serialised'], $myrow['decimalplaces'], htmlspecialchars_decode($myrow['narrative']), 'No', $myrow['orderlineno'], $myrow['taxcatid'], '', $myrow['itemdue'], $myrow['poline'], $myrow['standardcost']);
 				/*NB NO Updates to DB */
 
 				/*Calculate the taxes applicable to this line item from the customer branch Tax Group and Item Tax Category */

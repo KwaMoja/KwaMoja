@@ -34,7 +34,7 @@ if ($AlreadyOnThisOrder != 1) {
 				stockmaster.stockid,
 				stockmaster.units,
 				stockmaster.volume,
-				stockmaster.kgs,
+				stockmaster.grossweight,
 				(materialcost+labourcost+overheadcost) AS standardcost,
 				locstock.quantity,
 				stockmaster.mbflag,
@@ -193,7 +193,7 @@ if ($AlreadyOnThisOrder != 1) {
 			}
 
 			if ($WithinCreditLimit == true) {
-				$_SESSION['Items' . $identifier]->add_to_cart($NewItem, $NewItemQty, $myItemRow['description'], $myItemRow['longdescription'], $Price, $Discount, $myItemRow['units'], $myItemRow['volume'], $myItemRow['kgs'], $myItemRow['quantity'], $myItemRow['mbflag'], NULL, /*Actual Dispatch Date */ 0, /*Qty Invoiced */ $myItemRow['discountcategory'], 0, /*Controlled - dont care */ $myItemRow['serialised'], /* need to know for autocreation wos */ $myItemRow['decimalplaces'], '', /*Narrative - none yet */ $UpdateDB, $NewLineNo, $myItemRow['taxcatid'], '', $NewItemDue, $NewPOLine, $myItemRow['standardcost'], $myItemRow['eoq'], $myItemRow['nextserialno'], $ExRate, $identifier);
+				$_SESSION['Items' . $identifier]->add_to_cart($NewItem, $NewItemQty, $myItemRow['description'], $myItemRow['longdescription'], $Price, $Discount, $myItemRow['units'], $myItemRow['volume'], $myItemRow['grossweight'], $myItemRow['quantity'], $myItemRow['mbflag'], NULL, /*Actual Dispatch Date */ 0, /*Qty Invoiced */ $myItemRow['discountcategory'], 0, /*Controlled - dont care */ $myItemRow['serialised'], /* need to know for autocreation wos */ $myItemRow['decimalplaces'], '', /*Narrative - none yet */ $UpdateDB, $NewLineNo, $myItemRow['taxcatid'], '', $NewItemDue, $NewPOLine, $myItemRow['standardcost'], $myItemRow['eoq'], $myItemRow['nextserialno'], $ExRate, $identifier);
 
 			}
 		} else {
