@@ -4,9 +4,9 @@
 Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
 
-function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAddCountry, $TotalVolume, $TotalWeight, $FromLocation, $db) {
+function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAddCountry, $TotalVolume, $TotalWeight, $FromLocation, $Currency, $db) {
 
-	# make an array of all the words that could be the name of the destination zone (city, state or ZIP)
+	// make an array of all the words that could be the name of the destination zone (city, state or ZIP)
 	$FindCity = explode(' ', $BrAdd2 . ' ' . $BrAdd3 . ' ' . $BrAdd4 . ' ' . $BrAdd5);
 
 	$sql = "SELECT shipperid,
@@ -24,6 +24,10 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 		$sql .= " AND (";
 		foreach ($FindCity as $City) {
 			$sql = $sql . " destination LIKE '" . ucwords($City) . "%' OR";
+		}
+		if ($BrAddCountry != $CountriesArray[$_SESSION['CountryOfOperation']]){
+			/* For international shipments empty destination (ANY) is allowed */
+			$sql = $sql . " destination = '' OR";
 		}
 		$sql = mb_substr($sql, 0, strrpos($sql,' OR')) . ')';
 	}
@@ -64,7 +68,7 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 			}
 		}
 	} else {
-		$CalcFreightCost = _('Unrecognised destination, delivery only to cities in') . ' ' . $_SESSION['CountryOfOperation'];
+		$CalcFreightCost = _('Unrecognised destination');
 	}
 	if ($TotalValue >= $_SESSION['FreightChargeAppliesIfLessThan']) {
 
@@ -72,6 +76,18 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 
 		$CalcFreightCost = 0;
 	}
+
+	if ($Currency != $_SESSION['CompanyRecord']['currencydefault']){
+		$ExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $Currency . "'",$db);
+		if (DB_num_rows($ExRateResult)>0){
+			$ExRateRow = DB_fetch_row($ExRateResult);
+			$ExRate = $ExRateRow[0];
+		} else {
+			$ExRate =1;
+		}
+		$CalcFreightCost = $CalcFreightCost * $ExRate;
+	}
+
 	return array(
 		$CalcFreightCost,
 		$CalcBestShipper

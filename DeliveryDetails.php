@@ -123,7 +123,9 @@ if (isset($_POST['Update']) or isset($_POST['BackToLineDetails']) or isset($_POS
 																			$_POST['BrAdd6'],
 																			$_SESSION['Items'.$identifier]->totalVolume,
 																			$_SESSION['Items'.$identifier]->totalWeight,
-																			$_SESSION['Items'.$identifier]->Location, $db);
+																			$_SESSION['Items'.$identifier]->Location,
+																			$_SESSION['Items'.$identifier]->DefaultCurrency,
+																			$db);
 			if (!empty($BestShipper)) {
 				$_POST['FreightCost'] = round($_POST['FreightCost'], 2);
 				$_POST['ShipVia'] = $BestShipper;
@@ -916,7 +918,7 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 		</tr>
 		</table>';
 
-	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume, 2);
+	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume,5);
 	$DisplayWeight = locale_number_format($_SESSION['Items' . $identifier]->totalWeight, 2);
 	echo '<br />
 		<table>
@@ -975,7 +977,7 @@ else {
 
 	$DisplayTotal = locale_number_format($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 
-	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume, 2);
+	$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume,5);
 	$DisplayWeight = locale_number_format($_SESSION['Items' . $identifier]->totalWeight, 2);
 	echo '<table class="selection">
 			<tr>
