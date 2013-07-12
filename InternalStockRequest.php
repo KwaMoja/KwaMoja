@@ -632,9 +632,10 @@ if (isset($SearchResult)) {
 	echo '<td>
 			<input type="hidden" name="NextList" value="' . ($Offset + 1) . '" />
 			<input tabindex="' . ($j + 10) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Description') . '</th>
+	echo '<tbody>
+			<tr>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 			<th>' . _('Units') . '</th>
 			<th>' . _('On Hand') . '</th>
 			<th>' . _('On Demand') . '</th>
@@ -748,7 +749,7 @@ if (isset($SearchResult)) {
 		//end of page full new headings if
 	}
 	//end of while loop
-	echo '<tr><td><input type="hidden" name="Previous" value="' . ($Offset - 1) . '" />
+	echo '</tbody><tr><td><input type="hidden" name="Previous" value="' . ($Offset - 1) . '" />
 			<input tabindex="' . ($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>';
 	echo '<td style="text-align:center" colspan="6"><input type="hidden" name="order_items" value="1" />
 		<input tabindex="' . ($j + 8) . '" type="submit" value="' . _('Add to Requisition') . '" /></td>';

@@ -8,133 +8,104 @@ $ViewTopic = "GeneralLedger";
 $BookMark = "GLAccountInquiry";
 include('includes/header.inc');
 
-$msg = '';
 unset($result);
 
 if (isset($_POST['Search'])) {
 
-	if (mb_strlen($_POST['Keywords'] > 0) and mb_strlen($_POST['GLCode']) > 0) {
-		$msg = _('Account name keywords have been used in preference to the account code extract entered');
-	}
-	if ($_POST['Keywords'] == '' and $_POST['GLCode'] == '') {
-		$SQL = "SELECT chartmaster.accountcode,
-					chartmaster.accountname,
-					chartmaster.group_,
-					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') . "' END AS pl
-					FROM chartmaster,
-						accountgroups
-					WHERE chartmaster.group_=accountgroups.groupname
-					ORDER BY chartmaster.accountcode";
-	} elseif (mb_strlen($_POST['Keywords']) > 0) {
-		//insert wildcard characters in spaces
-		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+	//insert wildcard characters in spaces
+	$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-		$SQL = "SELECT chartmaster.accountcode,
+	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0
 						THEN '" . _('Profit and Loss') . "'
 						ELSE '" . _('Balance Sheet') . "' END AS pl
-				FROM chartmaster,
-					accountgroups
-				WHERE chartmaster.group_ = accountgroups.groupname
-				AND accountname " . LIKE . " '$SearchString'
+				FROM chartmaster
+				INNER JOIN accountgroups
+					ON chartmaster.group_ = accountgroups.groupname
+				WHERE accountname " . LIKE . " '" . $SearchString . "'
+					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
+					AND chartmaster.group_ " . LIKE . "  '" . $_POST['Group'] . "'
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
-	} elseif (mb_strlen($_POST['GLCode']) > 0) {
+	$result = DB_query($SQL, $db);
 
-		$SQL = "SELECT chartmaster.accountcode,
-					chartmaster.accountname,
-					chartmaster.group_,
-					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') . "' END AS pl
-					FROM chartmaster,
-						accountgroups
-					WHERE chartmaster.group_=accountgroups.groupname
-					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
-					ORDER BY chartmaster.accountcode";
-	}
+}
 
-	if (isset($SQL) and $SQL != '') {
-		$result = DB_query($SQL, $db);
-	}
-} //end of if search
-
-if (!isset($AccountID)) {
-
-
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="' . _('Search for General Ledger Accounts') . '" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
-	echo '<br />
+echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="' . _('Search for General Ledger Accounts') . '" />' . ' ' . _('Search for General Ledger Accounts') . '</p>';
+echo '<br />
 		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (mb_strlen($msg) > 1) {
-		prnMsg($msg, 'info');
-	}
-
-	echo '<table class="selection" summary="' . _('Criteria for inquiry') . '">
+echo '<table class="selection" summary="' . _('Criteria for inquiry') . '">
 		<tr>
 			<td>' . _('Enter extract of text in the Account name') . ':</td>
 			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
 			<td>' . _('Enter Account No. to search from') . ':</td>
 			<td><input type="text" name="GLCode" size="15" minlength="0" maxlength="18" class="number" /></td>
-		</tr>
-		</table>
-		<br />';
+		</tr>';
 
-	echo '<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-			<input type="submit" name="reset" value="' . _('Reset') . '" />
-		</div></form>';
+$GroupSQL = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
+$GroupResult = DB_query($GroupSQL, $db);
 
-	if (isset($result) and DB_num_rows($result) > 0) {
+echo '<tr>
+		<td>' . _('Search In Account Group') . ':</td>
+		<td><select minlength="0" name="Group">';
 
-		echo '<br />
-		<form onSubmit="return VerifyForm(this);" action="GLAccountInquiry.php" method="post" class="noPrint">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<br /><table class="selection" summary="' . _('List of GL Accounts') . '">';
+echo '<option value="%%">' . _('All Account Groups') . '</option>';
+while ($GroupRow = DB_fetch_array($GroupResult)) {
+	if (isset($_POST['Group']) and $GroupRow[0] == $_POST['Group']) {
+		echo '<option selected="selected" value="';
+	} else {
+		echo '<option value="';
+	}
+	echo $GroupRow[0] . '">' . $GroupRow[0] . '</option>';
+}
+echo '</select></td>
+	</tr>
+	</table>
+	<br />';
 
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th>' . _('Group') . '</th>
-							<th>' . _('Account Type') . '</th>
-						</tr>';
+echo '<div class="centre">
+		<input type="submit" name="Search" value="' . _('Search Now') . '" />
+		<input type="submit" name="reset" value="' . _('Reset') . '" />
+	</div></form>';
 
-		echo $TableHeader;
+if (isset($result) and DB_num_rows($result) > 0) {
 
-		$j = 1;
+	echo '<br />
+	<form onSubmit="return VerifyForm(this);" action="GLAccountInquiry.php" method="post" class="noPrint">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<br /><table class="selection" summary="' . _('List of GL Accounts') . '">';
 
-		while ($myrow = DB_fetch_array($result)) {
+	echo '<tr>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Account Name') . '</th>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Group') . '</th>
+			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Account Type') . '</th>
+		</tr>';
 
-			printf('<tr>
+	while ($myrow = DB_fetch_array($result)) {
+		printf('<tr>
 					<td><input type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', $myrow['accountcode'], htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false), $myrow['group_'], $myrow['pl']);
-
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $TableHeader;
-
-			}
-			//end of page full new headings if
-		}
-		//end of while loop
-
-		echo '</table>';
-
+				</tr>', $myrow['accountcode'], htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false), $myrow['group_'], $myrow['pl']);
 	}
-	//end if results to show
+	//end of while loop
 
-	echo '</div>
-		  </form>';
+	echo '</table>';
 
-} //end AccountID already selected
+}
+//end if results to show
+
+echo '</div>
+	  </form>';
 
 include('includes/footer.inc');
 ?>
