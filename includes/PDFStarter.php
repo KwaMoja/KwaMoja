@@ -108,12 +108,12 @@ switch ($PaperSize) {
 		$DocumentPaper = 'LETTER';
 		$DocumentOrientation = 'P';
 
-		$Page_Width = 612;
-		$Page_Height = 792;
-		$Top_Margin = 30;
-		$Bottom_Margin = 30;
-		$Left_Margin = 30;
-		$Right_Margin = 25;
+		$Page_Width = 612; // 72 * 8.5 inch
+		$Page_Height = 792; // 72 * 11 inch
+		$Top_Margin = 36; // Half inch = 72/2
+		$Bottom_Margin = 36; // Half inch = 72/2
+		$Left_Margin = 36; // Half inch = 72/2
+		$Right_Margin = 36; // Half inch = 72/2
 		break;
 
 	case 'letter_landscape':
@@ -121,12 +121,12 @@ switch ($PaperSize) {
 		$DocumentPaper = 'LETTER';
 		$DocumentOrientation = 'L';
 
-		$Page_Width = 792;
-		$Page_Height = 612;
-		$Top_Margin = 30;
-		$Bottom_Margin = 30;
-		$Left_Margin = 30;
-		$Right_Margin = 25;
+		$Page_Width = 792; // 72 * 11 inch
+		$Page_Height = 612; // 72 * 8.5 inch
+		$Top_Margin = 36; // Half inch = 72/2
+		$Bottom_Margin = 36; // Half inch = 72/2
+		$Left_Margin = 36; // Half inch = 72/2
+		$Right_Margin = 36; // Half inch = 72/2
 		break;
 
 	case 'legal':
