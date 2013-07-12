@@ -42,7 +42,7 @@ if (isset($_POST['Search'])) {
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
-	} elseif (mb_strlen($_POST['GLCode']) > 0 and is_numeric($_POST['GLCode'])) {
+	} elseif (mb_strlen($_POST['GLCode']) > 0) {
 
 		$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
@@ -53,9 +53,6 @@ if (isset($_POST['Search'])) {
 					WHERE chartmaster.group_=accountgroups.groupname
 					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
-	} elseif (!is_numeric($_POST['GLCode'])) {
-		prnMsg(_('The general ledger code specified must be numeric - all account numbers must be numeric'), 'warn');
-		unset($SQL);
 	}
 
 	if (isset($SQL) and $SQL != '') {
