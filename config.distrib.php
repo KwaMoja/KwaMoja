@@ -19,7 +19,7 @@ $SysAdminEmail = 'admin@mydomain.com';
 // this is not necessary if you have your own server locally
 //date_default_timezone_set('Europe/London');
 //date_default_timezone_set('America/Los_Angeles');
-date_default_timezone_set('Asia/Shanghai');
+//date_default_timezone_set('Asia/Shanghai');
 //date_default_timezone_set('Australia/Melbourne');
 //date_default_timezone_set('Australia/Sydney');
 //date_default_timezone_set('Pacific/Auckland');
@@ -39,17 +39,19 @@ $DBType = 'mysqli';
 $DBUser = 'kwamoja_db_user';
 $DBPassword = 'kwamoja_db_pwd';
 
-/*KwaMoja examines each of the directories under the companies directory
- *to determine all the companies that can be logged into
- * a new company directory together with the necessary subdirectories is
- * created each time a new company is created by Z_MakeNewCompany.php
- */
-$AllowCompanySelectionBox = true;
+// It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
+// depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
+// If set to 'ShowSelectionBox' KwaMoja examines each of the directories under the companies directory to determine all the companies that can be logged into
+// a new company directory together with the necessary subdirectories is created each time a new company is created by Z_MakeNewCompany.php
+// It would also be inappropiate in some environments to show the name of the company (database name) --> Choose 'Hide'.
+// Options:
+//     'ShowSelectionBox' (default)
+//     'ShowInputBox'
+//     'Hide'
+$AllowCompanySelectionBox = 'ShowSelectionBox';
 
-/*If $AllowCompanySelectionBox = false above then the $DefaultCompany string
- * is entered in the login screen as a default otherwise the user is expected
- * to know the name of the company to log into.
- */
+//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default
+//otherwise the user is expected to know the name of the company to log into.
 $DefaultCompany = 'kwamoja';
 
 //The maximum time that a login session can be idle before automatic logout

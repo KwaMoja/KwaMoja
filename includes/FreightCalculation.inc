@@ -68,7 +68,7 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 			}
 		}
 	} else {
-		$CalcFreightCost = _('Unrecognised destination');
+		$CalcFreightCost = "NOT AVAILABLE";
 	}
 	if ($TotalValue >= $_SESSION['FreightChargeAppliesIfLessThan']) {
 
@@ -85,7 +85,9 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 		} else {
 			$ExRate =1;
 		}
-		$CalcFreightCost = $CalcFreightCost * $ExRate;
+		if ($CalcFreightCost != "NOT AVAILABLE"){
+			$CalcFreightCost = $CalcFreightCost * $ExRate;
+		}
 	}
 
 	return array(

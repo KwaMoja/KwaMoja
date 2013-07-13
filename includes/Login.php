@@ -64,8 +64,16 @@ echo $_SESSION['FormID'];
 					<label><?php
 echo _('Company');
 ?>:</label>
+
 					<?php
-if ($AllowCompanySelectionBox == true) {
+if ($AllowCompanySelectionBox == 'Hide') {
+	// do not show input or selection box
+	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+} else if ($AllowCompanySelectionBox == 'ShowInputBox'){
+	// show input box
+	echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+} else {
+	// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 	echo '<select name="CompanyNameField">';
 
 	$DirHandle = dir('companies/');
@@ -83,10 +91,9 @@ if ($AllowCompanySelectionBox == true) {
 	$DirHandle->close();
 
 	echo '</select>';
-} else {
-	echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 }
 ?>
+
 					<br />
 					<label><?php
 echo _('User name');
