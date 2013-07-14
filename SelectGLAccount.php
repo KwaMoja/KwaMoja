@@ -58,12 +58,12 @@ echo '<tr>
 
 echo '<option value="%%">' . _('All Account Groups') . '</option>';
 while ($GroupRow = DB_fetch_array($GroupResult)) {
-	if (isset($_POST['Group']) and $GroupRow[0] == $_POST['Group']) {
+	if (isset($_POST['Group']) and $GroupRow['groupname'] == $_POST['Group']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $GroupRow[0] . '">' . $GroupRow[0] . '</option>';
+	echo $GroupRow['groupname'] . '">' . $GroupRow['groupname'] . '</option>';
 }
 echo '</select></td>
 	</tr>
@@ -91,11 +91,25 @@ if (isset($result) and DB_num_rows($result) > 0) {
 
 	while ($myrow = DB_fetch_array($result)) {
 		printf('<tr>
-					<td><input type="submit" name="Select" value="%s" /></td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-				</tr>', $myrow['accountcode'], htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false), $myrow['group_'], $myrow['pl']);
+					<td>%s</td>
+					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes"><img width="24px" src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
+					<td><a href="%s/GLAccounts.php?SelectedAccount=%s"><img width="24px" src="%s/css/%s/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
+				</tr>',
+					htmlspecialchars($myrow['accountcode'],ENT_QUOTES,'UTF-8',false),
+					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
+					$myrow['group_'],
+					$myrow['pl'],
+					$RootPath,
+					$myrow['accountcode'],
+					$RootPath,
+					$Theme,
+					$RootPath,
+					$myrow['accountcode'],
+					$RootPath,
+					$Theme);
 	}
 	//end of while loop
 
