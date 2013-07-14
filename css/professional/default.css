@@ -1,606 +1,556 @@
-/***
-
-New "Professional" Theme for KwaMoja
-
-by Hindra Joshua
-
-*** This a very clean professional-looking theme - handsome!
-
-Based from the previous theme "SilverWolf"
-Credits to the original authors.
-
-NOTE:
-This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
-but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for
-the next project. :)
-
-***/
 @font-face {
-    font-family: "Ubuntu";
-    font-style: normal;
-    font-weight: 400;
-    src: local("Ubuntu"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/_xyN3apAT_yRRDeqB3sPRg.woff") format("woff");
+font-family:Ubuntu;
+font-style:normal;
+font-weight:400;
+src:local(Ubuntu), url(http://themes.googleusercontent.com/static/fonts/ubuntu/v4/_xyN3apAT_yRRDeqB3sPRg.woff) format(woff);
 }
 
 body {
-font-family: "Ubuntu, Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-font-weight:normal;
-	background-color: #ddd;
-	margin:0;
-	padding:0;
+font-family:"Ubuntu, Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+font-weight:400;
+background-color:#ddd;
+margin:0;
+padding:0;
 }
-input, textarea, select{font-family:inherit;}
+
+input,textarea,select {
+font-family:inherit;
+}
 
 img {
-	border:none;
-	vertical-align:middle;
+border:none;
+vertical-align:middle;
 }
+
 .PrintIcon {
-	float: right;
-	cursor: pointer;
+float:right;
+cursor:pointer;
 }
 
 #mask {
-	display: none;
-    position:fixed;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	background-image:url('images/mask.png');
-	z-index: 2;
+display:none;
+position:fixed;
+top:0;
+right:0;
+bottom:0;
+left:0;
+background-image:url(images/mask.png);
+z-index:2;
 }
+
 #dialog {
-	min-width:10%;
-	max-width: 50%;
-	display: inline-block;
-	padding: 2px;
-	padding-bottom:5px;
-	background: #ffffff;
-	z-index: 99;
-	border: solid black 1px;
-	border-radius: 7px;
-    position:fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -9em; /*set to a negative number 1/2 of your height*/
-    margin-left: -15em; /*set to a negative number 1/2 of your width*/
-	box-shadow:0 0 5px #16187A;;
+min-width:10%;
+max-width:50%;
+display:inline-block;
+background:#fff;
+z-index:99;
+border:solid #000 1px;
+border-radius:7px;
+position:fixed;
+top:50%;
+left:50%;
+margin-top:-9em;
+margin-left:-15em;
+box-shadow:0 0 5px #16187A;
+padding:2px 2px 5px;
 }
+
 #dialog_header {
-	background: #cccce5;
-	width: auto;
-	margin: 2px;
-	border-radius: 4px;
-	font-size: 130%;
-	text-align: left;
-	padding-left: 5px;
-	color: #330000;
+background:#cccce5;
+width:auto;
+border-radius:4px;
+font-size:130%;
+text-align:left;
+padding-left:5px;
+color:#300;
+margin:2px;
 }
+
 #dialog_main {
-	background: white;
-	width: auto;
-	margin: 2px;
-	border-radius: 4px;
-	text-align: left;
-	margin-top: 3%;
-	margin-bottom: 3%;
-	padding-left: 5px;
-	padding-right: 5px;
-	font-style: italic;
-	font-size: 130%;
-	color: navy;
+background:#FFF;
+width:auto;
+border-radius:4px;
+text-align:left;
+padding-left:5px;
+padding-right:5px;
+font-style:italic;
+font-size:130%;
+color:navy;
+margin:3% 2px;
 }
-#dialog_buttons {
-	text-align: right;
-}
+
 input.okButton {
-	display: inline-block;
-	background-color:#cccce5;
-	border:thin;
-	border-color:#CCCCCC;
-	color: #171380;
-	margin:2px 15px 5px 0;
-	padding: 2px;
-	border-radius: 3px;
-	cursor:pointer;
-	font-style: normal;
-	box-shadow:2px 2px 3px;
-	width: 20%;
+display:inline-block;
+background-color:#cccce5;
+border:thin;
+color:#171380;
+border-radius:3px;
+cursor:pointer;
+font-style:normal;
+box-shadow:2px 2px 3px;
+width:20%;
+border-color:#CCC;
+margin:2px 15px 5px 0;
+padding:2px;
 }
+
 input.okButton:active {
-	box-shadow:0px 0px 0px;
+box-shadow:0 0 0;
 }
+
 input.okButton:hover {
-	background-color:lightsteelblue;
+background-color:#B0C4DE;
 }
+
 a {
-	color:blue;
-	text-decoration:none;
-}
-a:hover {
-	color:blue;
-	text-decoration:underline;
+color:blue;
+text-decoration:none;
 }
 
-.centre { /* used */
-  margin: 0 auto;
-  text-align:center;
+.centre {
+text-align:center;
+margin:0 auto;
 }
 
-/*table detail items default format */
 td {
-	text-align: left;
+text-align:left;
 }
+
 td.select {
-	background-color:#eee;
+background-color:#eee;
 }
+
 .dpTbl {
-	border: solid navy 1px;
-	background:white;
+border:solid navy 1px;
+background:#FFF;
 }
+
 .dpTD {
-	border: 0;
-	width:20px;
-	background-color: #EEEEEE;
-	text-align:right;
-	cursor:pointer;
+border:0;
+width:20px;
+background-color:#EEE;
+text-align:right;
+cursor:pointer;
 }
 
 .dpDayHighlight {
-	border: 0;
-	width:20px;
-	background-color: yellow;
-	text-align:right;
-	cursor:pointer;
+border:0;
+width:20px;
+background-color:#FF0;
+text-align:right;
+cursor:pointer;
 }
 
 .dpTDHover {
-	border: 0;
-	width:20px;
-	background-color: #CCCCCC;
-	text-align:right;
-	cursor:pointer;
-}
-td.number {
-	text-align: right;
+border:0;
+width:20px;
+background-color:#CCC;
+text-align:right;
+cursor:pointer;
 }
 
 .EvenTableRows {
-	background-color: #CCCCCC;
-}
-.OddTableRows {
-	background-color: #EEEEEE;
+background-color:#CCC;
 }
 
-th { /* table heading */
-	background-color: #cccce5;
-	color: #330000;
-	text-align: center;
+.OddTableRows {
+background-color:#EEE;
 }
+
+th {
+background-color:#cccce5;
+color:#300;
+text-align:center;
+}
+
 th.number {
-	background-color: #cccce5;
-	color: #330000;
-	text-align: right;
+background-color:#cccce5;
+color:#300;
+text-align:right;
 }
+
 th.SortableColumn {
-cursor: s-resize;
+cursor:s-resize;
 }
 
 div.error {
-	background-color:#fddbdb;
-	color: red;
-	border: 1px solid red;
+background-color:#fddbdb;
+color:red;
+border:1px solid red;
 }
 
 div.warn {
-	background-color:#f5dbfd;
-	color: maroon;
-	border: 1px solid maroon;
+background-color:#f5dbfd;
+color:maroon;
+border:1px solid maroon;
 }
+
 div.success {
-	background-color:#b9ecb4;
-	color: darkgreen;
-	border: 1px solid darkgreen;
+background-color:#b9ecb4;
+color:#006400;
+border:1px solid #006400;
 }
+
 div.info {
-	background-color:#c7ccf6;
-	color: navy;
-	border: 1px solid navy;
+background-color:#c7ccf6;
+color:navy;
+border:1px solid navy;
 }
 
-/* input as button or text */
-/* NOTE: input for button should have different class, one for 'normal' and one for 'input button inside a table,
-which should have the same width as the column where it is located
-e.g.: class input_button, input_column_button, input_text */
-input {
-}
-input.number{
-	text-align: right;
-}
-input.integer{
-text-align: right;
-}
 input.image {
-	border-width:0px;
-	background-color: transparent;
+background-color:transparent;
+border-width:0;
 }
-input.image:hover{
-background-color: transparent;
+
+input.image:hover {
+background-color:transparent;
 }
-input:hover{
-	background:lightblue;
-}
+
 input.big {
-	width: 100px;
+width:100px;
 }
+
 input.small {
-	width: 50px;
-}
-input.inputerror {
-	background-color: #fddbdb;
-}
-input:required, select:required, textarea:required {
-        background-color:#B2B2B2;
- }
-
-/* for buttons ***HJ***/
-button{
-}
-button:hover{
-	background:lightblue;
+width:50px;
 }
 
-/* dropdown box */
+input:required,select:required,textarea:required {
+background-color:#B2B2B2;
+}
 
-select {
-}
-select.selecterror {
-	background-color: #fddbdb;
-}
-select:hover{
-	background:lightblue;
-}
 select.inputerror {
 background:#FFA4A4;
 }
 
 p.good {
-    font-weight: bold;
-    color: green;
+font-weight:700;
+color:green;
 }
+
 p.bad {
-    font-weight: bold;
-    color:red;
+font-weight:700;
+color:red;
 }
 
 .header {
-	background-image: url("");
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	border: none;
-	margin: 0px;
-	padding: 0px;
+background-image:url();
+background-repeat:no-repeat;
+background-attachment:fixed;
+border:none;
+margin:0;
+padding:0;
 }
 
-textarea{ /* default style for textarre */
-}
-textarea:hover{
-}
-
-/* Table type is used for UI tables type 1 */
 .table1 {
-  width:90%;
-  background: #eee;
-  border: 1px solid #222;
-  margin: 0 auto;
+width:90%;
+background:#eee;
+border:1px solid #222;
+margin:0 auto;
 }
 
 input.address3 {
-	text-transform: uppercase;
+text-transform:uppercase;
 }
 
 div.csv {
-        background:lightgray;
-        color: black;
-        border: 1px solid black;
-        PADDING-LEFT: 3px;
-        Z-INDEX: 1;
-        width: 50%;
-        FLOAT: none;
-        VISIBILITY: visible;
-        MARGIN: 0 auto;
-        POSITION: static;
-        padding-top: 1px;
-        padding-bottom: 1px;
-        TEXT-ALIGN:center;
+background:lightgray;
+color:#000;
+border:1px solid #000;
+padding-left:3px;
+z-index:1;
+width:50%;
+float:none;
+visibility:visible;
+position:static;
+padding-top:1px;
+padding-bottom:1px;
+text-align:center;
+margin:0 auto;
 }
 
-.page_title_text { /* used */
-       padding-top: 2px;
-        padding-bottom: 2px;
-	font-weight: bold;
-	color: black;
-	TEXT-ALIGN:center;
+.page_title_text {
+padding-top:2px;
+padding-bottom:2px;
+font-weight:700;
+color:#000;
+text-align:center;
 }
 
 DIV.page_help_text {
-	background: lightgrey url(images/help.png) top left no-repeat;
-	BORDER: #a52a2a 1px solid;
-	padding-top:2px;
-        padding-bottom: 2px;
-	PADDING-LEFT: 10px;
-	Z-INDEX: 1;
-	width: 80%;
-	FLOAT: none;
-	VISIBILITY: visible;
-	MARGIN: 0 auto;
-	POSITION: static;
-        color: black;
-	TEXT-ALIGN:center;
+background:#D3D3D3 url(images/help.png) top left no-repeat;
+border:#a52a2a 1px solid;
+padding-top:2px;
+padding-bottom:2px;
+padding-left:10px;
+z-index:1;
+width:80%;
+float:none;
+visibility:visible;
+position:static;
+color:#000;
+text-align:center;
+margin:0 auto;
 }
 
-.menu_group_item a {
-}
 .menu_group_items a:hover {
-	color: #0000aa;
-	text-decoration: underline;
+color:#00a;
+text-decoration:underline;
 }
-
-
-
-textarea.texterror {
-	background-color: #fddbdb;
-}
-
-
 
 .tableheader {
-	background-color: #cccce5;
-	color: #330000;
+background-color:#cccce5;
+color:#300;
 }
 
 .notavailable {
-	font-weight:lighter;
-	font-style:italic;
-	color:#555555;
+font-weight:lighter;
+font-style:italic;
+color:#555;
 }
 
-.label { /* used */
-	font-weight:bold;
-	font-style:normal;
-	font-size:120%;
-	color:black;
-	background-color:#cccccc;
+.label {
+font-weight:700;
+font-style:normal;
+font-size:120%;
+color:#000;
+background-color:#ccc;
 }
 
 .OsRow {
-	background-color: #234567;
-	color: white;
+background-color:#234567;
+color:#FFF;
 }
 
 .table_index {
-	background-color: #F1FFDD;
+background-color:#F1FFDD;
 }
 
-/*li {
-	list-style-image: url(bullet.gif);
-}*/
-
-/*** CANVAS ***/
-
-#CanvasDiv{
-	background:#fff;
-	margin:5px;
-	border:thin inset #ddd;
+#CanvasDiv {
+background:#fff;
+border:thin inset #ddd;
+margin:5px;
 }
-
-/*** HEADER ***/
 
 #HeaderDiv {
-	overflow:hidden; /* REQUIRED: height according to items contained */
-	color:black;
-	padding-left:3px;
-}
-#HeaderWrapDiv{
+overflow:hidden;
+color:#000;
+padding-left:3px;
 }
 
-/*** HEADER - APP INFO ***/
-
-#AppInfoDiv{
-	float:left; /* REQUIRED: to the left */
-}
-#AppInfoDiv img{
-	vertical-align:middle; /* center image and text vertically */
-}
-#AppInfoCompanyDiv{
-	display:table-cell; /* REQUIRED: as a cell */
-}
-#AppInfoUserDiv{
-	display:table-cell; /* REQUIRED: as a cell */
-}
-#AppInfoUserDiv a{
-	color:black;
-}
-#AppInfoUserDiv a:hover{
-	color:blue;
-	text-decoration:underline;
-}
-#AppInfoModuleDiv{
+#AppInfoUserDiv a {
+color:#000;
 }
 
-/*** HEADER - QUICK MENU ***/
-
-#QuickMenuDiv{
-	float:right; /* to the right side  */
-	margin-top:3px;
-}
-#QuickMenuDiv ul{
-	list-style:none; /* hide the bullets */
-}
-#QuickMenuDiv li{
-    display:inline; /* items are inline */
+#QuickMenuDiv {
+float:right;
+margin-top:3px;
 }
 
-/*** links as buttons!!! clicking anywhere in the button will activate
-     the link!!! ***HJ***/
-
-#QuickMenuDiv li a{
-	padding:3px; /* links as button */
-	border:thin outset #ddd; /* un-pressed state */
-	background:#ddd;
-}
-#QuickMenuDiv li a:hover{
-	padding:3px; /* links as button */
-	border:thin inset #ddd; /* pressed state */
-	text-decoration:none; /* no underline */
-	color:blue;
+#QuickMenuDiv ul {
+list-style:none;
 }
 
-/*** BODY ***/
+#QuickMenuDiv li {
+display:inline;
+}
+
+#QuickMenuDiv li a {
+border:thin outset #ddd;
+background:#ddd;
+padding:3px;
+}
+
+#QuickMenuDiv li a:hover {
+border:thin inset #ddd;
+text-decoration:none;
+color:blue;
+padding:3px;
+}
 
 #BodyDiv {
-	clear:both; /* REQUIRED */
-	overflow:hidden; /* REQUIRED */
-	color:black;
-	background:white;
-	text-align:center;
+clear:both;
+overflow:hidden;
+color:#000;
+background:#FFF;
+text-align:center;
 }
+
 #BodyDiv table {
-	width:auto; /* automatic width */
-	margin: 0 auto;
-	margin-bottom:10px;
+width:auto;
+margin:0 auto 10px;
 }
+
 #BodyDiv table.selection {
-	background:#eee;
-	padding:5px;
-	border:thin outset #eee;
-}
-/*#BodyDiv .centre{
-	margin:0 auto 10px;
-    text-align:center;
-}*/
-
-/*** BODY - MAIN MENU ***/
-
-#MainMenuDiv{
-	float:left; /* REQUIRED: to the left side */
-	white-space:nowrap; /* don't break text */
-	text-align:center;
-	width:11%;
-	background:#ddd;
-}
-#MainMenuDiv ul{
-	list-style:none; /* REQUIRED: hide bullets */
-	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
-	margin:0;
-}
-#MainMenuDiv li{
-	list-style:none; /* REQUIRED */
-	padding:0; /* REQUIRED */
-}
-#MainMenuDiv li a{ /* link as button!!! not-pressed state */
-	display:block; /* REQUIRED */
-	padding:3px;
-	border:thin outset #ddd;
-	color:blue;
-}
-#MainMenuDiv li a:hover{ /* link as button!!! pressed state */
-	text-decoration:none;
-	padding:3px;
-	border:thin inset #ddd;
-	background:#ddd;
-}
-#MainMenuDiv .main_menu_selected a{ /* the selected button */
-	border:thin inset #ccc;
-	background:#ccc;
-	color:blue;
-	text-decoration:none;
+background:#eee;
+border:thin outset #eee;
+padding:5px;
 }
 
-/*** BODY - SUB MENU ***/
+#MainMenuDiv {
+float:left;
+white-space:nowrap;
+text-align:center;
+width:11%;
+background:#ddd;
+}
 
-#SubMenuDiv{
-	display:table; /* display as table, sub menu will auto adjust width */
-	width:89%; /* main menu is 10% */
-	text-align:left;
+#MainMenuDiv ul {
+list-style:none;
+margin:0;
+padding:0;
 }
-#SubMenuDiv ul{
-	list-style-type:none; /* REQUIRED: hide bullets */
-	padding:0; /* REQUIRED: remove extra gaps (ex-bullets) */
-	margin-top:0px;
-	margin-left:3px;
-	border:thin outset #ddd;
+
+#MainMenuDiv li {
+list-style:none;
+padding:0;
 }
-#SubMenuDiv li{
-	/*list-style:none;*/ /* REQUIRED: hide the bullets */
-	background:#eee;
-	padding:2px;
+
+#MainMenuDiv li a {
+display:block;
+border:thin outset #ddd;
+color:blue;
+padding:3px;
 }
-#SubMenuDiv li img{
-	vertical-align:middle; /* verticall align icon with the text */
+
+#MainMenuDiv li a:hover {
+text-decoration:none;
+border:thin inset #ddd;
+background:#ddd;
+padding:3px;
 }
+
+#MainMenuDiv .main_menu_selected a {
+border:thin inset #ccc;
+background:#ccc;
+color:blue;
+text-decoration:none;
+}
+
+#SubMenuDiv {
+display:table;
+width:89%;
+text-align:left;
+}
+
+#SubMenuDiv ul {
+list-style-type:none;
+margin-top:0;
+margin-left:3px;
+border:thin outset #ddd;
+padding:0;
+}
+
+#SubMenuDiv li {
+background:#eee;
+padding:2px;
+}
+
 #SubMenuDiv .menu_group_headers {
-	background:#ddd;
-	outline:thin outset #ddd;
-	text-align:center;
-	color:black;
+background:#ddd;
+outline:thin outset #ddd;
+text-align:center;
+color:#000;
 }
-#TransactionsDiv{
-	display:table-cell;
-	width: 33%;
-}
-#InquiriesDiv{
-	display:table-cell;
-	width: 33%;
-}
-#InquiriesDiv div{ /* default div, used for custom report header */
-	background:#ddd;
-	color:black;
-	padding:2px;
-	border:thin outset #ddd;
-	width: 33%;
-}
-#InquiriesDiv body{
-	background:#eee;
-	color:red;
-	padding:2px;
-	width: 33%;
-}
-#MaintenanceDiv{
-	display:table-cell;
-	width: 33%;
-/*    float:left;*/
-/*    width:32.5%;
-	border:thin solid black;*/
 
+#InquiriesDiv div {
+background:#ddd;
+color:#000;
+border:thin outset #ddd;
+width:33%;
+padding:2px;
 }
+
+#InquiriesDiv body {
+background:#eee;
+color:red;
+width:33%;
+padding:2px;
+}
+
 .menu_group_item p {
-	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
-	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
+color:#00f;
+text-indent:-10px;
+margin:0 0 0 12px;
 }
 
-/*** FOOTER ***/
-
-#FooterDiv{
-	clear:both; /* REQUIRED */
-    overflow:hidden;
-    color:gray;
-}
-#FooterWrapDiv{
-	overflow:hidden;
-	padding:3px;
-}
-#FooterLogoDiv{
-	float:right; /* right side */
-}
-#FooterVersionDiv{
-	float:left; /* left side */
-}
-#FooterTimeDiv{
-	clear:left; /* below  */
+#FooterDiv {
+clear:both;
+overflow:hidden;
+color:gray;
 }
 
-/*** END ***/
+#FooterWrapDiv {
+overflow:hidden;
+padding:3px;
+}
+
+#FooterLogoDiv {
+float:right;
+}
+
+#FooterTimeDiv {
+clear:left;
+}
+
+.tooltip {
+display:inline;
+position:relative;
+}
+
+.tooltip:hover:after {
+background:rgba(0,0,0,.8);
+border-radius:5px;
+top:32px;
+color:#fff;
+content:attr(title);
+left:20%;
+position:absolute;
+z-index:98;
+width:220px;
+padding:5px 15px;
+}
+
+.tooltip:hover:before {
+border:solid;
+top:26px;
+content:"";
+left:50%;
+position:absolute;
+z-index:99;
+border-color:#333 transparent;
+border-width:0 6px 6px;
+}
+
+#dialog_buttons,td.number,input.number,input.integer {
+text-align:right;
+}
+
+a:hover,#AppInfoUserDiv a:hover {
+color:blue;
+text-decoration:underline;
+}
+
+input:hover,button:hover,select:hover {
+background:#ADD8E6;
+}
+
+input.inputerror,select.selecterror,textarea.texterror {
+background-color:#fddbdb;
+}
+
+#AppInfoDiv,#FooterVersionDiv {
+float:left;
+}
+
+#AppInfoDiv img,#SubMenuDiv li img {
+vertical-align:middle;
+}
+
+#AppInfoCompanyDiv,#AppInfoUserDiv {
+display:table-cell;
+}
+
+#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv {
+display:table-cell;
+width:33%;
+}
