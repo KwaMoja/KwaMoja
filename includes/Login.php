@@ -66,10 +66,10 @@ echo _('Company');
 ?>:</label>
 
 					<?php
-if ($AllowCompanySelectionBox == 'Hide') {
+if ($AllowCompanySelectionBox === 'Hide') {
 	// do not show input or selection box
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-} else if ($AllowCompanySelectionBox == 'ShowInputBox'){
+} else if ($AllowCompanySelectionBox === 'ShowInputBox'){
 	// show input box
 	echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else {

@@ -946,7 +946,7 @@ if (isset($_POST['Description'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('short') . '):</td>
-		<td><input type="text" name="Description" size="52" required="required" minlength="1" maxlength="50" value="' . $Description . '" /></td>
+		<td><input type="text" name="Description" size="52" required="required" minlength="1" maxlength="50" value="' . stripslashes($Description) . '" /></td>
 	</tr>';
 
 foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
@@ -974,13 +974,24 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Image File (.jpg)') . ':</td>
-		<td><input type="file" id="ItemPicture" name="ItemPicture" /></td>';
+		<td><input type="file" id="ItemPicture" name="ItemPicture" />
+		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
+		</td>';
 
 if (function_exists('imagecreatefromjpg')) {
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . '&amp;width=100' . '&amp;height=100' . '" alt="" />';
 } else {
 	if (isset($StockID) and file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')) {
 		$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $StockID . '&amp;text=&amp;width=120&amp;height=120" alt="" />';
+		if (isset($_POST['ClearImage']) ) {
+			//workaround for many variations of permission issues that could cause unlink fail
+			@unlink($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg');
+			if(is_file($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg')) {
+				prnMsg(_('You do not have access to delete this item image file.'),'error');
+			} else {
+				$StockImgLink = _('No Image');
+			}
+		}
 	} else {
 		$StockImgLink = _('No Image');
 	}
@@ -1062,7 +1073,7 @@ echo '<tr>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input type="text" class="number" name="GrossWeight" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['KGS'], 'Variable') . '" /></td>
+		<td>' . _('Packaged Weight (KGs)') . ':</td><td><input type="text" class="number" name="GrossWeight" size="12" minlength="0" maxlength="10" value="' . locale_number_format($_POST['GrossWeight'], 'Variable') . '" /></td>
 	</tr>';
 
 echo '<tr>
