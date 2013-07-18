@@ -18,24 +18,24 @@ function hideAlert(){
 	document.getElementById("mask").style['display'] = "none";
 	return true;
 }
-function MakeConfirm(message, title, link) {
-	url=link.href;
-	theme=document.getElementById("Theme").value;
-	document.getElementById("mask").style['display'] = "inline";
-	html = '<div id="dialog_header"><img src="css/'+theme+'/images/help.png" />'+title+'</div><div id="dialog_main">'+message;
-	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
-	html = html + '<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
-	document.getElementById("dialog").innerHTML = html;
-	document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight)+"px";
-	document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
-	return false;
+function MakeConfirm(m, t, l) {
+url=l.href;
+th=document.getElementById("Theme").value;
+document.getElementById("mask").style['display'] = "inline";
+h='<div id="dialog_header"><img src="css/'+th+'/images/help.png" />'+t+'</div><div id="dialog_main">'+m;
+h=h+'</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />'
+h=h+'<a href="'+url+'" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>'
+document.getElementById("dialog").innerHTML = h;
+document.getElementById("dialog").style.marginTop = -(document.getElementById('dialog').offsetHeight)+"px";
+document.getElementById("dialog").style.marginLeft = -(document.getElementById('dialog').offsetWidth/2)+"px";
+return false;
 }
 function hideConfirm(result){
-	if (result=='') {
-		document.getElementById("dialog").innerHTML = '';
-		document.getElementById("mask").style['display'] = "none";
-	}
-	return true;
+if (result=='') {
+document.getElementById("dialog").innerHTML = '';
+document.getElementById("mask").style['display'] = "none";
+}
+return true;
 }
 function isInteger(s) {
 return (s.toString().search(/^-?[0-9]+$/) == 0);
@@ -53,23 +53,63 @@ function ShowTable(t){
 function HideTable(t){
 	document.getElementById(t).style["display"] = "none";
 }
+var kP='a';
 function rTN(event){
-	if (window.event) k=window.event.keyCode;
-	else if (event) k=event.which;
-	else return true;
-	kC=String.fromCharCode(k);
-	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27) || (k==32)) return true;
-	else if ((("0123456789.,-").indexOf(kC)>-1)) return true;
-	else return false;
+if (window.event) k=window.event.keyCode;
+else if (event) k=event.which;
+else return true;
+kC=String.fromCharCode(k);
+if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+else if ((("0123456789.,-").indexOf(kC)>-1)){
+if(("., ").indexOf(kC)>-1){
+if(("., ").indexOf(kP)>-1){
+return false;
+}else{
+kP = kC;
+return true;
+}
+}else{
+kP = kC;
+return true;
+}
+}
+else return false;
 }
 function rTI(event){
-	if (window.event) k=window.event.keyCode;
-	else if (event) k=event.which;
-	else return true;
-	kC=String.fromCharCode(k);
-	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if ((("0123456789").indexOf(kC)>-1)) return true;
-	else return false;
+if (window.event) k=window.event.keyCode;
+else if (event) k=event.which;
+else return true;
+kC=String.fromCharCode(k);
+if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+else if ((("0123456789").indexOf(kC)>-1)) return true;
+else return false;
+}
+function rLN(){
+var L=document.getElementById('Lang').value;
+switch(L){
+case 'GB':
+var p=/(?:^(-)?([1-9]{1,3}(?:,?\d{3})*(?:\.\d{1,})?)$)|(?:^(-)?(0\.\d{1,})$)/;
+break;
+case 'IN':
+var p=/(?:^(-)?([1-9]{1,2},)?(\d{2},)*(\d{3})(\.\d+)?$)|(?:^(-)?[1-9]{1,3}(\.\d+)?$)|(?:^(-)?(0\.\d{1,})$)/;
+break;
+case 'EE':
+var p=/(?:^(-)?[1-9]{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^(-)?(0\.\d{1,})$)/;
+break;
+case 'FR':
+var p=/(?:^(-)?[1-9]{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0,\d{1,})$)/;
+break;
+case 'GM':
+var p=/(?:^(-)?[1-9]{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0,\d{1,})$)/;
+break;
+}
+if(p.test(this.value)){
+this.setCustomValidity('');
+return true;
+}else{
+this.setCustomValidity('The number format is wrong');
+return false;
+};
 }
 function assignComboToInput(c,i){
 	i.value=c.value;
@@ -382,6 +422,7 @@ function initial(){
 			ds[i].onchange=changeDate;
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
+		if (ds[i].className=="number") ds[i].onchange=rLN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 	}
 }

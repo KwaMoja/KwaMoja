@@ -40,6 +40,24 @@ echo '<link href="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/default.css" 
 if ($debug == 1) {
 	echo '<link href="' . $RootPath . '/css/holmes.css" rel="stylesheet" type="text/css" />';
 }
+
+//Check users' locale format via their language
+//Then pass this information to the js for validation purpose
+
+$Collect = array('GB' => array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
+	'IN' => array('en_IN.utf8'),
+	'EE' => array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
+	'FR' => array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
+	'GM' => array('de_DE.utf8','el_GR.utf8','es_ES.utf8','fa_IR.utf8','id_ID.utf8','it_IT.utf8','ro_RO.utf8','lv_LV.utf8','nl_NL.utf8','pt_BR.utf8','pt_PT.utf8'));
+
+foreach ($Collect as $Key=>$Value){
+	if (in_array($Language,$Value)){
+		$Lang = $Key;
+		$_SESSION['Lang'] = $Lang;
+	}
+
+}
+
 echo '<script type="text/javascript" src = "' . $RootPath . '/javascripts/MiscFunctions.js"></script>';
 echo '<style media="screen">
 			.noPrint{ display: block; }
@@ -52,6 +70,8 @@ echo '<style media="screen">
 echo '</head>';
 if ($debug == 1) {
 	echo '<body class="holmes-debug">';
+} else {
+	echo '<body>';
 }
 
 if (isset($_GET['FontSize'])) {
@@ -86,6 +106,8 @@ echo '<style>
 				}
 			</style>';
 
+echo '<input type="hidden" name="Lang" id="Lang" value="'.$Lang.'" />';
+
 echo '<div id="CanvasDiv">';
 echo '<div id="HeaderDiv" class="noPrint">';
 echo '<div id="HeaderWrapDiv">';
@@ -99,7 +121,7 @@ if (isset($Title)) {
 	echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/company.png" title="' . _('Company') . '" alt="' . _('Company') . '"/>' . stripslashes($_SESSION['CompanyRecord']['coyname']);
 	echo '</div>';
 	echo '<div id="AppInfoUserDiv">';
-	echo '<a href="' . $RootPath . '/UserSettings.php"><img src="' . $RootPath . '/css/' . $Theme . '/images/user.png" title="User" alt="' . _('User') . '"/>' . stripslashes($_SESSION['UsersRealName']) . '</a>';
+	echo '<a title="' . _('Change settings for') . ' ' . stripslashes($_SESSION['UsersRealName']) . '" href="' . $RootPath . '/UserSettings.php"><img src="' . $RootPath . '/css/' . $Theme . '/images/user.png" alt="' . stripslashes($_SESSION['UsersRealName']) . '" /></a>';
 	echo '</div>';
 	echo '<div id="AppInfoModuleDiv">';
 	// Make the title text a class, can be set to display:none is some themes
@@ -114,18 +136,35 @@ if (isset($Title)) {
 	echo '</div>'; // AppInfoDiv
 	echo '<div id="QuickMenuDiv"><ul>';
 
-	echo '<li><a href="' . $RootPath . '/index.php">' . _('Main Menu') . '</a></li>'; //take off inline formatting, use CSS instead ===HJ===
+	echo '<li><a title="' . _('Return to the main menu') . '" href="' . $RootPath . '/index.php"><img src="' . $RootPath . '/css/' . $Theme . '/images/home.png" alt="' . _('Main Menu') . '" /></a></li>'; //take off inline formatting, use CSS instead ===HJ===
 
 	if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
-		echo '<li><a href="' . $RootPath . '/SelectCustomer.php">' . _('Customers') . '</a></li>';
-		echo '<li><a href="' . $RootPath . '/SelectProduct.php">' . _('Items') . '</a></li>';
-		echo '<li><a href="' . $RootPath . '/SelectSupplier.php">' . _('Suppliers') . '</a></li>';
 
-		$DefaultManualLink = '<li><a rel="external" target="_blank" accesskey="8" href="' . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '">' . _('Manual') . '</a></li>';
+		if (basename($_SERVER['PHP_SELF']) != 'index.php') {
+			$sql = "SELECT script FROM scripts WHERE script='" . basename($_SERVER['PHP_SELF']) . "' AND favourite=1";
+			$result = DB_query($sql, $db);
+
+			if (DB_num_rows($result) == 0) {
+				echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/add.png" title="' . _('Add this script to your list of commonly used') . '" alt="' . _('Add to commonly used') . '" /></li>';
+			} else {
+				echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/subtract.png" title="' . _('Remove this script from your list of commonly used') . '" alt="' . _('Remove from commonly used') . '" /></li>';
+			}
+		}
+
+		$sql = "SELECT script FROM scripts WHERE favourite='1'";
+		$result = DB_query($sql, $db);
+
+		echo '<li><select style="font-size: 150%" name="Favourites" onchange="window.open (this.value,\'_self\',false)">';
+		echo '<option value="">' . _('Commonly used') . '</option>';
+		while ($myrow = DB_fetch_array($result)) {
+			echo '<option value="' . $myrow['script'] . '">' . $myrow['script'] . '</option>';
+		}
+		echo '</select></li>';
+		$DefaultManualLink = '<li><a rel="external" title="' . _('Help') . '" target="_blank" href="' . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" alt="' . _('Help') . '" /></a></li>';
 
 		if (mb_substr($_SESSION['Language'], 0, 2) != 'en') {
 			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
-				echo '<li><a target="_blank" href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . $ViewTopic . $BookMark . '">' . _('Manual') . '</a></li>';
+				echo '<li><a target="_blank" href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" title="' . _('Help') . '" alt="' . _('Help') . '" /></a></li>';
 			} else {
 				echo $DefaultManualLink;
 			}
@@ -134,7 +173,7 @@ if (isset($Title)) {
 		}
 	}
 
-	echo '<li><a href="' . $RootPath . '/Logout.php" onclick="return MakeConfirm(\'' . _('Are you sure you wish to logout?') . '\', \'' . _('Confirm Logout') . '\', this);">' . _('Logout') . '</a></li>';
+	echo '<li><a title="' . _('Logout') . '" href="' . $RootPath . '/Logout.php" onclick="return MakeConfirm(\'' . _('Are you sure you wish to logout?') . '\', \'' . _('Confirm Logout') . '\', this);"><img src="' . $RootPath . '/css/' . $Theme . '/images/quit.png" alt="' . _('Logout') . '" /></a></li>';
 
 	echo '</ul></div>'; // QuickMenuDiv
 }
