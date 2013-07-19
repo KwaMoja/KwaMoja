@@ -561,7 +561,7 @@ echo '<tr>
 		<td>' . _('Restrict to Sales Person') . ':</td>
 		<td><select minlength="0" name="Salesman">';
 
-$sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1";
+$sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmanname";
 $result = DB_query($sql, $db);
 if ((isset($_POST['Salesman']) and $_POST['Salesman'] == '') or !isset($_POST['Salesman'])) {
 	echo '<option selected="selected" value="">' . _('Not a salesperson only login') . '</option>';
