@@ -821,7 +821,9 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	if ($IssueItemRow['controlled']==1){ //controlled
 
 		if ($IssueItemRow['serialised']==1){ //serialised
-			echo '<tr><th>' . _('Serial Numbers Issued') . '</th></tr>';
+			echo '<tr>
+					<th>' . _('Serial Numbers Issued') . '</th>
+				</tr>';
 
 			$SerialNoResult = DB_query("SELECT serialno
 										FROM stockserialitems

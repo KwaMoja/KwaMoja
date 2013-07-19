@@ -71,7 +71,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else if ($AllowCompanySelectionBox === 'ShowInputBox'){
 	// show input box
-	echo '<input type="text" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+	echo '<input type="text" required="required" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else {
 	// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 	echo '<select name="CompanyNameField">';
@@ -98,11 +98,11 @@ if ($AllowCompanySelectionBox === 'Hide') {
 					<label><?php
 echo _('User name');
 ?>:</label>
-					<input type="text" name="UserNameEntryField" maxlength="20" /><br />
+					<input type="text" required="required" name="UserNameEntryField" maxlength="20" /><br />
 					<label><?php
 echo _('Password');
 ?>:</label>
-					<input type="password" name="Password" />
+					<input type="password" required="required" name="Password" />
 	   <div id="demo_text">
 	   <?php
 if (isset($demo_text)) {
@@ -127,19 +127,20 @@ echo _('Login');
 					<a href="https://sourceforge.net/projects/kwamoja" target="_blank"><img src="css/sourceforge-logo.png" style="width:70%; border: 1px solid #A49999;" /></a><br />
 					<a href="https://launchpad.net/kwamoja" target="_blank"><img src="css/launchpad.png" style="width:70%; border: 1px solid #A49999;" /></a><br />
 					<a href="https://kwamoja.codeplex.com/" target="_blank"><img src="css/codeplex-logo.png" style="width:70%; border: 1px solid #A49999;" /></a><br /><br />
-					<b>Follow us at :</b><br />
+				</div>
+			</td>
+			<td style="width: 25%; padding-left: 0%;">
+				<div>
+					<b>Follow us at :</b>
 					<!--Follow us on twitter button-->
 					<a href="https://twitter.com/KwaMoja" class="twitter-follow-button" data-show-count="false">Follow @KwaMoja</a><br />
 					<a href="http://www.facebook.com/Kwamoja" target="_blank"><img src="css/FindUsOnFacebook.png" style="width:70%; border: 1px solid #A49999;" /></a>
+					<a href="http://www.linkedin.com/groups/KwaMoja-4833235?trk=myg_ugrp_ovr" target="_blank"><img src="css/linkedin.png" style="width:70%; border: 1px solid #A49999;" /></a>
 				</div>
 			</td>
 		</tr>
 	</table>
 </div>
-	<script type="text/javascript">
-			<!--
-				  document.forms[0].UserNameEntryField.focus();
-			//-->
-	</script>
+
 </body>
 </html>

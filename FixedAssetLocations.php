@@ -125,7 +125,7 @@ if (isset($_GET['SelectedLocation'])) {
 
 echo '<tr>
 		<th style="text-align:left">' . _('Location Description') . '</th>
-		<td><input type="text" name="LocationDescription"minlength="1" maxlength="20" size="20" value="' . $LocationDescription . '" /></td>
+		<td><input type="text" name="LocationDescription" required="required" minlength="1" maxlength="20" size="20" value="' . $LocationDescription . '" /></td>
 	</tr>
 	<tr>
 		<th style="text-align:left">' . _('Parent Location') . '</th>

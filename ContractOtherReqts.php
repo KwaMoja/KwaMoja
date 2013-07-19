@@ -111,7 +111,7 @@ if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
 			$k = 1;
 		}
 
-		echo '<td><textarea name="Requirement' . $ContractReqtID . '" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
+		echo '<td><textarea name="Requirement' . $ContractReqtID . '" required="required" autofocus="autofocus" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
 			  <td><input type="text" class="number" maxlength="11" required="required" minlength="1" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity, 'Variable') . '" /></td>
 			  <td><input type="text" class="number" maxlength="11" required="required" minlength="1" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
@@ -148,15 +148,15 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Requirement Description') . '</td>
-			<td><textarea name="RequirementDescription" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td>
+			<td><textarea name="RequirementDescription" required="required" autofocus="autofocus" cols="30" rows="3">' . $_POST['RequirementDescription'] . '</textarea></td>
 		</tr>
 		<tr>
 			<td>' . _('Quantity Required') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="10"	minlength="0" maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
+			<td><input type="text" class="number" name="Quantity" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Cost Per Unit') . ':</td>
-			<td><input type="text" class="number" name="CostPerUnit" size="10"	minlength="0" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
+			<td><input type="text" class="number" name="CostPerUnit" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
 		</tr>
 
 		</table>

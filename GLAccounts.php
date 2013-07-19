@@ -228,22 +228,26 @@ if (!isset($_GET['delete'])) {
 					<td>' . $_POST['AccountCode'] . '</td></tr>';
 	} else {
 		echo '<table class="selection">';
-		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="11" class="number" required="required" minlength="1" maxlength="20" /></td>
-				</tr>';
+		echo '<tr>
+				<td>' . _('Account Code') . ':</td>
+				<td><input type="text" name="AccountCode" size="11" class="number" required="required" minlength="1" maxlength="20" /></td>
+			</tr>';
 	}
 
 	if (!isset($_POST['AccountName'])) {
 		$_POST['AccountName'] = '';
 	}
-	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="text" size="51" required="required" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
+	echo '<tr>
+			<td>' . _('Account Name') . ':</td>
+			<td><input type="text" size="51" required="required" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td>
+		</tr>';
 
 	$sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);
 
 	echo '<tr>
 			<td>' . _('Account Group') . ':</td>
-			<td><select minlength="0" name="Group">';
+			<td><select required="required" minlength="1" name="Group">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Group']) and $myrow[0] == $_POST['Group']) {

@@ -6,6 +6,28 @@ Freight cost is determined by looking for a match of destination city from the A
 
 function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAddCountry, $TotalVolume, $TotalWeight, $FromLocation, $Currency, $db) {
 
+	$ParameterError = FALSE;
+	if ((!isset($BrAdd2)) and (!isset($BrAdd3)) and (!isset($BrAdd4)) and (!isset($BrAdd5)) and (!isset($BrAddCountry))){
+		// No address field to detect destination ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if ((!isset($TotalVolume)) and (!isset($TotalWeight))){
+		// No weight AND no volume ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if (!isset($FromLocation)){
+		// No location FROM ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if (!isset($Currency)){
+		// No Currency ==> ERROR
+		$ParameterError = TRUE;
+	}
+	if ($ParameterError){
+		return array ("NOT AVAILABLE", "NOT AVAILABLE");
+	}
+	// All parameters are OK, so we move ahead...
+
 	// make an array of all the words that could be the name of the destination zone (city, state or ZIP)
 	$FindCity = explode(' ', $BrAdd2 . ' ' . $BrAdd3 . ' ' . $BrAdd4 . ' ' . $BrAdd5);
 
@@ -19,7 +41,7 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 					AND destinationcountry = '" . $BrAddCountry . "'
 					AND maxkgs > " . $TotalWeight . "
 				AND maxcub >" . $TotalVolume . " ";
-	if (($BrAdd2 != "") OR ($BrAdd3 != "") OR ($BrAdd4 != "") OR ($BrAdd5 != "")){
+	if (($BrAdd2 != "") or ($BrAdd3 != "") or ($BrAdd4 != "") or ($BrAdd5 != "")){
 		// if there is some details of the address besides the country
 		$sql .= " AND (";
 		foreach ($FindCity as $City) {
@@ -34,7 +56,7 @@ function CalcFreightCost($TotalValue, $BrAdd2, $BrAdd3, $BrAdd4, $BrAdd5, $BrAdd
 
 	$CalcFreightCostResult = DB_query($sql, $db);
 	if (DB_error_no($db) != 0) {
-		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db);
+		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg($db) . ' - ' . $sql;
 	} elseif (DB_num_rows($CalcFreightCostResult) > 0) {
 
 		$CalcFreightCost =9999999999;

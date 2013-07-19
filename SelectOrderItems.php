@@ -593,7 +593,7 @@ if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['Items' . $id
 			 <table cellpadding="3" class="selection">
 				<tr>
 				<td>' . _('Part of the Customer Branch Name') . ':</td>
-				<td><input tabindex="1" type="text" name="CustKeywords" size="20" minlength="0" maxlength="25" /></td>
+				<td><input tabindex="1" type="text" name="CustKeywords" size="20" autofocus="autofocus" minlength="0" maxlength="25" /></td>
 				<td><b>' . _('OR') . '</b></td>
 				<td>' . _('Part of the Customer Branch Code') . ':</td>
 				<td><input tabindex="2" type="text" name="CustCode" size="15" minlength="0" maxlength="18" /></td>
@@ -1934,9 +1934,6 @@ else { //dont require customer selection
 		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 	} //$_SESSION['Items' . $identifier]->ItemsOrdered >= 1
 } //end of else not selecting a customer
-
-if (isset($_GET['NewOrder']) and $_GET['NewOrder'] != '') {
-	echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectCustomer.CustKeywords);}</script>';
-} //isset($_GET['NewOrder']) and $_GET['NewOrder'] != ''
+''
 include('includes/footer.inc');
 ?>

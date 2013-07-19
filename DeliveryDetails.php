@@ -994,7 +994,7 @@ echo '<br />
 	<table class="selection">
 	<tr>
 		<td>' . _('Deliver To') . ':</td>
-		<td><input type="text" size="42" required="required" minlength="1" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
+		<td><input type="text" size="42" autofocus="autofocus" required="required" minlength="1" maxlength="40" name="DeliverTo" value="' . $_SESSION['Items' . $identifier]->DeliverTo . '" /></td>
 	</tr>';
 
 echo '<tr>

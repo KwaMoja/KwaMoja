@@ -213,7 +213,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Area Code') . ':</td>
-				<td><input tabindex="1" type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" required="required" minlength="1" maxlength="3" /></td>
+				<td><input tabindex="1" type="text" name="AreaCode" value="' . $_POST['AreaCode'] . '" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="3" /></td>
 			</tr>';
 	}
 

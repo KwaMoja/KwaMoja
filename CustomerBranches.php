@@ -372,8 +372,7 @@ if (!isset($SelectedBranch)) {
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />
-				 ' . ' ' . _('Branches defined for') . ' ' . $DebtorNo . ' - ' . $myrow[0] . '</p>';
+		echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Branches defined for') . ' ' . $DebtorNo . ' - ' . $myrow[0] . '</p>';
 		echo '<table class="selection">
 			<tr>
 				<th>' . _('Code') . '</th>
@@ -399,17 +398,17 @@ if (!isset($SelectedBranch)) {
 			}
 
 			printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="Mailto:%s">%s</a></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
-				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this branch?') . '\', \'Confirm Delete\', this);">%s</a></td></tr>', $myrow[1], $myrow[2], $myrow[5], $myrow[3], $myrow[4], $myrow[6], $myrow[7], $myrow[8], $myrow[8], $myrow[9], ($myrow[10] ? _('No') : _('Yes')), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $DebtorNo, urlencode($myrow[1]), _('Edit'), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $DebtorNo, urlencode($myrow[1]), _('Delete Branch'));
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="Mailto:%s">%s</a></td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
+					<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this branch?') . '\', \'Confirm Delete\', this);">%s</a></td></tr>', $myrow[1], $myrow[2], $myrow[5], $myrow[3], $myrow[4], $myrow[6], $myrow[7], $myrow[8], $myrow[8], $myrow[9], ($myrow[10] ? _('No') : _('Yes')), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $DebtorNo, urlencode($myrow[1]), _('Edit'), htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $DebtorNo, urlencode($myrow[1]), _('Delete Branch'));
 
 			if ($myrow[10]) {
 				$TotalDisable++;
@@ -583,7 +582,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Branch Code') . ':</td>
-					<td><input tabindex="1" type="text" name="BranchCode" size="12" required="required" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
+					<td><input tabindex="1" type="text" name="BranchCode" size="12" autofocus="autofocus" required="required" minlength="1" maxlength="10" value="' . $_POST['BranchCode'] . '" /></td>
 				</tr>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -605,7 +604,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ContactName'])) {
 		$_POST['ContactName'] = '';
 	}
-	echo '<td><input tabindex="3" type="text" name="ContactName" size="41" minlength="0" maxlength="40" value="' . $_POST['ContactName'] . '" /></td>
+	echo '<td><input tabindex="3" type="text" name="ContactName" size="41" required="required" minlength="1" maxlength="40" value="' . $_POST['ContactName'] . '" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Street Address 1 (Street)') . ':</td>';
 	if (!isset($_POST['BrAddress1'])) {

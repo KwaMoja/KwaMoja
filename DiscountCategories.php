@@ -14,7 +14,7 @@ if (isset($_POST['stockID'])) {
 } elseif (isset($_GET['StockID'])) {
 	$_POST['StockID'] = $_GET['StockID'];
 	$_POST['ChooseOption'] = 1;
-	$_POST['selectchoice'] = 1;
+	$_POST['SelectChoice'] = 1;
 }
 
 if (isset($_POST['submit'])) {
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql, $db);
 }
 
-if (isset($_POST['selectchoice'])) {
+if (isset($_POST['SelectChoice'])) {
 	echo '<form onSubmit="return VerifyForm(this);" id="update" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -97,10 +97,13 @@ if (isset($_POST['selectchoice'])) {
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ChooseOption" value="' . $_POST['ChooseOption'] . '" />';
-	echo '<input type="hidden" name="selectchoice" value="' . $_POST['selectchoice'] . '" />';
+	echo '<input type="hidden" name="SelectChoice" value="' . $_POST['SelectChoice'] . '" />';
 
 	if (isset($_POST['ChooseOption']) and $_POST['ChooseOption'] == 1) {
-		echo '<table class="selection"><tr><td>' . _('Discount Category Code') . ':</td><td>';
+		echo '<table class="selection">
+				<tr>
+					<td>' . _('Discount Category Code') . ':</td>
+					<td>';
 
 		if (isset($_POST['DiscCat'])) {
 			echo '<input type="text" name="DiscountCategory" required="required" minlength="1" maxlength="2" size="2" value="' . $_POST['DiscCat'] . '" /></td>
@@ -125,7 +128,8 @@ if (isset($_POST['selectchoice'])) {
 		if (!isset($_POST['PartDesc'])) {
 			$_POST['PartDesc'] = '';
 		}
-		echo '<tr><td>' . _('Enter Stock Code') . ':</td>
+		echo '<tr>
+				<td>' . _('Enter Stock Code') . ':</td>
 				<td><input type="text" name="StockID" size="20" minlength="0" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
 				<td>' . _('Partial code') . ':</td>
 				<td><input type="text" name="PartID" size="10" minlength="0" maxlength="10" value="' . $_POST['PartID'] . '" /></td>
@@ -202,10 +206,12 @@ if (isset($_POST['selectchoice'])) {
 
 		$result = DB_query($sql, $db);
 
-		echo '<br /><table class="selection">';
-		echo '<tr>
-			<th>' . _('Discount Category') . '</th>
-			<th>' . _('Item') . '</th></tr>';
+		echo '<br />
+				<table class="selection">
+					<tr>
+						<th>' . _('Discount Category') . '</th>
+						<th>' . _('Item') . '</th>
+					</tr>';
 
 		$k = 0; //row colour counter
 
@@ -235,20 +241,22 @@ if (isset($_POST['selectchoice'])) {
 	}
 }
 
-if (!isset($_POST['selectchoice'])) {
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr><td>' . _('Update discount category for') . '</td>';
-	echo '<td><select minlength="0" name="ChooseOption" onchange="ReloadForm(choose.selectchoice)">';
-	echo '<option value="1">' . _('a single stock item') . '</option>';
-	echo '<option value="2">' . _('a complete stock category') . '</option>';
-	echo '</select></td></tr>
-		</table>
-		<br />';
-	echo '<div class="centre"><input type="submit" name="selectchoice" value="' . _('Select') . '" /></div>';
-	echo '</form>';
+if (!isset($_POST['SelectChoice'])) {
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				<table class="selection">
+					<tr>
+						<td>' . _('Update discount category for') . '</td>
+						<td>
+							<select minlength="0" name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
+								<option value="1">' . _('a single stock item') . '</option>
+								<option value="2">' . _('a complete stock category') . '</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<div class="centre"><input type="submit" name="SelectChoice" value="' . _('Select') . '" /></div>
+			</form>';
 }
 
 include('includes/footer.inc');

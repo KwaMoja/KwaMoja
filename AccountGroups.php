@@ -383,7 +383,7 @@ if (!isset($_GET['delete'])) {
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
 				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="GroupName" size="50" minlength="3" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
+				<td><input tabindex="1" type="text" name="GroupName" size="50" autofocus="autofocus" required="required" minlength="3" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Parent Group') . ':' . '</td>
@@ -458,7 +458,6 @@ if (!isset($_GET['delete'])) {
 
 	echo '</table><br />';
 
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].GroupName);</script>';
 	echo '</div>';
 	echo '</form>';
 

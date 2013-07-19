@@ -306,11 +306,11 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			<table class="selection">
 			<tr>
 				<td>' . _('From Supplier Code') . ':</td>
-				<td><input tabindex="1" type="text" minlength="0" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
+				<td><input tabindex="1" type="text" required="required" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Supplier Code') . ':</td>
-				<td><input tabindex="2" type="text" minlength="0" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
+				<td><input tabindex="2" type="text" required="required" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('All balances or overdues only') . ':' . '</td>

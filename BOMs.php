@@ -791,9 +791,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			</tr>';
 
 		if ($ParentMBflag == 'M' or $ParentMBflag == 'G') {
-			echo '<tr><td>' . _('Auto Issue this Component to Work Orders') . ':</td>
-				<td>
-				<select required="required" minlength="1" tabindex="7" name="AutoIssue">';
+			echo '<tr>
+					<td>' . _('Auto Issue this Component to Work Orders') . ':</td>
+					<td>
+					<select required="required" minlength="1" tabindex="7" name="AutoIssue">';
 
 			if (!isset($_POST['AutoIssue'])) {
 				$_POST['AutoIssue'] = $_SESSION['AutoIssue'];

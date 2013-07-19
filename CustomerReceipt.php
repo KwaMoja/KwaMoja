@@ -737,7 +737,7 @@ echo '<br />
 	<table class="selection" summary="' . _('Select batch header details') . '">
 	<tr>
 		<td>' . _('Bank Account') . ':</td>
-		 <td><select required="required" minlength="1" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
+		 <td><select autofocus="autofocus" required="required" minlength="1" tabindex="1" name="BankAccount" onchange="ReloadForm(form1.BatchInput)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -960,11 +960,11 @@ if (isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_POS
 			</tr>';
 
 	echo '<tr>
-		<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['balance'], $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
-		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
-		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['due'] - $_SESSION['CustomerRecord']['overdue1']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
-		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['overdue1'] - $_SESSION['CustomerRecord']['overdue2']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['overdue2'], $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['balance'], $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['balance'] - $_SESSION['CustomerRecord']['due']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['due'] - $_SESSION['CustomerRecord']['overdue1']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format(($_SESSION['CustomerRecord']['overdue1'] - $_SESSION['CustomerRecord']['overdue2']), $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($_SESSION['CustomerRecord']['overdue2'], $_SESSION['CustomerRecord']['currdecimalplaces']) . '</td>
 		</tr>
 		</table>
 		<br />';
@@ -1067,10 +1067,9 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 			<td>' . _('Payee Bank Details') . ':</td>
 			<td><input tabindex="12" type="text" name="PayeeBankDetail" minlength="0" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" /></td>
 		</tr>';
-	//	echo '<tr><td>' . _('Narrative') . ':</td>
-	//		<td><input tabindex="13" type="text" name="Narrative" minlength="0" maxlength="30" size="32" value="' . $_POST['Narrative'] . '" /></td></tr>';
-	echo '<td>' . _('Narrative') . ':</td>
-			<td><textarea name="Narrative"  cols="40" rows="1"></textarea></td>
+	echo '<tr>
+			<td>' . _('Narrative') . ':</td>
+			<td><textarea name="Narrative" cols="40" rows="1"></textarea></td>
 		</tr>
 		</table>
 		<br />

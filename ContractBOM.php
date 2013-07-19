@@ -295,7 +295,8 @@ if (!isset($_GET['Edit'])) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
 	echo '<table class="selection">
 			<tr></tr>
-			<tr><td><select minlength="0" name="StockCat">';
+			<tr>
+				<td><select minlength="0" name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	while ($myrow1 = DB_fetch_array($result1)) {
@@ -319,7 +320,7 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 			<td>' . _('Enter text extracts in the description') . ':</td>
-			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+			<td><input type="text" name="Keywords" size="20" autofocus="autofocus" minlength=1" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>

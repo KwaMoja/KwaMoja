@@ -80,8 +80,8 @@ if (isset($_SESSION['Contract' . $identifier]) and (isset($_POST['EnterContractB
 	/*User hit the button to enter line items -
 	then meta refresh to Contract_Items.php*/
 	$InputError = false;
-	if (mb_strlen($_SESSION['Contract' . $identifier]->ContractRef) < 2) {
-		prnMsg(_('The contract reference must be entered (and be longer than 2 characters) before the requirements of the contract can be setup'), 'warn');
+	if (mb_strlen($_SESSION['Contract' . $identifier]->ContractRef) < 5) {
+		prnMsg(_('The contract reference must be entered (and be longer than 5 characters) before the requirements of the contract can be setup'), 'warn');
 		$InputError = true;
 	}
 
@@ -745,7 +745,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 	echo '<table cellpadding="3" class="selection">
 			<tr>
 			<td><h5>' . _('Part of the Customer Branch Name') . ':</h5></td>
-			<td><input tabindex="1" type="text" name="CustKeywords" size="20" minlength="0" maxlength="25" /></td>
+			<td><input tabindex="1" type="text" name="CustKeywords" size="20" autofocus="autofocus" minlength="0" maxlength="25" /></td>
 			<td><h2><b>' . _('OR') . '</b></h2></td>
 			<td><h5>' . _('Part of the Customer Branch Code') . ':</h5></td>
 			<td><input tabindex="2" type="text" name="CustCode" size="15" minlength="0" maxlength="18" /></td>
@@ -829,7 +829,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 				<td>';
 	if ($_SESSION['Contract' . $identifier]->Status == 0) {
 		/*Then the contract has not become an order yet and we can allow changes to the ContractRef */
-		echo '<input type="text" name="ContractRef" size="21" required="required" minlength="3" maxlength="20" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />';
+		echo '<input type="text" name="ContractRef" size="21" autofocus="autofocus" required="required" minlength="5" maxlength="20" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />';
 	} else {
 		/*Just show the contract Ref - dont allow modification */
 		echo '<input type="hidden" name="ContractRef" value="' . $_SESSION['Contract' . $identifier]->ContractRef . '" />' . $_SESSION['Contract' . $identifier]->ContractRef;
@@ -920,7 +920,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 		</tr>
 		<tr>
 			<td>' . _('Contract Description') . ':</td>
-			<td><textarea name="ContractDescription" style="width:100%" rows="5" cols="40">' . $_SESSION['Contract' . $identifier]->ContractDescription . '</textarea></td>
+			<td><textarea name="ContractDescription" required="required" style="width:100%" rows="5" cols="40">' . $_SESSION['Contract' . $identifier]->ContractDescription . '</textarea></td>
 		</tr><tr>
 			<td>' . _('Drawing File') . ' .jpg' . ' ' . _('format only') . ':</td>
 			<td><input type="file" id="Drawing" name="Drawing" /></td>

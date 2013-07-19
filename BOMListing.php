@@ -104,6 +104,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	$Title = _('Bill Of Material Listing');
 	include('includes/header.inc');
+
+	$sql = "SELECT min(stockid) AS fromcriteria,
+					max(stockid) AS tocriteria
+				FROM stockmaster";
+
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_array($result);
+
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
@@ -114,12 +122,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 			  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			  <table class="selection">';
 
-		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="FromCriteria" size="20" required="required" minlength="1" maxlength="20" value="1" /></td>
+		echo '<tr>
+				<td>' . _('From Inventory Part Code') . ':' . '</td>
+				<td><input tabindex="1" type="text" name="FromCriteria" size="20" autofocus="autofocus" required="required" minlength="1" maxlength="20" value="' . $myrow['fromcriteria'] . '" /></td>
 			</tr>';
 
-		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" name="ToCriteria" size="20" required="required" minlength="1" maxlength="20" value="zzzzzzz" /></td>
+		echo '<tr>
+				<td>' . _('To Inventory Part Code') . ':' . '</td>
+				<td><input tabindex="2" type="text" name="ToCriteria" size="20" required="required" minlength="1" maxlength="20" value="' . $myrow['tocriteria'] . '" /></td>
 			</tr>';
 
 
@@ -127,7 +137,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
 			 </div>
 			 </form>';
-		echo '<script type="text/javascript">defaultControl(document.forms[0].FromCriteria);</script>';
+
 	}
 	include('includes/footer.inc');
 

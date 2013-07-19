@@ -763,9 +763,9 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 			<td class="number">' . locale_number_format($TaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format(($_SESSION['Items' . $identifier]->total + $TaxTotal), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
 		</tr>
-		<tr class="EvenTableRows">';
-	echo '<td colspan="10" class="number"><b>' . _('Rounded Total') . '</b></td>
-		<td class="number">' . locale_number_format(round($_SESSION['Items' . $identifier]->total + $TaxTotal, 0), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
+		<tr class="EvenTableRows">
+			<td colspan="10" class="number"><b>' . _('Rounded Total') . '</b></td>
+			<td class="number">' . locale_number_format(round($_SESSION['Items' . $identifier]->total + $TaxTotal, 0), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
 		</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="' . $TaxTotal . '" />';
@@ -776,11 +776,14 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		<td><input type="text" size="25" minlength="0" maxlength="25" name="DeliverTo" value="' . stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" /></td>
 	</tr>';
 	echo '<tr>
-		<td style="color:red">' . _('Contact Phone Number') . ':</td>
-		<td><input type="text" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
-	</tr>';
+			<td style="color:red">' . _('Contact Phone Number') . ':</td>
+			<td><input type="tel" size="25" minlength="0" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items' . $identifier]->PhoneNo) . '" /></td>
+		</tr>';
 
-	echo '<tr><td style="color:red">' . _('Contact Email') . ':</td><td><input type="email" size="25" minlength="0" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td></tr>';
+	echo '<tr>
+			<td style="color:red">' . _('Contact Email') . ':</td>
+			<td><input type="email" size="25" minlength="0" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items' . $identifier]->Email) . '" /></td>
+		</tr>';
 
 	echo '<tr>
 			<td style="color:red">' . _('Customer Reference') . ':</td>
@@ -825,12 +828,6 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0) {
 		}
 	}
 	echo '</select></td></tr>';
-
-	if ($_SESSION['UserStockLocation'] == 'KG') {
-		echo '<input type="hidden" name="BankAccount" value="8410" />';
-	} else { //its Shepperton Road
-		echo '<input type="hidden" name="BankAccount" value="8411" />';
-	}
 
 	if (!isset($_POST['AmountPaid'])) {
 		$_POST['AmountPaid'] = 0;
@@ -1654,7 +1651,7 @@ if (!isset($_POST['ProcessReturn'])) {
 		<td><b><?php
 		echo _('Enter partial Description');
 ?>:</b>
-		<input tabindex="2" type="text" name="Keywords" size="20" minlength="0" maxlength="25" value="<?php
+		<input tabindex="2" type="text" autofocus="autofocus" name="Keywords" size="20" minlength="0" maxlength="25" value="<?php
 		if (isset($_POST['Keywords']))
 			echo $_POST['Keywords'];
 ?>" /></td>
@@ -1678,9 +1675,6 @@ if (!isset($_POST['ProcessReturn'])) {
 ?>" /></td>
 
 		<?php
-		if (!isset($_POST['PartSearch'])) {
-			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
-		}
 
 		echo '</tr></table><br />';
 		// Add some useful help as the order progresses
@@ -1798,9 +1792,6 @@ if (!isset($_POST['ProcessReturn'])) {
 						<td class="number">%s</td>
 						<td><input class="number" required="required" minlength="1" maxlength="11" tabindex="' . strval($j + 7) . '" type="text" size="6" name="ReturnQty%s" value="0" /></font><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $myrow['decimalplaces']), locale_number_format($DemandQty, $myrow['decimalplaces']), locale_number_format($OnOrder, $myrow['decimalplaces']), locale_number_format($Available, $myrow['decimalplaces']), $i, $i, $myrow['stockid']);
-				if ($j == 1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
-				}
 				$j++;
 				$i++;
 				#end of page full new headings if

@@ -146,9 +146,9 @@ echo '<tr><td>' . _('FTP Server or Email Address') . ':</td>
 if ($myrow['editransport'] == 'ftp') {
 
 	echo '<tr><td>' . _('FTP Server User Name') . ':</td>
-			<td><input tabindex="6" type="text" name="EDIServerUser" size="20" minlength="0" maxlength="20" value="' . $myrow['ediserveruser'] . '" /></td></tr>';
+			<td><input tabindex="6" type="text" name="EDIServerUser" size="20" required="required" minlength="1" maxlength="20" value="' . $myrow['ediserveruser'] . '" /></td></tr>';
 	echo '<tr><td>' . _('FTP Server Password') . ':</td>
-			<td><input tabindex="7" type="text" name="EDIServerPwd" size="20" minlength="0" maxlength="20" value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
+			<td><input tabindex="7" type="text" name="EDIServerPwd" size="20" required="required" minlength="1" maxlength="20" value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
 }
 
 echo '</table>

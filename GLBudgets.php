@@ -36,7 +36,7 @@ echo '<br />';
 echo '<table summary="' . _('General ledger account election') . '">
 		<tr>
 			<td>' . _('Select GL Account') . ':</td>
-			<td><select minlength="0" name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
+			<td><select required="required" minlength="0" name="SelectedAccount" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
 				accountname
@@ -232,7 +232,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 			<td><input class="number" type="text" size="12" name="AnnualAmountTY" value="0.00" /></td>
 			<td>' . _('Annual Budget') . '</td>
 			<td><input type="submit" name="Apportion" value="' . _('Apportion Budget') . '" /></td>
-			<td><input onchange="numberFormat(this,2)" class="number" type="text" size="12" name="AnnualAmount" value="0.00" /></td>
+			<td><input onchange="numberFormat(this,' . $_SESSION['CompanyRecord']['decimalplaces'] . ')" class="number" type="text" size="14" name="AnnualAmount" value="0.00" /></td>
 		</tr>
 		</table>';
 

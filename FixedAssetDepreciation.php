@@ -276,7 +276,7 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false) {
 		<tr>';
 	if ($AllowUserEnteredProcessDate) {
 		echo '<td>' . _('Date to Process Depreciation') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ProcessDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
 	} else {
 		echo '<td>' . _('Date to Process Depreciation') . ':</td>
 			<td>' . $_POST['ProcessDate'] . '</td>';

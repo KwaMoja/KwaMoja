@@ -153,11 +153,11 @@ echo '<tr>
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
+			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') . ':</td>
-			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" minlength="0" maxlength="55" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" required="required" minlength="1" maxlength="55" /></td>
 		</tr>
 		<tr>
 		<td><input type="hidden" name="Access" value="1" />
@@ -271,12 +271,6 @@ echo '</select></td>
 	</div>
 	</div>
 	</form>';
-
-if (isset($_GET['SelectedUser'])) {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Password);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
-}
 
 include('includes/footer.inc');
 ?>

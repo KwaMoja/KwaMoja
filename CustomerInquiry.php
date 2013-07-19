@@ -154,7 +154,8 @@ echo '<br />
 	<div class="centre">
 		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
 		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . _('Show all transactions after') . ': <input tabindex="1" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" minlength="0" maxlength="10" size="12" />
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . _('Show all transactions after') . ':
+		<input tabindex="1" type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" id="datepicker" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" minlength="0" maxlength="10" size="12" />
 		<input tabindex="2" type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
 		</div>
 	</form>

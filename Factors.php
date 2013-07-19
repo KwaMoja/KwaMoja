@@ -233,11 +233,11 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		</tr>
 		<tr>
 			<td>' . _('Telephone') . ':</td>
-			<td><input tabindex="9" type="text" name="Telephone" size="20" minlength="0" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
+			<td><input tabindex="9" type="tel" name="Telephone" size="20" minlength="0" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Fax') . ':</td>
-			<td><input tabindex="10" type="text" name="Fax" size="20" minlength="0" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
+			<td><input tabindex="10" type="tel" name="Fax" size="20" minlength="0" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':</td>

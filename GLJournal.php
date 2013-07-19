@@ -244,10 +244,10 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)) {
 
 echo '<table>
 		<tr>
-		<td colspan="5"><table class="selection">
+			<td colspan="5"><table class="selection">
 						<tr>
 							<td>' . _('Date to Process Journal') . ':</td>
-							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" minlength="0" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
+							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" autofocus="autofocus" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
 							<td>' . _('Type') . ':</td>
 							<td><select minlength="0" name="JournalType">';
 

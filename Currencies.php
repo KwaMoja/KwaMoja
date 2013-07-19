@@ -440,7 +440,7 @@ if (!isset($_GET['delete'])) {
 			<td>' . _('Decimal Places to Display') . ':</td>
 			<td>';
 	if (!isset($_POST['DecimalPlaces'])) {
-		$_POST['DecimalPlaces'] = '';
+		$_POST['DecimalPlaces'] = 2;
 	}
 	echo '<input type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" /></td>
 		</tr>
@@ -448,7 +448,7 @@ if (!isset($_GET['delete'])) {
 			<td>' . _('Exchange Rate') . ':</td>
 			<td>';
 	if (!isset($_POST['ExchangeRate'])) {
-		$_POST['ExchangeRate'] = '';
+		$_POST['ExchangeRate'] = 1;
 	}
 	echo '<input type="text" class="number" name="ExchangeRate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>
 		</tr>';

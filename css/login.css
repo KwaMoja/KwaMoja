@@ -15,7 +15,7 @@ body {
 	padding: 10px 0 36px 0;
      /*	position: relative; only makes sense to absolute position a child */
 	z-index: 1000;
-	width: 50%;
+	width: 60%;
 	border: solid #A49999 1px;
 	border-radius: 15px;
 	opacity: 1.0;

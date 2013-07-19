@@ -14,7 +14,7 @@ $result = DB_query($sql, $db);
 
 if (DB_num_rows($result) == 0) {
 	$sql = "INSERT INTO accountsection (sectionid,
-											sectionname)
+										sectionname)
 									VALUES (1,
 											'Income')";
 	$result = DB_query($sql, $db);
@@ -25,7 +25,7 @@ $result = DB_query($sql, $db);
 
 if (DB_num_rows($result) == 0) {
 	$sql = "INSERT INTO accountsection (sectionid,
-											sectionname)
+										sectionname)
 									VALUES (2,
 											'Cost Of Sales')";
 	$result = DB_query($sql, $db);
@@ -251,8 +251,9 @@ if (!isset($_GET['delete'])) {
 				<td><input tabindex="1" type="text" name="SectionID" class="number" size="4" required="required" minlength="1" maxlength="4" value="' . $_POST['SectionID'] . '" /></td>
 			</tr>';
 	}
-	echo '<tr><td>' . _('Section Description') . ':' . '</td>
-		<td><input tabindex="2" type="text" name="SectionName" size="30" minlength="3" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
+	echo '<tr>
+			<td>' . _('Section Description') . ':' . '</td>
+			<td><input tabindex="2" type="text" name="SectionName" required="required" size="30" minlength="3" maxlength="30" value="' . $_POST['SectionName'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -261,11 +262,6 @@ if (!isset($_GET['delete'])) {
 		</table>
 		<br />';
 
-	if (!isset($_GET['SelectedSectionID']) or $_GET['SelectedSectionID'] == '') {
-		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionID);</script>';
-	} else {
-		echo '<script type="text/javascript">defaultControl(document.AccountSections.SectionName);</script>';
-	}
 	echo '</div>';
 	echo '</form>';
 

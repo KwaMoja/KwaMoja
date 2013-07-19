@@ -37,13 +37,18 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
-echo '<tr><td>' . _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] . '</td>
-	<td><input tabindex="1" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="11" minlength="0" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>';
-echo '<tr><td>' . _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] . '</td>
-	<td><input tabindex="2" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="11" minlength="0" maxlength="10" value="' . $_POST['ToDate'] . '" /></td></tr>';
+echo '<tr>
+		<td>' . _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] . '</td>
+		<td><input tabindex="1" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="11" required="required" minlength="1" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+	</tr>';
+echo '<tr>
+		<td>' . _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] . '</td>
+		<td><input tabindex="2" type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="11" required="required" minlength="1" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+	</tr>';
 
 // Show user selections
-echo '<tr><td>' . _('User ID') . '</td>
+echo '<tr>
+		<td>' . _('User ID') . '</td>
 		<td><select minlength="0" tabindex="3" name="SelectedUser">';
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($users = DB_fetch_row($UserResult)) {
@@ -56,7 +61,8 @@ while ($users = DB_fetch_row($UserResult)) {
 echo '</select></td></tr>';
 
 // Show table selections
-echo '<tr><td>' . _('Table ') . '</td>
+echo '<tr>
+		<td>' . _('Table ') . '</td>
 		<td><select minlength="0" tabindex="4" name="SelectedTable">';
 echo '<option value="ALL">' . _('All') . '</option>';
 while ($tables = DB_fetch_row($TableResult)) {
@@ -72,8 +78,10 @@ if (!isset($_POST['ContainingText'])) {
 	$_POST['ContainingText'] = '';
 }
 // Show the text
-echo '<tr><td>' . _('Containing text') . ':</td>';
-echo '<td><input type="text" name="ContainingText" size="20" minlength="0" maxlength="20" value="' . $_POST['ContainingText'] . '" /></td></tr>';
+echo '<tr>
+		<td>' . _('Containing text') . ':</td>
+		<td><input type="text" name="ContainingText" size="20" minlength="0" maxlength="20" value="' . $_POST['ContainingText'] . '" /></td>
+	</tr>';
 
 
 echo '</table><br />';
@@ -160,12 +168,14 @@ if (isset($_POST['View'])) {
 	$result = DB_query($sql, $db);
 
 	echo '<table border="0" width="98%" class="selection">';
-	echo '<tr><th>' . _('Date/Time') . '</th>
-				<th>' . _('User') . '</th>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Table') . '</th>
-				<th>' . _('Field Name') . '</th>
-				<th>' . _('Value') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Date/Time') . '</th>
+			<th>' . _('User') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Table') . '</th>
+			<th>' . _('Field Name') . '</th>
+			<th>' . _('Value') . '</th>
+		</tr>';
 	while ($myrow = DB_fetch_row($result)) {
 		if (Query_Type($myrow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO", '', $myrow[2]));
