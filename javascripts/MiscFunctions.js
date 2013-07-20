@@ -342,6 +342,7 @@ function VerifyForm(f) {
 }
 function SortSelect(selElem) {
 	var tmpArray = new Array();
+	th=document.getElementById("Theme").value;
 	columnText=selElem.innerHTML;
 	parentElem=selElem.parentNode;
 	table=parentElem.parentNode;
@@ -352,9 +353,17 @@ function SortSelect(selElem) {
 			s=getComputedStyle(row.cells[j], null);
 			if (s.cursor=="s-resize") {
 				row.cells[j].style.cursor="n-resize";
+				row.cells[j].style.backgroundImage="url('css/"+th+"/images/descending.png')";
+				row.cells[j].style.backgroundPosition="right center";
+				row.cells[j].style.backgroundRepeat="no-repeat";
+				row.cells[j].style.backgroundSize="12px";
 				direction="a";
 			} else {
 				row.cells[j].style.cursor="s-resize";
+				row.cells[j].style.backgroundImage="url('css/"+th+"/images/ascending.png')";
+				row.cells[j].style.backgroundPosition="right center";
+				row.cells[j].style.backgroundRepeat="no-repeat";
+				row.cells[j].style.backgroundSize="12px";
 				direction="d";
 			}
 		}

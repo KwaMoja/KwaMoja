@@ -71,7 +71,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else if ($AllowCompanySelectionBox === 'ShowInputBox'){
 	// show input box
-	echo '<input type="text" required="required" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
+	echo '<input type="text" required="required" autofocus="autofocus" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else {
 	// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 	echo '<select name="CompanyNameField">';
@@ -98,7 +98,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 					<label><?php
 echo _('User name');
 ?>:</label>
-					<input type="text" required="required" name="UserNameEntryField" maxlength="20" /><br />
+					<input type="text" autofocus="autofocus" required="required" name="UserNameEntryField" maxlength="20" /><br />
 					<label><?php
 echo _('Password');
 ?>:</label>

@@ -577,35 +577,6 @@ float:right;
 margin-top:15px;
 }
 
-.tooltip {
-display:inline;
-position:relative;
-}
-
-.tooltip:hover:after {
-background:rgba(68,62,138,.7);
-border-radius:5px;
-top:36px;
-color:#fff;
-content:attr(title);
-left:20%;
-position:absolute;
-z-index:998;
-width:200px;
-padding:5px 15px;
-}
-
-.tooltip:hover:before {
-border:solid;
-top:30px;
-content:"";
-left:50%;
-position:absolute;
-z-index:999;
-border-color:#443E8A transparent;
-border-width:0 6px 6px;
-}
-
 #dialog_buttons,td.number,input.number,input.integer {
 text-align:right;
 }

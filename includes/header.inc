@@ -141,25 +141,29 @@ if (isset($Title)) {
 	if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 		if (basename($_SERVER['PHP_SELF']) != 'index.php') {
-			$sql = "SELECT script FROM scripts WHERE script='" . basename($_SERVER['PHP_SELF']) . "' AND favourite=1";
-			$result = DB_query($sql, $db);
+			if (DB_table_exists('favourites', $db)) {
+				$sql = "SELECT caption, href FROM favourites WHERE href='" . basename($_SERVER['PHP_SELF']) . "' AND userid='" . $_SESSION['UserID'] . "'";
+				$result = DB_query($sql, $db);
 
-			if (DB_num_rows($result) == 0) {
-				echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/add.png" title="' . _('Add this script to your list of commonly used') . '" alt="' . _('Add to commonly used') . '" /></li>';
-			} else {
-				echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/subtract.png" title="' . _('Remove this script from your list of commonly used') . '" alt="' . _('Remove from commonly used') . '" /></li>';
+				if (DB_num_rows($result) == 0) {
+					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/add.png" title="' . _('Add this script to your list of commonly used') . '" alt="' . _('Add to commonly used') . '" /></li>';
+				} else {
+					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/subtract.png" title="' . _('Remove this script from your list of commonly used') . '" alt="' . _('Remove from commonly used') . '" /></li>';
+				}
 			}
 		}
 
-		$sql = "SELECT script FROM scripts WHERE favourite='1'";
-		$result = DB_query($sql, $db);
+		if (DB_table_exists('favourites', $db)) {
+			$sql = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+			$result = DB_query($sql, $db);
 
-		echo '<li><select style="font-size: 150%" name="Favourites" onchange="window.open (this.value,\'_self\',false)">';
-		echo '<option value="">' . _('Commonly used') . '</option>';
-		while ($myrow = DB_fetch_array($result)) {
-			echo '<option value="' . $myrow['script'] . '">' . $myrow['script'] . '</option>';
+			echo '<li><select style="font-size: 150%" name="Favourites" onchange="window.open (this.value,\'_self\',false)">';
+			echo '<option value="">' . _('Commonly used') . '</option>';
+			while ($myrow = DB_fetch_array($result)) {
+				echo '<option value="' . $myrow['href'] . '">' . $myrow['caption'] . '</option>';
+			}
+			echo '</select></li>';
 		}
-		echo '</select></li>';
 		$DefaultManualLink = '<li><a rel="external" title="' . _('Help') . '" target="_blank" href="' . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" alt="' . _('Help') . '" /></a></li>';
 
 		if (mb_substr($_SESSION['Language'], 0, 2) != 'en') {
