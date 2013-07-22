@@ -1934,6 +1934,6 @@ else { //dont require customer selection
 		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Whole Order') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');" /></div></form>';
 	} //$_SESSION['Items' . $identifier]->ItemsOrdered >= 1
 } //end of else not selecting a customer
-''
+
 include('includes/footer.inc');
 ?>

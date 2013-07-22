@@ -53,26 +53,13 @@ function ShowTable(t){
 function HideTable(t){
 	document.getElementById(t).style["display"] = "none";
 }
-var kP='a';
 function rTN(event){
 if (window.event) k=window.event.keyCode;
 else if (event) k=event.which;
 else return true;
 kC=String.fromCharCode(k);
 if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-else if ((("0123456789.,-").indexOf(kC)>-1)){
-if(("., ").indexOf(kC)>-1){
-if(("., ").indexOf(kP)>-1){
-return false;
-}else{
-kP = kC;
-return true;
-}
-}else{
-kP = kC;
-return true;
-}
-}
+else if ((("0123456789.,-").indexOf(kC)>-1)) return true;
 else return false;
 }
 function rTI(event){
@@ -83,33 +70,6 @@ kC=String.fromCharCode(k);
 if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
 else if ((("0123456789").indexOf(kC)>-1)) return true;
 else return false;
-}
-function rLN(){
-var L=document.getElementById('Lang').value;
-switch(L){
-case 'GB':
-var p=/(?:^(-)?([1-9]{1,3}(?:,?\d{3})*(?:\.\d{1,})?)$)|(?:^(-)?(0\.\d{1,})$)/;
-break;
-case 'IN':
-var p=/(?:^(-)?([1-9]{1,2},)?(\d{2},)*(\d{3})(\.\d+)?$)|(?:^(-)?[1-9]{1,3}(\.\d+)?$)|(?:^(-)?(0\.\d{1,})$)/;
-break;
-case 'EE':
-var p=/(?:^(-)?[1-9]{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^(-)?(0\.\d{1,})$)/;
-break;
-case 'FR':
-var p=/(?:^(-)?[1-9]{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0,\d{1,})$)/;
-break;
-case 'GM':
-var p=/(?:^(-)?[1-9]{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0,\d{1,})$)/;
-break;
-}
-if(p.test(this.value)){
-this.setCustomValidity('');
-return true;
-}else{
-this.setCustomValidity('The number format is wrong');
-return false;
-};
 }
 function assignComboToInput(c,i){
 	i.value=c.value;
@@ -414,6 +374,41 @@ function SortSelect(selElem) {
 	}
 	return;
 }
+function remSelOpt(inp1, sel1){
+	len1 = sel1.options.length;
+	for (i=0;i<len1 ;i++ ){
+		if (sel1.options[i].value == inp1){
+			sel1.options[i] = null;
+			break;
+		}
+	}
+}
+function AddScript(Script, Title) {
+	theme=document.getElementById("Theme").value;
+	document.getElementById("favourites").innerHTML=document.getElementById("favourites").innerHTML+'<option value="'+Script+'">'+Title+'</option>';
+	document.getElementById("PlusMinus").src="css/"+theme+"/images/subtract.png";
+	document.getElementById("PlusMinus").setAttribute( "onClick", "javascript: RemoveScript('"+Script+"', '"+Title+"');" );
+	UpdateFavourites(Script, Title);
+}
+function RemoveScript(Script, Title) {
+	theme=document.getElementById("Theme").value;
+	remSelOpt(Script, document.getElementById("favourites"));
+	document.getElementById("PlusMinus").src="css/"+theme+"/images/add.png";
+	document.getElementById("PlusMinus").setAttribute( "onClick", "javascript: AddScript('"+Script+"', '"+Title+"');" );
+	UpdateFavourites(Script, Title);
+}
+
+function UpdateFavourites(Script, Title) {
+	Target='UpdateFavourites.php?Script='+Script+'&Title='+Title;
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.open("GET",Target,true);
+	xmlhttp.send();
+	return false;
+}
 function initial(){
 	if (document.getElementsByTagName){
 		var as=document.getElementsByTagName("a");
@@ -431,7 +426,6 @@ function initial(){
 			ds[i].onchange=changeDate;
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
-		if (ds[i].className=="number") ds[i].onchange=rLN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
 	}
 }
