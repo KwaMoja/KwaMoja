@@ -336,18 +336,16 @@ padding:0;
 }
 
 #QuickMenuDiv li a {
-background:#aae;
-border:1px outset #aae;
-border-top:1px solid #aae;
+border:0px outset #aae;
+border-top:0px solid #aae;
 border-radius:0 0 7px 7px;
 color:#000;
 padding:1px;
 }
 
 #QuickMenuDiv li a:hover {
-background:#cdf;
-border:1px outset #cdf;
-border-top:1px solid #cdf;
+border:0px outset #cdf;
+border-top:0px solid #cdf;
 text-decoration:none;
 }
 
@@ -446,35 +444,6 @@ overflow:hidden;
 background:#569;
 }
 
-.tooltip {
-display:inline;
-position:relative;
-}
-
-.tooltip:hover:after {
-background:rgba(0,0,0,.8);
-border-radius:5px;
-top:32px;
-color:#fff;
-content:attr(title);
-left:20%;
-position:absolute;
-z-index:98;
-width:220px;
-padding:5px 15px;
-}
-
-.tooltip:hover:before {
-border:solid;
-top:26px;
-content:"";
-left:50%;
-position:absolute;
-z-index:99;
-border-color:#333 transparent;
-border-width:0 6px 6px;
-}
-
 #dialog_buttons,td.number,input.number,input.integer {
 text-align:right;
 }
@@ -504,4 +473,24 @@ display:inline;
 float:left;
 margin:2px 0;
 padding:0;
+}
+
+#favourites {
+background:#556699;
+color:#B0C4DE;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 7px;
+border: solid 1px #fff;
+border-radius: 15px;
+margin: 2px;
+}
+
+#favourites:hover {
+cursor:pointer;
+}
+
+#PlusMinus:hover {
+cursor:pointer;
 }

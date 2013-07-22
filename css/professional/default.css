@@ -355,8 +355,6 @@ display:inline;
 }
 
 #QuickMenuDiv li a {
-border:thin outset #ddd;
-background:#ddd;
 padding:3px;
 }
 
@@ -492,35 +490,6 @@ float:right;
 clear:left;
 }
 
-.tooltip {
-display:inline;
-position:relative;
-}
-
-.tooltip:hover:after {
-background:rgba(0,0,0,.8);
-border-radius:5px;
-top:32px;
-color:#fff;
-content:attr(title);
-left:20%;
-position:absolute;
-z-index:98;
-width:220px;
-padding:5px 15px;
-}
-
-.tooltip:hover:before {
-border:solid;
-top:26px;
-content:"";
-left:50%;
-position:absolute;
-z-index:99;
-border-color:#333 transparent;
-border-width:0 6px 6px;
-}
-
 #dialog_buttons,td.number,input.number,input.integer {
 text-align:right;
 }
@@ -553,4 +522,25 @@ display:table-cell;
 #TransactionsDiv,#InquiriesDiv,#MaintenanceDiv {
 display:table-cell;
 width:33%;
+}
+
+#favourites {
+background:#33414C;
+color:#D7DEE8;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 7px;
+border-radius: 15px;
+margin: 2px;
+}
+
+#favourites:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
+}
+
+#PlusMinus:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
 }

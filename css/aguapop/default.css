@@ -598,3 +598,25 @@ list-style:none;
 color:#000;
 text-decoration:none;
 }
+
+#favourites {
+background:#4682B4;
+color:#B0C4DE;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 7px;
+border: solid 1px #fff;
+border-radius: 15px;
+margin: 2px;
+}
+
+#favourites:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
+}
+
+#PlusMinus:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
+}

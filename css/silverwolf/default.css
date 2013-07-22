@@ -153,6 +153,7 @@ text-decoration:none;
 img {
 border:none;
 vertical-align:middle;
+margin-left: 4px;
 }
 
 .PrintIcon {
@@ -561,4 +562,26 @@ vertical-align:middle;
 
 #AppInfoCompanyDiv,#AppInfoUserDiv {
 display:table-cell;
+}
+
+#favourites {
+background:#B6B6B6;
+color:#3C434D;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 7px;
+border-radius: 15px;
+border: solid 1px #000;
+margin: 2px;
+}
+
+#favourites:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
+}
+
+#PlusMinus:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
 }

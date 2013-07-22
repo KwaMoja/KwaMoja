@@ -22,7 +22,7 @@ if (!headers_sent()) {
 		header('Content-type: text/html; charset=utf-8');
 	}
 }
-if ($Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
+if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
 	ob_start();
 }
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -39,23 +39,6 @@ if ($StrictXHTML) {
 echo '<link href="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/default.css" rel="stylesheet" type="text/css" />';
 if ($debug == 1) {
 	echo '<link href="' . $RootPath . '/css/holmes.css" rel="stylesheet" type="text/css" />';
-}
-
-//Check users' locale format via their language
-//Then pass this information to the js for validation purpose
-
-$Collect = array('GB' => array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
-	'IN' => array('en_IN.utf8'),
-	'EE' => array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
-	'FR' => array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
-	'GM' => array('de_DE.utf8','el_GR.utf8','es_ES.utf8','fa_IR.utf8','id_ID.utf8','it_IT.utf8','ro_RO.utf8','lv_LV.utf8','nl_NL.utf8','pt_BR.utf8','pt_PT.utf8'));
-
-foreach ($Collect as $Key=>$Value){
-	if (in_array($Language,$Value)){
-		$Lang = $Key;
-		$_SESSION['Lang'] = $Lang;
-	}
-
 }
 
 echo '<script type="text/javascript" src = "' . $RootPath . '/javascripts/MiscFunctions.js"></script>';
@@ -106,8 +89,6 @@ echo '<style>
 				}
 			</style>';
 
-echo '<input type="hidden" name="Lang" id="Lang" value="'.$Lang.'" />';
-
 echo '<div id="CanvasDiv">';
 echo '<div id="HeaderDiv" class="noPrint">';
 echo '<div id="HeaderWrapDiv">';
@@ -146,9 +127,9 @@ if (isset($Title)) {
 				$result = DB_query($sql, $db);
 
 				if (DB_num_rows($result) == 0) {
-					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/add.png" title="' . _('Add this script to your list of commonly used') . '" alt="' . _('Add to commonly used') . '" /></li>';
+					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/add.png" id="PlusMinus" onclick="AddScript(\'' . basename($_SERVER['PHP_SELF']) . '\',\'' . $Title . '\')" title="' . _('Add this script to your list of commonly used') . '" alt="' . _('Add to commonly used') . '" /></li>';
 				} else {
-					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/subtract.png" title="' . _('Remove this script from your list of commonly used') . '" alt="' . _('Remove from commonly used') . '" /></li>';
+					echo '<li><img src="' . $RootPath . '/css/' . $Theme . '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'' . basename($_SERVER['PHP_SELF']) . '\')" title="' . _('Remove this script from your list of commonly used') . '" alt="' . _('Remove from commonly used') . '" /></li>';
 				}
 			}
 		}
@@ -157,18 +138,18 @@ if (isset($Title)) {
 			$sql = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 			$result = DB_query($sql, $db);
 
-			echo '<li><select style="font-size: 150%" name="Favourites" onchange="window.open (this.value,\'_self\',false)">';
-			echo '<option value="">' . _('Commonly used') . '</option>';
+			echo '<li><select style="font-size: 150%" name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)" title="' . _('Select from a list of your commonly used tasks') . '">';
+			echo '<option value=""><i><----' . _('Commonly used') . '----></i></option>';
 			while ($myrow = DB_fetch_array($result)) {
 				echo '<option value="' . $myrow['href'] . '">' . $myrow['caption'] . '</option>';
 			}
 			echo '</select></li>';
 		}
-		$DefaultManualLink = '<li><a rel="external" title="' . _('Help') . '" target="_blank" href="' . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" alt="' . _('Help') . '" /></a></li>';
+		$DefaultManualLink = '<li><a rel="external" title="' . _('Read the manual page for this functionality') . '" target="_blank" href="' . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" alt="' . _('Help') . '" /></a></li>';
 
 		if (mb_substr($_SESSION['Language'], 0, 2) != 'en') {
 			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
-				echo '<li><a target="_blank" href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" title="' . _('Help') . '" alt="' . _('Help') . '" /></a></li>';
+				echo '<li><a target="_blank" title="' . _('Read the manual page for this functionality') . '" href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $RootPath . '/css/' . $Theme . '/images/manual.png" title="' . _('Help') . '" alt="' . _('Help') . '" /></a></li>';
 			} else {
 				echo $DefaultManualLink;
 			}
@@ -187,6 +168,5 @@ echo '</div>'; // Headerdiv
 echo '<div id="BodyDiv">';
 echo '<input type="hidden" name="Theme" id="Theme" value="' . $Theme . '" />';
 echo '<div id="BodyWrapDiv">';
-
 
 ?>
