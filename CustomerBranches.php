@@ -631,7 +631,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['BrAddress4'])) {
 		$_POST['BrAddress4'] = '';
 	}
-	echo '<td><input tabindex="7" type="text" name="BrAddress4" size="31" minlength="0" maxlength="30" value="' . $_POST['BrAddress4'] . '" /></td>
+	echo '<td><input tabindex="7" type="text" name="BrAddress4" size="51" minlength="0" maxlength="50" value="' . $_POST['BrAddress4'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Street Address 5 (Postal Code)') . ':</td>';

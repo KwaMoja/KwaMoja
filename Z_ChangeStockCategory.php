@@ -44,6 +44,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	echo '<br />' . _('Adding the new stock Category record');
 	$sql = "INSERT INTO stockcategory (categoryid,
 						categorydescription,
+						defaulttaxcatid,
 						stocktype,
 						stockact,
 						adjglact,
@@ -52,6 +53,7 @@ if (isset($_POST['ProcessStockChange'])) {
 						wipact)
 					SELECT '" . $_POST['NewStockCategory'] . "',
 							categorydescription,
+							defaulttaxcatid,
 							stocktype,
 							stockact,
 							adjglact,

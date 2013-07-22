@@ -559,8 +559,10 @@ if (isset($_POST['submit'])) {
 								FROM stockmaster
 								WHERE stockid='" . $StockID . "'", $db);
 			if (DB_num_rows($result) == 1) {
-				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'), 'error');
-				exit;
+				prnMsg(_('The stock code entered is already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'), 'error');
+				InputError = 1;
+				$Errors[$i] = 'StockID';
+				$i++;
 			} else {
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
