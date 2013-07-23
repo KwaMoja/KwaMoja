@@ -59,7 +59,7 @@ CreateTable('stockdescriptiontranslations',
 ,$db);
 
 AddColumn('language_id', 'debtorsmaster', 'VARCHAR( 10 )', 'NOT NULL', 'en_GB.utf8', 'typeid', $db);
-AddColumn('salesperson', 'debtortrans', 'VARCHAR( 4 )', 'NOT NULL', 'en_GB.utf8', 'packages', $db);
+AddColumn('salesperson', 'debtortrans', 'VARCHAR( 4 )', 'NOT NULL', 'DE', 'packages', $db);
 
 AddIndex(array('salesperson'), 'debtortrans', 'salesperson', $db);
 
