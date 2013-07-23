@@ -138,7 +138,7 @@ if (isset($Title)) {
 			$sql = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 			$result = DB_query($sql, $db);
 
-			echo '<li><select style="font-size: 150%" name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)" title="' . _('Select from a list of your commonly used tasks') . '">';
+			echo '<li><select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)" title="' . _('Select from a list of your commonly used tasks') . '">';
 			echo '<option value=""><i><----' . _('Commonly used') . '----></i></option>';
 			while ($myrow = DB_fetch_array($result)) {
 				echo '<option value="' . $myrow['href'] . '">' . $myrow['caption'] . '</option>';
