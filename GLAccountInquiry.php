@@ -135,51 +135,35 @@ if (isset($_POST['Show'])) {
 		/*its a balance sheet account */
 	}
 
-	if ($_POST['tag'] == 0) {
-		$sql = "SELECT type,
-						typename,
-						gltrans.typeno,
-						trandate,
-						narrative,
-						amount,
-						periodno,
-						tag
-					FROM gltrans
-					INNER JOIN systypes
-						ON systypes.typeid=gltrans.type
-					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND periodno>='" . $FirstPeriodSelected . "'
-						AND periodno<='" . $LastPeriodSelected . "'
-					ORDER BY periodno,
-							gltrans.trandate,
-							counterindex";
+	$sql= "SELECT counterindex,
+				type,
+				typename,
+				gltrans.typeno,
+				trandate,
+				narrative,
+				amount,
+				periodno,
+				gltrans.tag,
+				tagdescription
+			FROM gltrans INNER JOIN systypes
+			ON systypes.typeid=gltrans.type
+			LEFT JOIN tags
+			ON gltrans.tag = tags.tagref
+			WHERE gltrans.account = '" . $SelectedAccount . "'
+			AND posted=1
+			AND periodno>='" . $FirstPeriodSelected . "'
+			AND periodno<='" . $LastPeriodSelected . "'";
 
-	} else {
-		$sql = "SELECT type,
-						typename,
-						gltrans.typeno,
-						trandate,
-						narrative,
-						amount,
-						periodno,
-						tag
-					FROM gltrans
-					INNER JOIN systypes
-						ON systypes.typeid=gltrans.type
-					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND posted=1
-						AND periodno>= '" . $FirstPeriodSelected . "'
-						AND periodno<= '" . $LastPeriodSelected . "'
-						AND tag='" . $_POST['tag'] . "'
-					ORDER BY periodno,
-							gltrans.trandate,
-							counterindex";
+	if ($_POST['tag']!=0) {
+		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
 	}
 
-	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
-	$nameresult = DB_query($namesql, $db);
-	$namerow = DB_fetch_array($nameresult);
-	$SelectedAccountName = $namerow['accountname'];
+	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
+
+	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
+	$NameResult = DB_query($NameSQL, $db);
+	$NameRow = DB_fetch_array($NameResult);
+	$SelectedAccountName = $NameRow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
 	$TransResult = DB_query($sql, $db, $ErrMsg);
 
