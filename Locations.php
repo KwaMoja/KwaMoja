@@ -551,7 +551,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Contact for deliveries') . ':' . '</td>
-			<td><input type="text" name="Contact" value="' . $_POST['Contact'] . '" size="31" minlength="0" maxlength="30" /></td>
+			<td><input type="text" name="Contact" value="' . $_POST['Contact'] . '" size="31" required="required" minlength="1" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery Address 1') . ':' . '</td>
@@ -579,11 +579,11 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':' . '</td>
-			<td><input type="text" name="Tel" value="' . $_POST['Tel'] . '" size="31" minlength="0" maxlength="30" /></td>
+			<td><input type="tel" name="Tel" value="' . $_POST['Tel'] . '" size="31" minlength="0" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Facsimile No') . ':' . '</td>
-			<td><input type="text" name="Fax" value="' . $_POST['Fax'] . '" size="31" minlength="0" maxlength="30" /></td>
+			<td><input type="tel" name="Fax" value="' . $_POST['Fax'] . '" size="31" minlength="0" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email') . ':' . '</td>

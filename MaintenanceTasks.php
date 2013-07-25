@@ -128,7 +128,8 @@ echo '<table class="selection">';
 
 if (isset($_GET['Edit'])) {
 	echo '<tr>
-			<td>' . _('Task ID') . '</td><td>' . $_GET['TaskID'] . '</td>
+			<td>' . _('Task ID') . '</td>
+			<td>' . $_GET['TaskID'] . '</td>
 		</tr>';
 	echo '<input type="hidden" name="TaskID" value="' . $_GET['TaskID'] . '" />';
 	$sql = "SELECT assetid,
@@ -182,12 +183,12 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Task Description') . ':</td>
-		<td><textarea name="TaskDescription" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
+		<td><textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Days Before Task Due') . ':</td>
-		<td><input type="text" class="number" name="FrequencyDays" size="5" required="required" minlength="1" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
+		<td><input type="text" class="integer" name="FrequencyDays" size="5" required="required" minlength="1" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -207,7 +208,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Manager') . ':</td>
-		<td><select minlength="0" name="Manager">';
+		<td><select required="required" minlength="1" name="Manager">';
 if ($_POST['Manager'] == '') {
 	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
 } else {

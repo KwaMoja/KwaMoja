@@ -53,9 +53,13 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				<option value="Summary">' . _('Summary') . '</option>
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 			</select></td>
-		</tr>';
+		</tr>
 
-	echo '</table>';
+		<tr>
+			 <td>' . _('Show all Accounts including zero balances') . '</td>
+			 <td><input type="checkbox" checked="checked" title="' . _('Check this box to display all accounts including those accounts with no balance') . '" name="ShowZeroBalances"></td>
+		</tr>
+	</table>';
 
 	echo '<br />
 			<div class="centre">
@@ -266,20 +270,17 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		$LYCheckTotal += $LYAccountBalance;
 		$CheckTotal += $AccountBalance;
 
-
-		if ($_POST['Detail'] == 'Detailed') {
-			$FontSize = 8;
-			$pdf->setFont('', '');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $myrow['accountcode']);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 55, $YPos, 200, $FontSize, $myrow['accountname']);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-			$YPos -= $line_height;
+		if ($_POST['Detail']=='Detailed') {
+			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $LYAccountBalance <> 0))){
+				$FontSize = 8;
+				$pdf->setFont('', '');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $myrow['accountcode']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 55, $YPos, 200, $FontSize, $myrow['accountname']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 250, $YPos, 100, $FontSize, locale_number_format($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 350, $YPos, 100, $FontSize, locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+				$YPos -= $line_height;
+			}
 		}
-		if ($YPos < ($Bottom_Margin)) {
-			include('includes/PDFBalanceSheetPageHeader.inc');
-		}
-	} //end of loop
 
 	$FontSize = 8;
 	$pdf->setFont('', 'B');
@@ -560,24 +561,30 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 
 		if ($_POST['Detail'] == 'Detailed') {
 
-			if ($k == 1) {
-				echo '<tr class="OddTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$k++;
+			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $LYAccountBalance <> 0))){
+				if ($k==1){
+					echo '<tr class="OddTableRows">';
+					$k=0;
+				} else {
+					echo '<tr class="EvenTableRows">';
+					$k++;
+				}
+
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
+
+				printf('<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td></td>
+						<td class="number">%s</td>
+						<td></td>
+						</tr>',
+						$ActEnquiryURL,
+						htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
+						locale_number_format($AccountBalance,$_SESSION['CompanyRecord']['decimalplaces']),
+						locale_number_format($LYAccountBalance,$_SESSION['CompanyRecord']['decimalplaces']));
+				$j++;
 			}
-
-			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?Period=' . $_POST['BalancePeriodEnd'] . '&amp;Account=' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . '</a>';
-
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td></td>
-					<td class="number">%s</td>
-					<td></td>
-					</tr>', $ActEnquiryURL, htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false), locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']));
-			$j++;
 		}
 	}
 	//end of loop

@@ -21,17 +21,16 @@ echo '<p class="page_title_text noPrint" >
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($db,$ChangeDate);
+	submit($db, $ChangeDate);
 } elseif (isset($_POST['update'])) {
-	update($db,$ChangeDate);
-} elseif (isset($_POST['listall'])) {
-	listall($db);
+	update($db, $ChangeDate);
+} elseif (isset($_POST['ListAll'])) {
+	ShowDays($db);
 } else {
-	display($db,$ChangeDate);
+	ShowInputForm($db, $ChangeDate);
 }
 
-function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-{
+function submit(&$db,&$ChangeDate) {
 
 	//initialize no input errors
 	$InputError = 0;
@@ -69,7 +68,7 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 	}
 
 	 if ($InputError == 1) {
-		display($db,$ChangeDate);
+		ShowInputForm($db, $ChangeDate);
 		return;
 	 }
 
@@ -125,22 +124,21 @@ function submit(&$db,&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUB
 			ORDER BY calendardate";
 	$result = DB_query($sql,$db,$ErrMsg);
 	while ($myrow = DB_fetch_array($result)) {
-		   if ($myrow['manufacturingflag'] == "1") {
-			   $DayNumber++;
-		   }
-		   $CalDate = $myrow['calendardate'];
-		   $sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
+		if ($myrow['manufacturingflag'] == "1") {
+			$DayNumber++;
+		}
+		$CalDate = $myrow['calendardate'];
+		$sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $resultupdate = DB_query($sql,$db,$ErrMsg);
+		$resultupdate = DB_query($sql,$db,$ErrMsg);
 	}
 	prnMsg(_('The MRP Calendar has been created'),'success');
-	display($db,$ChangeDate);
+	ShowInputForm($db, $ChangeDate);
 
 } // End of function submit()
 
 
-function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_####
-{
+function update(&$db,&$ChangeDate) {
 // Change manufacturing flag for a date. The value "1" means the date is a manufacturing date.
 // After change the flag, re-calculate the daynumber for all dates.
 
@@ -157,7 +155,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	}
 
 	 if ($InputError == 1) {
-		display($db,$ChangeDate);
+		ShowInputForm($db, $ChangeDate);
 		return;
 	 }
 
@@ -174,7 +172,7 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$resultupdate = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 
 	// Have to update daynumber any time change a date from or to a manufacturing date
 	// Update daynumber. Set it so non-manufacturing days will have the same daynumber as a valid
@@ -184,19 +182,19 @@ function update(&$db,&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPD
 	$sql = "SELECT * FROM mrpcalendar ORDER BY calendardate";
 	$result = DB_query($sql,$db,$ErrMsg);
 	while ($myrow = DB_fetch_array($result)) {
-		   if ($myrow['manufacturingflag'] == '1') {
-			   $DayNumber++;
-		   }
-		   $CalDate = $myrow['calendardate'];
-		   $sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
+		if ($myrow['manufacturingflag'] == '1') {
+			$DayNumber++;
+		}
+		$CalDate = $myrow['calendardate'];
+		$sql = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $resultupdate = DB_query($sql,$db,$ErrMsg);
+		$resultupdate = DB_query($sql,$db,$ErrMsg);
 	} // End of while
 
 } // End of function update()
 
 
-function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
+function ShowDays(&$db) {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_####
 
 // List all records in date range
 	$FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -237,12 +235,12 @@ function listall(&$db)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_L
 	echo '</table>';
 	echo '<br /><br />';
 	unset ($ChangeDate);
-	display($db,$ChangeDate);
+	ShowInputForm($db,$ChangeDate);
 
-} // End of function listall()
+} // End of function ShowDays()
 
 
-function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function ShowInputForm(&$db,&$ChangeDate) {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 // Display form fields. This function is called the first time
 // the page is called, and is also invoked at the end of all of the other functions.
@@ -261,45 +259,51 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 
 	echo '<tr>
 			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" minlength="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" required="required" minlength="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
 			<tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" minlength="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" required="required" minlength="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
-		<tr><td></td></tr>
-		<tr><td></td></tr>
-		<tr><td>'._('Exclude The Following Days').'</td></tr>
-		 <tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td>'._('Exclude The Following Days').'</td>
+		</tr>
+		<tr>
 			<td>' . _('Saturday') . ':</td>
 			<td><input type="checkbox" name="Saturday" value="Saturday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Sunday') . ':</td>
 			<td><input type="checkbox" name="Sunday" value="Sunday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Monday') . ':</td>
 			<td><input type="checkbox" name="Monday" value="Monday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Tuesday') . ':</td>
 			<td><input type="checkbox" name="Tuesday" value="Tuesday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Wednesday') . ':</td>
 			<td><input type="checkbox" name="Wednesday" value="Wednesday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Thursday') . ':</td>
 			<td><input type="checkbox" name="Thursday" value="Thursday" /></td>
 		</tr>
-		 <tr>
+		<tr>
 			<td>' . _('Friday') . ':</td>
 			<td><input type="checkbox" name="Friday" value="Friday" /></td>
 		</tr>
 		</table><br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Create Calendar') . '" />
-			<input type="submit" name="listall" value="' . _('List Date Range') . '" />
+			<input type="submit" name="ListAll" value="' . _('List Date Range') . '" />
 		</div>';
 
 	if (!isset($_POST['ChangeDate'])) {
@@ -319,7 +323,7 @@ function display(&$db,&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISP
 		</div>
 		</form>';
 
-} // End of function display()
+} // End of function ShowInputForm()
 
 include('includes/footer.inc');
 ?>

@@ -28,7 +28,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$SendResult = ${'Mail' . $myrow['userresponsible']}->send(array(
 				$LastUserEmail
 			));
-			$MailText = "You have the following maintenance task(s) falling due or over-due:\n";
+			$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
 		}
 		$LastUserResponsible = $myrow['userresponsible'];
 		$LastUserEmail = $myrow['email'];
@@ -72,7 +72,7 @@ while ($myrow = DB_fetch_array($result)) {
 			$SendResult = ${'Mail' . $myrow['manager']}->send(array(
 				$LastManagerEmail
 			));
-			$MailText = "Your staff have failed to complete the following tasks by the due date:\n";
+			$MailText = _('Your staff have failed to complete the following tasks by the due date:') . "\n";
 		}
 		$LastManager = $myrow['manager'];
 		$LastManagerEmail = $myrow['email'];
@@ -80,7 +80,7 @@ while ($myrow = DB_fetch_array($result)) {
 		${'Mail' . $myrow['manager']}->setSubject('Overdue Maintenance Tasks Reminder');
 		${'Mail' . $myrow['manager']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .= "Asset: " . $myrow['description'] . "\nTask: " . $myrow['taskdescription'] . "\nDue: " . ConvertSQLDate($myrow['duedate']);
+	$MailText .= _('Asset:') . ' ' . $myrow['description'] . "\n" . _('Task:') . ' ' . $myrow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($myrow['duedate']);
 	$MailText . "\n\n";
 }
 if (DB_num_rows($result) > 0) {

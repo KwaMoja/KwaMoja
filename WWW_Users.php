@@ -55,9 +55,9 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (mb_strlen($_POST['UserID']) < 4) {
+	if (mb_strlen($_POST['UserID']) < 3) {
 		$InputError = 1;
-		prnMsg(_('The user ID entered must be at least 4 characters long'), 'error');
+		prnMsg(_('The user ID entered must be at least 3 characters long'), 'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'), 'error');
@@ -430,7 +430,7 @@ if (isset($SelectedUser)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('User Login') . ':</td>
-				<td><input type="text" name="UserID" size="22" required="required" minlength="1" maxlength="20" /></td>
+				<td><input type="text" name="UserID" size="22" required="required" minlength="3" maxlength="20" /></td>
 			</tr>';
 
 	/*set the default modules to show to all
@@ -462,7 +462,7 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" required="required" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Full Name') . ':</td>
@@ -470,7 +470,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Email Address') . ':</td>
@@ -491,7 +491,9 @@ echo '</select>';
 echo '<input type="hidden" name="ID" value="' . $_SESSION['UserID'] . '" /></td>
 	</tr>';
 
-echo '<tr><td>' . _('User Can Create Tenders') . ':</td><td><select minlength="0" name="CanCreateTender">';
+echo '<tr>
+		<td>' . _('User Can Create Tenders') . ':</td>
+		<td><select minlength="0" name="CanCreateTender">';
 
 if (isset($_POST['CanCreateTender']) and $_POST['CanCreateTender'] == 0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
