@@ -777,10 +777,5 @@ echo '</table>
 	</div>
 	</form>';
 
-if (isset($_GET['SelectedUser'])) {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Password);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
-}
 include('includes/footer.inc');
 ?>

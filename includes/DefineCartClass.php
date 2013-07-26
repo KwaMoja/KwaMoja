@@ -116,7 +116,7 @@ class Cart {
 														" . $Qty . ",
 														" . $Price . ",
 														" . $Disc . ",'
-														" . $ItemDue . "',
+														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$result = DB_query($sql, $db, _('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' . _('could not be inserted'));
 			}
