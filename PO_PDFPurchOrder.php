@@ -228,7 +228,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
-		while ((isset($OrderNo) and $OrderNo == 'Preview') or (isset($result) and $POLine = DB_fetch_array($result))) {
+		while ((isset($OrderNo) and $OrderNo == 'Preview') or (isset($result) and !is_bool($result) and $POLine = DB_fetch_array($result))) {
 			/* If we are previewing the order then fill the
 			 * order line with dummy data */
 			if ($OrderNo == 'Preview') {
