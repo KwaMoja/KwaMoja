@@ -680,6 +680,35 @@ if (!isset($_GET['delete'])) {
 	echo '<td><input tabindex="12" type="text" class="integer" name="FwdDate" size="4" minlength="0" maxlength="2" value="' . $_POST['FwdDate'] . '" /></td>
 		</tr>';
 
+	DB_data_seek($result, 0);
+
+	$sql = "SELECT areacode, areadescription FROM areas";
+	$result = DB_query($sql, $db);
+	if (DB_num_rows($result) == 0) {
+		echo '</table>';
+		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'), 'error');
+		echo '<br /><a href="' . $RootPath . '/Areas.php">' . _('Define Sales Areas') . '</a>';
+		include('includes/footer.inc');
+		exit;
+	}
+
+	echo '<tr>
+			<td>' . _('Sales Area') . ':</td>
+			<td><select minlength="0" tabindex="14" name="Area">';
+	while ($myrow = DB_fetch_array($result)) {
+		if (isset($_POST['Area']) and $myrow['areacode'] == $_POST['Area']) {
+			echo '<option selected="selected" value="';
+		} else {
+			echo '<option value="';
+		}
+		echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
+
+	} //end while loop
+
+
+	echo '</select></td>
+		</tr>';
+	DB_data_seek($result, 0);
 
 	//SQL to poulate account selection boxes
 	$sql = "SELECT salesmanname,
@@ -713,36 +742,6 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select></td>
 		</tr>';
-
-	DB_data_seek($result, 0);
-
-	$sql = "SELECT areacode, areadescription FROM areas";
-	$result = DB_query($sql, $db);
-	if (DB_num_rows($result) == 0) {
-		echo '</table>';
-		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'), 'error');
-		echo '<br /><a href="' . $RootPath . '/Areas.php">' . _('Define Sales Areas') . '</a>';
-		include('includes/footer.inc');
-		exit;
-	}
-
-	echo '<tr>
-			<td>' . _('Sales Area') . ':</td>
-			<td><select minlength="0" tabindex="14" name="Area">';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['Area']) and $myrow['areacode'] == $_POST['Area']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
-		}
-		echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
-
-	} //end while loop
-
-
-	echo '</select></td>
-		</tr>';
-	DB_data_seek($result, 0);
 
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,

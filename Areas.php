@@ -64,7 +64,8 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "'
+		$sql = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "',
+								parentarea='" . $_POST['ParentArea'] . "'
 								WHERE areacode = '" . $SelectedArea . "'";
 
 		$msg = _('Area code') . ' ' . $SelectedArea . ' ' . _('has been updated');
@@ -74,9 +75,11 @@ if (isset($_POST['submit'])) {
 		/*Selectedarea is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new area form */
 
 		$sql = "INSERT INTO areas (areacode,
+									parentarea,
 									areadescription
 								) VALUES (
 									'" . $_POST['AreaCode'] . "',
+									'" . $_POST['ParentArea'] . "',
 									'" . $_POST['AreaDescription'] . "'
 								)";
 
@@ -135,6 +138,7 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedArea)) {
 
 	$sql = "SELECT areacode,
+					parentarea,
 					areadescription
 				FROM areas";
 	$result = DB_query($sql, $db);
@@ -144,6 +148,7 @@ if (!isset($SelectedArea)) {
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('Area Code') . '</th>
+				<th>' . _('Parent Area') . '</th>
 				<th>' . _('Area Name') . '</th>
 			</tr>';
 
@@ -157,7 +162,11 @@ if (!isset($SelectedArea)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
+		$sql = "SELECT areadescription FROM areas WHERE areacode='" . $myrow['parentarea'] . "'";
+		$ParentResult = DB_query($sql, $db);
+		$ParentRow = DB_fetch_array($ParentResult);
 		echo '<td>' . $myrow['areacode'] . '</td>
+				<td>' . $ParentRow['areadescription'] . '</td>
 				<td>' . $myrow['areadescription'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $myrow['areacode'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this area?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
@@ -185,6 +194,7 @@ if (!isset($_GET['delete'])) {
 		//editing an existing area
 
 		$sql = "SELECT areacode,
+						parentarea,
 						areadescription
 					FROM areas
 					WHERE areacode='" . $SelectedArea . "'";
@@ -217,14 +227,35 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 	}
 
-	echo '<tr><td>' . _('Area Name') . ':</td>
-		<td><input tabindex="2" type="text" name="AreaDescription" value="' . $_POST['AreaDescription'] . '" size="26" required="required" minlength="1" maxlength="25" /></td>
+	echo '<tr>
+			<td>' . _('Parent Area') . ':' . '</td>
+			<td><select minlength="0" tabindex="2" name="ParentArea">';
+
+	$sql = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
+	$ErrMsg = _('An error occurred in retrieving the areas from the database');
+	$DbgMsg = _('The SQL that was used to retrieve the area information and that failed in the process was');
+	$ParentResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	echo '<option value=""></option>';
+	while ($ParentRow = DB_fetch_array($ParentResult)) {
+		if ($myrow['parentarea'] == $ParentRow['areacode']) {
+			echo '<option selected="selected" value="' . $ParentRow['areacode'] . '">' . $ParentRow['areadescription'] . ' (' . $ParentRow['areacode'] . ')</option>';
+		} //$_POST['SectionInAccounts'] == $secrow['sectionid']
+		else {
+			echo '<option value="' . $ParentRow['areacode'] . '">' . $ParentRow['areadescription'] . ' (' . $ParentRow['areacode'] . ')</option>';
+		}
+	} //$secrow = DB_fetch_array($secresult)
+	echo '</select>';
+	echo '</td></tr>';
+
+	echo '<tr>
+			<td>' . _('Area Name') . ':</td>
+			<td><input tabindex="3" type="text" name="AreaDescription" value="' . $_POST['AreaDescription'] . '" size="26" required="required" minlength="1" maxlength="25" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td colspan="2">
 				<div class="centre">
-					<input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" />
+					<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
 				</div>
 			</td>
 		</tr>

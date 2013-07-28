@@ -44,6 +44,11 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The salesperson name must be thirty characters or less long'), 'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
+	} elseif (mb_strlen($_POST['SalesArea']) == 0) {
+		$InputError = 1;
+		prnMsg(_('You must select an area for this salesman'), 'error');
+		$Errors[$i] = 'SalesmanName';
+		$i++;
 	} elseif (mb_strlen($_POST['SManTel']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'), 'error');
@@ -84,13 +89,14 @@ if (isset($_POST['submit'])) {
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
-						commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
-						smantel='" . $_POST['SManTel'] . "',
-						smanfax='" . $_POST['SManFax'] . "',
-						breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
-						commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
-						current='" . $_POST['Current'] . "'
-				WHERE salesmancode = '" . $SelectedSalesPerson . "'";
+									salesarea='" . $_POST['SalesArea'] . "',
+									commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
+									smantel='" . $_POST['SManTel'] . "',
+									smanfax='" . $_POST['SManFax'] . "',
+									breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
+									commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
+									current='" . $_POST['Current'] . "'
+								WHERE salesmancode = '" . $SelectedSalesPerson . "'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
@@ -99,6 +105,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "INSERT INTO salesman (salesmancode,
 						salesmanname,
+						salesarea,
 						commissionrate1,
 						commissionrate2,
 						breakpoint,
@@ -106,13 +113,14 @@ if (isset($_POST['submit'])) {
 						smanfax,
 						current)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
-					'" . $_POST['SalesmanName'] . "',
-					'" . filter_number_format($_POST['CommissionRate1']) . "',
-					'" . filter_number_format($_POST['CommissionRate2']) . "',
-					'" . filter_number_format($_POST['Breakpoint']) . "',
-					'" . $_POST['SManTel'] . "',
-					'" . $_POST['SManFax'] . "',
-					'" . $_POST['Current'] . "'
+						'" . $_POST['SalesmanName'] . "',
+						'" . $_POST['SalesArea'] . "',
+						'" . filter_number_format($_POST['CommissionRate1']) . "',
+						'" . filter_number_format($_POST['CommissionRate2']) . "',
+						'" . filter_number_format($_POST['Breakpoint']) . "',
+						'" . $_POST['SManTel'] . "',
+						'" . $_POST['SManFax'] . "',
+						'" . $_POST['Current'] . "'
 					)";
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
@@ -128,6 +136,7 @@ if (isset($_POST['submit'])) {
 		unset($SelectedSalesPerson);
 		unset($_POST['SalesmanCode']);
 		unset($_POST['SalesmanName']);
+		unset($_POST['SalesArea']);
 		unset($_POST['CommissionRate1']);
 		unset($_POST['CommissionRate2']);
 		unset($_POST['Breakpoint']);
@@ -183,6 +192,7 @@ if (!isset($SelectedSalesPerson)) {
 
 	$sql = "SELECT salesmancode,
 				salesmanname,
+				salesarea,
 				smantel,
 				smanfax,
 				commissionrate1,
@@ -196,6 +206,7 @@ if (!isset($SelectedSalesPerson)) {
 	echo '<tr>
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
+			<th>' . _('SalesArea') . '</th>
 			<th>' . _('Telephone') . '</th>
 			<th>' . _('Facsimile') . '</th>
 			<th>' . _('Comm Rate 1') . '</th>
@@ -219,7 +230,12 @@ if (!isset($SelectedSalesPerson)) {
 			$ActiveText = _('No');
 		}
 
+		$sql = "SELECT areadescription FROM areas WHERE areacode='" . $myrow['salesarea'] . "'";
+		$AreaResult = DB_query($sql, $db);
+		$AreaRow = DB_fetch_array($AreaResult);
+
 		printf('<td>%s</td>
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -229,7 +245,7 @@ if (!isset($SelectedSalesPerson)) {
 			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['salesmancode'], $myrow['salesmanname'], $myrow['smantel'], $myrow['smanfax'], locale_number_format($myrow['commissionrate1'], 2), locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['commissionrate2'], 2), $ActiveText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode']);
+			</tr>', $myrow['salesmancode'], $myrow['salesmanname'], $AreaRow['areadescription'], $myrow['smantel'], $myrow['smanfax'], locale_number_format($myrow['commissionrate1'], 2), locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['commissionrate2'], 2), $ActiveText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -250,6 +266,7 @@ if (!isset($_GET['delete'])) {
 
 		$sql = "SELECT salesmancode,
 					salesmanname,
+					salesarea,
 					smantel,
 					smanfax,
 					commissionrate1,
@@ -264,6 +281,7 @@ if (!isset($_GET['delete'])) {
 
 		$_POST['SalesmanCode'] = $myrow['salesmancode'];
 		$_POST['SalesmanName'] = $myrow['salesmanname'];
+		$_POST['SalesArea'] = $myrow['salesarea'];
 		$_POST['SManTel'] = $myrow['smantel'];
 		$_POST['SManFax'] = $myrow['smanfax'];
 		$_POST['CommissionRate1'] = locale_number_format($myrow['commissionrate1'], 'Variable');
@@ -285,11 +303,14 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>
-					<td><input type="text" name="SalesmanCode" size="3" required="required" minlength="1" maxlength="3" /></td>
+					<td><input type="text" name="SalesmanCode" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="3" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['SalesmanName'])) {
 		$_POST['SalesmanName'] = '';
+	}
+	if (!isset($_POST['SalesArea'])) {
+		$_POST['SalesArea'] = '';
 	}
 	if (!isset($_POST['SManTel'])) {
 		$_POST['SManTel'] = '';
@@ -314,6 +335,24 @@ if (!isset($_GET['delete'])) {
 			<td>' . _('Salesperson Name') . ':</td>
 			<td><input type="text" name="SalesmanName"  size="30" required="required" minlength="1" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
 		</tr>';
+	echo '<tr>
+			<td>' . _('Sales Area') . ':' . '</td>
+			<td><select required="required" minlength="1" tabindex="2" name="SalesArea">';
+	$sql = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
+	$ErrMsg = _('An error occurred in retrieving the areas from the database');
+	$DbgMsg = _('The SQL that was used to retrieve the area information and that failed in the process was');
+	$AreaResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	echo '<option value=""></option>';
+	while ($AreaRow = DB_fetch_array($AreaResult)) {
+		if ($_POST['SalesArea'] == $AreaRow['areacode']) {
+			echo '<option selected="selected" value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . ' (' . $AreaRow['areacode'] . ')</option>';
+		} //$_POST['SectionInAccounts'] == $secrow['sectionid']
+		else {
+			echo '<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . ' (' . $AreaRow['areacode'] . ')</option>';
+		}
+	} //$secrow = DB_fetch_array($secresult)
+	echo '</select>';
+	echo '</td></tr>';
 	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
 			<td><input type="text" name="SManTel" size="20" minlength="0" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
