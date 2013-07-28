@@ -6,8 +6,8 @@ include('includes/DefineStockTransfers.php');
 include('includes/session.inc');
 $Title = _('Stock Transfers');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "Inventory";
-$BookMark = "LocationTransfers";
+$ViewTopic = 'Inventory';
+$BookMark = 'LocationTransfers';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

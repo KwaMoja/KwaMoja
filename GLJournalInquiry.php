@@ -2,8 +2,8 @@
 
 include('includes/session.inc');
 $Title = _('General Ledger Journal Inquiry');
-$ViewTopic = "GeneralLedger";
-$BookMark = "GLJournalInquiry";
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLJournalInquiry';
 include('includes/header.inc');
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';

@@ -217,8 +217,8 @@ if (isset($_POST['RunReport'])) {
 /* end of if PrintReport button hit */
 else {
 	$Title = _('General Ledger Account Report');
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "GLAccountReport";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'GLAccountReport';
 	include('includes/header.inc');
 	include('includes/GLPostings.inc');
 

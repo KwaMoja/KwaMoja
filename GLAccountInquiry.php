@@ -2,8 +2,8 @@
 
 include('includes/session.inc');
 $Title = _('General Ledger Account Inquiry');
-$ViewTopic = "GeneralLedger";
-$BookMark = "GLAccountInquiry";
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLAccountInquiry';
 include('includes/header.inc');
 include('includes/GLPostings.inc');
 

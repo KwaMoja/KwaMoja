@@ -4,8 +4,8 @@ include('includes/session.inc');
 
 $Title = _('Discount Categories Maintenance');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "SalesOrders";
-$BookMark = "DiscountMatrix";
+$ViewTopic = 'SalesOrders';
+$BookMark = 'DiscountMatrix';
 include('includes/header.inc');
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 

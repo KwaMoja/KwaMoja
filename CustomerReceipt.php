@@ -7,11 +7,11 @@ $Title = _('Receipt Entry');
 
 /* KwaMoja manual links before header.inc */
 if ($_GET['Type'] == 'GL') {
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "GLReceipts";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'GLReceipts';
 } else {
-	$ViewTopic = "ARTransactions";
-	$BookMark = "CustomerReceipts";
+	$ViewTopic = 'ARTransactions';
+	$BookMark = 'CustomerReceipts';
 }
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');

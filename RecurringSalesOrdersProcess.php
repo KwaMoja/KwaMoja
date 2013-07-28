@@ -21,8 +21,8 @@ include('includes/session.inc');
 
 $Title = _('Recurring Orders Process');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "SalesOrders";
-$BookMark = "RecurringSalesOrders";
+$ViewTopic = 'SalesOrders';
+$BookMark = 'RecurringSalesOrders';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');

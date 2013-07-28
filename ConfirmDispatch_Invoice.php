@@ -7,8 +7,8 @@ include('includes/session.inc');
 $Title = _('Confirm Dispatches and Invoice An Order');
 
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "ARTransactions";
-$BookMark = "ConfirmInvoice";
+$ViewTopic = 'ARTransactions';
+$BookMark = 'ConfirmInvoice';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');

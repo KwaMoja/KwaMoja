@@ -13,8 +13,8 @@ if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod']))
 
 if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POST['SelectADifferentPeriod'])) {
 
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "TagReports";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'TagReports';
 	include('includes/header.inc');
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -479,8 +479,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 
 } else {
 
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "TagReports";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'TagReports';
 	include('includes/header.inc');
 	echo '<form onSubmit="return VerifyForm(this);" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />

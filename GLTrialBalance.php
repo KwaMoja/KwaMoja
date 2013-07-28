@@ -21,8 +21,8 @@ if (isset($_POST['FromPeriod']) and isset($_POST['ToPeriod']) and $_POST['FromPe
 
 if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POST['SelectADifferentPeriod'])) {
 
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "TrialBalance";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'TrialBalance';
 	include('includes/header.inc');
 	echo '<p class="page_title_text noPrint" >
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Trial Balance') . '" alt="' . _('Trial Balance') . '" />' . ' ' . $Title . '
@@ -156,8 +156,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	$AccountsResult = DB_query($SQL, $db);
 	if (DB_error_no($db) != 0) {
 		$Title = _('Trial Balance') . ' - ' . _('Problem Report') . '....';
-		$ViewTopic = "GeneralLedger";
-		$BookMark = "TrialBalance";
+		$ViewTopic = 'GeneralLedger';
+		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		prnMsg(_('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db));
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
@@ -169,8 +169,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	}
 	if (DB_num_rows($AccountsResult) == 0) {
 		$Title = _('Print Trial Balance Error');
-		$ViewTopic = "GeneralLedger";
-		$BookMark = "TrialBalance";
+		$ViewTopic = 'GeneralLedger';
+		$BookMark = 'TrialBalance';
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg(_('There were no entries to print out for the selections specified'));
@@ -398,8 +398,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	exit;
 } else {
 
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "TrialBalance";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'TrialBalance';
 	include('includes/header.inc');
 	echo '<form onSubmit="return VerifyForm(this);" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

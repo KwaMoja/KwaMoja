@@ -3,8 +3,8 @@
 include('includes/session.inc');
 $Title = _('Search Outstanding Sales Orders');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "SalesOrders";
-$BookMark = "SelectSalesOrder";
+$ViewTopic = 'SalesOrders';
+$BookMark = 'SelectSalesOrder';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

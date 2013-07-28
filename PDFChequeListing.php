@@ -19,8 +19,8 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 
 
 	$Title = _('Payment Listing');
-	$ViewTopic = "GeneralLedger";
-	$BookMark = "ChequePaymentListing";
+	$ViewTopic = 'GeneralLedger';
+	$BookMark = 'ChequePaymentListing';
 	include('includes/header.inc');
 
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . $Title . '" alt="' . $Title . '" />' . $Title . '</p>';

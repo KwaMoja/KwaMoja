@@ -4,8 +4,8 @@ include('includes/session.inc');
 
 $Title = _('Search GL Accounts');
 
-$ViewTopic = "GeneralLedger";
-$BookMark = "GLAccountInquiry";
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLAccountInquiry';
 include('includes/header.inc');
 
 unset($result);

@@ -2,8 +2,8 @@
 
 include('includes/session.inc');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "Inventory";
-$BookMark = "PlanningReport";
+$ViewTopic = 'Inventory';
+$BookMark = 'PlanningReport';
 
 if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_POST['FromCriteria']) >= 1 and isset($_POST['ToCriteria']) and mb_strlen($_POST['ToCriteria']) >= 1) {
 

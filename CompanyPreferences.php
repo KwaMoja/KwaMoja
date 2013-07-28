@@ -4,8 +4,8 @@ include('includes/session.inc');
 
 $Title = _('Company Preferences');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "CreatingNewSystem";
-$BookMark = "CompanyParameters";
+$ViewTopic = 'CreatingNewSystem';
+$BookMark = 'CompanyParameters';
 include('includes/header.inc');
 
 if (isset($Errors)) {
