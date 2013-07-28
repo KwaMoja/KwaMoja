@@ -18,7 +18,6 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])) {
@@ -31,7 +30,9 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 	/*Show a form to allow input of criteria for Tabs to show */
 	echo '<table class="selection">';
-	echo '<tr><td>' . _('Code Of Petty Cash Tab') . ':</td><td><select minlength="0" name="SelectedTabs">';
+	echo '<tr>
+			<td>' . _('Code Of Petty Cash Tab') . ':</td>
+			<td><select minlength="1" autofocus="autofocus" required="required" name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -53,16 +54,22 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('From Date :') . '</td><td>';
-	echo '<input tabindex="2" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="FromDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />';
-	echo '</td></tr>';
-	echo '<tr><td>' . _('To Date:') . '</td><td>';
-	echo '<input tabindex="3" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="ToDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />';
-	echo '</td></tr></table><br />';
+	echo '<tr>
+			<td>' . _('From Date :') . '</td>
+			<td>
+				<input tabindex="2" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="FromDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+			</td>
+		</tr>
+		<tr>
+			<td>' . _('To Date:') . '</td>
+			<td>
+				<input tabindex="3" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" type="text" name="ToDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			</td>
+		</tr>
+	</table><br />';
 	echo '<div class="centre"><input type="submit" name="ShowTB" value="' . _('Show HTML') . '" />';
 	echo '<input type="submit" name="PrintPDF" value="' . _('PrintPDF') . '" /></div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 } else if (isset($_POST['PrintPDF'])) {
 

@@ -24,12 +24,12 @@ if (!isset($_POST['BatchNo'])) {
 		ORDER BY transno DESC";
 	$result = DB_query($sql, $db);
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection" summary="' . _('Details of the batch to be re-printed') . '">';
-	echo '<tr><td>' . _('Select the batch number of receipts to be printed') . ':</td>';
-	echo '<td><select required="required" minlength="1" name="BatchNo">';
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+				<table class="selection" summary="' . _('Details of the batch to be re-printed') . '">
+					<tr>
+						<td>' . _('Select the batch number of receipts to be printed') . ':</td>
+						<td><select autofocus="autofocus" required="required" minlength="1" name="BatchNo">';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['transno'] . '">' . _('Batch') . ' ' . $myrow['transno'] . ' - ' . ConvertSqlDate($myrow['transdate']) . '</option>';
 	}
@@ -40,7 +40,6 @@ if (!isset($_POST['BatchNo'])) {
 			<div class="centre">
 				<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
 			</div>
-		</div>
 		</form>';
 
 	include('includes/footer.inc');

@@ -155,9 +155,9 @@ if (!isset($SelectedTab)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Type Of Tab') . '</th>
-		<th>' . _('Description') . '</th>
-	</tr>';
+			<th>' . _('Type Of Tab') . '</th>
+			<th>' . _('Description') . '</th>
+		</tr>';
 
 	$k = 0; //row colour counter
 
@@ -171,10 +171,10 @@ if (!isset($SelectedTab)) {
 		}
 
 		printf("<td>%s</td>
-		<td>%s</td>
-		<td><a href='%sSelectedTab=%s'>" . _('Edit') . "</a></td>
-		<td><a href='%sSelectedTab=%s&amp;delete=yes' onclick=\"return MakeConfirm('" . _('Are you sure you wish to delete this code and all the description it may have set up?') . "', \'Confirm Delete\', this);\">" . _('Delete') . "</a></td>
-		</tr>", $myrow['0'], $myrow['1'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['0'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['0']);
+				<td>%s</td>
+				<td><a href='%sSelectedTab=%s'>" . _('Edit') . "</a></td>
+				<td><a href='%sSelectedTab=%s&amp;delete=yes' onclick=\"return MakeConfirm('" . _('Are you sure you wish to delete this code and all the description it may have set up?') . "', \'Confirm Delete\', this);\">" . _('Delete') . "</a></td>
+			</tr>", $myrow['0'], $myrow['1'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['0'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['0']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -188,7 +188,6 @@ if (isset($SelectedTab)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />'; //Main table
 
@@ -243,7 +242,6 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
-		</div>
 		</div>
 		</form>';
 

@@ -3,8 +3,8 @@
 include('includes/session.inc');
 $Title = _('Claim Petty Cash Expenses From Tab');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "PettyCash";
-$BookMark = "ExpenseClaim";
+$ViewTopic = 'PettyCash';
+$BookMark = 'ExpenseClaim';
 include('includes/header.inc');
 
 
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 	if ($_POST['SelectedExpense'] == '') {
 		$InputError = 1;
 		prnMsg(_('You have not selected an expense to claim on this tab'), 'error');
-	} elseif ($_POST['amount'] == 0) {
+	} elseif ($_POST['Amount'] == 0) {
 		$InputError = 1;
 		prnMsg(_('The Amount must be greater than 0'), 'error');
 	}
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE pcashdetails
 			SET date = '" . FormatDateForSQL($_POST['Date']) . "',
 			codeexpense = '" . $_POST['SelectedExpense'] . "',
-			amount = '" . -filter_number_format($_POST['amount']) . "',
+			amount = '" . -filter_number_format($_POST['Amount']) . "',
 			notes = '" . $_POST['Notes'] . "',
 			receipt = '" . $_POST['Receipt'] . "'
 			WHERE counterindex = '" . $SelectedIndex . "'";
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['SelectedTabs'] . "',
 										'" . FormatDateForSQL($_POST['Date']) . "',
 										'" . $_POST['SelectedExpense'] . "',
-										'" . -filter_number_format($_POST['amount']) . "',
+										'" . -filter_number_format($_POST['Amount']) . "',
 										0,
 										0,
 										'" . $_POST['Notes'] . "',
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg, 'success');
 
 		unset($_POST['SelectedExpense']);
-		unset($_POST['amount']);
+		unset($_POST['Amount']);
 		unset($_POST['Date']);
 		unset($_POST['Notes']);
 		unset($_POST['Receipt']);
@@ -214,7 +214,7 @@ if (!isset($SelectedTabs)) {
 
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['SelectedExpense']);
-			unset($_POST['amount']);
+			unset($_POST['Amount']);
 			unset($_POST['Date']);
 			unset($_POST['Notes']);
 			unset($_POST['Receipt']);
@@ -247,11 +247,11 @@ if (!isset($SelectedTabs)) {
 				$k = 1;
 			}
 
-			$sqldes = "SELECT description
+			$SQLDes = "SELECT description
 						FROM pcexpenses
 						WHERE codeexpense='" . $myrow['3'] . "'";
 
-			$ResultDes = DB_query($sqldes, $db);
+			$ResultDes = DB_query($SQLDes, $db);
 			$Description = DB_fetch_array($ResultDes);
 
 			if (!isset($Description['0'])) {
@@ -287,11 +287,11 @@ if (!isset($SelectedTabs)) {
 		}
 		//END WHILE LIST LOOP
 
-		$sqlamount = "SELECT sum(amount)
+		$SQLAmount = "SELECT sum(amount)
 					FROM pcashdetails
 					WHERE tabcode='" . $SelectedTabs . "'";
 
-		$ResultAmount = DB_query($sqlamount, $db);
+		$ResultAmount = DB_query($SQLAmount, $db);
 		$Amount = DB_fetch_array($ResultAmount);
 
 		if (!isset($Amount['0'])) {
@@ -299,7 +299,7 @@ if (!isset($SelectedTabs)) {
 		}
 
 		echo '<tr>
-				<td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
+				<td colspan="2" class="number">' . _('Current balance') . ':</td>
 				<td class="number">' . locale_number_format($Amount['0'], $CurrDecimalPlaces) . '</td>
 			</tr>';
 
@@ -377,7 +377,7 @@ if (!isset($SelectedTabs)) {
 
 		echo '<tr>
 				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="amount" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
+				<td><input type="text" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
 			</tr>';
 
 		if (!isset($_POST['Notes'])) {

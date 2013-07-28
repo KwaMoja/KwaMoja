@@ -3,8 +3,8 @@
 include('includes/session.inc');
 $Title = _('Authorisation of Petty Cash Expenses');
 /* KwaMoja manual links before header.inc */
-$ViewTopic = "PettyCash";
-$BookMark = "AuthorizeExpense";
+$ViewTopic = 'PettyCash';
+$BookMark = 'AuthorizeExpense';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -48,7 +48,6 @@ if (isset($SelectedTabs)) {
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($Days)) {
@@ -281,7 +280,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	// Do the postings
 	include('includes/GLPostings.inc');
 	echo '</table><br /><div class="centre"><input type="submit" name="Submit" value="' . _('Update') . '" /></div>
-		  </div>
 		  </form>';
 
 
@@ -290,7 +288,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><table class="selection">'; //Main table
 
@@ -320,7 +317,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
 								<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
-	echo '</div>';
 	echo '</form>';
 }
 /*end of else not submit */

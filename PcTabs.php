@@ -249,7 +249,6 @@ if (isset($SelectedTab)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />'; //Main table
 
@@ -367,9 +366,13 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Limit Of Tab') . ':</td>
-			<td><input type="text" class="number" name="TabLimit" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['TabLimit'] . '" /></td></tr>';
+			<td>
+				<input type="text" class="number" name="TabLimit" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['TabLimit'] . '" />
+			</td>
+		</tr>';
 
-	echo '<tr><td>' . _('Assigner') . ':</td>
+	echo '<tr>
+			<td>' . _('Assigner') . ':</td>
 			<td><select required="required" minlength="1" name="SelectAssigner">';
 
 	$SQL = "SELECT userid,
@@ -465,10 +468,11 @@ if (!isset($_GET['delete'])) {
 	echo '</table>'; // close main table
 	DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<br /><div class="centre">
+		<input type="submit" name="Submit" value="' . _('Accept') . '" />
+		<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
 
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 } // end if user wish to delete
 
