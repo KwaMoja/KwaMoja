@@ -4,14 +4,6 @@
 	session_name('kwamoja_installation');
 	session_start();
 
-    //we need a languate for the LanguageSetup.php functions - first load we have none
-    if (!isset($_POST['Language'])) { //check that we haven't selected a language already
-        $DefaultLanguage = 'en_US.utf8'; // load a default language early so we can use defines - this will be overridden by user one
-	}
-	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
-	include('../includes/LanguageSetup.php'); // load LanguagesSetup early so we can use it earlier
-	include('../includes/MiscFunctions.php');
-
 /*
  * Web ERP Installer
  * Step 1: Licence acknowledgement and Choose Language
@@ -27,9 +19,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><?php echo _('KwaMoja Installer'); ?></title>
-    <link rel="stylesheet" type="text/css" href="installer.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo _('KwaMoja Installer'); ?></title>
+	<link rel="stylesheet" type="text/css" href="installer.css" />
 </head>
 <body>
 <div id="CanvasDiv">
@@ -147,6 +139,9 @@
 
 		}
 
+	$PathPrefix = '../';//To make the LanguageSetup.php script run properly
+	include('../includes/LanguageSetup.php');
+	include('../includes/MiscFunctions.php');
 
 	//prevent the installation file from running again
 
@@ -209,7 +204,7 @@
 		if(!empty($_POST['HostName'])){
 			// As HTTP_HOST is user input, ensure it only contains characters allowed
  			// in hostnames. See RFC 952 (and RFC 2181).
-    			// $_SERVER['HTTP_HOST'] is lowercased here per specifications.
+				// $_SERVER['HTTP_HOST'] is lowercased here per specifications.
 			$_POST['HostName'] = strtolower($_POST['HostName']);
 			$HostValid = preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $_POST['HostName']);
 			if($HostValid){
@@ -283,12 +278,12 @@
 			}
 
 		}else{
-		    //start to installation
+			//start to installation
 			$Path_To_Root = '..';
 			$Config_File = $Path_To_Root . '/config.php';
 			if((isset($DualCompany) and $DualCompany == 1) or (isset($NewCompany) and $NewCompany == 1)){
 				$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
-			    $Result = mkdir($CompanyDir);
+				$Result = mkdir($CompanyDir);
 				$Result = mkdir($CompanyDir . '/part_pics');
 				$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
 				$Result = mkdir($CompanyDir . '/reports');
@@ -322,7 +317,7 @@
 			$msg .= "\$host = '" . $HostName . "';\n\n";
 			$msg .= "// assuming that the web server is also the sql server\n";
 			$msg .= "\$DBType = '".$DBConnectType."';\n";
-		        $msg .= "//assuming that the web server is also the sql server\n";
+			$msg .= "//assuming that the web server is also the sql server\n";
 			$msg .= "\$DBUser = '".$UserName."';\n";
 			$msg .= "\$DBPassword = '".$Password."';\n";
 			$msg .= "// The timezone of the business - this allows the possibility of having;\n";
@@ -471,7 +466,7 @@
 		if(!empty($_POST['HostName'])){
 			// As HTTP_HOST is user input, ensure it only contains characters allowed
  			// in hostnames. See RFC 952 (and RFC 2181).
-    			// $_SERVER['HTTP_HOST'] is lowercased here per specifications.
+				// $_SERVER['HTTP_HOST'] is lowercased here per specifications.
 			$_POST['HostName'] = strtolower($_POST['HostName']);
 			$HostValid = preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $_POST['HostName']);
 			if($HostValid){
@@ -538,107 +533,107 @@
 
 	?>
 
-    <h1><?php echo _('KwaMoja Installation Wizard'); ?></h1>
+	<h1><?php echo _('KwaMoja Installation Wizard'); ?></h1>
 	<?php
-    	if(!isset($_POST['LanguageSet'])){
+		if(!isset($_POST['LanguageSet'])){
 		 Installation($DefaultLanguage);
-	    } else {//The locale has been set, it's time to check the settings item.
-		    $ErrMsg = '';
-		    $InputError = 0;
-		    $WarnMsg = '';
-		    $InputWarn = 0;
-		    //set the default time zone
-		    if(!empty($_POST['DefaultTimeZone'])){
-			    	date_default_timezone_set($_POST['DefaultTimeZone']);
+		} else {//The locale has been set, it's time to check the settings item.
+			$ErrMsg = '';
+			$InputError = 0;
+			$WarnMsg = '';
+			$InputWarn = 0;
+			//set the default time zone
+			if(!empty($_POST['DefaultTimeZone'])){
+					date_default_timezone_set($_POST['DefaultTimeZone']);
 
-		    }
-		    //Check if the browser has been set properly
-		    if(!isset($_SESSION['CookieAllowed']) or !($_SESSION['CookieAllowed'] == 1)){
-			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly').'</p>';
+			}
+			//Check if the browser has been set properly
+			if(!isset($_SESSION['CookieAllowed']) or !($_SESSION['CookieAllowed'] == 1)){
+				$InputError = 1;
+				$ErrMsg .= '<p>'._('Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly').'</p>';
 
-		    }
-		    //Check the situation of php safe mode
-		    if(!empty($_POST['SafeModeWarning'])){
-			    if(!ContainsIllegalCharacters($_POST['SafeModeWarning'])){
-				    $InputWarn = 1;
-				    $WarnMsg .= '<p>'._($_POST['SafeModeWarning']).'</p>';
-			    }else{//Something must be wrong since this messages have been defined.
-				    prnMsg(_('Illegal characters or data has been identified, please see your admistrator for help'),'error');
-				    exit;
+			}
+			//Check the situation of php safe mode
+			if(!empty($_POST['SafeModeWarning'])){
+				if(!ContainsIllegalCharacters($_POST['SafeModeWarning'])){
+					$InputWarn = 1;
+					$WarnMsg .= '<p>'._($_POST['SafeModeWarning']).'</p>';
+				}else{//Something must be wrong since this messages have been defined.
+					prnMsg(_('Illegal characters or data has been identified, please see your admistrator for help'),'error');
+					exit;
 
-			    }
-		    }
-		    //check the php version
-		    if(empty($_POST['PHPVersion'])){
-			    	  $InputError = 1;
+				}
+			}
+			//check the php version
+			if(empty($_POST['PHPVersion'])){
+					  $InputError = 1;
 				  $ErrMsg .= '<p>'._('You PHP version should be greater than 5.1').'</p>';
-		    }
-		    //check the directory access authority of rootpath and companies
-		    if(empty($_POST['ConfigFile'])){
-			    $InputError = 1;
-			    //get the directory where kwamoja live
-			    $KwaMojaHome = dirname(dirname(__FILE__));
-			    $ErrMsg .= '<p>'._('The directory').' '.$KwaMojaHome.' '._('must be writable by web server').'</p>';
-		    }
-		    if(empty($_POST['CompaniesCreate'])){
-			    $InputError = 1;
-			    $KwaMojaHome = dirname(dirname(__FILE__));
-			    $ErrMsg .= '<p>'._('The directory').' '.$KwaMojaHome.'/companies/'.' '.('must be writable by web server').'</p>';
-		    }
-		    //check the necessary php extensions
-		    if(empty($_POST['MbstringExt']) or $_POST['MbstringExt'] != 1){
-			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('The mbstring extension is not availble in your PHP').'</p>';
-		    }
-		    //check if the libxml is exist
-		    if(empty($_POST['LibxmlExt']) or $_POST['LibxmlExt'] != 1){
-			    $InputError = 1;
-			    $ErrMsg .='<p>'._('The libxml extension is not available in your PHP').'</p>';
+			}
+			//check the directory access authority of rootpath and companies
+			if(empty($_POST['ConfigFile'])){
+				$InputError = 1;
+				//get the directory where kwamoja live
+				$KwaMojaHome = dirname(dirname(__FILE__));
+				$ErrMsg .= '<p>'._('The directory').' '.$KwaMojaHome.' '._('must be writable by web server').'</p>';
+			}
+			if(empty($_POST['CompaniesCreate'])){
+				$InputError = 1;
+				$KwaMojaHome = dirname(dirname(__FILE__));
+				$ErrMsg .= '<p>'._('The directory').' '.$KwaMojaHome.'/companies/'.' '.('must be writable by web server').'</p>';
+			}
+			//check the necessary php extensions
+			if(empty($_POST['MbstringExt']) or $_POST['MbstringExt'] != 1){
+				$InputError = 1;
+				$ErrMsg .= '<p>'._('The mbstring extension is not availble in your PHP').'</p>';
+			}
+			//check if the libxml is exist
+			if(empty($_POST['LibxmlExt']) or $_POST['LibxmlExt'] != 1){
+				$InputError = 1;
+				$ErrMsg .='<p>'._('The libxml extension is not available in your PHP').'</p>';
 
-		    }
-		    //check if the mysqli or mysql is exist
-		    if(!empty($_POST['NosqlExt']) and $_POST['NosqlExt'] == 1){
-			    $InputError = 1;
-			    $ErrMsg .= '<p>'._('There is no MySQL or MySQL extension available').'</p>';
-		    }
-		    if(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] == 1 and empty($_POST['PHP55'])){
+			}
+			//check if the mysqli or mysql is exist
+			if(!empty($_POST['NosqlExt']) and $_POST['NosqlExt'] == 1){
+				$InputError = 1;
+				$ErrMsg .= '<p>'._('There is no MySQL or MySQL extension available').'</p>';
+			}
+			if(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] == 1 and empty($_POST['PHP55'])){
 
-			    $InputWarn = 1;
-			    $MysqlExt = 1;
-			    $WarnMsg .= _('The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5').'<br/>';
+				$InputWarn = 1;
+				$MysqlExt = 1;
+				$WarnMsg .= _('The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5').'<br/>';
 
-		    }elseif(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] ==1 and !empty($_POST['PHP55'])){
-			    $InputError = 1;
-			    $ErrMsg .='<p>'._('The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5').'</p>';
-		    }
-		    //Check if the GD extension is available
-		    if(empty($_POST['GdExt']) or $_POST['GdExt'] != 1){
-			    $InputWarn = 1;
-			    $WarnMsg .='<p>'. _('The GD extension should be installed in your PHP configuration').'</p>';
+			}elseif(!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] ==1 and !empty($_POST['PHP55'])){
+				$InputError = 1;
+				$ErrMsg .='<p>'._('The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5').'</p>';
+			}
+			//Check if the GD extension is available
+			if(empty($_POST['GdExt']) or $_POST['GdExt'] != 1){
+				$InputWarn = 1;
+				$WarnMsg .='<p>'. _('The GD extension should be installed in your PHP configuration').'</p>';
 
-		    }
+			}
 
-		    if($InputError != 0){
-			    prnMsg($ErrMsg,'error');
-			    Recheck();
-			    exit;
-		    }
-		    if($InputWarn != 0){
+			if($InputError != 0){
+				prnMsg($ErrMsg,'error');
+				Recheck();
+				exit;
+			}
+			if($InputWarn != 0){
 
-			    prnMsg($WarnMsg,'warn');
-			    Recheck();
-		    }
-		    //If all of them are OK, then users can input the data of database etc
-		    //Show the database
-		    if(!empty($MysqlExt)){
-			    DbConfig($Language,$MysqlExt);
-		    }else{
-			    DbConfig($Language);
-		    }
+				prnMsg($WarnMsg,'warn');
+				Recheck();
+			}
+			//If all of them are OK, then users can input the data of database etc
+			//Show the database
+			if(!empty($MysqlExt)){
+				DbConfig($Language,$MysqlExt);
+			}else{
+				DbConfig($Language);
+			}
 
 
-	    }
+		}
 
 	?>
 
@@ -648,210 +643,210 @@
 //And at the mean time to check if the php configuration has meet requirements.
 function Installation($DefaultLanguage)
 {
-    //Check if the cookie is allowed
+	//Check if the cookie is allowed
 
-    $_SESSION['CookieAllowed'] = 1;
+	$_SESSION['CookieAllowed'] = 1;
 
-    //Check if it's in safe model, safe mode has been deprecated at 5.3.0 and removed at 5.4
-    //Please refer to here for more details http://hk2.php.net/manual/en/features.safe-mode.php
-    if(ini_get('safe_mode')){
-        $SafeModeWarning = 'You php is running in safe mode, it will leads to the execution time within 30 seconds, sometime in windows system, this will lead to installation cannot be completed in time, You would better to turn this function off';
-    }
+	//Check if it's in safe model, safe mode has been deprecated at 5.3.0 and removed at 5.4
+	//Please refer to here for more details http://hk2.php.net/manual/en/features.safe-mode.php
+	if(ini_get('safe_mode')){
+	$SafeModeWarning = 'You php is running in safe mode, it will leads to the execution time within 30 seconds, sometime in windows system, this will lead to installation cannot be completed in time, You would better to turn this function off';
+	}
 
-    //It's time to check the php version. The version should be run greater than 5.1
-    if(version_compare(PHP_VERSION,'5.1.0')>=0){
-        $PHPVersion = 1;
-    }
-    if(version_compare(PHP_VERSION,'5.5.0')>=0){
-        $PHP55 = 1;
-    }
-    //Check the writability of the root path and companies path
-    $RootPath = '..';
-    $Companies = $RootPath.'/companies';
-    if(is_writable($RootPath)){
-        $ConfigFile = 1;
-    }else{
-        clearstatcache();
-    }
-    if(is_writable($Companies)){
-        $CompaniesCreate = 1;
-    }else{
-        clearstatcache();
-    }
-    //check the necessary extensions
-    $Extensions = get_loaded_extensions();
+	//It's time to check the php version. The version should be run greater than 5.1
+	if(version_compare(PHP_VERSION,'5.1.0')>=0){
+	$PHPVersion = 1;
+	}
+	if(version_compare(PHP_VERSION,'5.5.0')>=0){
+	$PHP55 = 1;
+	}
+	//Check the writability of the root path and companies path
+	$RootPath = '..';
+	$Companies = $RootPath.'/companies';
+	if(is_writable($RootPath)){
+	$ConfigFile = 1;
+	}else{
+	clearstatcache();
+	}
+	if(is_writable($Companies)){
+	$CompaniesCreate = 1;
+	}else{
+	clearstatcache();
+	}
+	//check the necessary extensions
+	$Extensions = get_loaded_extensions();
 
-    //First check the gd module
-    if(in_array('gd',$Extensions)){
-        $GDExt = 1;
-    }
-    //Check the gettext module, it's a selectable
-    if(in_array('gettext',$Extensions)){
-        $GettextExt = 1;
-    }
-    //Check the mbstring module, it must be exist
-    if(in_array('mbstring',$Extensions)){
-        $MbstringExt = 1;
-    }
-    //Check the libxml module
-    if(in_array('libxml',$Extensions)){
-        $LibxmlExt = 1;
-    }
-    //Check if mysqli is exist
-    //usually when it's not exist, there is some warning and cannot contiue in before version
-    //We should adjust show a warning to the users if the users still use the mysql, then we should modify the config.php
-    //to make use can still continue the installation. It's just performance lost
-    if(in_array('mysqli',$Extensions)){
-        $MysqliExt = '1';
-    }elseif(in_array('mysql',$Extensions)){//if only mysql has been installed
-        $MysqlExt = '1';
-    }else{
-        $NosqlExt = '1';//There is no sql available
-    }
+	//First check the gd module
+	if(in_array('gd',$Extensions)){
+	$GDExt = 1;
+	}
+	//Check the gettext module, it's a selectable
+	if(in_array('gettext',$Extensions)){
+	$GettextExt = 1;
+	}
+	//Check the mbstring module, it must be exist
+	if(in_array('mbstring',$Extensions)){
+	$MbstringExt = 1;
+	}
+	//Check the libxml module
+	if(in_array('libxml',$Extensions)){
+	$LibxmlExt = 1;
+	}
+	//Check if mysqli is exist
+	//usually when it's not exist, there is some warning and cannot contiue in before version
+	//We should adjust show a warning to the users if the users still use the mysql, then we should modify the config.php
+	//to make use can still continue the installation. It's just performance lost
+	if(in_array('mysqli',$Extensions)){
+	$MysqliExt = '1';
+	}elseif(in_array('mysql',$Extensions)){//if only mysql has been installed
+	$MysqlExt = '1';
+	}else{
+	$NosqlExt = '1';//There is no sql available
+	}
 
-    ?>
+	?>
 
-    <form id="installation" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post">
-    <fieldset>
-        <legend><?php echo _('Welcome to the KwaMoja Installation Wizard'); ?></legend>
-        <div class="page_help_text">
-            <?php echo '
-            <ul>
-                 <li>'._('During installation you may see different status messages.').'</li>
-                <li>'._('When there is an error message you must correct the error to continue.').'</li>
-                <li>'._('If you see a warning message you should take notice before you proceed.').'</li>
-                <li>'._('If you are unsure of an option value, you may keep the default setting.').'</li>
-            </ul>';
-            ?>
+	<form id="installation" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post">
+	<fieldset>
+	<legend><?php echo _('Welcome to the KwaMoja Installation Wizard'); ?></legend>
+	<div class="page_help_text">
+		<?php echo '
+		<ul>
+		 <li>'._('During installation you may see different status messages.').'</li>
+		<li>'._('When there is an error message you must correct the error to continue.').'</li>
+		<li>'._('If you see a warning message you should take notice before you proceed.').'</li>
+		<li>'._('If you are unsure of an option value, you may keep the default setting.').'</li>
+		</ul>';
+		?>
 
-        </div>
-    </fieldset>
-    <fieldset>
-            <legend><?php echo _('Select your language'); ?></legend>
+	</div>
+	</fieldset>
+	<fieldset>
+		<legend><?php echo _('Select your language'); ?></legend>
 
-            <div class="page_help_text" >
-                <p><?php echo _('The installer will try and guess your language from your browser, but may get it wrong. Please select you preferred language below.'); ?></p>
-            </div>
-            <ul>
-            <?php include('../includes/LanguagesArray.php'); ?>
-                <li><label for="Language"><?php echo _('Language:'); ?>&#160;</label>
-                <select id="Language" name="Language">
-            <?php
-                if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english
-                    foreach($LanguagesArray as $Key => $Language1){//since we only use the first 2 characters to separate the language, there are some
-                                            //chance that different locale but use same first 2 letters.
-                        if(!isset($SelectedKey) and substr($DefaultLanugage,0,2) == substr($Key,0,2)){
-                            $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
-                        }
-                        if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
-                            echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
-                        }
-                    }
-                }else{
-                    foreach($LanguagesArray as $Key => $Language1){
-                        if(!isset($SelectedKey) and substr($Key,0,2) == 'en'){
-                            $SelectedKey = $Key;
-                            echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].'</option>';
-                        }
-                        if(!isset($SelectedKey) or (isset($SelectedKey) and $SelectedKey != $Key)){
+		<div class="page_help_text" >
+		<p><?php echo _('The installer will try and guess your language from your browser, but may get it wrong. Please select you preferred language below.'); ?></p>
+		</div>
+		<ul>
+		<?php include('../includes/LanguagesArray.php'); ?>
+		<li><label for="Language"><?php echo _('Language:'); ?>&#160;</label>
+		<select id="Language" name="Language">
+		<?php
+		if(substr($DefaultLanguage,0,2) !='en'){//ensure that the bilingual only display when the language is not english
+			foreach($LanguagesArray as $Key => $Language1){//since we only use the first 2 characters to separate the language, there are some
+						//chance that different locale but use same first 2 letters.
+			if(!isset($SelectedKey) and substr($DefaultLanugage,0,2) == substr($Key,0,2)){
+				$SelectedKey = $Key;
+				echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
+			}
+			if(!isset($SelectedKey) or (isset($SelectedKey) and $Key != $SelectedKey)){
+				echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].$Language1['WindowsLocale'].'</option>';
+			}
+			}
+		}else{
+			foreach($LanguagesArray as $Key => $Language1){
+			if(!isset($SelectedKey) and substr($Key,0,2) == 'en'){
+				$SelectedKey = $Key;
+				echo '<option value="'.$Key.'" selected="selected">'.$Language1['LanguageName'].'</option>';
+			}
+			if(!isset($SelectedKey) or (isset($SelectedKey) and $SelectedKey != $Key)){
 
-                            echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].'</option>';
-                        }
-                    }
-                }
+				echo '<option value="'.$Key.'" >'.$Language1['LanguageName'].'</option>';
+			}
+			}
+		}
 
-                ?>
-                    </select>
-                </li>
-            </ul>
-            <script>
-                function tz(){
-                document.getElementById('DefaultTimeZone').value = jstz.determine().name();
-                }
-            </script>
-                <input type="hidden" name="DefaultTimeZone" id="DefaultTimeZone" />
-        <?php
-        if(!empty($SafeModeWarning)){
-        ?>
-        <input type="hidden" name="SafeModeWarning" value="<?php echo $SafeModeWarning; ?>" />
-        <?php
-        }
-        if(!empty($PHPVersion)){//
-        ?>
-        <input type="hidden" name="PHPVersion" value="1" />
-        <?php
-        }
-        if(!empty($ConfigFile)){
-        ?>
-        <input type="hidden" name="ConfigFile" value="1" />
-        <?php
-        }
-        if(!empty($CompaniesCreate)){
-        ?>
-        <input type="hidden" name="CompaniesCreate" value="1" />
-        <?php
-        }
-        if(!empty($GDExt)){
-        ?>
-        <input type="hidden" name="GdExt" value="1" />
-        <?php
-        }
-        if(!empty($GettextExt)){
-        ?>
-        <input type="hidden" name="GettextExt" value="1" />
+		?>
+			</select>
+		</li>
+		</ul>
+		<script>
+		function tz(){
+		document.getElementById('DefaultTimeZone').value = jstz.determine().name();
+		}
+		</script>
+		<input type="hidden" name="DefaultTimeZone" id="DefaultTimeZone" />
+	<?php
+	if(!empty($SafeModeWarning)){
+	?>
+	<input type="hidden" name="SafeModeWarning" value="<?php echo $SafeModeWarning; ?>" />
+	<?php
+	}
+	if(!empty($PHPVersion)){//
+	?>
+	<input type="hidden" name="PHPVersion" value="1" />
+	<?php
+	}
+	if(!empty($ConfigFile)){
+	?>
+	<input type="hidden" name="ConfigFile" value="1" />
+	<?php
+	}
+	if(!empty($CompaniesCreate)){
+	?>
+	<input type="hidden" name="CompaniesCreate" value="1" />
+	<?php
+	}
+	if(!empty($GDExt)){
+	?>
+	<input type="hidden" name="GdExt" value="1" />
+	<?php
+	}
+	if(!empty($GettextExt)){
+	?>
+	<input type="hidden" name="GettextExt" value="1" />
 
-        <?php
-        }
-        if(!empty($MbstringExt)){
-        ?>
-        <input type="hidden" name="MbstringExt" value="1" />
-        <?php
-        }
-        if(!empty($LibxmlExt)){
-        ?>
-        <input type="hidden" name="LibxmlExt" value="1" />
-        <?php
-        }
-        if(!empty($MysqliExt)){
-        ?>
-        <input type="hidden" name="MysqliExt" value="1" />
-        <?php
-        }
-        if(!empty($MysqlExt)){
-        ?>
-        <input type="hidden" name="MysqlExt" value="1" />
-        <?php
-        }
+	<?php
+	}
+	if(!empty($MbstringExt)){
+	?>
+	<input type="hidden" name="MbstringExt" value="1" />
+	<?php
+	}
+	if(!empty($LibxmlExt)){
+	?>
+	<input type="hidden" name="LibxmlExt" value="1" />
+	<?php
+	}
+	if(!empty($MysqliExt)){
+	?>
+	<input type="hidden" name="MysqliExt" value="1" />
+	<?php
+	}
+	if(!empty($MysqlExt)){
+	?>
+	<input type="hidden" name="MysqlExt" value="1" />
+	<?php
+	}
 
-        if(!empty($NosqlExt)){
-        ?>
-        <input type="hidden" name="NosqlExt" value="1" />
-        <?php
-        }
-        if(!empty($PHP55)){
-        ?>
-        <input type="hidden" name="PHP55" value="1" />
-        <?php
-        }
-        ?>
+	if(!empty($NosqlExt)){
+	?>
+	<input type="hidden" name="NosqlExt" value="1" />
+	<?php
+	}
+	if(!empty($PHP55)){
+	?>
+	<input type="hidden" name="PHP55" value="1" />
+	<?php
+	}
+	?>
 
-        </fieldset>
-        <fieldset>
-            <input type="hidden" name="LanguageSet" value="1" />
-            <button type="submit" ><?php echo _('Next Step'); ?></button>
-        </fieldset>
+	</fieldset>
+	<fieldset>
+		<input type="hidden" name="LanguageSet" value="1" />
+		<button type="submit" ><?php echo _('Next Step'); ?></button>
+	</fieldset>
 
 
-        <?php echo '
-        <div class="page_help_text">
-            <p>'. _('KwaMoja is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing KwaMoja you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official KwaMoja website for more information.').'
-            </p>
-            <p><img src="../css/KwaMojaweb.gif" title="KwaMoja" alt="KwaMoja" />&#160; <a href="http://www.kwamoja.com">http://www.kwamoja.com</a></p>
-        </div>';
-        ?>
+	<?php echo '
+	<div class="page_help_text">
+		<p>'. _('KwaMoja is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing KwaMoja you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official KwaMoja website for more information.').'
+		</p>
+		<p><a href="http://www.kwamoja.com"><img src="../css/logo.png" title="KwaMoja" alt="KwaMoja" /></a></p>
+	</div>';
+	?>
 
-    </form>
+	</form>
 </div>
 
 <?php
@@ -863,59 +858,59 @@ function Installation($DefaultLanguage)
 function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input mysql database information
 	?>
 	<form id="DatabaseConfig" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post">
-        <fieldset>
-            <legend><?php echo _('Database settings'); ?></legend>
-            <div class="page_help_text">
-                <p>
-                    <?php echo _('Please enter your MySQL Database information below. The database name is also used at log in time to choose the company for use.'); ?><br />
-                    <span><?php echo _('* Denotes required field'); ?></span>
-                </p>
-            </div>
-            <ul>
-                <li>
-                    <label for="HostName"><?php echo _('Host Name'); ?>: </label>
-                    <input type="text" name="HostName" id="HostName" required="true" placeholder="<?php echo _('Enter database host name'); ?>" />
-                    <span><?php echo _('Commonly: localhost or 127.0.0.1'); ?></span>
-                </li>
-                <li>
-                    <label for="Database"><?php echo _('Database Name'); ?>: </label>
-                    <input type="text" name="Database" id="Database" required="true" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
-                    <span><?php echo _('The database must have a valid name'); ?></span>
-                </li>
-                <li>
-                    <label for="Prefix"><?php echo _('Database Prefix'); ?>: </label>
-                    <input type="text" name="Prefix" size="25" placeholder="<?php echo _('Useful with shared hosting'); ?>" pattern="^[A-Za-z0-9$]+_$" />&#160;
-                    <span><?php echo _('Optional: in the form of prefix_'); ?></span>
-                </li>
-                <li>
-                    <label for="UserName"><?php echo _('Database User Name'); ?>: </label>
-                    <input type="text" name="UserName" id="UserName" placeholder="<?php echo _('A valid database user name'); ?>" maxlength="16" required="true" />&#160;
-                    <span><?php echo _('Must be a user that has permission to create a database.'); ?></span>
-                </li>
-                <li>
-                    <label for="Password"><?php echo _('Password'); ?>: </label>
-                    <input type="password" name="Password" placeholder="<?php echo _('mySQL user password'); ?>"  />
-                    <span><?php echo _('Enter the user password if one exists'); ?></span>
-                </li>
-            </ul>
-        </fieldset>
-        <input type="hidden" name="UserLanguage" value="<?php echo $Language; ?>" />
-        <input type="hidden" name="Language" value="<?php echo $Language; ?>" />
-        <?php
-        if($MysqlExt){
-        ?>
-            <input type="hidden" name="MysqlExt" value="1" />
-        <?php
-        }else{
-        ?>
-            <input type="hidden" name="MysqliExt" value="1" />
-        <?php
-        }
-        ?>
+	<fieldset>
+		<legend><?php echo _('Database settings'); ?></legend>
+		<div class="page_help_text">
+		<p>
+			<?php echo _('Please enter your MySQL Database information below. The database name is also used at log in time to choose the company for use.'); ?><br />
+			<span><?php echo _('* Denotes required field'); ?></span>
+		</p>
+		</div>
+		<ul>
+		<li>
+			<label for="HostName"><?php echo _('Host Name'); ?>: </label>
+			<input type="text" name="HostName" id="HostName" required="true" value="localhost" placeholder="<?php echo _('Enter database host name'); ?>" />
+			<span><?php echo _('Commonly: localhost or 127.0.0.1'); ?></span>
+		</li>
+		<li>
+			<label for="Database"><?php echo _('Database Name'); ?>: </label>
+			<input type="text" name="Database" id="Database" required="true" value="weberp" maxlength="16" placeholder="<?php echo _('The database name'); ?>" />
+			<span><?php echo _('The database must have a valid name'); ?></span>
+		</li>
+		<li>
+			<label for="Prefix"><?php echo _('Database Prefix'); ?>: </label>
+			<input type="text" name="Prefix" size="25" placeholder="<?php echo _('Useful with shared hosting'); ?>" pattern="^[A-Za-z0-9$]+_$" />&#160;
+			<span><?php echo _('Optional: in the form of prefix_'); ?></span>
+		</li>
+		<li>
+			<label for="UserName"><?php echo _('Database User Name'); ?>: </label>
+			<input type="text" name="UserName" id="UserName" value="root" placeholder="<?php echo _('A valid database user name'); ?>" maxlength="16" required="true" />&#160;
+			<span><?php echo _('Must be a user that has permission to create a database.'); ?></span>
+		</li>
+		<li>
+			<label for="Password"><?php echo _('Password'); ?>: </label>
+			<input type="password" name="Password" placeholder="<?php echo _('mySQL user password'); ?>"  />
+			<span><?php echo _('Enter the user password if one exists'); ?></span>
+		</li>
+		</ul>
+	</fieldset>
+	<input type="hidden" name="UserLanguage" value="<?php echo $Language; ?>" />
+	<input type="hidden" name="Language" value="<?php echo $Language; ?>" />
+	<?php
+	if($MysqlExt){
+	?>
+		<input type="hidden" name="MysqlExt" value="1" />
+	<?php
+	}else{
+	?>
+		<input type="hidden" name="MysqliExt" value="1" />
+	<?php
+	}
+	?>
 
-        <fieldset>
-            <button type="submit" name="DbConfig"><?php echo _('Next Step'); ?></button>
-        </fieldset>
+	<fieldset>
+		<button type="submit" name="DbConfig"><?php echo _('Next Step'); ?></button>
+	</fieldset>
 
 	<?php
 }
@@ -924,9 +919,9 @@ function DbConfig($Language,$MysqlExt = FALSE){//The screen for users to input m
 function Recheck(){
 	?>
 	<form id="refresh" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8');?>" method="post">
-	    <fieldset>
-    		<button type="submit"><?php echo _('Check Again'); ?></button>
-	    </fieldset>
+		<fieldset>
+			<button type="submit"><?php echo _('Check Again'); ?></button>
+		</fieldset>
 	<?php
 }
 
@@ -973,105 +968,105 @@ function DbCheck($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$Mysq
 function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,$MysqlExt = FALSE){//display the company setup for users
 
 ?>
-    <h1><?php echo _('KwaMoja Installation Wizard'); ?></h1>
-    <!--<p style="text-align:center;"><?php echo _("Please enter the company name and please pay attention the company will be as same as the database name"); ?></p>-->
-    <form id="companyset" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend><?php echo _('Company Settings'); ?></legend>
-             <div class="page_help_text">
-                <p><span><?php echo _('* Denotes required field'); ?></span></p>
-            </div>
-            <ul>
-                <li>
-                    <label for="CompanyName"><?php echo _("Company Name"); ?>: </label>
-                    <input type="text" name="CompanyName" required="true" value="<?php echo $DatabaseName; ?>" maxlength="50" />
-                    <span><?php echo _('Currently, must be the same as the database name'); ?></span>
-                </li>
-                <li>
-                    <label for="COA"><?php echo _("Chart of Accounts"); ?>: </label>
-                    <select name="COA">
-                    <?php
-                        $COAs = scandir('../sql/mysql/coa');
-                        $COAs = array_diff($COAs,array('.','..'));
-                        if(!empty($COAs)){
-                            foreach($COAs as $Value){
-                                if($Value == 'kwamoja-new.sql'){
-                                    echo '<option value="'.$Value.'" selected="true">'.$Value.'</option>';
-                                }else{
-                                    echo '<option value="'.$Value.'">'.$Value.'</option>';
-                                }
-                            }
-                        }else{
-                            echo '<option value="1">'._('Default').'</option>';
-                        }
-                    ?>
-                    </select>
-                    <span><?php echo _('Will be installed as starter Chart of Accounts'); ?> </span>
-                </li>
-                <li>
-                    <label for="TimeZone"><?php echo _("Time Zone"); ?>: </label>
-                    <select name="TimeZone"><?php include('timezone.php'); ?></select>
-                </li>
-                <li>
-                    <label for="Logo"><?php echo _('Company logo file'); ?>: </label>
-                    <input type="file" accept="image/jpg" name="LogoFile" title="<?php echo _('A jpg file up to 10k, and not greater than 170px x 80px'); ?>" />
-                    <span><?php echo _("jpg file to 10k, not greater than 170px x 80px"); ?></span>
-                </li>
-            </ul>
-        </fieldset>
-        <fieldset>
-            <legend><?php echo _('Installation option'); ?></legend>
-            <ul>
-                <li>
-                    <label for="InstallDemo"><?php echo _('Install the demo data?'); ?>: </label><input type="checkbox" name="Demo" checked="checked"  />
-                    <span><?php echo _("KwaMojaDemo site and data will be installed"); ?></span>
-                </li>
-            </ul>
-        </fieldset>
-        <fieldset>
-            <legend><?php echo _('Administrator account settings'); ?></legend>
-                <div class="page_help_text">
-                    <ul>
-                        <li>
-                            <?php echo _('The default user name is \'admin\' and it cannot be changed.'); ?>
-                        </li>
-                        <li>
-                            <?php echo _('The default password is \'kwamoja\' which you can change below.'); ?>
-                        </li>
-                    </ul>
-                </div>
-                <ul>
-                    <li>
-                        <label for="adminaccount"><?php echo _('KwaMoja Admin Account'); ?>: </label>
-                        <input type="text" name="adminaccount" value="admin" disabled="disabled" />
-                    </li>
-                    <li>
-                        <label for="Email"><?php echo _('Email address'); ?>: </label>
-                        <input type="text" name="Email" required="true" placeholder="admin@yoursite.com" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
-                        <span> <?php echo _('For example: admin@yourcompany.com'); ?></span>
-                    </li>
-                    <li>
-                        <label for="KwaMojaPassword"><?php echo _('KwaMoja Password'); ?>: </label>
-                        <input type="password" name="KwaMojaPassword" value="kwamoja" required="true" />
-                    </li>
-                    <li>
-                        <label for="PasswordConfirm"><?php echo _('Re-enter Password'); ?>: </label>
-                        <input type="password" required="true" value="kwamoja" name="PasswordConfirm" />
-                    </li>
-                </ul>
+	<h1><?php echo _('KwaMoja Installation Wizard'); ?></h1>
+	<!--<p style="text-align:center;"><?php echo _("Please enter the company name and please pay attention the company will be as same as the database name"); ?></p>-->
+	<form id="companyset" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post" enctype="multipart/form-data">
+	<fieldset>
+		<legend><?php echo _('Company Settings'); ?></legend>
+		 <div class="page_help_text">
+		<p><span><?php echo _('* Denotes required field'); ?></span></p>
+		</div>
+		<ul>
+		<li>
+			<label for="CompanyName"><?php echo _("Company Name"); ?>: </label>
+			<input type="text" name="CompanyName" required="true" value="<?php echo $DatabaseName; ?>" maxlength="50" />
+			<span><?php echo _('Currently, must be the same as the database name'); ?></span>
+		</li>
+		<li>
+			<label for="COA"><?php echo _("Chart of Accounts"); ?>: </label>
+			<select name="COA">
+			<?php
+			$COAs = scandir('../sql/mysql/coa');
+			$COAs = array_diff($COAs,array('.','..'));
+			if(!empty($COAs)){
+				foreach($COAs as $Value){
+				if($Value == 'kwamoja-new.sql'){
+					echo '<option value="'.$Value.'" selected="true">'.$Value.'</option>';
+				}else{
+					echo '<option value="'.$Value.'">'.$Value.'</option>';
+				}
+				}
+			}else{
+				echo '<option value="1">'._('Default').'</option>';
+			}
+			?>
+			</select>
+			<span><?php echo _('Will be installed as starter Chart of Accounts'); ?> </span>
+		</li>
+		<li>
+			<label for="TimeZone"><?php echo _("Time Zone"); ?>: </label>
+			<select name="TimeZone"><?php include('timezone.php'); ?></select>
+		</li>
+		<li>
+			<label for="Logo"><?php echo _('Company logo file'); ?>: </label>
+			<input type="file" accept="image/jpg" name="LogoFile" title="<?php echo _('A jpg file up to 10k, and not greater than 170px x 80px'); ?>" />
+			<span><?php echo _("jpg file to 10k, not greater than 170px x 80px"); ?></span>
+		</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend><?php echo _('Installation option'); ?></legend>
+		<ul>
+		<li>
+			<label for="InstallDemo"><?php echo _('Install the demo data?'); ?>: </label><input type="checkbox" name="Demo" checked="checked"  />
+			<span><?php echo _("KwaMojaDemo site and data will be installed"); ?></span>
+		</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend><?php echo _('Administrator account settings'); ?></legend>
+		<div class="page_help_text">
+			<ul>
+			<li>
+				<?php echo _('The default user name is \'admin\' and it cannot be changed.'); ?>
+			</li>
+			<li>
+				<?php echo _('The default password is \'kwamoja\' which you can change below.'); ?>
+			</li>
+			</ul>
+		</div>
+		<ul>
+			<li>
+			<label for="adminaccount"><?php echo _('KwaMoja Admin Account'); ?>: </label>
+			<input type="text" name="adminaccount" value="admin" disabled="disabled" />
+			</li>
+			<li>
+			<label for="Email"><?php echo _('Email address'); ?>: </label>
+			<input type="email" name="Email" required="true" placeholder="admin@yoursite.com" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
+			<span> <?php echo _('For example: admin@yourcompany.com'); ?></span>
+			</li>
+			<li>
+			<label for="KwaMojaPassword"><?php echo _('KwaMoja Password'); ?>: </label>
+			<input type="password" name="KwaMojaPassword" value="kwamoja" required="true" />
+			</li>
+			<li>
+			<label for="PasswordConfirm"><?php echo _('Re-enter Password'); ?>: </label>
+			<input type="password" required="true" value="kwamoja" name="PasswordConfirm" />
+			</li>
+		</ul>
 
-            </fieldset>
-            <input type="hidden" name="HostName" value="<?php echo $HostName; ?>" />
-            <input type="hidden" name="UserName" value="<?php echo $UserName; ?>" />
+		</fieldset>
+		<input type="hidden" name="HostName" value="<?php echo $HostName; ?>" />
+		<input type="hidden" name="UserName" value="<?php echo $UserName; ?>" />
 
-            <input type="hidden" name="Password" value="<?php echo $Password; ?>" />
-            <input type="hidden" name="MysqlExt" value="<?php echo $MysqlExt; ?>" />
-            <input type="hidden" name="UserLanguage" value="<?php echo $UserLanguage; ?>" />
-            <input type="hidden" name="MAX_FILE_SIZE" value="10240" />
+		<input type="hidden" name="Password" value="<?php echo $Password; ?>" />
+		<input type="hidden" name="MysqlExt" value="<?php echo $MysqlExt; ?>" />
+		<input type="hidden" name="UserLanguage" value="<?php echo $UserLanguage; ?>" />
+		<input type="hidden" name="MAX_FILE_SIZE" value="10240" />
 
-            <fieldset>
-              <button type="submit" name="Install"><?php echo _('Install'); ?></button>
-            </fieldset>
+		<fieldset>
+		  <button type="submit" name="Install"><?php echo _('Install'); ?></button>
+		</fieldset>
 <?php
 
 }
@@ -1194,7 +1189,7 @@ function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='kwamojadem
 							if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 								// Database created above with correct name.
 							if (strncasecmp($SQL, ' CREATE DATABASE ', 17)
-				    				AND strncasecmp($SQL, ' USE ', 5)){
+									AND strncasecmp($SQL, ' USE ', 5)){
 								$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 
 								$result = ($DBType=='mysqli')?mysqli_query($db,$SQL):mysql_query($SQL,$db);
@@ -1229,7 +1224,7 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
 	$sql = "UPDATE www_users
 				SET password = '".sha1($AdminPasswd)."',
 					email = '".$AdminEmail."',
-				        language = '".$AdminLanguage."'
+					language = '".$AdminLanguage."'
 				WHERE userid = 'admin'";
 	$Result = (!$MysqlExt) ? mysqli_query($db,$sql):mysql_query($sql,$db);
 	if(!$Result){
@@ -1272,244 +1267,244 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
    * Namespace to hold all the code for timezone detection.
    */
   var jstz = (function () {
-      'use strict';
-      var HEMISPHERE_SOUTH = 's',
+	  'use strict';
+	  var HEMISPHERE_SOUTH = 's',
 
-          /**
-           * Gets the offset in minutes from UTC for a certain date.
-           * @param {Date} date
-           * @returns {Number}
-           */
-          get_date_offset = function (date) {
-              var offset = -date.getTimezoneOffset();
-              return (offset !== null ? offset : 0);
-          },
+	  /**
+	   * Gets the offset in minutes from UTC for a certain date.
+	   * @param {Date} date
+	   * @returns {Number}
+	   */
+	  get_date_offset = function (date) {
+		  var offset = -date.getTimezoneOffset();
+		  return (offset !== null ? offset : 0);
+	  },
 
-          get_date = function (year, month, date) {
-              var d = new Date();
-              if (year !== undefined) {
-                d.setFullYear(year);
-              }
-              d.setMonth(month);
-              d.setDate(date);
-              return d;
-          },
+	  get_date = function (year, month, date) {
+		  var d = new Date();
+		  if (year !== undefined) {
+		d.setFullYear(year);
+		  }
+		  d.setMonth(month);
+		  d.setDate(date);
+		  return d;
+	  },
 
-          get_january_offset = function (year) {
-              return get_date_offset(get_date(year, 0 ,2));
-          },
+	  get_january_offset = function (year) {
+		  return get_date_offset(get_date(year, 0 ,2));
+	  },
 
-          get_june_offset = function (year) {
-              return get_date_offset(get_date(year, 5, 2));
-          },
+	  get_june_offset = function (year) {
+		  return get_date_offset(get_date(year, 5, 2));
+	  },
 
-          /**
-           * Private method.
-           * Checks whether a given date is in daylight saving time.
-           * If the date supplied is after august, we assume that we're checking
-           * for southern hemisphere DST.
-           * @param {Date} date
-           * @returns {Boolean}
-           */
-          date_is_dst = function (date) {
-              var is_southern = date.getMonth() > 7,
-                  base_offset = is_southern ? get_june_offset(date.getFullYear()) :
-                                              get_january_offset(date.getFullYear()),
-                  date_offset = get_date_offset(date),
-                  is_west = base_offset < 0,
-                  dst_offset = base_offset - date_offset;
+	  /**
+	   * Private method.
+	   * Checks whether a given date is in daylight saving time.
+	   * If the date supplied is after august, we assume that we're checking
+	   * for southern hemisphere DST.
+	   * @param {Date} date
+	   * @returns {Boolean}
+	   */
+	  date_is_dst = function (date) {
+		  var is_southern = date.getMonth() > 7,
+		  base_offset = is_southern ? get_june_offset(date.getFullYear()) :
+						  get_january_offset(date.getFullYear()),
+		  date_offset = get_date_offset(date),
+		  is_west = base_offset < 0,
+		  dst_offset = base_offset - date_offset;
 
-              if (!is_west && !is_southern) {
-                  return dst_offset < 0;
-              }
+		  if (!is_west && !is_southern) {
+		  return dst_offset < 0;
+		  }
 
-              return dst_offset !== 0;
-          },
+		  return dst_offset !== 0;
+	  },
 
-          /**
-           * This function does some basic calculations to create information about
-           * the user's timezone. It uses REFERENCE_YEAR as a solid year for which
-           * the script has been tested rather than depend on the year set by the
-           * client device.
-           *
-           * Returns a key that can be used to do lookups in jstz.olson.timezones.
-           * eg: "720,1,2".
-           *
-           * @returns {String}
-           */
+	  /**
+	   * This function does some basic calculations to create information about
+	   * the user's timezone. It uses REFERENCE_YEAR as a solid year for which
+	   * the script has been tested rather than depend on the year set by the
+	   * client device.
+	   *
+	   * Returns a key that can be used to do lookups in jstz.olson.timezones.
+	   * eg: "720,1,2".
+	   *
+	   * @returns {String}
+	   */
 
-          lookup_key = function () {
-              var january_offset = get_january_offset(),
-                  june_offset = get_june_offset(),
-                  diff = january_offset - june_offset;
+	  lookup_key = function () {
+		  var january_offset = get_january_offset(),
+		  june_offset = get_june_offset(),
+		  diff = january_offset - june_offset;
 
-              if (diff < 0) {
-                  return january_offset + ",1";
-              } else if (diff > 0) {
-                  return june_offset + ",1," + HEMISPHERE_SOUTH;
-              }
+		  if (diff < 0) {
+		  return january_offset + ",1";
+		  } else if (diff > 0) {
+		  return june_offset + ",1," + HEMISPHERE_SOUTH;
+		  }
 
-              return january_offset + ",0";
-          },
+		  return january_offset + ",0";
+	  },
 
-          /**
-           * Uses get_timezone_info() to formulate a key to use in the olson.timezones dictionary.
-           *
-           * Returns a primitive object on the format:
-           * {'timezone': TimeZone, 'key' : 'the key used to find the TimeZone object'}
-           *
-           * @returns Object
-           */
-          determine = function () {
-              var key = lookup_key();
-              return new jstz.TimeZone(jstz.olson.timezones[key]);
-          },
+	  /**
+	   * Uses get_timezone_info() to formulate a key to use in the olson.timezones dictionary.
+	   *
+	   * Returns a primitive object on the format:
+	   * {'timezone': TimeZone, 'key' : 'the key used to find the TimeZone object'}
+	   *
+	   * @returns Object
+	   */
+	  determine = function () {
+		  var key = lookup_key();
+		  return new jstz.TimeZone(jstz.olson.timezones[key]);
+	  },
 
-          /**
-           * This object contains information on when daylight savings starts for
-           * different timezones.
-           *
-           * The list is short for a reason. Often we do not have to be very specific
-           * to single out the correct timezone. But when we do, this list comes in
-           * handy.
-           *
-           * Each value is a date denoting when daylight savings starts for that timezone.
-           */
-          dst_start_for = function (tz_name) {
+	  /**
+	   * This object contains information on when daylight savings starts for
+	   * different timezones.
+	   *
+	   * The list is short for a reason. Often we do not have to be very specific
+	   * to single out the correct timezone. But when we do, this list comes in
+	   * handy.
+	   *
+	   * Each value is a date denoting when daylight savings starts for that timezone.
+	   */
+	  dst_start_for = function (tz_name) {
 
-            var ru_pre_dst_change = new Date(2010, 6, 15, 1, 0, 0, 0), // In 2010 Russia had DST, this allows us to detect Russia :)
-                dst_starts = {
-                    'America/Denver': new Date(2011, 2, 13, 3, 0, 0, 0),
-                    'America/Mazatlan': new Date(2011, 3, 3, 3, 0, 0, 0),
-                    'America/Chicago': new Date(2011, 2, 13, 3, 0, 0, 0),
-                    'America/Mexico_City': new Date(2011, 3, 3, 3, 0, 0, 0),
-                    'America/Asuncion': new Date(2012, 9, 7, 3, 0, 0, 0),
-                    'America/Santiago': new Date(2012, 9, 3, 3, 0, 0, 0),
-                    'America/Campo_Grande': new Date(2012, 9, 21, 5, 0, 0, 0),
-                    'America/Montevideo': new Date(2011, 9, 2, 3, 0, 0, 0),
-                    'America/Sao_Paulo': new Date(2011, 9, 16, 5, 0, 0, 0),
-                    'America/Los_Angeles': new Date(2011, 2, 13, 8, 0, 0, 0),
-                    'America/Santa_Isabel': new Date(2011, 3, 5, 8, 0, 0, 0),
-                    'America/Havana': new Date(2012, 2, 10, 2, 0, 0, 0),
-                    'America/New_York': new Date(2012, 2, 10, 7, 0, 0, 0),
-                    'Europe/Helsinki': new Date(2013, 2, 31, 5, 0, 0, 0),
-                    'Pacific/Auckland': new Date(2011, 8, 26, 7, 0, 0, 0),
-                    'America/Halifax': new Date(2011, 2, 13, 6, 0, 0, 0),
-                    'America/Goose_Bay': new Date(2011, 2, 13, 2, 1, 0, 0),
-                    'America/Miquelon': new Date(2011, 2, 13, 5, 0, 0, 0),
-                    'America/Godthab': new Date(2011, 2, 27, 1, 0, 0, 0),
-                    'Europe/Moscow': ru_pre_dst_change,
-                    'Asia/Amman': new Date(2013, 2, 29, 1, 0, 0, 0),
-                    'Asia/Beirut': new Date(2013, 2, 31, 2, 0, 0, 0),
-                    'Asia/Damascus': new Date(2013, 3, 6, 2, 0, 0, 0),
-                    'Asia/Jerusalem': new Date(2013, 2, 29, 5, 0, 0, 0),
-                    'Asia/Yekaterinburg': ru_pre_dst_change,
-                    'Asia/Omsk': ru_pre_dst_change,
-                    'Asia/Krasnoyarsk': ru_pre_dst_change,
-                    'Asia/Irkutsk': ru_pre_dst_change,
-                    'Asia/Yakutsk': ru_pre_dst_change,
-                    'Asia/Vladivostok': ru_pre_dst_change,
-                    'Asia/Baku': new Date(2013, 2, 31, 4, 0, 0),
-                    'Asia/Yerevan': new Date(2013, 2, 31, 3, 0, 0),
-                    'Asia/Kamchatka': ru_pre_dst_change,
-                    'Asia/Gaza': new Date(2010, 2, 27, 4, 0, 0),
-                    'Africa/Cairo': new Date(2010, 4, 1, 3, 0, 0),
-                    'Europe/Minsk': ru_pre_dst_change,
-                    'Pacific/Apia': new Date(2010, 10, 1, 1, 0, 0, 0),
-                    'Pacific/Fiji': new Date(2010, 11, 1, 0, 0, 0),
-                    'Australia/Perth': new Date(2008, 10, 1, 1, 0, 0, 0)
-                };
+		var ru_pre_dst_change = new Date(2010, 6, 15, 1, 0, 0, 0), // In 2010 Russia had DST, this allows us to detect Russia :)
+		dst_starts = {
+			'America/Denver': new Date(2011, 2, 13, 3, 0, 0, 0),
+			'America/Mazatlan': new Date(2011, 3, 3, 3, 0, 0, 0),
+			'America/Chicago': new Date(2011, 2, 13, 3, 0, 0, 0),
+			'America/Mexico_City': new Date(2011, 3, 3, 3, 0, 0, 0),
+			'America/Asuncion': new Date(2012, 9, 7, 3, 0, 0, 0),
+			'America/Santiago': new Date(2012, 9, 3, 3, 0, 0, 0),
+			'America/Campo_Grande': new Date(2012, 9, 21, 5, 0, 0, 0),
+			'America/Montevideo': new Date(2011, 9, 2, 3, 0, 0, 0),
+			'America/Sao_Paulo': new Date(2011, 9, 16, 5, 0, 0, 0),
+			'America/Los_Angeles': new Date(2011, 2, 13, 8, 0, 0, 0),
+			'America/Santa_Isabel': new Date(2011, 3, 5, 8, 0, 0, 0),
+			'America/Havana': new Date(2012, 2, 10, 2, 0, 0, 0),
+			'America/New_York': new Date(2012, 2, 10, 7, 0, 0, 0),
+			'Europe/Helsinki': new Date(2013, 2, 31, 5, 0, 0, 0),
+			'Pacific/Auckland': new Date(2011, 8, 26, 7, 0, 0, 0),
+			'America/Halifax': new Date(2011, 2, 13, 6, 0, 0, 0),
+			'America/Goose_Bay': new Date(2011, 2, 13, 2, 1, 0, 0),
+			'America/Miquelon': new Date(2011, 2, 13, 5, 0, 0, 0),
+			'America/Godthab': new Date(2011, 2, 27, 1, 0, 0, 0),
+			'Europe/Moscow': ru_pre_dst_change,
+			'Asia/Amman': new Date(2013, 2, 29, 1, 0, 0, 0),
+			'Asia/Beirut': new Date(2013, 2, 31, 2, 0, 0, 0),
+			'Asia/Damascus': new Date(2013, 3, 6, 2, 0, 0, 0),
+			'Asia/Jerusalem': new Date(2013, 2, 29, 5, 0, 0, 0),
+			'Asia/Yekaterinburg': ru_pre_dst_change,
+			'Asia/Omsk': ru_pre_dst_change,
+			'Asia/Krasnoyarsk': ru_pre_dst_change,
+			'Asia/Irkutsk': ru_pre_dst_change,
+			'Asia/Yakutsk': ru_pre_dst_change,
+			'Asia/Vladivostok': ru_pre_dst_change,
+			'Asia/Baku': new Date(2013, 2, 31, 4, 0, 0),
+			'Asia/Yerevan': new Date(2013, 2, 31, 3, 0, 0),
+			'Asia/Kamchatka': ru_pre_dst_change,
+			'Asia/Gaza': new Date(2010, 2, 27, 4, 0, 0),
+			'Africa/Cairo': new Date(2010, 4, 1, 3, 0, 0),
+			'Europe/Minsk': ru_pre_dst_change,
+			'Pacific/Apia': new Date(2010, 10, 1, 1, 0, 0, 0),
+			'Pacific/Fiji': new Date(2010, 11, 1, 0, 0, 0),
+			'Australia/Perth': new Date(2008, 10, 1, 1, 0, 0, 0)
+		};
 
-              return dst_starts[tz_name];
-          };
+		  return dst_starts[tz_name];
+	  };
 
-      return {
-          determine: determine,
-          date_is_dst: date_is_dst,
-          dst_start_for: dst_start_for
-      };
+	  return {
+	  determine: determine,
+	  date_is_dst: date_is_dst,
+	  dst_start_for: dst_start_for
+	  };
   }());
 
   /**
    * Simple object to perform ambiguity check and to return name of time zone.
    */
   jstz.TimeZone = function (tz_name) {
-      'use strict';
-        /**
-         * The keys in this object are timezones that we know may be ambiguous after
-         * a preliminary scan through the olson_tz object.
-         *
-         * The array of timezones to compare must be in the order that daylight savings
-         * starts for the regions.
-         */
-      var AMBIGUITIES = {
-              'America/Denver':       ['America/Denver', 'America/Mazatlan'],
-              'America/Chicago':      ['America/Chicago', 'America/Mexico_City'],
-              'America/Santiago':     ['America/Santiago', 'America/Asuncion', 'America/Campo_Grande'],
-              'America/Montevideo':   ['America/Montevideo', 'America/Sao_Paulo'],
-              'Asia/Beirut':          ['Asia/Amman', 'Asia/Jerusalem', 'Asia/Beirut', 'Europe/Helsinki','Asia/Damascus'],
-              'Pacific/Auckland':     ['Pacific/Auckland', 'Pacific/Fiji'],
-              'America/Los_Angeles':  ['America/Los_Angeles', 'America/Santa_Isabel'],
-              'America/New_York':     ['America/Havana', 'America/New_York'],
-              'America/Halifax':      ['America/Goose_Bay', 'America/Halifax'],
-              'America/Godthab':      ['America/Miquelon', 'America/Godthab'],
-              'Asia/Dubai':           ['Europe/Moscow'],
-              'Asia/Dhaka':           ['Asia/Yekaterinburg'],
-              'Asia/Jakarta':         ['Asia/Omsk'],
-              'Asia/Shanghai':        ['Asia/Krasnoyarsk', 'Australia/Perth'],
-              'Asia/Tokyo':           ['Asia/Irkutsk'],
-              'Australia/Brisbane':   ['Asia/Yakutsk'],
-              'Pacific/Noumea':       ['Asia/Vladivostok'],
-              'Pacific/Tarawa':       ['Asia/Kamchatka', 'Pacific/Fiji'],
-              'Pacific/Tongatapu':    ['Pacific/Apia'],
-              'Asia/Baghdad':         ['Europe/Minsk'],
-              'Asia/Baku':            ['Asia/Yerevan','Asia/Baku'],
-              'Africa/Johannesburg':  ['Asia/Gaza', 'Africa/Cairo']
-          },
+	  'use strict';
+	/**
+	 * The keys in this object are timezones that we know may be ambiguous after
+	 * a preliminary scan through the olson_tz object.
+	 *
+	 * The array of timezones to compare must be in the order that daylight savings
+	 * starts for the regions.
+	 */
+	  var AMBIGUITIES = {
+		  'America/Denver':       ['America/Denver', 'America/Mazatlan'],
+		  'America/Chicago':      ['America/Chicago', 'America/Mexico_City'],
+		  'America/Santiago':     ['America/Santiago', 'America/Asuncion', 'America/Campo_Grande'],
+		  'America/Montevideo':   ['America/Montevideo', 'America/Sao_Paulo'],
+		  'Asia/Beirut':          ['Asia/Amman', 'Asia/Jerusalem', 'Asia/Beirut', 'Europe/Helsinki','Asia/Damascus'],
+		  'Pacific/Auckland':     ['Pacific/Auckland', 'Pacific/Fiji'],
+		  'America/Los_Angeles':  ['America/Los_Angeles', 'America/Santa_Isabel'],
+		  'America/New_York':     ['America/Havana', 'America/New_York'],
+		  'America/Halifax':      ['America/Goose_Bay', 'America/Halifax'],
+		  'America/Godthab':      ['America/Miquelon', 'America/Godthab'],
+		  'Asia/Dubai':           ['Europe/Moscow'],
+		  'Asia/Dhaka':           ['Asia/Yekaterinburg'],
+		  'Asia/Jakarta':         ['Asia/Omsk'],
+		  'Asia/Shanghai':        ['Asia/Krasnoyarsk', 'Australia/Perth'],
+		  'Asia/Tokyo':           ['Asia/Irkutsk'],
+		  'Australia/Brisbane':   ['Asia/Yakutsk'],
+		  'Pacific/Noumea':       ['Asia/Vladivostok'],
+		  'Pacific/Tarawa':       ['Asia/Kamchatka', 'Pacific/Fiji'],
+		  'Pacific/Tongatapu':    ['Pacific/Apia'],
+		  'Asia/Baghdad':         ['Europe/Minsk'],
+		  'Asia/Baku':            ['Asia/Yerevan','Asia/Baku'],
+		  'Africa/Johannesburg':  ['Asia/Gaza', 'Africa/Cairo']
+	  },
 
-          timezone_name = tz_name,
+	  timezone_name = tz_name,
 
-          /**
-           * Checks if a timezone has possible ambiguities. I.e timezones that are similar.
-           *
-           * For example, if the preliminary scan determines that we're in America/Denver.
-           * We double check here that we're really there and not in America/Mazatlan.
-           *
-           * This is done by checking known dates for when daylight savings start for different
-           * timezones during 2010 and 2011.
-           */
-          ambiguity_check = function () {
-              var ambiguity_list = AMBIGUITIES[timezone_name],
-                  length = ambiguity_list.length,
-                  i = 0,
-                  tz = ambiguity_list[0];
+	  /**
+	   * Checks if a timezone has possible ambiguities. I.e timezones that are similar.
+	   *
+	   * For example, if the preliminary scan determines that we're in America/Denver.
+	   * We double check here that we're really there and not in America/Mazatlan.
+	   *
+	   * This is done by checking known dates for when daylight savings start for different
+	   * timezones during 2010 and 2011.
+	   */
+	  ambiguity_check = function () {
+		  var ambiguity_list = AMBIGUITIES[timezone_name],
+		  length = ambiguity_list.length,
+		  i = 0,
+		  tz = ambiguity_list[0];
 
-              for (; i < length; i += 1) {
-                  tz = ambiguity_list[i];
+		  for (; i < length; i += 1) {
+		  tz = ambiguity_list[i];
 
-                  if (jstz.date_is_dst(jstz.dst_start_for(tz))) {
-                      timezone_name = tz;
-                      return;
-                  }
-              }
-          },
+		  if (jstz.date_is_dst(jstz.dst_start_for(tz))) {
+			  timezone_name = tz;
+			  return;
+		  }
+		  }
+	  },
 
-          /**
-           * Checks if it is possible that the timezone is ambiguous.
-           */
-          is_ambiguous = function () {
-              return typeof (AMBIGUITIES[timezone_name]) !== 'undefined';
-          };
+	  /**
+	   * Checks if it is possible that the timezone is ambiguous.
+	   */
+	  is_ambiguous = function () {
+		  return typeof (AMBIGUITIES[timezone_name]) !== 'undefined';
+	  };
 
-      if (is_ambiguous()) {
-          ambiguity_check();
-      }
+	  if (is_ambiguous()) {
+	  ambiguity_check();
+	  }
 
-      return {
-          name: function () {
-              return timezone_name;
-          }
-      };
+	  return {
+	  name: function () {
+		  return timezone_name;
+	  }
+	  };
   };
 
   jstz.olson = {};
@@ -1529,83 +1524,83 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
    * jstz.determine_timezone();
    */
   jstz.olson.timezones = {
-      '-720,0'   : 'Pacific/Majuro',
-      '-660,0'   : 'Pacific/Pago_Pago',
-      '-600,1'   : 'America/Adak',
-      '-600,0'   : 'Pacific/Honolulu',
-      '-570,0'   : 'Pacific/Marquesas',
-      '-540,0'   : 'Pacific/Gambier',
-      '-540,1'   : 'America/Anchorage',
-      '-480,1'   : 'America/Los_Angeles',
-      '-480,0'   : 'Pacific/Pitcairn',
-      '-420,0'   : 'America/Phoenix',
-      '-420,1'   : 'America/Denver',
-      '-360,0'   : 'America/Guatemala',
-      '-360,1'   : 'America/Chicago',
-      '-360,1,s' : 'Pacific/Easter',
-      '-300,0'   : 'America/Bogota',
-      '-300,1'   : 'America/New_York',
-      '-270,0'   : 'America/Caracas',
-      '-240,1'   : 'America/Halifax',
-      '-240,0'   : 'America/Santo_Domingo',
-      '-240,1,s' : 'America/Santiago',
-      '-210,1'   : 'America/St_Johns',
-      '-180,1'   : 'America/Godthab',
-      '-180,0'   : 'America/Argentina/Buenos_Aires',
-      '-180,1,s' : 'America/Montevideo',
-      '-120,0'   : 'America/Noronha',
-      '-120,1'   : 'America/Noronha',
-      '-60,1'    : 'Atlantic/Azores',
-      '-60,0'    : 'Atlantic/Cape_Verde',
-      '0,0'      : 'UTC',
-      '0,1'      : 'Europe/London',
-      '60,1'     : 'Europe/Berlin',
-      '60,0'     : 'Africa/Lagos',
-      '60,1,s'   : 'Africa/Windhoek',
-      '120,1'    : 'Asia/Beirut',
-      '120,0'    : 'Africa/Johannesburg',
-      '180,0'    : 'Asia/Baghdad',
-      '180,1'    : 'Europe/Moscow',
-      '210,1'    : 'Asia/Tehran',
-      '240,0'    : 'Asia/Dubai',
-      '240,1'    : 'Asia/Baku',
-      '270,0'    : 'Asia/Kabul',
-      '300,1'    : 'Asia/Yekaterinburg',
-      '300,0'    : 'Asia/Karachi',
-      '330,0'    : 'Asia/Kolkata',
-      '345,0'    : 'Asia/Kathmandu',
-      '360,0'    : 'Asia/Dhaka',
-      '360,1'    : 'Asia/Omsk',
-      '390,0'    : 'Asia/Rangoon',
-      '420,1'    : 'Asia/Krasnoyarsk',
-      '420,0'    : 'Asia/Jakarta',
-      '480,0'    : 'Asia/Shanghai',
-      '480,1'    : 'Asia/Irkutsk',
-      '525,0'    : 'Australia/Eucla',
-      '525,1,s'  : 'Australia/Eucla',
-      '540,1'    : 'Asia/Yakutsk',
-      '540,0'    : 'Asia/Tokyo',
-      '570,0'    : 'Australia/Darwin',
-      '570,1,s'  : 'Australia/Adelaide',
-      '600,0'    : 'Australia/Brisbane',
-      '600,1'    : 'Asia/Vladivostok',
-      '600,1,s'  : 'Australia/Sydney',
-      '630,1,s'  : 'Australia/Lord_Howe',
-      '660,1'    : 'Asia/Kamchatka',
-      '660,0'    : 'Pacific/Noumea',
-      '690,0'    : 'Pacific/Norfolk',
-      '720,1,s'  : 'Pacific/Auckland',
-      '720,0'    : 'Pacific/Tarawa',
-      '765,1,s'  : 'Pacific/Chatham',
-      '780,0'    : 'Pacific/Tongatapu',
-      '780,1,s'  : 'Pacific/Apia',
-      '840,0'    : 'Pacific/Kiritimati'
+	  '-720,0'   : 'Pacific/Majuro',
+	  '-660,0'   : 'Pacific/Pago_Pago',
+	  '-600,1'   : 'America/Adak',
+	  '-600,0'   : 'Pacific/Honolulu',
+	  '-570,0'   : 'Pacific/Marquesas',
+	  '-540,0'   : 'Pacific/Gambier',
+	  '-540,1'   : 'America/Anchorage',
+	  '-480,1'   : 'America/Los_Angeles',
+	  '-480,0'   : 'Pacific/Pitcairn',
+	  '-420,0'   : 'America/Phoenix',
+	  '-420,1'   : 'America/Denver',
+	  '-360,0'   : 'America/Guatemala',
+	  '-360,1'   : 'America/Chicago',
+	  '-360,1,s' : 'Pacific/Easter',
+	  '-300,0'   : 'America/Bogota',
+	  '-300,1'   : 'America/New_York',
+	  '-270,0'   : 'America/Caracas',
+	  '-240,1'   : 'America/Halifax',
+	  '-240,0'   : 'America/Santo_Domingo',
+	  '-240,1,s' : 'America/Santiago',
+	  '-210,1'   : 'America/St_Johns',
+	  '-180,1'   : 'America/Godthab',
+	  '-180,0'   : 'America/Argentina/Buenos_Aires',
+	  '-180,1,s' : 'America/Montevideo',
+	  '-120,0'   : 'America/Noronha',
+	  '-120,1'   : 'America/Noronha',
+	  '-60,1'    : 'Atlantic/Azores',
+	  '-60,0'    : 'Atlantic/Cape_Verde',
+	  '0,0'      : 'UTC',
+	  '0,1'      : 'Europe/London',
+	  '60,1'     : 'Europe/Berlin',
+	  '60,0'     : 'Africa/Lagos',
+	  '60,1,s'   : 'Africa/Windhoek',
+	  '120,1'    : 'Asia/Beirut',
+	  '120,0'    : 'Africa/Johannesburg',
+	  '180,0'    : 'Asia/Baghdad',
+	  '180,1'    : 'Europe/Moscow',
+	  '210,1'    : 'Asia/Tehran',
+	  '240,0'    : 'Asia/Dubai',
+	  '240,1'    : 'Asia/Baku',
+	  '270,0'    : 'Asia/Kabul',
+	  '300,1'    : 'Asia/Yekaterinburg',
+	  '300,0'    : 'Asia/Karachi',
+	  '330,0'    : 'Asia/Kolkata',
+	  '345,0'    : 'Asia/Kathmandu',
+	  '360,0'    : 'Asia/Dhaka',
+	  '360,1'    : 'Asia/Omsk',
+	  '390,0'    : 'Asia/Rangoon',
+	  '420,1'    : 'Asia/Krasnoyarsk',
+	  '420,0'    : 'Asia/Jakarta',
+	  '480,0'    : 'Asia/Shanghai',
+	  '480,1'    : 'Asia/Irkutsk',
+	  '525,0'    : 'Australia/Eucla',
+	  '525,1,s'  : 'Australia/Eucla',
+	  '540,1'    : 'Asia/Yakutsk',
+	  '540,0'    : 'Asia/Tokyo',
+	  '570,0'    : 'Australia/Darwin',
+	  '570,1,s'  : 'Australia/Adelaide',
+	  '600,0'    : 'Australia/Brisbane',
+	  '600,1'    : 'Asia/Vladivostok',
+	  '600,1,s'  : 'Australia/Sydney',
+	  '630,1,s'  : 'Australia/Lord_Howe',
+	  '660,1'    : 'Asia/Kamchatka',
+	  '660,0'    : 'Pacific/Noumea',
+	  '690,0'    : 'Pacific/Norfolk',
+	  '720,1,s'  : 'Pacific/Auckland',
+	  '720,0'    : 'Pacific/Tarawa',
+	  '765,1,s'  : 'Pacific/Chatham',
+	  '780,0'    : 'Pacific/Tongatapu',
+	  '780,1,s'  : 'Pacific/Apia',
+	  '840,0'    : 'Pacific/Kiritimati'
   };
 
   if (typeof exports !== 'undefined') {
-    exports.jstz = jstz;
+	exports.jstz = jstz;
   } else {
-    root.jstz = jstz;
+	root.jstz = jstz;
   }
 })(this);
 if(typeof tz !== 'undefined'){
