@@ -80,8 +80,15 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['Breakpoint'])) {
 		$_POST['Breakpoint'] = 0;
 	}
+	if (!isset($_POST['Manager'])) {
+		$_POST['Manager'] = 0;
+	}
 	if (!isset($_POST['Current'])) {
 		$_POST['Current'] = 0;
+	}
+
+	if ($_POST['Current'] == 0) {
+		$_POST['Manager'] = 0;
 	}
 
 	if (isset($SelectedSalesPerson) and $InputError != 1) {
@@ -95,6 +102,7 @@ if (isset($_POST['submit'])) {
 									smanfax='" . $_POST['SManFax'] . "',
 									breakpoint='" . filter_number_format($_POST['Breakpoint']) . "',
 									commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
+									manager='" . $_POST['Manager'] . "',
 									current='" . $_POST['Current'] . "'
 								WHERE salesmancode = '" . $SelectedSalesPerson . "'";
 
@@ -106,6 +114,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO salesman (salesmancode,
 						salesmanname,
 						salesarea,
+						manager,
 						commissionrate1,
 						commissionrate2,
 						breakpoint,
@@ -115,6 +124,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['SalesmanCode'] . "',
 						'" . $_POST['SalesmanName'] . "',
 						'" . $_POST['SalesArea'] . "',
+						'" . $_POST['Manager'] . "',
 						'" . filter_number_format($_POST['CommissionRate1']) . "',
 						'" . filter_number_format($_POST['CommissionRate2']) . "',
 						'" . filter_number_format($_POST['Breakpoint']) . "',
@@ -126,6 +136,15 @@ if (isset($_POST['submit'])) {
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
 	}
 	if ($InputError != 1) {
+
+		/* if the sales person is a manager, ensure that there is no other manager for this area */
+		if ($_POST['Manager'] == 1 and $_POST['Current'] == 1) {
+			$ErrMsg = _('The update of the manager field failed because');
+			$DbgMsg = _('The SQL that was used and failed was');
+			$ManagerSQL = "UPDATE salesman SET manager=0 WHERE salesarea='" . $_POST['SalesArea'] . "'";
+			$result = DB_query($ManagerSQL, $db, $ErrMsg, $DbgMsg);
+		}
+
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the salesperson failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
@@ -137,6 +156,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['SalesmanCode']);
 		unset($_POST['SalesmanName']);
 		unset($_POST['SalesArea']);
+		unset($_POST['Manager']);
 		unset($_POST['CommissionRate1']);
 		unset($_POST['CommissionRate2']);
 		unset($_POST['Breakpoint']);
@@ -193,6 +213,7 @@ if (!isset($SelectedSalesPerson)) {
 	$sql = "SELECT salesmancode,
 				salesmanname,
 				salesarea,
+				manager,
 				smantel,
 				smanfax,
 				commissionrate1,
@@ -207,6 +228,7 @@ if (!isset($SelectedSalesPerson)) {
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
 			<th>' . _('SalesArea') . '</th>
+			<th>' . _('Manager') . '</th>
 			<th>' . _('Telephone') . '</th>
 			<th>' . _('Facsimile') . '</th>
 			<th>' . _('Comm Rate 1') . '</th>
@@ -224,10 +246,15 @@ if (!isset($SelectedSalesPerson)) {
 			echo '<tr class="OddTableRows">';
 			$k++;
 		}
-		if ($myrow[7] == 1) {
+		if ($myrow['current'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
+		}
+		if ($myrow['manager'] == 1) {
+			$ManagerText = _('Yes');
+		} else {
+			$ManagerText = _('No');
 		}
 
 		$sql = "SELECT areadescription FROM areas WHERE areacode='" . $myrow['salesarea'] . "'";
@@ -235,17 +262,18 @@ if (!isset($SelectedSalesPerson)) {
 		$AreaRow = DB_fetch_array($AreaResult);
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedSalesPerson=%s">' . _('Edit') . '</a></td>
-			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['salesmancode'], $myrow['salesmanname'], $AreaRow['areadescription'], $myrow['smantel'], $myrow['smanfax'], locale_number_format($myrow['commissionrate1'], 2), locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['commissionrate2'], 2), $ActiveText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode']);
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td><a href="%sSelectedSalesPerson=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				</tr>', $myrow['salesmancode'], $myrow['salesmanname'], $AreaRow['areadescription'], $ManagerText, $myrow['smantel'], $myrow['smanfax'], locale_number_format($myrow['commissionrate1'], 2), locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['commissionrate2'], 2), $ActiveText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -267,6 +295,7 @@ if (!isset($_GET['delete'])) {
 		$sql = "SELECT salesmancode,
 					salesmanname,
 					salesarea,
+					manager,
 					smantel,
 					smanfax,
 					commissionrate1,
@@ -282,6 +311,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['SalesmanCode'] = $myrow['salesmancode'];
 		$_POST['SalesmanName'] = $myrow['salesmanname'];
 		$_POST['SalesArea'] = $myrow['salesarea'];
+		$_POST['Manager'] = $myrow['manager'];
 		$_POST['SManTel'] = $myrow['smantel'];
 		$_POST['SManFax'] = $myrow['smanfax'];
 		$_POST['CommissionRate1'] = locale_number_format($myrow['commissionrate1'], 'Variable');
@@ -326,6 +356,9 @@ if (!isset($_GET['delete'])) {
 	}
 	if (!isset($_POST['Breakpoint'])) {
 		$_POST['Breakpoint'] = 0;
+	}
+	if (!isset($_POST['Manager'])) {
+		$_POST['Manager'] = 0;
 	}
 	if (!isset($_POST['Current'])) {
 		$_POST['Current'] = 0;
@@ -372,6 +405,22 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Commission Rate 2') . ':</td>
 			<td><input type="text" class="number" name="CommissionRate2" size="5" required="required" minlength="1" maxlength="5" value="' . $_POST['CommissionRate2'] . '" /></td>
+		</tr>';
+
+	echo '<tr>
+			<td>' . _('Area Manager?') . ':</td>
+			<td><select required="required" minlength="1" name="Manager">';
+	if ($_POST['Manager'] == 1) {
+		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if ($_POST['Manager'] == 0) {
+		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	} else {
+		echo '<option value="0">' . _('No') . '</option>';
+	}
+	echo '</select></td>
 		</tr>';
 
 	echo '<tr>
