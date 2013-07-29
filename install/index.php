@@ -1018,7 +1018,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
 		<legend><?php echo _('Installation option'); ?></legend>
 		<ul>
 		<li>
-			<label for="InstallDemo"><?php echo _('Install the demo data?'); ?>: </label><input type="checkbox" name="Demo" checked="checked"  />
+			<label for="InstallDemo"><?php echo _('Install the demo data?'); ?> </label><input type="checkbox" name="Demo" checked="checked"  />
 			<span><?php echo _("KwaMojaDemo site and data will be installed"); ?></span>
 		</li>
 		</ul>
@@ -1067,6 +1067,8 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
 		<fieldset>
 		  <button type="submit" name="Install"><?php echo _('Install'); ?></button>
 		</fieldset>
+	</form>
+	</div>
 <?php
 
 }
