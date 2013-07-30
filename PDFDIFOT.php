@@ -27,7 +27,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" /></td>
+				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" autofocus="autofocus" required="required" minlength="1" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
@@ -42,14 +42,15 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 				<td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ':</td>
 				<td><input type="text" class="integer" name="DaysAcceptable" required="required" minlength="1" maxlength="2" size="2" value="' . $_POST['DaysAcceptable'] . '" /></td>
 			</tr>';
-	echo '<tr><td>' . _('Inventory Category') . '</td><td>';
+	echo '<tr>
+			<td>' . _('Inventory Category') . '</td>
+			<td>
+				<select required="required" minlength="1" name="CategoryID">
+					<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	$result = DB_query($sql, $db);
 
-
-	echo '<select required="required" minlength="1" name="CategoryID">';
-	echo '<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
@@ -57,7 +58,8 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Inventory Location') . ':</td>
+	echo '<tr>
+			<td>' . _('Inventory Location') . ':</td>
 			<td><select required="required" minlength="1" name="Location">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
@@ -80,11 +82,13 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Email the report off') . ':</td>
+	echo '<tr>
+			<td>' . _('Email the report off') . ':</td>
 			<td><select required="required" minlength="1" name="Email">
-				<option selected="selected" value="No">' . _('No') . '</option>
-				<option value="Yes">' . _('Yes') . '</option>
-			</select></td>
+					<option selected="selected" value="No">' . _('No') . '</option>
+					<option value="Yes">' . _('Yes') . '</option>
+				</select>
+			</td>
 		</tr>
 		</table>
 		<br />

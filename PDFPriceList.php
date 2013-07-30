@@ -258,7 +258,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('From Inventory Category Code') . ':</td>
-					<td><select required="required" minlength="1" name="FromCriteria">';
+					<td><select autofocus="autofocus" required="required" minlength="1" name="FromCriteria">';
 
 		$sql = 'SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult = DB_query($sql, $db);
@@ -291,10 +291,13 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Show Gross Profit %') . ':</td>
-				<td><select required="required" minlength="1" name="ShowGPPercentages">';
-		echo '<option selected="selected" value="No">' . _('Prices Only') . '</option>';
-		echo '<option value="Yes">' . _('Show GP % too') . '</option>';
-		echo '</select></td></tr>';
+				<td>
+					<select required="required" minlength="1" name="ShowGPPercentages">
+						<option selected="selected" value="No">' . _('Prices Only') . '</option>
+						<option value="Yes">' . _('Show GP % too') . '</option>
+					</select>
+				</td>
+			</tr>';
 
 		echo '<tr>
 				<td>' . _('Price Listing Type') . ':</td>
@@ -309,7 +312,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 		echo '<tr>
 				<td>' . _('Effective As At') . ':</td>
-				<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" size="11" required="required" minlength="1" maxlength="10" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 
 		echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';

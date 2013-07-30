@@ -767,7 +767,7 @@ $AccountsResults = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 echo '<tr>
 		<td>' . _('Bank Account') . ':</td>
-		<td><select required="required" minlength="1" name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
+		<td><select autofocus="autofocus" required="required" minlength="1" name="BankAccount" onchange="ReloadForm(UpdateHeader)">';
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
@@ -800,7 +800,8 @@ echo '<tr>
 
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
-	echo '<tr><td>' . _('Currency of Payment') . ':</td>
+	echo '<tr>
+			<td>' . _('Currency of Payment') . ':</td>
 			<td><select required="required" minlength="1" name="Currency" onchange="ReloadForm(UpdateHeader)">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$result = DB_query($SQL, $db);
@@ -951,7 +952,11 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="2"><h3>' . _('General Ledger Payment Analysis Entry') . '</h3></th></tr>';
+	echo '<tr>
+			<th colspan="2">
+				<h3>' . _('General Ledger Payment Analysis Entry') . '</h3>
+			</th>
+		</tr>';
 
 	//Select the Tag
 	echo '<tr>
@@ -987,7 +992,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	else {
 		echo '<tr>
 				<td>' . _('Enter GL Account Manually') . ':</td>
-				<td><input type="text" class="number" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" /></td></tr>';
+				<td><input type="text" class="number" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" /></td>
+			</tr>';
 	}
 
 	echo '<tr>

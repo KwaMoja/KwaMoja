@@ -279,7 +279,7 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 		echo '<table class="selection" summary="' . _('Print Price Labels') . '">';
 		echo '<tr>
 				<td>' . _('Label to print') . ':</td>
-				<td><select required="required" minlength="1" name="LabelID">';
+				<td><select autofocus="autofocus" required="required" minlength="1" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels", $db);
 		while ($LabelRow = DB_fetch_array($LabelResult)) {

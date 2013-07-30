@@ -267,7 +267,7 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
-				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" required="required" minlength="1" maxlength="2" /></td>
+				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="2" /></td>
 			</tr>';
 	}
 

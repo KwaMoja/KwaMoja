@@ -56,11 +56,6 @@ if (isset($_POST['FromCriteria']) and mb_strlen($_POST['FromCriteria']) >= 1 and
 		include('includes/header.inc');
 		prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		/*
-		if ($debug==1){
-		echo '<br />' . $SQL;
-		}
-		* */
 		include('includes/footer.inc');
 		exit;
 	}
@@ -69,11 +64,6 @@ if (isset($_POST['FromCriteria']) and mb_strlen($_POST['FromCriteria']) >= 1 and
 		include('includes/header.inc');
 		prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		/*
-		if ($debug==1){
-		echo '<br />' . $SQL;
-		}
-		* */
 		include('includes/footer.inc');
 		exit;
 	}
@@ -268,7 +258,7 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult) > 0) {
 
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromCriteria" required="required" minlength="1" maxlength="20" value="' . $myrow['fromcriteria'] . '" /></td>
+			<td><input type="text" name="FromCriteria" autofocus="autofocus" required="required" minlength="1" maxlength="20" value="' . $myrow['fromcriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code') . ':</td>
