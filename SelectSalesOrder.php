@@ -287,7 +287,7 @@ if (isset($_POST['PlacePO'])) {
 														'" . $SupplierID . "',
 														'" . Date('Y-m-d') . "',
 														'" . $SuppRow['rate'] . "',
-														'" . $_SESSION['UsersRealName'] . "',
+														'" . $_SESSION['UserID'] . "',
 														'" . $_SESSION['UserStockLocation'] . "',
 														'" . $DelAddRow['locationname'] . "',
 														'" . $DelAddRow['deladd1'] . "',
