@@ -120,7 +120,7 @@ if ($NoOfGRNs > 0) {
 		} //end if need a new page headed up
 	} //end of loop around GRNs to print
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d') . '.pdf');
+	$pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . $GRNNo . '_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct();
 } //$NoOfGRNs > 0
 else { //there were not GRNs to print
