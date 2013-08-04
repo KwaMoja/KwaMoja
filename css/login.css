@@ -1,181 +1,152 @@
-/* $Id$*/
 body {
-	padding: 0;
-	margin: 0;
-	text-align: center;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 10pt;
-	color: #616161;
-	background: #ffffff; /* Fallback background color for non supported browsers */
+background:#fff;
+color:#616161;
+font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+font-size:10pt;
+margin:0;
+padding:0;
+text-align:center
 }
 
 #container {
-	text-align: left;
-	margin: 90px auto 0px auto;
-	padding: 10px 0 36px 0;
-     /*	position: relative; only makes sense to absolute position a child */
-	z-index: 1000;
-	width: 60%;
-	border: solid #A49999 1px;
-	border-radius: 15px;
-	opacity: 1.0;
-	-moz-box-shadow: 0 0 15px #DADADA;
-	-webkit-box-shadow: 0 0 15px #DADADA;
-	box-shadow: 0 0 15px #DADADA;
-	background: #ffffff; /* Old browsers */
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNDclIiBzdG9wLWNvbG9yPSIjZjZmNmY2IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
-	background: -moz-linear-gradient(-45deg,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(-45deg,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(-45deg,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(-45deg,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
-	background: linear-gradient(135deg,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+-moz-box-shadow:0 0 15px #DADADA;
+-webkit-box-shadow:0 0 15px #DADADA;
+background:linear-gradient(135deg,#ffffff0%,#f6f6f647%,#ededed100%);
+border:solid #A49999 1px;
+border-radius:15px;
+box-shadow:0 0 15px #DADADA;
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#ededed',GradientType=1);
+margin:90px auto 0;
+opacity:1.0;
+padding:10px 0 36px;
+text-align:left;
+width:60%;
+z-index:1000
 }
 
 #login_logo {
-	width: 200px;
-	height: 51px;
-	margin: 0 auto 10px auto; /* top margin in FF3 is from body but in IE8 is from container */
+height:51px;
+margin:0 auto 10px;
+width:200px
 }
 
 #login_box {
-	border: solid #A49999 1px;
-	border-radius: 15px;
-	background: #E5E5E5;
-	margin: 0px 10px 10px 20px; /* top margin in FF3 is from body but in IE8 is from container */
+background:#E5E5E5;
+border:solid #A49999 1px;
+border-radius:15px;
+margin:0 10px 10px 20px
 }
 
 #contact_box {
-	border: solid #A49999 1px;
-	border-radius: 15px;
-	background: #E5E5E5;
-	margin: 0px 0px 0px 0px; /* top margin in FF3 is from body but in IE8 is from container */
-	width: 98%;
+background:#E5E5E5;
+border:solid #A49999 1px;
+border-radius:15px;
+margin:0;
+width:98%
 }
 
 form {
-	margin: 0; /* IE8 gives default margin to forms, but FF3 doesn't */
+margin:0
 }
 
 th {
-	text-align: center;
+text-align:center
 }
 
 td {
-	vertical-align:top;
+vertical-align:top
 }
 
 select {
-	background: transparent;
-	color: #616161;
-	border-width: 1px;
-	font-size: 100%;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-top-color: gray;
-	border-top-style: solid;
-	border-left-color: gray;
-	border-left-style: solid;
-	border-right-color: gray;
-	border-right-style: solid;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	margin: 10px 0 0px 0px;
-	width: 40%;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+background:transparent;
+border-color:gray;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#616161;
+font-size:100%;
+margin:10px 0 0;
+width:auto
 }
 
-select:hover {
-	background: transparent;
-	border-width: 1px;
-	font-size: 100%;
-	border-bottom-color: black;
-	border-bottom-style: solid;
-	border-top-color: black;
-	border-top-style: solid;
-	border-left-color: black;
-	border-left-style: solid;
-	border-right-color: black;
-	border-right-style: solid;
-	border-radius: 3px;
+select:hover, select:focus {
+background:transparent;
+border-color:#000;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+box-shadow:0 0 5px #7E7575;
+font-size:100%;
+box-shadow:0 0 5px #7E7575
 }
 
 input {
-	background-color: transparent;
-	border-width:1px;
-	color: #616161;
-	font-size: 100%;
-	border-bottom-color: gray;
-	border-bottom-style: solid;
-	border-top-color: gray;
-	border-top-style: solid;
-	border-left-color: gray;
-	border-left-style: solid;
-	border-right-color: gray;
-	border-right-style: solid;
-	border-radius: 3px;
-	vertical-align: middle;
-	margin: 10px 0 0px 0px;
-	width: 40%;
+background-color:transparent;
+border-color:gray;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#616161;
+font-size:100%;
+margin:10px 0 0;
+vertical-align:middle;
+width:50%
 }
 
-input:hover {
-	background-color: transparent;
-	border-width:1px;
-	font-size: 100%;
-	border-bottom-color: black;
-	border-bottom-style: solid;
-	border-top-color: black;
-	border-top-style: solid;
-	border-left-color: black;
-	border-left-style: solid;
-	border-right-color: black;
-	border-right-style: solid;
+input:hover, input:focus {
+background-color:transparent;
+border-color:#000;
+border-style:solid;
+border-width:1px;
+box-shadow:0 0 5px #7E7575;
+font-size:100%;
+box-shadow:0 0 5px #7E7575
 }
 
 button {
-	font-weight: bold;
-	font-size: 100%;
-	color: #8A8A8A;
-	background: #E5E5E5;
-	border: solid #808080 1px;
-	border-radius: 7px;
-	padding: 4px;
-	margin: 10px 10px 10px 50px;
-	width: 30%;
+background:#E5E5E5;
+border:solid gray 1px;
+border-radius:7px;
+color:#8A8A8A;
+font-size:100%;
+font-weight:700;
+margin:10px 10px 10px 50px;
+padding:4px;
+width:30%
 }
 
 button:hover {
-	background: #BABABA; /* works in FF3 but not in IE8 */
-	color: #382E2E;
-	cursor: pointer;
+background:#BABABA;
+box-shadow:0 0 5px #7E7575;
+color:#382E2E;
+cursor:pointer
 }
 
 input.button:active {
-	background: #000000;
+background:#000
 }
 
 span {
-     /*	width: 200px;       not needed, works for IE8 but not for FF3 */
-     /*	padding-top: 7px;   not needed, works for IE8 but not for FF3 */
-     /*	padding-left: 50px; now using margin instead */
-	margin: 0 0 0 50px;
+margin:0 0 0 50px
 }
-label  {
-    font-weight: bold;
-    line-height: normal;
-	margin: 10px 0 0 50px;
-    position: relative;
-    display: block;
-    float: left;
-    width: 30%;
-    }
+
+label {
+display:block;
+float:left;
+font-weight:700;
+line-height:normal;
+margin:10px 0 0 50px;
+position:relative;
+width:30%
+}
+
 #demo_text {
-	margin: 10px 0 0 50px;
+margin:10px 0 0 50px
 }
-div.centre{
+
+div.centre {
 margin:0 auto 10px;
-text-align:center;
+text-align:center
 }

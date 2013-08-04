@@ -656,13 +656,13 @@ if ($_SESSION['PO' . $identifier]->SomethingReceived() == 0 and isset($_POST['Pr
 											narrative,
 											amount)
 									VALUES (
-										25,
-										'" . $GRN . "',
-										'" . $_POST['DefaultReceivedDate'] . "',
-										'" . $PeriodNo . "',
-										'" . $OrderLine->GLCode . "',
-										'PO: " . $_SESSION['PO' . $identifier]->OrderNo . " " . $_SESSION['PO' . $identifier]->SupplierID . " - " . $OrderLine->StockID . " - " . DB_escape_string($OrderLine->ItemDescription) . " x " . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost, $_SESSION['CompanyRecord']['decimalplaces']) . "',
-										'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
+											25,
+											'" . $GRN . "',
+											'" . $_POST['DefaultReceivedDate'] . "',
+											'" . $PeriodNo . "',
+											'" . $OrderLine->GLCode . "',
+											'" . _('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
+											'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "'
 										)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted because');
@@ -680,12 +680,12 @@ if ($_SESSION['PO' . $identifier]->SomethingReceived() == 0 and isset($_POST['Pr
 											narrative,
 											amount)
 									VALUES (25,
-										'" . $GRN . "',
-										'" . $_POST['DefaultReceivedDate'] . "',
-										'" . $PeriodNo . "',
-										'" . $_SESSION['CompanyRecord']['grnact'] . "',
-										'" . _('PO' . $identifier) . ': ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . $_SESSION['PO' . $identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost, $_SESSION['CompanyRecord']['decimalplaces']) . "',
-										'" . -$UnitCost * $OrderLine->ReceiveQty . "'
+											'" . $GRN . "',
+											'" . $_POST['DefaultReceivedDate'] . "',
+											'" . $PeriodNo . "',
+											'" . $_SESSION['CompanyRecord']['grnact'] . "',
+											'" . _('PO') . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "',
+											'" . -$UnitCost * $OrderLine->ReceiveQty . "'
 										)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');
