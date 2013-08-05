@@ -1459,8 +1459,8 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 												'" . $DefaultDispatchDate . "',
 												'" . $PeriodNo . "',
 												'" . $DisposalRow['accumdepnact'] . "',
-												'" . $_SESSION['Items' . $identifier]->DebtorNo . ' - ' . $OrderLine->StockID . ' ' . _('disposal') . "',
-												'" . -$DisposalRow['accumdpen'] . "')";
+												'" . $_SESSION['Items'.$identifier]->DebtorNo . ' - ' . $OrderLine->StockID . ' ' . _('accumulated depreciation disposal') . "',
+												'" . $DisposalRow['accumdepn'] . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of accumulated depreciation GL posting on disposal could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -1481,7 +1481,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 											'" . $DefaultDispatchDate . "',
 											'" . $PeriodNo . "',
 											'" . $DisposalRow['costact'] . "',
-											'" . $_SESSION['Items' . $identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
+											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('cost disposal') . "',
 											'" . -$DisposalRow['cost'] . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The reversal of asset cost on disposal GL posting could not be inserted because');
@@ -1503,7 +1503,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 											'" . $DefaultDispatchDate . "',
 											'" . $PeriodNo . "',
 											'" . $DisposalRow['disposalact'] . "',
-											'" . $_SESSION['Items' . $identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
+											'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('net book value disposal') . "',
 											'" . ($DisposalRow['cost'] - $DisposalRow['accumdepn']) . "')";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal net book value GL posting could not be inserted because');
@@ -1525,7 +1525,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 										'" . $DefaultDispatchDate . "',
 										'" . $PeriodNo . "',
 										'" . $DisposalRow['disposalact'] . "',
-										'" . $_SESSION['Items' . $identifier]->DebtorNo . " - " . $OrderLine->StockID . ' ' . _('disposal') . "',
+										'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID .  ' ' . _('asset disposal proceeds') . "',
 										'" . round((-$OrderLine->Price * $OrderLine->QtyDispatched * (1 - $OrderLine->DiscountPercent) / $_SESSION['CurrencyRate']), $_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The disposal proceeds GL posting could not be inserted because');

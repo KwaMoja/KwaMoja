@@ -420,9 +420,11 @@ if (!isset($AssetID) or $AssetID == '') {
 				depnrate,
 				cost,
 				accumdepn,
-				barcode
+				barcode,
+				disposalproceeds,
+				disposaldate
 			FROM fixedassets
-			WHERE assetid ='" . $AssetID . "'";
+			WHERE assetid='" . $AssetID . "'";
 
 	$result = DB_query($sql, $db);
 	$AssetRow = DB_fetch_array($result);
@@ -448,6 +450,12 @@ if (!isset($AssetID) or $AssetID == '') {
 			<td>' . $AssetID . '</td>
 		</tr>';
 	echo '<tr><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></tr>';
+}
+if ($AssetRow['disposaldate'] != '0000-00-00'){
+	echo '<tr>
+			<td>' . _('Asset Already disposed on') . ':</td>
+			<td>' . ConvertSQLDate($AssetRow['disposaldate']) . '</td>
+		</tr>';
 }
 
 if (isset($_POST['Description'])) {
@@ -588,12 +596,27 @@ if (isset($AssetRow)) {
 		<tr>
 			<td>' . _('Accumulated Depreciation') . ':</td>
 			<td class="number">' . locale_number_format($AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>
-		<tr>
+		</tr>';
+	if ($AssetRow['disposaldate'] != '0000-00-00'){
+		echo'<tr>
+			<td>' . _('Net Book Value at disposal date') . ':</td>
+			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
+		echo'<tr>
+			<td>' . _('Disposal Proceeds') . ':</td>
+			<td class="number">' . locale_number_format($AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
+		echo'<tr>
+			<td>' . _('P/L after disposal') . ':</td>
+			<td class="number">' . locale_number_format(-$AssetRow['cost'] + $AssetRow['accumdepn'] + $AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
+
+	} else {
+		echo '<tr>
 			<td>' . _('Net Book Value') . ':</td>
 			<td class="number">' . locale_number_format($AssetRow['cost'] - $AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
-
+	}
 	/*Get the last period depreciation (depn is transtype =44) was posted for */
 	$result = DB_query("SELECT periods.lastdate_in_period,
 								max(fixedassettrans.periodno)
