@@ -79,11 +79,16 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	$DirHandle = dir('companies/');
 
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
-		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.svn' and $CompanyEntry != '.') {
-			if ($CompanyEntry == $DefaultCompany) {
-				echo '<option selected="selected" label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.') {
+			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
+				include('companies/' . $CompanyEntry . '/Companies.php');
 			} else {
-				echo '<option label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyEntry . '</option>';
+				$CompanyName[$CompanyEntry] = $CompanyEntry;
+			}
+			if ($CompanyEntry == $DefaultCompany) {
+				echo '<option selected="selected" label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
+			} else {
+				echo '<option label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			}
 		}
 	}

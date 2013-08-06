@@ -1445,7 +1445,7 @@ else { //dont require customer selection
 			echo '<a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier=' . $identifier . '&amp;StockID=' . $OrderLine->StockID . '&amp;DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $OrderLine->StockID . '</a></td>
 				<td title="' . $OrderLine->LongDescription . '">' . $OrderLine->ItemDescription . '</td>';
 
-			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" required="required" minlength="1" maxlength="6" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
+			echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $OrderLine->LineNumber . '" size="6" required="required" minlength="1" maxlength="11" value="' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . '" />';
 			if ($QtyRemain != $QtyOrdered) {
 				echo '<br />' . locale_number_format($OrderLine->QtyInv, $OrderLine->DecimalPlaces) . ' ' . _('of') . ' ' . locale_number_format($OrderLine->Quantity, $OrderLine->DecimalPlaces) . ' ' . _('invoiced');
 			} //$QtyRemain != $QtyOrdered
