@@ -101,37 +101,32 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts'] != '') {
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							stockmaster.units,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
-						WHERE salesorderdetails.completed =1
-						AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
 							stockmaster.units
+						FROM stockmaster
+						LEFT JOIN locstock
+							ON stockmaster.stockid=locstock.stockid
+						WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							stockmaster.units,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
-						WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
 							stockmaster.units
+						FROM stockmaster
+						LEFT JOIN locstock
+							ON stockmaster.stockid=locstock.stockid
+						WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						GROUP BY stockmaster.stockid,
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		}
 
@@ -142,37 +137,32 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts'] != '') {
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem,
 							stockmaster.units
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
-						WHERE salesorderdetails.completed =1
-						AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						FROM stockmaster
+						LEFT JOIN locstock
+							ON stockmaster.stockid=locstock.stockid
+						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							stockmaster.units
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem,
 							stockmaster.units
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
+						FROM stockmaster
+						LEFT JOIN locstock
+							ON stockmaster.stockid=locstock.stockid
 						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							stockmaster.units
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		}
 
@@ -183,35 +173,28 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts'] != '') {
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem,
 							stockmaster.units
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
-						WHERE salesorderdetails.completed=1
-						AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+						FROM stockmaster LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid
+						WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							stockmaster.units
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.decimalplaces,
 							SUM(locstock.quantity) AS qoh,
-							SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,
-							SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem,
 							stockmaster.units
-						FROM (((stockmaster LEFT JOIN salesorderdetails on stockmaster.stockid = salesorderdetails.stkcode)
-							 LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid)
-							 LEFT JOIN purchorderdetails on stockmaster.stockid = purchorderdetails.itemcode)
+						FROM stockmaster
+						LEFT JOIN locstock
+							ON stockmaster.stockid=locstock.stockid
 						WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "'
 						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							stockmaster.units
+								stockmaster.description,
+								stockmaster.decimalplaces,
+								stockmaster.units
 						ORDER BY stockmaster.stockid";
 		}
 	}
@@ -550,8 +533,6 @@ if (isset($StockItemsResult)) {
 						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
 						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
-						<th>' . _('Purchase Orders') . '</th>
-						<th>' . _('Sales Orders') . '</th>
 						<th>' . _('Units') . '</th>
 					</tr>';
 
@@ -573,9 +554,7 @@ if (isset($StockItemsResult)) {
 		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td></tr>', $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), locale_number_format($myrow['qoo'], $myrow['decimalplaces']), locale_number_format($myrow['qdem'], $myrow['decimalplaces']), $myrow['units']);
+				<td>%s</td></tr>', $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), $myrow['units']);
 
 		//end of page full new headings if
 	}
