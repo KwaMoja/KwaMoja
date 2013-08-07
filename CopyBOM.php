@@ -169,7 +169,11 @@ if (isset($_POST['Submit'])) {
 				<td>' . _('From Stock ID') . '</td>';
 	echo '<td><select minlength="0" name="StockID">';
 	while ($myrow = DB_fetch_row($result)) {
-		echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
+		if (isset($_GET['Item']) and $myrow[0] == $_GET['Item']) {
+			echo '<option selected="selected" value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
+		} else {
+			echo '<option value="' . $myrow[0] . '">' . $myrow[0] . ' -- ' . $myrow[1] . '</option>';
+		}
 	}
 	echo '</select></td>
 			</tr>';
@@ -195,7 +199,6 @@ if (isset($_POST['Submit'])) {
 	}
 	echo '</table>';
 	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-		  </div>
 		  </form>';
 
 	include('includes/footer.inc');

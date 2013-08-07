@@ -635,6 +635,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		} else { //end of if $SelectedComponent
 
+			echo '<div class="centre"><a href="' . $RootPath . '/CopyBOM.php?Item=' . $SelectedParent . '">' . _('Copy this BOM') . '</a></div>';
 			echo '<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
 			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
 			 */

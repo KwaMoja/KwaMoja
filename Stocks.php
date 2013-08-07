@@ -972,7 +972,7 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<tr>
 		<td>' . _('Part Description') . ' (' . _('long') . '):</td>
-		<td><textarea ' . (in_array('LongDescription', $Errors) ? 'class="texterror"' : '') . ' required="required" minlength="1" name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
+		<td><textarea required="required" minlength="1" name="LongDescription" cols="40" rows="3">' . stripslashes($LongDescription) . '</textarea></td>
 	</tr>
 	<tr>
 		<td>' . _('Image File (.jpg)') . ':</td>

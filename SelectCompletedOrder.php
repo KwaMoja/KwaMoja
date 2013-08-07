@@ -89,132 +89,38 @@ if (isset($OrderNumber)) {
 
 if (isset($_POST['SearchParts']) and $_POST['SearchParts'] != '') {
 
-	if ($_POST['Keywords'] != '' and $_POST['StockCode'] != '') {
-		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
-	}
-	if ($_POST['Keywords'] != '') {
-		//insert wildcard characters in spaces
-		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+	$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
+	$StockString = '%' . str_replace(' ', '%', $_POST['StockCode']) . '%';
 
-		if (isset($_POST['completed'])) {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster
-						LEFT JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster
-						LEFT JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		}
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units
+				FROM stockmaster
+				LEFT JOIN locstock
+					ON stockmaster.stockid=locstock.stockid
+				WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
+					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					AND stockmaster.stockid " . LIKE . " '" . $StockString . "'
+				GROUP BY stockmaster.stockid,
+						stockmaster.description,
+						stockmaster.decimalplaces,
+						stockmaster.units
+				ORDER BY stockmaster.stockid";
 
-	} elseif ($_POST['StockCode'] != '') {
+	$ErrMsg = _('No stock items were returned by the SQL because');
+	$DbgMsg = _('The SQL used to retrieve the searched parts was');
+	$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
-		if (isset($_POST['completed'])) {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster
-						LEFT JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster
-						LEFT JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-							AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		}
-
-	} elseif ($_POST['StockCode'] == '' and $_POST['Keywords'] == '' and $_POST['StockCat'] != '') {
-
-		if (isset($_POST['completed'])) {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster LEFT JOIN locstock ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.decimalplaces,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units
-						FROM stockmaster
-						LEFT JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-								stockmaster.description,
-								stockmaster.decimalplaces,
-								stockmaster.units
-						ORDER BY stockmaster.stockid";
-		}
+	if (DB_num_rows($StockItemsResult) == 1) {
+		$myrow = DB_fetch_row($StockItemsResult);
+		$SelectedStockItem = $myrow[0];
+		$_POST['SearchOrders'] = 'True';
+		unset($StockItemsResult);
+		echo '<br />' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 
-	if (mb_strlen($SQL) < 2) {
-		prnMsg(_('No selections have been made to search for parts') . ' - ' . _('choose a stock category or enter some characters of the code or description then try again'), 'warn');
-	} else {
-
-		$ErrMsg = _('No stock items were returned by the SQL because');
-		$DbgMsg = _('The SQL used to retrieve the searched parts was');
-		$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($StockItemsResult) == 1) {
-			$myrow = DB_fetch_row($StockItemsResult);
-			$SelectedStockItem = $myrow[0];
-			$_POST['SearchOrders'] = 'True';
-			unset($StockItemsResult);
-			echo '<br />' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
-		}
-	}
 } else if (isset($_POST['SearchOrders']) and Is_Date($_POST['OrdersAfterDate']) == 1) {
 
 	//figure out the SQL required from the inputs available
