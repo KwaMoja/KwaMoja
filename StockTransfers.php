@@ -44,8 +44,8 @@ if (isset($_POST['CheckCode'])) {
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 	echo '<table class="selection">
 			<tr>
-				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Stock Code') . '</th>
-				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Stock Description') . '</th>
+				<th class="SortableColumn">' . _('Stock Code') . '</th>
+				<th class="SortableColumn">' . _('Stock Description') . '</th>
 			</tr>';
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<tr>
@@ -460,7 +460,7 @@ echo '<table class="selection">
 if (isset($_POST['StockID'])) {
 	echo '<input type="text" name="StockID" size="21" value="' . $_POST['StockID'] . '" required="required" minlength="1" maxlength="20" /></td></tr>';
 } else {
-	echo '<input type="text" name="StockID" size="21" value="" required="required" minlength="1" maxlength="20" /></td></tr>';
+	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></td></tr>';
 }
 echo '<tr><td>' . _('Partial Description') . ':</td>
 		<td><input type="text" name="StockText" size="21" value="' . $_GET['Description'] . '" /></td>

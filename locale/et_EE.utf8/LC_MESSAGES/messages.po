@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 11:21+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:20+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Estonian <kalmer.piiskop@eesti.ee>\n"
@@ -6827,7 +6827,7 @@ msgid "User Login"
 msgstr "kasutaja sisse logimine"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "parool"
 
@@ -10291,7 +10291,7 @@ msgstr "Kustuta Factor"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Oled sa kindel, et soovid kustutada selle faktooringufirmale ?"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "Ettevõtte nimi"
 
@@ -38988,7 +38988,7 @@ msgstr "Seda funktsiooni kasutatakse sisselogimiseksAPI meetodidmääratud andme
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "MÄRKUS : Selle funktsiooni abil tähendab, et kasutajanimi ja parool väljadele järgmised funktsioonid enam ei vajata . "
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Andmebaasi nimi"
 
@@ -40313,406 +40313,411 @@ msgstr "parameetrid"
 msgid "Return Value"
 msgstr "Tagasi Value"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMoja Installer"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Tundub, et süsteem on juba paigaldatud. "
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "Konto jaotise nimi ei tohi sisaldada tähemärki"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "Ajatsooni olema juriidiline"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "Host Name pole kehtiv nimi ."
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "Host Name ei tohi olla tühi ."
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "Kasutaja keel defintion ei ole õiges vormingus"
 
-#: install/index.php:282
+#: install/index.php:288
 msgid "The COA file name must only contain letters,"
 msgstr "COA faili nimi peab sisaldama ainult tähti,"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "Ei saa COA fail valitud. "
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "Ei saa avada konfiguratsioonifaili"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "Ei saa kirjutada konfiguratsioonifaili"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "Ei suutnud ühendada andmebaasiviga on"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "Suutnud luua andmebaas"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "Suutnud luua andmebaas kwamojademo javiga on"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "Host Name on ebaseaduslik"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "Host Name tohiks olla tühi"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
-msgstr "Uude asukohta nime muuta vana nimi sisaldab keelatud sümboleid - muudatusi ei tehtud"
+msgid "The database name should not contains illegal characters such as"
+msgstr "Konto jaotise nimi ei tohi sisaldada tähemärki"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "võiruumi"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "Andmebaasi nimi ei tohi olla tühi"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "Palun parandagekuvatakse viga esimene"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMoja installeerimisviisardiga"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "Palun sea küpsised lubatud oma veebibrauseriga , muidu KwaMoja ei tööta korralikult"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "Küpsised on õigesti lubatud brauseris"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "Ebaseaduslik tähemärki või andmed on kindlaks tehtud, vaata oma admistrator abi"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "Sa PHP versioon peab olema suurem kui 5,1"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "Sinu PHP versioon sobib KwaMoja"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "kataloog"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "peab olema kirjutatav veebiserveri"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "Baasi KwaMoja kataloog on kirjutatav"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "Ettevõtted / kataloog on kirjutatav"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "Mbstring pikendamine ei ole availble oma PHP"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "Mbstring pikendamine on õigesti paigaldatud"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "Libxml pikendamine ei ole võimalik oma PHP"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "Libxml laiendamine on õigesti paigaldatud"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "Sul ei ole õige andmebaasi laiendamine paigaldada PHP"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "Andmebaasi laiendamine on paigaldatud"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "PHP MySQLi pikendamist soovitada MySQL laiendus on iganenud alates PHP 5,5"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "MySQL laiendus on iganenud alates 5.5. "
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "GD laiendus peab olema paigaldatud oma PHP konfiguratsiooni"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "GD laiendus on õigesti paigaldatud"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "Järgmine samm"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "Sa php töötab turvarežiimis , see sunnibmaksimaalne Skripti täitmise aeg 30 sekundit"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "See võib mõnikord tähendada seda, et paigaldamine ei ole võimalik õigeks ajaks lõpetada ."
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "Parem on selle funktsiooni välja lülitama"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "Tere tulemast KwaMoja installeerimisviisardiga"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "Paigaldamise ajal võite näha eri staatusega sõnumeid."
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "Kui onveateade viga tuleb parandada, et jätkata ."
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "Kui näed hoiatus siis peaks panema enne jätkamist ."
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "Kui te pole kindel,optsiooni väärtus , siis tuleb hoidavaikesäte."
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "Vali oma keel"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "Paigaldaja proovida ja arvan oma keel oma brauseri , kuid võib saada see vale . "
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "Keel:"
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "Vali Database Management System"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMoja saab kasutada mitmeid erinevaid andmebaasi süsteeme. "
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "DBMS :"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMoja on avatud lähtekoodiga rakendus GPL litsentsi all V2 ja täiesti tasuta alla laadida ."
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "Paigaldades KwaMoja teadvustad sa oled lugenud"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "Palun pöörduge süsteemiadministraatori poole."
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "Andmebaas seaded"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "Palun sisestage oma andmebaasi info allpool . "
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "* Kohustuslik väli"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "Host Name"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "Sisestage andmebaasi hostinimi"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "Tavaliselt : localhost või 127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "Andmebaasi nimi"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "Kui teie kasutajanime all ei ole õigusi luuaandmebaas , siis see andmebaas tuleb luua ja tühi ."
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "Andmebaas Eesliide"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "Kasulik virtuaalserver"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "Valikuline: kujul prefix_"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "Database User Name"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "Kehtiv andmebaasi kasutaja nimi"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "Kui kasutaja ei ole luba luua andmebaase , siis andmebaasi sisestatud üle peab eksisteerima ja olema tühi ."
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "DB kasutaja parool"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "Sisestakasutaja parool, kui see on olemas"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "Kontrolli uuesti"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "Ei suutnud ühendadaandmebaas . "
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "firma Seaded"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "Praegu peab olema sama andmebaasi nimi"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "Kontoplaan"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "Paigaldatakse nagu starter kontoplaani"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "ajavöönd"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "Firma logo faili"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "Jpg fail kuni 10k, ja mitte suurem kui 170px x 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "jpg fail 10k, mitte suurem kui 170px x 80px"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "installisuvand"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "Installidemo andmed ?"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "KwaMojaDemo saidi ja andmete paigaldatakse"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "Administraatori konto seaded"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "Vaikimisi kasutajanimi on 'admin 'ja seda ei saa muuta ."
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "Vaikimisi parool on 'kwamoja 'kus saab muuta allpool ."
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja admin konto"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "E-posti aadress"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "Näiteks : admin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMoja Parool"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "Sisesta parool uuesti"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "paigaldama"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "Ebaõnnestus avada uus sql fail"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "Ebaõnnestus asustada andmebaasi"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "Uuendamine ebaõnnestuse-posti aadress ja parooladministraator javiga on"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "Uuendamine ebaõnnestusfirma nimi jaerroris"
 
@@ -41549,6 +41554,10 @@ msgstr "peab olema kirjutatavveebiserveri"
 #, fuzzy
 msgid "Update Module Order"
 msgstr "Uuenda Tellimus"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "Uude asukohta nime muuta vana nimi sisaldab keelatud sümboleid - muudatusi ei tehtud"
 
 #~ msgid "KwaMoja is an \"accrual\" based system (not a \"cash based\" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date."
 #~ msgstr "KwaMoja on\\ 'tekkepõhise \\'süsteem ( mitte\\ 'kassapõhist \\'süsteem). "

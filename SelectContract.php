@@ -133,10 +133,10 @@ echo '<table cellpadding="2" width="98%" class="selection">';
 
 $TableHeader = '<tr>
 					<th>' . _('Modify') . '</th>
-					<th class="SortableColumn" onclick="SortSelect(this)">' . _('Order') . '</th>
+					<th class="SortableColumn">' . _('Order') . '</th>
 					<th>' . _('Issue To WO') . '</th>
 					<th>' . _('Costing') . '</th>
-					<th class="SortableColumn" onclick="SortSelect(this)">' . _('Contract Ref') . '</th>
+					<th class="SortableColumn">' . _('Contract Ref') . '</th>
 					<th>' . _('Description') . '</th>
 					<th>' . _('Customer') . '</th>
 					<th>' . _('Required Date') . '</th>

@@ -634,8 +634,8 @@ if (isset($SearchResult)) {
 			<input tabindex="' . ($j + 10) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
 	echo '<tbody>
 			<tr>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+			<th class="SortableColumn">' . _('Code') . '</th>
+			<th class="SortableColumn">' . _('Description') . '</th>
 			<th>' . _('Units') . '</th>
 			<th>' . _('On Hand') . '</th>
 			<th>' . _('On Demand') . '</th>

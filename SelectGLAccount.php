@@ -83,10 +83,10 @@ if (isset($result) and DB_num_rows($result) > 0) {
 	echo '<br /><table class="selection" summary="' . _('List of GL Accounts') . '">';
 
 	echo '<tr>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Account Name') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Group') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Account Type') . '</th>
+			<th class="SortableColumn">' . _('Code') . '</th>
+			<th class="SortableColumn">' . _('Account Name') . '</th>
+			<th class="SortableColumn">' . _('Group') . '</th>
+			<th class="SortableColumn">' . _('Account Type') . '</th>
 		</tr>';
 
 	while ($myrow = DB_fetch_array($result)) {

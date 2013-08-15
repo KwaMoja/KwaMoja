@@ -300,12 +300,12 @@ function VerifyForm(f) {
 	if (Alert!='') {makeAlert(Alert, 'Input Error');}
 	return Clean;
 }
-function SortSelect(selElem) {
+function SortSelect() {
+	selElem=this;
 	var tmpArray = new Array();
 	th=document.getElementById("Theme").value;
 	columnText=selElem.innerHTML;
-	parentElem=selElem.parentNode;
-	table=parentElem.parentNode;
+	table=selElem.parentNode.parentNode;
 	row = table.rows[0];
 	for (var j = 0, col; col = row.cells[j]; j++) {
 		if (row.cells[j].innerHTML==columnText) {
@@ -427,6 +427,12 @@ function initial(){
 		}
 		if (ds[i].className=="number") ds[i].onkeypress=rTN;
 		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
+	}
+	var ds=document.getElementsByTagName("th");
+	for (i=0;i<ds.length;i++){
+		if (ds[i].className=="SortableColumn"){
+			ds[i].onclick=SortSelect;
+		}
 	}
 }
 window.onload=initial;

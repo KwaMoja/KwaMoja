@@ -446,8 +446,8 @@ if (isset($SuppliersResult)) {
 
 	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Supplier Name') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Address 1') . '</th>
 						<th>' . _('Address 2') . '</th>

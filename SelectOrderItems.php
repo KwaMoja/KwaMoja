@@ -1743,8 +1743,8 @@ else { //dont require customer selection
 			echo '<td colspan="1"><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 10) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
 			$TableHeader = '<tbody>
 							<tr>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+								<th class="SortableColumn">' . _('Code') . '</th>
+					   			<th class="SortableColumn">' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>

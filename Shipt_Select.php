@@ -194,8 +194,8 @@ if (isset($StockItemsResult)) {
 
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 						<th>' . _('Units') . '</th>
@@ -292,11 +292,11 @@ else {
 
 		echo '<table width="95%" class="selection">';
 		$TableHeader = '<tr>
-							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Shipment') . '</th>
-							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier') . '</th>
-							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Vessel') . '</th>
-							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Voyage') . '</th>
-							<th class="SortableColumn" onclick="SortSelect(this)">' . _('Expected Arrival') . '</th>
+							<th class="SortableColumn">' . _('Shipment') . '</th>
+							<th class="SortableColumn">' . _('Supplier') . '</th>
+							<th class="SortableColumn">' . _('Vessel') . '</th>
+							<th class="SortableColumn">' . _('Voyage') . '</th>
+							<th class="SortableColumn">' . _('Expected Arrival') . '</th>
 						</tr>';
 
 		echo $TableHeader;

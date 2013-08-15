@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 2.9b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 11:59+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:28+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -6878,7 +6878,7 @@ msgid "User Login"
 msgstr "Логин пользователя"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "Пароль"
 
@@ -10383,7 +10383,7 @@ msgstr "Удалить торгового агента"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Вы уверены, что хотите удалить эту компанию-торгового агента ?"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "Название компании"
 
@@ -34494,7 +34494,7 @@ msgstr "Сделать перерасчет"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?"
-"Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно опубликовать сделки из главной книги за выбранный период?\n"
+"Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно опубликовать сделки из главной книги за выбранный период?\n"
 "\t   .... Это может занять некоторое время?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37708,7 +37708,7 @@ msgstr "Конфигурация в файле config.php для имени по
 #, fuzzy
 msgid "to try logging in again"
 msgstr ", чтобы попытаться войти снова"
-", чтобы попытаться войти сновапопытаться войти в\n"
+", чтобы попытаться войти снова, чтобы попытаться войти сновапопытаться войти в\n"
 "снова"
 
 #: includes/ConnectDB_mysql.inc:33 includes/ConnectDB_mysql.inc:40
@@ -39738,7 +39738,7 @@ msgstr "Эта функция используется для входа в ме
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "ПРИМЕЧАНИЕ: использование этой функции означает, что поля Имя Пользователя и Пароль в следующие функциях больше не требуются. При вызове этих функций, оставьте последние два параметра пустыми."
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Имя базы данных"
 
@@ -41122,407 +41122,412 @@ msgstr "Параметры"
 msgid "Return Value"
 msgstr "Возвращаемое значение"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMoja Installer"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Похоже, что система уже установлена. "
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "Способ оплаты не может содержать символ"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "Часовой пояс, должны быть законными"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "Имя хоста не является допустимым именем ."
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "Имя хоста не может быть пустым."
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "Дефиниция пользователь языка не в правильном формате"
 
-#: install/index.php:282
+#: install/index.php:288
 #, fuzzy
 msgid "The COA file name must only contain letters,"
 msgstr "COA имя файла должно содержать только латинские буквы , \\'- \\', \\ '_ \\'"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "Там нет COA выбранный файл . "
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "Не удается открыть файл конфигурации"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "Невозможно записать в файл конфигурации"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "Не удалось подключиться базы данных , ошибки"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "Не удалось создать базу данных"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "Не удалось создать базу данных kwamojademo и ошибка"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "Имя хоста является незаконным"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "Имя хоста не должно быть пустым"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
-msgstr "Новый кол склада содержит недопустимые символы - изменения не применены"
+msgid "The database name should not contains illegal characters such as"
+msgstr "Способ оплаты не может содержать символ"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "или пробел"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "Имя базы данных не должно быть пустым"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "Пожалуйста, исправьте ошибки отображается первый"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMoja мастера установки"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "Пожалуйста, установите Cookies разрешены в Вашем веб Брауэр , в противном случае KwaMoja не может работать должным образом"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "Cookies должным образом разрешены в Вашем браузере"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "Недопустимые символы или данные были определены , пожалуйста, обратитесь к помощи включена администратором"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "Вы PHP версия должна быть больше 5,1"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "Ваша версия PHP подходит для KwaMoja"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "каталог"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "должна быть доступна для записи веб-сервером"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "База каталога KwaMoja доступен для записи"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "Компании / каталог доступен для записи"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "MBstring расширение не доступный в вашем PHP"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "MBstring расширения установлен правильно"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "LibXML расширение недоступно в вашей PHP"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "LibXML расширения установлен правильно"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "Вам не нужно правильное расширение базы данных установлены для PHP"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "Расширение базы данных установлена"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "Расширение PHP Mysqli , рекомендуют в качестве расширения MySQL устарела начиная с PHP 5.5"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "Расширение MySQL устарела начиная с 5.5. "
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "Расширение GD должны быть установлены в вашей конфигурации PHP"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "Расширение GD установлена ​​правильно"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "Следующий шаг"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "Вы PHP работает в безопасном режиме , то он выполняет максимальное время выполнения сценария в 30 секунд"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "Иногда это может означать, что установка не может быть завершена в срок."
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "Лучше отключить эту функцию"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "Добро пожаловать в мастер установки KwaMoja"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "Во время установки вы можете увидеть различные сообщения о состоянии ."
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "Когда есть сообщение об ошибке, вы должны исправить ошибку , чтобы продолжить."
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "Если вы видите предупреждение вы должны обратить внимание , прежде чем продолжить ."
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "Если вы не уверены встоимости опциона , вы должны оставить значение по умолчанию ."
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "Выберите ваш язык"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "Программа установки попытается и угадать ваш язык из браузера , но может получить его не так . "
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "Язык:"
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "Выберите Система управления базами данных"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMoja можете использовать несколько различных систем баз данных. "
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "СУБД:"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMoja приложение с открытым исходным кодом под лицензией GPL v2 и абсолютно бесплатно скачать."
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "Установив KwaMoja вы признаете вы читали"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "Пожалуйста, обратитесь к системному администратору для получения дополнительной информации."
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "настройки базы данных"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "Пожалуйста, введите свои базы данных информацию ниже. "
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "* Обязательное для заполнения поле"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "Имя хоста"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "Введите имя хоста базы данных"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "Обычно : локальный или 127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "Имя базы данных"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "Если ваше имя пользователя ниже, не имеет разрешений на созданиебазы данных, то эта база данных должна быть создана и пусто."
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "префикс базы данных"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "Полезно с виртуального хостинга"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "Дополнительно: в виде prefix_"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "Имя пользователя базы данных"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "Допустимое имя пользователя базы данных"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "Если этот пользователь не имеет разрешения на создание баз данных , то база данных введенный выше должна существовать и быть пустой."
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "DB пароль пользователя"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "Введите пароль пользователя , если она существует"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "Проверить снова"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "Не удалось подключиться к базе данных. "
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "Компания Настройки"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "В настоящее время должно быть таким же, как имя базы"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "План счетов"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "Будет установлен в качестве стартера План счетов"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "Часовой пояс"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "Файл логотипа компании"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "JPG файлов до 10k, и не больше чем 170px х 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "JPG файл 10k, не более 170px х 80px"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "вариант установки"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "Установить демо- данные?"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "KwaMojaDemo сайта и данные будут установлены"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "Настройки учетной записи администратора"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "Имя пользователя по умолчанию 'Admin' , и она не может быть изменена."
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "Пароль по умолчанию ' kwamoja', который вы можете изменить ниже."
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja учетная запись администратора"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "адрес электронной почты"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "Например: admin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMoja Пароль"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "Повторно введите пароль"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "устанавливать"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "Не удалось открыть новый файл SQL"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "Не удалось заполнить базу данных"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "Не удалось обновить адрес электронной почты и пароль администратора и ошибка"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "Не удалось обновить название компании иerroris"
 
@@ -42376,6 +42381,10 @@ msgstr "должна быть доступна для записи веб-сер
 #, fuzzy
 msgid "Update Module Order"
 msgstr "Обновление заказа"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "Новый кол склада содержит недопустимые символы - изменения не применены"
 
 #~ msgid "Customer Type (Group) Notes for:<b> "
 #~ msgstr "Примечания для типа клиента (группы): "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 11:21+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:24+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: italian <none>\n"
@@ -6876,7 +6876,7 @@ msgid "User Login"
 msgstr "Login utente"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "Password"
 
@@ -10381,7 +10381,7 @@ msgstr "Elimina Factor"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Sei sicuro di voler cancellare questa società di factoring?"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "Nome della società"
 
@@ -34491,7 +34491,7 @@ msgstr "Fare il ricalcolo"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?"
-"Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ripubblicare uno transazioni di contabilità generale in quanto il periodo selezionato \n"
+"Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ripubblicare uno transazioni di contabilità generale in quanto il periodo selezionato \n"
 "\t .... questo può richiedere un certo tempo?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37703,7 +37703,7 @@ msgstr "La configurazione nel file config.php per il nome utente e password del 
 #, fuzzy
 msgid "to try logging in again"
 msgstr "per provare ad accedere di nuovo"
-"per provare ad accedere di nuovoper provare ad accedere di nuovoper tentare il log-in \n"
+"per provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper tentare il log-in \n"
 "di nuovo"
 
 #: includes/ConnectDB_mysql.inc:33 includes/ConnectDB_mysql.inc:40
@@ -39726,7 +39726,7 @@ msgstr "Questa funzione viene utilizzata per effettuare il login nei metodi API 
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "NOTA: utilizzando questa funzione significa che il Nome Utente e Password nelle seguenti funzioni non sono più necessari. Quando si chiamano quelle funzioni, lasciare gli ultimi due parametri off."
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Nome database"
 
@@ -41110,407 +41110,412 @@ msgstr "Parametri"
 msgid "Return Value"
 msgstr "Return Value"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMoja Installer"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Sembra che il sistema è stato già installato . "
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "Il metodo di pagamento non può contenere il carattere"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "Il fuso orario deve essere legale"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "Il nome host non è un nome valido ."
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "Il nome host non deve essere vuoto ."
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "La lingua defintion utente non è nel formato corretto"
 
-#: install/index.php:282
+#: install/index.php:288
 #, fuzzy
 msgid "The COA file name must only contain letters,"
 msgstr "Il nome del file COA deve contenere solo lettere , \\ '- \\ ', \\ '_ \\'"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "Non c'è nessun file COA selezionato . "
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "Impossibile aprire il file di configurazione"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "Impossibile scrivere il file di configurazione"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "Impossibile connettersi al database , l'errore è"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "Impossibile creare il database di"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "Impossibile creare kwamojademo banca dati e l'errore è"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "Il nome host è illegale"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "Il nome host non deve essere vuoto"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
-msgstr "Il codice di scorta nuovo per cambiare il vecchio codice a contiene caratteri non validi - non saranno apportate delle modifiche"
+msgid "The database name should not contains illegal characters such as"
+msgstr "Il metodo di pagamento non può contenere il carattere"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "o un spazio"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "Il nome del database non deve essere vuoto"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "Si prega di correggere l'errore visualizzato prima"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "Installazione guidata KwaMoja"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "Vi preghiamo di impostare cookie ammessi nel vostro brower web , altrimenti KwaMoja non può funzionare correttamente"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "I cookie sono correttamente abilitati nel tuo browser"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "Caratteri illegali o è stato identificato , si prega di consultare il vostro admistrator aiuto"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "È la versione di PHP deve essere maggiore di 5,1"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "La tua versione di PHP è adatto per KwaMoja"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "la directory"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "deve essere scrivibile dal web server"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "La directory di base KwaMoja è scrivibile"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "Le aziende / directory è scrivibile"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "L'estensione mbstring non è availble in PHP"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "L'estensione mbstring è installato correttamente"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "L'estensione libxml non è disponibile nel tuo PHP"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "L'estensione libxml è installato correttamente"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "Non si dispone la proroga database corretto installato per PHP"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "L'estensione del database è installato"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "L'estensione mysqli PHP è raccomandare come estensione MySQL è stato deprecato da PHP 5.5"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "L'estensione MySQL è stato deprecato da 5.5 . "
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "L'estensione GD deve essere installato nella configurazione di PHP"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "L'estensione GD è installato correttamente"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "Next Step"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "È php è in esecuzione in modalità provvisoria , forzerà un tempo massimo di esecuzione dello script di 30 secondi"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "Questo a volte può significare che l'installazione non può essere completata in tempo ."
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "E 'meglio disattivare questa funzione"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "Benvenuti nella procedura guidata di installazione KwaMoja"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "Durante l'installazione è possibile visualizzare diversi messaggi di stato ."
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "Quando c'è un messaggio di errore è necessario correggere l'errore di continuare ."
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "Se viene visualizzato un messaggio di avviso si dovrebbe prendere atto prima di procedere."
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "Se non siete sicuri di un valore di opzione , si dovrebbe mantenere l'impostazione predefinita ."
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "Selezionare la lingua"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "Il programma di installazione cercherà di indovinare la vostra lingua dal vostro browser, ma può sbagliare. "
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "lingua :"
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "Selezionate il vostro sistema di gestione di database"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMoja può utilizzare diversi sistemi di database diversi. "
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "DBMS :"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMoja è un software open source sotto licenza GPL v2 e per scaricare assolutamente gratuito ."
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "Con l'installazione di KwaMoja riconoscete di aver letto"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "Si prega di rivolgersi all&#39;amministratore di sistema per ulteriori informazioni."
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "impostazioni del database"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "Si prega di inserire i dati del database sottostante . "
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "* Indica un campo obbligatorio"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "Nome Host"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "Immettere il nome host del database"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "Comunemente : localhost o 127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "Il nome del database"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "Se il tuo nome utente qui sotto non dispone delle autorizzazioni per creare un database, allora questo database deve essere creato e vuoto."
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "Prefisso Database"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "Utile con hosting condiviso"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "Opzionale : in forma di prefisso_"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "Nome utente database"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "Un nome utente di database valido"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "Se l'utente non dispone delle autorizzazioni per creare database , quindi il database inserito sopra deve esistere ed essere vuota ."
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "DB password utente"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "Immettere la password utente , se ne esiste uno"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "ricontrollare"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "Impossibile connettersi al database . "
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "Impostazioni società"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "Attualmente , deve essere uguale al nome del database"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "Piano dei conti"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "Verrà installato come antipasto tabella dei conti"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "Time Zone"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "File del logo aziendale"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "Un file jpg fino a 10k , e non maggiore di 170px x 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "jpg a 10k , non più grande di 170px x 80px"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "Variante di montaggio"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "Installare i dati demo ?"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "Verranno installati sito KwaMojaDemo e dati"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "Impostazioni degli account amministratore"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "Il nome utente predefinito è 'admin' e non può essere modificato."
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "La password di default è ' kwamoja ', che si può cambiare sotto."
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja account Admin"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "indirizzo e-mail"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "Per esempio : admin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMoja password"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "Immettere nuovamente la password"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "installare"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "Impossibile aprire il nuovo file sql"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "Impossibile per popolare il database"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "Impossibile aggiornare l' indirizzo email e la password dell'amministratore e l'errore è"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "Impossibile aggiornare il nome della società e il erroris"
 
@@ -42363,6 +42368,10 @@ msgstr "deve essere scrivibile dal server web"
 #, fuzzy
 msgid "Update Module Order"
 msgstr "Aggiornamento Ordine"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "Il codice di scorta nuovo per cambiare il vecchio codice a contiene caratteri non validi - non saranno apportate delle modifiche"
 
 #, fuzzy
 #~ msgid "KwaMoja is an \"accrual\" based system (not a \"cash based\" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date."

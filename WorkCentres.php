@@ -134,9 +134,9 @@ if (!isset($SelectedWC)) {
 	$result = DB_query($sql, $db);
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('WC Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Location') . '</th>
+				<th class="SortableColumn">' . _('WC Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th class="SortableColumn">' . _('Location') . '</th>
 				<th>' . _('Overhead GL Account') . '</th>
 				<th>' . _('Overhead Per Hour') . '</th>
 			</tr>';

@@ -165,7 +165,7 @@ if (!isset($SelectedMeasureID)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Units of Measure') . '</th>
+				<th class="SortableColumn">' . _('Units of Measure') . '</th>
 			</tr>';
 
 	$k = 0; //row colour counter

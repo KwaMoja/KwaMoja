@@ -222,8 +222,8 @@ echo '</select></td>
 if (isset($StockItemsResult)) {
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 						<th>' . _('Units') . '</th>
@@ -441,13 +441,13 @@ else {
 		/*show a table of the orders returned by the SQL */
 		echo '<table cellpadding="2" width="90%" class="selection">';
 		$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('View') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier') . '</th>
+						<th class="SortableColumn">' . _('View') . '</th>
+						<th class="SortableColumn">' . _('Supplier') . '</th>
 						<th>' . _('Currency') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Requisition') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Order Date') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Delivery Date') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Initiator') . '</th>
+						<th class="SortableColumn">' . _('Requisition') . '</th>
+						<th class="SortableColumn">' . _('Order Date') . '</th>
+						<th class="SortableColumn">' . _('Delivery Date') . '</th>
+						<th class="SortableColumn">' . _('Initiator') . '</th>
 						<th>' . _('Order Total') . '</th>
 						<th>' . _('Status') . '</th>
 					</tr>';

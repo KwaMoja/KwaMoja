@@ -1146,8 +1146,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" class="selection">';
 
 	$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' . _('Units') . '</th>

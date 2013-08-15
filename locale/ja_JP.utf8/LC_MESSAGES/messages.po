@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UTF-8 Japanese 3.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 11:21+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:25+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Japanese <KwaMoja@okid.sakura.ne.jp>\n"
@@ -6828,7 +6828,7 @@ msgid "User Login"
 msgstr "ユーザーＩＤ"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "パスワード"
 
@@ -10293,7 +10293,7 @@ msgstr "得意先削除"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "この仕入先価格を削除してもよろしいですか？"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "会社"
 
@@ -38902,7 +38902,7 @@ msgstr "この関数は、指定されたデータベースのためのAPIメソ
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "注：この機能を使用すると、以下の機能でユーザー名とパスワードのフィールドは、もはや必要とされないことを意味します。"
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Databaseエラー"
 
@@ -40242,406 +40242,411 @@ msgstr "支払条件"
 msgid "Return Value"
 msgstr "税別価格"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMojaインストーラ"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "これは、システムが既にインストールされているように思われる。"
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "勘定セクション名は文字列を含むことができません"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "タイムゾーンは合法でなければなりません"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "ホスト名は、有効な名前ではありません。"
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "ホスト名は空であってはなりません。"
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "ユーザーの言語のそれぞれで独立が正しい形式ではありません"
 
-#: install/index.php:282
+#: install/index.php:288
 msgid "The COA file name must only contain letters,"
 msgstr "COAのファイル名は、文字のみを含める必要があります"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "COAファイルはあり選択されていません。"
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "設定ファイルを開くことができません"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "コンフィギュレーション·ファイルに書き込めません"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "データベースの接続に失敗しました、エラーがある"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "データベースの作成に失敗しました"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "データベースkwamojademoを作成できませんでしたとエラーが"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "ホスト名が不正です"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "ホスト名は空であってはならない"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+msgid "The database name should not contains illegal characters such as"
 msgstr "勘定セクション名は文字列を含むことができません"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "またはスペース"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "データベース名が空であってはならない"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "最初に表示されたエラーを訂正してください"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMojaインストールウィザード"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "あなたのウェブブラウワーで許さクッキーを設定してください、そうでなければKwaMojaが正しく実行できません"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "クッキーは正しくお使いのブラウザで有効になっている"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "不正な文字やデータが特定されている、助けをあなたのadmistratorを参照してください。"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "あなたは、 PHPのバージョンが5.1以上でなければなりません"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "PHPのバージョンはKwaMojaに適しています"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "ディレクトリ"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "Webサーバから書き込み可能でなければなりません"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "ベースKwaMojaディレクトリが書き込み可能である"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "企業/ディレクトリが書き込み可能である"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "mbstring拡張モジュールはPHPでavailbleでない"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "mbstring拡張モジュールが正しくインストールされています"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "その他のlibxml拡張モジュールはPHPで利用できません"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "その他のlibxml拡張子が正しくインストールされている"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "あなたは、 PHP用にインストールされ、正しいデータベースの拡張子を持っていない"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "データベース拡張がインストールされている"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "PHPのmysqli拡張MySQL拡張としてお勧めしますが、PHP 5.5以降廃止されました"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "MySQL拡張モジュールは、 5.5以降推奨されなくなりました。"
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "GD拡張モジュールはPHPの構成でインストールする必要があります"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "GD拡張子が正しくインストールされている"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "次のステップ"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "PHPがセーフモードで実行されているお客様には、最大30秒のスクリプトの実行時間を強制されます"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "これは時々 、インストールが時間内に完了できないことを意味することができる。"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "これは、この機能をオフにすることをお勧めします"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "KwaMojaインストールウィザードへようこそ"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "インストール中に別のステータスメッセージが表示される場合があります。"
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "エラーメッセージがある場合には、継続してエラーを修正する必要があります。"
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "警告メッセージが表示された場合は、続行する前に通知を取るべきである。"
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "あなたはオプションの値が不明な場合は、デフォルト設定を維持する必要があります。"
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "あなたの言語を選択"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "インストーラは、試してみて、あなたのブラウザから言語を推測するが、それは間違ったことがあります。"
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "言語："
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "あなたのデータベース管理システムを選択してください"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMojaは、いくつかの異なるデータベースシステムを使用することができます。"
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "DBMS ："
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMojaはGPL V2の下でライセンスしてダウンロードすることが絶対に無料のオープンソースアプリケーションです。"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "KwaMojaをインストールすることにより、あなたは読んだことが認め"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "詳細については、システム管理者に相談してください。"
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "データベースの設定"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "下記のデータベース情報を入力してください。"
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "*必須フィールドを示し"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "ホスト名"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "データベースのホスト名を入力してください"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "一般： localhostまたは127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "データベース名"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "下記にユーザー名がデータベースを作成する権限を持っていない場合、このデータベースが作成され、空でなければなりません。"
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "データベースのプレフィックス"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "共有ホスティングと便利"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "オプション： prefix_の形で"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "データベース·ユーザー名"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "有効なデータベース·ユーザー名"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "存在していて、空にしておく必要があり、このユーザーがデータベースを作成する権限を持っていない場合は、データベース上で入力。"
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "DBユーザーのパスワード"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "が存在する場合、ユーザーのパスワードを入力し"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "再チェック"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "データベースへの接続に失敗しました。"
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "会社の設定"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "現在、データベース名と同じでなければならない"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "勘定科目表"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "アカウントのスターターチャートとしてインストールされます"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "時間帯"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "会社のロゴファイル"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "JPG 10kまでファイルをバックアップではなく、より大きい170px X 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "10kのではなく、より大きい170px X 80pxのjpgファイルを"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "インストールオプション"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "デモデータをインストールしますか？"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "KwaMojaDemoサイトとデータがインストールされます"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "管理者アカウントの設定"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "デフォルトのユーザー名は '管理'であり、それは変更することはできません。"
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "デフォルトのパスワードを使用すると、下記の変更ができます' kwamoja 'です。"
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja管理者アカウント"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "電子メールアドレス"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "たとえば、次のようにadmin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMojaパスワード"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "再入力するパスワード"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "インストール"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "新しいSQLファイルを開くことができませんでした"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "データベースを作成できませんでした"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "管理者の電子メールアドレスとパスワードを更新できませんでしたとエラーが"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "会社名とerrorisの更新に失敗しました"
 
@@ -41475,6 +41480,10 @@ msgstr "Webサーバーによって書き込み可能でなければなりませ
 #, fuzzy
 msgid "Update Module Order"
 msgstr "注文更新"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "勘定セクション名は文字列を含むことができません"
 
 #~ msgid "P &amp; L Depn GL"
 #~ msgstr "P ＆L DEPN GL"

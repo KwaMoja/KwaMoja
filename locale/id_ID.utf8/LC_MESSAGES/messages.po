@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 11:21+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:24+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: www.baliboss.com <open@baliboss.com>\n"
@@ -6798,7 +6798,7 @@ msgid "User Login"
 msgstr "Login User"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "Kata Sandi"
 
@@ -10242,7 +10242,7 @@ msgstr "Hapus Penagih"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Apakah Anda yakin ingin menghapus perusahaan penagih ini"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "Nama Perusahaan"
 
@@ -38740,7 +38740,7 @@ msgstr "Fungsi ini digunakan utk login ke metode API utk database tertentu terse
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "CATATAN: menggunakan fungsi ini berarti bahwa kolom User Name dan Password dalam fungsi-fungsi berikut ini tdk diperlukan lagi. Saat memanggil fungsi-fungsi, meninggalkan dua parameter terakhir dari."
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Nama Database"
 
@@ -40063,407 +40063,412 @@ msgstr "Parameter"
 msgid "Return Value"
 msgstr "Nilai Kembali"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMoja Installer"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Tampaknya bahwa sistem telah terinstal . "
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "Metode pembayaran tdk boleh berisi karakter"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "Zona waktu harus legal"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "Nama Host bukanlah nama yang valid ."
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "Nama Host tidak boleh kosong ."
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "Defintion bahasa pengguna tidak dalam format yang benar"
 
-#: install/index.php:282
+#: install/index.php:288
 #, fuzzy
 msgid "The COA file name must only contain letters,"
 msgstr "COA nama file hanya harus berisi huruf , \\ '- \\ ', \\ '_ \\'"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "Ada ada file COA dipilih . "
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "Tidak dapat membuka file konfigurasi"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "Tidak bisa menulis ke file konfigurasi"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "Gagal melakukan koneksi database , kesalahan adalah"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "Gagal membuat database"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "Gagal membuat kwamojademo database dan kesalahan adalah"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "Nama Host adalah ilegal"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "Nama Host tidak boleh kosong"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
-msgstr "Nama kode lokasi baru utk mengubah nama lama berisi karakter ilegal - perubahan tdk akan dilakukan"
+msgid "The database name should not contains illegal characters such as"
+msgstr "Metode pembayaran tdk boleh berisi karakter"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "atau spasi"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "Nama database harus tidak boleh kosong"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "Harap perbaiki kesalahan ditampilkan lebih dulu"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMoja Installation Wizard"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "Silakan set Cookie diperbolehkan dalam Brower web Anda, jika KwaMoja tidak dapat berjalan dengan baik"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "Cookies benar diaktifkan pada browser Anda"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "Karakter ilegal atau data telah diidentifikasi , silakan lihat admistrator Anda untuk bantuan"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "Anda versi PHP harus lebih besar dari 5,1"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "PHP versi Anda cocok untuk KwaMoja"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "direktori"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "harus bisa ditulis oleh server web"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "Basis direktori KwaMoja dapat ditulis"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "Perusahaan / direktori dapat ditulis"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "Perpanjangan mbstring tidak availble di PHP Anda"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "Perpanjangan mbstring diinstal dengan benar"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "Perpanjangan libxml tidak tersedia di PHP"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "Perpanjangan libxml terpasang dengan benar"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "Anda tidak memiliki ekstensi database yang benar diinstal untuk PHP"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "Perpanjangan database diinstal"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "PHP mysqli ekstensi merekomendasikan sebagai ekstensi MySQL telah usang karena PHP 5.5"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "Perpanjangan MySQL telah usang sejak 5,5 . "
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "Perpanjangan GD harus dipasang dalam konfigurasi PHP Anda"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "Perpanjangan GD terpasang dengan benar"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "Langkah Selanjutnya"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "Anda php berjalan dalam safe mode , hal ini akan memaksa maksimal skrip waktu eksekusi dari 30 detik"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "Ini kadang-kadang bisa berarti bahwa instalasi tidak dapat diselesaikan dalam waktu."
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "Lebih baik untuk menonaktifkan fungsi ini"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "Selamat datang di KwaMoja Installation Wizard"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "Selama instalasi Anda mungkin melihat pesan status yang berbeda ."
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "Bila ada pesan kesalahan yang Anda harus memperbaiki kesalahan untuk melanjutkan ."
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "Jika Anda melihat pesan peringatan Anda harus memperhatikan sebelum Anda melanjutkan ."
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "Jika Anda tidak yakin dari nilai pilihan, Anda harus menyimpan pengaturan default ."
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "Pilih bahasa Anda"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "Installer akan mencoba dan menebak bahasa Anda dari browser Anda , tetapi mungkin bisa salah . "
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "bahasa:"
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "Pilih Sistem Manajemen Database"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMoja dapat menggunakan beberapa sistem database yang berbeda . "
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "DBMS :"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMoja adalah sebuah aplikasi open source dibawah lisensi GPL V2 dan benar-benar gratis untuk men-download ."
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "Dengan menginstal KwaMoja Anda mengakui Anda telah membaca"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "Silahkan Hubungi administrator sistem Anda utk informasi lebih lanjut."
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "pengaturan database"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "Silakan masukkan informasi database Anda di bawah ini . "
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "* Menunjukkan bidang yang diperlukan"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "Host Name"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "Masukkan basis data nama host"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "Umumnya : localhost atau 127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "Nama Database"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "Jika nama pengguna Anda di bawah ini tidak memiliki izin untuk membuat database maka database ini harus diciptakan dan kosong ."
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "database Prefix"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "Berguna dengan shared hosting"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "Opsional : dalam bentuk prefix_"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "Database User Nama"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "Sebuah database nama pengguna yang valid"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "Jika pengguna ini tidak memiliki izin untuk membuat database , maka database yang dimasukkan di atas harus ada dan kosong ."
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "Password user DB"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "Masukkan password user jika ada"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "periksa lagi"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "Gagal menyambung ke database . "
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "Pengaturan perusahaan"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "Saat ini, harus sama dengan nama database"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "Bagan Akun"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "Akan diinstal sebagai starter Bagan Akun"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "Zona Waktu"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "Perusahaan berkas logo"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "Sebuah file jpg sampai dengan 10k , dan tidak lebih dari 170px x 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "jpg file 10k , tidak lebih besar dari 170px x 80px"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "pilihan instalasi"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "Instal data demo ?"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "Situs KwaMojaDemo dan data akan diinstal"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "Pengaturan account Administrator"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "Nama pengguna default adalah ' admin ' dan tidak dapat diubah ."
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "Default password adalah ' kwamoja ' yang dapat Anda ubah di bawah ini ."
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja Admin Akun"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "alamat email"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "Sebagai contoh: admin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMoja Sandi"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "Masukkan kembali sandi"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "memasang"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "Gagal membuka file sql baru"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "Gagal mengisi database"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "Gagal memperbarui alamat email dan password administrator dan kesalahan"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "Gagal memperbarui nama perusahaan dan erroris"
 
@@ -41295,6 +41300,10 @@ msgstr "harus bisa ditulisi oleh server web"
 #, fuzzy
 msgid "Update Module Order"
 msgstr "Perbarui Urutan"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "Nama kode lokasi baru utk mengubah nama lama berisi karakter ilegal - perubahan tdk akan dilakukan"
 
 #~ msgid "KwaMoja is an \"accrual\" based system (not a \"cash based\" system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date."
 #~ msgstr "KwaMoja adalah sistem berdasarkan \"akrual\" (bukan sistem \"berdasarkan tunai\"). Sistem akrual meliputi item ketika difaktur ke customer, dan ketika pengeluaran dihutangi pada tgl faktur supplier."

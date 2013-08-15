@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 12:20+0100\n"
+"POT-Creation-Date: 2013-08-13 01:47+0100\n"
 "PO-Revision-Date: 2013-08-08 22:30+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: KwaMoja Translation Team <web-erp-translation@lists.sourceforge.net>\n"
@@ -6881,7 +6881,7 @@ msgid "User Login"
 msgstr "KULLANICI ADI"
 
 #: CustLoginSetup.php:147 SMTPServer.php:125 SuppLoginSetup.php:128
-#: WWW_Users.php:464 includes/Login.php:108 install/index.php:910
+#: WWW_Users.php:464 includes/Login.php:108 install/index.php:911
 msgid "Password"
 msgstr "SIFRE"
 
@@ -10386,7 +10386,7 @@ msgstr "Silmek Faktörü"
 msgid "Are you sure you wish to delete this factoring company?"
 msgstr "Eğer bu faktoring şirketi silmek istediğinizden emin misiniz?"
 
-#: Factors.php:284 install/index.php:991
+#: Factors.php:284 install/index.php:989
 msgid "Company Name"
 msgstr "Firma Adı"
 
@@ -39730,7 +39730,7 @@ msgstr "Bu işlev belirtilen veritabanı için API yöntemleri içine giriş iç
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off."
 msgstr "NOT: Bu fonksiyonu kullanarak aşağıdaki işlevleri Kullanıcı Adı ve Şifre alanları artık gerekli olduğu anlamına gelir. Bu fonksiyonlar ararken, kapalı son iki parametre bırakın."
 
-#: api/api_xml-rpc.php:15 install/index.php:895
+#: api/api_xml-rpc.php:15 install/index.php:896
 msgid "Database Name"
 msgstr "Veritabanı Adı"
 
@@ -41114,407 +41114,412 @@ msgstr "Parametreleri"
 msgid "Return Value"
 msgstr "Dönüş oranı"
 
-#: install/index.php:30
+#: install/index.php:39
 msgid "KwaMoja Installer"
 msgstr "KwaMoja Installer"
 
-#: install/index.php:168
+#: install/index.php:177
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Bu sistem zaten yüklü olduğunu görünüyor . "
 
-#: install/index.php:183
+#: install/index.php:192
 #, fuzzy
 msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" blank etc"
 msgstr "ÖDEME METODU SU KARAKTERLERI IÇEREMEZ:"
 
-#: install/index.php:195
+#: install/index.php:204
 msgid "The timezone must be legal"
 msgstr "Zaman dilimi yasal olmalıdır"
 
-#: install/index.php:229
+#: install/index.php:238
 msgid "The Host Name is not a valid name."
 msgstr "Host Name geçerli bir ad değil ."
 
-#: install/index.php:235
+#: install/index.php:244
 msgid "The Host Name must not be empty."
 msgstr "Ana Bilgisayar Adı boş olmamalıdır ."
 
-#: install/index.php:257
+#: install/index.php:263
 msgid "The user language defintion is not in the correct format"
 msgstr "Kullanıcı tanımlı dili doğru biçimde değil"
 
-#: install/index.php:282
+#: install/index.php:288
 #, fuzzy
 msgid "The COA file name must only contain letters,"
 msgstr "COA dosya adı harf içermesi gerekir , \\ '- \\ ', \\ '_ \\'"
 
-#: install/index.php:286
+#: install/index.php:292
 msgid "There is no COA file selected. Please select a file."
 msgstr "COA dosya yok seçilir. "
 
-#: install/index.php:373
+#: install/index.php:374
 msgid "Cannot open the configuration file"
 msgstr "Yapılandırma dosyası açılamıyor"
 
-#: install/index.php:377
+#: install/index.php:378
 msgid "Cannot write to the configuration file"
 msgstr "Ayar dosyası yazılamıyor"
 
-#: install/index.php:388 install/index.php:395
+#: install/index.php:389 install/index.php:396
 msgid "Failed to connect the database, the error is "
 msgstr "Veritabanına bağlantı kurulamadı ,hata"
 
-#: install/index.php:406 install/index.php:408
+#: install/index.php:407 install/index.php:409
 msgid "Failed to create database  "
 msgstr "Veritabanı oluşturulamadı"
 
-#: install/index.php:416 install/index.php:418 install/index.php:435
-#: install/index.php:437 install/index.php:451 install/index.php:453
+#: install/index.php:417 install/index.php:419 install/index.php:436
+#: install/index.php:438 install/index.php:452 install/index.php:454
 msgid "Failed to create database kwamojademo and the error is  "
 msgstr "Veritabanı kwamojademo oluşturulamadı ve hata"
 
-#: install/index.php:492
+#: install/index.php:493
 msgid "The Host Name is illegal"
 msgstr "Ana Bilgisayar Adı yasadışı"
 
-#: install/index.php:499
+#: install/index.php:500
 msgid "The Host Name should not be empty"
 msgstr "Ana Bilgisayar Adı boş olmamalıdır"
 
-#: install/index.php:511
+#: install/index.php:512
 #, fuzzy
-msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
-msgstr "Yeni stok kodu eski kodunu değiştirmek için izin verilmeyen karakterler içeriyor - herhangi bir değişiklik yapılmayacaktır"
+msgid "The database name should not contains illegal characters such as"
+msgstr "ÖDEME METODU SU KARAKTERLERI IÇEREMEZ:"
 
-#: install/index.php:517
+#: install/index.php:512
+#, fuzzy
+msgid "or blank spaces"
+msgstr "VEYA BOSLUK"
+
+#: install/index.php:518
 msgid "The database name should not be empty"
 msgstr "Veritabanı adı boş olmamalıdır"
 
-#: install/index.php:539
+#: install/index.php:540
 msgid "Please correct the displayed error first"
 msgstr "İlk Görüntülenen hata düzeltin"
 
-#: install/index.php:551 install/index.php:879 install/index.php:953
-#: install/index.php:979
+#: install/index.php:552 install/index.php:880 install/index.php:955
+#: install/index.php:977
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMoja Kurulum Sihirbazı"
 
-#: install/index.php:568
+#: install/index.php:569
 msgid "Please set Cookies allowed in your web brower, otherwise KwaMoja cannot run properly"
 msgstr "Web tarayıcınızın izin Çerezler veriniz , aksi KwaMoja düzgün çalışamaz"
 
-#: install/index.php:570
+#: install/index.php:571
 msgid "Cookies are properly enabled in your browser"
 msgstr "Çerezler düzgün tarayıcınızda etkin"
 
-#: install/index.php:578
+#: install/index.php:579
 msgid "Illegal characters or data has been identified, please see your admistrator for help"
 msgstr "Geçersiz karakterler veya veri tespit edilmiştir , yardım için admistrator bakın"
 
-#: install/index.php:586
+#: install/index.php:587
 msgid "You PHP version should be greater than 5.1"
 msgstr "PHP sürüm 5.1 daha yüksek olmalıdır"
 
-#: install/index.php:588
+#: install/index.php:589
 msgid "Your PHP version is suitable for KwaMoja"
 msgstr "PHP sürümü KwaMoja için uygundur"
 
-#: install/index.php:595 install/index.php:602 sql/updates/62.php:15
+#: install/index.php:596 install/index.php:603 sql/updates/62.php:15
 msgid "The directory"
 msgstr "dizin"
 
-#: install/index.php:595
+#: install/index.php:596
 msgid "must be writable by web server"
 msgstr "web sunucusu tarafından yazılabilir olmalıdır"
 
-#: install/index.php:597
+#: install/index.php:598
 msgid "The base KwaMoja directory is writable"
 msgstr "Baz KwaMoja dizin yazılabilir"
 
-#: install/index.php:604
+#: install/index.php:605
 msgid "The companies/ directory is writable"
 msgstr "ŞİRKETLER / dizin yazılabilir"
 
-#: install/index.php:609
+#: install/index.php:610
 msgid "The mbstring extension is not availble in your PHP"
 msgstr "Mbstring uzantısı PHP availble değil"
 
-#: install/index.php:611
+#: install/index.php:612
 msgid "The mbstring extension is correctly installed"
 msgstr "Mbstring uzantısı doğru takıldığından"
 
-#: install/index.php:616
+#: install/index.php:617
 msgid "The libxml extension is not available in your PHP"
 msgstr "Libxml uzantısı PHP mevcut değildir"
 
-#: install/index.php:619
+#: install/index.php:620
 msgid "The libxml extension is correctly installed"
 msgstr "Libxml uzantısı doğru takıldığından"
 
-#: install/index.php:624
+#: install/index.php:625
 msgid "You do not have the correct database extension installed for PHP"
 msgstr "PHP için yüklü doğru veritabanı uzantısı yok"
 
-#: install/index.php:626
+#: install/index.php:627
 msgid "The database extension is installed"
 msgstr "Veritabanı uzantısı yüklenir"
 
-#: install/index.php:631
+#: install/index.php:632
 msgid "The PHP MySQLI extension is recommend as MySQL extension has been deprecated since PHP 5.5"
 msgstr "PHP MySQLi uzantısı MySQL uzantısı olarak tavsiye edilir PHP 5.5 yana onaylanmaz"
 
-#: install/index.php:634
+#: install/index.php:635
 msgid "The MySQL extension has been deprecated since 5.5. You should install the MySQLI extension or downgrade you PHP version to  one prior to 5.5"
 msgstr "MySQL eklentisi 5.5 yana onaylanmaz . "
 
-#: install/index.php:639
+#: install/index.php:640
 msgid "The GD extension should be installed in your PHP configuration"
 msgstr "GD uzantısı PHP yapılandırma yüklü olması gerekmektedir"
 
-#: install/index.php:641
+#: install/index.php:642
 msgid "The GD extension is correctly installed"
 msgstr "GD uzantısı doğru takıldığından"
 
-#: install/index.php:655 install/index.php:861 install/index.php:923
+#: install/index.php:656 install/index.php:862 install/index.php:925
 msgid "Next Step"
 msgstr "Sonraki Adım"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "You php is running in safe mode, it will force a maximum script execution time of 30 seconds"
 msgstr "Php güvenli modda çalışırken Sen , bu 30 saniye en fazla betik çalıştırma zamanı zorlar"
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "This can sometimes mean that the installation cannot be completed in time."
 msgstr "Bu bazen kurulum zamanında tamamlanamaz anlamına gelebilir ."
 
-#: install/index.php:672
+#: install/index.php:673
 msgid "It is better to turn this function off"
 msgstr "Bu fonksiyonu kapatmak için daha iyidir"
 
-#: install/index.php:733
+#: install/index.php:734
 msgid "Welcome to the KwaMoja Installation Wizard"
 msgstr "KwaMoja Kurulum Sihirbazı Hoş Geldiniz"
 
-#: install/index.php:736
+#: install/index.php:737
 msgid "During installation you may see different status messages."
 msgstr "Yükleme sırasında farklı durum mesajlarını görebilirsiniz ."
 
-#: install/index.php:737
+#: install/index.php:738
 msgid "When there is an error message you must correct the error to continue."
 msgstr "Bir hata mesajı olduğunda devam etmek hatayı düzeltmek gerekir ."
 
-#: install/index.php:738
+#: install/index.php:739
 msgid "If you see a warning message you should take notice before you proceed."
 msgstr "Bir uyarı iletisi görürseniz devam etmeden önce dikkate almak gerekir ."
 
-#: install/index.php:739
+#: install/index.php:740
 msgid "If you are unsure of an option value, you should keep the default setting."
 msgstr "Bir seçenek değeri emin değilseniz , varsayılan ayar tutmalı ."
 
-#: install/index.php:749
+#: install/index.php:750
 msgid "Select your language"
 msgstr "Dilinizi seçin"
 
-#: install/index.php:751
+#: install/index.php:752
 msgid "The installer will try and guess your language from your browser, but may get it wrong. Please select your preferred language below."
 msgstr "Yükleyici deneyin ve tarayıcınızdan dilinizi sanırım, ama yanlış alabilirsiniz olacaktır . "
 
-#: install/index.php:755
+#: install/index.php:756
 msgid "Language:"
 msgstr "Dil :"
 
-#: install/index.php:789
+#: install/index.php:790
 msgid "Select your Database Management System"
 msgstr "Lütfen Veritabanı Yönetim Sistemi seçin"
 
-#: install/index.php:791
+#: install/index.php:792
 msgid "KwaMoja can use several different Database systems. Please select below the system you will be using."
 msgstr "KwaMoja birkaç farklı veritabanı sistemlerini kullanabilirsiniz . "
 
-#: install/index.php:795
+#: install/index.php:796
 msgid "DBMS:"
 msgstr "DBMS :"
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "KwaMoja is an open source application licenced under GPL V2 and absolutely free to download."
 msgstr "KwaMoja GPL V2 altında lisanslı ve indirmek için tamamen ücretsiz açık kaynak kodlu bir uygulamadır ."
 
-#: install/index.php:865
+#: install/index.php:866
 msgid "By installing KwaMoja you acknowledge you have read"
 msgstr "KwaMoja yükleyerek size okudum kabul"
 
-#: install/index.php:865
+#: install/index.php:866
 #, fuzzy
 msgid "Please visit the official KwaMoja website for more information."
 msgstr "Daha fazla bilgi için sistem yöneticinize danışın lütfen."
 
-#: install/index.php:882
+#: install/index.php:883
 msgid "Database settings"
 msgstr "veritabanı ayarları"
 
-#: install/index.php:884
+#: install/index.php:885
 msgid "Please enter your Database information below. The database name is also used at log in time to choose the company for use."
 msgstr "Aşağıda Veritabanı bilgilerinizi girin. "
 
-#: install/index.php:885 install/index.php:986
+#: install/index.php:886 install/index.php:984
 msgid "* Denotes required field"
 msgstr "* Doldurulması zorunlu alanları gösterir"
 
-#: install/index.php:890
+#: install/index.php:891
 msgid "Host Name"
 msgstr "ana Bilgisayar Adı"
 
-#: install/index.php:891
+#: install/index.php:892
 msgid "Enter database host name"
 msgstr "Veritabanı ana bilgisayar adını girin"
 
-#: install/index.php:892
+#: install/index.php:893
 msgid "Commonly: localhost or 127.0.0.1"
 msgstr "Yaygın : localhost veya 127.0.0.1"
 
-#: install/index.php:896
+#: install/index.php:897
 msgid "The database name"
 msgstr "Veritabanı adı"
 
-#: install/index.php:897
+#: install/index.php:898
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
 msgstr "Aşağıdaki kullanıcı adınızı bir veritabanı oluşturmak için izniniz yoksa o zaman bu veritabanı oluşturulur ve boş olmalıdır ."
 
-#: install/index.php:900
+#: install/index.php:901
 msgid "Database Prefix"
 msgstr "veritabanı Önek"
 
-#: install/index.php:901
+#: install/index.php:902
 msgid "Useful with shared hosting"
 msgstr "Barındırma paylaşılan ile yararlı"
 
-#: install/index.php:902
+#: install/index.php:903
 msgid "Optional: in the form of prefix_"
 msgstr "İsteğe bağlı: prefix_ biçiminde"
 
-#: install/index.php:905
+#: install/index.php:906
 msgid "Database User Name"
 msgstr "Veritabanı Kullanıcı Adı"
 
-#: install/index.php:906
+#: install/index.php:907
 msgid "A valid database user name"
 msgstr "Geçerli bir veritabanı kullanıcı adı"
 
-#: install/index.php:907
+#: install/index.php:908
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
 msgstr "Mevcut ve boş olmalıdır Bu kullanıcı veritabanı oluşturma izni yok , daha sonra veritabanı üzerinde girdi."
 
-#: install/index.php:911
+#: install/index.php:912
 msgid "DB user password"
 msgstr "DB kullanıcı şifresi"
 
-#: install/index.php:912
+#: install/index.php:913
 msgid "Enter the user password if one exists"
 msgstr "Eğer varsa kullanıcı şifrenizi girin"
 
-#: install/index.php:932
+#: install/index.php:934
 msgid "Check Again"
 msgstr "Yine kontrol edin"
 
-#: install/index.php:954
+#: install/index.php:956
 msgid "Failed to connect to the database. Please correct the following error:"
 msgstr "Veritabanına bağlanmak için başarısız oldu . "
 
-#: install/index.php:983
+#: install/index.php:981
 msgid "Company Settings"
 msgstr "Şirket Ayarlar"
 
-#: install/index.php:993
+#: install/index.php:991
 msgid "Currently, must be the same as the database name"
 msgstr "Şu anda , veritabanı adıyla aynı olmalıdır"
 
-#: install/index.php:996
+#: install/index.php:994
 msgid "Chart of Accounts"
 msgstr "Hesap Planı"
 
-#: install/index.php:1012
+#: install/index.php:1010
 msgid "Will be installed as starter Chart of Accounts"
 msgstr "Hesap başlangıç ​​Grafik olarak kurulacaktır"
 
-#: install/index.php:1016
+#: install/index.php:1014
 msgid "Time Zone"
 msgstr "zaman Dilimi"
 
-#: install/index.php:1023
+#: install/index.php:1021
 msgid "Company logo file"
 msgstr "Şirket logosu dosyası"
 
-#: install/index.php:1024
+#: install/index.php:1022
 #, fuzzy
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
 msgstr "Bir jpg 10k dosya kadar değil, daha büyük 170px x 80px"
 
-#: install/index.php:1025
+#: install/index.php:1023
 #, fuzzy
 msgid "jpg file to 10kb, and not greater than 170px x 80px"
 msgstr "10k , daha büyük olmayan 170px x 80px için jpg dosyası"
 
-#: install/index.php:1031
+#: install/index.php:1029
 msgid "Installation option"
 msgstr "Yükleme seçeneği"
 
-#: install/index.php:1034
+#: install/index.php:1032
 msgid "Install the demo data?"
 msgstr "Demo verileri yükleyin ?"
 
-#: install/index.php:1035
+#: install/index.php:1033
 msgid "KwaMojaDemo site and data will be installed"
 msgstr "KwaMojaDemo sitesi ve veri kurulacak"
 
-#: install/index.php:1040
+#: install/index.php:1038
 msgid "Administrator account settings"
 msgstr "Yönetici hesap ayarları"
 
-#: install/index.php:1043
+#: install/index.php:1041
 msgid "The default user name is 'admin' and it cannot be changed."
 msgstr "Varsayılan kullanıcı adı'admin've bu değiştirilemez ."
 
-#: install/index.php:1044
+#: install/index.php:1042
 msgid "The default password is 'kwamoja' which you can change below."
 msgstr "Varsayılan şifre aşağıda değiştirebilirsiniz ' kwamoja ' dir."
 
-#: install/index.php:1049
+#: install/index.php:1047
 msgid "KwaMoja Admin Account"
 msgstr "KwaMoja Yönetici Hesabı"
 
-#: install/index.php:1053
+#: install/index.php:1051
 msgid "Email address"
 msgstr "E-posta adresi"
 
-#: install/index.php:1055
+#: install/index.php:1053
 msgid "For example: admin@yourcompany.com"
 msgstr "Örneğin : admin@yourcompany.com"
 
-#: install/index.php:1058
+#: install/index.php:1056
 msgid "KwaMoja Password"
 msgstr "KwaMoja Şifre"
 
-#: install/index.php:1062
+#: install/index.php:1060
 msgid "Re-enter Password"
 msgstr "Tekrar girin Şifre"
 
-#: install/index.php:1076
+#: install/index.php:1074
 msgid "Install"
 msgstr "kurmak"
 
-#: install/index.php:1096
+#: install/index.php:1094
 msgid "Failed to open the new sql file"
 msgstr "Yeni sql dosyası açılamadı"
 
-#: install/index.php:1101
+#: install/index.php:1099
 msgid "Failed to populate the database "
 msgstr "Veritabanı doldurmak için başarısız oldu"
 
-#: install/index.php:1232
+#: install/index.php:1230
 msgid "Failed to update the email address and password of the administrator and the error is"
 msgstr "Yönetici e-posta adresinizi ve şifrenizi güncellemek için başarısız oldu vehata"
 
-#: install/index.php:1240
+#: install/index.php:1238
 msgid "Failed to update the company name and the erroris"
 msgstr "Şirket adı ve erroris güncellemek için başarısız oldu"
 
@@ -42368,6 +42373,10 @@ msgstr "web sunucusu tarafından yazılabilir olmalıdır"
 #, fuzzy
 msgid "Update Module Order"
 msgstr "SIPARISI GÜNCELLE"
+
+#, fuzzy
+#~ msgid "The database name should not contains illegal characters such as \"/\\?%:|<>\" or blank spaces"
+#~ msgstr "Yeni stok kodu eski kodunu değiştirmek için izin verilmeyen karakterler içeriyor - herhangi bir değişiklik yapılmayacaktır"
 
 #~ msgid "Customer Type (Group) Notes for:<b> "
 #~ msgstr "Müşteri Tipi (Grup) için notlar: "

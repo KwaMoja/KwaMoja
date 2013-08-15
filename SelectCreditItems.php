@@ -213,8 +213,8 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		echo '<br /><table cellpadding="2">';
 
 		$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
+						<th class="SortableColumn">' . _('Customer') . '</th>
+						<th class="SortableColumn">' . _('Branch') . '</th>
 						<th>' . _('Contact') . '</th>
 						<th>' . _('Phone') . '</th>
 						<th>' . _('Fax') . '</th>

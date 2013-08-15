@@ -2114,8 +2114,8 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<div class="page_help_text noPrint">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
 			echo '<table class="table1">';
 			$TableHeader = '<tr>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+								<th class="SortableColumn">' . _('Code') . '</th>
+					   			<th class="SortableColumn">' . _('Description') . '</th>
 								<th>' . _('Units') . '</th>
 								<th>' . _('On Hand') . '</th>
 								<th>' . _('On Demand') . '</th>
@@ -2294,8 +2294,8 @@ if (!isset($_POST['ProcessSale'])) {
 				</tr>';
 			$TableHeader = '<tbody>
 							<tr>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-					   			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+								<th class="SortableColumn">' . _('Code') . '</th>
+					   			<th class="SortableColumn">' . _('Description') . '</th>
 					   			<th>' . _('Units') . '</th>
 					   			<th>' . _('On Hand') . '</th>
 					   			<th>' . _('On Demand') . '</th>

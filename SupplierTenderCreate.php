@@ -120,8 +120,8 @@ if (isset($_GET['Edit'])) {
 	$result = DB_query($sql, $db);
 	echo '<table class="selection">';
 	echo '<tr>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Tender ID') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Location') . '</th>
+			<th class="SortableColumn">' . _('Tender ID') . '</th>
+			<th class="SortableColumn">' . _('Location') . '</th>
 			<th>' . _('Address 1') . '</th>
 			<th>' . _('Address 2') . '</th>
 			<th>' . _('Address 3') . '</th>
@@ -589,8 +589,8 @@ if (isset($_POST['SearchSupplier'])) {
 		<br />
 		<table cellpadding="2">';
 	echo '<tr>
-	  		<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier Name') . '</th>
+	  		<th class="SortableColumn">' . _('Code') . '</th>
+			<th class="SortableColumn">' . _('Supplier Name') . '</th>
 			<th>' . _('Currency') . '</th>
 			<th>' . _('Address 1') . '</th>
 			<th>' . _('Address 2') . '</th>
@@ -823,8 +823,8 @@ if (isset($_POST['Search'])) {
 
 		echo '<table cellpadding="1">';
 		echo '<tr>
-				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-				<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
 				<th>' . _('Units') . '</th>
 				<th>' . _('Image') . '</th>
 				<th>' . _('Quantity') . '</th>

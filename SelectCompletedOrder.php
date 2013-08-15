@@ -436,8 +436,8 @@ if (isset($StockItemsResult)) {
 		<table cellpadding="2" class="selection">';
 
 	$TableHeadings = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Units') . '</th>
 					</tr>';
@@ -486,9 +486,9 @@ if (isset($SalesOrdersResult)) {
 
 	$tableheader = '<tbody>
 					<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Order') . ' #</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
+						<th class="SortableColumn">' . _('Order') . ' #</th>
+						<th class="SortableColumn">' . _('Customer') . '</th>
+						<th class="SortableColumn">' . _('Branch') . '</th>
 						<th>' . _('Cust Order') . ' #</th>
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Req Del Date') . '</th>

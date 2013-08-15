@@ -616,8 +616,8 @@ if (!isset($StockID)) {
 
 		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Units') . '</th>
 					</tr>';
@@ -873,11 +873,11 @@ if (!isset($StockID)) {
 
 			if (isset($_POST['Quotations']) and $_POST['Quotations'] == 'Orders_Only') {
 				$tableheader = '<tr>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Modify') . '</th>
+								<th class="SortableColumn">' . _('Modify') . '</th>
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
+								<th class="SortableColumn">' . _('Customer') . '</th>
+								<th class="SortableColumn">' . _('Branch') . '</th>
 								<th>' . _('Cust Order') . ' #</th>
 								<th>' . _('Order Date') . '</th>
 								<th>' . _('Req Del Date') . '</th>
@@ -892,10 +892,10 @@ if (!isset($StockID)) {
 			} else {
 				/* displaying only quotations */
 				$tableheader = '<tr>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Modify') . '</th>
+								<th class="SortableColumn">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Customer') . '</th>
-								<th class="SortableColumn" onclick="SortSelect(this)">' . _('Branch') . '</th>
+								<th class="SortableColumn">' . _('Customer') . '</th>
+								<th class="SortableColumn">' . _('Branch') . '</th>
 								<th>' . _('Cust Ref') . ' #</th>
 								<th>' . _('Quote Date') . '</th>
 								<th>' . _('Req Del Date') . '</th>

@@ -25,6 +25,8 @@ if (isset($_GET['StockID'])) { //the page was called for the first time - get va
 	$NextSerialNo = $_POST['NextSerialNo'];
 }
 if (!isset($WO) or $WO == '') {
+	$Title = _('Work order serial number entry problem');
+	include('includes/header.inc');
 	prnMsg(_('This page must to be called from the work order entry screen'), 'error');
 	include('includes/footer.inc');
 	exit;
@@ -85,6 +87,7 @@ if (isset($_POST['AddControlledItems'])) {
 					$sql .= $ValueLine . $NextItemNumber . "')";
 				}
 			}
+echo $sql;
 			$NextSerialNo = $NextItemNumber + 1;
 			$ErrMsg = _('Unable to add the serial numbers requested');
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);

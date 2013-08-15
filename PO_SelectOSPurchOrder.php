@@ -257,8 +257,8 @@ echo '<br />';
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">';
 	$TableHeader = '<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Description') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('On Hand') . '</th>
 						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
 						<th>' . _('Units') . '</th>
@@ -502,11 +502,11 @@ else if (isset($_POST['SearchOrders'])) {
 
 
 	echo '<tr>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Order #') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Order Date') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Delivery Date') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Initiated by') . '</th>
-			<th class="SortableColumn" onclick="SortSelect(this)">' . _('Supplier') . '</th>
+			<th class="SortableColumn">' . _('Order #') . '</th>
+			<th class="SortableColumn">' . _('Order Date') . '</th>
+			<th class="SortableColumn">' . _('Delivery Date') . '</th>
+			<th class="SortableColumn">' . _('Initiated by') . '</th>
+			<th class="SortableColumn">' . _('Supplier') . '</th>
 			<th>' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PricesSecurity)) {

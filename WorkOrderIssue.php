@@ -862,7 +862,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 				echo '<tr>
 						<td><input type="text" name="BatchRef' . $i .'" ';
 				echo '/></td>
-					  <td><input type="text" name="Qty' . $i .'" /></td></tr>';
+					  <td><input type="text" class="number" name="Qty' . $i .'" /></td></tr>';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 			echo '<tr>
@@ -871,8 +871,10 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 		} //end of lot/batch control
 	} else { //not controlled - an easy one!
 		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
-		echo '<tr><td>' . _('Quantity Issued') . ':</td>
-			  <td><input class="number" required="required" minlength="1" maxlength="10" type="text" name="Qty" /></tr>';
+		echo '<tr>
+				<td>' . _('Quantity Issued') . ':</td>
+				<td><input class="number" required="required" minlength="1" maxlength="10" type="text" name="Qty" />
+			</tr>';
 		echo '<tr>
 				<td colspan="2"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
 			</tr>';

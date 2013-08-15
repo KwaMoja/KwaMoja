@@ -168,7 +168,7 @@ if ($_SESSION['WorkOrder' . $identifier]->NumberOfItems > 0) {
 				} else {
 					$LotOrSN = _('Batches');
 				}
-				echo '<td><a href="' . $RootPath . '/WOSerialNos.php?WO=' . $_POST['WO'] . '&StockID=' . $_POST['OutputItem' . $i] . '&Description=' . $_POST['OutputItemDesc' . $i] . '&Serialised=' . $_POST['Serialised' . $i] . '&NextSerialNo=' . $_POST['NextLotSNRef' . $i] . '">' . $LotOrSN . '</a></td>';
+				echo '<td><a href="' . $RootPath . '/WOSerialNos.php?WO=' . $_SESSION['WorkOrder' . $identifier]->OrderNumber . '&StockID=' . $_POST['OutputItem' . $i] . '&Description=' . $_POST['OutputItemDesc' . $i] . '&Serialised=' . $_POST['Serialised' . $i] . '&NextSerialNo=' . $_POST['NextLotSNRef' . $i] . '">' . $LotOrSN . '</a></td>';
 			}
 		}
 		echo '<td>';

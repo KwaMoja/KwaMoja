@@ -440,8 +440,8 @@ if (isset($_SESSION['Transfer'])) {
 
 	$tableheader = '<tbody>
 					<tr>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Item Code') . '</th>
-						<th class="SortableColumn" onclick="SortSelect(this)">' . _('Item Description') . '</th>
+						<th class="SortableColumn">' . _('Item Code') . '</th>
+						<th class="SortableColumn">' . _('Item Description') . '</th>
 						<th>' . _('Quantity Dispatched') . '</th>
 						<th>' . _('Quantity Received') . '</th>
 						<th>' . _('Quantity To Receive') . '</th>
