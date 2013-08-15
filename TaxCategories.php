@@ -154,7 +154,7 @@ if (!isset($SelectedTaxCategory)) {
 	or deletion of the records*/
 
 	$sql = "SELECT taxcatid,
-			taxcatname
+					taxcatname
 			FROM taxcategories
 			ORDER BY taxcatid";
 
@@ -163,11 +163,13 @@ if (!isset($SelectedTaxCategory)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Tax Categories') . '</th>
+				<th class="SortableColumn">' . _('Tax Categories') . '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 
 	$k = 0; //row colour counter
-	while ($myrow = DB_fetch_row($result)) {
+	while ($myrow = DB_fetch_array($result)) {
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -177,10 +179,17 @@ if (!isset($SelectedTaxCategory)) {
 			$k++;
 		}
 
-		echo '<td>' . $myrow[1] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow[0] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax category?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>';
+		if ($myrow['taxcatname'] != 'Freight') {
+			echo '<td>' . $myrow['taxcatname'] . '</td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow['taxcatid'] . '">' . _('Edit') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $myrow['taxcatid'] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax category?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				</tr>';
+		} else {
+			echo '<td>' . $myrow['taxcatname'] . '</td>
+					<td>' . _('Edit') . '</td>
+					<td>' . _('Delete') . '</td>
+				</tr>';
+		}
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';

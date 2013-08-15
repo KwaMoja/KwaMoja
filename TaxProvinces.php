@@ -161,7 +161,7 @@ if (!isset($SelectedTaxProvince)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Tax Provinces') . '</th>
+				<th class="SortableColumn">' . _('Tax Provinces') . '</th>
 			</tr>';
 
 	$k = 0; //row colour counter

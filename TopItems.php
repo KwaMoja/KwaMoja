@@ -98,18 +98,18 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="number" tabindex="3" type="text" name="NumberOfDays" size="8"	minlength="1" maxlength="8" value="30" /></td>
+			<td><input class="integer" tabindex="3" type="text" name="NumberOfDays" size="8" required="required" minlength="1" maxlength="8" value="30" /></td>
 		 </tr>';
 	//Stock in days less than
 	echo '<tr>
 			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="MaxDaysOfStock" size="8" required="required" minlength="1" maxlength="8" value="999" /></td>
+			<td><input class="integer" tabindex="4" type="text" name="MaxDaysOfStock" size="8" required="required" minlength="1" maxlength="8" value="999" /></td>
 			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	minlength="1" maxlength="8" value="100" /></td>
+			<td><input class="integer" tabindex="4" type="text" name="NumberOfTopItems" size="8" required="required" minlength="1" maxlength="8" value="100" /></td>
 		 </tr>
 		 <tr>
 			<td></td>
@@ -165,18 +165,17 @@ if (!(isset($_POST['Search']))) {
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Total Invoiced') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Value Sales') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('On Order') . '</th>
-						<th>' . _('Stock (Days)') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<tr>
+			<th class="SortableColumn">' . _('#') . '</th>
+			<th class="SortableColumn">' . _('Code') . '</th>
+			<th class="SortableColumn">' . _('Description') . '</th>
+			<th class="SortableColumn">' . _('Total Invoiced') . '</th>
+			<th>' . _('Units') . '</th>
+			<th class="SortableColumn">' . _('Value Sales') . '</th>
+			<th>' . _('On Hand') . '</th>
+			<th>' . _('On Order') . '</th>
+			<th>' . _('Stock (Days)') . '</th>
+		</tr>';
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
 			<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
@@ -230,7 +229,15 @@ if (!(isset($_POST['Search']))) {
 				}
 				break;
 		}
-		$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+		if (is_numeric($QOH) and is_numeric($QOO)) {
+			$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+		} elseif (is_numeric($QOH)) {
+			$DaysOfStock = $QOH / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+		} elseif (is_numeric($QOO)) {
+			$DaysOfStock = $QOO / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+		} else {
+			$DaysOfStock = 0;
+		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
@@ -240,6 +247,13 @@ if (!(isset($_POST['Search']))) {
 				$k = 1;
 			}
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+			if (is_numeric($QOH)) {
+				$QOH = locale_number_format($QOH, $myrow['decimalplaces']);
+			}
+			if (is_numeric($QOO)) {
+				$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
+			}
+
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -252,8 +266,8 @@ if (!(isset($_POST['Search']))) {
 					</tr>', $i, $CodeLink, $myrow['description'], locale_number_format($myrow['totalinvoiced'], $myrow['decimalplaces']), //total invoice here
 				$myrow['units'], //unit
 				locale_number_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-				locale_number_format($QOH, $myrow['decimalplaces']), //on hand
-				locale_number_format($QOO, $myrow['decimalplaces']), //on order
+				$QOH, //on hand
+				$QOO, //on order
 				locale_number_format($DaysOfStock, 0) //days of available stock
 				);
 		}

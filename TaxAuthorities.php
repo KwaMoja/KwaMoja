@@ -140,8 +140,8 @@ if (!isset($SelectedTaxAuthID)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('ID') . '</th>
-				<th>' . _('Description') . '</th>
+				<th class="SortableColumn">' . _('ID') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
 				<th>' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
 				<th>' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
 				<th>' . _('Bank') . '</th>

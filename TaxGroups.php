@@ -168,8 +168,8 @@ if (!isset($SelectedGroup)) {
 	} else {
 		echo '<table class="selection">
 				<tr>
-					<th>' . _('Group No') . '</th>
-					<th>' . _('Tax Group') . '</th>
+					<th class="SortableColumn">' . _('Group No') . '</th>
+					<th class="SortableColumn">' . _('Tax Group') . '</th>
 				</tr>';
 
 		$k = 0; //row colour counter
@@ -228,8 +228,9 @@ echo '<table class="selection">';
 if (!isset($_POST['GroupName'])) {
 	$_POST['GroupName'] = '';
 }
-echo '<tr><td>' . _('Tax Group') . ':</td>
-		<td><input type="text" name="GroupName" size="40" minlength="0" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
+echo '<tr>
+		<td>' . _('Tax Group') . ':</td>
+		<td><input type="text" name="GroupName" size="40" required="required" minlength="1" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
 echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
 	</tr>
 	</table>
@@ -278,7 +279,7 @@ if (isset($SelectedGroup)) {
 					<th colspan="3"><h3>' . _('Calculation Order') . '</h3></th>
 				</tr>
 				<tr>
-					<th>' . _('Tax Authority') . '</th>
+					<th class="SortableColumn">' . _('Tax Authority') . '</th>
 					<th>' . _('Order') . '</th>
 					<th>' . _('Tax on Prior Taxes') . '</th>
 				</tr>';
@@ -297,7 +298,7 @@ if (isset($SelectedGroup)) {
 			}
 
 			echo '<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
-				<td><input type="text" class="number" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="2" required="required" minlength="1" maxlength="2" style="width: 100%" /></td>
+				<td><input type="text" class="integer" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size="2" required="required" minlength="1" maxlength="2" style="width: 100%" /></td>
 				<td><select required="required" minlength="1" name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
 			if ($TaxAuthRow[$i]['taxontax'] == 1) {
 				echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -329,8 +330,8 @@ if (isset($SelectedGroup)) {
 					<th colspan="2">' . _('Available Taxes') . '</th>
 				</tr>
 				<tr>
-					<th>' . _('Tax Auth ID') . '</th>
-					<th>' . _('Tax Authority Name') . '</th>
+					<th class="SortableColumn">' . _('Tax Auth ID') . '</th>
+					<th class="SortableColumn">' . _('Tax Authority Name') . '</th>
 					<th>' . _('Calculation Order') . '</th>
 					<th>' . _('Tax on Prior Tax(es)') . '</th>
 					<th></th>
