@@ -208,6 +208,7 @@ $CountriesArray['VN'] = _('Viet Nam');
 $CountriesArray['VU'] = _('Vanuatu');
 $CountriesArray['WS'] = _('Samoa');
 $CountriesArray['YE'] = _('Yemen');
+$CountriesArray['ZA'] = _('South Africa');
 $CountriesArray['ZM'] = _('Zambia');
 $CountriesArray['ZW'] = _('Zimbabwe');
 

@@ -1,6 +1,6 @@
 <?php
 
-ini_set('max_execution_time', "600");
+ini_set('max_execution_time', 0);
 session_name('kwamoja_installation');
 session_start();
 
@@ -18,6 +18,10 @@ if (isset($_POST['DBExt'])) {
 
 if (isset($_POST['DBMS'])) {
 	$_SESSION['Installer']['DBMS'] = $_POST['DBMS'];
+}
+
+if (isset($_POST['Email'])) {
+	$_SESSION['Installer']['Email'] = $_POST['Email'];
 }
 
 /*
@@ -179,6 +183,9 @@ if (file_exists('../config.php') or file_exists('../Config.php')) {
 }
 
 if (isset($_POST['Install'])) { //confirm the final install data, the last validation step before we submit the data
+
+	echo '<h1>' . _('KwaMoja Installation Wizard') . '</h1>';
+	echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	//first do necessary validation
 	//Since user may have changed the DatabaseName so we need check it again
 	$InputError = 0;
@@ -233,7 +240,7 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		$_POST['HostName'] = strtolower($_POST['HostName']);
 		$HostValid = preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $_POST['HostName']);
 		if ($HostValid) {
-			$HostName = $_POST['HostName'];
+			$host = $_POST['HostName'];
 		} else {
 			echo '<div class="error">' . _('The Host Name is not a valid name.') . '</div>';
 			exit;
@@ -244,16 +251,16 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		echo '<div class="error">' . _('The Host Name must not be empty.') . '</div>';
 	}
 	if (!empty($_POST['UserName']) and strlen($_POST['UserName']) <= 16) { // dbms user
-		$UserName = $_POST['UserName'];
+		$DBUser = $_POST['UserName'];
 	} else {
 		$InputError = 1;
 		echo '<div class="error">' . ('The user name cannot be empty and length must not be over 16 characters.') . '</div>';
 	}
 	if (isset($_POST['Password'])) { // dbms password
-		$Password = $_POST['Password'];
+		$DBPassword = $_POST['Password'];
 	}
 	if (!empty($_POST['DBMS'])) { //get the dbms connect extension
-		$DBConnectType = $_POST['DBMS'];
+		$_SESSION['Installer']['DBMS'] = $_POST['DBMS'];
 	}
 	if (!empty($_POST['UserLanguage'])) {
 		if (preg_match(',^[a-z]{2}_[A-Z]{2}.utf8$,', $_POST['UserLanguage'])) {
@@ -263,7 +270,7 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 			echo '<div class="error">' . _('The user language defintion is not in the correct format') . '</div>';
 		}
 	}
-	If (!empty($_FILES['LogoFile'])) { //We check the file upload situation
+	if (!empty($_FILES['LogoFile'])) { //We check the file upload situation
 		if ($_FILES['LogoFile']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['LogoFile']['error'] == UPLOAD_ERR_FORM_SIZE) { //the file is over the php.ini limit or over the from limit
 			$InputError = 1;
 			if (upload_max_filesize < 0.01) {
@@ -281,24 +288,19 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 
 	}
 	if (!empty($_POST['COA'])) {
-		if (preg_match('/[a-zA-Z_-]+(\.sql)/', $_POST['COA'])) {
-			$COA = $_POST['COA'];
-		} else {
-			$InputError = 1;
-			echo '<div class="error">' . _('The COA file name must only contain letters,') . ' "-","_"' . '</div>';
-		}
+		$COA = $_POST['COA'];
 	} else {
 		$InputError = 1;
 		echo '<div class="error">' . _('There is no COA file selected. Please select a file.') . '</div>';
 
 	}
 	if ($InputError == 1) { //return to the company configuration stage
-		CompanySetup($UserLanguage, $HostName, $UserName, $Password, $DatabaseName);
+		CompanySetup($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName);
 	} else {
 		//start to installation
 		$Path_To_Root = '..';
 		$Config_File = $Path_To_Root . '/config.php';
-		if ((isset($DualCompany) and $DualCompany == 1) or (isset($NewCompany) and $NewCompany == 1)) {
+		if (!file_exists($Path_To_Root . '/companies/' . $DatabaseName)) {
 			$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
 			$Result = mkdir($CompanyDir);
 			$Result = mkdir($CompanyDir . '/part_pics');
@@ -309,16 +311,19 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 			$Result = mkdir($CompanyDir . '/reportwriter');
 			$Result = mkdir($CompanyDir . '/pdf_append');
 			$Result = mkdir($CompanyDir . '/FormDesigns');
-			copy($Path_To_Root . '/companies/kwamojademo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
-			copy($Path_To_Root . '/companies/kwamojademo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
-			copy($Path_To_Root . '/companies/kwamojademo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-			copy($Path_To_Root . '/companies/kwamojademo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+			copy($Path_To_Root . '/companies/kwamoja/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+			copy($Path_To_Root . '/companies/kwamoja/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
+			copy($Path_To_Root . '/companies/kwamoja/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
+			copy($Path_To_Root . '/companies/kwamoja/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
 			if (isset($File_Temp_Name)) {
 				$Result = move_uploaded_file($File_Temp_Name, $CompanyDir . '/logo.jpg');
 
 			} elseif (isset($File_To_Copy)) {
 				$Result = copy($Path_To_Root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
 			}
+		} else {
+			echo '<div class="error">' . _('This company name already exists') . '</div>';
+			exit;
 		}
 		//$msg holds the text of the new config.php file
 		$msg = "<?php\n\n";
@@ -331,19 +336,19 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		$msg .= "// Connection information for the database\n";
 		$msg .= "// \$host is the computer ip address or name where the database is located\n";
 		$msg .= "// assuming that the webserver is also the sql server\n";
-		$msg .= "\$host = '" . $HostName . "';\n\n";
+		$msg .= "\$host = '" . $host . "';\n\n";
 		$msg .= "// assuming that the web server is also the sql server\n";
-		$msg .= "\$DBType = '" . $DBConnectType . "';\n";
+		$msg .= "\$DBType = '" . $_SESSION['Installer']['DBMS'] . "';\n";
 		$msg .= "//assuming that the web server is also the sql server\n";
-		$msg .= "\$DBUser = '" . $UserName . "';\n";
-		$msg .= "\$DBPassword = '" . $Password . "';\n";
+		$msg .= "\$DBUser = '" . $DBUser . "';\n";
+		$msg .= "\$DBPassword = '" . $DBPassword . "';\n";
 		$msg .= "// The timezone of the business - this allows the possibility of having;\n";
 		$msg .= "date_default_timezone_set('" . $TimeZone . "');\n";
 		$msg .= "putenv('TZ=" . $TimeZone . "');\n";
 		$msg .= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
 		$msg .= "//The system administrator name use the user input mail;\n";
-		if (strtolower($AdminEmail) != 'admin@kwamoja.com') {
-			$msg .= "\$SysAdminEmail = '" . $AdminEmail . "';\n";
+		if (strtolower($_SESSION['Installer']['Email']) != 'admin@kwamoja.com') {
+			$msg .= "\$SysAdminEmail = '" . $_SESSION['Installer']['Email'] . "';\n";
 		}
 		if (isset($NewCompany)) {
 			$msg .= "\$DefaultCompany = '" . $DatabaseName . "';\n";
@@ -380,97 +385,57 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 			//close file
 			fclose($zp);
 		}
+
 		//Now it is the time to create the mysql data
 		//Just get the data from $COA and read data from this file
 		//At the mean time, we should check the user need demo database or not
-		if ($DBConnectType == 'mysqli') {
-			$Db = mysqli_connect($HostName, $UserName, $Password);
-			if (!$Db) {
+		$sql = 'CREATE DATABASE IF NOT EXISTS `' . $DatabaseName . '`';
+		if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
+			$db = mysqli_connect($host, $DBUser, $DBPassword);
+			$result = mysqli_query($db, $sql);
+			if (!$db) {
 				echo '<div class="error">' . _('Failed to connect the database, the error is ') . mysqli_connect_error() . '</div>';
 			}
-		} elseif ($DBConnectType == 'mysql') {
-			$Db = mysql_connect($HostName, $UserName, $Password);
-
-
-			if (!$Db) {
+		}
+		if ($_SESSION['Installer']['DBMS'] == 'mysql') {
+			$db = mysql_connect($host, $DBUser, $DBPassword);
+			$result = mysql_query($db, $sql);
+			if (!$db) {
 				echo '<div class="error">' . _('Failed to connect the database, the error is ') . mysql_connect_error() . '</div>';
 			}
 		}
-		$NewSQLFile = $Path_To_Root . '/sql/mysql/coa/' . $COA;
-		$DemoSQLFile = $Path_To_Root . '/sql/mysql/coa/kwamoja-demo.sql';
-		if (!empty($DualCompany) and $DualCompany == 1) {
-			//we should install the production data and demo data
-			$sql = 'CREATE DATABASE IF NOT EXISTS `' . $DatabaseName . '`';
-			$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db, $sql) : mysql_query($sql, $Db);
-			if (!$result) {
-				if ($DBConnectType == 'mysqli') {
-					echo '<div class="error">' . _('Failed to create database ' . ' ' . $DatabaseName . ' and the error is ' . ' ' . mysqli_error($Db)) . '</div>';
-				} else {
-					echo '<div class="error">' . _('Failed to create database ' . ' ' . $DatabaseName . ' and the error is ' . ' ' . mysql_error($Db)) . '</div>';
-
-				}
+		if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
+			$db = mysqli_connect($host, $DBUser, $DBPassword);
+			$result = mysqli_query($db, $sql);
+			if (!$db) {
+				echo '<div class="error">' . _('Failed to connect the database, the error is ') . mysql_connect_error() . '</div>';
 			}
-			$sql = 'CREATE DATABASE IF NOT EXISTS `kwamojademo`';
-			$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db, $sql) : mysql_query($sql, $Db);
-			if (!$result) {
-				if ($DBConnectType == 'mysqli') {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysqli_error($Db)) . '</div>';
-				} else {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysql_error($Db)) . '</div>';
-
-				}
-
-
-			}
-			PopulateSQLData($NewSQLFile, false, $Db, $DBConnectType, $DatabaseName);
-			DBUpdate($Db, $DatabaseName, $DBConnectType, $AdminPassword, $Email, $UserLanguage, $DatabaseName);
-			PopulateSQLData(false, $DemoSQLFile, $Db, $DBConnectType, 'kwamojademo');
-			DBUpdate($Db, 'kwamojademo', $DBConnectType, $AdminPassword, $Email, $UserLanguage, 'kwamojademo');
-
-		} elseif (!empty($NewCompany) and $NewCompany == 1) { //only install the production data
-
-			$sql = 'CREATE DATABASE IF NOT EXISTS `' . $DatabaseName . '`';
-			$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db, $sql) : mysql_query($sql, $Db);
-			if (!$result) {
-				if ($DBConnectType == 'mysqli') {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysqli_error($Db)) . '</div>';
-				} else {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysql_error($Db)) . '</div>';
-
-				}
-
-
-			}
-			PopulateSQLData($NewSQLFile, false, $Db, $DBConnectType, $DatabaseName);
-			DBUpdate($Db, $DatabaseName, $DBConnectType, $AdminPassword, $Email, $UserLanguage, $DatabaseName);
-
-		} elseif (!empty($OnlyDemo) and $OnlyDemo == 1) { //only install the demo data
-			$sql = 'CREATE DATABASE IF NOT EXISTS `kwamojademo`';
-			$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db, $sql) : mysql_query($sql, $Db);
-			if (!$result) {
-				if ($DBConnectType == 'mysqli') {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysqli_error($Db)) . '</div>';
-				} else {
-					echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysql_error($Db)) . '</div>';
-
-				}
-
-
-			}
-			PopulateSQLData(false, $DemoSQLFile, $Db, $DBConnectType, 'kwamojademo');
-			DBUpdate($Db, 'kwamojademo', $DBConnectType, $AdminPassword, $Email, $UserLanguage, 'kwamojademo');
-
 		}
+		$NewSQLFile = $Path_To_Root . '/install/coa/' . $COA;
+		if (!$result) {
+			if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
+				echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysqli_error($db)) . '</div>';
+			} else {
+				echo '<div class="error">' . _('Failed to create database kwamojademo and the error is ' . ' ' . mysql_error($db)) . '</div>';
+			}
+		}
+		if (!isset($DBPort)) {
+			$DBPort = 3306;
+		}
+		$_SESSION['DatabaseName'] = $DatabaseName;
+		include('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.inc');
+		include('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.inc');
+		PopulateSQLData($NewSQLFile, false, $db, $_SESSION['Installer']['DBMS'], $DatabaseName);
+		DBUpdate($db, $DatabaseName, $_SESSION['Installer']['DBMS'], $AdminPassword, $Email, $UserLanguage, $DatabaseName);
+
 		session_unset();
-		session_destroy();
-
-		header('Location: ' . $Path_To_Root . '/index.php?newDb=1');
-		ini_set('max_execution_time', '60');
-		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $Path_To_Root . '/index.php">';
-
-
 
 	} //end of the installation
+	echo '<fieldset>
+			<input type="hidden" name="SystemValid" value="1" />
+			<button type="submit">' . _('Next Step') . '</button>
+		</fieldset>';
+	echo '</form>';
 
 	exit;
 }
@@ -488,7 +453,7 @@ if (isset($_POST['DbConfig'])) {
 		$_POST['HostName'] = strtolower($_POST['HostName']);
 		$HostValid = preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $_POST['HostName']);
 		if ($HostValid) {
-			$HostName = $_POST['HostName'];
+			$host = $_POST['HostName'];
 		} else {
 			echo '<div class="error">' . _('The Host Name is illegal') . '</div>';
 			exit;
@@ -519,21 +484,21 @@ if (isset($_POST['DbConfig'])) {
 	}
 
 	if (!empty($_POST['Password'])) {
-		$Password = $_POST['Password'];
+		$DBPassword = $_POST['Password'];
 	} else {
-		$Password = '';
+		$DBPassword = '';
 	}
 	if (!empty($_POST['UserLanguage'])) {
 		$UserLanguage = $_POST['UserLanguage'];
 	}
 	if (!empty($_POST['UserName']) and mb_strlen($_POST['UserName']) <= 16) {
-		$UserName = trim($_POST['UserName']);
+		$DBUser = trim($_POST['UserName']);
 	}
 	if ($InputError == 0) {
 		if (!empty($_POST['MysqlExt']) and $_POST['MysqlExt'] == 1) {
-			DbCheck($UserLanguage, $HostName, $UserName, $Password, $DatabaseName, $_POST['MysqlExt']);
+			DbCheck($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName, $_POST['MysqlExt']);
 		} else {
-			DbCheck($UserLanguage, $HostName, $UserName, $Password, $DatabaseName);
+			DbCheck($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName);
 		}
 		exit;
 	} else {
@@ -937,19 +902,19 @@ function Recheck() {
 }
 
 //@para $UserLanguage is the language select by users and will be used as a default language
-//@para $HostName is the Host of mysql server
-//@para $UserName is the name of the mysql user
-//@para $Password is the user's password which is stored in plain text in config.php
+//@para $host is the Host of mysql server
+//@para $DBUser is the name of the mysql user
+//@para $DBPassword is the user's password which is stored in plain text in config.php
 //@DatabaseName is the database used by kwamoja
 //@$MysqlExt to check if it's use mysql extension in php instead of mysqli
 //The function used to check if mysql parameters have been set correctly and can connect correctly
 
-function DbCheck($UserLanguage, $HostName, $UserName, $Password, $DatabaseName, $MysqlExt = FALSE) { //Check if the users have input the correct password
+function DbCheck($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName, $MysqlExt = FALSE) { //Check if the users have input the correct password
 	if ($MysqlExt) { //use the mysqli
-		$Con = mysql_connect($HostName, $UserName, $Password);
+		$Con = mysql_connect($host, $DBUser, $DBPassword);
 
 	} else {
-		$Con = mysqli_connect($HostName, $UserName, $Password);
+		$Con = mysqli_connect($host, $DBUser, $DBPassword);
 	}
 	if (!$Con) {
 		echo '<h1>' . _('KwaMoja Installation Wizard') . '</h1>';
@@ -961,18 +926,18 @@ function DbCheck($UserLanguage, $HostName, $UserName, $Password, $DatabaseName, 
 		}
 
 	} else {
-		CompanySetup($UserLanguage, $HostName, $UserName, $Password, $DatabaseName);
+		CompanySetup($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName);
 	}
 
 }
 //@para $UsersLanguage the language select by the user it will be used as the default langauge in config.php
-//@para $HostName is the host for mysql server
-//@para $UserName is the name of mysql user
-//@para $Password is the password for mysql server
+//@para $host is the host for mysql server
+//@para $DBUser is the name of mysql user
+//@para $DBPassword is the password for mysql server
 //@para $DatabaseName is the name of the database of KwaMoja and also the same name of company
 //@para $MysqlEx is refer to the php mysql extention if it's false, it means the php configuration only support mysql instead of mysqli
 //The purpose of this function is to display the final screen for users to input company, admin user accounts etc informatioin
-function CompanySetup($UserLanguage, $HostName, $UserName, $Password, $DatabaseName) { //display the company setup for users
+function CompanySetup($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName) { //display the company setup for users
 
 	echo '<h1>' . _('KwaMoja Installation Wizard') . '</h1>';
 	echo '<form id="companyset" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
@@ -1063,9 +1028,9 @@ function CompanySetup($UserLanguage, $HostName, $UserName, $Password, $DatabaseN
 			</ul>
 		</fieldset>';
 
-	echo '<input type="hidden" name="HostName" value="' . $HostName . '" />
-		<input type="hidden" name="UserName" value="' . $UserName . '" />
-		<input type="hidden" name="Password" value="' . $Password . '" />
+	echo '<input type="hidden" name="HostName" value="' . $host . '" />
+		<input type="hidden" name="UserName" value="' . $DBUser . '" />
+		<input type="hidden" name="Password" value="' . $DBPassword . '" />
 		<input type="hidden" name="DBExt" value="' . $_SESSION['Installer']['DBExt'] . '" />
 		<input type="hidden" name="UserLanguage" value="' . $UserLanguage . '" />
 		<input type="hidden" name="MAX_FILE_SIZE" value="10240" />';
@@ -1085,37 +1050,30 @@ function CompanySetup($UserLanguage, $HostName, $UserName, $Password, $DatabaseN
 //The purpose of this function is populate database with data from the sql file by mysqli
 function PopulateSQLData($NewSQL = false, $Demo = false, $db, $DBType, $NewDB = false) {
 	if ($NewSQL) {
-
-		if ($DBType == 'mysqli') { //if the mysql db type is mysqli
-			mysqli_select_db($db, $NewDB);
-			//currently there is no 'USE' statements in sql file, no bother to remove them
-			$sql = file_get_contents($NewSQL);
-			if (!$sql) {
-				die(_('Failed to open the new sql file'));
+		$PathPrefix = '../';
+		$StartingUpdate = 0;
+		$EndingUpdate = HighestFileName('../sql/updates/');
+		unset($_SESSION['Updates']);
+		$_SESSION['Updates']['Errors'] = 0;
+		$_SESSION['Updates']['Successes'] = 0;
+		$_SESSION['Updates']['Warnings'] = 0;
+		for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
+			if (file_exists('../sql/updates/' . $UpdateNumber . '.php')) {
+				$sql = "SET FOREIGN_KEY_CHECKS=0";
+				$result = DB_query($sql, $db);
+				include('../sql/updates/' . $UpdateNumber . '.php');
+				$sql = "SET FOREIGN_KEY_CHECKS=1";
+				$result = DB_query($sql, $db);
 			}
-
-			$result = mysqli_multi_query($db, $sql);
-			if (!$result) {
-				echo '<div class="error">' . _('Failed to populate the database' . ' ' . $NewDB . ' and the error is') . ' ' . mysqli_error($db) . '</div>';
-			}
-			//now clear the result otherwise the next operation will failed with commands out of sync
-			//Since the mysqli_multi_query() return boolean value, we must retrieve the query result set
-			//via mysqli_store_result or mysqli_use_result
-			//mysqli_store_result return an buffered object or false if failed or no such object such as result of INSERT
-			//so if it's false no bother to free them
-			do {
-				if ($result = mysqli_store_result($db)) {
-					mysqli_free_result($result);
-				}
-			} while (mysqli_more_results($db) ? mysqli_next_result($db) : false);
-			//} while (mysqli_next_result($db));
-
-
-		} else {
-			PopulateSQLDataBySQL($NewSQL, $db, $DBType, $NewDB);
 		}
-
-
+		echo 'Number of Errors ' . $_SESSION['Updates']['Errors'];
+		if ($_SESSION['Updates']['Errors'] > 0) {
+			echo '<div class="error">' . _('There were errors creating the database') . '</div>';
+			foreach ($_SESSION['Updates']['Messages'] as $Message) {
+				echo '<div class="error">' . $Message . '</div>';
+			}
+			exit;
+		}
 	}
 	if ($Demo) {
 
@@ -1207,7 +1165,7 @@ function PopulateSQLDataBySQL($File, $db, $DBType, $NewDB = false, $DemoDB = 'kw
 
 //@para $db the database connection
 //@para $DatabaseName the database to update
-//@para $DBConnectType if it is mysql extention or not
+//@para $_SESSION['Installer']['DBMS'] if it is mysql extention or not
 //@para $AdminPasswd the kwamoja administrator's password
 //@para $AdminEmail the kwamoja administrators' email
 //@para $AdminLangauge the administrator's language for login
@@ -1239,6 +1197,46 @@ function DBUpdate($db, $DatabaseName, $DBConnectType, $AdminPasswd, $AdminEmail,
 	}
 
 
+}
+
+function HighestFileName($PathPrefix) {
+	if ($handle = opendir('../sql/updates')) {
+		$i = 0;
+		// Go through directory:
+		while (false !== ($file = readdir($handle))) {
+			// filter unnecessary file/dir paths:
+			if (substr($file, -3) == 'php') {
+				$FileNameLength = strlen($file) - 4;
+				$UpdateNames[$i] = substr($file, 0, $FileNameLength);
+				$i++;
+			}
+		}
+		closedir($handle);
+	}
+	return max($UpdateNames);
+}
+
+function executeSQL($sql, $db, $TrapErrors = False) {
+	global $SQLFile;
+	/* Run an sql statement and return an error code */
+	if (!isset($SQLFile)) {
+		DB_IgnoreForeignKeys($db);
+		$result = DB_query($sql, $db, '', '', false, $TrapErrors);
+		$ErrorNumber = DB_error_no($db);
+		DB_ReinstateForeignKeys($db);
+		return $ErrorNumber;
+	} else {
+		fwrite($SQLFile, $sql . ";\n");
+	}
+}
+
+function updateDBNo($NewNumber, $db) {
+	global $SQLFile;
+	if (!isset($SQLFile)) {
+		$sql = "UPDATE config SET confvalue='" . $NewNumber . "' WHERE confname='DBUpdateNumber'";
+		executeSQL($sql, $db);
+		$_SESSION['DBUpdateNumber'] = $NewNumber;
+	}
 }
 
 echo '<script src="installer.js"></script>';

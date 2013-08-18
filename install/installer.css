@@ -195,16 +195,18 @@ background:#eaeaea
 }
 
 form select {
-background:#A7AEB3;
-color:#4D4D4D;
+background:#fff;
+color:#726868;
 font-size: 100%;
+font-style:italic;
 padding-top: 2px;
 padding-bottom: 2px;
 padding-left: 7px;
 padding-right: 7px;
-border: solid 1px #fff;
+border: solid 1px #28921F;
 border-radius: 15px;
 margin: 2px;
+box-shadow:0 0 5px #83F07B;
 }
 
 form button {

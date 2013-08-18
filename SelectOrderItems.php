@@ -617,9 +617,9 @@ if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['Items' . $id
 					<table class="selection">';
 
 		$TableHeader = '<tr>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Branch') . '</th>
-							<th>' . _('Contact') . '</th>
+							<th class="SortableColumn">' . _('Customer') . '</th>
+							<th class="SortableColumn">' . _('Branch') . '</th>
+							<th class="SortableColumn">' . _('Contact') . '</th>
 							<th>' . _('Phone') . '</th>
 							<th>' . _('Fax') . '</th>
 						</tr>';
@@ -1394,8 +1394,8 @@ else { //dont require customer selection
 		if ($_SESSION['Items' . $identifier]->DefaultPOLine == 1) {
 			echo '<th>' . _('PO Line') . '</th>';
 		} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
-		echo '<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
+		echo '<th class="SortableColumn">' . _('Item Code') . '</th>
+				<th class="SortableColumn">' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('QOH') . '</th>
 				<th>' . _('Unit') . '</th>
@@ -1560,8 +1560,8 @@ else { //dont require customer selection
 					<table class="table1">';
 
 			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
+								<th class="SortableColumn">' . _('Code') . '</th>
+								<th class="SortableColumn">' . _('Description') . '</th>
 								<th>' . _('Units') . '</th>
 								<th>' . _('On Hand') . '</th>
 								<th>' . _('On Demand') . '</th>
@@ -1878,9 +1878,9 @@ else { //dont require customer selection
 			echo '<th>' . _('PO Line') . '</th>';
 		} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
 		echo '<th>' . _('Part Code') . '</th>
-				  <th>' . _('Quantity') . '</th>
-				  <th>' . _('Due Date') . '</th>
-				  </tr>';
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Due Date') . '</th>
+			</tr>';
 		$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', $_SESSION['Items' . $identifier]->DeliveryDays);
 		for ($i = 1; $i <= $_SESSION['QuickEntries']; $i++) {
 			echo '<tr class="OddTableRow">';
@@ -1889,10 +1889,8 @@ else { //dont require customer selection
 				echo '<td><input type="text" name="poline_' . $i . '" size="21" minlength="0" maxlength="20" /></td>';
 			} //$_SESSION['Items' . $identifier]->DefaultPOLine > 0
 			echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>
-						<td><input type="text" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" /></td>
-						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" minlength="0" maxlength="25"
-
-						alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+					<td><input type="text" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" /></td>
+					<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" minlength="0" maxlength="25" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
 		} //$i = 1; $i <= $_SESSION['QuickEntries']; $i++
 		echo '</table><script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
@@ -1910,8 +1908,9 @@ else { //dont require customer selection
 			echo '<tr><td>' . _('PO Line') . '</td>
 							<td><input type="text" name="poline" size="21" minlength="0" maxlength="20" /></td></tr>';
 		} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
-		echo '<tr><td>' . _('Asset to Dispose Of') . ':</td>
-						<td><select minlength="0" name="AssetToDisposeOf">';
+		echo '<tr>
+				<td>' . _('Asset to Dispose Of') . ':</td>
+				<td><select minlength="0" name="AssetToDisposeOf">';
 		$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'", $db);
 		echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 		while ($AssetRow = DB_fetch_array($AssetsResult)) {

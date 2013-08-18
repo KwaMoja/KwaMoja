@@ -33,7 +33,7 @@ $db);
 
 ChangeColumnName('taxauthority', 'locations', 'TINYINT(4)', 'NOT NULL', '1', 'taxprovinceid', $db);
 
-AddIndex('taxprovinceid', 'locations', 'taxprovinceid', $db);
+AddIndex(array('taxprovinceid'), 'locations', 'taxprovinceid', $db);
 InsertRecord('taxprovinces', array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), $db);
 AddConstraint('locations', 'locations_ibfk_1', 'taxprovinceid', 'taxprovinces', 'taxprovinceid', $db);
 
@@ -55,8 +55,8 @@ CreateTable('taxgrouptaxes',
 )",
 $db);
 
-AddIndex('taxgroupid', 'taxgrouptaxes', 'taxgroupid', $db);
-AddIndex('taxauthid', 'taxgrouptaxes', 'taxauthid', $db);
+AddIndex(array('taxgroupid'), 'taxgrouptaxes', 'taxgroupid', $db);
+AddIndex(array('taxauthid'), 'taxgrouptaxes', 'taxauthid', $db);
 AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_1', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
 AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_2', 'taxauthid', 'taxauthorities', 'taxid', $db);
 

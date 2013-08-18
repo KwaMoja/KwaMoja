@@ -247,7 +247,7 @@ if ($OffHold == 1) {
 
 echo '<tr>
 		<td>' . _('User can authorise orders up to :') . '</td>';
-echo '<td><input type="text" name="AuthLevel" required="required" minlength="1" maxlength="11" size="11" class="number" value="' . locale_number_format($AuthLevel, $CurrDecimalPlaces) . '" /></td>
+echo '<td><input type="text" name="AuthLevel" required="required" minlength="1" maxlength="11" size="11" class="integer" value="' . locale_number_format($AuthLevel, $CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 

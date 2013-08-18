@@ -427,19 +427,17 @@ if (isset($result)) {
 			echo '</div>';
 		} //$ListPageMax > 1
 		echo '<br />
-				<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th class="SortableColumn">' . _('Code') . '</th>
-							<th class="SortableColumn">' . _('Customer Name') . '</th>
-							<th class="SortableColumn">' . _('Branch') . '</th>
-							<th>' . _('Contact') . '</th>
-							<th>' . _('Type') . '</th>
-							<th>' . _('Phone') . '</th>
-							<th>' . _('Fax') . '</th>
-							<th>' . _('Email') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
+				<table cellpadding="2" class="selection">
+					<tr>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Customer Name') . '</th>
+						<th class="SortableColumn">' . _('Branch') . '</th>
+						<th>' . _('Contact') . '</th>
+						<th>' . _('Type') . '</th>
+						<th>' . _('Phone') . '</th>
+						<th>' . _('Fax') . '</th>
+						<th>' . _('Email') . '</th>
+					</tr>';
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 	} //!isset($_POST['CSV'])
@@ -477,11 +475,6 @@ if (isset($result)) {
 				<td>' . $myrow['email'] . '</td>
 			</tr>';
 			$i++;
-			$j++; //row counter
-			if ($j == 11 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
-				$j = 1;
-				echo $TableHeader;
-			} //$j == 11 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])
 			$RowIndex++;
 			//end of page full new headings if
 		} //($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])
@@ -577,7 +570,9 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<table width="45%" cellpadding="4">';
-			echo '<tr><th style="width:33%" colspan="3">' . _('Customer Data') . '</th></tr>';
+			echo '<tr>
+					<th style="width:33%" colspan="3">' . _('Customer Data') . '</th>
+				</tr>';
 			echo '<tr><td valign="top" class="select">';
 			/* Customer Data */
 			if ($myrow['lastpaiddate'] == 0) {
@@ -592,33 +587,35 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					<td class="select">' . $myrow['lastpaiddays'] . ' ' . _('days') . '</td>
 					</tr>';
 			}
-			echo '<tr><td class="select">' . _('Last Paid Amount (inc tax):') . '</td>
+			echo '<tr>
+					<td class="select">' . _('Last Paid Amount (inc tax):') . '</td>
 					<td class="select"> <b>' . locale_number_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td>
 					<td class="select"></td>
-					</tr>';
-			echo '<tr><td class="select">' . _('Customer since:') . '</td>
+				</tr>';
+			echo '<tr>
+					<td class="select">' . _('Customer since:') . '</td>
 					<td class="select"> <b>' . ConvertSQLDate($myrow['clientsince']) . '</b> </td>
 					<td class="select">' . $myrow['customersincedays'] . ' ' . _('days') . '</td>
-					</tr>';
+				</tr>';
 			if ($row['total'] == 0) {
 				echo '<tr>
 						<td class="select">' . _('No Spend from this Customer.') . '</b></td>
 						<td class="select"></td>
 						<td class="select"></td>
-						</tr>';
+					</tr>';
 			} //$row['total'] == 0
 			else {
 				echo '<tr>
 						<td class="select">' . _('Total Spend from this Customer (inc tax):') . ' </td>
 						<td class="select"><b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
 						<td class="select"></td>
-						</tr>';
+					</tr>';
 			}
 			echo '<tr>
 					<td class="select">' . _('Customer Type:') . ' </td>
 					<td class="select"><b>' . $CustomerTypeName . '</b></td>
 					<td class="select"></td>
-					</tr>';
+				</tr>';
 			echo '</table>';
 		} //$_SESSION['CustomerID'] != ''
 		// Customer Contacts
@@ -630,9 +627,9 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Customer Contacts') . '" alt="" />' . ' ' . _('Customer Contacts') . '</div>';
 			echo '<br /><table width="45%">';
 			echo '<tr>
-					<th>' . _('Name') . '</th>
-					<th>' . _('Role') . '</th>
-					<th>' . _('Phone Number') . '</th>
+					<th class="SortableColumn">' . _('Name') . '</th>
+					<th class="SortableColumn">' . _('Role') . '</th>
+					<th class="SortableColumn">' . _('Phone Number') . '</th>
 					<th>' . _('Email') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Edit') . '</th>
@@ -680,10 +677,10 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/note_add.png" title="' . _('Customer Notes') . '" alt="" />' . ' ' . _('Customer Notes') . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
-					<th>' . _('date') . '</th>
+					<th class="SortableColumn">' . _('date') . '</th>
 					<th>' . _('note') . '</th>
 					<th>' . _('hyperlink') . '</th>
-					<th>' . _('priority') . '</th>
+					<th class="SortableColumn">' . _('priority') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note') . '</a> </th>
@@ -722,10 +719,10 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '<br /><div class="centre"><img src="' . $RootPath . '/css/' . $Theme . '/images/folder_add.png" title="' . _('Customer Type (Group) Notes') . '" alt="" />' . ' ' . _('Customer Type (Group) Notes for') . ':<b> ' . $CustomerTypeName . '</b>' . '</div><br />';
 			echo '<table width="45%">';
 			echo '<tr>
-				 	<th>' . _('date') . '</th>
+				 	<th class="SortableColumn">' . _('date') . '</th>
 				  	<th>' . _('note') . '</th>
 				   	<th>' . _('file link / reference / URL') . '</th>
-				   	<th>' . _('priority') . '</th>
+				   	<th class="SortableColumn">' . _('priority') . '</th>
 				   	<th>' . _('Edit') . '</th>
 				   	<th>' . _('Delete') . '</th>
 				   	<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>

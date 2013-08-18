@@ -272,20 +272,18 @@ if (isset($_POST['Search'])) {
 	echo '<br />
 		<br />
 		<br />
-		<table cellpadding="2">';
-	$tableheader = '<tr>
-				  		<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-						<th>' . _('Address 4') . '</th>
-						<th>' . _('Telephone') . '</th>
-						<th>' . _('Email') . '</th>
-					</tr>';
-	echo $tableheader;
-	$j = 1;
+		<table cellpadding="2">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Supplier Name') . '</th>
+				<th>' . _('Currency') . '</th>
+				<th>' . _('Address 1') . '</th>
+				<th>' . _('Address 2') . '</th>
+				<th>' . _('Address 3') . '</th>
+				<th>' . _('Address 4') . '</th>
+				<th>' . _('Telephone') . '</th>
+				<th>' . _('Email') . '</th>
+			</tr>';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
@@ -344,14 +342,18 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
 		} else {
 			echo '<div class="centre"><br />';
-			echo '<tr><td colspan="2">';
-			echo '<table width="45%" class="selection">';
-			echo '<tr><th style="width:33%">' . _('Supplier Mapping') . '</th></tr>';
-			echo '</td><td valign="top">';
+			echo '<tr>
+					<td colspan="2">';
+			echo '<table width="45%" class="selection">
+					<tr>
+						<th style="width:33%">' . _('Supplier Mapping') . '</th>
+					</tr>';
+			echo '</td>
+					<td valign="top">';
 			/* Mapping */
 			echo '<div class="centre">' . _('Mapping is enabled, Map will display below.') . '</div>';
 			echo '<div class="centre" id="map" style="width: ' . $map_width . 'px; height: ' . $map_height . 'px"></div></div><br />';
-			echo '</th></tr></table>';
+			echo '</td></tr></table>';
 		}
 	}
 	// Extended Info only if selected in Configuration
@@ -402,6 +404,6 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 		}
 	}
 }
-echo '<script  type="text/javascript">defaultControl(document.forms[0].SupplierCode);</script>';
+
 include('includes/footer.inc');
 ?>

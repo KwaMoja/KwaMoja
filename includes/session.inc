@@ -9,7 +9,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	} //$RootPath == '/' or $RootPath == "\\"
-	header('Location:' . $RootPath . '/install/index.php');
+	header('Location:' . $RootPath . '/install/index.php?New=True');
 	exit;
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
