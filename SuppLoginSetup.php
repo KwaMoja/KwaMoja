@@ -48,10 +48,8 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'), 'error');
 	} elseif (mb_strlen($_POST['Password']) < 5) {
-		if (!$SelectedUser) {
-			$InputError = 1;
-			prnMsg(_('The password entered must be at least 5 characters long'), 'error');
-		}
+		$InputError = 1;
+		prnMsg(_('The password entered must be at least 5 characters long'), 'error');
 	} elseif (mb_strstr($_POST['Password'], $_POST['UserID']) != False) {
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'), 'error');
@@ -134,7 +132,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Email Address') . ':</td>

@@ -197,8 +197,8 @@ if ($AllowGLAnalysis == false) {
 						<th colspan="5">' . _('General ledger Analysis') . '</th>
 					</tr>
 					<tr>
-						<th>' . _('Account') . '</th>
-						<th>' . _('Name') . '</th>
+						<th class="SortableColumn">' . _('Account') . '</th>
+						<th class="SortableColumn">' . _('Name') . '</th>
 						<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
 						<th>' . _('Narrative') . '</th>
 						<th>' . _('Tag') . '</th>
@@ -210,13 +210,13 @@ if ($AllowGLAnalysis == false) {
 	foreach ($_SESSION['Trans'][$TransID]->GLEntries AS $EnteredGLCode) {
 
 		echo '<tr>
-			<td>' . $EnteredGLCode->GLCode . '</td>
-			<td>' . $EnteredGLCode->GLAccountName . '</td>
-			<td class=number>' . locale_number_format($EnteredGLCode->Amount, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>
-			<td>' . $EnteredGLCode->Narrative . '</td>
-			<td>' . $EnteredGLCode->Tag . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
+				<td>' . $EnteredGLCode->GLCode . '</td>
+				<td>' . $EnteredGLCode->GLAccountName . '</td>
+				<td class=number>' . locale_number_format($EnteredGLCode->Amount, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>
+				<td>' . $EnteredGLCode->Narrative . '</td>
+				<td>' . $EnteredGLCode->Tag . '</td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
+				<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
 			</tr>';
 
 		$TotalGLValue += $EnteredGLCode->Amount;
@@ -229,20 +229,20 @@ if ($AllowGLAnalysis == false) {
 	}
 
 	echo '<tr>
-			<td colspan="2" class="number"><font size=4 color=blue>' . _('Total of GL Entries') . ':</font></td>
+			<td colspan="2" class="number">' . _('Total of GL Entries') . ':</td>
 			<td class="number"><font size=2 color=navy>' . locale_number_format($TotalGLValue, $_SESSION['Statement']->CurrDecimalPlaces) . '</font></td>
 		</tr>
 		<tr>
-			<td colspan="2" class="number"><font size=4 color=blue>' . _('Total Bank Transaction') . ':</font></td>
-			<td class="number">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount, $_SESSION['Statement']->CurrDecimalPlaces) . '</font></td>
+			<td colspan="2" class="number">' . _('Total Bank Transaction') . ':</td>
+			<td class="number">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>
 		</tr>
 		<tr>';
 
 	if (($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue) != 0) {
-		echo '<td colspan="2" class="number"><font size=4 color=blue>' . _('Yet To Enter') . ':</font></td>
-		<td class="number"><font size="4" color="red">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
+		echo '<td colspan="2" class="number">' . _('Yet To Enter') . ':</td>
+		<td class="number">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
 	} else {
-		echo '<th colspan="5"><font size="4" color="green">' . _('Reconciled') . '</th>';
+		echo '<th colspan="5">' . _('Reconciled') . '</th>';
 	}
 	echo '</tr>
 		</table>';

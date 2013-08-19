@@ -94,15 +94,14 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
 echo '</p>
-	<table class="selection">';
-
-$TableHeader = '<tr>
-					<th>' . _('Account') . '</th>
-					<th>' . _('Name') . '</th>
-					<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					<th>' . _('Narrative') . '</th>
-					<th>' . _('Tag') . '</th>
-					</tr>';
+	<table class="selection">
+		<tr>
+			<th class="SortableColumn">' . _('Account') . '</th>
+			<th class="SortableColumn">' . _('Name') . '</th>
+			<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			<th>' . _('Narrative') . '</th>
+			<th>' . _('Tag') . '</th>
+		</tr>';
 echo $TableHeader;
 $TotalGLValue = 0;
 $i = 0;

@@ -14,9 +14,9 @@ $EmailRow = DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $value) {
-		if (mb_substr($key, 0, 6) == 'status') {
+		if (mb_substr($key, 0, 6) == 'Status') {
 			$OrderNo = mb_substr($key, 6);
-			$Status = $_POST['status' . $OrderNo];
+			$Status = $_POST['Status' . $OrderNo];
 			$Comment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Authorised by') . ' <a href="mailto:' . $EmailRow['email'] . '">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'], ENT_QUOTES, 'UTF-8');
 			$sql = "UPDATE purchorders
 					SET status='" . $Status . "',
@@ -46,16 +46,15 @@ $sql = "SELECT purchorders.*,
 $result = DB_query($sql, $db);
 
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
 /* Create the table for the purchase order header */
 echo '<tr>
-		<th>' . _('Order Number') . '</th>
-		<th>' . _('Supplier') . '</th>
-		<th>' . _('Date Ordered') . '</th>
-		<th>' . _('Initiator') . '</th>
+		<th class="SortableColumn">' . _('Order Number') . '</th>
+		<th class="SortableColumn">' . _('Supplier') . '</th>
+		<th class="SortableColumn">' . _('Date Ordered') . '</th>
+		<th class="SortableColumn">' . _('Initiator') . '</th>
 		<th>' . _('Delivery Date') . '</th>
 		<th>' . _('Status') . '</th>
 	</tr>';
@@ -86,7 +85,7 @@ while ($myrow = DB_fetch_array($result)) {
 				<td><a href="mailto:' . $myrow['email'] . '">' . $myrow['realname'] . '</td>
 				<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
 				<td>
-					<select required="required" minlength="1" name="status' . $myrow['orderno'] . '">
+					<select required="required" minlength="1" name="Status' . $myrow['orderno'] . '">
 						<option selected="selected" value="Pending">' . _('Pending') . '</option>
 						<option value="Authorised">' . _('Authorised') . '</option>
 						<option value="Rejected">' . _('Rejected') . '</option>
@@ -109,7 +108,7 @@ while ($myrow = DB_fetch_array($result)) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th>' . _('Product') . '</th>
+						<th class="SortableColumn">' . _('Product') . '</th>
 						<th>' . _('Quantity Ordered') . '</th>
 						<th>' . _('Currency') . '</th>
 						<th>' . _('Price') . '</th>
@@ -139,7 +138,6 @@ echo '</table>';
 echo '<br />
 		<div class="centre">
 			<input type="submit" name="UpdateAll" value="' . _('Update') . '" />
-		</div>
 		</div>
 		</form>';
 include('includes/footer.inc');

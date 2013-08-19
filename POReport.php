@@ -1348,12 +1348,14 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 		echo '" /></td></tr>';
 	}
 
-	echo '<tr><td>' . _('Supplier Number') . ':</td>';
-	echo '<td><select minlength="0" name="SupplierIdOp">';
-	echo '<option selected="selected" value="Equals">' . _('Equals') . '</option>';
-	echo '<option value="LIKE">' . _('Begins With') . '</option>';
-	echo '</select>';
-	echo '&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" minlength="0" maxlength="10" value="';
+	echo '<tr>
+			<td>' . _('Supplier Number') . ':</td>
+			<td>
+				<select minlength="0" name="SupplierIdOp">
+					<option selected="selected" value="Equals">' . _('Equals') . '</option>
+					<option value="LIKE">' . _('Begins With') . '</option>
+				</select>
+				&nbsp;&nbsp;<input type="text" name="SupplierId" size="10" minlength="0" maxlength="10" value="';
 	if (isset($_POST['SupplierId'])) {
 		echo $_POST['SupplierId'] . '" /></td></tr>';
 	} else {

@@ -13,9 +13,10 @@ include('includes/header.inc');
 if (isset($_GET['FromGRNNo'])) {
 
 	$SQL = "SELECT purchorderdetails.orderno
-		FROM purchorderdetails INNER JOIN grns
-		ON purchorderdetails.podetailitem=grns.podetailitem
-		WHERE grns.grnno='" . $_GET['FromGRNNo'] . "'";
+				FROM purchorderdetails
+				INNER JOIN grns
+					ON purchorderdetails.podetailitem=grns.podetailitem
+				WHERE grns.grnno='" . $_GET['FromGRNNo'] . "'";
 
 	$ErrMsg = _('The search of the GRNs was unsuccessful') . ' - ' . _('the SQL statement returned the error');
 	$OrderResult = DB_query($SQL, $db, $ErrMsg);
@@ -40,24 +41,24 @@ if (!isset($_GET['OrderNo'])) {
 
 $ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL returned the following error');
 $OrderHeaderSQL = "SELECT purchorders.*,
-			suppliers.supplierid,
-			suppliers.suppname,
-			suppliers.currcode,
-			www_users.realname,
-			locations.locationname,
-			currencies.decimalplaces AS currdecimalplaces
-		FROM purchorders
-		INNER JOIN locations
-			ON locations.loccode=purchorders.intostocklocation
-		INNER JOIN suppliers
-			ON purchorders.supplierno = suppliers.supplierid
-		INNER JOIN currencies
-			ON suppliers.currcode = currencies.currabrev
-		LEFT JOIN www_users
-			ON purchorders.initiator=www_users.userid
-				AND locations.loccode=www_users.defaultlocation
-		WHERE purchorders.orderno = '" . $_GET['OrderNo'] . "'
-			AND www_users.userid='" . $_SESSION['UserID'] . "'";
+						suppliers.supplierid,
+						suppliers.suppname,
+						suppliers.currcode,
+						www_users.realname,
+						locations.locationname,
+						currencies.decimalplaces AS currdecimalplaces
+					ROM purchorders
+					INNER JOIN locations
+						ON locations.loccode=purchorders.intostocklocation
+					INNER JOIN suppliers
+						ON purchorders.supplierno = suppliers.supplierid
+					INNER JOIN currencies
+						ON suppliers.currcode = currencies.currabrev
+					LEFT JOIN www_users
+						ON purchorders.initiator=www_users.userid
+						AND locations.loccode=www_users.defaultlocation
+					WHERE purchorders.orderno = '" . $_GET['OrderNo'] . "'
+						AND www_users.userid='" . $_SESSION['UserID'] . "'";
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL, $db, $ErrMsg);
 
@@ -69,9 +70,12 @@ if (DB_num_rows($GetOrdHdrResult) != 1) {
 		prnMsg(_('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
 	}
 	echo '<table class="table_index">
-		<tr><td class="menu_group_item">
-		<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-		</td></tr></table>';
+			<tr>
+				<td class="menu_group_item">
+					<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+				</td>
+			</tr>
+		</table>';
 
 	include('includes/footer.inc');
 	exit;
@@ -83,31 +87,55 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
 
-echo '<table class="selection" cellpadding="2">';
-echo '<tr><th colspan="8"><b>' . _('Order Header Details') . '</b></th></tr>';
-echo '<tr><td style="text-align:left">' . _('Supplier Code') . '</td><td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['supplierid'] . '</a></td>
-	<td style="text-align:left">' . _('Supplier Name') . '</td><td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['suppname'] . '</a></td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Ordered On') . '</td><td>' . ConvertSQLDate($myrow['orddate']) . '</td>
-	<td style="text-align:left">' . _('Delivery Address 1') . '</td><td>' . $myrow['deladd1'] . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Order Currency') . '</td><td>' . $myrow['currcode'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 2') . '</td><td>' . $myrow['deladd2'] . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Exchange Rate') . '</td><td>' . $myrow['rate'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 3') . '</td><td>' . $myrow['deladd3'] . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Deliver Into Location') . '</td><td>' . $myrow['locationname'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 4') . '</td><td>' . $myrow['deladd4'] . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Initiator') . '</td><td>' . $myrow['realname'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 5') . '</td><td>' . $myrow['deladd5'] . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Requisition Ref') . '.</td><td>' . $myrow['requisitionno'] . '</td>
-	<td style="text-align:left">' . _('Delivery Address 6') . '</td><td>' . $myrow['deladd6'] . '</td></tr>';
-
-
-echo '<tr><td style="text-align:left">' . _('Printing') . '</td><td colspan="3">';
+echo '<table class="selection" cellpadding="2">
+		<tr>
+			<th colspan="8"><b>' . _('Order Header Details') . '</b></th>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Supplier Code') . '</td>
+			<td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['supplierid'] . '</a></td>
+			<td style="text-align:left">' . _('Supplier Name') . '</td>
+			<td><a href="SelectSupplier.php?SupplierID=' . urlencode(stripslashes($myrow['supplierid'])) . '">' . $myrow['suppname'] . '</a></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Ordered On') . '</td>
+			<td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+			<td style="text-align:left">' . _('Delivery Address 1') . '</td>
+			<td>' . $myrow['deladd1'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Order Currency') . '</td>
+			<td>' . $myrow['currcode'] . '</td>
+			<td style="text-align:left">' . _('Delivery Address 2') . '</td>
+			<td>' . $myrow['deladd2'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Exchange Rate') . '</td>
+			<td>' . $myrow['rate'] . '</td>
+			<td style="text-align:left">' . _('Delivery Address 3') . '</td>
+			<td>' . $myrow['deladd3'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Deliver Into Location') . '</td>
+			<td>' . $myrow['locationname'] . '</td>
+			<td style="text-align:left">' . _('Delivery Address 4') . '</td>
+			<td>' . $myrow['deladd4'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Initiator') . '</td>
+			<td>' . $myrow['realname'] . '</td>
+			<td style="text-align:left">' . _('Delivery Address 5') . '</td>
+			<td>' . $myrow['deladd5'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Requisition Ref') . '.</td>
+			<td>' . $myrow['requisitionno'] . '</td>
+			<td style="text-align:left">' . _('Delivery Address 6') . '</td>
+			<td>' . $myrow['deladd6'] . '</td>
+		</tr>
+		<tr>
+			<td style="text-align:left">' . _('Printing') . '</td>
+			<td colspan="3">';
 
 if ($myrow['dateprinted'] == '') {
 	echo '<i>' . _('Not yet printed') . '</i> &nbsp; &nbsp; ';
@@ -118,9 +146,14 @@ if ($myrow['dateprinted'] == '') {
 }
 
 echo '</td></tr>';
-echo '<tr><td style="text-align:left">' . _('Status') . '</td><td>' . _($myrow['status']) . '</td></tr>';
-
-echo '<tr><td style="text-align:left">' . _('Comments') . '</td><td colspan="3">' . $myrow['comments'] . '</td></tr>';
+echo '<tr>
+		<td style="text-align:left">' . _('Status') . '</td>
+		<td>' . _($myrow['status']) . '</td>
+	</tr>
+	<tr>
+		<td style="text-align:left">' . _('Comments') . '</td>
+		<td colspan="3">' . $myrow['comments'] . '</td>
+	</tr>';
 
 echo '</table>';
 
@@ -142,7 +175,9 @@ $LineItemsResult = DB_query($LineItemsSQL, $db, $ErrMsg);
 
 
 echo '<table class="selection" cellpadding="0">';
-echo '<tr><th colspan="8"><b>' . _('Order Line Details') . '</b></th></tr>';
+echo '<tr>
+		<th colspan="8"><b>' . _('Order Line Details') . '</b></th>
+	</tr>';
 echo '<tr>
 		<td>' . _('Item Code') . '</td>
 		<td>' . _('Item Description') . '</td>

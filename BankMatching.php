@@ -255,9 +255,9 @@ if ($InputError != 1 and isset($_POST['BankAccount']) and $_POST['BankAccount'] 
 
 	echo '<table cellpadding="2" class="selection" summary="' . _('Payments to be matched') . '">
 			<tr>
-				<th>' . _('Cheque No') . '</th>
-				<th>' . _('Ref') . '</th>
-				<th>' . _('Date') . '</th>
+				<th class="SortableColumn">' . _('Cheque No') . '</th>
+				<th class="SortableColumn">' . _('Ref') . '</th>
+				<th class="SortableColumn">' . _('Date') . '</th>
 				<th>' . _('Amount') . '</th>
 				<th>' . _('Outstanding') . '</th>
 				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>

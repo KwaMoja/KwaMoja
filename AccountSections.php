@@ -170,8 +170,8 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Section Number') . '</th>
-				<th>' . _('Section Description') . '</th>
+				<th class="SortableColumn">' . _('Section Number') . '</th>
+				<th class="SortableColumn">' . _('Section Description') . '</th>
 			</tr>';
 
 	$k = 0; //row colour counter

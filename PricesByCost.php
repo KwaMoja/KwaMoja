@@ -150,11 +150,12 @@ if (isset($_POST['submit']) or isset($_POST['update'])) {
 
 	if ($numrow > 0) { //the number of prices returned from the main prices query is
 		echo '<table class="selection">';
-		echo '<tr><th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Start Date') . '</th>
+		echo '<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th class="SortableColumn">' . _('Customer') . '</th>
+				<th class="SortableColumn">' . _('Branch') . '</th>
+				<th class="SortableColumn">' . _('Start Date') . '</th>
 				<th>' . _('End Date') . '</th>
 				<th>' . _('Cost') . '</th>
 				<th>' . _('GP %') . '</th>

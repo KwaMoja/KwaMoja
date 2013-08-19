@@ -330,8 +330,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ID';
 		$i++;
 	}
-	if (mb_strlen($_POST['SuppName']) > 40 or mb_strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
-
+	if (mb_strlen(trim($_POST['SuppName'])) > 40 or mb_strlen(trim($_POST['SuppName'])) == 0 or trim($_POST['SuppName']) == '') {
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'), 'error');
 		$Errors[$i] = 'Name';
@@ -705,10 +704,10 @@ if (!isset($SupplierID)) {
 		</tr>';
 
 	echo '<tr><td>' . _('Telephone') . ':</td>
-			<td><input type="text" name="Phone" size="30" minlength="0" maxlength="40" /></td>
+			<td><input type="tel" name="Phone" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Facsimile') . ':</td>
-			<td><input type="text" name="Fax" size="30" minlength="0" maxlength="40" /></td>
+			<td><input type="tel" name="Fax" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
 			<td><input type="email" name="Email" size="30" required="required" minlength="1" maxlength="40" /></td>

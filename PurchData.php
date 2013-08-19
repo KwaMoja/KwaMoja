@@ -262,16 +262,16 @@ if (!isset($_GET['Edit'])) {
 	} else if ($StockID != '') {
 		echo '<table cellpadding="2" class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('Supplier') . '</th>
+							<th class="SortableColumn">' . _('Supplier') . '</th>
 							<th>' . _('Price') . '</th>
 							<th>' . _('Supplier Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
 							<th>' . _('Cost Per Our Unit') . '</th>
 							<th>' . _('Currency') . '</th>
-							<th>' . _('Effective From') . '</th>
+							<th class="SortableColumn">' . _('Effective From') . '</th>
 							<th>' . _('Min Order Qty') . '</th>
 							<th>' . _('Lead Time') . '</th>
-							<th>' . _('Preferred') . '</th>
+							<th class="SortableColumn">' . _('Preferred') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$CountPreferreds = 0;
@@ -439,9 +439,9 @@ if (isset($SuppliersResult)) {
 			<table cellpadding="2" colspan="7" class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Supplier Name') . '</th>
+						<th class="SortableColumn">' . _('Currency') . '</th>
 						<th>' . _('Address 1') . '</th>
 						<th>' . _('Address 2') . '</th>
 						<th>' . _('Address 3') . '</th>
@@ -623,7 +623,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<tr>
 			<td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-			<td><input type="text" class="number" name="LeadTime" required="required" minlength="1" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
+			<td><input type="text" class="integer" name="LeadTime" required="required" minlength="1" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Preferred Supplier') . ':</td>
@@ -662,10 +662,10 @@ if (!isset($SuppliersResult)) {
 
 		echo '<table cellpadding="2" colspan="7" class="selection">
 				<tr>
-					<th>' . _('Discount Name') . '</th>
+					<th class="SortableColumn">' . _('Discount Name') . '</th>
 					<th>' . _('Discount') . '<br />' . _('Value') . '</th>
 					<th>' . _('Discount') . '<br />' . _('Percent') . '</th>
-					<th>' . _('Effective From') . '</th>
+					<th class="SortableColumn">' . _('Effective From') . '</th>
 					<th>' . _('Effective To') . '</th>
 				</tr>';
 		$k = 0;

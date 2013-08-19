@@ -234,7 +234,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Sub Category') . '</th>
+			<th class="SortableColumn">' . _('Sub Category') . '</th>
 			<th>' . _('Active?') . '</th>
 		</tr>';
 
@@ -483,9 +483,9 @@ if ($result) {
 				<th colspan="4">' . _('Inventory items for') . ' ' . $CategoryPath . '</th>
 			</tr>
 			<tr>
-				<th>' . _('Item') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Brand') . '</th>
+				<th class="SortableColumn">' . _('Item') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th class="SortableColumn">' . _('Brand') . '</th>
 				<th>' . _('Featured') . '</th>
 			</tr>';
 

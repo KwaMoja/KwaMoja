@@ -1120,12 +1120,12 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 														'" . $_SESSION['Items' . $identifier]->Branch . "',
 														'" . $LocalCurrencyPrice . "',
 														'" . $PeriodNo . "',
-														'" . $_SESSION['ProcessingOrder'] . "',
+														'" . DB_escape_string($_SESSION['ProcessingOrder']) . "',
 														'" . -$OrderLine->QtyDispatched . "',
 														'" . $OrderLine->DiscountPercent . "',
 														'" . $OrderLine->StandardCost . "',
 														'" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . "',
-														'" . $OrderLine->Narrative . "' )";
+														'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
 				// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				if (empty($OrderLine->StandardCost)) {
@@ -1154,11 +1154,11 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 												'" . $_SESSION['Items' . $identifier]->Branch . "',
 												'" . $LocalCurrencyPrice . "',
 												'" . $PeriodNo . "',
-												'" . $_SESSION['ProcessingOrder'] . "',
+												'" . DB_escape_string($_SESSION['ProcessingOrder']) . "',
 												'" . -$OrderLine->QtyDispatched . "',
 												'" . $OrderLine->DiscountPercent . "',
 												'" . $OrderLine->StandardCost . "',
-												'" . $OrderLine->Narrative . "')";
+												'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			}
 
 

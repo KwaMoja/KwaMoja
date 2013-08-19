@@ -23,7 +23,6 @@ if (isset($_GET['SelectedSupplier'])) {
 	$SelectedSupplier = $_POST['SelectedSupplier'];
 }
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
@@ -113,7 +112,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	if (isset($SelectedStockItem)) {
 		echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
-	echo _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select minlength="0" name="StockLocation"> ';
+	echo _('Order Number') . ': <input type="text" class="integer" name="OrderNumber" autofocus="autofocus" minlength="0" maxlength="8" size="9" /> ' . _('Into Stock Location') . ':<select minlength="0" name="StockLocation"> ';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
@@ -240,10 +239,10 @@ if (isset($StockItemsResult)) {
 			$k = 1;
 		}
 		echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
-			<td>' . $myrow['description'] . '</td>
-			<td class="number">' . locale_number_format($myrow['qoh'], $myrow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($myrow['qord'], $myrow['decimalplaces']) . '</td>
-			<td>' . $myrow['units'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td class="number">' . locale_number_format($myrow['qoh'], $myrow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($myrow['qord'], $myrow['decimalplaces']) . '</td>
+				<td>' . $myrow['units'] . '</td>
 			</tr>';
 		$j++;
 		if ($j == 12) {
@@ -491,7 +490,6 @@ else {
 		echo '</table>';
 	} // end if purchase orders to show
 }
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

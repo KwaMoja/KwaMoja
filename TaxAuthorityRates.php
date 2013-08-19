@@ -78,8 +78,8 @@ if (DB_num_rows($TaxRatesResult) > 0) {
 			<th colspan="3"><h3>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</h3></th>
 		</tr>';
 	$TableHeader = '<tr>
-						<th>' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-						<th>' . _('Tax Category') . '</th>
+						<th class="SortableColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+						<th class="SortableColumn">' . _('Tax Category') . '</th>
 						<th>' . _('Tax Rate') . ' %</th>
 					</tr>';
 	echo $TableHeader;

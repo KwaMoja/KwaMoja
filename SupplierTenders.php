@@ -288,13 +288,13 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] != 3 and isset($_SESSIO
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from') . ' ' . $Supplier . '</p>';
 	echo '<table>
 		<tr>
-			<th>' . _('Stock ID') . '</th>
-			<th>' . _('Description') . '</th>
+			<th class="SortableColumn">' . _('Stock ID') . '</th>
+			<th class="SortableColumn">' . _('Description') . '</th>
 			<th>' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
 			<th>' . _('Price') . ' (' . $Currency . ')</th>
 			<th>' . _('Line Total') . ' (' . $Currency . ')</th>
-			<th>' . _('Expiry Date') . '</th>
+			<th class="SortableColumn">' . _('Expiry Date') . '</th>
 		</tr>';
 	$k = 0;
 	foreach ($_SESSION['offer' . $identifier]->LineItems as $LineItems) {
@@ -642,17 +642,15 @@ if (isset($_POST['Search'])) {
 
 	if (isset($SearchResult)) {
 
-		echo '<table cellpadding="1">';
-
-		$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Image') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Price') . ' (' . $Currency . ')</th>
-					</tr>';
-		echo $TableHeader;
+		echo '<table cellpadding="1">
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
+					<th>' . _('Units') . '</th>
+					<th>' . _('Image') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Price') . ' (' . $Currency . ')</th>
+				</tr>';
 
 		$i = 0;
 		$k = 0; //row colour counter

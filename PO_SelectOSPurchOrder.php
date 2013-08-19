@@ -31,7 +31,6 @@ elseif (isset($_POST['SelectedSupplier'])) {
 } //isset($_POST['SelectedSupplier'])
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -147,7 +146,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
 			<tr>
-				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
+				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" autofocus="autofocus" minlength="0" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
 				<select minlength="0" name="StockLocation">';
 
 	if ($_SESSION['RestrictLocations'] == 0) {
@@ -512,11 +511,11 @@ else if (isset($_POST['SearchOrders'])) {
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PricesSecurity)) {
 		echo '<th>' . _('Order Total') . '</th>';
 	} //in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PricesSecurity)
-	echo '<th>' . _('Status') . '</th>
-			<th>' . _('Print') . '</th>
+	echo '<th class="SortableColumn">' . _('Status') . '</th>
+			<th class="SortableColumn">' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 		</tr>';
-	$j = 1;
+
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($PurchOrdersResult)) {
 		if ($k == 1) {
@@ -577,8 +576,7 @@ else if (isset($_POST['SearchOrders'])) {
 
 	echo '</table>';
 }
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-echo '</div>
-	  </form>';
+
+echo '</form>';
 include('includes/footer.inc');
 ?>

@@ -602,6 +602,8 @@ if (isset($_POST['SearchSupplier'])) {
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+	} else {
+		prnMsg(_('There are no suppliers returned, one reason maybe no email addresses set for those suppliers'),'warn');
 	}
 	while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 		if ($k == 1) {

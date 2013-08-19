@@ -266,9 +266,9 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Group Name') . '</th>
-				<th>' . _('Section') . '</th>
-				<th>' . _('Sequence In TB') . '</th>
+				<th class="SortableColumn">' . _('Group Name') . '</th>
+				<th class="SortableColumn">' . _('Section') . '</th>
+				<th class="SortableColumn">' . _('Sequence In TB') . '</th>
 				<th>' . _('Profit and Loss') . '</th>
 				<th>' . _('Parent Group') . '</th>
 			</tr>';

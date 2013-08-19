@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (mb_strlen($_POST['TypeName']) == 0) {
+	if (mb_strlen(trim($_POST['TypeName'])) == 0) {
 		$InputError = 1;
 		echo prnMsg(_('The supplier type name description must contain at least one character'), 'error');
 		$Errors[$i] = 'SupplierType';
@@ -165,8 +165,8 @@ if (!isset($SelectedType)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-		<th>' . _('Type ID') . '</th>
-		<th>' . _('Type Name') . '</th>
+			<th class="SortableColumn">' . _('Type ID') . '</th>
+			<th class="SortableColumn">' . _('Type Name') . '</th>
 		</tr>';
 
 	$k = 0; //row colour counter
@@ -181,10 +181,10 @@ if (!isset($SelectedType)) {
 		}
 
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
-			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this Supplier Type?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-		</tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
+				<td>%s</td>
+				<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this Supplier Type?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -235,7 +235,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Type Name') . ':</td>
-			<td><input type="text" required="required" minlength="1" maxlength="100" name="TypeName" value="' . $_POST['TypeName'] . '" /></td>
+			<td><input type="text" autofocus="autofocus" required="required" minlength="1" maxlength="100" name="TypeName" value="' . $_POST['TypeName'] . '" /></td>
 		</tr>';
 
 	echo '<tr>

@@ -364,20 +364,6 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	echo '</select></td>
 		</tr>';
 
-	if (!isset($_POST['Ref']) or !is_numeric($_POST['Ref'])) {
-		$DefaultRef = '1';
-	} else {
-		$DefaultRef = $_POST['Ref'];
-	}
-	if (!isset($_POST['Ref'])) {
-		$_POST['Ref'] = '';
-	}
-
-	echo '<tr>
-			<td>' . _('Starting Reference no (eg chq no)') . ':</td>
-			<td><input type="text" name="Ref" minlength="0" maxlength="11" size="12" value="' . $_POST['Ref'] . '" /></td>
-		  </tr>';
-
 	echo '</table>
 			<br />
 			<div class="centre">

@@ -558,18 +558,14 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		<input type="submit" value="' . _('Reset') . '" /></div>';
 
 	if (isset($result_SuppSelect)) {
-		echo '<br /><table cellpadding="3" class="selection">';
-
-		$tableheader = '<tr>
+		echo '<br /><table cellpadding="3" class="selection">
+						<tr>
 							<th class="SortableColumn">' . _('Code') . '</th>
 							<th class="SortableColumn">' . _('Supplier Name') . '</th>
 							<th>' . _('Address') . '</th>
 							<th>' . _('Currency') . '</th>
 						</tr>';
 
-		echo $tableheader;
-
-		$j = 1;
 		$k = 0;
 		/*row counter to determine background colour */
 

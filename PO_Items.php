@@ -699,8 +699,8 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit']
 	echo '<br /><b>' . _(' Order Summary') . '</b></p>';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('Description') . '</th>
+			<th class="SortableColumn">' . _('Item Code') . '</th>
+			<th class="SortableColumn">' . _('Description') . '</th>
 			<th>' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit') . '</th>
 			<th>' . _('Price Our Units') . ' (' . $_SESSION['PO' . $identifier]->CurrCode . ')</th>
@@ -780,8 +780,8 @@ if (isset($_POST['NonStockOrder'])) {
 				<td>' . _('Item Description') . '</td>';
 	echo '<td><input type="text" name="ItemDescription" size="40" /></td></tr>';
 	echo '<tr>
-			<td>' . _('General Ledger Code') . '</td>';
-	echo '<td><select minlength="0" name="GLCode">';
+			<td>' . _('General Ledger Code') . '</td>
+			<td><select minlength="0" name="GLCode">';
 	$sql = "SELECT accountcode,
 				  accountname
 				FROM chartmaster
@@ -795,7 +795,13 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<tr>
 			<td>' . _('OR Asset ID') . '</td>
 			<td><select required="required" minlength="1" name="AssetID">';
-	$AssetsResult = DB_query("SELECT assetid, description, datepurchased FROM fixedassets ORDER BY assetid DESC", $db);
+
+	$sql = "SELECT assetid,
+					description,
+					datepurchased
+				FROM fixedassets
+				ORDER BY assetid DESC";
+	$AssetsResult = DB_query($sql, $db);
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)) {
 		if ($AssetRow['datepurchased'] == '0000-00-00') {
@@ -1127,11 +1133,13 @@ if (!isset($_GET['Edit'])) {
 		echo 'checked';
 	} //isset($_POST['SupplierItemsOnly']) and $_POST['SupplierItemsOnly'] == 'on'
 	echo ' /></td>
-		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
+			<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
-		<tr><td></td>
-		<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $RootPath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td></tr>
+		<tr>
+			<td></td>
+			<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $RootPath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td>
+		</tr>
 		</table>
 		<br />
 

@@ -208,16 +208,17 @@ if (DB_num_rows($result) > 0) {
 			<tr>
 				<th colspan="7">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . _('Pricing for part') . ':
-				<input type="text" name="Item" size="22" value="' . $Item . '" minlength="0" maxlength="20" />
+				<input type="text" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" minlength="0" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>';
 
-	echo '<tr><th>' . _('Currency') . '</th>
-				<th>' . _('Sales Type') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Start Date') . ' </th>
-				<th>' . _('End Date') . '</th>
-			</tr>';
+	echo '<tr>
+			<th class="SortableColumn">' . _('Currency') . '</th>
+			<th class="SortableColumn">' . _('Sales Type') . '</th>
+			<th>' . _('Price') . '</th>
+			<th class="SortableColumn">' . _('Start Date') . ' </th>
+			<th>' . _('End Date') . '</th>
+		</tr>';
 
 	$k = 0; //row colour counter
 
@@ -338,7 +339,7 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<td>' . _('Price Effective To Date') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EndDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EndDate" size="10" minlength="0" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
 	</tr>';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 echo '<tr><td>' . _('Price') . ':</td>
