@@ -420,19 +420,18 @@ if (isset($_POST['AllocTrans'])) {
 
 	/*Now display the potential and existing allocations put into the array above */
 
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-							<th>' . _('Type') . '</th>
-				 			<th>' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th>' . _('Trans') . '<br />' . _('Date') . '</th>
-							<th>' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th>' . _('Total') . '<br />' . _('Amount') . '</th>
-							<th>' . _('Yet to') . '<br />' . _('Allocate') . '</th>
-							<th>' . _('This') . '<br />' . _('Allocation') . '</th>
-						</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Trans') . '<br />' . _('Number') . '</th>
+				<th>' . _('Trans') . '<br />' . _('Date') . '</th>
+				<th>' . _('Supp') . '<br />' . _('Ref') . '</th>
+				<th>' . _('Total') . '<br />' . _('Amount') . '</th>
+				<th>' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+				<th>' . _('This') . '<br />' . _('Allocation') . '</th>
+			</tr>';
 	$k = 0;
 	$Counter = 0;
-	$RowCounter = 0;
 	$TotalAllocated = 0;
 
 	foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
@@ -445,13 +444,6 @@ if (isset($_POST['AllocTrans'])) {
 		} else {
 			echo '<tr class="OddTableRows">';
 			$k = 1;
-		}
-		$RowCounter++;
-
-		if ($RowCounter == 15) {
-			/*Set up another row of headings to ensure always a heading on the screen of potential allocns*/
-			echo $TableHeader;
-			$RowCounter = 1;
 		}
 
 		$YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);

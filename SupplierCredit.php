@@ -530,7 +530,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 			<tr>
 				<td style="color:red">' . _('Credit Amount in Supplier Currency') . ':</td>
 				<td colspan="2" class="number">
-					<input type="text" size="12" required="required" minlength="1" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+					<input type="text" size="12" class="number" required="required" minlength="1" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
 				</td>
 			</tr>';
 }

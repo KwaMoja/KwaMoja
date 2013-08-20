@@ -719,8 +719,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts INNER JOIN chartmaster
-		ON bankaccounts.accountcode=chartmaster.accountcode";
+			FROM bankaccounts
+			INNER JOIN chartmaster
+				ON bankaccounts.accountcode=chartmaster.accountcode
+			ORDER BY bankaccountname";
 
 
 $ErrMsg = _('The bank accounts could not be retrieved because');

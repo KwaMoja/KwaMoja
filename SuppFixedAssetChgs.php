@@ -69,31 +69,35 @@ else {
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p></div>';
-echo '<table class="selection">';
-$TableHeader = '<tr>
-					<th>' . _('Asset ID') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Amount') . '</th>
-				</tr>';
+echo '<table class="selection">
+		<tbody>
+		<tr>
+			<th class="SortableColumn">' . _('Asset ID') . '</th>
+			<th class="SortableColumn">' . _('Description') . '</th>
+			<th>' . _('Amount') . '</th>
+		</tr>';
 echo $TableHeader;
 
 $TotalAssetValue = 0;
 
 foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset) {
-	echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
-		<td>' . $EnteredAsset->Description . '</td>
-		<td class="number">' . locale_number_format($EnteredAsset->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td></tr>';
+	echo '<tr>
+			<td>' . $EnteredAsset->AssetID . '</td>
+			<td>' . $EnteredAsset->Description . '</td>
+			<td class="number">' . locale_number_format($EnteredAsset->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredAsset->Counter . '">' . _('Delete') . '</a></td>
+		</tr>';
 
 	$TotalAssetValue += $EnteredAsset->Amount;
 
 } //$_SESSION['SuppTrans']->Assets as $EnteredAsset
 
-echo '<tr>
-	<td class="number"><h4>' . _('Total') . ':</h4></td>
-	<td class="number"><h4>' . locale_number_format($TotalAssetValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
-</tr>
-</table><br />';
+echo '</tbody>
+		<tr>
+			<td class="number"><h4>' . _('Total') . ':</h4></td>
+			<td class="number"><h4>' . locale_number_format($TotalAssetValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
+		</tr>
+	</table>';
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
 	echo '<div class="centre"><a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a></div>';
@@ -104,7 +108,6 @@ else {
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" />';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
@@ -117,7 +120,7 @@ echo '<br /><table class="selection">';
 
 echo '<tr>
 		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="text" name="AssetID" size="5" required="required" minlength="1" maxlength="6" value="' . $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' . _('New Fixed Asset') . '</a></td>
+		<td><input type="integer" name="AssetID" size="5" required="required" minlength="1" maxlength="6" value="' . $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' . _('New Fixed Asset') . '</a></td>
 	</tr>';
 echo '<tr>
 		<td><b>' . _('OR') . ' </b>' . _('Select from list') . ':</td>
@@ -158,7 +161,6 @@ echo '<br />
 		<input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '" />
 	</div>';
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

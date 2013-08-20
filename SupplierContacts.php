@@ -145,13 +145,14 @@ if (!isset($SelectedContact)) {
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
 				</tr>';
 
-		echo '<tr>
-				<th>' . _('Name') . '</th>
-				<th>' . _('Position') . '</th>
-				<th>' . _('Phone No') . '</th>
-				<th>' . _('Fax No') . '</th>
-				<th>' . _('Email') . '</th>
-			</tr>';
+		echo '<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Name') . '</th>
+					<th class="SortableColumn">' . _('Position') . '</th>
+					<th>' . _('Phone No') . '</th>
+					<th>' . _('Fax No') . '</th>
+					<th>' . _('Email') . '</th>
+				</tr>';
 
 		do {
 			printf('<tr><td>%s</td>
@@ -162,7 +163,8 @@ if (!isset($SelectedContact)) {
 					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this contact?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>', $myrow['contact'], $myrow['position'], $myrow['tel'], $myrow['fax'], $myrow['email'], $myrow['email'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $SupplierID, $myrow['contact'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $SupplierID, $myrow['contact']);
 		} while ($myrow = DB_fetch_array($result));
-		echo '</table><br />';
+		echo '</tbody>
+			</table><br />';
 	} else {
 		prnMsg(_('There are no contacts defined for this supplier'), 'info');
 	}
@@ -247,15 +249,15 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_POST['Tel'] . '" /></td>
+			<td><input type="tel" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_POST['Tel'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="text" name="Fax" size="31" minlength="0" maxlength="30" value="' . $_POST['Fax'] . '" /></td>
+			<td><input type="tel" name="Fax" size="31" minlength="0" maxlength="30" value="' . $_POST['Fax'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Mobile No') . ':</td>
-			<td><input type="text" name="Mobile" size="31" minlength="0" maxlength="30" value="' . $_POST['Mobile'] . '" /></td>
+			<td><input type="tel" name="Mobile" size="31" minlength="0" maxlength="30" value="' . $_POST['Mobile'] . '" /></td>
 		</tr>
 		<tr>
 			<td><a href="Mailto:' . $_POST['Email'] . '">' . _('Email') . ':</a></td>

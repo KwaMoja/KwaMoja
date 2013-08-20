@@ -69,8 +69,9 @@ echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['
 echo '</p></div>';
 
 echo '<table class="selection">';
-$TableHeader = '<tr>
-					<th>' . _('Contract') . '</th>
+$TableHeader = '<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Contract') . '</th>
 					<th>' . _('Amount') . '</th>
 					<th>' . _('Narrative') . '</th>
 					<th>' . _('Anticipated') . '</th>
@@ -98,10 +99,11 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract) {
 
 }
 
-echo '<tr>
-		<td class="number">' . _('Total') . ':</td>
-		<td class="number">' . locale_number_format($TotalContractsValue, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	</tr>
+echo '</tobdy>
+		<tr>
+			<td class="number">' . _('Total') . ':</td>
+			<td class="number">' . locale_number_format($TotalContractsValue, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>
 	</table>';
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {

@@ -611,7 +611,7 @@ if (!isset($_POST['PostInvoice'])) {
 
 	echo '<tr>
 			<td>' . _('Supplier Invoice Reference') . ':</td>
-			<td><input type="text" size="20" minlength="0" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+			<td><input type="text" size="20" required="required" minlength="1" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 	if (!isset($_SESSION['SuppTrans']->TranDate)) {
 		$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y')));
@@ -851,7 +851,7 @@ if (!isset($_POST['PostInvoice'])) {
 				<table class="selection">
 				<tr>
 					<td>' . _('Amount in supplier currency') . ':</td>
-					<td colspan="2" class="number"><input type="text" size="12" minlength="0" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+					<td colspan="2" class="number"><input type="text" class="number" size="12" minlength="0" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 				</tr>';
 	}
 
@@ -861,11 +861,11 @@ if (!isset($_POST['PostInvoice'])) {
 
 	if (isset($_POST['OverRideTax']) and $_POST['OverRideTax'] == 'Man') {
 		echo '<option value="Auto">' . _('Automatic') . '</option>
-				<option selected="selected" value="Man">' . _('Manual') . '</option>';
+				<option selected="selected" value="Man">' . _('Manually') . '</option>';
 	} //$_POST['OverRideTax'] == 'Man'
 	else {
 		echo '<option selected="selected" value="Auto">' . _('Automatic') . '</option>
-				<option  value="Man">' . _('Manual') . '</option>';
+				<option  value="Man">' . _('Manually') . '</option>';
 	}
 
 	echo '</select></td>

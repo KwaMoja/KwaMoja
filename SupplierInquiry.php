@@ -203,10 +203,10 @@ if (DB_num_rows($TransResult) == 0) {
 
 echo '<table width="90%" class="selection">';
 $TableHeader = '<tr>
-					<th>' . _('Trans') . ' #' . '</th>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Supplier Ref') . '</th>
-					<th>' . _('Date') . '</th>
+					<th class="SortableColumn">' . _('Trans') . ' #' . '</th>
+					<th class="SortableColumn">' . _('Type') . '</th>
+					<th class="SortableColumn">' . _('Supplier Ref') . '</th>
+					<th class="SortableColumn">' . _('Date') . '</th>
 					<th>' . _('Total') . '</th>
 					<th>' . _('Allocated') . '</th>
 					<th>' . _('Balance') . '</th>

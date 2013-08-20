@@ -103,12 +103,12 @@ if (isset($_GET['Delete'])) {
 echo '<table class="selection">
 		<tr>
 			<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
-		</tr>';
-
-$tableheader = '<tr>
-					<th>' . _('Sequence') . ' #</th>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Description') . '</th>
+		</tr>
+			<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Sequence') . ' #</th>
+					<th class="SortableColumn">' . _('Item Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
 					<th>' . _('Quantity Charged') . '</th>
 					<th>' . _('Price Charge in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
@@ -118,7 +118,6 @@ echo $tableheader;
 
 $TotalValueCharged = 0;
 
-$i = 0;
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 	echo '<tr>
 			<td>' . $EnteredGRN->GRNNo . '</td>
@@ -133,17 +132,13 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 
 	$TotalValueCharged = $TotalValueCharged + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
-	$i++;
-	if ($i > 15) {
-		$i = 0;
-		echo $tableheader;
-	} //$i > 15
 } //$_SESSION['SuppTrans']->GRNs as $EnteredGRN
 
-echo '<tr>
-		<td colspan="5" align="right">' . _('Total Value of Goods Charged') . ':</td>
-		<td class="number"><h4>' . locale_number_format($TotalValueCharged, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
-	</tr>
+echo '</tbody>
+		<tr>
+			<td colspan="5" align="right">' . _('Total Value of Goods Charged') . ':</td>
+			<td class="number"><h4>' . locale_number_format($TotalValueCharged, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
+		</tr>
 	</table>
 	<br />
 	<div class="centre">

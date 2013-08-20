@@ -64,10 +64,11 @@ echo '<table class="selection">';
 echo '<tr>
 		<th colspan="6"><h3>' . _('Credits Against Goods Received Selected') . '</h3></th>
 	</tr>';
-$TableHeader = '<tr>
-					<th>' . _('GRN') . '</th>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Description') . '</th>
+$TableHeader = '<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('GRN') . '</th>
+					<th class="SortableColumn">' . _('Item Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
 					<th>' . _('Quantity Credited') . '</th>
 					<th>' . _('Price Credited in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
@@ -99,10 +100,11 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 	}
 }
 
-echo '<tr>
-		<td colspan="5" class="number"><h4>' . _('Total Value Credited Against Goods') . ':</h4></td>
-		<td class="number"><h4>' . locale_number_format($TotalValueCharged, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
-		  </tr>';
+echo '</tbody>
+		<tr>
+			<td colspan="5" class="number"><h4>' . _('Total Value Credited Against Goods') . ':</h4></td>
+			<td class="number"><h4>' . locale_number_format($TotalValueCharged, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
+		</tr>';
 echo '</table>
 	<br />
 	<div class="centre">
@@ -158,11 +160,12 @@ echo '<input type="text" name="Show_Since" required="required" minlength="1" max
 	</tr>';
 
 if (DB_num_rows($GRNResults) > 0) {
-	$TableHeader = '<tr>
-						<th>' . _('GRN') . '</th>
-						<th>' . _('Order') . '</th>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Description') . '</th>
+	$TableHeader = '<tbody>
+					<tr>
+						<th class="SortableColumn">' . _('GRN') . '</th>
+						<th class="SortableColumn">' . _('Order') . '</th>
+						<th class="SortableColumn">' . _('Item Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
 						<th>' . _('Delivered') . '</th>
 						<th>' . _('Total Qty') . '<br />' . _('Received') . '</th>
 						<th>' . _('Qty Invoiced') . '</th>
@@ -170,8 +173,6 @@ if (DB_num_rows($GRNResults) > 0) {
 						<th>' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						<th>' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
-
-	echo $TableHeader;
 
 	$i = 0;
 	while ($myrow = DB_fetch_array($GRNResults)) {
@@ -213,7 +214,8 @@ if (DB_num_rows($GRNResults) > 0) {
 		}
 	}
 
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 
 	if (isset($_POST['GRNNo']) and $_POST['GRNNo'] != '') {
 

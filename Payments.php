@@ -758,8 +758,10 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail' . $identifier]->DatePaid . 
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
-		FROM bankaccounts INNER JOIN chartmaster
-		ON bankaccounts.accountcode=chartmaster.accountcode";
+			FROM bankaccounts
+			INNER JOIN chartmaster
+				ON bankaccounts.accountcode=chartmaster.accountcode
+			ORDER BY bankaccountname";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');

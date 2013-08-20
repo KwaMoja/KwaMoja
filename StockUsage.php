@@ -35,7 +35,6 @@ $myrow = DB_fetch_row($result);
 $DecimalPlaces = $myrow[3];
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -143,8 +142,9 @@ if (isset($_POST['ShowUsage'])) {
 	}
 
 	echo '<table class="selection">';
-	$tableheader = '<tr>
-						<th>' . _('Month') . '</th>
+	$tableheader = '<tbody>
+					<tr>
+						<th class="SortableColumn">' . _('Month') . '</th>
 						<th>' . _('Usage') . '</th>
 					</tr>';
 	echo $tableheader;
@@ -178,9 +178,10 @@ if (isset($_POST['ShowUsage'])) {
 	//end of while loop
 
 	if ($TotalUsage > 0 and $PeriodsCounter > 0) {
-		echo '<tr>
-				<th colspan="2">' . _('Average Usage per month is') . ' ' . locale_number_format($TotalUsage / $PeriodsCounter) . '</th>
-			</tr>';
+		echo '</tbody>
+				<tr>
+					<th colspan="2">' . _('Average Usage per month is') . ' ' . locale_number_format($TotalUsage / $PeriodsCounter) . '</th>
+				</tr>';
 	}
 	echo '</table>';
 }
@@ -199,7 +200,6 @@ echo '<br />
 	<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 
 echo '</div>
-	  </div>
 	  </form>';
 include('includes/footer.inc');
 
