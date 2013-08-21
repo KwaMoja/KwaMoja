@@ -1,6 +1,6 @@
 <?php
 
-AddColumn('email', 'custcontacts', 'VARCHAR', 'NOT NULL', '', 'notes', $db);
+AddColumn('email', 'custcontacts', 'VARCHAR(78)', 'NOT NULL', '', 'notes', $db);
 
 NewConfigValue('WorkingDaysWeek', '5', $db);
 

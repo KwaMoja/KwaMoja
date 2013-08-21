@@ -37,13 +37,13 @@ AddColumn('factorcompanyid', 'suppliers', 'INT(11)', 'NOT NULL', '1', 'taxgroupi
 AddConstraint('suppliers', 'suppliers_ibfk_4', 'factorcompanyid', 'factorcompanies', 'id', $db);
 
 AddColumn('perishable', 'stockmaster', 'TINYINT(1)', 'NOT NULL', '0', 'serialised', $db);
-AddColumn('appendfile', 'stockmaster', 'VARCHAR(40)', 'NOT NULL', "'none'", 'serialised', $db);
+AddColumn('appendfile', 'stockmaster', 'VARCHAR(40)', 'NOT NULL', "none", 'serialised', $db);
 
-AddColumn('expirationdate', 'stockserialitems', 'DATETIME', 'NOT NULL', "'0000-00-00'", 'serialno', $db);
+AddColumn('expirationdate', 'stockserialitems', 'DATETIME', 'NOT NULL', "0000-00-00", 'serialno', $db);
 AddColumn('currcode', 'bankaccounts', 'CHAR( 3 )', 'NOT NULL', '', 'accountcode', $db);
 AddIndex(array('currcode'), 'bankaccounts', 'currcode', $db);
 ChangeColumnType('exrate', 'banktrans', 'DOUBLE', 'NOT NULL', '1.0', $db);
-AddColumn('functionalexrate', 'banktrans', 'DOUBLE', 'NOT NULL', "'1'", 'exrate', $db);
+AddColumn('functionalexrate', 'banktrans', 'DOUBLE', 'NOT NULL', " 1", 'exrate', $db);
 
 DropConstraint('worequirements', 'worequirements_ibfk_3', $db);
 

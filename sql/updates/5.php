@@ -116,9 +116,10 @@ InsertRecord('taxcategories', array('taxcatname'), array('Freight'), array('taxc
 DropIndex('custbranch', 'BranchCode', $db);
 
 AddColumn('stdcostunit', 'grns', 'double', 'NOT NULL', '0', 'supplierid',$db);
+DropConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1', $db);
 DropPrimaryKey('stockcheckfreeze', array('stockid'), $db);
 AddPrimaryKey('stockcheckfreeze', array('stockid', 'loccode'), $db);
-
+AddConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1', 'stockid', 'stockmaster', 'stockid', $db);
 
 UpdateDBNo(basename(__FILE__, '.php'), $db);
 

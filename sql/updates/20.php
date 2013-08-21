@@ -1,4 +1,6 @@
 <?php
+$sql = "SET foreign_key_checks=0";
+$result = executeSQL($sql, $db, False);
 
 executeSQL("INSERT INTO securitytokens VALUES(0, 'Main Index Page')", $db);
 executeSQL("INSERT INTO securitygroups (SELECT secroleid,0 FROM securityroles)", $db);
@@ -87,6 +89,23 @@ $db);
 
 AddIndex(array('locationname'), 'locations', 'locationname', $db);
 
+DropPrimaryKey('chartmaster', 'accountcode', $db);
+DropConstraint('bankaccounts', 'bankaccounts_ibfk_1', $db);
+DropConstraint('chartdetails', 'chartdetails_ibfk_1', $db);
+DropConstraint('gltrans', 'gltrans_ibfk_1', $db);
+DropConstraint('pcexpenses', 'pcexpenses_ibfk_1', $db);
+DropConstraint('pctabs', 'pctabs_ibfk_5', $db);
+DropConstraint('taxauthorities', 'taxauthorities_ibfk_1', $db);
+ChangeColumnType('accountcode', 'chartmaster', 'varchar(20)', 'NOT NULL', '0', $db);
+AddPrimaryKey('chartmaster', 'accountcode', $db);
+AddConstraint('bankaccounts', 'bankaccounts_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
+AddConstraint('chartdetails', 'chartdetails_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
+AddConstraint('gltrans', 'gltrans_ibfk_1', 'account', 'chartmaster', 'accountcode', $db);
+AddConstraint('pcexpenses', 'pcexpenses_ibfk_1', 'glaccount', 'chartmaster', 'accountcode', $db);
+AddConstraint('pctabs', 'pctabs_ibfk_5', 'glaccountassignment', 'chartmaster', 'accountcode', $db);
+AddConstraint('taxauthorities', 'taxauthorities_ibfk_1', 'taxglcode', 'chartmaster', 'accountcode', $db);
+
+
 ChangeColumnName('papersize', 'labels', 'DOUBLE', 'NOT NULL', '0', 'pagewidth', $db);
 AddColumn('pageheight', 'labels', 'DOUBLE', 'NOT NULL', '0', 'pagewidth', $db);
 ChangeColumnType('height', 'labels', 'DOUBLE', 'NOT NULL', '0', $db);
@@ -128,7 +147,6 @@ AddConstraint('taxauthorities', 'taxauthorities_ibfk_1', 'taxglcode', 'chartmast
 DropConstraint('taxauthorities', 'taxauthorities_ibfk_2', $db);
 ChangeColumnType('purchtaxglaccount', 'taxauthorities', 'varchar(20)', 'NOT NULL', '0', $db);
 AddConstraint('taxauthorities', 'taxauthorities_ibfk_2', 'purchtaxglaccount', 'chartmaster', 'accountcode', $db);
-ChangeColumnType('accountcode', 'chartmaster', 'varchar(20)', 'NOT NULL', '0', $db);
 AddConstraint('bankaccounts', 'bankaccounts_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
 AddConstraint('chartdetails', 'chartdetails_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
 

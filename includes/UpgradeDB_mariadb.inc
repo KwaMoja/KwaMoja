@@ -229,14 +229,15 @@ function ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $d
 	$NewResult = DB_query($NewSQL, $db);
 	if (DB_num_rows($OldResult) > 0 and DB_num_rows($NewResult) == 0) {
 		if ($AutoIncrement == '') {
-			$response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", $db, False);
+			$sql = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'";
 		} else {
-			$response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement, $db, False);
+			$sql = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement;
 		}
+		$response = executeSQL($sql, $db, False);
 		if ($response == 0) {
 			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('has been renamed') . ' ' . $NewName, 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('could not be renamed'), 'error');
+			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('could not be renamed') . '<br />' . $sql , 'error');
 		}
 	} else {
 		OutputResult(_('The column') . ' ' . $OldName . ' ' . _('is already changed'), 'info');
@@ -254,11 +255,10 @@ function ChangeColumnType($Column, $Table, $Type, $Null, $Default, $db) {
 	if ($myrow[0] <> $Type) {
 		if ($Default == '') {
 			$sql = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null;
-			$response = executeSQL($sql, $db, False);
 		} else {
 			$sql = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'";
-			$response = executeSQL($sql, $db, False);
 		}
+		$response = executeSQL($sql, $db, False);
 		if ($response == 0) {
 			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
 		} else {

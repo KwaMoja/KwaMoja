@@ -644,7 +644,8 @@ DropTable('scripts', 'pagedescription', $db);
 
 CreateTable('scripts', "CREATE TABLE `scripts` (
 	`script` varchar(78) NOT NULL DEFAULT '',
-	`security` int(11) NOT NULL DEFAULT 1,
+	`pagesecurity` int(11) NOT NULL DEFAULT 1,
+	`description` varchar(78) NOT NULL DEFAULT '',
 	PRIMARY KEY  (`script`)
 )", $db);
 

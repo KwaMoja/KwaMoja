@@ -5,7 +5,7 @@ if (is_writable($PathPrefix . 'companies/' . $_SESSION['DatabaseName'])) {
 
 	fwrite($FileHandle, '<?php' . "\n");
 
-	fwrite($FileHandle, $PathPrefix . '$CompanyName[\'' . $_SESSION['DatabaseName'] . '\'] = \'' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '\';' . "\n");
+	fwrite($FileHandle, '$CompanyName[\'' . $_SESSION['DatabaseName'] . '\'] = \'' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '\';' . "\n");
 
 	fwrite($FileHandle, '?>');
 

@@ -63,7 +63,7 @@ InsertRecord('debtortype', array( 'typeid' , 'typename' ), array(NULL, 'Default'
 AddColumn('typeid', 'debtorsmaster', 'TINYINT(4)', 'NOT NULL', "1", 'customerpoline', $db);
 AddConstraint('debtorsmaster', 'debtorsmaster_ibfk_5', 'typeid', 'debtortype', 'typeid', $db);
 
-AddColumn('effectivefrom', 'purchdata', 'DATE', 'NOT NULL', "'0000-00-00'", 'preferred', $db);
+AddColumn('effectivefrom', 'purchdata', 'DATE', 'NOT NULL', "0000-00-00", 'preferred', $db);
 
 CreateTable('debtortypenotes',
 "CREATE TABLE `debtortypenotes` (

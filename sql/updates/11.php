@@ -21,7 +21,7 @@ CreateTable('mrpdemands',
 )",
 $db);
 
-AddConstraint('mrpdemands', 'mrpdemands_ibfk_1', 'mrpdemantype', 'mrpdemandtypes', 'mrpdemandtype', $db);
+AddConstraint('mrpdemands', 'mrpdemands_ibfk_1', 'mrpdemandtype', 'mrpdemandtypes', 'mrpdemandtype', $db);
 AddConstraint('mrpdemands', 'mrpdemands_ibfk_2', 'stockid', 'stockmaster', 'stockid', $db);
 
 AddColumn('pansize', 'stockmaster', 'DOUBLE', 'NOT NULL', '0.0', 'decimalplaces', $db);
@@ -52,8 +52,8 @@ ChangeColumnType('notes', 'custcontacts', 'VARCHAR(255)', 'NOT NULL', '', $db);
 DropPrimaryKey('purchdata', array('supplierno','stockid'), $db);
 AddPrimaryKey('purchdata', array('supplierno','stockid', 'effectivefrom'), $db);
 
-AddColumn('quotedate', 'salesorders', 'DATE', 'NOT NULL', "'0000-00-00'", 'quotation', $db);
-AddColumn('confirmeddate', 'salesorders', 'DATE', 'NOT NULL', "'0000-00-00'", 'deliverydate', $db);
+AddColumn('quotedate', 'salesorders', 'DATE', 'NOT NULL', "0000-00-00", 'quotation', $db);
+AddColumn('confirmeddate', 'salesorders', 'DATE', 'NOT NULL', "0000-00-00", 'deliverydate', $db);
 
 CreateTable('woserialnos',
 "CREATE TABLE `woserialnos` (
@@ -86,10 +86,10 @@ CreateTable('purchorderauth',
 $db);
 
 AddColumn('version', 'purchorders', 'DECIMAL(3,2)', 'NOT NULL', "1.0", 'contact', $db);
-AddColumn('revised', 'purchorders', 'DATE', 'NOT NULL', "'0000-00-00'", 'version', $db);
+AddColumn('revised', 'purchorders', 'DATE', 'NOT NULL', "0000-00-00", 'version', $db);
 AddColumn('realorderno', 'purchorders', 'VARCHAR(16)', 'NOT NULL', '', 'revised', $db);
 AddColumn('deliveryby', 'purchorders', 'VARCHAR(100)', 'NOT NULL', '', 'realorderno', $db);
-AddColumn('deliverydate', 'purchorders', 'DATE', 'NOT NULL', "'0000-00-00'", 'deliveryby', $db);
+AddColumn('deliverydate', 'purchorders', 'DATE', 'NOT NULL', "0000-00-00", 'deliveryby', $db);
 AddColumn('status', 'purchorders', 'VARCHAR(12)', 'NOT NULL', '', 'deliverydate', $db);
 AddColumn('stat_comment', 'purchorders', 'TEXT', 'NOT NULL', '', 'status', $db);
 
@@ -141,8 +141,7 @@ CreateTable('deliverynotes',
   `printed` tinyint(4) NOT NULL DEFAULT '0',
   `invoiced` tinyint(4) NOT NULL DEFAULT '0',
   `deliverydate` date NOT NULL DEFAULT '0000-00-00',
-  PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
-  KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`)
+  PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`)
 )",
 $db);
 

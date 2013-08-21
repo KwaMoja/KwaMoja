@@ -105,6 +105,7 @@ AddConstraint('stockmaster', 'stockmaster_ibfk_2', 'taxcatid', 'taxcategories', 
 
 DropPrimaryKey('salesorderdetails', array('orderno','stkcode'), $db);
 AddColumn('orderlineno', 'salesorderdetails', 'INT(11)', 'NOT NULL', '0', 'orderno', $db);
+AddPrimaryKey('salesorderdetails', array('orderno','orderlineno'), $db);
 
 NewConfigValue('FreightTaxCategory','1', $db);
 NewConfigValue('SO_AllowSameItemMultipleTimes','1', $db);
@@ -127,7 +128,7 @@ DropIndex('suppliers', 'taxauthority', $db);
 AddIndex(array('taxgroupid'),'suppliers', 'taxgroupid', $db);
 AddConstraint('suppliers', 'suppliers_ibfk_3', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
 
-AddColumn('managed', 'locations', 'TINYINT', 'NOT NULL', '0', 'taxauthority', $db);
+AddColumn('managed', 'locations', 'TINYINT', 'NOT NULL', '0', 'taxprovinceid', $db);
 
 
 UpdateDBNo(basename(__FILE__, '.php'), $db);
