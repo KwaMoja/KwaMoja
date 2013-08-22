@@ -235,11 +235,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 } //end loop through categories
 echo '</select></td>';
-echo '<td>' . _('Enter text extracts in the') . '<b>' . _('description') . '</b>:</td>';
+echo '<td>' . _('Enter text extracts in the') . ' ' . '<b>' . _('description') . '</b>:</td>';
 echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 		</tr>
 		<tr><td></td>';
-echo '<td><b>' . _('OR') . '</b>' . _('Enter extract of the') . '<b>' . _('Stock Code') . '</b>:</td>';
+echo '<td><b>' . _('OR') . '</b>' . _('Enter extract of the') . ' ' . '<b>' . _('Stock Code') . '</b>:</td>';
 echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	</table>
