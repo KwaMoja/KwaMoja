@@ -932,10 +932,6 @@ if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative'] = '';
 } //!isset($_POST['Narrative'])
 
-if (!isset($_POST['Currency'])) {
-	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
-} //!isset($_POST['Narrative'])
-
 echo '<tr>
 		<td>' . _('Reference / Narrative') . ':</td>
 		<td colspan="2"><input type="text" name="Narrative" minlength="0" maxlength="80" size="82" value="' . stripslashes($_POST['Narrative']) . '" />  ' . _('(Max. length 80 characters)') . '</td>

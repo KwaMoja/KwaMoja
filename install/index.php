@@ -1,6 +1,7 @@
 <?php
 
 ini_set('max_execution_time', 0);
+ini_set('output_buffering', 0);
 session_name('kwamoja_installation');
 session_start();
 
@@ -22,6 +23,26 @@ if (isset($_POST['DBMS'])) {
 
 if (isset($_POST['Email'])) {
 	$_SESSION['Installer']['Email'] = $_POST['Email'];
+}
+
+if (isset($_POST['CompanyName'])) {
+	$_SESSION['CompanyRecord']['coyname'] = $_POST['CompanyName'];
+}
+
+if (isset($_POST['Database'])) {
+	$_SESSION['Installer']['Database'] = $_POST['Database'];
+}
+
+if (isset($_POST['COA'])) {
+	$_SESSION['Installer']['COA'] = $_POST['COA'];
+}
+
+if (isset($_POST['adminaccount'])) {
+	$_SESSION['Installer']['AdminAccount'] = $_POST['adminaccount'];
+}
+
+if (isset($_POST['KwaMojaPassword'])) {
+	$_SESSION['Installer']['KwaMojaPassword'] = $_POST['KwaMojaPassword'];
 }
 
 /*
@@ -194,11 +215,7 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		//The database name cannot contains illegal characters such as "/","\","." etc
 		//and it should not contains illegal characters as file name such as "?""%"<"">"" " etc
 
-		if (preg_match(',[/\\\?%:\|<>\.\s"]+,', $_POST['CompanyName'])) {
-			$InputError = 1;
-			echo '<div class="error">' . _('The database name should not contains illegal characters such as "/\?%:|<>" blank etc') . '</div>';
-		}
-		$DatabaseName = strtolower($_POST['CompanyName']);
+		$DatabaseName = strtolower($_SESSION['Installer']['Database']);
 	} else {
 		$InputError = 1;
 		echo '<div class="error">' . ('The database name should not be empty') . '</div>';
@@ -330,7 +347,7 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		$msg .= "// User configurable variables\n";
 		$msg .= "//---------------------------------------------------\n\n";
 		$msg .= "//DefaultLanguage to use for the login screen and the setup of new users.\n";
-		$msg .= "\$_SESSION['Installer']['Language'] = '" . $UserLanguage . "';\n\n";
+		$msg .= "\$DefaultLanguage = '" . $_SESSION['Installer']['Language'] . "';\n\n";
 		$msg .= "// Whether to display the demo login and password or not on the login screen\n";
 		$msg .= "\$AllowDemoMode = FALSE;\n\n";
 		$msg .= "// Connection information for the database\n";
@@ -369,7 +386,7 @@ if (isset($_POST['Install'])) { //confirm the final install data, the last valid
 		$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
 		$msg .= "	\$RootPath = '';\n";
 		$msg .= "}\n";
-		$msg .= "error_reporting (E_ALL & ~E_NOTICE);\n";
+		$msg .= "error_reporting (-1);\n";
 		$msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
 		$msg .= "?>";
 
@@ -1003,14 +1020,14 @@ function CompanySetup($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName)
 			<legend>' . _('Administrator account settings') . '</legend>
 			<div class="page_help_text">
 				<ul>
-					<li>' . _('The default user name is \'admin\' and it cannot be changed.') . '</li>
-					<li>' . _('The default password is \'kwamoja\' which you can change below.') . '</li>
+					<li>' . _('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . _('which you can change below.') . '</li>
+					<li>' . _('The default password is') . ' ' . '<b><i>kwamoja</i></b>' . ' ' . _('which you can change below.') . '</li>
 				</ul>
 			</div>
 			<ul>
 				<li>
 					<label for="adminaccount">' . _('KwaMoja Admin Account') . ': </label>
-					<input type="text" name="adminaccount" value="admin" disabled="disabled" />
+					<input type="text" name="adminaccount" value="admin" />
 				</li>
 				<li>
 					<label for="Email">' . _('Email address') . ': </label>
@@ -1049,6 +1066,10 @@ function CompanySetup($UserLanguage, $host, $DBUser, $DBPassword, $DatabaseName)
 //@para $NewDB is the new database name
 //The purpose of this function is populate database with data from the sql file by mysqli
 function PopulateSQLData($NewSQL = false, $Demo = false, $db, $DBType, $NewDB = false) {
+	ob_implicit_flush();
+	echo '<legend>' . _('Building your database.') . ' ' . _('This may take some time, please be patient') . '</legend>';
+	echo '<div id="progress" class="centre" style="border-radius: 15px;width:95%;border:1px solid #373F67;"></div>';
+	echo '<div id="information" style="width"></div>';
 	if ($NewSQL) {
 		$PathPrefix = '../';
 		$StartingUpdate = 0;
@@ -1059,21 +1080,53 @@ function PopulateSQLData($NewSQL = false, $Demo = false, $db, $DBType, $NewDB = 
 		$_SESSION['Updates']['Warnings'] = 0;
 		for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 			if (file_exists('../sql/updates/' . $UpdateNumber . '.php')) {
-				$sql = "SET FOREIGN_KEY_CHECKS=0";
-				$result = DB_query($sql, $db);
-				include('../sql/updates/' . $UpdateNumber . '.php');
-				$sql = "SET FOREIGN_KEY_CHECKS=1";
-				$result = DB_query($sql, $db);
+				$percent = intval($UpdateNumber/$EndingUpdate * 100)."%";
+				echo '<script language="javascript">
+						document.getElementById("progress").innerHTML="<div style=\"margin: 1px;border-radius: 15px; width:'.$percent.';background-color:#e9ffcf;\">&nbsp;</div>";
+						document.getElementById("information").innerHTML="'.$UpdateNumber.' row(s) processed.";
+					</script>';
+				echo str_repeat(' ',1024*64);
+				$sql = "SET foreign_key_checks=0";
+				$result = executeSQL($sql, $db, False);
+				if ($result == 0) {
+					include('../sql/updates/' . $UpdateNumber . '.php');
+				}
+				ob_flush();
+				sleep(1);
 			}
 		}
-		echo 'Number of Errors ' . $_SESSION['Updates']['Errors'];
 		if ($_SESSION['Updates']['Errors'] > 0) {
-			echo '<div class="error">' . _('There were errors creating the database') . '</div>';
+			echo 'Number of Errors ' . $_SESSION['Updates']['Errors'];
 			foreach ($_SESSION['Updates']['Messages'] as $Message) {
 				echo '<div class="error">' . $Message . '</div>';
 			}
 			exit;
 		}
+		/* Now we uploade the chosen chart of accounts */
+		$sql = "SET foreign_key_checks=0";
+		$result = executeSQL($sql, $db, False);
+		include('coa/' . $_SESSION['Installer']['COA']);
+		echo '<div class="success">' . _('Your chosen chart of accounts has been uploaded') . '</div>';
+		ob_flush();
+		/* Create the admin user */
+		InsertRecord('www_users',
+					array('userid'),
+					array('admin'),
+					array('userid' ,'password' ,'realname' ,'email', 'displayrecordsmax' ,'fullaccess' ,'cancreatetender' ,'modulesallowed' ,'blocked' ,'theme' ,'language' ,'pdflanguage' ,'fontsize'),
+					array($_SESSION['Installer']['AdminAccount'],
+						sha1($_SESSION['Installer']['KwaMojaPassword']),
+						$_SESSION['Installer']['AdminAccount'],
+						$_SESSION['Installer']['Email'],
+						50,
+						8,
+						1,
+						'1,1,1,1,1,1,1,1,1,1,1,',
+						0,
+						'aguapop',
+						$_SESSION['Installer']['Language'],
+						0,
+						0),
+						$db);
 	}
 	if ($Demo) {
 
@@ -1238,7 +1291,6 @@ function updateDBNo($NewNumber, $db) {
 		$_SESSION['DBUpdateNumber'] = $NewNumber;
 	}
 }
-
 echo '<script src="installer.js"></script>';
 
 echo '</body>

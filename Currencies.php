@@ -17,8 +17,6 @@ if (isset($_GET['SelectedCurrency'])) {
 $ForceConfigReload = true;
 include('includes/GetConfig.php');
 
-$FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
-
 if (isset($Errors)) {
 	unset($Errors);
 }
@@ -27,6 +25,13 @@ $Errors = array();
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
+
+if (isset($_SESSION['CompanyRecord']['currencydefault'])) {
+	$FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
+} else {
+	echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first set up your main accounting currency.') . '</div>';
+	$_SESSION['FirstStart'] = 'True';
+}
 
 if (isset($_POST['submit'])) {
 
@@ -279,6 +284,11 @@ if (!isset($SelectedCurrency)) {
 					webcart
 				FROM currencies";
 	$result = DB_query($sql, $db);
+
+	if (DB_num_rows($result) == 1 and isset($_SESSION['FirstStart'])) {
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/CompanyPreferences.php">';
+		exit;
+	}
 
 	echo '<table class="selection">';
 	echo '<tr>

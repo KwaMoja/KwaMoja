@@ -107,6 +107,8 @@ NewConfigValue('ProhibitPostingsBefore', '2006-01-01', $db);
 NewConfigValue('WeightedAverageCosting', '1', $db);
 NewConfigValue('AllowOrderLineItemNarrative', '1', $db);
 NewConfigValue('vtiger_integration', '0', $db);
+NewConfigValue('DB_Maintenance', '-1', $db);
+NewConfigValue('HTTPS_Only', '0', $db);
 
 AddIndex(array('serialno'), 'stockserialitems', 'serialno', $db);
 AddIndex(array('serialno'), 'stockserialmoves', 'serialno', $db);

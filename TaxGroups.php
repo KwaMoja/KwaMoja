@@ -34,25 +34,36 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add'])) {
 			$sql = "UPDATE taxgroups SET taxgroupdescription = '" . $_POST['GroupName'] . "'
 					WHERE taxgroupid = '" . $SelectedGroup . "'";
 			$ErrMsg = _('The update of the tax group description failed because');
-			$SuccessMsg = _('The tax group description was updated to') . ' ' . $_POST['GroupName'];
+			$result = DB_query($sql, $db, $ErrMsg);
+			if ($result) {
+				prnMsg(_('The tax group description was updated to') . ' ' . $_POST['GroupName'], 'success');
+			}
+			unset($SelectedGroup);
 		} else { // Add new tax group
 
-			$result = DB_query("SELECT taxgroupid
+			$GroupResult = DB_query("SELECT taxgroupid
 								FROM taxgroups
 								WHERE taxgroupdescription='" . $_POST['GroupName'] . "'", $db);
-			if (DB_num_rows($result) == 1) {
+			if (DB_num_rows($GroupResult) == 1) {
 				prnMsg(_('A new tax group could not be added because a tax group already exists for') . ' ' . $_POST['GroupName'], 'warn');
 				unset($sql);
 			} else {
 				$sql = "INSERT INTO taxgroups (taxgroupdescription)
 						VALUES ('" . $_POST['GroupName'] . "')";
 				$ErrMsg = _('The addition of the group failed because');
-				$SuccessMsg = _('Added the new tax group') . ' ' . $_POST['GroupName'];
+				$result = DB_query($sql, $db, $ErrMsg);
+				if ($result) {
+					prnMsg(_('Added the new tax group') . ' ' . $_POST['GroupName'], 'success');
+				}
+				$GroupResult = DB_query("SELECT taxgroupid
+									FROM taxgroups
+									WHERE taxgroupdescription='" . $_POST['GroupName'] . "'", $db);
+				$GroupRow = DB_fetch_array($GroupResult);
+				$SelectedGroup = $GroupRow['taxgroupid'];
 			}
 		}
 		unset($_POST['GroupName']);
-		unset($SelectedGroup);
-	} elseif (isset($SelectedGroup)) {
+	} elseif (isset($SelectedGroup) and isset($_GET['TaxAuthority'])) {
 		$TaxAuthority = $_GET['TaxAuthority'];
 		if (isset($_GET['add'])) { // adding a tax authority to a tax group
 			$sql = "INSERT INTO taxgrouptaxes ( taxgroupid,
@@ -63,24 +74,23 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add'])) {
 							0)";
 
 			$ErrMsg = _('The addition of the tax failed because');
-			$SuccessMsg = _('The tax was added.');
+			$result = DB_query($sql, $db, $ErrMsg);
+			if ($result) {
+				prnMsg(_('The tax was added.'), 'success');
+			}
 		} elseif (isset($_GET['remove'])) { // remove a taxauthority from a tax group
 			$sql = "DELETE FROM taxgrouptaxes
 					WHERE taxgroupid = '" . $SelectedGroup . "'
 					AND taxauthid = '" . $TaxAuthority . "'";
 			$ErrMsg = _('The removal of this tax failed because');
-			$SuccessMsg = _('This tax was removed.');
+			$result = DB_query($sql, $db, $ErrMsg);
+			if ($result) {
+				prnMsg(_('This tax was removed.'), 'success');
+			}
 		}
 		unset($_GET['add']);
 		unset($_GET['remove']);
 		unset($_GET['TaxAuthority']);
-	}
-	// Need to exec the query
-	if (isset($sql) and $InputError != 1) {
-		$result = DB_query($sql, $db, $ErrMsg);
-		if ($result) {
-			prnMsg($SuccessMsg, 'success');
-		}
 	}
 } elseif (isset($_POST['UpdateOrder'])) {
 	//A calculation order update
@@ -162,6 +172,15 @@ if (!isset($SelectedGroup)) {
 	$result = DB_query($sql, $db);
 
 	if (DB_num_rows($result) == 0) {
+		echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first create a tax group.') .
+				'<br />' . _('For help, click on the help icon in the top right') .
+				'<br />' . _('Once you have filled in all the details, click on the button at the bottom of the screen') . '</div>';
+	} elseif (DB_num_rows($result) == 1 and isset($_SESSION['FirstStart'])) {
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/TaxGroups.php">';
+		exit;
+	}
+
+	if (DB_num_rows($result) == 0) {
 		echo '<div class="centre">';
 		prnMsg(_('There are no tax groups configured.'), 'info');
 		echo '</div>';
@@ -218,7 +237,6 @@ if (isset($SelectedGroup)) {
 }
 echo '<br />';
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_POST['SelectedGroup'])) {
 	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '" />';
@@ -235,7 +253,6 @@ echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" />
 	</tr>
 	</table>
 	<br />
-	</div>
 	</form>';
 
 
@@ -271,7 +288,6 @@ if (isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed) > 0) {
 		echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup . '" />';
 		echo '<table class="selection">
@@ -318,8 +334,7 @@ if (isset($SelectedGroup)) {
 			</div>';
 	}
 
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 	if (DB_num_rows($Result) > 0) {
 		echo '<br />';

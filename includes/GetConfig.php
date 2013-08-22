@@ -2,7 +2,7 @@
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
 
-if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded'])) {
+if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded']) or isset($_SESSION['FirstStart'])) {
 	global $db; // It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
@@ -82,9 +82,12 @@ if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION
 	$ReadCoyResult = DB_query($sql, $db, $ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult) == 0) {
-		echo '<br /><b>';
-		prnMsg(_('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'), 'error', _('CRITICAL PROBLEM'));
-		exit;
+		$CurrencySQL = "SELECT currabrev FROM currencies";
+		$CurrencyResult = DB_query($CurrencySQL, $db);
+		if (DB_num_rows($CurrencyResult) == 0 and (basename($_SERVER['SCRIPT_NAME']) != 'Currencies.php')) {
+			echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/Currencies.php">';
+			exit;
+		}
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
 	}

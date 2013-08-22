@@ -208,9 +208,32 @@ AddColumn('telephone', 'suppliers', 'varchar(25)', 'NOT NULL', '', 'fax', $db);
  */
 
 AddColumn('supplierid', 'www_users', 'varchar(10)', 'NOT NULL', '', 'customerid', $db);
+InsertRecord('securityroles', array('secroleid', 'secrolename'), array(7,'Customer Log On Only'), array('secroleid', 'secrolename'), array(7,'Customer Log On Only'), $db);
+InsertRecord('securityroles', array('secroleid', 'secrolename'), array(8,'System Administrator'), array('secroleid', 'secrolename'), array(8,'System Administrator'), $db);
 InsertRecord('securityroles', array('secroleid', 'secrolename'), array(9,'Supplier Log On Only'), array('secroleid', 'secrolename'), array(9,'Supplier Log On Only'), $db);
-UpdateField('securitytokens', 'tokenname', 'Supplier centre - Supplier access only', 'tokenid=9', $db);
+
+InsertRecord('securitytokens', array('tokenid'), array(1), array('tokenid', 'tokenname'), array(1,_('Order Entry/Inquiries customer access only')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(2), array('tokenid', 'tokenname'), array(2,_('Basic Reports and Inquiries with selection options')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(3), array('tokenid', 'tokenname'), array(3,_('Credit notes and AR management')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(4), array('tokenid', 'tokenname'), array(4,_('Purchasing data/PO Entry/Reorder Levels ')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(5), array('tokenid', 'tokenname'), array(5,_('Accounts Payable')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(6), array('tokenid', 'tokenname'), array(6,_('Petty Cash')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(7), array('tokenid', 'tokenname'), array(7,_('Bank Reconciliations')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(8), array('tokenid', 'tokenname'), array(8,_('General ledger reports/inquiries')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(9), array('tokenid', 'tokenname'), array(9,_('Supplier centre - Supplier access only')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(10), array('tokenid', 'tokenname'), array(10,_('General Ledger Maintenance, stock valuation & Configuration')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(11), array('tokenid', 'tokenname'), array(11,_('Inventory Management and Pricing')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(12), array('tokenid', 'tokenname'), array(12,_('Unknown')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(13), array('tokenid', 'tokenname'), array(13,_('Unknown')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(14), array('tokenid', 'tokenname'), array(14,_('Unknown')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(15), array('tokenid', 'tokenname'), array(15,_('User Management and System Administration')), $db);
+
+UpdateField('securitytokens', 'tokenname', _('Supplier centre - Supplier access only'), 'tokenid=9', $db);
 InsertRecord('securitygroups', array('secroleid', 'tokenid'), array(9,9), array('secroleid', 'tokenid'), array(9,9), $db);
+InsertRecord('securitygroups', array('secroleid', 'tokenid'), array(7,1), array('secroleid', 'tokenid'), array(7,1), $db);
+for ($i = 1;$i <= 15; $i++) {
+	InsertRecord('securitygroups', array('secroleid', 'tokenid'), array(8,$i), array('secroleid', 'tokenid'), array(8,$i), $db);
+}
 
 /* add a field to each location giving a customer/branch combination
  * that can be used for cash sales at that location
