@@ -237,6 +237,10 @@ select.inputerror {
 background:#FFA4A4;
 }
 
+:-moz-ui-invalid {
+background-color:#FFA4A4;
+}
+
 .EvenTableRows {
 background-color:#ccc;
 }

@@ -223,6 +223,10 @@ select.inputerror {
 background:#FFA4A4;
 }
 
+:-moz-ui-invalid {
+background-color:#FFA4A4;
+}
+
 p.good {
 font-weight:700;
 color:green;

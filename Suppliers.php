@@ -931,11 +931,11 @@ if (!isset($SupplierID)) {
 
 	echo '<tr>
 			<td>' . _('Telephone') . ':</td>
-			<td><input type="text" name="Phone" value="' . $_POST['Phone'] . '" size="42" minlength="0" maxlength="40" /></td>
+			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Facsimile') . ':</td>
-			<td><input  type="text" name="Fax" value="' . $_POST['Fax'] . '" size="42" minlength="0" maxlength="40" /></td>
+			<td><input  type="tel" name="Fax" value="' . $_POST['Fax'] . '" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Email Address') . ':</td>

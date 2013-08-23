@@ -375,7 +375,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 		</tr>';
 	echo '<tr>
 			<td>' . _('Phone') . ':</td>
-			<td><input type="text" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_SESSION['tender' . $identifier]->Telephone . '" /></td>
+			<td><input type="tel" name="Tel" size="31" minlength="0" maxlength="30" value="' . $_SESSION['tender' . $identifier]->Telephone . '" /></td>
 		</tr>';
 	echo '</table><br />';
 

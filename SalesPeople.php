@@ -388,11 +388,11 @@ if (!isset($_GET['delete'])) {
 	echo '</td></tr>';
 	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="text" name="SManTel" size="20" minlength="0" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
+			<td><input type="tel" name="SManTel" size="20" minlength="0" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="text" name="SManFax" size="20" minlength="0" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
+			<td><input type="tel" name="SManFax" size="20" minlength="0" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 1') . ':</td>

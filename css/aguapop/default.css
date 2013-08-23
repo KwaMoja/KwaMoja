@@ -15,6 +15,9 @@ padding:0;
 
 input,textarea,select {
 font-family:inherit;
+font-style:italic;
+background-color:#E9E8FA;
+border-radius: 3px;
 }
 
 div.container {
@@ -229,10 +232,6 @@ div.toplink {
 padding-top:1%;
 }
 
-input {
-font-style:italic;
-}
-
 input.image {
 background-color:transparent;
 border-width:0;
@@ -244,6 +243,10 @@ background-color:#C0C3FF;
 
 input.image:hover {
 background-color:transparent;
+}
+
+:-moz-ui-invalid {
+background-color:#FFA4A4;
 }
 
 input.inputerror {
@@ -582,7 +585,11 @@ text-align:right;
 }
 
 input:hover,select:hover,textarea:hover {
-background:#9ffffb;
+box-shadow: 0 0 3px #480FCE;
+}
+
+input:focus,select:focus,textarea:focus {
+box-shadow: 0 0 3px #480FCE;
 }
 
 #MainMenuDiv ul,#SubMenuDiv ul {
@@ -600,7 +607,8 @@ text-decoration:none;
 }
 
 #favourites {
-background:#4682B4;
+background:transparent;
+overflow: hidden;
 color:#B0C4DE;
 font-size: 150%;
 padding-top: 2px;

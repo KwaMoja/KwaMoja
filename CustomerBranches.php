@@ -694,7 +694,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Sales Area') . ':</td>
-			<td><select minlength="0" tabindex="14" name="Area">';
+			<td><select required="required" minlength="1" tabindex="14" name="Area">
+					<option value=""></option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode'] == $_POST['Area']) {
 			echo '<option selected="selected" value="';
@@ -728,7 +729,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Salesperson') . ':</td>
-			<td><select minlength="0" tabindex="13" name="Salesman">';
+			<td><select required="required" minlength="1" tabindex="13" name="Salesman">
+					<option value=""></option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Salesman']) and $myrow['salesmancode'] == $_POST['Salesman']) {
@@ -786,7 +788,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['PhoneNo'])) {
 		$_POST['PhoneNo'] = '';
 	}
-	echo '<td><input tabindex="16" type="text" name="PhoneNo" size="22" minlength="0" maxlength="20" value="' . $_POST['PhoneNo'] . '" /></td>
+	echo '<td><input tabindex="16" type="tel" name="PhoneNo" size="22" minlength="0" maxlength="20" value="' . $_POST['PhoneNo'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -794,7 +796,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['FaxNo'])) {
 		$_POST['FaxNo'] = '';
 	}
-	echo '<td><input tabindex="17" type="text" name="FaxNo" size="22" minlength="0" maxlength="20" value="' . $_POST['FaxNo'] . '" /></td>
+	echo '<td><input tabindex="17" type="tel" name="FaxNo" size="22" minlength="0" maxlength="20" value="' . $_POST['FaxNo'] . '" /></td>
 		</tr>';
 
 	if (!isset($_POST['Email'])) {
