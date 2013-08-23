@@ -246,10 +246,16 @@ echo '<table>
 		<tr>
 			<td colspan="5"><table class="selection">
 						<tr>
-							<td>' . _('Date to Process Journal') . ':</td>
-							<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" autofocus="autofocus" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>
-							<td>' . _('Type') . ':</td>
-							<td><select minlength="0" name="JournalType">';
+							<td>' . _('Date to Process Journal') . ':</td>';
+
+if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
+	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
+} else {
+	echo '<td><input type="text" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
+}
+
+echo '<td>' . _('Type') . ':</td>
+		<td><select minlength="0" name="JournalType">';
 
 if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
@@ -307,7 +313,12 @@ echo '</select></td>';
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode'] = '';
 }
-echo '<td><input class="number" type="text" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
+
+if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
+	echo '<td><input class="number" type="text" autofocus="autofocus" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
+} else {
+	echo '<td><input class="number" type="text" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
+}
 
 $sql = "SELECT accountcode,
 			accountname
@@ -446,11 +457,6 @@ if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['Journal
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'), 'warn');
 }
 
-if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
-	echo '<script  type="text/javascript">defaultControl(document.form.GLManualCode);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.form.JournalProcessDate);</script>';
-}
 echo '</div>';
 echo '</form>';
 include('includes/footer.inc');

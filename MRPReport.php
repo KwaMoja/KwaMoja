@@ -506,7 +506,6 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 	}
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
 	echo '<table class="selection"><tr>';
@@ -538,9 +537,9 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 	echo '<td><h3><b>' . _('OR') . ' ' . '</b></h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
+		echo '<input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size="15" minlength="0" maxlength="18" />';
+		echo '<input type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" />';
 	}
 	echo '</td>
 		</tr>
@@ -551,8 +550,6 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 		</div>
 		<br />';
 
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</div>';
 	echo '</form>';
 	if (!isset($_POST['Search'])) {
 		include('includes/footer.inc');

@@ -8,7 +8,6 @@ include('includes/header.inc');
 
 if (isset($_POST['StockSearch'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 
@@ -47,15 +46,13 @@ if (isset($_POST['StockSearch'])) {
 	echo '<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 	echo '<td>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
+		echo '<input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" />';
 	} else {
-		echo '<input type="text" name="StockCode" size="15" minlength="0" maxlength="18" />';
+		echo '<input type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" />';
 	}
 	echo '</td></tr></table><br />';
 	echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }

@@ -1835,12 +1835,15 @@ if (!isset($_POST['ProcessReturn'])) {
 
 			echo '<tr class="OddTableRow">';
 			/* Do not display colum unless customer requires po line number by sales order line*/
-			echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>
-					<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" />
+			if ($i == 1) {
+				echo '<td><input type="text" autofocus="autofocus" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>';
+			} else {
+				echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>';
+			}
+			echo '<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" />
 						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
 				</tr>';
 		}
-		echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 		echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';

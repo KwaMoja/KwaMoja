@@ -279,10 +279,10 @@ echo '</td>
 	<td><b>' . _('OR') . '</b></td><td>' . _('Enter a partial Code') . ':</td>
 	<td>';
 if (isset($_POST['CustCode'])) {
-	echo '<input type="text" name="CustCode" value="' . $_POST['CustCode'] . '" size="15" minlength="0" maxlength="18" />';
+	echo '<input type="text" autofocus="autofocus" name="CustCode" value="' . $_POST['CustCode'] . '" size="15" minlength="0" maxlength="18" />';
 } //isset($_POST['CustCode'])
 else {
-	echo '<input type="text" name="CustCode" size="15" minlength="0" maxlength="18" />';
+	echo '<input type="text" autofocus="autofocus" name="CustCode" size="15" minlength="0" maxlength="18" />';
 }
 echo '</td>
 	</tr>
@@ -754,6 +754,6 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 	} //$_SESSION['Extended_CustomerInfo'] == 1
 } //isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != ''
-echo '<script  type="text/javascript">defaultControl(document.forms[0].CustCode);</script>';
+
 include('includes/footer.inc');
 ?>

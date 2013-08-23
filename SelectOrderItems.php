@@ -1663,11 +1663,7 @@ else { //dont require customer selection
 						<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 						</td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $QOHRow['decimalplaces']), locale_number_format($DemandQty, $QOHRow['decimalplaces']), locale_number_format($OnOrder, $QOHRow['decimalplaces']), locale_number_format($Available, $QOHRow['decimalplaces']));
-				if ($j == 1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
-				} //$j == 1
 				$i++;
-				$j++;
 				//end of page full new headings if
 			} //$myrow = DB_fetch_array($result2)
 			//end of while loop for Frequently Ordered Items
@@ -1714,7 +1710,7 @@ else { //dont require customer selection
 		} //isset($_POST['Keywords'])
 		echo '" /></td>';
 
-		echo '<td align="right"><b>' . _('OR') . ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="';
+		echo '<td align="right"><b>' . _('OR') . ' ' . _('Enter extract of the Stock Code') . ':</b><input tabindex="3" type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" value="';
 		if (isset($_POST['StockCode'])) {
 			echo $_POST['StockCode'];
 		} //isset($_POST['StockCode'])
@@ -1727,9 +1723,6 @@ else { //dont require customer selection
 
 		echo '</tr></table><br />';
 		echo '</div>';
-		if (!isset($_POST['PartSearch'])) {
-			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
-		} //!isset($_POST['PartSearch'])
 		if (isset($SearchResult)) {
 			echo '<br />';
 			echo '<div class="page_help_text noPrint">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
@@ -1849,10 +1842,6 @@ else { //dont require customer selection
 						</td>
 						</tr>', $myrow['stockid'], $myrow['longdescription'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $QOHRow['decimalplaces']), locale_number_format($DemandQty, $QOHRow['decimalplaces']), locale_number_format($OnOrder, $QOHRow['decimalplaces']), locale_number_format($Available, $QOHRow['decimalplaces']));
 				$i++;
-				if ($j == 1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
-				} //$j == 1
-				$j++;
 				//end of page full new headings if
 			} //$myrow = DB_fetch_array($SearchResult)
 			//end of while loop
@@ -1861,7 +1850,6 @@ else { //dont require customer selection
 			echo '<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
 			echo '</table>
 				  </div>';
-			echo $jsCall;
 
 		} //end if SearchResults to show
 	} //(!isset($_POST['QuickEntry']) and !isset($_POST['SelectAsset']))
@@ -1892,7 +1880,7 @@ else { //dont require customer selection
 					<td><input type="text" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" /></td>
 					<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" minlength="0" maxlength="25" alt="' . $_SESSION['DefaultDateFormat'] . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
 		} //$i = 1; $i <= $_SESSION['QuickEntries']; $i++
-		echo '</table><script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
+		echo '</table>';
 
 		echo '<br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';

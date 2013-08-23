@@ -70,9 +70,9 @@ echo '</select></td>
 	<td>' . _('Enter partial description') . ':</td>
 	<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" size="20" minlength="0" maxlength="25" />';
 }
 echo '</td>
 	</tr>
@@ -116,7 +116,6 @@ echo '</td>
 	</div>
 	<br />
 	</div>';
-echo '<script  type="text/javascript">defaultControl(document.forms[0].Keywords);</script>';
 
 // query for list of record(s)
 if (isset($_POST['Go']) or isset($_POST['Next']) or isset($_POST['Previous'])) {

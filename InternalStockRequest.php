@@ -314,7 +314,6 @@ echo '</table>
 	</form>';
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
@@ -363,9 +362,9 @@ echo '</tr>
 			<td><h3>' . _('OR') . ' ' . '</h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
 
 if (isset($_POST['StockCode'])) {
-	echo '<td><input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" /></td>';
+	echo '<td><input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" minlength="0" maxlength="18" /></td>';
 } else {
-	echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>';
+	echo '<td><input type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" /></td>';
 }
 echo '</tr>
 	</table>
@@ -374,8 +373,7 @@ echo '</tr>
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>
 	<br />';
-echo '<script  type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-echo '</div>';
+
 echo '</form>';
 
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])) {
@@ -620,7 +618,6 @@ if (isset($SearchResult)) {
 	echo '<br />';
 	$j = 1;
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="orderform">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="table1">';
 	echo '<tr><td>
@@ -735,16 +732,14 @@ if (isset($SearchResult)) {
 				<td class="number">' . locale_number_format($DemandQty, $DecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format($OnOrder, $DecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format($Available, $DecimalPlaces) . '</td>
-				<td><input class="number"  tabindex="' . ($j + 7) . '" type="text" size="6" name="Quantity' . $i . '" value="0" />
+				<td><input class="number" autofocus="autofocus" tabindex="' . ($j + 7) . '" type="text" size="6" name="Quantity' . $i . '" value="0" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
 				</td>
 			</tr>';
 		echo '<input type="hidden" name="DecimalPlaces' . $i . '" value="' . $myrow['decimalplaces'] . '" />';
 		echo '<input type="hidden" name="ItemDescription' . $i . '" value="' . $myrow['description'] . '" />';
 		echo '<input type="hidden" name="Units' . $i . '" value="' . $myrow['stockunits'] . '" />';
-		if ($j == 1) {
-			$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
-		}
+
 		$i++;
 		//end of page full new headings if
 	}
@@ -756,9 +751,7 @@ if (isset($SearchResult)) {
 	echo '<td><input type="hidden" name="NextList" value="' . ($Offset + 1) . '" />
 		<input tabindex="' . ($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td><tr/>';
 	echo '</table>
-		  </div>
-		  </form>';
-	echo $jsCall;
+		</form>';
 
 } //end if SearchResults to show
 

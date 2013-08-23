@@ -374,8 +374,6 @@ if (isset($_POST['Submit']) and $InputError == False) {
 		<input type="submit" name="Submit" value="' . _('Create Transfer Shipment') . '" />
 		<br />';
 
-	echo '<script type="text/javascript">defaultControl(document.forms[0].StockID0);</script>';
-
 	echo '</div>
 		  </div>
 		  </form>';

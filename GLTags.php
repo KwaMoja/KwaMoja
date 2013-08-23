@@ -96,8 +96,6 @@ while ($myrow = DB_fetch_array($result, $db)) {
 
 echo '</table>';
 
-echo '<script  type="text/javascript">defaultControl(document.form.Description);</script>';
-
 include('includes/footer.inc');
 
 ?>

@@ -205,7 +205,7 @@ if (isset($SelectedWC)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" size="6" required="required" minlength="1" maxlength="5" value="' . $_POST['Code'] . '" /></td>
+				<td><input type="text" name="Code" size="6" autofocus="autofocus" required="required" minlength="1" maxlength="5" value="' . $_POST['Code'] . '" /></td>
 			</tr>';
 }
 
@@ -290,12 +290,6 @@ echo '<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
-
-if (!isset($_GET['SelectedWC']) or $_GET['SelectedWC'] == '') {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Code);</script>';
-} else {
-	echo '<script  type="text/javascript">defaultControl(document.forms[0].Description);</script>';
-}
 
 echo '</div>
 	  </form>';

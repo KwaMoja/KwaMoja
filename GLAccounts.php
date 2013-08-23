@@ -224,23 +224,29 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] . '" />';
 		echo '<table class="selection">
-				<tr><td>' . _('Account Code') . ':</td>
-					<td>' . $_POST['AccountCode'] . '</td></tr>';
+				<tr>
+					<td>' . _('Account Code') . ':</td>
+					<td>' . $_POST['AccountCode'] . '</td>
+				</tr>';
+		echo '<tr>
+				<td>' . _('Account Name') . ':</td>
+				<td><input type="text" size="51" autofocus="autofocus" required="required" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td>
+			</tr>';
 	} else {
 		echo '<table class="selection">';
 		echo '<tr>
 				<td>' . _('Account Code') . ':</td>
-				<td><input type="text" name="AccountCode" size="11" class="number" required="required" minlength="1" maxlength="20" /></td>
+				<td><input type="text" name="AccountCode" size="11" autofocus="autofocus" required="required" minlength="1" maxlength="20" /></td>
+			</tr>';
+		echo '<tr>
+				<td>' . _('Account Name') . ':</td>
+				<td><input type="text" size="51" required="required" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td>
 			</tr>';
 	}
 
 	if (!isset($_POST['AccountName'])) {
 		$_POST['AccountName'] = '';
 	}
-	echo '<tr>
-			<td>' . _('Account Name') . ':</td>
-			<td><input type="text" size="51" required="required" minlength="1" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td>
-		</tr>';
 
 	$sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$result = DB_query($sql, $db);
@@ -260,12 +266,6 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		</table>';
-
-	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount'] == '') {
-		echo '<script  type="text/javascript">defaultControl(document.GLAccounts.AccountCode);</script>';
-	} else {
-		echo '<script  type="text/javascript">defaultControl(document.GLAccounts.AccountName);</script>';
-	}
 
 	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
 	echo '</div>';

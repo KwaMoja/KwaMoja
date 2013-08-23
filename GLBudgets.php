@@ -202,7 +202,11 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		echo '<td><input type="text" class="number" required="required" minlength="1" maxlength="12" size="12" name="' . $i . 'this" value="' . locale_number_format($Budget[$CurrentYearEndPeriod - (12 - $i)], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
 		echo '<th>' . $PeriodEnd[$CurrentYearEndPeriod + ($i)] . '</th>';
 		echo '<td class="number">' . locale_number_format($Actual[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
-		echo '<td><input type="text" class="number" required="required" minlength="1" maxlength="12" size="12" name="' . $i . 'next" value="' . locale_number_format($Budget[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
+		if ($i == 1) {
+			echo '<td><input type="text" class="number" autofocus="autofocus" required="required" minlength="1" maxlength="12" size="12" name="' . $i . 'next" value="' . locale_number_format($Budget[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
+		} else {
+			echo '<td><input type="text" class="number" required="required" minlength="1" maxlength="12" size="12" name="' . $i . 'next" value="' . locale_number_format($Budget[$CurrentYearEndPeriod + $i], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>';
+		}
 		echo '</tr>';
 		$LastYearActual = $LastYearActual + $Actual[$CurrentYearEndPeriod - (24 - $i)];
 		$LastYearBudget = $LastYearBudget + $Budget[$CurrentYearEndPeriod - (24 - $i)];
@@ -238,7 +242,6 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 
 	echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 
-	echo '<script  type="text/javascript">defaultControl(document.form.1next);</script>';
 	echo '<br />
 		<div class="centre">
 			<input type="submit" name="update" value="' . _('Update') . '" />

@@ -646,7 +646,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<tr>
 					<td>' . _('Component code') . ':</td>
 					<td>';
-			echo '<select required="required" minlength="1" tabindex="1" name="Component">';
+			echo '<select required="required" autofocus="autofocus" minlength="1" tabindex="1" name="Component">';
 
 			if ($ParentMBflag == 'A') {
 				/*Its an assembly */
@@ -897,7 +897,7 @@ if (!isset($SelectedParent)) {
 		<td><input tabindex="1" type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 		<td><b>' . _('OR') . '</b></td>
 		<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td><input tabindex="2" type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
+		<td><input tabindex="2" type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
 	</table>
 	<br /><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
@@ -948,11 +948,6 @@ if (!isset($SelectedParent)) {
 	}
 	//end if results to show
 
-	if (!isset($SelectedParent) or $SelectedParent == '') {
-		echo '<script type="text/javascript">defaultControl(document.forms[0].StockCode);</script>';
-	} else {
-		echo '<script type="text/javascript">defaultControl(document.form.JournalProcessDate);</script>';
-	}
 	echo '</div>';
 	echo '</form>';
 

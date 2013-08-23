@@ -94,7 +94,7 @@ echo '<br />
 
 if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {
 	echo '<td>' . _('Description') . '</td>
-		<td><input type="text" size="50" required="required" minlength="1" maxlength="50" name="TokenDescription" value="' . _($_POST['TokenDescription']) . '" /></td>
+		<td><input type="text" size="50" autofocus="autofocus" required="required" minlength="1" maxlength="50" name="TokenDescription" value="' . _($_POST['TokenDescription']) . '" /></td>
 		<td><input type="hidden" name="TokenID" value="' . $_GET['SelectedToken'] . '" />
 			<input type="submit" name="Update" value="' . _('Update') . '" />';
 } else {
@@ -134,8 +134,6 @@ while ($myrow = DB_fetch_array($Result, $db)) {
 }
 
 echo '</table><br />';
-
-echo '<script  type="text/javascript">defaultControl(document.form.TokenDescription);</script>';
 
 include('includes/footer.inc');
 ?>

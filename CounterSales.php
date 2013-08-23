@@ -2211,10 +2211,6 @@ if (!isset($_POST['ProcessSale'])) {
 							<input type="hidden" name="StockID%s" value="%s" />
 						</td>
 						</tr>', $myrow['stockid'], $myrow['description'], $myrow['units'], $QOH, $DemandQty, $OnOrder, $Available, $i, $i, $myrow['stockid']);
-				if ($j == 1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.OrderQty' . $i . ');}</script>';
-				}
-				$j++; //counter for paging
 				$i++; //index for controls
 				#end of page full new headings if
 			}
@@ -2258,7 +2254,7 @@ if (!isset($_POST['ProcessSale'])) {
 		echo '" /></td>
 
 		<td align="right"><b> ' . _('OR') . ' </b><b>' . _('Enter extract of the Stock Code') . ':</b>
-		<input tabindex="3" type="text" name="StockCode" size="15" minlength="0" maxlength="18" value="';
+		<input tabindex="3" type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" value="';
 		if (isset($_POST['StockCode']))
 			echo $_POST['StockCode'];
 		echo '" /></td>
@@ -2266,10 +2262,6 @@ if (!isset($_POST['ProcessSale'])) {
 		</tr><tr>
 		<td style="text-align:center" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
 		<td style="text-align:center" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' . _('Use Quick Entry') . '" /></td>';
-
-		if (!isset($_POST['PartSearch'])) {
-			echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.Keywords);}</script>';
-		}
 
 		echo '</tr>
 		</table>
@@ -2390,10 +2382,6 @@ if (!isset($_POST['ProcessSale'])) {
 						<td class="number">%s</td>
 						<td><input class="number"  tabindex="' . strval($j + 7) . '" required="required" minlength="1" type="text" size="6" name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
 						</tr>', $myrow['stockid'], $myrow['description'], $myrow['units'], locale_number_format($QOH, $myrow['decimalplaces']), locale_number_format($DemandQty, $myrow['decimalplaces']), locale_number_format($OnOrder, $myrow['decimalplaces']), locale_number_format($Available, $myrow['decimalplaces']), $i, $i, $myrow['stockid']);
-				if ($j == 1) {
-					$jsCall = '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.itm' . $myrow['stockid'] . ');}</script>';
-				}
-				$j++;
 				$i++;
 				#end of page full new headings if
 			}
@@ -2411,7 +2399,6 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>';
 			echo '<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
 			echo '</table></div>';
-			echo $jsCall;
 
 		} #end if SearchResults to show
 	}
@@ -2439,15 +2426,19 @@ if (!isset($_POST['ProcessSale'])) {
 
 			echo '<tr class="OddTableRow">';
 			/* Do not display colum unless customer requires po line number by sales order line*/
-			echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>
-					<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" />
-						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+			if ($i == 1) {
+				echo '<td><input type="text" autofocus="autofocus" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>';
+			} else {
+				echo '<td><input type="text" name="part_' . $i . '" size="21" minlength="0" maxlength="20" /></td>';
+			}
+			echo '<td><input type="text" class="number" name="qty_' . $i . '" size="6" minlength="0" maxlength="6" />
+						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td>
+				</tr>';
 		}
 		echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '" />
 					 <input type="submit" name="PartSearch" value="' . _('Search Parts') . '" /></div>';
 
 		echo '</div>';
-		echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
 	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >= 1) {
