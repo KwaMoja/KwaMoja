@@ -225,16 +225,16 @@ if (!isset($SelectedSalesPerson)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Name') . '</th>
-			<th>' . _('SalesArea') . '</th>
-			<th>' . _('Manager') . '</th>
+			<th class="SortableColumn">' . _('Code') . '</th>
+			<th class="SortableColumn">' . _('Name') . '</th>
+			<th class="SortableColumn">' . _('SalesArea') . '</th>
+			<th class="SortableColumn">' . _('Manager') . '</th>
 			<th>' . _('Telephone') . '</th>
 			<th>' . _('Facsimile') . '</th>
 			<th>' . _('Comm Rate 1') . '</th>
 			<th>' . _('Break') . '</th>
 			<th>' . _('Comm Rate 2') . '</th>
-			<th>' . _('Current') . '</th>
+			<th class="SortableColumn">' . _('Current') . '</th>
 		</tr>';
 	$k = 0;
 	while ($myrow = DB_fetch_array($result)) {
@@ -361,7 +361,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Manager'] = 0;
 	}
 	if (!isset($_POST['Current'])) {
-		$_POST['Current'] = 0;
+		$_POST['Current'] = 1;
 	}
 
 	echo '<tr>
