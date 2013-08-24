@@ -2112,17 +2112,17 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 			echo _('Frequently Ordered Items') . '</p><br />';
 			echo '<div class="page_help_text noPrint">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
-			echo '<table class="table1">';
-			$TableHeader = '<tr>
-								<th class="SortableColumn">' . _('Code') . '</th>
-					   			<th class="SortableColumn">' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
-								<th>' . _('On Hand') . '</th>
-								<th>' . _('On Demand') . '</th>
-								<th>' . _('On Order') . '</th>
-								<th>' . _('Available') . '</th>
-								<th>' . _('Quantity') . '</th></tr>';
-			echo $TableHeader;
+			echo '<table class="table1">
+					<tr>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+						<th>' . _('On Hand') . '</th>
+						<th>' . _('On Demand') . '</th>
+						<th>' . _('On Order') . '</th>
+						<th>' . _('Available') . '</th>
+						<th>' . _('Quantity') . '</th>
+					</tr>';
 			$i = 0;
 			$j = 1;
 			$k = 0; //row colour counter
@@ -2283,19 +2283,18 @@ if (!isset($_POST['ProcessSale'])) {
 					<td><input type="hidden" name="PreviousList" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Previous" value="' . _('Prev') . '" /></td>
 					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>
 					<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td>
+				</tr>
+			<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
+					<th>' . _('Units') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('On Demand') . '</th>
+					<th>' . _('On Order') . '</th>
+					<th>' . _('Available') . '</th>
+					<th>' . _('Quantity') . '</th>
 				</tr>';
-			$TableHeader = '<tbody>
-							<tr>
-								<th class="SortableColumn">' . _('Code') . '</th>
-					   			<th class="SortableColumn">' . _('Description') . '</th>
-					   			<th>' . _('Units') . '</th>
-					   			<th>' . _('On Hand') . '</th>
-					   			<th>' . _('On Demand') . '</th>
-					   			<th>' . _('On Order') . '</th>
-					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th>
-					   		</tr>';
-			echo $TableHeader;
 			$i = 0;
 			$k = 0; //row colour counter
 

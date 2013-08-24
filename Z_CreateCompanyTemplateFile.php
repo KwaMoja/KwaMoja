@@ -236,8 +236,10 @@ echo '<table>';
 
 $ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster", $db);
 
-$TableHeadings = '<tr><th>' . _('Account Code') . '</th>
-					<th>' . _('Account Name') . '</th></tr>';
+echo '<tr>
+		<th>' . _('Account Code') . '</th>
+		<th>' . _('Account Name') . '</th>
+	</tr>';
 $i = 0;
 while ($ChartRow = DB_fetch_array($ChartResult)) {
 	echo '<tr>

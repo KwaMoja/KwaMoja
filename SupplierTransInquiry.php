@@ -93,23 +93,20 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 	$ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
 	$DbgMsg = _('The SQL that failed was');
 
-	echo '<table class="selection">';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Supp Ref') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Comments') . '</th>
+				<th>' . _('Due Date') . '</th>
+				<th>' . _('Ex Rate') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Currency') . '</th>
+			</tr>';
 
-	$tableheader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Supp Ref') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th>' . _('Due Date') . '</th>
-					<th>' . _('Ex Rate') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Currency') . '</th>
-				</tr>';
-	echo $tableheader;
-
-	$RowCounter = 1;
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($TransResult)) {
@@ -178,11 +175,6 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 			echo '</table></td></tr>';
 		}
 
-		$RowCounter++;
-		if ($RowCounter == 12) {
-			$RowCounter = 1;
-			echo $tableheader;
-		}
 		//end of page full new headings if
 	}
 	//end of while loop

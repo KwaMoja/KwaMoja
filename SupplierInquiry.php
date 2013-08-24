@@ -201,20 +201,18 @@ if (DB_num_rows($TransResult) == 0) {
 /*show a table of the transactions returned by the SQL */
 
 
-echo '<table width="90%" class="selection">';
-$TableHeader = '<tr>
-					<th class="SortableColumn">' . _('Trans') . ' #' . '</th>
-					<th class="SortableColumn">' . _('Type') . '</th>
-					<th class="SortableColumn">' . _('Supplier Ref') . '</th>
-					<th class="SortableColumn">' . _('Date') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('Allocated') . '</th>
-					<th>' . _('Balance') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th colspan="2"></th>
-				</tr>';
-
-echo $TableHeader;
+echo '<table width="90%" class="selection">
+		<tr>
+			<th class="SortableColumn">' . _('Trans') . ' #' . '</th>
+			<th class="SortableColumn">' . _('Type') . '</th>
+			<th class="SortableColumn">' . _('Supplier Ref') . '</th>
+			<th class="SortableColumn">' . _('Date') . '</th>
+			<th>' . _('Total') . '</th>
+			<th>' . _('Allocated') . '</th>
+			<th>' . _('Balance') . '</th>
+			<th>' . _('Comments') . '</th>
+			<th colspan="2"></th>
+		</tr>';
 
 $j = 1;
 $k = 0; //row colour counter

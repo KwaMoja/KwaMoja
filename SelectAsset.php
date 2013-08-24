@@ -256,15 +256,13 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		echo '<form onSubmit="return VerifyForm(this);" action="FixedAssetItems.php" method="post">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
-		$tableheader = '<tr>
+		echo '<table class="selection">
+				<tr>
 					<th>' . _('Asset Code') . '</th>
 					<th>' . _('Description') . '</th>
 					<th>' . _('Asset Location') . '</th>
 					<th>' . _('Date Purchased') . '</th>
 				</tr>';
-		echo $tableheader;
-		$j = 1;
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($SearchResult) <> 0) {
@@ -279,17 +277,10 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				$k++;
 			}
 			echo '<td><input type="submit" name="Select" value="' . $myrow['assetid'] . '" /></td>
-				<td>' . $myrow['description'] . '</td>
-				<td>' . $myrow['locationdescription'] . '</td>
-				<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>
+					<td>' . $myrow['description'] . '</td>
+					<td>' . $myrow['locationdescription'] . '</td>
+					<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>
 				</tr>';
-			$j++;
-			if ($j == 20 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
-				$j = 1;
-				echo $tableheader;
-			}
-			$RowIndex = $RowIndex + 1;
-			//end of page full new headings if
 		}
 		//end of while loop
 		echo '</table>';

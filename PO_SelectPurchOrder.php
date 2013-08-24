@@ -219,16 +219,14 @@ echo '</select></td>
 	<br />';
 
 if (isset($StockItemsResult)) {
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
+	echo '<table class="selection">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
 		if ($k == 1) {
@@ -244,13 +242,6 @@ if (isset($StockItemsResult)) {
 				<td class="number">' . locale_number_format($myrow['qord'], $myrow['decimalplaces']) . '</td>
 				<td>' . $myrow['units'] . '</td>
 			</tr>';
-		$j++;
-		if ($j == 12) {
-			$j = 1;
-			echo $TableHeader;
-		}
-		//end of page full new headings if
-
 	}
 	//end of while loop
 	echo '</table>';
@@ -438,20 +429,18 @@ else {
 
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding="2" width="90%" class="selection">';
-		$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('View') . '</th>
-						<th class="SortableColumn">' . _('Supplier') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th class="SortableColumn">' . _('Requisition') . '</th>
-						<th class="SortableColumn">' . _('Order Date') . '</th>
-						<th class="SortableColumn">' . _('Delivery Date') . '</th>
-						<th class="SortableColumn">' . _('Initiator') . '</th>
-						<th>' . _('Order Total') . '</th>
-						<th>' . _('Status') . '</th>
-					</tr>';
-		echo $TableHeader;
-		$j = 1;
+		echo '<table cellpadding="2" width="90%" class="selection">
+				<tr>
+					<th class="SortableColumn">' . _('View') . '</th>
+					<th class="SortableColumn">' . _('Supplier') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th class="SortableColumn">' . _('Requisition') . '</th>
+					<th class="SortableColumn">' . _('Order Date') . '</th>
+					<th class="SortableColumn">' . _('Delivery Date') . '</th>
+					<th class="SortableColumn">' . _('Initiator') . '</th>
+					<th>' . _('Order Total') . '</th>
+					<th>' . _('Status') . '</th>
+				</tr>';
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($PurchOrdersResult)) {
 			if ($k == 1) {
@@ -479,12 +468,6 @@ else {
 					</tr>';
 			//$myrow['status'] is a string which has gettext translations from PO_Header.php script
 
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			//end of page full new headings if
 		}
 		//end of while loop
 		echo '</table>';

@@ -433,16 +433,13 @@ if (!isset($SelectedStockItem)) {
 if (isset($StockItemsResult)) {
 
 	echo '<br />
-		<table cellpadding="2" class="selection">';
-
-	$TableHeadings = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-
-	echo $TableHeadings;
+		<table cellpadding="2" class="selection">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 
 	$j = 1;
 	$k = 0; //row colour counter
@@ -482,21 +479,18 @@ if (isset($SalesOrdersResult)) {
 						<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
 					</h3>
 				</th>
+			</tr>
+		<tbody>
+			<tr>
+				<th class="SortableColumn">' . _('Order') . ' #</th>
+				<th class="SortableColumn">' . _('Customer') . '</th>
+				<th class="SortableColumn">' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Order Date') . '</th>
+				<th>' . _('Req Del Date') . '</th>
+				<th>' . _('Delivery To') . '</th>
+				<th>' . _('Order Total') . '</th>
 			</tr>';
-
-	$tableheader = '<tbody>
-					<tr>
-						<th class="SortableColumn">' . _('Order') . ' #</th>
-						<th class="SortableColumn">' . _('Customer') . '</th>
-						<th class="SortableColumn">' . _('Branch') . '</th>
-						<th>' . _('Cust Order') . ' #</th>
-						<th>' . _('Order Date') . '</th>
-						<th>' . _('Req Del Date') . '</th>
-						<th>' . _('Delivery To') . '</th>
-						<th>' . _('Order Total') . '</th>
-					</tr>';
-
-	echo $tableheader;
 
 	$j = 1;
 	$k = 0; //row colour counter

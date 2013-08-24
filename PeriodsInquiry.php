@@ -21,18 +21,16 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 $NumberOfPeriods = DB_num_rows($PeriodsResult);
 $PeriodsInTable = round($NumberOfPeriods / 3, 0);
 
-$TableHeader = '<tr><th>' . _('Period Number') . '</th>
-					<th>' . _('Date of Last Day') . '</th>
-				</tr>';
-
 echo '<table><tr>';
 
 for ($i = 0; $i < 3; $i++) {
 	echo '<td valign="top">';
-	echo '<table cellpadding="2" class="selection">';
-	echo $TableHeader;
+	echo '<table cellpadding="2" class="selection">
+			<tr>
+				<th>' . _('Period Number') . '</th>
+				<th>' . _('Date of Last Day') . '</th>
+			</tr>';
 	$k = 0;
-	$j = 0;
 	while ($myrow = DB_fetch_array($PeriodsResult)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';

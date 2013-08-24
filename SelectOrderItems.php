@@ -614,16 +614,14 @@ if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['Items' . $id
 					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 					<input type="hidden" name="JustSelectedACustomer" value="Yes" />
 					<br />
-					<table class="selection">';
-
-		$TableHeader = '<tr>
+					<table class="selection">
+						<tr>
 							<th class="SortableColumn">' . _('Customer') . '</th>
 							<th class="SortableColumn">' . _('Branch') . '</th>
 							<th class="SortableColumn">' . _('Contact') . '</th>
 							<th>' . _('Phone') . '</th>
 							<th>' . _('Fax') . '</th>
 						</tr>';
-		echo $TableHeader;
 
 		$j = 1;
 		$k = 0; //row counter to determine background colour
@@ -1557,19 +1555,17 @@ else { //dont require customer selection
 					<br />
 					<div class="page_help_text noPrint">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div>
 					<br />
-					<table class="table1">';
-
-			$TableHeader = '<tr>
-								<th class="SortableColumn">' . _('Code') . '</th>
-								<th class="SortableColumn">' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
-								<th>' . _('On Hand') . '</th>
-								<th>' . _('On Demand') . '</th>
-								<th>' . _('On Order') . '</th>
-								<th>' . _('Available') . '</th>
-								<th>' . _('Quantity') . '</th>
-							</tr>';
-			echo $TableHeader;
+					<table class="table1">
+						<tr>
+							<th class="SortableColumn">' . _('Code') . '</th>
+							<th class="SortableColumn">' . _('Description') . '</th>
+							<th>' . _('Units') . '</th>
+							<th>' . _('On Hand') . '</th>
+							<th>' . _('On Demand') . '</th>
+							<th>' . _('On Order') . '</th>
+							<th>' . _('Available') . '</th>
+							<th>' . _('Quantity') . '</th>
+						</tr>';
 			$i = 0;
 			$j = 1;
 			$k = 0; //row colour counter
@@ -1734,18 +1730,17 @@ else { //dont require customer selection
 			echo '<tr><td colspan="1"><input type="hidden" name="PreviousList" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 8) . '" type="submit" name="Previous" value="' . _('Previous') . '" /></td>';
 			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="' . strval($j + 9) . '" type="submit" value="' . _('Add to Sales Order') . '" /></td>';
 			echo '<td colspan="1"><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 10) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
-			$TableHeader = '<tbody>
-							<tr>
-								<th class="SortableColumn">' . _('Code') . '</th>
-					   			<th class="SortableColumn">' . _('Description') . '</th>
-					   			<th>' . _('Units') . '</th>
-					   			<th>' . _('On Hand') . '</th>
-					   			<th>' . _('On Demand') . '</th>
-					   			<th>' . _('On Order') . '</th>
-					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th>
-					   		</tr>';
-			echo $TableHeader;
+			echo '<tbody>
+					<tr>
+						<th class="SortableColumn">' . _('Code') . '</th>
+						<th class="SortableColumn">' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+						<th>' . _('On Hand') . '</th>
+						<th>' . _('On Demand') . '</th>
+						<th>' . _('On Order') . '</th>
+						<th>' . _('Available') . '</th>
+						<th>' . _('Quantity') . '</th>
+					</tr>';
 			$ImageSource = _('No Image');
 			$i = 0;
 			$k = 0; //row colour counter

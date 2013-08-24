@@ -99,17 +99,14 @@ if (isset($_POST['Search'])) {
 if (isset($_POST['Search']) and isset($result) and !isset($SelectedParent)) {
 
 	echo '<br />
-			<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
+			<table class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('Units') . '</th>
+				</tr>';
 
-	echo $TableHeader;
-
-	$j = 1;
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
@@ -184,17 +181,15 @@ if (isset($StockID) and $StockID != "") {
 				<th colspan="5">
 					<div class="centre"><b>' . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . '</b>
 					</div></th>
+			</tr>
+			<tr>
+				<th>' . _('Component') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Unit Cost') . '</th>
+				<th>' . _('Total Cost') . '</th>
 			</tr>';
-		$TableHeader = '<tr>
-							<th>' . _('Component') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Unit Cost') . '</th>
-							<th>' . _('Total Cost') . '</th>
-						</tr>';
-		echo $TableHeader;
 
-		$j = 1;
 		$k = 0; //row colour counter
 
 		$TotalCost = 0;

@@ -108,19 +108,16 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 						<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
 					</div>
 					</th>
+				</tr>
+				<tr>
+					<th>' . _('Type') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Reference') . '</th>
+					<th>' . _('Ex Rate') . '</th>
+					<th>' . _('Amount') . '</th>
+					<th>' . _('Alloc') . '</th>
 				</tr>';
 
-			$TableHeader = '<tr>
-								<th>' . _('Type') . '</th>
-								<th>' . _('Number') . '</th>
-								<th>' . _('Reference') . '</th>
-								<th>' . _('Ex Rate') . '</th>
-								<th>' . _('Amount') . '</th>
-								<th>' . _('Alloc') . '</th>
-							</tr>';
-			echo $TableHeader;
-
-			$RowCounter = 1;
 			$k = 0; //row colour counter
 			$AllocsTotal = 0;
 
@@ -146,12 +143,6 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 					<td class="number">' . locale_number_format($myrow['amt'], $CurrDecimalPlaces) . '</td>
 					</tr>';
 
-				$RowCounter++;
-				if ($RowCounter == 12) {
-					$RowCounter = 1;
-					echo $TableHeader;
-				}
-				//end of page full new headings if
 				$AllocsTotal += $myrow['amt'];
 			}
 			//end of while loop

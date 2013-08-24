@@ -106,22 +106,19 @@ $DbgMsg = _('The SQL that failed was') . ' ';
 
 $MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-$tableheader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Price') . '</th>
-					<th>' . _('Discount') . '</th>
-					<th>' . _('New Qty') . '</th>
-				</tr>';
+echo '<tr>
+		<th>' . _('Type') . '</th>
+		<th>' . _('Number') . '</th>
+		<th>' . _('Date') . '</th>
+		<th>' . _('Customer') . '</th>
+		<th>' . _('Branch') . '</th>
+		<th>' . _('Quantity') . '</th>
+		<th>' . _('Reference') . '</th>
+		<th>' . _('Price') . '</th>
+		<th>' . _('Discount') . '</th>
+		<th>' . _('New Qty') . '</th>
+	</tr>';
 
-echo $tableheader;
-
-$j = 1;
 $k = 0; //row colour counter
 
 while ($myrow = DB_fetch_array($MovtsResult)) {

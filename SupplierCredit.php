@@ -307,15 +307,17 @@ if (count($_SESSION['SuppTrans']->GRNs) > 0) {
 	Note that the class for carrying GRNs refers to quantity invoiced read credited in this context*/
 
 	echo '<table class="selection">
-		<tr><th colspan="6">' . _('Purchase Order Credits') . '</th></tr>';
-	$TableHeader = '<tr><th>' . _('GRN') . '</th>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Quantity') . '<br />' . _('Credited') . '</th>
-					<th>' . _('Price Credited') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					<th>' . _('Line Total') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-				</tr>';
-	echo $TableHeader;
+			<tr>
+				<th colspan="6">' . _('Purchase Order Credits') . '</th>
+			</tr>
+			<tr>
+				<th>' . _('GRN') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Quantity') . '<br />' . _('Credited') . '</th>
+				<th>' . _('Price Credited') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Line Total') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			</tr>';
 	$TotalGRNValue = 0;
 
 	foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
@@ -348,12 +350,11 @@ if (count($_SESSION['SuppTrans']->Shipts) > 0) {
 	echo '<table class="selection">
 				<tr>
 					<th colspan="2">' . _('Shipment Credits') . '</th>
+				</tr>
+				<tr>
+					<th>' . _('Shipment') . '</th>
+					<th>' . _('Amount') . '</th>
 				</tr>';
-	$TableHeader = '<tr>
-						<th>' . _('Shipment') . '</th>
-						<th>' . _('Amount') . '</th>
-					</tr>';
-	echo $TableHeader;
 
 	$TotalShiptValue = 0;
 
@@ -382,13 +383,12 @@ if (count($_SESSION['SuppTrans']->Assets) > 0) {
 		<table class="selection">
 		<tr>
 			<th colspan="3">' . _('Fixed Asset Credits') . '</th>
+		</tr>
+		<tr>
+			<th>' . _('Asset ID') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 		</tr>';
-	$TableHeader = '<tr>
-						<th>' . _('Asset ID') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					</tr>';
-	echo $TableHeader;
 
 	$TotalAssetValue = 0;
 
@@ -402,11 +402,6 @@ if (count($_SESSION['SuppTrans']->Assets) > 0) {
 
 		$TotalAssetValue += $EnteredAsset->Amount;
 
-		$i++;
-		if ($i > 15) {
-			$i = 0;
-			echo $TableHeader;
-		}
 	}
 
 	echo '<tr>
@@ -423,16 +418,14 @@ if (count($_SESSION['SuppTrans']->Contracts) > 0) {
 	echo '<table class="selection">
 			<tr>
 				<th colspan="3">' . _('Contract Charges') . '</th>
+			</tr>
+			<tr>
+				<th>' . _('Contract') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>';
-	$TableHeader = '<tr>
-						<th>' . _('Contract') . '</th>
-						<th>' . _('Narrative') . '</th>
-						<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					</tr>';
-	echo $TableHeader;
 
 	$TotalContractsValue = 0;
-	$i = 0;
 	foreach ($_SESSION['SuppTrans']->Contracts as $Contract) {
 
 		echo '<tr>
@@ -443,11 +436,6 @@ if (count($_SESSION['SuppTrans']->Contracts) > 0) {
 
 		$TotalContractsValue += $Contract->Amount;
 
-		$i++;
-		if ($i == 15) {
-			$i = 0;
-			echo $TableHeader;
-		}
 	}
 
 	echo '<tr>
@@ -464,15 +452,14 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 		echo '<table class="selection">
 			<tr>
 				<th colspan="3">' . _('General Ledger Analysis') . '</th>
+			</tr>
+			<tr>
+				<th>' . _('Account') . '</th>
+				<th>' . _('Account Name') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Tag') . '</th>
+				<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>';
-		$TableHeader = '<tr>
-							<th>' . _('Account') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th>' . _('Narrative') . '</th>
-							<th>' . _('Tag') . '</th>
-							<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						</tr>';
-		echo $TableHeader;
 
 		$TotalGLValue = 0;
 
@@ -488,11 +475,6 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 
 			$TotalGLValue += $EnteredGLCode->Amount;
 
-			$i++;
-			if ($i > 15) {
-				$i = 0;
-				echo $TableHeader;
-			}
 		}
 
 		echo '<tr>

@@ -21,7 +21,6 @@ echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'
 	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -735,14 +734,12 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 		if (DB_num_rows($SearchResult)>1){
 
 			echo '<br />
-				<table cellpadding="2" class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
-							</tr>';
-			echo $TableHeader;
-			$j = 1;
+				<table cellpadding="2" class="selection">
+					<tr>
+						<th>' . _('Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+					</tr>';
 			$k=0; //row colour counter
 			$ItemCodes = array();
 
@@ -781,11 +778,6 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 							$ImageSource,
 							$IssueLink);
 
-					$j++;
-					if ($j == 25){
-						$j=1;
-						echo $TableHeader;
-					} //end of page full new headings if
 				} //end if not already on work order
 			}//end of while loop
 		} //end if more than 1 row to show
@@ -881,8 +873,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	}
 	echo '</table>';
 } //end if selecting new item to issue or entering the issued item quantities
-echo '</div>
-	  </form>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

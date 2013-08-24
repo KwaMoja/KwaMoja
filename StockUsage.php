@@ -141,15 +141,13 @@ if (isset($_POST['ShowUsage'])) {
 		exit;
 	}
 
-	echo '<table class="selection">';
-	$tableheader = '<tbody>
-					<tr>
-						<th class="SortableColumn">' . _('Month') . '</th>
-						<th>' . _('Usage') . '</th>
-					</tr>';
-	echo $tableheader;
+	echo '<table class="selection">
+			<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Month') . '</th>
+					<th>' . _('Usage') . '</th>
+				</tr>';
 
-	$j = 1;
 	$k = 0; //row colour counter
 
 	$TotalUsage = 0;

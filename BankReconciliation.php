@@ -203,20 +203,16 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])) {
 
 	echo '<tr>
 			<td colspan="6"><b>' . _('Add back unpresented cheques') . ':</b></td>
+		</tr>
+		<tr>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Orig Amount') . '</th>
+			<th>' . _('Outstanding') . '</th>
 		</tr>';
 
-	$TableHeader = '<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Orig Amount') . '</th>
-						<th>' . _('Outstanding') . '</th>
-					</tr>';
-
-	echo $TableHeader;
-
-	$j = 1;
 	$k = 0; //row colour counter
 	$TotalUnpresentedCheques = 0;
 
@@ -239,11 +235,6 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])) {
 
 		$TotalUnpresentedCheques += $myrow['outstanding'];
 
-		$j++;
-		if ($j == 18) {
-			$j = 1;
-			echo $TableHeader;
-		}
 	}
 	//end of while loop
 
@@ -275,20 +266,18 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])) {
 
 	$UPChequesResult = DB_query($SQL, $db, $ErrMsg);
 
-	echo '<tr><td colspan="6"><b>' . _('Less deposits not cleared') . ':</b></td></tr>';
+	echo '<tr>
+			<td colspan="6"><b>' . _('Less deposits not cleared') . ':</b></td>
+		</tr>
+		<tr>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Orig Amount') . '</th>
+			<th>' . _('Outstanding') . '</th>
+		</tr>';
 
-	$TableHeader = '<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Orig Amount') . '</th>
-						<th>' . _('Outstanding') . '</th>
-					</tr>';
-
-	echo $TableHeader;
-
-	$j = 1;
 	$k = 0; //row colour counter
 	$TotalUnclearedDeposits = 0;
 
@@ -311,11 +300,6 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])) {
 
 		$TotalUnclearedDeposits += $myrow['outstanding'];
 
-		$j++;
-		if ($j == 18) {
-			$j = 1;
-			echo $TableHeader;
-		}
 	}
 	//end of while loop
 	echo '<tr>

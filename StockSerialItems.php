@@ -79,49 +79,48 @@ echo '<tr>
 	</tr>';
 
 if ($Serialised == 1 and $Perishable == 0) {
-	$tableheader = '<tr>
-						<th>' . _('Serial Number') . '</th>
-						<th></th>
-						<th>' . _('Serial Number') . '</th>
-						<th></th>
-						<th>' . _('Serial Number') . '</th>
-					</tr>';
+	echo '<tr>
+			<th>' . _('Serial Number') . '</th>
+			<th></th>
+			<th>' . _('Serial Number') . '</th>
+			<th></th>
+			<th>' . _('Serial Number') . '</th>
+		</tr>';
 } else if ($Serialised == 1 and $Perishable == 1) {
-	$tableheader = '<tr>
+	echo '<tr>
 			<th>' . _('Serial Number') . '</th>
 			<th>' . _('Expiry Date') . '</th>
 			<th>' . _('Serial Number') . '</th>
 			<th>' . _('Expiry Date') . '</th>
 			<th>' . _('Serial Number') . '</th>
 			<th>' . _('Expiry Date') . '</th>
-			</tr>';
+		</tr>';
 } else if ($Serialised == 0 and $Perishable == 0) {
-	$tableheader = '<tr>
-						<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th></th>
-						<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th></th>
-						<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-					</tr>';
+	echo '<tr>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th></th>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th></th>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+		</tr>';
 } else if ($Serialised == 0 and $Perishable == 1) {
-	$tableheader = '<tr>
-						<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Expiry Date') . '</th>
-						<th></th>
-						<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Expiry Date') . '</th>
-						<th></th>
-			   			<th>' . _('Batch/Bundle Ref') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Expiry Date') . '</th>
-			   		</tr>';
+	echo '<tr>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th>' . _('Expiry Date') . '</th>
+			<th></th>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th>' . _('Expiry Date') . '</th>
+			<th></th>
+			<th>' . _('Batch/Bundle Ref') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th>' . _('Expiry Date') . '</th>
+		</tr>';
 }
-echo $tableheader;
 $TotalQuantity = 0;
 $j = 1;
 $Col = 0;
@@ -153,11 +152,6 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 			<td class="number">' . locale_number_format($myrow['quantity'], $DecimalPlaces) . '</td>
 			<td>' . ConvertSQLDate($myrow['expirationdate']) . '</td>
 			<th></th>';
-	}
-	$j++;
-	if ($j == 36) {
-		$j = 1;
-		echo $tableheader;
 	}
 	//end of page full new headings if
 	$Col++;

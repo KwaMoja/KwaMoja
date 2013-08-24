@@ -95,24 +95,23 @@ echo '<br />
 		<table class="selection">';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True) {
-	$TableHeader = '<tr>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Demand') . '</th>
-					</tr>';
+	echo '<tr>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Demand') . '</th>
+		</tr>';
 } else {
-	$TableHeader = '<tr>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Bin Location') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Re-Order Level') . '</th>
-						<th>' . _('Demand') . '</th>
-						<th>' . _('In Transit') . '</th>
-						<th>' . _('Available') . '</th>
-						<th>' . _('On Order') . '</th>
-					</tr>';
+	echo '<tr>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Bin Location') . '</th>
+			<th>' . _('Quantity On Hand') . '</th>
+			<th>' . _('Re-Order Level') . '</th>
+			<th>' . _('Demand') . '</th>
+			<th>' . _('In Transit') . '</th>
+			<th>' . _('Available') . '</th>
+			<th>' . _('On Order') . '</th>
+		</tr>';
 }
-echo $TableHeader;
-$j = 1;
+
 $k = 0; //row colour counter
 
 while ($myrow = DB_fetch_array($LocStockResult)) {
@@ -367,23 +366,17 @@ if ($DebtorNo) {
 			<table class="selection">
 			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
+			</tr>
+			<tr>
+				<th>' . _('Date Range') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Price') . '</th>
+				<th>' . _('Discount') . '</th>
 			</tr>';
-		$TableHeader = '<tr>
-						<th>' . _('Date Range') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Price') . '</th>
-						<th>' . _('Discount') . '</th>
-					</tr>';
 
-		$j = 0;
 		$k = 0; //row colour counter
 
 		foreach ($PriceHistory as $PreviousPrice) {
-			$j--;
-			if ($j < 0) {
-				$j = 11;
-				echo $TableHeader;
-			}
 
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';

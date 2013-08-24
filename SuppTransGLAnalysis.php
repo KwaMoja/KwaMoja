@@ -102,7 +102,6 @@ echo '</p>
 			<th>' . _('Narrative') . '</th>
 			<th>' . _('Tag') . '</th>
 		</tr>';
-echo $TableHeader;
 $TotalGLValue = 0;
 $i = 0;
 
@@ -120,11 +119,6 @@ foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 
 	$TotalGLValue += $EnteredGLCode->Amount;
 
-	$i++;
-	if ($i > 15) {
-		$i = 0;
-		echo $TableHeader;
-	}
 }
 
 echo '<tr>

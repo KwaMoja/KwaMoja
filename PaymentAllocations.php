@@ -56,17 +56,14 @@ if (DB_num_rows($Result) == 0) {
 	exit;
 }
 
-echo '<table cellpadding="2" width="80%" class="selection">';
-$TableHeader = '<tr>
-					<th>' . _('Supplier Number') . '<br />' . _('Reference') . '</th>
-					<th>' . _('Payment') . '<br />' . _('Reference') . '</th>
-					<th>' . _('Payment') . '<br />' . _('Date') . '</th>
-					<th>' . _('Total Payment') . '<br />' . _('Amount') . '</th>
-				</tr>';
+echo '<table cellpadding="2" width="80%" class="selection">
+		<tr>
+			<th>' . _('Supplier Number') . '<br />' . _('Reference') . '</th>
+			<th>' . _('Payment') . '<br />' . _('Reference') . '</th>
+			<th>' . _('Payment') . '<br />' . _('Date') . '</th>
+			<th>' . _('Total Payment') . '<br />' . _('Amount') . '</th>
+		</tr>';
 
-echo $TableHeader;
-
-$j = 1;
 $k = 0; //row colour counter
 while ($myrow = DB_fetch_array($Result)) {
 	if ($k == 1) {
@@ -78,16 +75,10 @@ while ($myrow = DB_fetch_array($Result)) {
 	}
 
 	echo '<td>' . $myrow['supplierno'] . '</td>
-		<td>' . $myrow['suppreference'] . '</td>
-		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-		<td class="number">' . locale_number_format($myrow['alloc'], $myrow['currdecimalplaces']) . '</td>
+			<td>' . $myrow['suppreference'] . '</td>
+			<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
+			<td class="number">' . locale_number_format($myrow['alloc'], $myrow['currdecimalplaces']) . '</td>
 		</tr>';
-
-	$j++;
-	if ($j == 18) {
-		$j = 1;
-		echo $TableHeader;
-	}
 
 }
 echo '</table>';

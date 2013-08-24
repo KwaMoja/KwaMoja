@@ -299,17 +299,6 @@ echo '<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Allocate Receipt') . '" alt="" />' . ' ' . _('Allocate Receipts') . '
 	</p>';
 
-$TableHeader = '<tr>
-					<th>' . _('Trans Type') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Cust No') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('To Alloc') . '</th>
-					<th>' . _('Currency') . '</th>
-					<th>' . _('Action') . '</th>
-				</tr>';
 
 if (isset($_POST['AllocTrans'])) {
 	// Page called with trans number
@@ -447,8 +436,18 @@ if (isset($_POST['AllocTrans'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-	echo '<table class="selection">';
-	echo $TableHeader;
+	echo '<table class="selection">
+				<tr>
+					<th>' . _('Trans Type') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Cust No') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Total') . '</th>
+					<th>' . _('To Alloc') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th>' . _('Action') . '</th>
+				</tr>';
 	$k = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
@@ -501,8 +500,18 @@ if (isset($_POST['AllocTrans'])) {
 	$NoOfUnallocatedTrans = DB_num_rows($result);
 	$CurrentTransaction = 1;
 	$CurrentDebtor = '';
-	echo '<table class="selection">';
-	echo $TableHeader;
+	echo '<table class="selection">
+				<tr>
+					<th>' . _('Trans Type') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Cust No') . '</th>
+					<th>' . _('Number') . '</th>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Total') . '</th>
+					<th>' . _('To Alloc') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th>' . _('Action') . '</th>
+				</tr>';
 
 	$k = 0;
 	while ($myrow = DB_fetch_array($result)) {

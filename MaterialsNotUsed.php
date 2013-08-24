@@ -30,18 +30,16 @@ echo '<p class="page_title_text" align="center"><strong>' . _('Raw Materials Not
 if (DB_num_rows($result) != 0) {
 	$TotalValue = 0;
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('QOH') . '</th>
-						<th>' . _('Std Cost') . '</th>
-						<th>' . _('Value') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('#') . '</th>
+				<th>' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('QOH') . '</th>
+				<th>' . _('Std Cost') . '</th>
+				<th>' . _('Value') . '</th>
+			</tr>';
 	$k = 0; //row colour counter
-	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';

@@ -260,20 +260,19 @@ if (!isset($_GET['Edit'])) {
 		prnMsg(_('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData = 1;
 	} else if ($StockID != '') {
-		echo '<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th class="SortableColumn">' . _('Supplier') . '</th>
-							<th>' . _('Price') . '</th>
-							<th>' . _('Supplier Unit') . '</th>
-							<th>' . _('Conversion Factor') . '</th>
-							<th>' . _('Cost Per Our Unit') . '</th>
-							<th>' . _('Currency') . '</th>
-							<th class="SortableColumn">' . _('Effective From') . '</th>
-							<th>' . _('Min Order Qty') . '</th>
-							<th>' . _('Lead Time') . '</th>
-							<th class="SortableColumn">' . _('Preferred') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table cellpadding="2" class="selection">
+				<tr>
+					<th class="SortableColumn">' . _('Supplier') . '</th>
+					<th>' . _('Price') . '</th>
+					<th>' . _('Supplier Unit') . '</th>
+					<th>' . _('Conversion Factor') . '</th>
+					<th>' . _('Cost Per Our Unit') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th class="SortableColumn">' . _('Effective From') . '</th>
+					<th>' . _('Min Order Qty') . '</th>
+					<th>' . _('Lead Time') . '</th>
+					<th class="SortableColumn">' . _('Preferred') . '</th>
+				</tr>';
 		$CountPreferreds = 0;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($PurchDataResult)) {
@@ -437,16 +436,15 @@ if (isset($SuppliersResult)) {
 	}
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post" class="noPrint">
 			<table cellpadding="2" colspan="7" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Supplier Name') . '</th>
-						<th class="SortableColumn">' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Supplier Name') . '</th>
+				<th class="SortableColumn">' . _('Currency') . '</th>
+				<th>' . _('Address 1') . '</th>
+				<th>' . _('Address 2') . '</th>
+				<th>' . _('Address 3') . '</th>
+			</tr>';
 	$k = 0;
 	while ($myrow = DB_fetch_array($SuppliersResult)) {
 		if ($k == 1) {

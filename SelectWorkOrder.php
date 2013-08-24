@@ -212,16 +212,14 @@ if (!isset($StockID)) {
 	if (isset($StockItemsResult)) {
 
 		echo '<br />
-			<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('On Hand') . '</th>
-							<th>' . _('Units') . '</th>
-						</tr>';
-		echo $TableHeader;
+			<table cellpadding="2" class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('Units') . '</th>
+				</tr>';
 
-		$j = 1;
 		$k = 0; //row colour counter
 
 		while ($myrow = DB_fetch_array($StockItemsResult)) {
@@ -240,12 +238,6 @@ if (!isset($StockID)) {
 					<td>%s</td>
 					</tr>', $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), $myrow['units']);
 
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			//end of page full new headings if
 		}
 		//end of while loop
 
@@ -326,26 +318,21 @@ if (!isset($StockID)) {
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult) > 0) {
 			echo '<br />
-				<table cellpadding="2" width="95%" class="selection">';
+				<table cellpadding="2" width="95%" class="selection">
+					<tr>
+						<th>' . _('Modify') . '</th>
+						<th>' . _('Status') . '</th>
+						<th>' . _('Receive') . '</th>
+						<th>' . _('Issue To') . '</th>
+						<th>' . _('Costing') . '</th>
+						<th>' . _('Item') . '</th>
+						<th>' . _('Quantity Required') . '</th>
+						<th>' . _('Quantity Received') . '</th>
+						<th>' . _('Quantity Outstanding') . '</th>
+						<th>' . _('Start Date') . '</th>
+						<th>' . _('Required Date') . '</th>
+					</tr>';
 
-
-			$tableheader = '<tr>
-								<th>' . _('Modify') . '</th>
-								<th>' . _('Status') . '</th>
-								<th>' . _('Receive') . '</th>
-								<th>' . _('Issue To') . '</th>
-								<th>' . _('Costing') . '</th>
-								<th>' . _('Item') . '</th>
-								<th>' . _('Quantity Required') . '</th>
-								<th>' . _('Quantity Received') . '</th>
-								<th>' . _('Quantity Outstanding') . '</th>
-								<th>' . _('Start Date') . '</th>
-								<th>' . _('Required Date') . '</th>
-							</tr>';
-
-			echo $tableheader;
-
-			$j = 1;
 			$k = 0; //row colour counter
 			while ($myrow = DB_fetch_array($WorkOrdersResult)) {
 
@@ -380,12 +367,6 @@ if (!isset($StockID)) {
 					<td>%s</td>
 					</tr>', $ModifyPage, $myrow['wo'], $Status_WO, $Receive_WO, $Issue_WO, $Costing_WO, $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qtyreqd'], $myrow['decimalplaces']), locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']), locale_number_format($myrow['qtyreqd'] - $myrow['qtyrecd'], $myrow['decimalplaces']), $FormatedStartDate, $FormatedRequiredByDate);
 
-				$j++;
-				if ($j == 12) {
-					$j = 1;
-					echo $tableheader;
-				}
-				//end of page full new headings if
 			}
 			//end of while loop
 

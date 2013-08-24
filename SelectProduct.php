@@ -714,7 +714,6 @@ if (isset($_POST['Search']) or isset($_POST['Go']) or isset($_POST['Next']) or i
 /* display list if there is more than one record */
 if (isset($SearchResult) and !isset($_POST['Select'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
@@ -755,18 +754,15 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				<br />
 			</div>';
 		}
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Stock Status') . '</th>
-							<th class="SortableColumn">' . _('Code') . '</th>
-							<th class="SortableColumn">' . _('Description') . '</th>
-							<th>' . _('Total Qty On Hand') . '</th>
-							<th>' . _('Units') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
+		echo '<table class="selection">
+				<tr>
+					<th>' . _('Stock Status') . '</th>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
+					<th>' . _('Total Qty On Hand') . '</th>
+					<th>' . _('Units') . '</th>
+				</tr>';
 		$k = 0; //row counter to determine background colour
-		$RowIndex = 0;
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
@@ -796,17 +792,9 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				<td>' . $myrow['units'] . '</td>
 				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . _('View') . '</a></td>
 				</tr>';
-			$j++;
-			if ($j == 20 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			$RowIndex = $RowIndex + 1;
-			//end of page full new headings if
 		}
 		//end of while loop
 		echo '</table>
-			  </div>
 			  </form>
 			  <br />';
 	}

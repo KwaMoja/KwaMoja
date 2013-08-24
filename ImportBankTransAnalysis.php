@@ -192,20 +192,18 @@ if ($AllowGLAnalysis == false) {
 	}
 } else {
 	/*Allow GL Analysis == true */
-	echo '</p><table cellpadding="2" class="selection">';
-	$TableHeader = '<tr>
-						<th colspan="5">' . _('General ledger Analysis') . '</th>
-					</tr>
-					<tr>
-						<th class="SortableColumn">' . _('Account') . '</th>
-						<th class="SortableColumn">' . _('Name') . '</th>
-						<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
-						<th>' . _('Narrative') . '</th>
-						<th>' . _('Tag') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '</p><table cellpadding="2" class="selection">
+				<tr>
+					<th colspan="5">' . _('General ledger Analysis') . '</th>
+				</tr>
+				<tr>
+					<th class="SortableColumn">' . _('Account') . '</th>
+					<th class="SortableColumn">' . _('Name') . '</th>
+					<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
+					<th>' . _('Narrative') . '</th>
+					<th>' . _('Tag') . '</th>
+				</tr>';
 	$TotalGLValue = 0;
-	$i = 0;
 
 	foreach ($_SESSION['Trans'][$TransID]->GLEntries AS $EnteredGLCode) {
 
@@ -221,11 +219,6 @@ if ($AllowGLAnalysis == false) {
 
 		$TotalGLValue += $EnteredGLCode->Amount;
 
-		$i++;
-		if ($i > 15) {
-			$i = 0;
-			echo $TableHeader;
-		}
 	}
 
 	echo '<tr>

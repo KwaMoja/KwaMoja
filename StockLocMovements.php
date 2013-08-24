@@ -97,22 +97,20 @@ $sql = "SELECT stockmoves.stockid,
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($sql, $db, $ErrMsg);
 
-echo '<table cellpadding="5" cellspacing="4 "class="selection">';
-$tableheader = '<tr>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Trans No') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Price') . '</th>
-					<th>' . _('Discount') . '</th>
-					<th>' . _('Quantity on Hand') . '</th>
-		   		</tr>';
-echo $tableheader;
+echo '<table cellpadding="5" cellspacing="4 "class="selection">
+		<tr>
+			<th>' . _('Item Code') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Trans No') . '</th>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Customer') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Price') . '</th>
+			<th>' . _('Discount') . '</th>
+			<th>' . _('Quantity on Hand') . '</th>
+		</tr>';
 
-$j = 1;
 $k = 0; //row colour counter
 
 while ($myrow = DB_fetch_array($MovtsResult)) {
@@ -139,12 +137,6 @@ while ($myrow = DB_fetch_array($MovtsResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', mb_strtoupper($myrow['stockid']), mb_strtoupper($myrow['stockid']), $myrow['typename'], $myrow['transno'], $DisplayTranDate, $myrow['debtorno'], locale_number_format($myrow['qty'], $myrow['decimalplaces']), $myrow['reference'], locale_number_format($myrow['price'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['discountpercent'] * 100, 2), locale_number_format($myrow['newqoh'], $myrow['decimalplaces']));
-	$j++;
-	if ($j == 16) {
-		$j = 1;
-		echo $tableheader;
-	}
-	//end of page full new headings if
 }
 //end of while loop
 

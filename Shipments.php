@@ -375,33 +375,23 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 	echo '<br /><table class="selection">';
 	echo '<tr>
 			<th colspan="9"><h3>' . _('Order Lines On This Shipment') . '</h3></th>
+		</tr>
+		<tr>
+			<th>' . _('Order') . '</th>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
+			<th>' . $_SESSION['Shipment']->CurrCode . ' ' . _('Price') . '</th>
+			<th>' . _('Current') . '<br />' . _('Std Cost') . '</th>
 		</tr>';
-
-	$TableHeader = '<tr>
-						<th>' . _('Order') . '</th>
-						<th>' . _('Item') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
-						<th>' . $_SESSION['Shipment']->CurrCode . ' ' . _('Price') . '</th>
-						<th>' . _('Current') . '<br />' . _('Std Cost') . '</th>
-					</tr>';
-
-	echo $TableHeader;
 
 	/*show the line items on the shipment with the quantity being received for modification */
 
 	$k = 0; //row colour counter
-	$RowCounter = 0;
 
 	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
-
-		if ($RowCounter == 15) {
-			echo $TableHeader;
-			$RowCounter = 0;
-		}
-		$RowCounter++;
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -462,31 +452,21 @@ if (DB_num_rows($result) > 0) {
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
 			<th colspan="7"><h3>' . _('Possible Order Lines To Add To This Shipment') . '</h3></th>
+		</tr>
+		<tr>
+			<th>' . _('Order') . '</th>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
+			<th>' . _('Delivery') . '<br />' . _('Date') . '</th>
 		</tr>';
-
-	$TableHeader = '<tr>
-						<th>' . _('Order') . '</th>
-						<th>' . _('Item') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-						<th>' . _('Delivery') . '<br />' . _('Date') . '</th>
-					</tr>';
-
-	echo $TableHeader;
 
 	/*show the PO items that could be added to the shipment */
 
 	$k = 0; //row colour counter
-	$RowCounter = 0;
 
 	while ($myrow = DB_fetch_array($result)) {
-
-		if ($RowCounter == 15) {
-			echo $TableHeader;
-			$RowCounter = 0;
-		}
-		$RowCounter++;
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';

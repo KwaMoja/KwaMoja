@@ -140,20 +140,19 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 	echo '<br /><table cellpadding="2" class="selection">';
 	echo '<tr>
-			<th colspan="9"><h3>' . _('Items on shipment') . '</h3></th></tr>';
-
-	$TableHeader = '<tr>
-						<th>' . _('Item') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-						<th>' . _('Invoiced') . '<br />' . _('Charges') . '</th>
-						<th>' . _('Shipment') . '<br />' . _('Charges') . '</th>
-						<th>' . _('Shipment') . '<br />' . _('Cost') . '</th>
-						<th>' . _('Standard') . '<br />' . _('Cost') . '</th>
-						<th>' . _('Variance') . '</th>
-						<th>%</th>
-					</tr>';
-	echo $TableHeader;
+			<th colspan="9"><h3>' . _('Items on shipment') . '</h3></th>
+		</tr>
+		<tr>
+			<th>' . _('Item') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
+			<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
+			<th>' . _('Invoiced') . '<br />' . _('Charges') . '</th>
+			<th>' . _('Shipment') . '<br />' . _('Charges') . '</th>
+			<th>' . _('Shipment') . '<br />' . _('Cost') . '</th>
+			<th>' . _('Standard') . '<br />' . _('Cost') . '</th>
+			<th>' . _('Variance') . '</th>
+			<th>%</th>
+		</tr>';
 
 	/*show the line items on the shipment with the value invoiced and shipt cost */
 
@@ -533,18 +532,15 @@ $ChargesResult = DB_query($sql, $db);
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
 		<th colspan="6"><h3>' . _('Shipment Charges Against Products') . '</h3></th>
+	</tr>
+	<tr>
+		<th>' . _('Supplier') . '</th>
+		<th>' . _('Type') . '</th>
+		<th>' . _('Ref') . '</th>
+		<th>' . _('Date') . '</th>
+		<th>' . _('Item') . '</th>
+		<th>' . _('Local Amount') . '<br />' . _('Charged') . '</th>
 	</tr>';
-
-$TableHeader = '<tr>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Ref') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Item') . '</th>
-					<th>' . _('Local Amount') . '<br />' . _('Charged') . '</th>
-				</tr>';
-
-echo $TableHeader;
 
 /*show the line items on the shipment with the value invoiced and shipt cost */
 
@@ -610,17 +606,14 @@ $ChargesResult = DB_query($sql, $db);
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
 		<th colspan="6"><h3>' . _('General Shipment Charges') . '</h3></th>
+	</tr>
+	<tr>
+		<th>' . _('Supplier') . '</th>
+		<th>' . _('Type') . '</th>
+		<th>' . _('Ref') . '</th>
+		<th>' . _('Date') . '</th>
+		<th>' . _('Local Amount') . '<br />' . _('Charged') . '</th>
 	</tr>';
-
-$TableHeader = '<tr>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Ref') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Local Amount') . '<br />' . _('Charged') . '</th>
-				</tr>';
-
-echo $TableHeader;
 
 /*show the line items on the shipment with the value invoiced and shipt cost */
 

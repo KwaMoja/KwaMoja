@@ -192,29 +192,25 @@ if (DB_num_rows($TransResult) == 0) {
 }
 /*show a table of the invoices returned by the SQL */
 
-echo '<table class="selection">';
+echo '<table class="selection">
+		<tr>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Branch') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Comments') . '</th>
+			<th>' . _('Order') . '</th>
+			<th>' . _('Total') . '</th>
+			<th>' . _('Allocated') . '</th>
+			<th>' . _('Balance') . '</th>
+			<th>' . _('More Info') . '</th>
+			<th>' . _('More Info') . '</th>
+			<th>' . _('More Info') . '</th>
+			<th>' . _('More Info') . '</th>
+			<th>' . _('More Info') . '</th>
+		</tr>';
 
-$tableheader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th>' . _('Order') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('Allocated') . '</th>
-					<th>' . _('Balance') . '</th>
-					<th>' . _('More Info') . '</th>
-					<th>' . _('More Info') . '</th>
-					<th>' . _('More Info') . '</th>
-					<th>' . _('More Info') . '</th>
-					<th>' . _('More Info') . '</th>
-				</tr>';
-
-echo $tableheader;
-
-$j = 1;
 $k = 0; //row colour counter
 while ($myrow = DB_fetch_array($TransResult)) {
 

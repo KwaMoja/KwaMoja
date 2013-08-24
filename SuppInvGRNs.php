@@ -114,8 +114,6 @@ echo '<table class="selection">
 					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				</tr>';
 
-echo $tableheader;
-
 $TotalValueCharged = 0;
 
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
@@ -258,21 +256,20 @@ else {
 		echo '<table class="selection">
 				<tr>
 					<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
+				</tr>
+				<tr>
+					<th>' . _('Select') . '</th>
+					<th>' . _('Sequence') . ' #</th>
+					<th>' . _('Order') . '</th>
+					<th>' . _('Item Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Total Qty Received') . '</th>
+					<th>' . _('Qty Already Invoiced') . '</th>
+					<th>' . _('Qty Yet To Invoice') . '</th>
+					<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				</tr>';
-
-		$tableheader = '<tr>
-							<th>' . _('Select') . '</th>
-							<th>' . _('Sequence') . ' #</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Total Qty Received') . '</th>
-							<th>' . _('Qty Already Invoiced') . '</th>
-							<th>' . _('Qty Yet To Invoice') . '</th>
-							<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						</tr>';
-		$i = 0;
+		
 		$POs = array();
 		foreach ($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
 			$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;
@@ -283,11 +280,7 @@ else {
 							<td><input type="submit" name="AddPOToTrans" value="' . $GRNTmp->PONo . '" /></td>
 							<td colspan="3">' . _('Add Whole PO to Invoice') . '</td>
 						</tr>';
-				$i = 0;
 			} //isset($POs[$GRNTmp->PONo]) and $POs[$GRNTmp->PONo] != $GRNTmp->PONo
-			if ($i == 0) {
-				echo $tableheader;
-			} //$i == 0
 			if (isset($_POST['SelectAll'])) {
 				echo '<tr>
 					<td><input type="checkbox" checked name="GRNNo_' . $GRNTmp->GRNNo . '" /></td>';
@@ -306,10 +299,6 @@ else {
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>';
-			$i++;
-			if ($i > 15) {
-				$i = 0;
-			} //$i > 15
 		} //$_SESSION['SuppTransTmp']->GRNs as $GRNTmp
 		echo '</table>';
 		echo '<br />

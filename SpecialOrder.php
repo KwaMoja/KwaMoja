@@ -141,15 +141,12 @@ if (!isset($_SESSION['SPL' . $identifier]->BranchCode)) {
 
 		echo '</div>
 			<br />
-			<table class="selection">';
+			<table class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Branch Name') . '</th>
+				</tr>';
 
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Branch Name') . '</th>
-						</tr>';
-		echo $TableHeader;
-
-		$j = 1;
 		$k = 0; //row counter to determine background colour
 
 		while ($myrow = DB_fetch_array($BranchResult)) {
@@ -166,7 +163,6 @@ if (!isset($_SESSION['SPL' . $identifier]->BranchCode)) {
 					<td>%s</td>
 					</tr>', $myrow['branchcode'], htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8', false));
 
-			//end of page full new headings if
 		}
 		//end of while loop
 

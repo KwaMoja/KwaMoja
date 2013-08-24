@@ -455,17 +455,16 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 				<b>' . _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate . '</b>
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
 			</th>
+		</tr>
+		<tr>
+			<th>' . _('Account') . '</th>
+			<th>' . _('Account Name') . '</th>
+			<th>' . _('Month Actual') . '</th>
+			<th>' . _('Month Budget') . '</th>
+			<th>' . _('Period Actual') . '</th>
+			<th>' . _('Period Budget') . '</th>
 		</tr>';
-	$TableHeader = '<tr>
-						<th>' . _('Account') . '</th>
-						<th>' . _('Account Name') . '</th>
-						<th>' . _('Month Actual') . '</th>
-						<th>' . _('Month Budget') . '</th>
-						<th>' . _('Period Actual') . '</th>
-						<th>' . _('Period Budget') . '</th>
-					</tr>';
 
-	$j = 1;
 	$k = 0; //row colour counter
 	$ActGrp = '';
 	$ParentGroups = array();
@@ -562,10 +561,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 			$ParentGroups[$Level] = $myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			printf('<tr>
-					<td colspan="6"><h2>%s</h2></td>
-				</tr>', $myrow['groupname']);
-			echo $TableHeader;
-			$j++;
+						<td colspan="6"><h2>%s</h2></td>
+					</tr>', $myrow['groupname']);
 		}
 
 		if ($k == 1) {

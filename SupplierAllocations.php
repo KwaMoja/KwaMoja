@@ -523,18 +523,16 @@ if (isset($_POST['AllocTrans'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-	echo '<table class="selection">';
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Trans Type') . '</th>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Total') . '</th>
+				<th>' . _('To Alloc') . '</th>
+			</tr>';
 
-	$TableHeader = '<tr>
-					<th>' . _('Trans Type') . '</th>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('To Alloc') . '</th>
-				</tr>';
-
-	echo $TableHeader;
 
 	/* set up table of TransType - Supplier - Trans No - Date - Total - Left to alloc  */
 
@@ -592,18 +590,16 @@ if (isset($_POST['AllocTrans'])) {
 
 	$result = DB_query($sql, $db);
 
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-					<th>' . _('Trans Type') . '</th>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('To Alloc') . '</th>
-					<th>' . _('More Info') . '</th>
-				</tr>';
-
-	echo $TableHeader;
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Trans Type') . '</th>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Total') . '</th>
+				<th>' . _('To Alloc') . '</th>
+				<th>' . _('More Info') . '</th>
+			</tr>';
 
 	/* set up table of Tran Type - Supplier - Trans No - Date - Total - Left to alloc  */
 

@@ -184,22 +184,20 @@ if (!(isset($_POST['Search']))) {
 	echo '<p class="page_title_text noPrint"  align="center"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form onSubmit="return VerifyForm(this);" action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$TableHeader = '<tr>
-						<th>' . _('No') . '</th>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Location QOH') . '</th>
-						<th>' . _('Total QOH') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<tr>
+				<th>' . _('No') . '</th>
+				<th>' . _('Location') . '</th>
+				<th>' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Location QOH') . '</th>
+				<th>' . _('Total QOH') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
 			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />';
 	$k = 0; //row colour counter
-	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -240,7 +238,6 @@ if (!(isset($_POST['Search']))) {
 				$myrow['units'] //unit
 				);
 		}
-		$i++;
 	}
 	echo '</table>';
 	echo '<br />

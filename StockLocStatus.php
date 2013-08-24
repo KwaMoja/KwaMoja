@@ -175,19 +175,16 @@ if (isset($_POST['ShowStatus'])) {
 	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 	echo '<br />
-		 <table cellpadding="5" cellspacing="4" class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' . _('StockID') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-						<th>' . _('Re-Order Level') . '</th>
-						<th>' . _('Demand') . '</th>
-						<th>' . _('Available') . '</th>
-						<th>' . _('On Order') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
+		 <table cellpadding="5" cellspacing="4" class="selection">
+		 	<tr>
+				<th>' . _('StockID') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Quantity On Hand') . '</th>
+				<th>' . _('Re-Order Level') . '</th>
+				<th>' . _('Demand') . '</th>
+				<th>' . _('Available') . '</th>
+				<th>' . _('On Order') . '</th>
+			</tr>';
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($LocStockResult)) {

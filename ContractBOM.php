@@ -342,19 +342,16 @@ if (!isset($_GET['Edit'])) {
 
 if (isset($SearchResult)) {
 
-	echo '<table cellpadding="1">';
-
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Description') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Image') . '</th>
-						<th>' . _('Quantity') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table cellpadding="1">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('Units') . '</th>
+				<th>' . _('Image') . '</th>
+				<th>' . _('Quantity') . '</th>
+			</tr>';
 
 	$k = 0; //row colour counter
-	$i = 0;
 	while ($myrow = DB_fetch_array($SearchResult)) {
 
 		if ($k == 1) {

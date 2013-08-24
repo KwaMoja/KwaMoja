@@ -192,17 +192,15 @@ echo '<div class="centre">
 
 if (isset($StockItemsResult)) {
 
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table class="selection">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 
-	$j = 1;
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($StockItemsResult)) {
@@ -222,12 +220,6 @@ if (isset($StockItemsResult)) {
 				<td class="number">%s</td>
 				<td>%s</td></tr>', $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), locale_number_format($myrow['qord'], $myrow['decimalplaces']), $myrow['units']);
 
-		$j++;
-		if ($j == 15) {
-			$j = 1;
-			echo $TableHeader;
-		}
-		//end of page full new headings if
 	}
 	//end of while loop
 
@@ -290,18 +282,15 @@ else {
 	if (DB_num_rows($ShipmentsResult) > 0) {
 		/*show a table of the shipments returned by the SQL */
 
-		echo '<table width="95%" class="selection">';
-		$TableHeader = '<tr>
-							<th class="SortableColumn">' . _('Shipment') . '</th>
-							<th class="SortableColumn">' . _('Supplier') . '</th>
-							<th class="SortableColumn">' . _('Vessel') . '</th>
-							<th class="SortableColumn">' . _('Voyage') . '</th>
-							<th class="SortableColumn">' . _('Expected Arrival') . '</th>
-						</tr>';
+		echo '<table width="95%" class="selection">
+				<tr>
+					<th class="SortableColumn">' . _('Shipment') . '</th>
+					<th class="SortableColumn">' . _('Supplier') . '</th>
+					<th class="SortableColumn">' . _('Vessel') . '</th>
+					<th class="SortableColumn">' . _('Voyage') . '</th>
+					<th class="SortableColumn">' . _('Expected Arrival') . '</th>
+				</tr>';
 
-		echo $TableHeader;
-
-		$j = 1;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($ShipmentsResult)) {
 
@@ -344,12 +333,6 @@ else {
 						<td><a href="%s">' . _('Costing') . '</a></td>
 						</tr>', $myrow['shiptref'], $myrow['suppname'], $myrow['vessel'], $myrow['voyage'], $FormatedETA, $URL_View_Shipment);
 			}
-			$j++;
-			if ($j == 15) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			//end of page full new headings if
 		}
 		//end of while loop
 

@@ -76,14 +76,12 @@ if (DB_num_rows($TaxRatesResult) > 0) {
 	echo '<table class="selection">';
 	echo '<tr>
 			<th colspan="3"><h3>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</h3></th>
+		</tr>
+		<tr>
+			<th class="SortableColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+			<th class="SortableColumn">' . _('Tax Category') . '</th>
+			<th>' . _('Tax Rate') . ' %</th>
 		</tr>';
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-						<th class="SortableColumn">' . _('Tax Category') . '</th>
-						<th>' . _('Tax Rate') . ' %</th>
-					</tr>';
-	echo $TableHeader;
-	$j = 1;
 	$k = 0; //row counter to determine background colour
 	$OldProvince = '';
 

@@ -95,24 +95,21 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 	$TransResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 	echo '<br />
-		<table class="selection">';
+		<table class="selection">
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Reference') . '</th>
+				<th>' . _('Comments') . '</th>
+				<th>' . _('Order') . '</th>
+				<th>' . _('Ex Rate') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Currency') . '</th>
+			</tr>';
 
-	$TableHeader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th>' . _('Order') . '</th>
-					<th>' . _('Ex Rate') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Currency') . '</th>
-				</tr>';
-	echo $TableHeader;
-
-	$RowCounter = 1;
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($TransResult)) {

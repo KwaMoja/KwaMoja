@@ -56,18 +56,15 @@ while ($myrow = DB_fetch_array($result)) {
 	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
 	$TransResult = DB_query($sql, $db, $ErrMsg);
 
-	echo '<table class="selection">';
-
-	$tableheader = '<tr>
+	echo '<table class="selection">
+			<tr>
 				<th>' . _('Type') . '</th>
 				<th>' . _('Number') . '</th>
 				<th>' . _('Reference') . '</th>
 				<th>' . _('Ex Rate') . '</th>
 				<th>' . _('Amount') . '</th>
 				<th>' . _('Alloc') . '</th></tr>';
-	echo $tableheader;
 
-	$RowCounter = 1;
 	$k = 0; //row colour counter
 	$AllocsTotal = 0;
 
@@ -96,11 +93,6 @@ while ($myrow = DB_fetch_array($result)) {
 				<td class="number">%s</td>
 				</tr>', $TransType, $myrow1['transno'], $myrow1['reference'], locale_number_format($myrow1['exrate'], 4), locale_number_format($myrow1['totalamt'], $CurrDecimalPlaces), locale_number_format($myrow1['amt'], $CurrDecimalPlaces));
 
-		$RowCounter++;
-		if ($RowCounter == 12) {
-			$RowCounter = 1;
-			echo $tableheader;
-		}
 		//end of page full new headings if
 		$AllocsTotal += $myrow1['amt'];
 	}

@@ -170,24 +170,21 @@ if (isset($_POST['Show'])) {
 	echo '<br />
 			<table class="selection" summary="' . _('General Ledger account inquiry details') . '">
 			<tr>
-					<th colspan="8">
-						<b>' . _('Transactions for account') . ' ' . $SelectedAccount . ' - ' . $SelectedAccountName . '</b>
-						<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
-					</th>
+				<th colspan="8">
+					<b>' . _('Transactions for account') . ' ' . $SelectedAccount . ' - ' . $SelectedAccountName . '</b>
+					<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+				</th>
+			</tr>
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Debit') . '</th>
+				<th>' . _('Credit') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Balance') . '</th>
+				<th>' . _('Tag') . '</th>
 			</tr>';
-
-	$TableHeader = '<tr>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Debit') . '</th>
-						<th>' . _('Credit') . '</th>
-						<th>' . _('Narrative') . '</th>
-						<th>' . _('Balance') . '</th>
-						<th>' . _('Tag') . '</th>
-					</tr>';
-
-	echo $TableHeader;
 
 	if ($PandLAccount == True) {
 		$RunningTotal = 0;

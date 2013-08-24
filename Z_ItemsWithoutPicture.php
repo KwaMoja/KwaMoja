@@ -25,13 +25,12 @@ if (DB_num_rows($result) != 0) {
 	while ($myrow = DB_fetch_array($result)) {
 		if (!file_exists($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
 			if ($PrintHeader) {
-				$TableHeader = '<tr>
+				echo '<tr>
 									<th>' . '#' . '</th>
 									<th>' . _('Category') . '</th>
 									<th>' . _('Item Code') . '</th>
 									<th>' . _('Description') . '</th>
 								</tr>';
-				echo $TableHeader;
 				$PrintHeader = FALSE;
 			}
 			if ($k == 1) {

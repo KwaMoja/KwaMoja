@@ -159,17 +159,16 @@ if (isset($_POST['SearchSupplier'])) {
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table cellpadding="2" colspan="7" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-					</tr>';
-	echo $TableHeader;
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table cellpadding="2" colspan="7" class="selection">
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Supplier Name') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th>' . _('Address 1') . '</th>
+					<th>' . _('Address 2') . '</th>
+					<th>' . _('Address 3') . '</th>
+				</tr>';
 	$k = 0;
 	while ($myrow = DB_fetch_array($SuppliersResult)) {
 		if ($k == 1) {
@@ -258,18 +257,17 @@ if (isset($SupplierID) AND $Edit == false) {
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
 	} else {
-		echo '<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Item or Category') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Rebate') . '<br />' . _('Value') . ' ' . $SuppRow['currcode'] . '</th>
-							<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
-							<th>' . _('Narrative') . '</th>
-							<th>' . _('Effective From') . '</th>
-							<th>' . _('Effective To') . '</th>
-						</tr>';
+		echo '<table cellpadding="2" class="selection">
+				<tr>
+					<th>' . _('Item or Category') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Rebate') . '<br />' . _('Value') . ' ' . $SuppRow['currcode'] . '</th>
+					<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
+					<th>' . _('Narrative') . '</th>
+					<th>' . _('Effective From') . '</th>
+					<th>' . _('Effective To') . '</th>
+				</tr>';
 
-		echo $TableHeader;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($Result)) {
 			if ($k == 1) {

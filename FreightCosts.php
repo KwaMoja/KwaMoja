@@ -220,8 +220,8 @@ if (!isset($SelectedFreightCost) and isset($LocationFrom) and isset($ShipperID))
 
 	$result = DB_query($sql, $db);
 
-	echo '<br /><table class="selection">';
-	$TableHeader = '<tr>
+	echo '<br /><table class="selection">
+					<tr>
 						<th>' . _('Destination') . '</th>
 						<th>' . _('Country') . '</th>
 						<th>' . _('Cubic Rate') . '</th>
@@ -232,18 +232,10 @@ if (!isset($SelectedFreightCost) and isset($LocationFrom) and isset($ShipperID))
 						<th>' . _('Minimum Charge') . '</th>
 					</tr>';
 
-	echo $TableHeader;
-
 	$k = 0; //row counter to determine background colour
-	$PageFullCounter = 0;
 
 	while ($myrow = DB_fetch_array($result)) {
-		$PageFullCounter++;
-		if ($PageFullCounter == 15) {
-			$PageFullCounter = 0;
-			echo $TableHeader;
 
-		}
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;

@@ -1694,20 +1694,18 @@ if (!isset($_POST['ProcessReturn'])) {
 					<td><input type="hidden" name="previous" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>
 					<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Return Item(s)') . '" /></td>
 					<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td>
+				</tr>
+			<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Description') . '</th>
+					<th>' . _('Units') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('On Demand') . '</th>
+					<th>' . _('On Order') . '</th>
+					<th>' . _('Available') . '</th>
+					<th>' . _('Quantity') . '</th>
 				</tr>';
-			$TableHeader = '<tbody>
-							<tr>
-								<th class="SortableColumn">' . _('Code') . '</th>
-					   			<th class="SortableColumn">' . _('Description') . '</th>
-					   			<th>' . _('Units') . '</th>
-					   			<th>' . _('On Hand') . '</th>
-					   			<th>' . _('On Demand') . '</th>
-					   			<th>' . _('On Order') . '</th>
-					   			<th>' . _('Available') . '</th>
-					   			<th>' . _('Quantity') . '</th>
-					   		</tr>';
-			echo $TableHeader;
-			$i = 0;
 			$k = 0; //row colour counter
 
 			while ($myrow = DB_fetch_array($SearchResult)) {

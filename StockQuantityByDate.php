@@ -110,14 +110,12 @@ if (isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 
 	echo '<br />
-		<table class="selection">';
-
-	$tableheader = '<tr>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Quantity On Hand') . '</th>
-					</tr>';
-	echo $tableheader;
+		<table class="selection">
+			<tr>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Quantity On Hand') . '</th>
+			</tr>';
 
 	while ($myrows = DB_fetch_array($StockResult)) {
 
@@ -135,7 +133,6 @@ if (isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 
 		$NumRows = DB_num_rows($LocStockResult, $db);
 
-		$j = 1;
 		$k = 0; //row colour counter
 
 		while ($LocQtyRow = DB_fetch_array($LocStockResult)) {
@@ -158,11 +155,6 @@ if (isset($_POST['ShowStatus']) and Is_Date($_POST['OnHandDate'])) {
 					<td class="number">%s</td></tr>', 'StockID=' . mb_strtoupper($myrows['stockid']), mb_strtoupper($myrows['stockid']), $myrows['description'], locale_number_format($LocQtyRow['newqoh'], $myrows['decimalplaces']));
 
 				$TotalQuantity += $LocQtyRow['newqoh'];
-			}
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $tableheader;
 			}
 			//end of page full new headings if
 		}

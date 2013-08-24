@@ -759,18 +759,15 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 
 	if (isset($result_CustSelect)) {
 
-		echo '<br /><table cellpadding="2" class="selection">';
-
-		$TableHeader = '<tr>
+		echo '<br /><table cellpadding="2" class="selection">
+						<tr>
 							<th class="SortableColumn">' . _('Customer') . '</th>
 							<th class="SortableColumn">' . _('Branch') . '</th>
 							<th>' . _('Contact') . '</th>
 							<th>' . _('Phone') . '</th>
 							<th>' . _('Fax') . '</th>
 						</tr>';
-		echo $TableHeader;
 
-		$j = 1;
 		$k = 0; //row counter to determine background colour
 		$LastCustomer = '';
 		while ($myrow = DB_fetch_array($result_CustSelect)) {

@@ -342,16 +342,14 @@ if (isset($_POST['submit'])) {
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table cellpadding="2" class="selection" width="98%">';
-
-$TableHeader = '<tr>
-					<th>' . _('System Variable Name') . '</th>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Notes') . '</th>
-				</tr>';
+echo '<table cellpadding="2" class="selection" width="98%">
+		<tr>
+			<th>' . _('System Variable Name') . '</th>
+			<th>' . _('Value') . '</th>
+			<th>' . _('Notes') . '</th>
+		</tr>';
 
 echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
-echo $TableHeader;
 
 // DefaultDateFormat
 echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
@@ -711,7 +709,6 @@ echo '<tr style="outline: 1px solid"><td>' . _('Automatically authorise purchase
 
 
 echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
-echo $TableHeader;
 
 // YearEnd
 $MonthNames = array(

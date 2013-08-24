@@ -436,20 +436,18 @@ if (isset($_SESSION['Transfer'])) {
 			<table class="selection">';
 	echo '<tr>
 			<th colspan="7"><h3>' . _('Location Transfer Reference') . ' #' . $_SESSION['Transfer']->TrfID . ' ' . _('from') . ' ' . $_SESSION['Transfer']->StockLocationFromName . ' ' . _('to') . ' ' . $_SESSION['Transfer']->StockLocationToName . '</h3></th>
+		</tr>
+	<tbody>
+		<tr>
+			<th class="SortableColumn">' . _('Item Code') . '</th>
+			<th class="SortableColumn">' . _('Item Description') . '</th>
+			<th>' . _('Quantity Dispatched') . '</th>
+			<th>' . _('Quantity Received') . '</th>
+			<th>' . _('Quantity To Receive') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Cancel Balance') . '</th>
 		</tr>';
 
-	$tableheader = '<tbody>
-					<tr>
-						<th class="SortableColumn">' . _('Item Code') . '</th>
-						<th class="SortableColumn">' . _('Item Description') . '</th>
-						<th>' . _('Quantity Dispatched') . '</th>
-						<th>' . _('Quantity Received') . '</th>
-						<th>' . _('Quantity To Receive') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Cancel Balance') . '</th>
-					</tr>';
-
-	echo $tableheader;
 	$k = 0;
 	foreach ($_SESSION['Transfer']->TransferItem as $TrfLine) {
 		if ($k == 1) {

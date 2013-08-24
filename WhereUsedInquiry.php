@@ -62,17 +62,15 @@ if (isset($StockID)) {
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'), 'error');
 	} else {
 
-		echo '<table width="97%" class="selection">';
-
-		$TableHeader = '<tr>
-							<th>' . _('Used By') . '</th>
-							<th>' . _('Work Centre') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Quantity Required') . '</th>
-							<th>' . _('Effective After') . '</th>
-							<th>' . _('Effective To') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table width="97%" class="selection">
+				<tr>
+					<th>' . _('Used By') . '</th>
+					<th>' . _('Work Centre') . '</th>
+					<th>' . _('Location') . '</th>
+					<th>' . _('Quantity Required') . '</th>
+					<th>' . _('Effective After') . '</th>
+					<th>' . _('Effective To') . '</th>
+				</tr>';
 		$k = 0;
 		while ($myrow = DB_fetch_array($result)) {
 

@@ -1110,13 +1110,11 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 
 	if (isset($CustomerSearchResult)) {
 
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="SortableColumn">' . _('Code') . '</th>
-							<th class="SortableColumn">' . _('Customer Name') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
+		echo '<table class="selection">
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Customer Name') . '</th>
+				</tr>';
 		$k = 0; //row counter to determine background colour
 
 		while ($myrow = DB_fetch_array($CustomerSearchResult)) {
@@ -1132,13 +1130,6 @@ if (((isset($_SESSION['CustomerRecord']) and isset($_POST['CustomerID']) and $_P
 					<td>%s</td>
 					</tr>', $myrow['debtorno'], $myrow['name']);
 
-			$j++;
-			if ($j == 11) {
-				$j = 1;
-				echo $TableHeader;
-
-			}
-			//end of page full new headings if
 		}
 		//end of while loop
 

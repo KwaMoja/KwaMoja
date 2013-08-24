@@ -176,17 +176,15 @@ if (isset($_POST['submit'])) {
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table cellpadding="2" class="selection" width="98%">';
-
-$TableHeader = '<tr>
-					<th>' . _('Shop Configuration Parameter') . '</th>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Notes') . '</th>
-				</tr>';
+	<table cellpadding="2" class="selection" width="98%">
+		<tr>
+			<th>' . _('Shop Configuration Parameter') . '</th>
+			<th>' . _('Value') . '</th>
+			<th>' . _('Notes') . '</th>
+		</tr>';
 
 echo '<tr>
 		<th colspan="3">' . _('General Settings') . '</th></tr>';
-echo $TableHeader;
 
 echo '<tr>
 		<td>' . _('Test or Live Mode') . ':</td>
@@ -266,7 +264,6 @@ echo '<tr>
 echo '<tr>
 		<th colspan="3">' . _('Web-Store Behaviour Settings') . '</th>
 	</tr>';
-echo $TableHeader;
 
 echo '<tr>
 		<td>' . _('Show Only Items With Available Stock') . ':</td>
@@ -350,7 +347,6 @@ echo '</select></td>
 echo '<tr>
 		<th colspan="3">' . _('Bank Transfer Settings') . '</th>
 	</tr>';
-echo $TableHeader;
 
 echo '<tr>
 		<td>' . _('Allow Bank Transfer Payment') . ':</td>
@@ -374,7 +370,6 @@ echo '<tr>
 echo '<tr>
 		<th colspan="3">' . _('Paypal Settings') . '</th>
 	</tr>';
-echo $TableHeader;
 
 echo '<tr>
 		<td>' . _('Allow PayPal Payment') . ':</td>
@@ -434,8 +429,9 @@ if ($AllowDemoMode) {
 		</tr>';
 }
 
-echo '<tr><th colspan="3">' . _('Credit Card Processing Settings') . '</th></tr>';
-echo $TableHeader;
+echo '<tr>
+		<th colspan="3">' . _('Credit Card Processing Settings') . '</th>
+	</tr>';
 
 echo '<tr>
 		<td>' . _('Allow Credit Card Payments') . ':</td>

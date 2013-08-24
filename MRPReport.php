@@ -736,16 +736,14 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 				<input type="hidden" name="StockCode" value="' . $_POST['StockCode'] . '" />
 				</div>';
 		}
-		echo '<table class="selection">';
-		$tableheader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Total Qty On Hand') . '</th>
-							<th>' . _('Units') . '</th>
-							<th>' . _('Stock Status') . '</th>
-						</tr>';
-		echo $tableheader;
-		$j = 1;
+		echo '<table class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Total Qty On Hand') . '</th>
+					<th>' . _('Units') . '</th>
+					<th>' . _('Stock Status') . '</th>
+				</tr>';
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($searchresult) <> 0) {
@@ -765,18 +763,11 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
 			echo '<td><input type="submit" name="Select" value="' . $myrow['stockid'] . '" /></td>
-				<td>' . $myrow['description'] . '</td>
-				<td class="number">' . $qoh . '</td>
-				<td>' . $myrow['units'] . '</td>
-				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . _('View') . '</a></td>
+					<td>' . $myrow['description'] . '</td>
+					<td class="number">' . $qoh . '</td>
+					<td>' . $myrow['units'] . '</td>
+					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . _('View') . '</a></td>
 				</tr>';
-			$j++;
-			if ($j == 20 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
-				$j = 1;
-				echo $tableheader;
-			}
-			$RowIndex = $RowIndex + 1;
-			//end of page full new headings if
 		}
 		//end of while loop
 		echo '</table>

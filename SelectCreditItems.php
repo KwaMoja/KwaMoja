@@ -210,16 +210,14 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 	if (isset($result_CustSelect)) {
 
-		echo '<br /><table cellpadding="2">';
-
-		$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Customer') . '</th>
-						<th class="SortableColumn">' . _('Branch') . '</th>
-						<th>' . _('Contact') . '</th>
-						<th>' . _('Phone') . '</th>
-						<th>' . _('Fax') . '</th>
-					</tr>';
-		echo $TableHeader;
+		echo '<br /><table cellpadding="2">
+						<tr>
+							<th class="SortableColumn">' . _('Customer') . '</th>
+							<th class="SortableColumn">' . _('Branch') . '</th>
+							<th>' . _('Contact') . '</th>
+							<th>' . _('Phone') . '</th>
+							<th>' . _('Fax') . '</th>
+						</tr>';
 
 		$j = 1;
 		$k = 0; //row counter to determine background colour
@@ -944,13 +942,12 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 
 		if (isset($SearchResult)) {
 
-			echo '<table cellpadding="2" class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-					  			<th>' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
-							</tr>';
-			echo $TableHeader;
+			echo '<table cellpadding="2" class="selection">
+					<tr>
+						<th>' . _('Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Units') . '</th>
+					</tr>';
 
 			$j = 1;
 			$k = 0; //row colour counter

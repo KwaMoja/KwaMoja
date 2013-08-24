@@ -311,17 +311,13 @@ if (isset($_POST['Submit']) and $InputError == False) {
 		  </tr>
 		  </table>';
 
-	echo '<br /><table class="selection">';
-
-	$TableHeader = '<tr>
+	echo '<br /><table class="selection">
+					<tr>
 						<th>' . _('Item Code') . '</th>
 						<th>' . _('Quantity') . '</th>
 						<th>' . _('Clear All') . ':<input type="checkbox" name="ClearAll" /></th>
 					</tr>';
-	echo $TableHeader;
 
-	$k = 0;
-	/* page heading row counter */
 	$j = 0;
 	/* row counter for reindexing */
 	if (isset($_POST['LinesCounter'])) {
@@ -333,17 +329,12 @@ if (isset($_POST['Submit']) and $InputError == False) {
 			if ($_POST['StockID' . $i] == '') {
 				break;
 			}
-			if ($k == 18) {
-				echo $TableHeader;
-				$k = 0;
-			}
-			$k++;
 
 			echo '<tr>
-				<td><input type="text" name="StockID' . $j . '" size="21" minlength="0" maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-				<td><input type="text" name="StockQTY' . $j . '" size="10" required="required" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i], 'Variable') . '" /></td>
-				<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j . '" /></td>
-			</tr>';
+					<td><input type="text" name="StockID' . $j . '" size="21" minlength="0" maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
+					<td><input type="text" name="StockQTY' . $j . '" size="10" required="required" minlength="1" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i], 'Variable') . '" /></td>
+					<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j . '" /></td>
+				</tr>';
 			$j++;
 		}
 	} else {

@@ -129,22 +129,18 @@ $ContractsResult = DB_query($SQL, $db, $ErrMsg);
 
 /*show a table of the contracts returned by the SQL */
 
-echo '<table cellpadding="2" width="98%" class="selection">';
+echo '<table cellpadding="2" width="98%" class="selection">
+		<tr>
+			<th>' . _('Modify') . '</th>
+			<th class="SortableColumn">' . _('Order') . '</th>
+			<th>' . _('Issue To WO') . '</th>
+			<th>' . _('Costing') . '</th>
+			<th class="SortableColumn">' . _('Contract Ref') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Customer') . '</th>
+			<th>' . _('Required Date') . '</th>
+		</tr>';
 
-$TableHeader = '<tr>
-					<th>' . _('Modify') . '</th>
-					<th class="SortableColumn">' . _('Order') . '</th>
-					<th>' . _('Issue To WO') . '</th>
-					<th>' . _('Costing') . '</th>
-					<th class="SortableColumn">' . _('Contract Ref') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Required Date') . '</th>
-				</tr>';
-
-echo $TableHeader;
-
-$j = 1;
 $k = 0; //row colour counter
 while ($myrow = DB_fetch_array($ContractsResult)) {
 	if ($k == 1) {
@@ -186,12 +182,6 @@ while ($myrow = DB_fetch_array($ContractsResult)) {
 		  <td>' . $myrow['customername'] . '</td>
 		  <td>' . $FormatedRequiredDate . '</td></tr>';
 
-	$j++;
-	if ($j == 12) {
-		$j = 1;
-		echo $TableHeader;
-	}
-	//end of page full new headings if
 }
 //end of while loop
 

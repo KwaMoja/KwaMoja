@@ -1151,19 +1151,16 @@ if (!isset($_GET['Edit'])) {
 } //!isset($_GET['Edit'])
 
 if (isset($SearchResult)) {
-	echo '<table cellpadding="1" class="selection">';
+	echo '<table cellpadding="1" class="selection">
+			<tr>
+				<th class="SortableColumn">' . _('Code') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('Our Units') . '</th>
+				<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
+				<th>' . _('Supplier/Order') . '<br />' . _('Units') . '</th>
+				<th colspan="2"><a href="#end">' . _('Go to end of list') . '</a></th>
+			</tr>';
 
-	$TableHeader = '<tr>
-						<th class="SortableColumn">' . _('Code') . '</th>
-						<th class="SortableColumn">' . _('Description') . '</th>
-						<th>' . _('Our Units') . '</th>
-						<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
-						<th>' . _('Supplier/Order') . '<br />' . _('Units') . '</th>
-						<th colspan="2"><a href="#end">' . _('Go to end of list') . '</a></th>
-					</tr>';
-	echo $TableHeader;
-
-	$j = 1;
 	$k = 0; //row colour counter
 
 	while ($myrow = DB_fetch_array($SearchResult)) {

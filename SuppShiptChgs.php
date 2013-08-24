@@ -73,32 +73,34 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p>';
-echo '<table cellpadding="2" class="selection">';
-$TableHeader = '<tr><th>' . _('Shipment') . '</th>
-		<th>' . _('Amount') . '</th></tr>';
-echo $TableHeader;
+echo '<table cellpadding="2" class="selection">
+		<tr>
+			<th>' . _('Shipment') . '</th>
+			<th>' . _('Amount') . '</th>
+		</tr>';
 
 $TotalShiptValue = 0;
 
 foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef) {
 
-	echo '<tr><td>' . $EnteredShiptRef->ShiptRef . '</td>
-		<td class="number">' . locale_number_format($EnteredShiptRef->Amount, 2) . '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredShiptRef->Counter . '">' . _('Delete') . '</a></td></tr>';
+	echo '<tr>
+			<td>' . $EnteredShiptRef->ShiptRef . '</td>
+			<td class="number">' . locale_number_format($EnteredShiptRef->Amount, 2) . '</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredShiptRef->Counter . '">' . _('Delete') . '</a></td>
+		</tr>';
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
 
 }
 
 echo '<tr>
-	<td class="number">' . _('Total') . ':</td>
-	<td class="number">' . locale_number_format($TotalShiptValue, 2) . '</td>
-</tr>
+		<td class="number">' . _('Total') . ':</td>
+		<td class="number">' . locale_number_format($TotalShiptValue, 2) . '</td>
+	</tr>
 </table><br />';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ShiptRef'])) {
@@ -149,7 +151,6 @@ echo '<tr>
 echo '<br />
 	<div class="centre">
 		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
-	</div>
 	</div>
 	</form>';
 

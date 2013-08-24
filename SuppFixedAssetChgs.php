@@ -71,12 +71,11 @@ echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['
 echo '</p></div>';
 echo '<table class="selection">
 		<tbody>
-		<tr>
-			<th class="SortableColumn">' . _('Asset ID') . '</th>
-			<th class="SortableColumn">' . _('Description') . '</th>
-			<th>' . _('Amount') . '</th>
-		</tr>';
-echo $TableHeader;
+			<tr>
+				<th class="SortableColumn">' . _('Asset ID') . '</th>
+				<th class="SortableColumn">' . _('Description') . '</th>
+				<th>' . _('Amount') . '</th>
+			</tr>';
 
 $TotalAssetValue = 0;
 

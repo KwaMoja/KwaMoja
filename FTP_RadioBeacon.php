@@ -42,23 +42,20 @@ $SalesOrdersResult = DB_query($SQL, $db, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo '<table cellpadding="2" width="100%">';
-$TableHeader = '<tr>
-				<td class="tableheader">' . _('Modify') . '</td>
-				<td class="tableheader">' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>
-				<td class="tableheader">' . _('Customer') . '</td>
-				<td class="tableheader">' . _('Branch') . '</td>
-				<td class="tableheader">' . _('Cust Order') . ' #</td>
-				<td class="tableheader">' . _('Order Date') . '</td>
-				<td class="tableheader">' . _('Req Del Date') . '</td>
-				<td class="tableheader">' . _('Delivery To') . '</td>
-				<td class="tableheader">' . _('Order Total') . '</td>
-				<td class="tableheader">' . _('Last Send') . '</td>
-				</tr>';
+echo '<table cellpadding="2" width="100%">
+		<tr>
+			<th>' . _('Modify') . '</td>
+			<th">' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>
+			<th>' . _('Customer') . '</td>
+			<th">' . _('Branch') . '</td>
+			<th">' . _('Cust Order') . ' #</td>
+			<th">' . _('Order Date') . '</td>
+			<th">' . _('Req Del Date') . '</td>
+			<th">' . _('Delivery To') . '</td>
+			<th">' . _('Order Total') . '</td>
+			<th">' . _('Last Send') . '</td>
+		</tr>';
 
-echo $TableHeader;
-
-$j = 1;
 $k = 0; //row colour counter
 while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 	if ($k == 1) {
@@ -99,12 +96,6 @@ while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 				<td class="number"><font size="2">%s</font></td>
 				<td><font size="2">%s</font></td></tr>', $ModifyPage, $myrow['orderno'], $FTPDispatchNote, $myrow['name'], $myrow['brname'], $myrow['customerref'], $FormatedOrderDate, $FormatedDelDate, $myrow['deliverto'], $FormatedOrderValue, $FormatedDateLastSent);
 	}
-	$j++;
-	if ($j == 12) {
-		$j = 1;
-		echo $TableHeader;
-	}
-	//end of page full new headings if
 }
 //end of while loop
 

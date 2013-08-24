@@ -173,24 +173,22 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult) > 0) {
 	echo '<div class="page_help_text noPrint">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Supplier') . '</th>
-						<th>' . _('PO#') . '</th>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Qty Received') . '</th>
-						<th>' . _('Qty Invoiced') . '</th>
-						<th>' . _('Qty Pending') . '</th>
-						<th>' . _('Unit Price') . '</th>
-						<th>' . '' . '</th>
-						<th>' . _('Line Total') . '</th>
-						<th>' . '' . '</th>
-						<th>' . _('Line Total') . '</th>
-						<th>' . '' . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('PO#') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Qty Received') . '</th>
+				<th>' . _('Qty Invoiced') . '</th>
+				<th>' . _('Qty Pending') . '</th>
+				<th>' . _('Unit Price') . '</th>
+				<th>' . '' . '</th>
+				<th>' . _('Line Total') . '</th>
+				<th>' . '' . '</th>
+				<th>' . _('Line Total') . '</th>
+				<th>' . '' . '</th>
+			</tr>';
 	$k = 0; //row colour counter
-	$i = 1;
 	$TotalHomeCurrency = 0;
 	while ($GRNs = DB_fetch_array($GRNsResult, $db)) {
 		if ($k == 1) {
@@ -216,12 +214,6 @@ if (isset($_POST['PrintPDF']) and DB_num_rows($GRNsResult) > 0) {
 				<td>%s</td>
 				</tr>', $GRNs['supplierid'], $GRNs['orderno'], $GRNs['itemcode'], $GRNs['qtyrecd'], $GRNs['quantityinv'], $QtyPending, locale_number_format($GRNs['unitprice'], $GRNs['decimalplaces']), $GRNs['currcode'], locale_number_format(($QtyPending * $GRNs['unitprice']), $GRNs['decimalplaces']), $GRNs['currcode'], locale_number_format(($GRNs['qtyrecd'] - $GRNs['quantityinv']) * $GRNs['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']), $_SESSION['CompanyRecord']['currencydefault']);
 
-		if ($i == 15) {
-			$i = 0;
-			echo $TableHeader;
-		} else {
-			$i++;
-		}
 	}
 	printf('<td colspan="9">%s</td>
 			<td>%s</td>

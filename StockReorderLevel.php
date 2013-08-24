@@ -65,16 +65,13 @@ echo '<tr>
 	</tr>';
 echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
+	</tr>
+	<tr>
+		<th>' . _('Location') . '</th>
+		<th>' . _('Quantity On Hand') . '</th>
+		<th>' . _('Re-Order Level') . '</th>
 	</tr>';
 
-$TableHeader = '<tr>
-					<th>' . _('Location') . '</th>
-					<th>' . _('Quantity On Hand') . '</th>
-					<th>' . _('Re-Order Level') . '</th>
-				</tr>';
-
-echo $TableHeader;
-$j = 1;
 $k = 0; //row colour counter
 
 while ($myrow = DB_fetch_array($LocStockResult)) {
@@ -101,11 +98,6 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 			<td class="number">%s</td>
 			<td><input type="text" class="number" name="%s" required="required" minlength="1" maxlength="10" size="10" value="%s" />
 			<input type="hidden" name="Old_%s" value="%s" /></td></tr>', $myrow['locationname'], locale_number_format($myrow['quantity'], $myrow['decimalplaces']), $myrow['loccode'], $myrow['reorderlevel'], $myrow['loccode'], $myrow['reorderlevel']);
-	$j++;
-	if ($j == 12) {
-		$j = 1;
-		echo $TableHeader;
-	}
 	//end of page full new headings if
 }
 //end of while loop

@@ -549,21 +549,20 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 		</tr>';
 
 	if ($_POST['Detail'] == 'Detailed') {
-		$TableHeader = '<tr>
+		echo '<tr>
 							<th>' . _('Account') . '</th>
 							<th>' . _('Account Name') . '</th>
 							<th colspan="2">' . _('Period Actual') . '</th>
 						</tr>';
 	} else {
 		/*summary */
-		$TableHeader = '<tr>
+		echo '<tr>
 							<th colspan="2"></th>
 							<th colspan="2">' . _('Period Actual') . '</th>
 						</tr>';
 	}
 
 
-	$j = 1;
 	$k = 0; //row colour counter
 	$Section = '';
 	$SectionPrdActual = 0;
@@ -749,7 +748,6 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 							<td colspan="6"><h4><b>%s</b></h4></td>
 						</tr>', $myrow['groupname']);
 
-				echo $TableHeader;
 			}
 		}
 

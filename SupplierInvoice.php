@@ -645,16 +645,15 @@ if (!isset($_POST['PostInvoice'])) {
 				<table class="selection">
 			<tr>
 				<th colspan="6">' . _('Purchase Order Charges') . '</th>
-			</tr>';
-		$tableheader = '<tr style="background-color:#800000">
-							<th>' . _('Seq') . ' #</th>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Quantity Charged') . '</th>
-							<th>' . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							<th>' . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						</tr>';
-		echo $tableheader;
+			</tr>
+				<tr style="background-color:#800000">
+					<th>' . _('Seq') . ' #</th>
+					<th>' . _('Item Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Quantity Charged') . '</th>
+					<th>' . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					<th>' . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				</tr>';
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 			echo '<tr>
@@ -686,14 +685,11 @@ if (!isset($_POST['PostInvoice'])) {
 				<table class="selection">
 				<tr>
 					<th colspan="2">' . _('Shipment Charges') . '</th>
+				</tr>
+				<tr>
+					<th>' . _('Shipment') . '</th>
+					<th>' . _('Amount') . '</th>
 				</tr>';
-		$TableHeader = '<tr>
-							<th>' . _('Shipment') . '</th>
-							<th>' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-
-		$i = 0; //row counter
 
 		foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef) {
 			echo '<tr>
@@ -703,11 +699,6 @@ if (!isset($_POST['PostInvoice'])) {
 
 			$TotalShiptValue += $EnteredShiptRef->Amount;
 
-			$i++;
-			if ($i > 15) {
-				$i = 0;
-				echo $TableHeader;
-			} //$i > 15
 		} //$_SESSION['SuppTrans']->Shipts as $EnteredShiptRef
 
 		echo '<tr>
@@ -726,13 +717,12 @@ if (!isset($_POST['PostInvoice'])) {
 			<table class="selection">
 			<tr>
 				<th colspan="3">' . _('Fixed Asset Additions') . '</th>
+			</tr>
+			<tr>
+				<th>' . _('Asset ID') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>';
-		$TableHeader = '<tr>
-							<th>' . _('Asset ID') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						</tr>';
-		echo $TableHeader;
 
 		foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset) {
 			echo '<tr>
@@ -743,11 +733,6 @@ if (!isset($_POST['PostInvoice'])) {
 
 			$TotalAssetValue += $EnteredAsset->Amount;
 
-			$i++;
-			if ($i > 15) {
-				$i = 0;
-				echo $TableHeader;
-			} //$i > 15
 		} //$_SESSION['SuppTrans']->Assets as $EnteredAsset
 
 		echo '<tr>
@@ -766,16 +751,13 @@ if (!isset($_POST['PostInvoice'])) {
 			<table class="selection">
 			<tr>
 				<th colspan="3">' . _('Contract Charges') . '</th>
+			</tr>
+			<tr>
+				<th>' . _('Contract') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>';
-		$TableHeader = '<tr>
-							<th>' . _('Contract') . '</th>
-							<th>' . _('Narrative') . '</th>
-							<th>' . _('Amount') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						</tr>';
-		echo $TableHeader;
 
-
-		$i = 0;
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract) {
 			echo '<tr>
 					<td>' . $Contract->ContractRef . '</td>
@@ -785,11 +767,6 @@ if (!isset($_POST['PostInvoice'])) {
 
 			$TotalContractsValue += $Contract->Amount;
 
-			$i++;
-			if ($i == 15) {
-				$i = 0;
-				echo $TableHeader;
-			} //$i == 15
 		} //$_SESSION['SuppTrans']->Contracts as $Contract
 
 		echo '<tr>
@@ -807,15 +784,14 @@ if (!isset($_POST['PostInvoice'])) {
 					<table class="selection">
 					<tr>
 						<th colspan="5">' . _('General Ledger Analysis') . '</th>
+					</tr>
+					<tr>
+						<th>' . _('Account') . '</th>
+						<th>' . _('Account Name') . '</th>
+						<th>' . _('Narrative') . '</th>
+						<th>' . _('Tag') . '</th>
+						<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 					</tr>';
-			$TableHeader = '<tr>
-								<th>' . _('Account') . '</th>
-								<th>' . _('Account Name') . '</th>
-								<th>' . _('Narrative') . '</th>
-								<th>' . _('Tag') . '</th>
-								<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-							</tr>';
-			echo $TableHeader;
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 				echo '<tr>

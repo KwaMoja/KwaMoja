@@ -130,7 +130,6 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db) {
 	$DbgMsg = _('The SQL used to retrieve the components was');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	//echo $TableHeader;
 	$RowCounter = 0;
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -551,19 +550,18 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$i = 0;
 	display_children($SelectedParent, 1, $BOMTree);
 
-	$TableHeader = '<tr>
-						<th>' . _('Level') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Work Centre') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Effective After') . '</th>
-						<th>' . _('Effective To') . '</th>
-						<th>' . _('Auto Issue') . '</th>
-						<th>' . _('Qty On Hand') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<tr>
+			<th>' . _('Level') . '</th>
+			<th>' . _('Code') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Work Centre') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Effective After') . '</th>
+			<th>' . _('Effective To') . '</th>
+			<th>' . _('Auto Issue') . '</th>
+			<th>' . _('Qty On Hand') . '</th>
+		</tr>';
 	if (count($BOMTree) == 0) {
 		echo '<tr class="OddTableRows">
 				<td colspan="8">' . _('No materials found.') . '</td>
@@ -906,17 +904,14 @@ if (!isset($SelectedParent)) {
 	if (isset($_POST['Search']) and isset($result) and !isset($SelectedParent)) {
 
 		echo '<br />
-			<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('On Hand') . '</th>
-							<th>' . _('Units') . '</th>
-						</tr>';
+			<table cellpadding="2" class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('Units') . '</th>
+				</tr>';
 
-		echo $TableHeader;
-
-		$j = 1;
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k == 1) {

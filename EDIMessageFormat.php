@@ -121,14 +121,15 @@ if (!isset($SelectedMessageLine)) {
 
 	$result = DB_query($sql, $db);
 
-	echo '<table class="selection">';
-	echo '<tr><th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode . '</h3></th></tr>';
-	$TableHeader = '<tr>
-					<th>' . _('Section') . '</th>
-					<th>' . _('Sequence') . '</th>
-					<th>' . _('Format String') . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table class="selection">
+			<tr>
+				<th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode . '</h3></th>
+			</tr>
+			<tr>
+				<th>' . _('Section') . '</th>
+				<th>' . _('Sequence') . '</th>
+				<th>' . _('Format String') . '</th>
+			</tr>';
 
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {

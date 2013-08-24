@@ -68,15 +68,14 @@ echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['
 
 echo '</p></div>';
 
-echo '<table class="selection">';
-$TableHeader = '<tbody>
-				<tr>
-					<th class="SortableColumn">' . _('Contract') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Narrative') . '</th>
-					<th>' . _('Anticipated') . '</th>
-				</tr>';
-echo $TableHeader;
+echo '<table class="selection">
+		<tbody>
+			<tr>
+				<th class="SortableColumn">' . _('Contract') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Anticipated') . '</th>
+			</tr>';
 
 $TotalContractsValue = 0;
 

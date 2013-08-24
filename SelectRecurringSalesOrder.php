@@ -93,22 +93,18 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 	/*show a table of the orders returned by the SQL */
 
 	echo '<br />
-		<table cellpadding="2" width="90%" class="selection">';
+		<table cellpadding="2" width="90%" class="selection">
+			<tr>
+				<th>' . _('Modify') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Last Recurrence') . '</th>
+				<th>' . _('End Date') . '</th>
+				<th>' . _('Times p.a.') . '</th>
+				<th>' . _('Order Total') . '</th>
+			</tr>';
 
-	$tableheader = '<tr>
-						<th>' . _('Modify') . '</th>
-						<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Cust Order') . ' #</th>
-						<th>' . _('Last Recurrence') . '</th>
-						<th>' . _('End Date') . '</th>
-						<th>' . _('Times p.a.') . '</th>
-						<th>' . _('Order Total') . '</th>
-					</tr>';
-
-	echo $tableheader;
-
-	$j = 1;
 	$k = 0; //row colour counter
 	while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 
@@ -136,11 +132,6 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 				<td class="number">%s</td>
 				</tr>', $ModifyPage, $myrow['recurrorderno'], $myrow['name'], $myrow['brname'], $myrow['customerref'], $FormatedLastRecurrence, $FormatedStopDate, $myrow['frequency'], $FormatedOrderValue);
 
-		$j++;
-		if ($j == 12) {
-			$j = 1;
-			echo $tableheader;
-		}
 		//end of page full new headings if
 	}
 	//end of while loop

@@ -404,8 +404,8 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br />' . _('To reverse a GRN that has been invoiced first it must be credited'), 'warn');
 		} else { //there are GRNs to show
 
-			echo '<br /><table cellpadding="2" class="selection">';
-			$TableHeader = '<tr>
+			echo '<br /><table cellpadding="2" class="selection">
+							<tr>
 								<th>' . _('GRN') . ' #</th>
 								<th>' . _('GRN Batch') . '</th>
 								<th>' . _('Item Code') . '</th>
@@ -416,10 +416,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 								<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
 							</tr>';
 
-			echo $TableHeader;
-
 			/* show the GRNs outstanding to be invoiced that could be reversed */
-			$RowCounter = 0;
 			$k = 0;
 			while ($myrow = DB_fetch_array($result)) {
 				if ($k == 1) {
@@ -447,11 +444,6 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 						<td>%s</td>
 						</tr>', $myrow['grnno'], $myrow['grnbatch'], $myrow['itemcode'], $myrow['itemdescription'], $DisplayDateDel, $DisplayQtyRecd, $DisplayQtyInv, $DisplayQtyRev, $LinkToRevGRN);
 
-				$RowCounter++;
-				if ($RowCounter > 20) {
-					$RowCounter = 0;
-					echo $TableHeader;
-				}
 			}
 
 			echo '</table>';
