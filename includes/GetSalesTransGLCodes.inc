@@ -31,6 +31,7 @@ function GetCOGSGLAccount($Area, $StockID, $SalesType, &$db) {
 	- matching Area, stock category and AN Sales type
 	- see if matching Area, stock category - AN sales type
 	- see if matching Area, saletype and ANY StockCategory
+	- see if matching saletype , StockCategory      and AN Area
 	- see if mathcing Area, ANY stock category and AN salestype
 	- see if matching stockcategory, AN area and AN salestype
 	- if still no record is found then the GL Code for the default area, sales type and default stock category is used
@@ -58,6 +59,19 @@ function GetCOGSGLAccount($Area, $StockID, $SalesType, &$db) {
 		$SQL = "SELECT glcode FROM cogsglpostings
 			WHERE area = '" . $Area . "'
 			AND stkcat = 'ANY' AND salestype = '" . $SalesType . "'";
+
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	}
+
+	if (DB_num_rows($Result) == 0) {
+
+		DB_free_result($Result);
+		$SQL = "SELECT salesglcode,
+						discountglcode
+					FROM salesglpostings
+					WHERE area = 'AN'
+						AND salestype='" . $SalesType . "'
+						AND stkcat = '" . $StockCategory . "'";
 
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 	}

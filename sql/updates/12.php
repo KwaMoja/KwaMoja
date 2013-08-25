@@ -221,7 +221,7 @@ InsertRecord('securitytokens', array('tokenid'), array(6), array('tokenid', 'tok
 InsertRecord('securitytokens', array('tokenid'), array(7), array('tokenid', 'tokenname'), array(7,_('Bank Reconciliations')), $db);
 InsertRecord('securitytokens', array('tokenid'), array(8), array('tokenid', 'tokenname'), array(8,_('General ledger reports/inquiries')), $db);
 InsertRecord('securitytokens', array('tokenid'), array(9), array('tokenid', 'tokenname'), array(9,_('Supplier centre - Supplier access only')), $db);
-InsertRecord('securitytokens', array('tokenid'), array(10), array('tokenid', 'tokenname'), array(10,_('General Ledger Maintenance, stock valuation & Configuration')), $db);
+InsertRecord('securitytokens', array('tokenid'), array(10), array('tokenid', 'tokenname'), array(10,_('General Ledger Maintenance, stock valuation and Configuration')), $db);
 InsertRecord('securitytokens', array('tokenid'), array(11), array('tokenid', 'tokenname'), array(11,_('Inventory Management and Pricing')), $db);
 InsertRecord('securitytokens', array('tokenid'), array(12), array('tokenid', 'tokenname'), array(12,_('Unknown')), $db);
 InsertRecord('securitytokens', array('tokenid'), array(13), array('tokenid', 'tokenname'), array(13,_('Unknown')), $db);
