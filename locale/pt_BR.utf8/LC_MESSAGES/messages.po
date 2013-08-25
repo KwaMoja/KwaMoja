@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:27+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: pt-br <gsavix@hotmail.com>\n"
@@ -41057,7 +41057,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Saldo Forneced. para Fornec. entre"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger Manutenção, avaliação de ações e Configuração"
 
 #: sql/updates/12.php:225

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:24+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: italian <none>\n"
@@ -34503,7 +34503,7 @@ msgstr "Fare il ricalcolo"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?"
-"Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ripubblicare uno transazioni di contabilità generale in quanto il periodo selezionato \n"
+"Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ri- postare tutte le transazioni di contabilità generale in quanto il periodo selezionato questo può richiedere un certo tempo ?Sei sicuro di voler ripubblicare uno transazioni di contabilità generale in quanto il periodo selezionato \n"
 "\t .... questo può richiedere un certo tempo?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37711,7 +37711,7 @@ msgstr "L&#39;abbreviazione nome della società iscritte al login deve avere anc
 #, fuzzy
 msgid "to try logging in again"
 msgstr "per provare ad accedere di nuovo"
-"per provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper tentare il log-in \n"
+"per provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper provare ad accedere di nuovoper tentare il log-in \n"
 "di nuovo"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41634,7 +41634,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Per fornitori fornitore saldi tra"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Contabilità generale di manutenzione , valutazione delle scorte e configurazione"
 
 #: sql/updates/12.php:225

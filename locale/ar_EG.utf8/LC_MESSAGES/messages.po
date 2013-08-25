@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-10 14:08+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -40816,7 +40816,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "المورد أرصدة موردون بين"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "صيانة دفتر الأستاذ العام ، وتقييم الأوراق المالية و تكوين"
 
 #: sql/updates/12.php:225

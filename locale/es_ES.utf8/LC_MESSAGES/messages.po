@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 4.081\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:20+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
@@ -40788,7 +40788,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Saldos de Proveedor de los Proveedores entre"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Mantenimiento Contabilidad , las acciones de evaluación y configuración"
 
 #: sql/updates/12.php:225

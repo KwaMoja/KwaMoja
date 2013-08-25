@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:29+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Albanian\n"
@@ -34503,7 +34503,7 @@ msgstr "A rillogaritjes"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?"
-"Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?A jeni i sigurt se doni të ri pas të gjitha transaksionet e përgjithshme të librit që nga periudha e zgjedhur\n"
+"Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?Jeni i sigurt që ju dëshironi të ri-post gjitha transaksionet Librit të Përgjithshëm që në periudhën e zgjedhur kjo mund të marrë disa kohë ?A jeni i sigurt se doni të ri pas të gjitha transaksionet e përgjithshme të librit që nga periudha e zgjedhur\n"
 "\t   .... kjo mund të marrë disa kohë?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37713,7 +37713,7 @@ msgstr "Emri i kompanisë shkurtim hyrë në hyrje me emrin përkatës duhet të
 #, fuzzy
 msgid "to try logging in again"
 msgstr "prerje-transportim trupash të provoni përsëri"
-"prerje-transportim trupash të provoni përsëriprerje-transportim trupash të provoni përsëriprerje-transportim trupash të provoni përsëritë provoni\n"
+"prerje-transportim trupash të provoni përsëriprerje-transportim trupash të provoni përsëriprerje-transportim trupash të provoni përsëriprerje-transportim trupash të provoni përsëritë provoni\n"
 "përsëri"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41643,7 +41643,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Furnizuesi Bilancet Për Furnizuesit mes"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Mirëmbajtja e Përgjithshme Ledger , aksioneve vlerësimi dhe Konfigurimi"
 
 #: sql/updates/12.php:225

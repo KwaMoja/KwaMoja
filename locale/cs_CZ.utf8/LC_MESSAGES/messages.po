@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 3.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-09 14:10+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -34511,7 +34511,7 @@ msgstr "Do Přepočet"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?"
-"Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete, aby znovu-post všechny obecné transakcí v účetních knihách, protože vybrané období\n"
+"Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete znovu psát všechny hlavní knihy transakce od vybrané období to může trvat nějakou dobu ?Jste si jisti, že chcete, aby znovu-post všechny obecné transakcí v účetních knihách, protože vybrané období\n"
 "\t .... To může trvat nějaký čas?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37721,7 +37721,7 @@ msgstr "Název společnosti zkratka vstoupila na přihlášení musí mít také
 #, fuzzy
 msgid "to try logging in again"
 msgstr "vyzkoušet přihlášením"
-"vyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímzkusit přihlásit\n"
+"vyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímvyzkoušet přihlášenímzkusit přihlásit\n"
 "opět"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41632,7 +41632,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Dodavatel Zůstatky Pro dodavatele mezi"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger Údržba, ocenění akcií a konfigurace"
 
 #: sql/updates/12.php:225

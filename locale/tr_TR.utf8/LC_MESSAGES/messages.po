@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:30+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: KwaMoja Translation Team <web-erp-translation@lists.sourceforge.net>\n"
@@ -41638,7 +41638,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "arasında Tedarikçiler için Tedarikçi Teraziler"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Genel Muhasebe Bakım , hisse senedi değerlemesi ve Yapılandırma"
 
 #: sql/updates/12.php:225

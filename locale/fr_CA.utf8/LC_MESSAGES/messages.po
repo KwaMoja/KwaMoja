@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:21+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: french <none>\n"
@@ -37374,7 +37374,7 @@ msgstr "L'abréviation nom de la société entré lors de la connexion doit auss
 #, fuzzy
 msgid "to try logging in again"
 msgstr "pour essayer de vous reconnecter"
-"pour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecteressayez de vous connecter à \n"
+"pour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecterpour essayer de vous reconnecteressayez de vous connecter à \n"
 "de nouveau"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41299,7 +41299,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Fournisseur des bilans pour les fournisseurs entre"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger entretien, valorisation des stocks et configuration"
 
 #: sql/updates/12.php:225

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.13rc0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:29+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -34505,7 +34505,7 @@ msgstr "Do the Recalculation"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?"
-"Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill återpublicera en huvudbok transaktioner sedan den valda perioden\n"
+"Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill re - posta alla huvudbok transaktioner sedan den valda perioden detta kan ta lite tid ?Är du säker på att du vill återpublicera en huvudbok transaktioner sedan den valda perioden\n"
 "\t   .... Detta kan ta lite tid?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37717,7 +37717,7 @@ msgstr "Företagsnamnet förkortningen upp vid inloggning måste också ha en f�
 #, fuzzy
 msgid "to try logging in again"
 msgstr "att försöka logga in igen"
-"att försöka logga in igenatt försöka logga in igenatt försöka logga in igenatt prova att logga in \n"
+"att försöka logga in igenatt försöka logga in igenatt försöka logga in igenatt försöka logga in igenatt prova att logga in \n"
 "igen"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41648,7 +41648,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Leverantörssaldo för leverantörer mellan"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Huvudbok Underhåll , lagervärdering och konfiguration"
 
 #: sql/updates/12.php:225

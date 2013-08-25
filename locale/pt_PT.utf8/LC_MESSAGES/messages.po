@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:27+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Portugese (Portugal) <thiago.figueiredo@microskills.eu>\n"
@@ -34521,7 +34521,7 @@ msgstr "Refazer cálculos"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?"
-"Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações de contabilidade desde o período escolhido\n"
+"Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações do razão geral , desde o período selecionado isso pode levar algum tempo ?Tem certeza de que deseja voltar a postar todas as transações de contabilidade desde o período escolhido\n"
 "\t   .... isso pode levar algum tempo?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37748,7 +37748,7 @@ msgstr "A abreviação do nome da empresa entrou no início da sessão também d
 #, fuzzy
 msgid "to try logging in again"
 msgstr "para tentar fazer login novamente"
-"para tentar fazer login novamentepara tentar fazer login novamentepara tentar fazer login novamentetentar efetuar login\n"
+"para tentar fazer login novamentepara tentar fazer login novamentepara tentar fazer login novamentepara tentar fazer login novamentetentar efetuar login\n"
 "novamente"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41678,7 +41678,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Fornecedor saldos de fornecedores entre"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger Manutenção, avaliação de ações e Configuração"
 
 #: sql/updates/12.php:225

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:23+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: HUNGARIAN <LL@li.org>\n"
@@ -34509,7 +34509,7 @@ msgstr "Ne a újratervezése"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?"
-"Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztosan szeretné, hogy újra tegye az összes főkönyvi tranzakció, mivel a kiválasztott időszakban \n"
+"Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztos benne, hogy szeretné, hogy újra tegye az összes főkönyvi tranzakció óta kiválasztott időszakban ez némi időt vesz igénybe ?Biztosan szeretné, hogy újra tegye az összes főkönyvi tranzakció, mivel a kiválasztott időszakban \n"
 "\t .... ez eltarthat egy ideig?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37719,7 +37719,7 @@ msgstr "A cég nevének rövidítése lépett a bejelentkezéskor kell egy cége
 #, fuzzy
 msgid "to try logging in again"
 msgstr "próbálja meg újra bejelentkezni"
-"próbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznihogy próbáljon meg bejelentkezni \n"
+"próbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznipróbálja meg újra bejelentkeznihogy próbáljon meg bejelentkezni \n"
 "újra"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41648,7 +41648,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Görgetett szállítói egyenlegek szállítótól"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger Karbantartás, készletértékelés és konfigurálás"
 
 #: sql/updates/12.php:225

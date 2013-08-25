@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UTF-8 Japanese 3.08\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:25+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Japanese <KwaMoja@okid.sakura.ne.jp>\n"
@@ -40766,7 +40766,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "債権残高　　仕入先範囲"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "総勘定元帳のメンテナンス、在庫評価＆フィギュ"
 
 #: sql/updates/12.php:225

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Victor's-KwaMoja romanian translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:28+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Victor <info@onofrei.net>\n"
@@ -34504,7 +34504,7 @@ msgstr "Nu Recalcularea"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?"
-"Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteţi sigur că doriţi să repost un registru general tranzacţiile încă din perioada selectată\n"
+"Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteți sigur că doriți să re - publica toate tranzacțiile registrul general de la perioada selectată acest lucru poate dura ceva timp ?Sunteţi sigur că doriţi să repost un registru general tranzacţiile încă din perioada selectată\n"
 "\t   .... acest lucru poate dura ceva timp?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37713,7 +37713,7 @@ msgstr "Abrevierea numele companiei a intrat la conectare trebuie să aibă, de 
 #, fuzzy
 msgid "to try logging in again"
 msgstr "să încercați să vă conectați din nou"
-"să încercați să vă conectați din nousă încercați să vă conectați din nousă încercați să vă conectați din nousă încercaţi să vă conectaţi\n"
+"să încercați să vă conectați din nousă încercați să vă conectați din nousă încercați să vă conectați din nousă încercați să vă conectați din nousă încercaţi să vă conectaţi\n"
 "din nou"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41622,7 +41622,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Pentru furnizorul Solduri Furnizori între"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger întreținere , stocul de evaluare și de configurare"
 
 #: sql/updates/12.php:225

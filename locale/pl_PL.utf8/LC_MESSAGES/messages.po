@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:26+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team:  <pl@li.org>\n"
@@ -34498,7 +34498,7 @@ msgstr "Wykonaj Przeliczenie Ponowne"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?"
-"Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz, aby wysłać ogólne transakcji księgi od wybranego okresu\n"
+"Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz , aby ponownie opublikować wszystkie ogólne transakcji księgi głównej od wybranego okresu może to zająć trochę czasu ?Czy na pewno chcesz, aby wysłać ogólne transakcji księgi od wybranego okresu\n"
 "\t   .... może to zająć trochę czasu?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37708,7 +37708,7 @@ msgstr "Skrót nazwy firmy wprowadzone podczas logowania musi mieć również ka
 #, fuzzy
 msgid "to try logging in again"
 msgstr "spróbować zalogować się ponownie"
-"spróbować zalogować się ponowniespróbować zalogować się ponowniespróbować zalogować się ponowniespróbować zalogować się\n"
+"spróbować zalogować się ponowniespróbować zalogować się ponowniespróbować zalogować się ponowniespróbować zalogować się ponowniespróbować zalogować się\n"
 "ponownie"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41638,7 +41638,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Dostawca równowagi między Dostawcy"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "General Ledger serwisowych, wyceny i konfiguracja"
 
 #: sql/updates/12.php:225

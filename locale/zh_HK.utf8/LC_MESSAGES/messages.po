@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja3.05 VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:32+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: KwaMoja Translation Team <web-erp-translation@lists.sourceforge.net>\n"
@@ -34502,7 +34502,7 @@ msgstr "进行重计"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？"
-"你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？您确认您想重新过账所选期间\n"
+"你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？你确定你想重新发布以来，选定时间段内的所有总帐交易，这可能需要一些时间吗？您确认您想重新过账所选期间\n"
 "\t   .... 所有的总帐交易，这将需要一些时间？"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -41646,7 +41646,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "供应商（应付）余额为供应商在"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
+#, fuzzy
+msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "总帐维护，股票估值与配置"
 
 #: sql/updates/12.php:225

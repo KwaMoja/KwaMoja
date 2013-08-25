@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 22:26+0100\n"
+"POT-Creation-Date: 2013-08-25 10:24+0100\n"
 "PO-Revision-Date: 2013-08-08 22:30+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -34504,7 +34504,7 @@ msgstr "Kufanya Recalculation"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?"
-"Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Una uhakika unataka tena baada ya malipo yote kitabu ujumla tangu kipindi cha kuchaguliwa\n"
+"Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Una uhakika unataka tena baada ya malipo yote kitabu ujumla tangu kipindi cha kuchaguliwa\n"
 "\t   .... hii inaweza kuchukua muda?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -37714,7 +37714,7 @@ msgstr "Jina kampuni abbreviation aliingia saa login lazima pia kuwa kampuni dir
 #, fuzzy
 msgid "to try logging in again"
 msgstr "kujaribu kuingia ndani tena"
-"kujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kukata magogo katika\n"
+"kujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kukata magogo katika\n"
 "tena"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41644,8 +41644,8 @@ msgid "Supplier centre - Supplier access only"
 msgstr "Wasambazaji Bakaa Kwa Suppliers kati"
 
 #: sql/updates/12.php:224
-msgid "General Ledger Maintenance, stock valuation & Configuration"
-msgstr "Mkuu wa kitabu matengenezo, hisa hesabu \u0026 Upangiaji"
+msgid "General Ledger Maintenance, stock valuation and Configuration"
+msgstr "Mkuu wa kitabu matengenezo, hisa na hesabu Upangiaji"
 
 #: sql/updates/12.php:225
 #, fuzzy
