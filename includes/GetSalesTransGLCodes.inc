@@ -66,12 +66,11 @@ function GetCOGSGLAccount($Area, $StockID, $SalesType, &$db) {
 	if (DB_num_rows($Result) == 0) {
 
 		DB_free_result($Result);
-		$SQL = "SELECT salesglcode,
-						discountglcode
-					FROM salesglpostings
+		$SQL = "SELECT glcode
+					FROM cogsglpostings
 					WHERE area = 'AN'
-						AND salestype='" . $SalesType . "'
-						AND stkcat = '" . $StockCategory . "'";
+						AND stkcat = = '" . $StockCategory . "'
+						AND salestype = '" . $SalesType . "'";
 
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 	}
@@ -218,8 +217,20 @@ function GetSalesGLAccount($Area, $StockID, $SalesType, &$db) {
 						discountglcode
 				FROM salesglpostings
 				WHERE area = 'AN'
-				AND salestype='AN'
-				AND stkcat = '" . $StockCategory . "'";
+					AND salestype='" . $SalesType . "'
+					AND stkcat = '" . $StockCategory . "'";
+
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	}
+
+	if (DB_num_rows($Result)==0){
+		DB_free_result($Result);
+		$SQL = "SELECT salesglcode,
+						discountglcode
+					FROM salesglpostings
+					WHERE area = 'AN'
+						AND salestype='AN'
+						AND stkcat = '" . $StockCategory . "'";
 
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 	}
