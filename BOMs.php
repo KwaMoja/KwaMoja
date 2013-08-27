@@ -397,7 +397,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		UpdateCost($db, $ComponentArray[0]);
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'), 'success');
-		// Now reselect
+		// Now reset to enable New Component Details to display after delete
+		unset($_GET['SelectedComponent']);
 
 	} elseif (isset($SelectedParent) and !isset($SelectedComponent) and !isset($_POST['submit'])) {
 
@@ -588,16 +589,15 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	echo '</table>
 		<br />';
 
-	if (!isset($_GET['delete'])) {
+	/* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
+	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Select=' . $SelectedParent . '">';
+	echo '<div>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Select=' . $SelectedParent . '">';
-		echo '<div>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	if (isset($_GET['SelectedComponent']) and $InputError != 1) {
+		//editing a selected component from the link to the line item
 
-		if (isset($_GET['SelectedComponent']) and $InputError != 1) {
-			//editing a selected component from the link to the line item
-
-			$sql = "SELECT loccode,
+		$sql = "SELECT loccode,
 						effectiveafter,
 						effectiveto,
 						workcentreadded,
@@ -607,48 +607,48 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					WHERE parent='" . $SelectedParent . "'
 					AND component='" . $SelectedComponent . "'";
 
-			$result = DB_query($sql, $db);
-			$myrow = DB_fetch_array($result);
+		$result = DB_query($sql, $db);
+		$myrow = DB_fetch_array($result);
 
-			$_POST['LocCode'] = $myrow['loccode'];
-			$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['effectiveafter']);
-			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
-			$_POST['WorkCentreAdded'] = $myrow['workcentreadded'];
-			$_POST['Quantity'] = locale_number_format($myrow['quantity'], 'Variable');
-			$_POST['AutoIssue'] = $myrow['autoissue'];
+		$_POST['LocCode'] = $myrow['loccode'];
+		$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['effectiveafter']);
+		$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
+		$_POST['WorkCentreAdded'] = $myrow['workcentreadded'];
+		$_POST['Quantity'] = locale_number_format($myrow['quantity'], 'Variable');
+		$_POST['AutoIssue'] = $myrow['autoissue'];
 
-			prnMsg(_('Edit the details of the selected component in the fields below') . '. <br />' . _('Click on the Enter Information button to update the component details'), 'info');
-			echo '<br />
+		prnMsg(_('Edit the details of the selected component in the fields below') . '. <br />' . _('Click on the Enter Information button to update the component details'), 'info');
+		echo '<br />
 					<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
-			echo '<input type="hidden" name="SelectedComponent" value="' . $SelectedComponent . '" />';
-			echo '<table class="selection">';
-			echo '<tr>
+		echo '<input type="hidden" name="SelectedComponent" value="' . $SelectedComponent . '" />';
+		echo '<table class="selection">';
+		echo '<tr>
 					<th colspan="13"><div class="centre"><b>' . ('Edit Component Details') . '</b></div></th>
 				</tr>';
-			echo '<tr>
+		echo '<tr>
 					<td>' . _('Component') . ':</td>
 					<td><b>' . $SelectedComponent . '</b></td>
 					<input type="hidden" name="Component" value="' . $SelectedComponent . '" />
 				</tr>';
 
-		} else { //end of if $SelectedComponent
+	} else { //end of if $SelectedComponent
 
-			echo '<div class="centre"><a href="' . $RootPath . '/CopyBOM.php?Item=' . $SelectedParent . '">' . _('Copy this BOM') . '</a></div>';
-			echo '<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
-			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
-			 */
-			echo '<table class="selection">';
-			echo '<tr>
+		echo '<div class="centre"><a href="' . $RootPath . '/CopyBOM.php?Item=' . $SelectedParent . '">' . _('Copy this BOM') . '</a></div>';
+		echo '<input type="hidden" name="SelectedParent" value="' . $SelectedParent . '" />';
+		/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
+		 */
+		echo '<table class="selection">';
+		echo '<tr>
 					<th colspan="13"><div class="centre"><b>' . _('New Component Details') . '</b></div></th>
 				</tr>';
-			echo '<tr>
+		echo '<tr>
 					<td>' . _('Component code') . ':</td>
 					<td>';
-			echo '<select required="required" autofocus="autofocus" minlength="1" tabindex="1" name="Component">';
+		echo '<select required="required" autofocus="autofocus" minlength="1" tabindex="1" name="Component">';
 
-			if ($ParentMBflag == 'A') {
-				/*Its an assembly */
-				$sql = "SELECT stockmaster.stockid,
+		if ($ParentMBflag == 'A') {
+			/*Its an assembly */
+			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description
 						FROM stockmaster INNER JOIN stockcategory
 							ON stockmaster.categoryid = stockcategory.categoryid
@@ -660,9 +660,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						AND stockmaster.stockid != '" . $SelectedParent . "'
 						ORDER BY stockmaster.stockid";
 
-			} else {
-				/*Its either a normal manufac item, phantom, kitset - controlled items ok */
-				$sql = "SELECT stockmaster.stockid,
+		} else {
+			/*Its either a normal manufac item, phantom, kitset - controlled items ok */
+			$sql = "SELECT stockmaster.stockid,
 							stockmaster.description
 						FROM stockmaster INNER JOIN stockcategory
 							ON stockmaster.categoryid = stockcategory.categoryid
@@ -672,115 +672,115 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						AND stockmaster.mbflag !='A'
 						AND stockmaster.stockid != '" . $SelectedParent . "'
 						ORDER BY stockmaster.stockid";
-			}
-
-			$ErrMsg = _('Could not retrieve the list of potential components because');
-			$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-
-
-			while ($myrow = DB_fetch_array($result)) {
-				echo '<option value="' . $myrow['stockid'] . '">' . str_pad($myrow['stockid'], 21, '_', STR_PAD_RIGHT) . $myrow['description'] . '</option>';
-			} //end while loop
-
-			echo '</select></td>
-				</tr>';
 		}
 
-		echo '<tr>
+		$ErrMsg = _('Could not retrieve the list of potential components because');
+		$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
+		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+
+
+		while ($myrow = DB_fetch_array($result)) {
+			echo '<option value="' . $myrow['stockid'] . '">' . str_pad($myrow['stockid'], 21, '_', STR_PAD_RIGHT) . $myrow['description'] . '</option>';
+		} //end while loop
+
+		echo '</select></td>
+				</tr>';
+	}
+
+	echo '<tr>
 				<td>' . _('Location') . ': </td>
 				<td><select required="required" minlength="1" tabindex="2" name="LocCode">';
 
-		DB_free_result($result);
+	DB_free_result($result);
 
-		if ($_SESSION['RestrictLocations'] == 0) {
-			$sql = "SELECT locationname,
+	if ($_SESSION['RestrictLocations'] == 0) {
+		$sql = "SELECT locationname,
 							loccode
 						FROM locations";
-		} else {
-			$sql = "SELECT locationname,
+	} else {
+		$sql = "SELECT locationname,
 							loccode
 						FROM locations
 						INNER JOIN www_users
 							ON locations.loccode=www_users.defaultlocation
 						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
+	$result = DB_query($sql, $db);
+
+	while ($myrow = DB_fetch_array($result)) {
+		if (isset($_POST['LocCode']) and $myrow['loccode'] == $_POST['LocCode']) {
+			echo '<option selected="selected" value="';
+		} else {
+			echo '<option value="';
 		}
-		$result = DB_query($sql, $db);
+		echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 
-		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['LocCode']) and $myrow['loccode'] == $_POST['LocCode']) {
-				echo '<option selected="selected" value="';
-			} else {
-				echo '<option value="';
-			}
-			echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	} //end while loop
 
-		} //end while loop
+	DB_free_result($result);
 
-		DB_free_result($result);
-
-		echo '</select></td>
+	echo '</select></td>
 			</tr>
 			<tr>
 				<td>' . _('Work Centre Added') . ': </td><td>';
 
-		if ($_SESSION['RestrictLocations'] == 0) {
-			$sql = "SELECT code,
+	if ($_SESSION['RestrictLocations'] == 0) {
+		$sql = "SELECT code,
 							description
 						FROM workcentres";
-		} else {
-			$sql = "SELECT code,
+	} else {
+		$sql = "SELECT code,
 							description
 						FROM workcentres
 						INNER JOIN www_users
 							ON workcentres.location=www_users.defaultlocation
 						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+	}
+
+	$result = DB_query($sql, $db);
+
+	if (DB_num_rows($result) == 0) {
+		prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
+		echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
+		include('includes/footer.inc');
+		exit;
+	}
+
+	echo '<select required="required" minlength="1" tabindex="3" name="WorkCentreAdded">';
+
+	while ($myrow = DB_fetch_array($result)) {
+		if (isset($_POST['WorkCentreAdded']) and $myrow['code'] == $_POST['WorkCentreAdded']) {
+			echo '<option selected="selected" value="';
+		} else {
+			echo '<option value="';
 		}
+		echo $myrow['code'] . '">' . $myrow['description'] . '</option>';
+	} //end while loop
 
-		$result = DB_query($sql, $db);
+	DB_free_result($result);
 
-		if (DB_num_rows($result) == 0) {
-			prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
-			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
-			include('includes/footer.inc');
-			exit;
-		}
-
-		echo '<select required="required" minlength="1" tabindex="3" name="WorkCentreAdded">';
-
-		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['WorkCentreAdded']) and $myrow['code'] == $_POST['WorkCentreAdded']) {
-				echo '<option selected="selected" value="';
-			} else {
-				echo '<option value="';
-			}
-			echo $myrow['code'] . '">' . $myrow['description'] . '</option>';
-		} //end while loop
-
-		DB_free_result($result);
-
-		echo '</select></td>
+	echo '</select></td>
 				</tr>
 				<tr>
 					<td>' . _('Quantity') . ': </td>
 					<td><input tabindex="4" type="text" class="number" name="Quantity" size="10" required="required" minlength="1" maxlength="8" value="';
-		if (isset($_POST['Quantity'])) {
-			echo $_POST['Quantity'];
-		} else {
-			echo 1;
-		}
+	if (isset($_POST['Quantity'])) {
+		echo $_POST['Quantity'];
+	} else {
+		echo 1;
+	}
 
-		echo '" /></td>
+	echo '" /></td>
 			</tr>';
 
-		if (!isset($_POST['EffectiveTo']) or $_POST['EffectiveTo'] == '') {
-			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d'), (Date('y') + 20)));
-		}
-		if (!isset($_POST['EffectiveAfter']) or $_POST['EffectiveAfter'] == '') {
-			$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y')));
-		}
+	if (!isset($_POST['EffectiveTo']) or $_POST['EffectiveTo'] == '') {
+		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d'), (Date('y') + 20)));
+	}
+	if (!isset($_POST['EffectiveAfter']) or $_POST['EffectiveAfter'] == '') {
+		$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y')));
+	}
 
-		echo '<tr>
+	echo '<tr>
 				<td>' . _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
 				<td><input tabindex="5" type="text" name="EffectiveAfter" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" required="required" minlength="1" maxlength="10" value="' . $_POST['EffectiveAfter'] . '" /></td>
 			</tr>
@@ -789,36 +789,34 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<td><input tabindex="6" type="text" name="EffectiveTo" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" required="required" minlength="1" maxlength="10" value="' . $_POST['EffectiveTo'] . '" /></td>
 			</tr>';
 
-		if ($ParentMBflag == 'M' or $ParentMBflag == 'G') {
-			echo '<tr>
+	if ($ParentMBflag == 'M' or $ParentMBflag == 'G') {
+		echo '<tr>
 					<td>' . _('Auto Issue this Component to Work Orders') . ':</td>
 					<td>
 					<select required="required" minlength="1" tabindex="7" name="AutoIssue">';
 
-			if (!isset($_POST['AutoIssue'])) {
-				$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
-			}
-			if ($_POST['AutoIssue'] == 0) {
-				echo '<option selected="selected" value="0">' . _('No') . '</option>';
-				echo '<option value="1">' . _('Yes') . '</option>';
-			} else {
-				echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
-				echo '<option value="0">' . _('No') . '</option>';
-			}
-
-
-			echo '</select></td></tr>';
+		if (!isset($_POST['AutoIssue'])) {
+			$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
+		}
+		if ($_POST['AutoIssue'] == 0) {
+			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+			echo '<option value="1">' . _('Yes') . '</option>';
 		} else {
-			echo '<input type="hidden" name="AutoIssue" value="0" />';
+			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
 		}
 
-		echo '</table>
+
+		echo '</select></td></tr>';
+	} else {
+		echo '<input type="hidden" name="AutoIssue" value="0" />';
+	}
+
+	echo '</table>
 			<br /><div class="centre"><input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
 			</div>
 			</div>
 			</form>';
-
-	} //end if record deleted no point displaying form to add record
 
 	// end of BOM maintenance code - look at the parent selection form if not relevant
 	// ----------------------------------------------------------------------------------

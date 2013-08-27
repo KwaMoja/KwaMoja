@@ -95,7 +95,7 @@ if (isset($_POST['ProcessTransfer'])) {
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
 						'" . $SQLTransferDate . "',
 						'" . $PeriodNo . "',
-						'" . _('To') . ' ' . $_SESSION['Transfer']->StockLocationToName . "',
+						'" . _('To') . ' ' . DB_escape_string($_SESSION['Transfer']->StockLocationToName) . "',
 						'" . round(-$TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						'" . round($QtyOnHandPrior - $TrfLine->Quantity, $TrfLine->DecimalPlaces) . "'
 					)";
@@ -209,7 +209,7 @@ if (isset($_POST['ProcessTransfer'])) {
 						'" . $_SESSION['Transfer']->StockLocationTo . "',
 						'" . $SQLTransferDate . "',
 						'" . $PeriodNo . "',
-						'" . _('From') . ' ' . $_SESSION['Transfer']->StockLocationFromName . "',
+						'" . _('From') . ' ' . DB_escape_string($_SESSION['Transfer']->StockLocationFromName) . "',
 						'" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						'" . round($QtyOnHandPrior + $TrfLine->Quantity, $TrfLine->DecimalPlaces) . "'
 						)";

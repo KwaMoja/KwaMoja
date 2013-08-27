@@ -86,9 +86,9 @@ if ($AllowCompanySelectionBox === 'Hide') {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
 			if ($CompanyEntry == $DefaultCompany) {
-				echo '<option selected="selected" label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
+				echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			} else {
-				echo '<option label="' . $CompanyEntry . '" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
+				echo '<option  value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			}
 		}
 	}
@@ -139,6 +139,7 @@ echo _('Login');
 					<b>Follow us at :</b>
 					<!--Follow us on twitter button-->
 					<a href="https://twitter.com/KwaMoja" class="twitter-follow-button" data-show-count="false">Follow @KwaMoja</a><br />
+					<a href="https://plus.google.com/u/0/communities/106845561370559503655" target="_blank"><img src="css/google-plus.png" style="width:50%; border: 1px solid #A49999;" /></a>
 					<a href="http://www.facebook.com/Kwamoja" target="_blank"><img src="css/FindUsOnFacebook.png" style="width:70%; border: 1px solid #A49999;" /></a>
 					<a href="http://www.linkedin.com/groups/KwaMoja-4833235?trk=myg_ugrp_ovr" target="_blank"><img src="css/linkedin.png" style="width:70%; border: 1px solid #A49999;" /></a>
 				</div>

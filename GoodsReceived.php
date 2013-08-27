@@ -145,7 +145,11 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_POST['Proce
 		$DisplayQtyOrd = locale_number_format($LnItm->Quantity, $LnItm->DecimalPlaces);
 		$DisplayQtyRec = locale_number_format($LnItm->QtyReceived, $LnItm->DecimalPlaces);
 		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['PO' . $identifier]->CurrDecimalPlaces);
-		$DisplayPrice = locale_number_format($LnItm->Price, $_SESSION['PO' . $identifier]->CurrDecimalPlaces);
+		if ($LnItm->Price > 1) {
+			$DisplayPrice = locale_number_format($LnItm->Price, $_SESSION['PO' . $identifier]->CurrDecimalPlaces);
+		} else {
+			$DisplayPrice = locale_number_format($LnItm->Price, 4);
+		}
 
 
 		//Now Display LineItem
