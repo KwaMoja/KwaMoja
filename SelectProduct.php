@@ -766,6 +766,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
+		$RowIndex = 1;
 		while (($myrow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
@@ -792,6 +793,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				<td>' . $myrow['units'] . '</td>
 				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . _('View') . '</a></td>
 				</tr>';
+			$RowIndex++;
 		}
 		//end of while loop
 		echo '</table>

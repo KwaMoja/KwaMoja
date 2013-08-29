@@ -250,15 +250,15 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	echo '<tr>
 			<td>' . _('Tab Code') . '</td>
 			<td>:</td>
-			<td style="width:200px">' . '' . $SelectedTabs . '</td>
+			<td style="width:200px">' . $SelectedTabs . '</td>
 			<td>' . _('From') . '</td>
 			<td>:</td>
-			<td>' . '' . $_POST['FromDate'] . '</td>
+			<td>' . $_POST['FromDate'] . '</td>
 		</tr>
 		<tr>
 			<td>' . _('User') . '</td>
 			<td>:</td>
-			<td>' . '' . $Tabs['usercode'] . '</td>
+			<td>' . $Tabs['usercode'] . '</td>
 			<td>' . _('To') . '</td>
 			<td>:</td>
 			<td>' . $_POST['ToDate'] . '</td>
@@ -266,12 +266,12 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		<tr>
 			<td>' . _('Authoriser') . '</td>
 			<td>:</td>
-			<td>' . '' . $Tabs['authorizer'] . '</td>
+			<td>' . $Tabs['authorizer'] . '</td>
 		</tr>
 		<tr>
 			<td>' . _('Currency') . '</td>
 			<td>:</td>
-			<td>' . '' . $Tabs['currency'] . '</td>
+			<td>' . $Tabs['currency'] . '</td>
 		</tr>';
 
 	$SqlBalance = "SELECT SUM(amount)
@@ -288,7 +288,7 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	}
 
 	echo '<tr>
-			<td>' . _('Balance before ') . '' . $_POST['FromDate'] . '</td>
+			<td>' . _('Balance before ') . $_POST['FromDate'] . '</td>
 			<td>:</td>
 			<td>' . locale_number_format($Balance['0'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td>
 		</tr>';
@@ -326,13 +326,13 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 	echo '<br /><table class="selection">';
 	echo '<tr>
-		<th>' . _('Date Of Expense') . '</th>
-		<th>' . _('Expense Description') . '</th>
-		<th>' . _('Amount') . '</th>
-		<th>' . _('Notes') . '</th>
-		<th>' . _('Receipt') . '</th>
-		<th>' . _('Date Authorised') . '</th>
-	</tr>';
+			<th>' . _('Date Of Expense') . '</th>
+			<th>' . _('Expense Description') . '</th>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('Notes') . '</th>
+			<th>' . _('Receipt') . '</th>
+			<th>' . _('Date Authorised') . '</th>
+		</tr>';
 
 	$j = 1;
 	$k = 0; //row colour counter
@@ -359,20 +359,20 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		}
 		if ($myrow['5'] != '0000-00-00') {
 			printf("<td>%s</td>
-			<td>%s</td>
-			<td class='number'>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>", ConvertSQLDate($myrow['2']), $Description['0'], locale_number_format($myrow['4'], $_SESSION['CompanyRecord']['decimalplaces']), $myrow['7'], $myrow['8'], ConvertSQLDate($myrow['5']));
+					<td>%s</td>
+					<td class='number'>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+				</tr>", ConvertSQLDate($myrow['2']), $Description['0'], locale_number_format($myrow['4'], $_SESSION['CompanyRecord']['decimalplaces']), $myrow['7'], $myrow['8'], ConvertSQLDate($myrow['5']));
 		} else {
 			printf("<td>%s</td>
-			<td>%s</td>
-			<td class='number'>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>", ConvertSQLDate($myrow['2']), $Description['0'], locale_number_format($myrow['4'], $_SESSION['CompanyRecord']['decimalplaces']), $myrow['7'], $myrow['8'], '		  ');
+					<td>%s</td>
+					<td class='number'>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+				</tr>", ConvertSQLDate($myrow['2']), $Description['0'], locale_number_format($myrow['4'], $_SESSION['CompanyRecord']['decimalplaces']), $myrow['7'], $myrow['8'], '		  ');
 		}
 
 	}

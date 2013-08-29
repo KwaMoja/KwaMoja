@@ -33,14 +33,10 @@ if (isset($_POST['UpdateDatabase']) or isset($_POST['RefreshAllocTotal'])) {
 	$TotalAllocated = 0;
 	$TotalDiffOnExch = 0;
 
-	echo '<br />Total number of potential allocations = ' . $_POST['TotalNumberOfAllocs'];
-
 	for ($AllocCounter = 0; $AllocCounter < $_POST['TotalNumberOfAllocs']; $AllocCounter++) {
 		// loop through amounts allocated using AllocnItm->ID for each record
-		echo '<br />Counter = ' . $AllocCounter;
 		if (isset($_POST['Amt' . $AllocCounter])) {
 			// allocatable charge amounts
-			echo ' - Amount allocated' . $_POST['Amt' . $AllocCounter] . ' for ' . $_POST['AllocID' . $AllocCounter];
 			if (!is_numeric(filter_number_format($_POST['Amt' . $AllocCounter]))) {
 				$_POST['Amt' . $AllocCounter] = 0;
 			}

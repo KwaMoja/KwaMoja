@@ -92,17 +92,18 @@ $DbgMsg = _('The SQL that was used to fetch the location details and failed was'
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<br />
-		<table class="selection">';
+		<table class="selection">
+			<tbody>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True) {
 	echo '<tr>
-			<th>' . _('Location') . '</th>
+			<th class="SortableColumn">' . _('Location') . '</th>
 			<th>' . _('Demand') . '</th>
 		</tr>';
 } else {
 	echo '<tr>
-			<th>' . _('Location') . '</th>
-			<th>' . _('Bin Location') . '</th>
+			<th class="SortableColumn">' . _('Location') . '</th>
+			<th class="SortableColumn">' . _('Bin Location') . '</th>
 			<th>' . _('Quantity On Hand') . '</th>
 			<th>' . _('Re-Order Level') . '</th>
 			<th>' . _('Demand') . '</th>
@@ -261,7 +262,7 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td></tr>', locale_number_format($myrow['quantity'], $DecimalPlaces), locale_number_format($myrow['reorderlevel'], $DecimalPlaces), locale_number_format($DemandQty, $DecimalPlaces), locale_number_format($InTransitQuantityIn + $InTransitQuantityOut, $DecimalPlaces), locale_number_format($Available, $DecimalPlaces), locale_number_format($QOO, $DecimalPlaces));
+				<td class="number">%s</td>', locale_number_format($myrow['quantity'], $DecimalPlaces), locale_number_format($myrow['reorderlevel'], $DecimalPlaces), locale_number_format($DemandQty, $DecimalPlaces), locale_number_format($InTransitQuantityIn + $InTransitQuantityOut, $DecimalPlaces), locale_number_format($Available, $DecimalPlaces), locale_number_format($QOO, $DecimalPlaces));
 
 		if ($Serialised == 1) {
 			/*The line is a serialised item*/
@@ -269,6 +270,8 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&amp;StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 		} elseif ($Controlled == 1) {
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&amp;StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+		} else {
+			echo '</tr>';
 		}
 
 	} else {
@@ -281,11 +284,12 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 	//end of page full new headings if
 }
 //end of while loop
-echo '<tr>
-		<td></td>
-		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
-	</tr>
-</table>';
+echo '</tbody>
+		<tr>
+			<td></td>
+			<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
+		</tr>
+	</table>';
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
@@ -364,15 +368,16 @@ if ($DebtorNo) {
 	if (isset($PriceHistory)) {
 		echo '<br />
 			<table class="selection">
-			<tr>
-				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
-			</tr>
-			<tr>
-				<th>' . _('Date Range') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Discount') . '</th>
-			</tr>';
+				<tr>
+					<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
+				</tr>
+			<tbody>
+				<tr>
+					<th class="SortableColumn">' . _('Date Range') . '</th>
+					<th>' . _('Quantity') . '</th>
+					<th>' . _('Price') . '</th>
+					<th>' . _('Discount') . '</th>
+				</tr>';
 
 		$k = 0; //row colour counter
 
@@ -387,12 +392,13 @@ if ($DebtorNo) {
 			}
 
 			printf('<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s%%</td>
-						</tr>', $ph[0], locale_number_format($PreviousPrice[1], $DecimalPlaces), locale_number_format($PreviousPrice[2], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($PreviousPrice[3] * 100, 2));
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s%%</td>
+				</tr>', $ph[0], locale_number_format($PreviousPrice[1], $DecimalPlaces), locale_number_format($PreviousPrice[2], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($PreviousPrice[3] * 100, 2));
 		}
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 	}
 	//end of while loop
 	else {

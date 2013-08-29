@@ -220,9 +220,9 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 		<td>' . _('Enter a partial Name') . ':</td>
 		<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" name="Keywords" autofocus="autofocus" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" name="Keywords" autofocus="autofocus" size="20" minlength="0" maxlength="25" />';
 }
 echo '</td>
 		<td><b>' . _('OR') . '</b></td>
