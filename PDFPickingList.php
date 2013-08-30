@@ -132,7 +132,7 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 				AND salesorders.shipvia=shippers.shipper_id
 				AND salesorders.fromstkloc=locations.loccode
 				AND salesorders.fromstkloc='" . $_POST['loccode'] . "'
-				AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate']) . "'";
+				AND salesorders.deliverydate='" . FormatDateForSQL($_POST['TransDate']) . "'";
 }
 
 if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
@@ -315,7 +315,7 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 					'" . $myrow2['orderlineno'] . "',
 					'" . $DisplayQtySupplied . "',
 					0)";
-				$LineResult = DB_query($sql, $db);
+				$Result = DB_query($sql, $db);
 			}
 			$ListCount++;
 
