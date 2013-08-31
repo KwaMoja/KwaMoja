@@ -172,13 +172,15 @@ function GetMailGroup() {
 	if (DB_num_rows($result) != 0) {
 ?>
 	<table class="selection">
-		<tr><th><?php
+		<tr>
+			<th><?php
 		echo _('Mail Group');
 ?></th></tr>
 <?php
 		while ($myrow = DB_fetch_array($result)) {
 ?>
-			<tr><td><?php
+			<tr>
+				<td><?php
 			echo $myrow['groupname'];
 ?></td>
 

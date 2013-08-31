@@ -79,8 +79,9 @@ echo '</table>
 		</td><td valign="top">
 		<table>';
 
-echo '<tr><th colspan="2" class="centre">' . _('Display Data') . '</th>
-		</tr>
+echo '<tr>
+		<th colspan="2" class="centre">' . _('Display Data') . '</th>
+	</tr>
 	<tr>
 		<td>' . _('Daily') . ':</td>
 		<td><input type="radio" name="DisplayData" value="Daily" ';

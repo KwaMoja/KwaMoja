@@ -375,9 +375,12 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$Total1Result = DB_query($SQL, $db);
 			$row = DB_fetch_array($Total1Result);
 			echo '<br />';
-			echo '<table width="45%" cellpadding="4">';
-			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
-			echo '<tr><td valign="top" class="select">';
+			echo '<table width="45%" cellpadding="4">
+					<tr>
+						<th style="width:33%" colspan="2">' . _('Supplier Data') . '</th>
+					</tr>
+					<tr>
+						<td valign="top" class="select">';
 			/* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($myrow['lastpaiddate'] == 0) {

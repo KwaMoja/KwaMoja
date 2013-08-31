@@ -710,7 +710,23 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			} //$_POST['DateType'] == 'Order'
 			else {
 				// Headings for Invoiced Date
-				printf('<tr><th> %10s </th><th> %14s </th><th> %-20s </th><th> %10s </th><th> %-10s </th><th> %-30s </th><th> %-30s </th><th> %12s </th><th> %14s </th><th> %14s </th><th> %12s </th><th> %-10s </th><th> %-10s </th><th> %-10s </th><th> %-40s </th</tr>', _('Order No'), _('Trans. No'), _('Stock Code'), _('Order Date'), _('Debtor No'), _('Debtor Name'), _('Branch Name'), _('Invoiced Qty'), _('Extended Cost'), _('Extended Price'), _('Line Status'), _('Invoiced'), _('Salesman'), _('Area'), _('Item Description'));
+				printf('<tr>
+							<th> %10s </th>
+							<th> %14s </th>
+							<th> %-20s </th>
+							<th> %10s </th>
+							<th> %-10s </th>
+							<th> %-30s </th>
+							<th> %-30s </th>
+							<th> %12s </th>
+							<th> %14s </th>
+							<th> %14s </th>
+							<th> %12s </th>
+							<th> %-10s </th>
+							<th> %-10s </th>
+							<th> %-10s </th>
+							<th> %-40s </th>
+						</tr>', _('Order No'), _('Trans. No'), _('Stock Code'), _('Order Date'), _('Debtor No'), _('Debtor Name'), _('Branch Name'), _('Invoiced Qty'), _('Extended Cost'), _('Extended Price'), _('Line Status'), _('Invoiced'), _('Salesman'), _('Area'), _('Item Description'));
 			}
 			$linectr = 0;
 			while ($myrow = DB_fetch_array($result)) {
@@ -853,7 +869,15 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 				$SummaryHeader = _('Month');
 				$Descriptionheader = _('Month');
 			} //$SummaryType == 'month'
-			printf('<tr><th>	%-30s </th><th> %-40s </th><th> %12s </th><th> %14s </th><th> %14s </th><th> %14s </th><th> %-15s </th></tr>', _($SummaryHeader), _($Descriptionheader), _('Quantity'), _('Extended Cost'), _('Extended Price'), _('Invoiced Qty'), _($columnheader7));
+			printf('<tr>
+						<th>	%-30s </th>
+						<th> %-40s </th>
+						<th> %12s </th>
+						<th> %14s </th>
+						<th> %14s </th>
+						<th> %14s </th>
+						<th> %-15s </th>
+					</tr>', _($SummaryHeader), _($Descriptionheader), _('Quantity'), _('Extended Cost'), _('Extended Price'), _('Invoiced Qty'), _($columnheader7));
 			print '<br/><br/>';
 
 			$column7 = ' ';

@@ -901,7 +901,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 
 				if (DB_num_rows($result) > 0) {
 					echo '<table class="table1">
-						<tr><th>' . _('Item Code') . '</th>
+						<tr>
+							<th>' . _('Item Code') . '</th>
 							<th>' . _('Item Description') . '</th>
 							<th>' . _('Quantity') . '</th>
 							<th>' . _('Unit') . '</th>

@@ -79,8 +79,9 @@ echo '</table></td>
 if (!isset($_POST['OrderBy'])) { //default to order by net sales
 	$_POST['OrderBy'] = 'NetSales';
 }
-echo '<tr><th colspan="2" class="centre">' . _('Display') . '</th>
-		</tr>
+echo '<tr>
+		<th colspan="2" class="centre">' . _('Display') . '</th>
+	</tr>
 	<tr>
 		<td>' . _('Order By Net Sales') . ':</td>
 		<td><input type="radio" name="OrderBy" value="NetSales" ';

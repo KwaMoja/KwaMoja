@@ -194,11 +194,14 @@ if (isset($SelectedMessageLine)) {
 echo '<table class="selection">';
 
 if ($myrow['messagetype'] != '') {
-	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'] . '</th></tr>';
+	echo '<tr>
+			<th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'] . '</th>
+		</tr>';
 }
 
-echo '<tr><td>' . _('Section') . ':</td>';
-echo '<td>';
+echo '<tr>
+		<td>' . _('Section') . ':</td>
+		<td>';
 echo '<select minlength="0" tabindex="2" name="Section">';
 
 if ($_POST['Section'] == 'Heading') {

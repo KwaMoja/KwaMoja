@@ -201,7 +201,9 @@ echo '<table class="selection">';
 if (DB_num_rows($result) == 0) {
 	prnMsg( _('There are no default prices set up for this part'), 'info');
 } else {
-	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Normal Price') . '</th>
+		</tr>';
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['enddate'] == '0000-00-00') {
 			$EndDateDisplay = _('No End Date');
@@ -209,9 +211,10 @@ if (DB_num_rows($result) == 0) {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
 		printf('<tr class="EvenTableRows">
-				<td class="number">%s</td>
-				<td class="date">%s</td>
-				<td class="date">%s</td></tr>', locale_number_format($myrow['price'], $CurrDecimalPlaces), ConvertSQLDate($myrow['startdate']), $EndDateDisplay);
+					<td class="number">%s</td>
+					<td class="date">%s</td>
+					<td class="date">%s</td>
+				</tr>', locale_number_format($myrow['price'], $CurrDecimalPlaces), ConvertSQLDate($myrow['startdate']), $EndDateDisplay);
 	}
 }
 

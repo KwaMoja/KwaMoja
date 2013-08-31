@@ -254,18 +254,18 @@ if (isset($_POST['FixedAssets']) and $_POST['FixedAssets'] == _('Fixed Assets'))
 fisrt add a header to show who we are making an credit note for */
 
 echo '<table class="selection">
-		<tr><th>' . _('Supplier') . '</th>
+		<tr>
+			<th>' . _('Supplier') . '</th>
 			<th>' . _('Currency') . '</th>
 			<th>' . _('Terms') . '</th>
 			<th>' . _('Tax Group') . '</th>
-		</tr>';
-
-echo '<tr>
-		<th><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' . $_SESSION['SuppTrans']->SupplierName . '</b></th>
-		<th><b>' . $_SESSION['SuppTrans']->CurrCode . '</b></th>
-		<td><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></td>
-		<td><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></td>
-	</tr>
+		</tr>
+		<tr>
+			<th><b>' . $_SESSION['SuppTrans']->SupplierID . ' - ' . $_SESSION['SuppTrans']->SupplierName . '</b></th>
+			<th><b>' . $_SESSION['SuppTrans']->CurrCode . '</b></th>
+			<td><b>' . $_SESSION['SuppTrans']->TermsDescription . '</b></td>
+			<td><b>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</b></td>
+		</tr>
 	</table>';
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="form1">';

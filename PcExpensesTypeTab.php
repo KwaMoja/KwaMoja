@@ -164,8 +164,10 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 
 	echo '<br />
 			<table class="selection">';
-	echo '<tr><th colspan="3"><h3>' . _('Expense Codes for Type of Tab ') . ' ' . $SelectedTab . '</h3></th></tr>';
 	echo '<tr>
+			<th colspan="3"><h3>' . _('Expense Codes for Type of Tab ') . ' ' . $SelectedTab . '</h3></th>
+		</tr>
+		<tr>
 			<th>' . _('Expense Code') . '</th>
 			<th>' . _('Description') . '</th>
 		</tr>';

@@ -22,7 +22,12 @@ if (isset($_POST['update'])) {
 	$FieldNames = explode(',', $buffer);
 	$SuccessStyle = 'style="color:green; font-weight:bold"';
 	$FailureStyle = 'style="color:red; font-weight:bold"';
-	echo '<table><tr><th>' . _('Account Code') . '</th><th>' . _('Result') . '</th><th>' . _('Comments') . '</th></tr>';
+	echo '<table>
+			<tr>
+				<th>' . _('Account Code') . '</th>
+				<th>' . _('Result') . '</th>
+				<th>' . _('Comments') . '</th>
+			</tr>';
 	$successes = 0;
 	$failures = 0;
 	while (!feof($fp)) {
@@ -66,9 +71,13 @@ if (isset($_POST['update'])) {
 		}
 		unset($AccountDetails);
 	}
-	echo '<tr><td>' . $successes . _(' records successfully imported') . '</td></tr>';
-	echo '<tr><td>' . $failures . _(' records failed to import') . '</td></tr>';
-	echo '</table>';
+	echo '<tr>
+			<td>' . $successes . _(' records successfully imported') . '</td>
+		</tr>
+		<tr>
+			<td>' . $failures . _(' records failed to import') . '</td>
+		</tr>
+	</table>';
 	fclose($fp);
 } else {
 	prnMsg(_('Select a csv file containing the details of the account codes that you wish to import into KwaMoja. ') . '<br />' . _('The first line must contain the field names that you wish to import. ') . '<a href ="Z_DescribeTable.php?table=chartmaster">' . _('The field names can be found here') . '</a>', 'info');

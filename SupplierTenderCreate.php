@@ -408,8 +408,10 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	/* Item Details
 	 */
 	echo '<td valign="top"><table class="selection">';
-	echo '<tr><th colspan="6"><h3>' . _('Items in Tender') . '</h3></th></tr>';
 	echo '<tr>
+			<th colspan="6"><h3>' . _('Items in Tender') . '</h3></th>
+		</tr>
+		<tr>
 			<th>' . _('Stock ID') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Quantity') . '</th>

@@ -123,7 +123,10 @@ if (!isset($SelectedShipper)) {
 	$result = DB_query($sql, $db);
 
 	echo '<table class="selection">
-		<tr><th>' . _('Shipper ID') . '</th><th>' . _('Shipper Name') . '</th></tr>';
+			<tr>
+				<th>' . _('Shipper ID') . '</th>
+				<th>' . _('Shipper Name') . '</th>
+			</tr>';
 
 	$k = 0; //row colour counter
 
@@ -136,9 +139,9 @@ if (!isset($SelectedShipper)) {
 			$k = 1;
 		}
 		printf('<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedShipper=%s">' . _('Edit') . '</a></td>
-			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this shipper?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
+				<td>%s</td>
+				<td><a href="%sSelectedShipper=%s">' . _('Edit') . '</a></td>
+				<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this shipper?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

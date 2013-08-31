@@ -158,8 +158,10 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 
 	echo '<br />
 			<table class="selection">';
-	echo '<tr><th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' . $SelectedRole . '</h3></th></tr>';
 	echo '<tr>
+			<th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' . $SelectedRole . '</h3></th>
+		</tr>
+		<tr>
 			<th>' . _('Category Code') . '</th>
 			<th>' . _('Description') . '</th>
 		</tr>';

@@ -85,12 +85,14 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 		<br />';
 
 	echo '<table cellpadding="2" class="selection">
-			<tr><th colspan="2"></th>
+			<tr>
+				<th colspan="2"></th>
 				<th align="center" colspan="3"><b>' . _('Supplier Units') . '</b></th>
 				<th></th>
 				<th align="center" colspan="5"><b>' . _('Our Receiving Units') . '</b></th>
 			</tr>
-			<tr><th>' . _('Item Code') . '</th>
+			<tr>
+				<th>' . _('Item Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
 				<th>' . _('Units') . '</th>

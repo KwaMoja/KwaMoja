@@ -55,7 +55,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 	echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />';
 	echo '<br /><table class="selection">';
-	echo '<tr><th colspan="7">' . _('Detail Of Movement For Last ') . ': ';
+	echo '<tr>
+			<th colspan="7">' . _('Detail Of Movement For Last ') . ': ';
 	echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="0" maxlength="3" size="4" />' . _('Days');
 	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></th></tr>';
 

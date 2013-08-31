@@ -68,9 +68,11 @@ $LocStockResult = DB_query($sql, $db, $ErrMsg);
 echo '<table class="selection">';
 
 if ($Serialised == 1) {
-	echo '<tr><th colspan="5"><font color="navy" size="2">' . _('Serialised items in') . ' ';
+	echo '<tr>
+			<th colspan="5"><font color="navy" size="2">' . _('Serialised items in') . ' ';
 } else {
-	echo '<tr><th colspan="11"><font color="navy" size="2">' . _('Controlled items in') . ' ';
+	echo '<tr>
+			<th colspan="11"><font color="navy" size="2">' . _('Controlled items in') . ' ';
 }
 echo $myrow[0] . '</font></th></tr>';
 

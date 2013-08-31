@@ -137,14 +137,17 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 	}
 	echo '</td><th class="number">' . _('Units') . ':</th>
 			<td class="select">' . $myrow['units'] . '</td></tr>';
-	echo '<tr><th class="number">' . _('Volume') . ':</th>
+	echo '<tr>
+			<th class="number">' . _('Volume') . ':</th>
 			<td class="select" colspan="2">' . locale_number_format($myrow['volume'], 3) . '</td>
 			<th class="number">' . _('Weight') . ':</th>
 			<td class="select">' . locale_number_format($myrow['grossweight'], 3) . '</td>
 			<th class="number">' . _('EOQ') . ':</th>
-			<td class="select">' . locale_number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td></tr>';
+			<td class="select">' . locale_number_format($myrow['eoq'], $myrow['decimalplaces']) . '</td>
+		</tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PricesSecurity)) {
-		echo '<tr><th colspan="2">' . _('Sell Price') . ':</th>
+		echo '<tr>
+				<th colspan="2">' . _('Sell Price') . ':</th>
 				<td class="select">';
 		$PriceResult = DB_query("SELECT typeabbrev,
 										price
@@ -349,14 +352,17 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 
 	if (($myrow['mbflag'] == 'B' or ($myrow['mbflag'] == 'M')) and (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 
-		echo '<td style="width:50%" valign="top"><table>
-			<tr><th style="width:50%">' . _('Supplier') . '</th>
-				<th style="width:15%">' . _('Cost') . '</th>
-				<th style="width:5%">' . _('Curr') . '</th>
-				<th style="width:15%">' . _('Eff Date') . '</th>
-				<th style="width:10%">' . _('Lead Time') . '</th>
-				<th style="width:10%">' . _('Min Order Qty') . '</th>
-				<th style="width:5%">' . _('Prefer') . '</th></tr>';
+		echo '<td style="width:50%" valign="top">
+				<table>
+					<tr>
+						<th style="width:50%">' . _('Supplier') . '</th>
+						<th style="width:15%">' . _('Cost') . '</th>
+						<th style="width:5%">' . _('Curr') . '</th>
+						<th style="width:15%">' . _('Eff Date') . '</th>
+						<th style="width:10%">' . _('Lead Time') . '</th>
+						<th style="width:10%">' . _('Min Order Qty') . '</th>
+						<th style="width:5%">' . _('Prefer') . '</th>
+					</tr>';
 		$SuppResult = DB_query("SELECT suppliers.suppname,
 									suppliers.currcode,
 									suppliers.supplierid,

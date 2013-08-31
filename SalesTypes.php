@@ -252,10 +252,14 @@ if (!isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo '<table class="selection">';
-		echo '<tr><th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th></tr>';
-		echo '<tr><td>' . _('Type Code') . ':</td>
-				<td><input type="text" size="3" required="required" minlength="1" maxlength="2" name="TypeAbbrev" /></td></tr>';
+		echo '<table class="selection">
+				<tr>
+					<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
+				</tr>
+				<tr>
+					<td>' . _('Type Code') . ':</td>
+					<td><input type="text" size="3" required="required" minlength="1" maxlength="2" name="TypeAbbrev" /></td>
+				</tr>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {

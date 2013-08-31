@@ -860,10 +860,14 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 	echo '<table>';
 
 	if ($_SESSION['Items' . $identifier]->Quotation == 1) {
-		echo '<tr><th colspan="7">' . _('Quotation Summary') . '</th></tr>';
+		echo '<tr>
+				<th colspan="7">' . _('Quotation Summary') . '</th>
+			</tr>';
 	} //$_SESSION['Items' . $identifier]->Quotation == 1
 	else {
-		echo '<tr><th colspan="7">' . _('Order Summary') . '</th></tr>';
+		echo '<tr>
+				<th colspan="7">' . _('Order Summary') . '</th>
+			</tr>';
 	}
 	echo '<tr>
 				<th>' . _('Item Code') . '</th>

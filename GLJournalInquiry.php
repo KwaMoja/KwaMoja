@@ -12,8 +12,10 @@ if (!isset($_POST['Show'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection" summary="' . _('Selection Criteria') . '">';
-	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
+	echo '<table class="selection" summary="' . _('Selection Criteria') . '">
+			<tr>
+				<th colspan="3">' . _('Selection Criteria') . '</th>
+			</tr>';
 
 	$sql = "SELECT typeno FROM systypes WHERE typeid=0";
 	$result = DB_query($sql, $db);

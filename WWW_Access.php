@@ -105,7 +105,9 @@ if (!isset($SelectedRole)) {
 	$result = DB_query($sql, $db);
 
 	echo '<table class="selection">';
-	echo '<tr><th>' . _('Role') . '</th></tr>';
+	echo '<tr>
+			<th>' . _('Role') . '</th>
+		</tr>';
 
 	$k = 0; //row colour counter
 
@@ -121,8 +123,8 @@ if (!isset($SelectedRole)) {
 		/*The SecurityHeadings array is defined in config.php */
 
 		printf('<td>%s</td>
-			<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this role?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this role?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>', $myrow['secrolename'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['secroleid'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['secroleid'], urlencode($myrow['secrolename']));
 
 	} //END WHILE LIST LOOP

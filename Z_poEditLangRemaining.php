@@ -104,26 +104,32 @@ if (isset($_POST['submit'])) {
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table>';
-	echo '<tr><th ALIGN="center">' . _('Language File for') . ' "' . $_SESSION['Language'] . '"</th></tr>';
-	echo '<tr><td></td></tr>';
-	echo '<tr><td>';
-
-	echo '<table WIDTH="100%">';
-	echo '<tr>';
-	echo '<th>' . _('Default text') . '</th>';
-	echo '<th>' . _('Translation') . '</th>';
-	echo '<th>' . _('Exists in') . '</th>';
-	echo '</tr>' . "\n";
+	echo '<table>
+			<tr>
+				<th>' . _('Language File for') . ' "' . $_SESSION['Language'] . '"</th>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%">
+						<tr>
+							<th>' . _('Default text') . '</th>
+							<th>' . _('Translation') . '</th>
+							<th>' . _('Exists in') . '</th>
+						</tr>' . "\n";
 
 	for ($i = 1; $i <= $TotalLines; $i++) {
 		if ($ModuleText[$i] == "") {
-			echo '<tr>';
-			echo '<td VALIGN="top"><I>' . $DefaultText[$i] . '</I></td>';
-			echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
-			echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" value="' . $msgstr[$i] . '" /></td>';
-			echo '</tr>';
-			echo '<tr><th colspan="3"></th></tr>';
+			echo '<tr>
+					<td valign="top"><i>' . $DefaultText[$i] . '</i></td>
+					<td valign="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>
+					<td valign="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" value="' . $msgstr[$i] . '" /></td>
+				</tr>
+				<tr>
+					<th colspan="3"></th>
+				</tr>';
 		}
 	}
 

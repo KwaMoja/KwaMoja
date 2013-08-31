@@ -110,7 +110,8 @@ if (!isset($SelectedSalesPostingID)) {
 		$ShowLivePostingRecords = false;
 		prnMsg(_('The following posting records that do not have valid general ledger code specified - these records must be amended.'), 'error');
 		echo '<table class="selection">';
-		echo '<tr><th>' . _('Area') . '</th>
+		echo '<tr>
+				<th>' . _('Area') . '</th>
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
 				<th>' . _('Sales Account') . '</th>
@@ -128,12 +129,13 @@ if (!isset($SelectedSalesPostingID)) {
 			}
 
 			printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>', $myrow[1], $myrow[2], $myrow[3], htmlspecialchars($myrow[4], ENT_QUOTES, 'UTF-8'), $myrow[5], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
+					<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				</tr>', $myrow[1], $myrow[2], $myrow[3], htmlspecialchars($myrow[4], ENT_QUOTES, 'UTF-8'), $myrow[5], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
 		}
 	}
 

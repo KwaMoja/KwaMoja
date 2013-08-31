@@ -23,7 +23,12 @@ if (isset($_POST['update'])) {
 	$FieldNames = explode(',', $buffer);
 	$SuccessStyle = 'style="color:green; font-weight:bold"';
 	$FailureStyle = 'style="color:red; font-weight:bold"';
-	echo '<table><tr><th>' . _('Account Group') . '</th><th>' . _('Result') . '</th><th>' . _('Comments') . '</th></tr>';
+	echo '<table>
+			<tr>
+				<th>' . _('Account Group') . '</th>
+				<th>' . _('Result') . '</th>
+				<th>' . _('Comments') . '</th>
+			</tr>';
 	$successes = 0;
 	$failures = 0;
 	while (!feof($fp)) {
@@ -49,22 +54,33 @@ if (isset($_POST['update'])) {
 			$response = $client->send($msg);
 			$answer = php_xmlrpc_decode($response->value());
 			if ($answer[0] == 0) {
-				echo '<tr ' . $SuccessStyle . '><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Success' . '</td></tr>';
+				echo '<tr ' . $SuccessStyle . '>
+						<td>' . $AccountGroupDetails['groupname'] . '</td>
+						<td>' . 'Success' . '</td>
+					</tr>';
 				$successes++;
 			} else {
-				echo '<tr ' . $FailureStyle . '><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Failure' . '</td><td>';
+				echo '<tr ' . $FailureStyle . '>
+						<td>' . $AccountGroupDetails['groupname'] . '</td>
+						<td>' . 'Failure' . '</td>
+						<td>';
 				for ($i = 0; $i < sizeof($answer); $i++) {
 					echo 'Error no ' . $answer[$i] . ' - ' . $ErrorDescription[$answer[$i]] . '<br />';
 				}
-				echo '</td></tr>';
+				echo '</td>
+					</tr>';
 				$failures++;
 			}
 		}
 		unset($AccountDetails);
 	}
-	echo '<tr><td>' . $successes . _(' records successfully imported') . '</td></tr>';
-	echo '<tr><td>' . $failures . _(' records failed to import') . '</td></tr>';
-	echo '</table>';
+	echo '<tr>
+			<td>' . $successes . _(' records successfully imported') . '</td>
+		</tr>
+		<tr>
+			<td>' . $failures . _(' records failed to import') . '</td>
+		</tr>
+	</table>';
 	fclose($fp);
 } else {
 	prnMsg(_('Select a csv file containing the details of the account sections that you wish to import into KwaMoja. ') . '<br />' . _('The first line must contain the field names that you wish to import. ') . '<a href ="Z_DescribeTable.php?table=accountsection">' . _('The field names can be found here') . '</a>', 'info');

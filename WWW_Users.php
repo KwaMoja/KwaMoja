@@ -282,8 +282,9 @@ if (!isset($SelectedUser)) {
 				FROM www_users";
 	$result = DB_query($sql, $db);
 
-	echo '<table class="selection">';
-	echo '<tr><th>' . _('User Login') . '</th>
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('User Login') . '</th>
 				<th>' . _('Full Name') . '</th>
 				<th>' . _('Telephone') . '</th>
 				<th>' . _('Email') . '</th>
@@ -334,22 +335,22 @@ if (!isset($SelectedUser)) {
 		}
 
 		printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this user?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-					</tr>', $myrow['userid'], $myrow['realname'], $myrow['phone'], $myrow['email'], $myrow['customerid'], $myrow['branchcode'], $myrow['supplierid'], $myrow['salesman'], $LastVisitDate, $SecurityRoles[($myrow['fullaccess'])], $myrow['pagesize'], $myrow['theme'], $LanguagesArray[$myrow['language']]['LanguageName'], $FontSize, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['userid'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['userid']);
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this user?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>', $myrow['userid'], $myrow['realname'], $myrow['phone'], $myrow['email'], $myrow['customerid'], $myrow['branchcode'], $myrow['supplierid'], $myrow['salesman'], $LastVisitDate, $SecurityRoles[($myrow['fullaccess'])], $myrow['pagesize'], $myrow['theme'], $LanguagesArray[$myrow['language']]['LanguageName'], $FontSize, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['userid'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['userid']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';

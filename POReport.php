@@ -491,34 +491,54 @@ function submit(&$db, $PartNumber, $PartNumberOp, $SupplierId, $SupplierIdOp, $S
 		} else {
 			$SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
-		echo '<tr><th colspan="2">' . _('Header Details') . '</th></tr>';
-		echo '<tr><td>' . _('Purchase Order Report') . '</td>
-					<td>' . $_POST['ReportType'] . ' ' . _('By') . ' ' . $SortBy_Display . '</td></tr>';
-		echo '<tr><td>' . _('Date Type') . '</td>
-				<td>' . $_POST['DateType'] . '</td></tr>';
-		echo '<tr><td>' . _('Date Range') . '</td>
-				<td>' . $_POST['FromDate'] . ' ' . _('To') . ' ' . $_POST['ToDate'] . '</td></tr>';
+		echo '<tr>
+				<th colspan="2">' . _('Header Details') . '</th>
+			</tr>
+			<tr>
+				<td>' . _('Purchase Order Report') . '</td>
+				<td>' . $_POST['ReportType'] . ' ' . _('By') . ' ' . $SortBy_Display . '</td>
+			</tr>
+			<tr>
+				<td>' . _('Date Type') . '</td>
+				<td>' . $_POST['DateType'] . '</td>
+			</tr>
+			<tr>
+				<td>' . _('Date Range') . '</td>
+				<td>' . $_POST['FromDate'] . ' ' . _('To') . ' ' . $_POST['ToDate'] . '</td>
+			</tr>';
 		if (mb_strlen(trim($PartNumber)) > 0) {
-			echo '<tr><td>' . _('Part Number') . '</td>
-					<td>' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '</td></tr>';
+			echo '<tr>
+					<td>' . _('Part Number') . '</td>
+					<td>' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '</td>
+				</tr>';
 		}
 		if (mb_strlen(trim($_POST['SupplierId'])) > 0) {
-			echo '<tr><td>' . _('Supplier Number') . '</td>
-					<td>' . $_POST['SupplierIdOp'] . ' ' . $_POST['SupplierId'] . '</td></tr>';
+			echo '<tr>
+					<td>' . _('Supplier Number') . '</td>
+					<td>' . $_POST['SupplierIdOp'] . ' ' . $_POST['SupplierId'] . '</td>
+				</tr>';
 		}
 		if (mb_strlen(trim($_POST['SupplierName'])) > 0) {
-			echo '<tr><td>' . _('Supplier Name') . '</td>
-					<td>' . $_POST['SupplierNameOp'] . ' ' . $_POST['SupplierName'] . '</td></tr>';
+			echo '<tr>
+					<td>' . _('Supplier Name') . '</td>
+					<td>' . $_POST['SupplierNameOp'] . ' ' . $_POST['SupplierName'] . '</td>
+				</tr>';
 		}
-		echo '<tr><td>' . _('Line Item Status') . '</td>
-				<td>' . $_POST['LineStatus'] . '</td></tr>';
-		echo '<tr><td>' . _('Stock Category') . '</td>
-				<td>' . $_POST['Category'] . '</td></tr></table>';
+		echo '<tr>
+				<td>' . _('Line Item Status') . '</td>
+				<td>' . $_POST['LineStatus'] . '</td>
+			</tr>
+			<tr>
+				<td>' . _('Stock Category') . '</td>
+				<td>' . $_POST['Category'] . '</td>
+			</tr>
+		</table>';
 
 		if ($_POST['ReportType'] == 'Detail') {
 			echo '<br /><table class="selection" width="98%">';
 			if ($_POST['DateType'] == 'Order') {
-				echo '<tr><th>' . _('Order No') . '</th>
+				echo '<tr>
+						<th>' . _('Order No') . '</th>
 						<th>' . _('Part Number') . '</th>
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Supplier No') . '</th>
@@ -530,7 +550,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $SupplierId, $SupplierIdOp, $S
 						<th>' . _('Line Status') . '</th>
 						<th>' . _('Item Due') . '</th>
 						<th>' . _('Part Description') . '</th>
-						</tr>';
+					</tr>';
 
 				$linectr = 0;
 				$k = 0;

@@ -507,23 +507,26 @@ if (isset($_POST['SupplierID'])) {
 					FROM unitsofmeasure";
 	$UOMResult = DB_query($UOMSQL, $db);
 	echo '<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
-	echo '<table class="selection">';
-	echo '<tr><th colspan="8" style="text-align: left"><h3>' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</h3></th>';
-	echo '<th colspan="5" style="text-align: right">' . _('Find new Item Code') . '
-			<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" alt="" /></button></th></tr>';
-	echo '<tr>
-			<th>' . _('StockID') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Price') . '</th>
-			<th>' . _('Suppliers UOM') . '</th>
-			<th>' . _('Conversion Factor') . '</th>
-			<th>' . _('Suppliers Description') . '</th>
-			<th>' . _('Lead Time') . '</th>
-			<th>' . _('Preferred') . '</th>
-			<th>' . _('Effective From') . '</th>
-			<th>' . _('Suppliers Item Code') . '</th>
-			<th>' . _('Min Order Qty') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<tr>
+				<th colspan="8" style="text-align: left"><h3>' . _('Supplier purchasing data for') . ' ' . $_POST['SupplierID'] . '</h3></th>
+				<th colspan="5" style="text-align: right">' . _('Find new Item Code') . '
+					<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" alt="" /></button>
+				</th>
+			</tr>
+			<tr>
+				<th>' . _('StockID') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Price') . '</th>
+				<th>' . _('Suppliers UOM') . '</th>
+				<th>' . _('Conversion Factor') . '</th>
+				<th>' . _('Suppliers Description') . '</th>
+				<th>' . _('Lead Time') . '</th>
+				<th>' . _('Preferred') . '</th>
+				<th>' . _('Effective From') . '</th>
+				<th>' . _('Suppliers Item Code') . '</th>
+				<th>' . _('Min Order Qty') . '</th>
+			</tr>';
 
 	if (isset($_POST['Select'])) {
 		$StockSQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $_POST['Select'] . "'";

@@ -105,16 +105,18 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 	$result = DB_query($sql, $db);
 
 	echo '<table class="selection">
-			<tr><th>' . _('Demand Type') . '</th>
+			<tr>
+				<th>' . _('Demand Type') . '</th>
 				<th>' . _('Description') . '</th>
 			</tr>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
-		printf('<tr><td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedDT=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+		printf('<tr>
+					<td>%s</td>
+					<td>%s</td>
+					<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
+					<td><a href="%sSelectedDT=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 				</tr>', $myrow[0], $myrow[1], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
 	}
 

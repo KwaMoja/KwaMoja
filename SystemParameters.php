@@ -347,20 +347,25 @@ echo '<table cellpadding="2" class="selection" width="98%">
 			<th>' . _('System Variable Name') . '</th>
 			<th>' . _('Value') . '</th>
 			<th>' . _('Notes') . '</th>
+		</tr>
+		<tr>
+			<th colspan="3">' . _('General Settings') . '</th>
 		</tr>';
 
-echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
-
 // DefaultDateFormat
-echo '<tr style="outline: 1px solid"><td>' . _('Default Date Format') . ':</td>
-	<td><select required="required" minlength="1" name="X_DefaultDateFormat">
-	<option ' . (($_SESSION['DefaultDateFormat'] == 'd/m/Y') ? 'selected="selected" ' : '') . 'value="d/m/Y">d/m/Y</option>
-	<option ' . (($_SESSION['DefaultDateFormat'] == 'd.m.Y') ? 'selected="selected" ' : '') . 'value="d.m.Y">d.m.Y</option>
-	<option ' . (($_SESSION['DefaultDateFormat'] == 'm/d/Y') ? 'selected="selected" ' : '') . 'value="m/d/Y">m/d/Y</option>
-	<option ' . (($_SESSION['DefaultDateFormat'] == 'Y/m/d') ? 'selected="selected" ' : '') . 'value="Y/m/d">Y/m/d</option>
-	<option ' . (($_SESSION['DefaultDateFormat'] == 'Y-m-d') ? 'selected="selected" ' : '') . 'value="Y-m-d">Y-m-d</option>
-	</select></td>
-	<td>' . _('The default date format for entry of dates and display.') . '</td></tr>';
+echo '<tr style="outline: 1px solid">
+		<td>' . _('Default Date Format') . ':</td>
+		<td>
+			<select required="required" minlength="1" name="X_DefaultDateFormat">
+				<option ' . (($_SESSION['DefaultDateFormat'] == 'd/m/Y') ? 'selected="selected" ' : '') . 'value="d/m/Y">d/m/Y</option>
+				<option ' . (($_SESSION['DefaultDateFormat'] == 'd.m.Y') ? 'selected="selected" ' : '') . 'value="d.m.Y">d.m.Y</option>
+				<option ' . (($_SESSION['DefaultDateFormat'] == 'm/d/Y') ? 'selected="selected" ' : '') . 'value="m/d/Y">m/d/Y</option>
+				<option ' . (($_SESSION['DefaultDateFormat'] == 'Y/m/d') ? 'selected="selected" ' : '') . 'value="Y/m/d">Y/m/d</option>
+				<option ' . (($_SESSION['DefaultDateFormat'] == 'Y-m-d') ? 'selected="selected" ' : '') . 'value="Y-m-d">Y-m-d</option>
+			</select>
+		</td>
+		<td>' . _('The default date format for entry of dates and display.') . '</td>
+	</tr>';
 
 // DefaultTheme
 echo '<tr style="outline: 1px solid"><td>' . _('New Users Default Theme') . ':</td>
@@ -378,7 +383,9 @@ while (false != ($ThemeName = $ThemeDirectory->read())) {
 echo '</select></td>
 	<td>' . _('The default theme is used for new users who have not yet defined the display colour scheme theme of their choice') . '</td></tr>';
 
-echo '<tr><th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th></tr>';
+echo '<tr>
+		<th colspan="3">' . _('Accounts Receivable/Payable Settings') . '</th>
+	</tr>';
 
 // PastDueDays1
 echo '<tr style="outline: 1px solid"><td>' . _('First Overdue Deadline in (days)') . ':</td>
@@ -708,7 +715,9 @@ echo '<tr style="outline: 1px solid"><td>' . _('Automatically authorise purchase
 	</select></td><td>' . _('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '</td></tr>';
 
 
-echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
+echo '<tr>
+		<th colspan="3">' . _('General Settings') . '</th>
+	</tr>';
 
 // YearEnd
 $MonthNames = array(

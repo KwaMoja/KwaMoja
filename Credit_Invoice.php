@@ -254,12 +254,15 @@ if (!isset($_POST['ProcessCredit'])) {
 
 
 	echo '<table cellpadding="2" class="selection">';
-	echo '<tr><th colspan="13">';
-	echo '<div class="centre"><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
-		<b>' . ' - ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b>
-		 - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems' . $identifier]->DefaultCurrency . '</div>';
-	echo '</th></tr>';
-	echo '<tr><th>' . _('Item Code') . '</th>
+	echo '<tr>
+			<th colspan="13">
+				<div class="centre"><b>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</b>
+					<b>' . ' - ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b>
+		 				- ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems' . $identifier]->DefaultCurrency . '</div>
+		 	</th>
+		 </tr>';
+	echo '<tr>
+			<th>' . _('Item Code') . '</th>
 			<th>' . _('Item Description') . '</th>
 			<th>' . _('Invoiced') . '</th>
 			<th>' . _('Units') . '</th>
@@ -270,7 +273,8 @@ if (!isset($_POST['ProcessCredit'])) {
 			<th>' . _('Tax Authority') . '</th>
 			<th>' . _('Tax') . ' %' . '</th>
 			<th>' . _('Tax') . '<br />' . _('Amount') . '</th>
-			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th></tr>';
+			<th>' . _('Total') . '<br />' . _('Incl Tax') . '</th>
+		</tr>';
 
 }
 $_SESSION['CreditItems' . $identifier]->total = 0;

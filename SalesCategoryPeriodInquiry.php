@@ -18,9 +18,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<table cellpadding="2" class="selection">';
 
-echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
-		</tr>
-		<tr>
+echo '<tr>
+		<th colspan="2" class="centre">' . _('Date Selection') . '</th>
+	</tr>
+	<tr>
 		<td>' . _('Custom Range') . ':</td>
 		<td><input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange'] == 'Custom') {

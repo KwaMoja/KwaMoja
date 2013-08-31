@@ -194,8 +194,10 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note') . '</p>';
 
 	echo '<table cellpadding="3" class="selection">';
-	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection') . '</h3></th></tr>';
 	echo '<tr>
+			<th colspan="5"><h3> ' . _('Customer Selection') . '</h3></th>
+		</tr>
+		<tr>
 			<td>' . _('Enter text in the customer name') . ':</td>
 			<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
 			<td><b>' . _('OR') . '</b></td>
@@ -982,12 +984,14 @@ if ($_SESSION['RequireCustomerSelection'] == 1 OR !isset($_SESSION['CreditItems'
 		/*quick entry form */
 
 		/*FORM VARIABLES TO POST TO THE CREDIT NOTE 10 AT A TIME WITH PART CODE AND QUANTITY */
-		echo '<table class="selection">';
-		echo '<tr><th colspan="2"><h3>' . _('Quick Entry') . '</h3></th></tr>';
-		echo '<tr>
-	           	<th>' . _('Part Code') . '</th>
-	           	<th>' . _('Quantity') . '</th>
-	           </tr>';
+		echo '<table class="selection">
+				<tr>
+					<th colspan="2"><h3>' . _('Quick Entry') . '</h3></th>
+				</tr>
+				<tr>
+	           		<th>' . _('Part Code') . '</th>
+	           		<th>' . _('Quantity') . '</th>
+	           	</tr>';
 
 		for ($i = 1; $i <= $_SESSION['QuickEntries']; $i++) {
 

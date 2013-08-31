@@ -743,7 +743,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<br /><table class="selection">';
 
-echo '<tr><th colspan="4"><h3>' . _('Payment');
+echo '<tr>
+		<th colspan="4"><h3>' . _('Payment');
 
 if ($_SESSION['PaymentDetail' . $identifier]->SupplierID != '') {
 	echo ' ' . _('to') . ' ' . $_SESSION['PaymentDetail' . $identifier]->SuppName;

@@ -420,12 +420,15 @@ if (isset($_POST['pricelist'])) {
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Price List Export') . '</th></tr>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Price List Export') . '</th>
+			</tr>';
 	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
 	$SalesTypesResult = DB_query($sql, $db);
-	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
-	echo '<td><select minlength="0" name="SalesType">';
+	echo '<tr>
+			<td>' . _('For Sales Type/Price List') . ':</td>
+			<td><select minlength="0" name="SalesType">';
 	while ($myrow = DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 	}
@@ -433,8 +436,9 @@ if (isset($_POST['pricelist'])) {
 
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult = DB_query($sql, $db);
-	echo '<tr><td>' . _('For Location') . ':</td>';
-	echo '<td><select minlength="0" name="Location">';
+	echo '<tr>
+			<td>' . _('For Location') . ':</td>
+			<td><select minlength="0" name="Location">';
 	while ($myrow = DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
@@ -450,92 +454,93 @@ if (isset($_POST['pricelist'])) {
 	echo "<br />";
 	// Export Stock For Location
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Customer List Export') . '</th></tr>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Customer List Export') . '</th>
+			</tr>';
 
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult = DB_query($sql, $db);
-	echo '<tr><td>' . _('For Location') . ':</td>';
-	echo '<td><select minlength="0" name="Location">';
+	echo '<tr>
+			<td>' . _('For Location') . ':</td>
+			<td><select minlength="0" name="Location">';
 	while ($myrow = DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';
 	echo "<div class='centre'><input type='submit' name='custlist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 	// SELECT EXPORT FOR SALES MAN
 
 	echo "<br />";
 	// Export Stock For Location
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Salesman List Export') . '</th></tr>';
-	echo '</table>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Salesman List Export') . '</th>
+			</tr>
+		</table>';
 	echo "<div class='centre'><input type='submit' name='salesmanlist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 	// SELECT EXPORT FOR IMAGES
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Image List Export') . '</th></tr>';
-	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='imagelist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Image List Export') . '</th>
+			</tr>
+		</table>';
+	echo '<div class="centre"><input type="submit" name="imagelist" value="' . _('Export') . '" /></div>';
+	echo '</form><br />';
 
 	// SELECT EXPORT SECURITY TOKENS
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Token List Export') . '</th></tr>';
-	echo '</table>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Security Token List Export') . '</th>
+			</tr>
+		</table>';
 	echo "<div class='centre'><input type='submit' name='sectokenlist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 	// SELECT EXPORT SECURITY ROLES
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Role List Export') . '</th></tr>';
-	echo '</table>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Security Role List Export') . '</th>
+			</tr>
+		</table>';
 	echo "<div class='centre'><input type='submit' name='secrolelist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 	// SELECT EXPORT SECURITY GROUPS
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Group List Export') . '</th></tr>';
-	echo '</table>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Security Group List Export') . '</th>
+			</tr>
+		</table>';
 	echo "<div class='centre'><input type='submit' name='secgrouplist' value='" . _('Export') . "' /></div>";
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 	// SELECT EXPORT SECURITY USERS
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security User List Export') . '</th></tr>';
-	echo '</table>';
+	echo '<table>
+			<tr>
+				<th colspan="2">' . _('Security User List Export') . '</th>
+			</tr>
+		</table>';
 	echo '<div class="centre"><input type="submit" name="secuserlist" value="' . _('Export') . '" /></div>';
-	echo '</div>
-		  </form><br />';
+	echo '</form><br />';
 
 
 	include('includes/footer.inc');

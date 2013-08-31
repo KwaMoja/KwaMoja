@@ -243,8 +243,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Review'])) {
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
-		echo '<tr><th colspan="9"><h3>' . _('Consolidation') . ': ' . $_POST['Consolidation'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</h3></th></tr>';
 		echo '<tr>
+				<th colspan="9"><h3>' . _('Consolidation') . ': ' . $_POST['Consolidation'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</h3></th>
+			</tr>
+			<tr>
 				<th></th>
 				<th>' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>

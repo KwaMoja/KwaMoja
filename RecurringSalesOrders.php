@@ -304,16 +304,18 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">';
-echo '<tr><th colspan="7"><b>' . _('Order Line Details') . '</b></th></tr>';
 echo '<tr>
-	<th>' . _('Item Code') . '</th>
-	<th>' . _('Item Description') . '</th>
-	<th>' . _('Quantity') . '</th>
-	<th>' . _('Unit') . '</th>
-	<th>' . _('Price') . '</th>
-	<th>' . _('Discount') . ' %</th>
-	<th>' . _('Total') . '</th>
-</tr>';
+		<th colspan="7"><b>' . _('Order Line Details') . '</b></th>
+	</tr>
+	<tr>
+		<th>' . _('Item Code') . '</th>
+		<th>' . _('Item Description') . '</th>
+		<th>' . _('Quantity') . '</th>
+		<th>' . _('Unit') . '</th>
+		<th>' . _('Price') . '</th>
+		<th>' . _('Discount') . ' %</th>
+		<th>' . _('Total') . '</th>
+	</tr>';
 
 $_SESSION['Items' . $identifier]->total = 0;
 $_SESSION['Items' . $identifier]->totalVolume = 0;
@@ -359,19 +361,24 @@ echo '<tr>
 	</table>';
 
 echo '<br /><table class="selection">';
-echo '<tr><th colspan="7"><h3>' . _('Order Header Details') . '</h3></th></tr>';
+echo '<tr>
+		<th colspan="7"><h3>' . _('Order Header Details') . '</h3></th>
+	</tr>';
 
 echo '<tr>
-	<td>' . _('Deliver To') . ':</td>
-	<td>' . $_SESSION['Items' . $identifier]->DeliverTo . '</td></tr>';
+		<td>' . _('Deliver To') . ':</td>
+		<td>' . $_SESSION['Items' . $identifier]->DeliverTo . '</td>
+	</tr>';
 
 echo '<tr>
-	<td>' . _('Deliver from the warehouse at') . ':</td>
-	<td>' . $_SESSION['Items' . $identifier]->Location . '</td></tr>';
+		<td>' . _('Deliver from the warehouse at') . ':</td>
+		<td>' . $_SESSION['Items' . $identifier]->Location . '</td>
+	</tr>';
 
 echo '<tr>
-	<td>' . _('Street') . ':</td>
-	<td>' . $_SESSION['Items' . $identifier]->DelAdd1 . '</td></tr>';
+		<td>' . _('Street') . ':</td>
+		<td>' . $_SESSION['Items' . $identifier]->DelAdd1 . '</td>
+	</tr>';
 
 echo '<tr>
 	<td>' . _('Suburb') . ':</td>

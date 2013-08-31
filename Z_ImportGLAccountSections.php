@@ -23,7 +23,8 @@ if (isset($_POST['update'])) {
 	$SuccessStyle = 'style="color:green; font-weight:bold"';
 	$FailureStyle = 'style="color:red; font-weight:bold"';
 	echo '<table>
-			<tr><th>' . _('Account Section') . '</th>
+			<tr>
+				<th>' . _('Account Section') . '</th>
 				<th>' . _('Result') . '</th>
 				<th>' . _('Comments') . '</th>
 			</tr>';
