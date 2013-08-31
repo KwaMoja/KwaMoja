@@ -56,6 +56,10 @@ require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
+function DB_connect($host, $DBUser, $DBPassword, $DBPort) {
+	return mysqli_connect($host, $DBUser, $DBPassword, $_SESSION['DatabaseName'], $DBPort);
+}
+
 function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
 
 	global $debug;
@@ -135,7 +139,9 @@ function DB_data_seek(&$ResultIndex, $Record) {
 }
 
 function DB_free_result(&$ResultIndex) {
-	mysqli_free_result($ResultIndex);
+	if (is_resource($ResultIndex)) {
+		mysqli_free_result($ResultIndex);
+	}
 }
 
 function DB_num_rows(&$ResultIndex) {

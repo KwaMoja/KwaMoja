@@ -48,6 +48,10 @@ require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
+function DB_connect($host, $DBUser, $DBPassword, $DBPort) {
+	return mysql_connect($host, $DBUser, $DBPassword, $_SESSION['DatabaseName'], $DBPort);
+}
+
 function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
 
 	global $debug;

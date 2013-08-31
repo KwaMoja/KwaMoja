@@ -924,7 +924,7 @@ if (!isset($StockID)) {
 				$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 				$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 				$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $_SESSION['CompanyRecord']['decimalplaces']);
-
+				$OrdersTotal += $myrow['ordervalue'];
 				if ($myrow['printedpackingslip'] == 0) {
 					$PrintText = _('Print');
 				} else {

@@ -41,6 +41,28 @@ require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
+function DB_connect($host, $DBUser, $DBPassword, $DBPort) {
+	/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
+	$PgConnStr = 'dbname=' . $_SESSION['DatabaseName'];
+
+	if (isset($host) and ($host != "")) {
+		$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+	}
+
+	if (isset($DBPort) and ($DBPort != "")) {
+		$PgConnStr = 'port=' . $DBPort . ' ' . $PgConnStr;
+	}
+
+	if (isset($DBUser) and ($DBUser != "")) {
+		// if we have a user we need to use password if supplied
+		$PgConnStr .= " user=" . $DBUser;
+		if (isset($DBPassword) and ($DBPassword != "")) {
+			$PgConnStr .= " password=" . $DBPassword;
+		}
+	}
+	return pg_connect($PgConnStr);
+}
+
 function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
 
 	global $debug;
