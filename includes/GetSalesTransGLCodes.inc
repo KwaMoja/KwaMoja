@@ -69,7 +69,7 @@ function GetCOGSGLAccount($Area, $StockID, $SalesType, &$db) {
 		$SQL = "SELECT glcode
 					FROM cogsglpostings
 					WHERE area = 'AN'
-						AND stkcat = = '" . $StockCategory . "'
+						AND stkcat = '" . $StockCategory . "'
 						AND salestype = '" . $SalesType . "'";
 
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);

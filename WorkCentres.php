@@ -167,7 +167,6 @@ if (isset($SelectedWC)) {
 
 echo '<br />
 	<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
@@ -291,7 +290,6 @@ echo '<br />
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

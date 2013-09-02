@@ -1392,8 +1392,8 @@ else { //dont require customer selection
 		if ($_SESSION['Items' . $identifier]->DefaultPOLine == 1) {
 			echo '<th>' . _('PO Line') . '</th>';
 		} //$_SESSION['Items' . $identifier]->DefaultPOLine == 1
-		echo '<th class="SortableColumn">' . _('Item Code') . '</th>
-				<th class="SortableColumn">' . _('Item Description') . '</th>
+		echo '<th>' . _('Item Code') . '</th>
+				<th>' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
 				<th>' . _('QOH') . '</th>
 				<th>' . _('Unit') . '</th>
@@ -1510,12 +1510,14 @@ else { //dont require customer selection
 
 		$DisplayVolume = locale_number_format($_SESSION['Items' . $identifier]->totalVolume, 2);
 		$DisplayWeight = locale_number_format($_SESSION['Items' . $identifier]->totalWeight, 2);
-		echo '<table><tr class="EvenTableRows"><td>' . _('Total Weight') . ':</td>
-						 <td>' . $DisplayWeight . '</td>
-						 <td>' . _('Total Volume') . ':</td>
-						 <td>' . $DisplayVolume . '</td>
-					</tr>
-				</table>';
+		echo '<table>
+				<tr class="EvenTableRows">
+					<td>' . _('Total Weight') . ':</td>
+					<td>' . $DisplayWeight . '</td>
+					<td>' . _('Total Volume') . ':</td>
+					<td>' . $DisplayVolume . '</td>
+				</tr>
+			</table>';
 
 
 		echo '<br />

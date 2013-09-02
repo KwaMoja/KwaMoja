@@ -1802,11 +1802,21 @@ if (!isset($_POST['ProcessReturn'])) {
 			echo '<input type="hidden" name="Email" value="' . $_SESSION['Items' . $identifier]->Email . '" />';
 			echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items' . $identifier]->SalesPerson . '" />';
 
-			echo '<tr><td><input type="hidden" name="previous" value="' . strval($Offset - 1) . '" /><input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" /></td>';
-			echo '<td style="text-align:center" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" /></td>';
-			echo '<td><input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" /><input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" /></td></tr>';
+			echo '<tr>
+					<td>
+						<input type="hidden" name="previous" value="' . strval($Offset - 1) . '" />
+						<input tabindex="' . strval($j + 7) . '" type="submit" name="Prev" value="' . _('Prev') . '" />
+					</td>
+					<td style="text-align:center" colspan="6">
+						<input type="hidden" name="SelectingReturnItems" value="1" />
+						<input tabindex="' . strval($j + 8) . '" type="submit" value="' . _('Add to Sale') . '" />
+					</td>
+					<td>
+						<input type="hidden" name="NextList" value="' . strval($Offset + 1) . '" />
+						<input tabindex="' . strval($j + 9) . '" type="submit" name="Next" value="' . _('Next') . '" />
+					</td>
+				</tr>';
 			echo '</table></form>';
-			echo $jsCall;
 
 		} #end if SearchResults to show
 	}

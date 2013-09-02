@@ -1171,8 +1171,8 @@ else {
 }
 
 echo '<tr>
-							   <td>' . _('Charge Freight Cost inc tax') . ':</td>
-							   <td><input type="text" class="number" size="10" minlength="0" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
+		<td>' . _('Charge Freight Cost ex tax') . ':</td>
+		<td><input type="text" class="number" size="10" minlength="0" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $identifier]->FreightCost . '" /></td>';
 
 if ($_SESSION['DoFreightCalc'] == true) {
 	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
@@ -1184,8 +1184,8 @@ if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['
 } //(!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['Items' . $identifier]->ShipVia)
 
 echo '<tr>
-							   <td>' . _('Freight/Shipper Method') . ':</td>
-							   <td><select minlength="0" name="ShipVia">';
+		<td>' . _('Freight/Shipper Method') . ':</td>
+		<td><select minlength="0" name="ShipVia">';
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
@@ -1203,8 +1203,9 @@ while ($myrow = DB_fetch_array($ShipperResults)) {
 echo '</select></td></tr>';
 
 
-echo '<tr><td>' . _('Quotation Only') . ':</td>
-							   <td><select minlength="0" name="Quotation">';
+echo '<tr>
+		<td>' . _('Quotation Only') . ':</td>
+		<td><select minlength="0" name="Quotation">';
 if ($_SESSION['Items' . $identifier]->Quotation == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';

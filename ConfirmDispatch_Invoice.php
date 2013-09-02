@@ -510,11 +510,11 @@ if (!isset($_POST['ChargeFreightCost'])) {
 }
 if ($_SESSION['Items' . $identifier]->Any_Already_Delivered() == 1 and (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_POST['ChargeFreightCost'] == 0)) {
 
-	echo '<td colspan="2" class="number">' . _('Charge Freight Cost inc Tax') . '</td>
+	echo '<td colspan="2" class="number">' . _('Charge Freight Cost ex Tax') . '</td>
 		<td><input tabindex="' . $j . '" type="text" class="number" size="10" required="required" minlength="1" maxlength="12" name="ChargeFreightCost" value="0" /></td>';
 	$_SESSION['Items' . $identifier]->FreightCost = 0;
 } else {
-	echo '<td colspan="2" class="number">' . _('Charge Freight Cost inc Tax') . '</td>';
+	echo '<td colspan="2" class="number">' . _('Charge Freight Cost ex Tax') . '</td>';
 	if (isset($_POST['ProcessInvoice'])) {
 		echo '<td class="number">' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 	} else {

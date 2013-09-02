@@ -91,8 +91,8 @@ $result = DB_query($sql, $db);
 if (DB_num_rows($result) > 0) {
 	echo '<table class="selection">
 		<tr>
-			<th>' . _('Location ID') . '</th>
-			<th>' . _('Location Description') . '</th>
+			<th class="SortableColumn">' . _('Location ID') . '</th>
+			<th class="SortableColumn">' . _('Location Description') . '</th>
 			<th>' . _('Parent Location') . '</th>
 		</tr>';
 }
