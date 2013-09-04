@@ -101,7 +101,4 @@ echo '<div align="center">
     </table>
 </div>';
 
-
-
-include('includes/footer.inc');
 ?>

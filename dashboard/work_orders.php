@@ -99,7 +99,4 @@ $StockID = $row['stockid'];
 
 </div>';
 
-
-
-include('includes/footer.inc');
 ?>

@@ -112,7 +112,4 @@ INNER JOIN currencies ON debtorsmaster.currcode = currencies.currabrev  WHERE sa
 </div>
 ';
 
-
-
-include('includes/footer.inc');
 ?>

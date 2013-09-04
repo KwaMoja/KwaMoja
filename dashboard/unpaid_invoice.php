@@ -70,6 +70,7 @@ echo '<div align="center" style="width:100%;">
 					salesorders.deliverto,
 					salesorders.printedpackingslip,
 					salesorders.poplaced,
+					currencies.decimalplaces AS currdecimalplaces,
 					SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
 				FROM salesorders INNER JOIN salesorderdetails
 					ON salesorders.orderno = salesorderdetails.orderno
@@ -99,7 +100,7 @@ echo '<div align="center" style="width:100%;">
 						$k = 0;
 
 
-
+		$TotalOrderValue = 0;
 				while ($row = DB_fetch_array($SalesOrdersResult1))
 
 					{
@@ -117,10 +118,10 @@ echo '<div align="center" style="width:100%;">
 						$FormatedDelDate = ConvertSQLDate($row['deliverydate']);
 
 						echo ' <td> ' . $row['name'] . ' </td>';
-						echo ' <td>'.$FormatedOrderDate.'</td><td>'.$FormatedDelDate.'</td><td> ' . $row['deliverto'] . ' </td><td>'.$fo.'</td> ';
+						echo ' <td>'.$FormatedOrderDate.'</td><td>'.$FormatedDelDate.'</td><td> ' . $row['deliverto'] . ' </td><td class="number">'.$fo.'</td> ';
 
 		}
-					echo '<tr><td colspan="4">Total</td><td colspan="2">'.$TotalOrderValue.'</td></tr></tbody>';
+					echo '<tr><td colspan="4">Total</td><td colspan="2" class="number">'.locale_number_format($TotalOrderValue,$row['currdecimalplaces']).'</td></tr></tbody>';
 
 		echo '</table>';
 
@@ -129,7 +130,4 @@ echo '<div align="center" style="width:100%;">
     </table>
 </div>';
 
-
-
-include('includes/footer.inc');
 ?>
