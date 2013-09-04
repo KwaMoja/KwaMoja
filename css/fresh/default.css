@@ -549,3 +549,34 @@ cursor:pointer;
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 cursor:pointer;
 }
+
+.CanvasTitle {
+background:#4682B4;
+border-top-left-radius:15px;
+border-top-right-radius:15px;
+box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 0px #000;
+padding: 5px;
+color:#fff;
+text-shadow: 1px 1px #0E0C6D;
+}
+
+iframe {
+border-width: 0px;
+width:30%;
+margin-left:10px;
+margin-top:5px;
+margin-bottom:5px;
+}
+
+#CloseButton {
+cursor:pointer;
+float:right;
+padding: 1px;
+padding-right:5px;
+color: #fff;
+text-shadow: 1px 1px #0E0C6D;
+}
+
+#CloseButton:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+}

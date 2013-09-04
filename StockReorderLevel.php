@@ -8,6 +8,8 @@ if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])) {
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
+} else {
+	$StockID = '';
 }
 
 echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
@@ -20,7 +22,6 @@ $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" 
 $myrow = DB_fetch_row($result);
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if ($_SESSION['RestrictLocations'] == 0) {
@@ -66,8 +67,9 @@ echo '<tr>
 echo '<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
 	</tr>
+<tbody>
 	<tr>
-		<th>' . _('Location') . '</th>
+		<th class="SortableColumn">' . _('Location') . '</th>
 		<th>' . _('Quantity On Hand') . '</th>
 		<th>' . _('Re-Order Level') . '</th>
 	</tr>';
@@ -102,7 +104,8 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 }
 //end of while loop
 
-echo '</table>
+echo '</tbody>
+	</table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="UpdateData" value="' . _('Update') . '" />
@@ -115,7 +118,6 @@ echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' 
 echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
-	</div>
 	</form>';
 include('includes/footer.inc');
 ?>

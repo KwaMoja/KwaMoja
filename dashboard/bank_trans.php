@@ -1,0 +1,109 @@
+<?php
+$PageSecurity=0;
+$PathPrefix='../';
+include('../includes/session.inc');
+
+$RootPath = '../';
+
+
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+
+	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Dashboard</title>';
+	echo '<link rel="shortcut icon" href="'. $RootPath.'/favicon.ico" />';
+	echo '<link rel="icon" href="' . $RootPath.'/favicon.ico" />';
+
+		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
+		echo '<meta http-equiv="refresh" content="600">';
+
+	echo '<link href="' . $RootPath . '/css/'. $_SESSION['Theme'] .'/default.css" rel="stylesheet" type="text/css" />';
+	echo '<script type="text/javascript" src = "'.$RootPath.'/javascripts/MiscFunctions.js"></script>';
+	echo '<style media="screen">
+			.noPrint{ display: block; }
+			.yesPrint{ display: block !important; }
+		</style>
+		<style media="print">
+			.noPrint{ display: none; }
+			.yesPrint{ display: block !important; }
+		</style>';
+
+	echo '</head><body style="background:transparent;">';
+
+switch ($_SESSION['ScreenFontSize']) {
+	case 0:
+		$FontSize = '8pt';
+		break;
+	case 1:
+		$FontSize = '10pt';
+		break;
+	case 2:
+		$FontSize = '12pt';
+		break;
+	default:
+		$FontSize = '10pt';
+}
+echo '<style>
+			body {
+					font-size: ' . $FontSize . ';
+				}
+			</style>';
+
+$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$result = DB_query($sql, $db);
+$myrow = DB_fetch_array($result);
+
+echo '<div align="center"">
+
+<table border="0" cellspacing="0" cellpadding="0" style="max-width:100%;width:99%;">
+      <tr>
+        <th colspan="5" style="margin:0px;padding:0px;background: transparent;">
+			<div class="CanvasTitle">' . _('Latest bank transactions') .
+				'<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+			</div>
+		</th>
+      </tr>';
+
+		$sql="SELECT banktrans.currcode,
+					banktrans.amount,
+					banktrans.functionalexrate,
+					banktrans.exrate,
+					banktrans.banktranstype,
+					banktrans.transdate,
+					banktrans.ref,
+					bankaccounts.bankaccountname,
+					systypes.typename,
+					systypes.typeid
+				FROM banktrans
+				INNER JOIN bankaccounts
+				ON banktrans.bankact=bankaccounts.accountcode
+				INNER JOIN systypes
+				ON banktrans.type=systypes.typeid ORDER BY banktrans.transdate LIMIT 5";
+				$result = DB_query($sql, $db);
+				$AccountCurrTotal=0;
+		$LocalCurrTotal =0;
+			echo "<tbody><tr><th> Code </th><th>Amount</th><th>Trans. Type</th><th>Trans. Date</th><th>A/c Name</th></tr> ";
+						$k=0;
+			while ($row = DB_fetch_array($result)){
+				if ($k == 1){
+			echo '<tr class="EvenTableRows">';
+			$k = 0;
+		} else {
+			echo '<tr class="OddTableRows">';
+			$k = 1;
+		}
+
+			$AccountCurrTotal += $row['amount'];
+			$LocalCurrTotal += $row['amount']/$row['functionalexrate']/$row['exrate'];
+			echo"<td width='20%'>".$row['currcode']." </td> <td width='20%'>".$row['amount']. "</td><td width='20%'>" .$row['banktranstype']. "</td><td width='20%'>" .$row['transdate']. "</td><td width='20%'>" .$row['bankaccountname']. " </td>";
+			}
+			echo' </td>
+      </tr></tbody>
+    </table></td>
+  </tr>
+</table>
+</div>';
+
+
+
+include('includes/footer.inc');
+?>

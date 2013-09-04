@@ -1,0 +1,280 @@
+<?php
+
+/* $Id$*/
+
+include('includes/session.inc');
+$Title = _('User Settings');
+include('includes/header.inc');
+
+echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' .
+	_('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
+
+$PDFLanguages = array(  _('Latin Western Languages - Times'),
+						_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
+						_('Chinese'),
+						_('Free Serif'));
+
+
+
+
+
+
+if (isset($_POST['Modify'])) {
+	// no input errors assumed initially before we test
+	$InputError = 0;
+
+	/* actions to take once the user has clicked the submit button
+	ie the page has called itself with some user input */
+
+	//first off validate inputs sensible
+	if ($_POST['DisplayRecordsMax'] <= 0){
+		$InputError = 1;
+		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
+	}
+
+	//!!!for the demo only - enable this check so password is not changed
+ /*
+	if ($_POST['pass'] != ''){
+		$InputError = 1;
+		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
+	}
+ */
+ 	$UpdatePassword = 'N';
+
+	if ($_POST['PasswordCheck'] != ''){
+		if (mb_strlen($_POST['Password'])<5){
+			$InputError = 1;
+			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+		} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= False){
+			$InputError = 1;
+			prnMsg(_('The password cannot contain the user id'),'error');
+		}
+		if ($_POST['Password'] != $_POST['PasswordCheck']){
+			$InputError = 1;
+			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
+		}else{
+			$UpdatePassword = 'Y';
+		}
+	}
+
+
+	if ($InputError != 1) {
+		// no errors
+		if ($UpdatePassword != 'Y'){
+			$sql = "UPDATE www_users
+				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+					theme='" . $_POST['Theme'] . "',
+					language='" . $_POST['Language'] . "',
+					email='". $_POST['email'] ."',
+					pdflanguage='" . $_POST['PDFLanguage'] . "',
+					fontsize='" . $_POST['FontSize'] . "'
+				WHERE userid = '" . $_SESSION['UserID'] . "'";
+
+			$ErrMsg =  _('The user alterations could not be processed because');
+			$DbgMsg = _('The SQL that was used to update the user and failed was');
+
+			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+
+			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
+		} else {
+			$sql = "UPDATE www_users
+				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+					theme='" . $_POST['Theme'] . "',
+					language='" . $_POST['Language'] . "',
+					email='". $_POST['email'] ."',
+					pdflanguage='" . $_POST['PDFLanguage'] . "',
+					password='" . CryptPass($_POST['Password']) . "',
+					fontsize='" . $_POST['FontSize'] . "'
+				WHERE userid = '" . $_SESSION['UserID'] . "'";
+
+			$ErrMsg =  _('The user alterations could not be processed because');
+			$DbgMsg = _('The SQL that was used to update the user and failed was');
+
+			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+
+			prnMsg(_('The user settings have been updated'),'success');
+		}
+		
+
+	  // update the session variables to reflect user changes on-the-fly
+		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
+		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
+		$Theme = $_SESSION['Theme'];
+		$_SESSION['Language'] = trim($_POST['Language']);
+		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
+		include ('includes/LanguageSetup.php');
+
+	}
+	
+
+}
+
+
+echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<div>';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+if (!isset($_POST['DisplayRecordsMax']) or $_POST['DisplayRecordsMax']=='') {
+
+  $_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
+
+}
+echo '<table width="100%" align="left"><tr><td>';
+echo '<table class="selection">
+		<tr>
+			<td>' . _('User ID') . ':</td>
+			<td>' . $_SESSION['UserID'] . '</td>
+		</tr>';
+
+echo '<tr>
+		<td>' . _('User Name') . ':</td>
+		<td>' . $_SESSION['UsersRealName'] . '
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
+
+echo '<tr>
+	<td>' . _('Maximum Number of Records to Display') . ':</td>
+	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+	</tr>';
+
+
+echo '<tr>
+	<td>' . _('Language') . ':</td>
+	<td><select name="Language">';
+
+if (!isset($_POST['Language'])){
+	$_POST['Language']=$_SESSION['Language'];
+}
+
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
+	if (isset($_POST['Language']) and $_POST['Language'] == $LanguageEntry){
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	} elseif (!isset($_POST['Language']) and $LanguageEntry == $DefaultLanguage) {
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	} else {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] .'</option>';
+	}
+}
+echo '</select></td></tr>';
+
+echo '<tr>
+	<td>' . _('Theme') . ':</td>
+	<td><select name="Theme">';
+
+$Themes = scandir('css/');
+
+foreach ($Themes as $ThemeName) {
+
+	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn'){
+
+		if ($_SESSION['Theme'] == $ThemeName){
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		} else {
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		}
+	}
+}
+
+if (!isset($_POST['PasswordCheck'])) {
+	$_POST['PasswordCheck']='';
+}
+if (!isset($_POST['Password'])) {
+	$_POST['Password']='';
+}
+echo '</select></td></tr>
+	<tr>
+		<td>' . _('New Password') . ':</td>
+		<td><input type="password" name="Password" size="20" value="' .  $_POST['Password'] . '" /></td>
+	</tr>
+	<tr>
+		<td>' . _('Confirm Password') . ':</td>
+		<td><input type="password" name="PasswordCheck" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center"><i>' . _('if you leave the password boxes empty your password will not change') . '</i></td>
+	</tr>
+	<tr>
+		<td>' . _('Email') . ':</td>';
+
+$sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
+$result = DB_query($sql,$db);
+$myrow = DB_fetch_array($result);
+if(!isset($_POST['email'])){
+	$_POST['email'] = $myrow['email'];
+}
+
+echo '<td><input type="text" name="email" size="40" value="' . $_POST['email'] . '" /></td>
+	</tr>';
+	
+
+if (!isset($_POST['PDFLanguage'])){
+	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
+}
+
+/* Screen Font Size */
+
+echo '<tr>
+		<td>' . _('Screen Font Size') . ':</td>
+		<td><select name="FontSize">';
+if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize']==0){
+	echo '<option selected="selected" value="0">' . _('Small') . '</option>';
+	echo '<option value="1">' . _('Medium') . '</option>';
+	echo '<option value="2">' . _('Large') . '</option>';
+} else if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize']==1) {
+	echo '<option value="0">' . _('Small') . '</option>';
+	echo '<option selected="selected" value="1">' . _('Medium') . '</option>';
+	echo '<option value="2">' . _('Large') . '</option>';
+} else  {
+	echo '<option value="0">' . _('Small') . '</option>';
+	echo '<option value="1">' . _('Medium') . '</option>';
+	echo '<option selected="selected" value="2">' . _('Large') . '</option>';
+}
+echo '</select></td>
+	</tr>';
+
+echo '<tr>
+		<td>' . _('PDF Language Support') . ': </td>
+		<td><select name="PDFLanguage">';
+
+for($i=0;$i<count($PDFLanguages);$i++){
+	if ($_POST['PDFLanguage']==$i){
+		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
+	} else {
+		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
+	}
+}
+echo '</select></td>
+	</tr>
+	
+</table>
+	<br />
+	<div class="centre"><input type="submit" class="button" name="Modify" value="' . _('Modify') . '" /></div>
+    </div>
+	</form></td>';
+	
+	echo '<td>';
+	$uid = $_SESSION['UserID'];
+	
+	echo '<table class="selection" width="100%" align="left">
+	<tr><td valign="top"> <form method="post" class="noPrint" action="submit.php?uid='.$uid.'"><strong>Pages to be displayed on Dashboard</strong> </td></tr>
+
+			
+			
+		<input type="hidden" name="uid" value="<?php echo '.$uid.'; ?>"> 
+<tr>
+	
+<td> <table border="0" width="100%"><tr><td><input type="checkbox" name="dashboard[]" value="1"  /></td><td> Total</td></tr>	
+<tr><td><input type="checkbox" name="dashboard[]" value="2"  /></td><td> Latest Customer Orders</td></tr>
+<tr><td><input type="checkbox" name="dashboard[]" value="3"  /></td><td> Unpaid Customer Orders</td></tr>
+<tr><td><input type="checkbox" name="dashboard[]" value="4"  /></td><td> Purchase Orders</td></tr>
+<tr><td><input type="checkbox" name="dashboard[]" value="5"   /></td><td> Purchase Orders to Authorize</td></tr>	
+<tr><td><input type="checkbox" name="dashboard[]" value="6"   /></td><td> Stock Status</td></tr>	
+<tr><td><input type="checkbox" name="dashboard[]" value="7"  /></td><td> Work Orders</td></tr>	
+<tr><td><input type="checkbox" name="dashboard[]" value="8"   /></td><td> MRP</td></tr>
+<tr><td><input type="checkbox" name="dashboard[]" value="9"   /></td><td> Bank Transactions</td></tr>			
+
+<tr><td><div class="centre"><input type="submit" class="button" name="Submit" value="' . _('Submit') . '" /></div></form></table>	
+</td></tr></td></tr></table></td></tr></table><br />';
+
+include('includes/footer.inc');
+
+?>
