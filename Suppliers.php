@@ -710,7 +710,7 @@ if (!isset($SupplierID)) {
 			<td><input type="tel" name="Fax" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Email Address') . ':</td>
-			<td><input type="email" name="Email" size="30" required="required" minlength="1" maxlength="40" /></td>
+			<td><input type="email" name="Email" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
 	echo '<tr><td>' . _('Supplier Type') . ':</td>
 			<td><select minlength="0" name="SupplierType">';
