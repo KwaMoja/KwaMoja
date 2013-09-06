@@ -1164,6 +1164,7 @@ if (isset($SearchResult)) {
 			</tr>';
 
 	$k = 0; //row colour counter
+	$j = 0;
 
 	while ($myrow = DB_fetch_array($SearchResult)) {
 		if ($k == 1) {
