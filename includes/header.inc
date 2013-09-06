@@ -132,7 +132,7 @@ if (isset($Title)) {
 	if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 		if (basename($_SERVER['PHP_SELF']) != 'index.php') {
-			if (DB_table_exists('favourites', $db)) {
+			if ($_SESSION['DBUpdateNumber'] >= 56) {
 				$sql = "SELECT caption, href FROM favourites WHERE href='" . basename($_SERVER['PHP_SELF']) . "' AND userid='" . $_SESSION['UserID'] . "'";
 				$result = DB_query($sql, $db);
 
@@ -144,7 +144,7 @@ if (isset($Title)) {
 			}
 		}
 
-		if (DB_table_exists('favourites', $db)) {
+		if ($_SESSION['DBUpdateNumber'] >= 56) {
 			$sql = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 			$result = DB_query($sql, $db);
 

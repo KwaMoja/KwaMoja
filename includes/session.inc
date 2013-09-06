@@ -145,16 +145,6 @@ if (($DBVersion > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NA
 	header('Location: Z_UpgradeDatabase.php');
 }
 
-if (isset($_SESSION['DB_Maintenance'])) {
-	if ($_SESSION['DB_Maintenance'] > 0) {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') >= $_SESSION['DB_Maintenance']) {
-			/*Do the DB maintenance routing for the DB_type selected */
-			DB_Maintenance($db);
-			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		} //DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['DB_Maintenance_LastRun']), 'd') >= $_SESSION['DB_Maintenance']
-	} //$_SESSION['DB_Maintenance'] != 0
-} //isset($_SESSION['DB_Maintenance'])
-
 //purge the audit trail if necessary
 if (isset($_SESSION['MonthsAuditTrail'])) {
 	$sql = "DELETE FROM audittrail
