@@ -92,6 +92,7 @@ function search(&$db, &$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEAR
 				</tr>';
 
 		$k = 0; //row colour counter
+		$j = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';

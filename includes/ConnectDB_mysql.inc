@@ -126,6 +126,12 @@ function DB_fetch_array(&$ResultIndex) {
 	return $RowPointer;
 }
 
+function DB_fetch_all(&$ResultIndex) {
+
+	$ResultArray = mysqli_fetch_all($ResultIndex, MYSQLI_ASSOC);
+	return $ResultArray;
+}
+
 function DB_data_seek(&$ResultIndex, $Record) {
 	mysql_data_seek($ResultIndex, $Record);
 }

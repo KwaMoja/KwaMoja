@@ -65,9 +65,26 @@ function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transac
 	global $debug;
 	global $PathPrefix;
 
-	$result = mysqli_query($Conn, $SQL);
+	if (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn) == 0 and $_SESSION['MonthsAuditTrail'] > 0) and (DB_affected_rows($result) > 0)) {
 
-	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
+		$SQLArray = explode(' ', $SQL);
+
+		if (($SQLArray[0] == 'INSERT') or ($SQLArray[0] == 'UPDATE') or ($SQLArray[0] == 'DELETE')) {
+
+			if ($SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
+				$AuditSQL = "INSERT INTO audittrail (transactiondate,
+									userid,
+									querystring)
+						VALUES('" . Date('Y-m-d H:i:s') . "',
+							'" . trim($_SESSION['UserID']) . "',
+							'" . DB_escape_string($SQL) . "')";
+
+				$AuditResult = mysqli_query($Conn, $AuditSQL);
+			}
+		}
+	}
+
+	$result = mysqli_query($Conn, $SQL);
 
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
@@ -94,24 +111,8 @@ function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transac
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn) == 0 and $_SESSION['MonthsAuditTrail'] > 0) and (DB_affected_rows($result) > 0)) {
-
-		$SQLArray = explode(' ', $SQL);
-
-		if (($SQLArray[0] == 'INSERT') or ($SQLArray[0] == 'UPDATE') or ($SQLArray[0] == 'DELETE')) {
-
-			if ($SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
-				$AuditSQL = "INSERT INTO audittrail (transactiondate,
-									userid,
-									querystring)
-						VALUES('" . Date('Y-m-d H:i:s') . "',
-							'" . trim($_SESSION['UserID']) . "',
-							'" . DB_escape_string($SQL) . "')";
-
-				$AuditResult = mysqli_query($Conn, $AuditSQL);
-			}
-		}
 	}
+
 	return $result;
 
 }
@@ -132,6 +133,12 @@ function DB_fetch_array(&$ResultIndex) {
 
 	$RowPointer = mysqli_fetch_array($ResultIndex);
 	return $RowPointer;
+}
+
+function DB_fetch_all(&$ResultIndex) {
+
+	$ResultArray = mysqli_fetch_all($ResultIndex, MYSQLI_ASSOC);
+	return $ResultArray;
 }
 
 function DB_data_seek(&$ResultIndex, $Record) {
@@ -164,6 +171,7 @@ function DB_error_msg(&$Conn) {
 }
 
 function DB_Last_Insert_ID(&$Conn, $Table, $FieldName) {
+	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
 	//	return mysqli_insert_id($Conn);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];

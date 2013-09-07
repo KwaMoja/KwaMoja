@@ -47,7 +47,7 @@ $OrderHeaderSQL = "SELECT purchorders.*,
 						www_users.realname,
 						locations.locationname,
 						currencies.decimalplaces AS currdecimalplaces
-					ROM purchorders
+					FROM purchorders
 					INNER JOIN locations
 						ON locations.loccode=purchorders.intostocklocation
 					INNER JOIN suppliers

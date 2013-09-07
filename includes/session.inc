@@ -320,24 +320,9 @@ function CryptPass($Password) {
 }
 
 function HighestFileName($PathPrefix) {
-	if ($handle = opendir($PathPrefix . 'sql/updates')) {
-
-		$i = 0;
-
-		// Go through directory:
-		while (false !== ($file = readdir($handle))) {
-			// filter unnecessary file/dir paths:
-			if (substr($file, -3) == 'php') {
-
-				$FileNameLength = strlen($file) - 4;
-				$UpdateNames[$i] = substr($file, 0, $FileNameLength);
-
-				$i++;
-			}
-		}
-		closedir($handle);
-	}
-	return max($UpdateNames);
+	$files = glob('sql/updates/*.php');
+	natsort($files);
+	return basename(array_pop($files), ".php");
 }
 
 if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {

@@ -532,7 +532,7 @@ if (isset($_POST['submit'])) {
 
 		$Leeway = $myrow['leeway'];
 		$UserMRPDemands = _('No');
-		if ($myrow['UserMRPDemands'] == 'y') {
+		if ($myrow['usemrpdemands'] == 'y') {
 			$UserMRPDemands = _('Yes');
 		}
 		$useeoq = _('No');
