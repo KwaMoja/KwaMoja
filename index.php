@@ -183,8 +183,19 @@ function GetRptLinks($GroupID) {
 	be generated, one for standard reports and the other for custom reports.
 	*/
 	global $db, $RootPath, $ReportList;
-	require_once('reportwriter/languages/en_US/reports.php');
-	require_once('reportwriter/admin/defaults.php');
+	$FormGroups = array (
+		'gl:chk' => _('Bank Checks'),	// Bank checks grouped with the gl report group
+		'ar:col' => _('Collection Letters'),
+		'ar:cust' => _('Customer Statements'),
+		'gl:deps' => _('Bank Deposit Slips'),
+		'ar:inv' => _('Invoices and Packing Slips'),
+		'ar:lblc' => _('Labels - Customer'),
+		'prch:lblv' => _('Labels - Vendor'),
+		'prch:po' => _('Purchase Orders'),
+		'ord:quot' => _('Customer Quotes'),
+		'ar:rcpt' => _('Sales Receipts'),
+		'ord:so' => _('Sales Orders'),
+		'misc:misc' => _('Miscellaneous'));  // do not delete misc category
 	$GroupID = $ReportList[$GroupID];
 	$Title = array(
 		_('Custom Reports'),
@@ -192,15 +203,15 @@ function GetRptLinks($GroupID) {
 	);
 
 	$sql = "SELECT id,
-				reporttype,
-				defaultreport,
-				groupname,
-				reportname
-			FROM reports
-			ORDER BY groupname,
-					reportname";
+					reporttype,
+					defaultreport,
+					groupname,
+					reportname
+				FROM reports
+				ORDER BY groupname,
+						reportname";
 	$Result = DB_query($sql, $db, '', '', false, true);
-	$ReportList = '';
+	$ReportList = array();
 	while ($Temp = DB_fetch_array($Result))
 		$ReportList[] = $Temp;
 

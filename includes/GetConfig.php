@@ -4,6 +4,14 @@
 
 if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded']) or isset($_SESSION['FirstStart'])) {
 	global $db; // It is global, we may not be.
+
+	//purge the audit trail if necessary
+	if (isset($_SESSION['MonthsAuditTrail'])) {
+		$sql = "DELETE FROM audittrail
+				WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+		$ErrMsg = _('There was a problem deleting expired audit-trail history');
+		$result = DB_query($sql, $db);
+	} //isset($_SESSION['MonthsAuditTrail'])
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($sql, $db, $ErrMsg);

@@ -82,8 +82,6 @@ else { //set SESSION['FormID'] before the a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-include($PathPrefix . 'includes/LanguageSetup.php');
-
 /* only do security checks if AllowAnyone is not true */
 if (!isset($AllowAnyone)) {
 	/* only do security checks if AllowAnyone is not true */
@@ -144,14 +142,6 @@ include($PathPrefix . 'includes/GetConfig.php');
 if (($DBVersion > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
 }
-
-//purge the audit trail if necessary
-if (isset($_SESSION['MonthsAuditTrail'])) {
-	$sql = "DELETE FROM audittrail
-			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
-	$ErrMsg = _('There was a problem deleting expired audit-trail history');
-	$result = DB_query($sql, $db);
-} //isset($_SESSION['MonthsAuditTrail'])
 
 /*Check to see if currency rates need to be updated */
 if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {

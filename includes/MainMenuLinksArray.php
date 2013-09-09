@@ -23,7 +23,9 @@ $sql = "SELECT `modulelink`,
 			ORDER BY `sequence`, `menusection`";
 $result = DB_query($sql, $db);
 
-while ($myrow = DB_fetch_array($result)) {
+$Items = DB_fetch_all($result);
+
+foreach ($Items as $myrow) {
 	$MenuItems[$myrow['modulelink']][$myrow['menusection']]['Caption'][] = _($myrow['caption']);
 	$MenuItems[$myrow['modulelink']][$myrow['menusection']]['URL'][] = $myrow['url'];
 }
