@@ -180,7 +180,7 @@ echo '<tr>
 	<td>' . _('Account Selection') . ':
 		<br />(' . _('If you know the code enter it above') . '
 		<br />' . _('otherwise select the account from the list') . ')</td>
-	<td><select required="required" minlength="1" name="AcctSelection">';
+	<td><select minlength="0" name="AcctSelection" onchange="return assignComboToInput(this,' . 'GLCode' . ')">';
 
 $sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 

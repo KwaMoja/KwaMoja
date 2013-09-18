@@ -460,6 +460,14 @@ if (!isset($_GET['delete'])) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
+		if (DB_num_rows($result) == 0) {
+			echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first create a location.') .
+					'<br />' . _('Once you have filled in all the details, click on the button at the bottom of the screen') . '</div>';
+		} elseif (DB_num_rows($result) == 1 and isset($_SESSION['FirstStart'])) {
+			echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SalesTypes.php">';
+			exit;
+		}
+
 		$_POST['LocCode'] = $myrow['loccode'];
 		$_POST['LocationName'] = $myrow['locationname'];
 		$_POST['DelAdd1'] = $myrow['deladd1'];
@@ -555,7 +563,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' . _('Delivery Address 1') . ':' . '</td>
-			<td><input type="text" name="DelAdd1" value="' . $_POST['DelAdd1'] . '" size="41" minlength="0" maxlength="40" /></td>
+			<td><input type="text" name="DelAdd1" value="' . $_POST['DelAdd1'] . '" size="41" required="required" minlength="1" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Delivery Address 2') . ':' . '</td>

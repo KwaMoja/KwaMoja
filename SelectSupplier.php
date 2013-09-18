@@ -235,7 +235,7 @@ if (isset($_POST['SupplierCode'])) {
 }
 echo '</td></tr>
 		</table>
-		<br /><div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
 //if (isset($result) and !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($result);
@@ -269,49 +269,48 @@ if (isset($_POST['Search'])) {
 		echo '<br />';
 	}
 	echo '<input type="hidden" name="Search" value="' . _('Search Now') . '" />';
-	echo '<br />
-		<br />
-		<br />
-		<table cellpadding="2">
-			<tr>
-				<th class="SortableColumn">' . _('Code') . '</th>
-				<th class="SortableColumn">' . _('Supplier Name') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . _('Address 1') . '</th>
-				<th>' . _('Address 2') . '</th>
-				<th>' . _('Address 3') . '</th>
-				<th>' . _('Address 4') . '</th>
-				<th>' . _('Telephone') . '</th>
-				<th>' . _('Email') . '</th>
-			</tr>';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
-	}
-	while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
+		echo '<table cellpadding="2">
+				<tr>
+					<th class="SortableColumn">' . _('Code') . '</th>
+					<th class="SortableColumn">' . _('Supplier Name') . '</th>
+					<th>' . _('Currency') . '</th>
+					<th>' . _('Address 1') . '</th>
+					<th>' . _('Address 2') . '</th>
+					<th>' . _('Address 3') . '</th>
+					<th>' . _('Address 4') . '</th>
+					<th>' . _('Telephone') . '</th>
+					<th>' . _('Email') . '</th>
+				</tr>';
+		while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+			if ($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+			echo '<td><input type="submit" name="Select" value="' . $myrow['supplierid'] . '" /></td>
+					<td>' . $myrow['suppname'] . '</td>
+					<td>' . $myrow['currcode'] . '</td>
+					<td>' . $myrow['address1'] . '</td>
+					<td>' . $myrow['address2'] . '</td>
+					<td>' . $myrow['address3'] . '</td>
+					<td>' . $myrow['address4'] . '</td>
+					<td>' . $myrow['telephone'] . '</td>
+					<td><a href="mailto://' . $myrow['email'] . '">' . $myrow['email'] . '</a></td>
+				</tr>';
+			$RowIndex = $RowIndex + 1;
+			//end of page full new headings if
 		}
-		echo '<td><input type="submit" name="Select" value="' . $myrow['supplierid'] . '" /></td>
-				<td>' . $myrow['suppname'] . '</td>
-				<td>' . $myrow['currcode'] . '</td>
-				<td>' . $myrow['address1'] . '</td>
-				<td>' . $myrow['address2'] . '</td>
-				<td>' . $myrow['address3'] . '</td>
-				<td>' . $myrow['address4'] . '</td>
-				<td>' . $myrow['telephone'] . '</td>
-				<td><a href="mailto://' . $myrow['email'] . '">' . $myrow['email'] . '</a></td>
-			</tr>';
-		$RowIndex = $RowIndex + 1;
-		//end of page full new headings if
+		//end of while loop
+		echo '</table>';
+	} else {
+		prnMsg( _('There are no suppliers returned for this criteria. Please enter new criteria'), 'info');
 	}
-	//end of while loop
-	echo '</table>';
 }
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {

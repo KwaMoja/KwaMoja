@@ -493,6 +493,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	$CheckPeriodActual = 0;
 	$CheckPeriodBudget = 0;
 
+	$j = 0;
+
 	while ($myrow = DB_fetch_array($AccountsResult)) {
 
 		if ($myrow['groupname'] != $ActGrp) {

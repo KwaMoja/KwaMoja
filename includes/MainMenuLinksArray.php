@@ -7,8 +7,9 @@ $sql = "SELECT `modulelink`,
 			WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
 			ORDER BY `sequence`";
 $result = DB_query($sql, $db);
+$Modules = DB_fetch_all($result);
 
-while ($myrow = DB_fetch_array($result)) {
+foreach ($Modules as $myrow) {
 	$ModuleLink[] = $myrow['modulelink'];
 	$ReportList[$myrow['modulelink']] = $myrow['reportlink'];
 	$ModuleList[] = _($myrow['modulename']);

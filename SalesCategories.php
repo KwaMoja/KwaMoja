@@ -329,7 +329,7 @@ echo '<table class="selection">
 echo '<tr>
 		<td>' . _('Display in webSHOP?') . ':</td>
 		<td><select name="Active">';
-if ($_POST['Active'] == '1') {
+if (isset($_POST['Active']) and $_POST['Active'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 } else {

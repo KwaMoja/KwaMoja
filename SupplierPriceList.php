@@ -531,7 +531,7 @@ if (isset($_POST['SupplierID'])) {
 				<td><input type="text" class="number" required="required" minlength="1" maxlength="11" size="11" value="0.0000" name="Price0" /></td>
 				<td><select required="required" minlength="1" name="SuppUOM0">';
 		while ($UOMRow = DB_fetch_array($UOMResult)) {
-			if ($UOMRow['unitname'] == $StRowoc['units']) {
+			if (isset($StRowoc['units']) and ($UOMRow['unitname'] == $StRowoc['units'])) {
 				echo '<option selected="selected" value="' . $UOMRow['unitname'] . '">' . $UOMRow['unitname'] . '</option>';
 			} else {
 				echo '<option value="' . $UOMRow['unitname'] . '">' . $UOMRow['unitname'] . '</option>';

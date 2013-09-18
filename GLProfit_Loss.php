@@ -22,7 +22,6 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	echo '<div class="page_help_text noPrint">' . _('Profit and loss statement, also called an Income Statement, or Statement of Operations, this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the top line) is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").') . '<br />' . _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />' . _('The Profit and Loss statement represents a period of time. This contrasts with the Balance Sheet, which represents a single moment in time.') . '<br />' . _('KwaMoja is an accrual based system (not a cash based system).  Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.') . '</div>';
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
@@ -114,7 +113,8 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 		<br />
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Produce PDF Report') . '" />
-		</div>';
+		</div>
+	</form>';
 
 	/*Now do the posting while the user is thinking about the period to select */
 
@@ -1262,7 +1262,6 @@ if ((!isset($_POST['FromPeriod']) and !isset($_POST['ToPeriod'])) or isset($_POS
 	echo '</table>';
 	echo '<br /><div class="centre noPrint"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Period') . '" /></div>';
 }
-echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 

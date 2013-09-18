@@ -13,8 +13,8 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 					WHERE quantityrecd >0
 						AND supplierno>= '" . $_POST['FromSupplierNo'] . "'
 						AND supplierno <= '" . $_POST['ToSupplierNo'] . "'";
-	echo $SQL;
 	$result = DB_query($SQL, $db);
+	prnMsg( _('All back order quantities have been cleared'), 'success');
 
 }
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';

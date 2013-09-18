@@ -426,6 +426,10 @@ if (isset($result)) {
 				<input type="submit" name="Next" value="' . _('Next') . '" />';
 			echo '</div>';
 		} //$ListPageMax > 1
+		$k = 0; //row counter to determine background colour
+		$RowIndex = 0;
+	} //!isset($_POST['CSV'])
+	if (DB_num_rows($result) <> 0) {
 		echo '<br />
 				<table cellpadding="2" class="selection">
 					<tr>
@@ -438,10 +442,6 @@ if (isset($result)) {
 						<th>' . _('Fax') . '</th>
 						<th>' . _('Email') . '</th>
 					</tr>';
-		$k = 0; //row counter to determine background colour
-		$RowIndex = 0;
-	} //!isset($_POST['CSV'])
-	if (DB_num_rows($result) <> 0) {
 		if (isset($_POST['CSV'])) {
 			$FileName = $_SESSION['reports_dir'] . '/Customer_Listing_' . Date('Y-m-d') . '.csv';
 			echo '<br /><p class="page_title_text noPrint" ><a href="' . $FileName . '">' . _('Click to view the csv Search Result') . '</p>';
@@ -479,6 +479,8 @@ if (isset($result)) {
 			//end of page full new headings if
 		} //($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])
 		//end of while loop
+		echo '</table>';
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 		echo '</table>';
 		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 	} //DB_num_rows($result) <> 0

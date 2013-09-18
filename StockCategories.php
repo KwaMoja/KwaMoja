@@ -347,7 +347,7 @@ if (isset($SelectedCategory)) {
 						purchpricevaract,
 						materialuseagevarac,
 						wipact,
-						defaulttaxcatids
+						defaulttaxcatid
 					FROM stockcategory
 					WHERE categoryid='" . $SelectedCategory . "'";
 

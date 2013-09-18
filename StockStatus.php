@@ -321,8 +321,9 @@ if ($DebtorNo) {
 	$MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 	$k = 1;
+	$LastPrice = 0;
 	while ($myrow = DB_fetch_array($MovtsResult)) {
-		if ($LastPrice != $myrow['price'] OR $LastDiscount != $myrow['discount']) {
+		if ($LastPrice != $myrow['price'] or $LastDiscount != $myrow['discount']) {
 			/* consolidate price history for records with same price/discount */
 			if (isset($qty)) {
 				$DateRange = ConvertSQLDate($FromDate);
@@ -395,7 +396,7 @@ if ($DebtorNo) {
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s%%</td>
-				</tr>', $ph[0], locale_number_format($PreviousPrice[1], $DecimalPlaces), locale_number_format($PreviousPrice[2], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($PreviousPrice[3] * 100, 2));
+				</tr>', $PreviousPrice[0], locale_number_format($PreviousPrice[1], $DecimalPlaces), locale_number_format($PreviousPrice[2], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($PreviousPrice[3] * 100, 2));
 		}
 		echo '</tbody>
 			</table>';

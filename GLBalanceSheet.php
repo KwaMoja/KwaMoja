@@ -69,7 +69,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Produce PDF Report') . '" />
 			</div>';
-	echo '</div></form>';
+	echo '</form>';
 
 	/*Now do the posting while the user is thinking about the period to select */
 	include('includes/GLPostings.inc');
@@ -271,7 +271,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 		$CheckTotal += $AccountBalance;
 
 		if ($_POST['Detail']=='Detailed') {
-			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $LYAccountBalance <> 0))){
+			if (isset($_POST['ShowZeroBalances']) or (!isset($_POST['ShowZeroBalances']) and ($AccountBalance <> 0 or $LYAccountBalance <> 0))) {
 				$FontSize = 8;
 				$pdf->setFont('', '');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $myrow['accountcode']);
@@ -281,7 +281,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 				$YPos -= $line_height;
 			}
 		}
-
+	}
 	$FontSize = 8;
 	$pdf->setFont('', 'B');
 	while ($Level > 0) {
@@ -680,7 +680,7 @@ if (!isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod']
 	echo '</table>';
 	echo '</div>';
 	echo '<br /><div class="centre noPrint"><input type="submit" name="SelectADifferentPeriod" value="' . _('Select A Different Balance Date') . '" /></div>';
-	echo '</div></form>';
+	echo '</form>';
 }
 
 include('includes/footer.inc');
