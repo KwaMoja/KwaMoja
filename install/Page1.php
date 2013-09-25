@@ -101,6 +101,8 @@ if (!isset($_POST['Language'])) {
 		}
 
 	}
+} else {
+	$_SESSION['Installer']['Language'] = $_POST['Language'];
 }
 
 echo '<form id="installation" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
