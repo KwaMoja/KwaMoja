@@ -30,7 +30,6 @@ if (isset($_SESSION['CompanyRecord']['currencydefault'])) {
 	$FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 } else {
 	echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first set up your main accounting currency.') . '</div>';
-	$_SESSION['FirstStart'] = 'True';
 }
 
 if (isset($_POST['submit'])) {
@@ -151,7 +150,7 @@ if (isset($_POST['submit'])) {
 	After we update to the new rate, we still have 5.000 USD on the bank account
 	but the balance value of the bank account is 50.000.000 IDR, so let's adjust the value */
 
-	if (isset($SelectedCurrency) AND $InputError != 1) {
+	if (isset($SelectedCurrency) and $InputError != 1) {
 		/*Get the current period */
 		$PostingDate = Date($_SESSION['DefaultDateFormat']);
 		$PeriodNo = GetPeriod($PostingDate, $db);
@@ -376,7 +375,6 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) and $SelectedCurrency != '') {
@@ -487,7 +485,6 @@ if (!isset($_GET['delete'])) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

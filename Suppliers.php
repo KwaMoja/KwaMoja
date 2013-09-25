@@ -514,7 +514,6 @@ if (isset($_POST['submit'])) {
 
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
-			// echo $sql;
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'), 'success');
@@ -1063,7 +1062,6 @@ if (!isset($SupplierID)) {
 					<input type="submit" name="submit" value="' . _('Update Supplier') . '" />
 				</div>
 			<br />';
-		//		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
 		echo '<br />
 			<div class="centre">

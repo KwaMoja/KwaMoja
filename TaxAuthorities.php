@@ -17,6 +17,8 @@ if (isset($_POST['SelectedTaxAuthID'])) {
 
 if (isset($_POST['submit'])) {
 
+	$InputError = 0;
+
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	if (trim($_POST['Description']) == '') {
@@ -67,7 +69,7 @@ if (isset($_POST['submit'])) {
 				'" . $_POST['BankSwift'] . "'
 				)";
 
-		$Errmsg = _('The addition of this tax authority failed because');
+		$ErrMsg = _('The addition of this tax authority failed because');
 		$result = DB_query($sql, $db, $ErrMsg);
 
 		$msg = _('The new tax authority record has been added to the database');
@@ -125,18 +127,27 @@ if (!isset($SelectedTaxAuthID)) {
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxAuthID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
 	$sql = "SELECT taxid,
-				description,
-				taxglcode,
-				purchtaxglaccount,
-				bank,
-				bankacc,
-				bankacctype,
-				bankswift
-			FROM taxauthorities";
+					description,
+					taxglcode,
+					purchtaxglaccount,
+					bank,
+					bankacc,
+					bankacctype,
+					bankswift
+				FROM taxauthorities";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+
+	if (DB_num_rows($result) == 0) {
+		echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first create a tax authority.') .
+				'<br />' . _('For help, click on the help icon in the top right') .
+				'<br />' . _('Once you have filled in all the details, click on the button at the bottom of the screen') . '</div>';
+	} elseif (DB_num_rows($RatesResult) == 0 and DB_num_rows($result) == 1) {
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/TaxAuthorityRates.php?TaxAuthority=' . $NewTaxID . '">';
+		exit;
+	}
 
 	echo '<table class="selection">
 			<tr>
@@ -192,7 +203,6 @@ if (isset($SelectedTaxAuthID)) {
 
 
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedTaxAuthID)) {
@@ -311,7 +321,6 @@ echo '<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
 	</form>';
 
 include('includes/footer.inc');

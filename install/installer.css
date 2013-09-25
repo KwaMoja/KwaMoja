@@ -45,7 +45,8 @@ background:#2185c4;
 width:auto;
 margin:0;
 padding:30px 0;
-border:1px solid
+border-top-left-radius: 19px;
+border-top-right-radius: 19px
 }
 
 p {
@@ -135,12 +136,14 @@ font-size:13px
 form {
 background:#d8d8d8;
 padding:20px;
-border:1px solid #d8d8d8;
+border-bottom-left-radius: 19px;
+border-bottom-right-radius: 19px;
 margin:0
 }
 
 form fieldset {
 border:none;
+
 margin-bottom:10px
 }
 
@@ -187,7 +190,6 @@ border-radius:3px;
 font:italic 14px Georgia, "Times New Roman", Times, serif;
 outline:none;
 padding:5px;
-width:200px
 }
 
 form input:not([type=submit]):focus,form textarea:focus {
@@ -217,14 +219,14 @@ border:none;
 -khtml-border-radius:20px;
 border-radius:20px;
 color:#fff;
-display:block;
+display:inline-block;
 font:18px Georgia, "Times New Roman", Times, serif;
 letter-spacing:1px;
 margin:auto;
 margin-bottom:20px;
 padding:7px 25px;
 text-shadow:0 1px 1px #000;
-text-transform:uppercase
+width:30%
 }
 
 form button:hover {
@@ -255,6 +257,7 @@ background:#d45252;
 border-radius:3px 3px 3px 3px;
 color:#FFF;
 margin-left:8px;
+margin-right:20px;
 padding:1px 6px;
 z-index:999;
 position:absolute;
@@ -271,7 +274,7 @@ left:-6px
 }
 
 form select:focus+span::before,input[type=checkbox]:checked+span::before,form input[type=file] + span::before {
-color:#28921f
+color:#28921f;
 }
 
 form input:focus + span,form select:focus+span,input[type=checkbox]:checked+span {

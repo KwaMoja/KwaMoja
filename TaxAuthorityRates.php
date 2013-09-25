@@ -38,6 +38,10 @@ if (isset($_POST['UpdateRates'])) {
 		DB_query($sql, $db);
 	}
 	prnMsg(_('All rates updated successfully'), 'info');
+	if (isset($_SESSION['FirstStart'])) {
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/Locations.php">';
+		exit;
+	}
 }
 
 /* end of update code
@@ -51,7 +55,6 @@ $TaxAuthDetail = DB_query("SELECT description
 $myrow = DB_fetch_row($TaxAuthDetail);
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
@@ -70,6 +73,12 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 							WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'
 							ORDER BY taxauthrates.dispatchtaxprovince,
 							taxauthrates.taxcatid", $db);
+
+if (isset($_SESSION['FirstStart'])) {
+	echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first create a tax authority.') .
+			'<br />' . _('For help, click on the help icon in the top right') .
+			'<br />' . _('Once you have filled in all the details, click on the button at the bottom of the screen') . '</div>';
+}
 
 if (DB_num_rows($TaxRatesResult) > 0) {
 
@@ -128,8 +137,7 @@ echo '<br />
 	<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') . '</a>
 	</div>';
 
-echo '</div>
-	  </form>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

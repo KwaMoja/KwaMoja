@@ -90,9 +90,16 @@ if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION
 	$ReadCoyResult = DB_query($sql, $db, $ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult) == 0) {
+		$PeriodsSQL = "SELECT periodno FROM periods";
+		$PeriodResult = DB_query($PeriodsSQL, $db);
+		if (DB_num_rows($PeriodResult) == 0) {
+			$_SESSION['DefaultDateFormat'] = 'd/m/Y';
+			GetPeriod(DateAdd(date($_SESSION['DefaultDateFormat']), 'm', -12),$db);
+		}
 		$CurrencySQL = "SELECT currabrev FROM currencies";
 		$CurrencyResult = DB_query($CurrencySQL, $db);
 		if (DB_num_rows($CurrencyResult) == 0 and (basename($_SERVER['SCRIPT_NAME']) != 'Currencies.php')) {
+			$_SESSION['FirstStart'] = 'True';
 			echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/Currencies.php">';
 			exit;
 		}

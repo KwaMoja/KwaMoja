@@ -94,32 +94,90 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError != 1) {
 
-		$sql = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
-									companynumber = '" . $_POST['CompanyNumber'] . "',
-									gstno='" . $_POST['GSTNo'] . "',
-									regoffice1='" . $_POST['RegOffice1'] . "',
-									regoffice2='" . $_POST['RegOffice2'] . "',
-									regoffice3='" . $_POST['RegOffice3'] . "',
-									regoffice4='" . $_POST['RegOffice4'] . "',
-									regoffice5='" . $_POST['RegOffice5'] . "',
-									regoffice6='" . $_POST['RegOffice6'] . "',
-									telephone='" . $_POST['Telephone'] . "',
-									fax='" . $_POST['Fax'] . "',
-									email='" . $_POST['Email'] . "',
-									currencydefault='" . $_POST['CurrencyDefault'] . "',
-									debtorsact='" . $_POST['DebtorsAct'] . "',
-									pytdiscountact='" . $_POST['PytDiscountAct'] . "',
-									creditorsact='" . $_POST['CreditorsAct'] . "',
-									payrollact='" . $_POST['PayrollAct'] . "',
-									grnact='" . $_POST['GRNAct'] . "',
-									exchangediffact='" . $_POST['ExchangeDiffAct'] . "',
-									purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
-									retainedearnings='" . $_POST['RetainedEarnings'] . "',
-									gllink_debtors='" . $_POST['GLLink_Debtors'] . "',
-									gllink_creditors='" . $_POST['GLLink_Creditors'] . "',
-									gllink_stock='" . $_POST['GLLink_Stock'] . "',
-									freightact='" . $_POST['FreightAct'] . "'
-								WHERE coycode=1";
+		if (isset($_SESSION['FirstStart'])) {
+			$sql = "INSERT INTO companies (coycode,
+											coyname,
+											companynumber,
+											gstno,
+											regoffice1,
+											regoffice2,
+											regoffice3,
+											regoffice4,
+											regoffice5,
+											regoffice6,
+											telephone,
+											fax,
+											email,
+											currencydefault,
+											debtorsact,
+											pytdiscountact,
+											creditorsact,
+											payrollact,
+											grnact,
+											exchangediffact,
+											purchasesexchangediffact,
+											retainedearnings,
+											gllink_debtors,
+											gllink_creditors,
+											gllink_stock,
+											freightact
+										) VALUES (
+											1,
+											'" . $_POST['CoyName'] . "',
+											'" . $_POST['CompanyNumber'] . "',
+											'" . $_POST['GSTNo'] . "',
+											'" . $_POST['RegOffice1'] . "',
+											'" . $_POST['RegOffice2'] . "',
+											'" . $_POST['RegOffice3'] . "',
+											'" . $_POST['RegOffice4'] . "',
+											'" . $_POST['RegOffice5'] . "',
+											'" . $_POST['RegOffice6'] . "',
+											'" . $_POST['Telephone'] . "',
+											'" . $_POST['Fax'] . "',
+											'" . $_POST['Email'] . "',
+											'" . $_POST['CurrencyDefault'] . "',
+											'" . $_POST['DebtorsAct'] . "',
+											'" . $_POST['PytDiscountAct'] . "',
+											'" . $_POST['CreditorsAct'] . "',
+											'" . $_POST['PayrollAct'] . "',
+											'" . $_POST['GRNAct'] . "',
+											'" . $_POST['ExchangeDiffAct'] . "',
+											'" . $_POST['PurchasesExchangeDiffAct'] . "',
+											'" . $_POST['RetainedEarnings'] . "',
+											'" . $_POST['GLLink_Debtors'] . "',
+											'" . $_POST['GLLink_Creditors'] . "',
+											'" . $_POST['GLLink_Stock'] . "',
+											'" . $_POST['FreightAct'] . "'
+										)";
+		} else {
+
+			$sql = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
+										companynumber = '" . $_POST['CompanyNumber'] . "',
+										gstno='" . $_POST['GSTNo'] . "',
+										regoffice1='" . $_POST['RegOffice1'] . "',
+										regoffice2='" . $_POST['RegOffice2'] . "',
+										regoffice3='" . $_POST['RegOffice3'] . "',
+										regoffice4='" . $_POST['RegOffice4'] . "',
+										regoffice5='" . $_POST['RegOffice5'] . "',
+										regoffice6='" . $_POST['RegOffice6'] . "',
+										telephone='" . $_POST['Telephone'] . "',
+										fax='" . $_POST['Fax'] . "',
+										email='" . $_POST['Email'] . "',
+										currencydefault='" . $_POST['CurrencyDefault'] . "',
+										debtorsact='" . $_POST['DebtorsAct'] . "',
+										pytdiscountact='" . $_POST['PytDiscountAct'] . "',
+										creditorsact='" . $_POST['CreditorsAct'] . "',
+										payrollact='" . $_POST['PayrollAct'] . "',
+										grnact='" . $_POST['GRNAct'] . "',
+										exchangediffact='" . $_POST['ExchangeDiffAct'] . "',
+										purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
+										retainedearnings='" . $_POST['RetainedEarnings'] . "',
+										gllink_debtors='" . $_POST['GLLink_Debtors'] . "',
+										gllink_creditors='" . $_POST['GLLink_Creditors'] . "',
+										gllink_stock='" . $_POST['GLLink_Stock'] . "',
+										freightact='" . $_POST['FreightAct'] . "'
+									WHERE coycode=1";
+		}
 
 		$ErrMsg = _('The company preferences could not be updated because');
 		$result = DB_query($sql, $db, $ErrMsg);
@@ -154,7 +212,6 @@ if (isset($_POST['submit'])) {
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -190,7 +247,6 @@ if ($InputError != 1) {
 	$ErrMsg = _('The company preferences could not be retrieved because');
 	$result = DB_query($sql, $db, $ErrMsg);
 
-
 	$myrow = DB_fetch_array($result);
 
 	$_POST['CoyName'] = $myrow['coyname'];
@@ -219,6 +275,16 @@ if ($InputError != 1) {
 	$_POST['GLLink_Stock'] = $myrow['gllink_stock'];
 	$_POST['FreightAct'] = $myrow['freightact'];
 }
+
+	if (DB_num_rows($result) == 0) {
+		echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first fill out the company details.') .
+				'<br />' . _('Once you have filled in all the details, click on the button at the bottom of the screen') . '</div>';
+		include('companies/' . $_SESSION['DatabaseName'] . '/Companies.php');
+		$_POST['CoyName'] = $CompanyName[$_SESSION['DatabaseName']];
+	} elseif (DB_num_rows($result) == 1 and isset($_SESSION['FirstStart'])) {
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/TaxProvinces.php">';
+		exit;
+	}
 
 echo '<tr>
 		<td>' . _('Name') . ' (' . _('to appear on reports') . '):</td>
@@ -267,12 +333,12 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Telephone Number') . ':</td>
-		<td><input tabindex="10" type="text" name="Telephone" size="26" minlength="0" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
+		<td><input tabindex="10" type="tel" name="Telephone" size="26" minlength="0" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Facsimile Number') . ':</td>
-		<td><input tabindex="11" type="text" name="Fax" size="26" minlength="0" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
+		<td><input tabindex="11" type="tel" name="Fax" size="26" minlength="0" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -517,7 +583,7 @@ echo '</table>
 	<div class="centre">
 		<input tabindex="26" type="submit" name="submit" value="' . _('Update') . '" />
 	</div>';
-echo '</div></form>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

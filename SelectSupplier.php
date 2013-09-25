@@ -22,11 +22,11 @@ if ($_SESSION['geocode_integration'] == 1 and isset($_SESSION['SupplierID'])) {
 	$result = DB_query($sql, $db, $ErrMsg);
 	$myrow = DB_fetch_array($result);
 	$sql = "SELECT suppliers.supplierid,
-				suppliers.lat,
-				suppliers.lng
-			FROM suppliers
-			WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
-			ORDER BY suppliers.supplierid";
+					suppliers.lat,
+					suppliers.lng
+				FROM suppliers
+				WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
+				ORDER BY suppliers.supplierid";
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result2 = DB_query($sql, $db, $ErrMsg);
 	$myrow2 = DB_fetch_array($result2);

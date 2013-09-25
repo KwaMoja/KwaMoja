@@ -100,7 +100,7 @@ if (isset($Title)) {
 
 	if (!isset($_SESSION['CompanyRecord'])) {
 		include('companies/' . $_SESSION['DatabaseName'] . '/Companies.php');
-		$_SESSION['CompanyRecord']['coyname'] = $CompanyName['company'];
+		$_SESSION['CompanyRecord']['coyname'] = $CompanyName[$_SESSION['DatabaseName']];
 	}
 	echo '<div id="AppInfoDiv">'; //===HJ===
 	echo '<div id="AppInfoCompanyDiv">';

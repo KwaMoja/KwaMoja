@@ -612,7 +612,6 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 				} //$_POST['SummaryType'] == 'area'
 			}
 		} // End of if ($_POST['ReportType']
-		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
 		$result = DB_query($sql, $db, $ErrMsg);
 		$ctr = 0;

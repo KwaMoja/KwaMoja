@@ -460,7 +460,6 @@ function submit(&$db, $PartNumber, $PartNumberOp, $SupplierId, $SupplierIdOp, $S
 				}
 			}
 		} // End of if ($_POST['ReportType']
-		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
 		$result = DB_query($sql, $db, $ErrMsg);
 		$ctr = 0;
@@ -1170,7 +1169,6 @@ function submitcsv(&$db, $PartNumber, $PartNumberOp, $SupplierId, $SupplierIdOp,
 				}
 			}
 		} // End of if ($_POST['ReportType']
-		//echo "<br/>$sql<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
 		$result = DB_query($sql, $db, $ErrMsg);
 		$ctr = 0;

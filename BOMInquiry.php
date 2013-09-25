@@ -12,7 +12,6 @@ if (isset($_GET['StockID'])) {
 
 if (!isset($_POST['StockID'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
-		<div>
 		<br />
 		<div class="page_help_text noPrint">
 			' . _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to view the costed bill of materials') . '
@@ -108,6 +107,7 @@ if (isset($_POST['Search']) and isset($result) and !isset($SelectedParent)) {
 				</tr>';
 
 	$k = 0; //row colour counter
+	$j = 0;
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -135,8 +135,7 @@ if (isset($_POST['Search']) and isset($result) and !isset($SelectedParent)) {
 	echo '</table><br />';
 }
 if (!isset($_POST['StockID'])) {
-	echo '</div>
-		  </form>';
+	echo '</form>';
 }
 
 if (isset($StockID) and $StockID != "") {
@@ -191,6 +190,7 @@ if (isset($StockID) and $StockID != "") {
 			</tr>';
 
 		$k = 0; //row colour counter
+		$j = 0;
 
 		$TotalCost = 0;
 

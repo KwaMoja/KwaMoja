@@ -1,0 +1,2 @@
+SET foreign_key_checks = 0;
+INSERT INTO `currencies` VALUES ('Kenya Shillings','KES','Kenya','Cent',0,1,1),('Rwanda Franc','RWF','Rwanda','Centime',2,7.328490000000001,1),('Tanzania Shillings','TZS','Tanzania','Cent',0,21.538461740000002,1),('Uganda Shillings','UGX','Uganda','Centavo',0,26.923077030000005,1);

@@ -19,7 +19,6 @@ function display_children($Parent, $Level, &$BOMTree) {
 	if (DB_num_rows($c_result) > 0) {
 
 		while ($row = DB_fetch_array($c_result)) {
-			//echo '<br />Parent: ' . $Parent . ' Level: ' . $Level . ' row[component]: ' . $row['component'] .'<br />';
 			if ($Parent != $row['component']) {
 				// indent and display the title of this child
 				$BOMTree[$i]['Level'] = $Level; // Level
@@ -156,9 +155,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db) {
 		}
 
 		if ($myrow['mbflag'] == 'D' //dummy orservice
-			OR $myrow['mbflag'] == 'K' //kit-set
-			OR $myrow['mbflag'] == 'A' // assembly
-			OR $myrow['mbflag'] == 'G') /* ghost */ {
+			or $myrow['mbflag'] == 'K' //kit-set
+			or $myrow['mbflag'] == 'A' // assembly
+			or $myrow['mbflag'] == 'G') /* ghost */ {
 
 			$QuantityOnHand = _('N/A');
 		} else {
@@ -166,19 +165,19 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db) {
 		}
 
 		printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
-					<td>' . $DrillText . '</td>
-					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-					 </tr>', $Level1, $myrow['component'], $myrow['itemdescription'], $myrow['locationname'], $myrow['workcentrename'], locale_number_format($myrow['quantity'], 'Variable'), ConvertSQLDate($myrow['effectiveafter']), ConvertSQLDate($myrow['effectiveto']), $AutoIssue, $QuantityOnHand, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $Parent, $myrow['component'], $DrillLink, $DrillID, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $Parent, $myrow['component'], $UltimateParent, $myrow['loccode'], $myrow['workcentrecode']);
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . _('Edit') . '</a></td>
+				<td>' . $DrillText . '</td>
+				<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this component from the bill of material?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			 </tr>', $Level1, $myrow['component'], $myrow['itemdescription'], $myrow['locationname'], $myrow['workcentrename'], locale_number_format($myrow['quantity'], 'Variable'), ConvertSQLDate($myrow['effectiveafter']), ConvertSQLDate($myrow['effectiveto']), $AutoIssue, $QuantityOnHand, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $Parent, $myrow['component'], $DrillLink, $DrillID, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $Parent, $myrow['component'], $UltimateParent, $myrow['loccode'], $myrow['workcentrecode']);
 
 	} //END WHILE LIST LOOP
 } //end of function DisplayBOMItems
@@ -191,8 +190,6 @@ if (isset($_GET['SelectedParent'])) {
 } else if (isset($_POST['SelectedParent'])) {
 	$SelectedParent = $_POST['SelectedParent'];
 }
-
-
 
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])) {
@@ -444,7 +441,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select a Different BOM') . '</a></div><br />';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select a Different BOM') . '</a></div>';
 	// Display Manufatured Parent Items
 	$sql = "SELECT bom.parent,
 				stockmaster.description,
@@ -591,7 +588,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	/* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Select=' . $SelectedParent . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedComponent']) and $InputError != 1) {
@@ -815,7 +811,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	echo '</table>
 			<br /><div class="centre"><input tabindex="8" type="submit" name="Submit" value="' . _('Enter Information') . '" />
 			</div>
-			</div>
 			</form>';
 
 	// end of BOM maintenance code - look at the parent selection form if not relevant
@@ -886,16 +881,15 @@ if (!isset($SelectedParent)) {
 
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">' . '<div class="page_help_text noPrint">' . _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to maintain the bill of material for using the options below') . '<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') . '</div>' . '
-	<div>
-	 <br />
-	 <table class="selection" cellpadding="3">
-	<tr><td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-		<td><input tabindex="1" type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
-		<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td><input tabindex="2" type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
-	</tr>
-	</table>
+		<table class="selection" cellpadding="3">
+			<tr>
+				<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
+				<td><input tabindex="1" type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
+				<td><b>' . _('OR') . '</b></td>
+				<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
+				<td><input tabindex="2" type="text" autofocus="autofocus" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
+			</tr>
+		</table>
 	<br /><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -911,6 +905,7 @@ if (!isset($SelectedParent)) {
 				</tr>';
 
 		$k = 0; //row colour counter
+		$j = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
@@ -941,7 +936,6 @@ if (!isset($SelectedParent)) {
 	}
 	//end if results to show
 
-	echo '</div>';
 	echo '</form>';
 
 } //end StockID already selected

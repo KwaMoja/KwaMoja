@@ -86,7 +86,8 @@ $SQL = 'SELECT purchorders.orderno,
 					purchorders.allowprint,
 					purchorders.status,
 					suppliers.currcode,
-					currencies.decimalplaces LIMIT 5';
+					currencies.decimalplaces
+			ORDER BY orddate DESC LIMIT 5';
 $SalesOrdersResult2 = DB_query($SQL, $db);
 $Total = 0;
 

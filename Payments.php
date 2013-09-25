@@ -738,7 +738,6 @@ if (isset($_POST['BankAccount']) and $_POST['BankAccount'] != '') {
 } //isset($_POST['BankAccount']) and $_POST['BankAccount'] != ''
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br /><table class="selection">';
@@ -775,8 +774,7 @@ echo '<tr>
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select></td>
 		</tr>
-		</table>
-		<p />';
+		</table>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 	include('includes/footer.inc');
 	exit;
@@ -890,7 +888,7 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 } //$_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] and isset($_SESSION['PaymentDetail' . $identifier]->AccountCurrency)
 echo '<tr>
 		<td>' . _('Payment type') . ':</td>
-		<input type="submit" visibility="hidden" name="UpdatePmtType" value="Update" />
+		<input type="submit" style="display:none;" name="UpdatePmtType" value="Update" />
 		<td><select minlength="0" name="Paymenttype" onchange="return ReloadForm(UpdatePmtType)">';
 
 include('includes/GetPaymentMethods.php');
@@ -933,24 +931,24 @@ if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative'] = '';
 } //!isset($_POST['Narrative'])
 
+if (!isset($_POST['Currency'])) {
+	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
+} //!isset($_POST['Currency'])
+
 echo '<tr>
 		<td>' . _('Reference / Narrative') . ':</td>
 		<td colspan="2"><input type="text" name="Narrative" minlength="0" maxlength="80" size="82" value="' . stripslashes($_POST['Narrative']) . '" />  ' . _('(Max. length 80 characters)') . '</td>
 	</tr>
-
-
-			<td><input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" /></td>
-
-
-	<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update') . '" /></div></td>
+		<td><input type="hidden" name="PreviousCurrency" value="' . $_POST['Currency'] . '" /></td>
+		<td colspan="3"><div class="centre"><input type="submit" name="UpdateHeader" value="' . _('Update') . '" /></div></td>
 	</tr>';
 
-echo '</table><br />';
+echo '</table>';
 
 if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
-	echo '<br /><table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th colspan="2">
 				<h3>' . _('General Ledger Payment Analysis Entry') . '</h3>
@@ -1063,7 +1061,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 
 	echo '<tr>
 			<td>' . _('Cheque/Voucher Number') . '</td>
-			<td><input type="text" name="Cheque" required="required" minlength="1" maxlength="12" size="12" /></td>
+			<td><input type="text" name="Cheque" minlength="0" maxlength="12" size="12" /></td>
 		</tr>';
 
 	if (isset($_POST['GLNarrative'])) {
@@ -1082,7 +1080,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	if (isset($_POST['GLAmount'])) {
 		echo '<tr>
 				<td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail' . $identifier]->Currency . '):</td>
-				<td><input type="text" name="GLAmount" required="required" minlength="1" maxlength="12" size="12" class="number" value="' . $_POST['GLAmount'] . '" /></td>
+				<td><input type="text" name="GLAmount" minlength="0" maxlength="12" size="12" class="number" value="' . $_POST['GLAmount'] . '" /></td>
 			</tr>';
 	} //isset($_POST['GLAmount'])
 	else {
@@ -1171,7 +1169,6 @@ else {
 	echo '</table><br />';
 	echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . _('Accept and Process Payment') . '" /></div>';
 }
-echo '</div>';
 echo '</form>';
 
 include('includes/footer.inc');

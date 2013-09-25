@@ -34,7 +34,7 @@ $db);
 ChangeColumnName('taxauthority', 'locations', 'TINYINT(4)', 'NOT NULL', '1', 'taxprovinceid', $db);
 
 AddIndex(array('taxprovinceid'), 'locations', 'taxprovinceid', $db);
-InsertRecord('taxprovinces', array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), $db);
+//InsertRecord('taxprovinces', array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), $db);
 AddConstraint('locations', 'locations_ibfk_1', 'taxprovinceid', 'taxprovinces', 'taxprovinceid', $db);
 
 CreateTable('taxgroups',
@@ -93,7 +93,7 @@ ChangeColumnName('taxauthority', 'custbranch', 'TINYINT(4)', 'NOT NULL', '1', 't
 DropIndex('custbranch', 'area_2', $db);
 DropIndex('custbranch', 'taxauthority', $db);
 AddIndex(array('taxgroupid'), 'custbranch', 'taxgroupid', $db);
-InsertRecord('taxgroups', array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), $db);
+//InsertRecord('taxgroups', array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), $db);
 AddConstraint('custbranch', 'custbranch_ibfk_7', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
 
 RenameTable('taxauthlevels', 'taxauthrates', $db);

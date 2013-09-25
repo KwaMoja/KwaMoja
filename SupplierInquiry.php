@@ -226,7 +226,7 @@ while ($myrow = DB_fetch_array($TransResult)) {
 		$HoldValue = _('Release');
 	}
 	if ($myrow['hold'] == 1) {
-		//		echo "<tr bgcolor='#DD99BB'>";
+		echo '<tr bgcolor="#DD99BB">';
 	} elseif ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;

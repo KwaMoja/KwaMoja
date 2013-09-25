@@ -76,7 +76,7 @@ $sql = "SELECT banktrans.currcode,
 				ON banktrans.type=systypes.typeid
 			INNER JOIN currencies
 				ON banktrans.currcode=currencies.currabrev
-			ORDER BY banktrans.transdate LIMIT 5";
+			ORDER BY banktrans.transdate DESC LIMIT 5";
 
 $result = DB_query($sql, $db);
 $AccountCurrTotal = 0;
@@ -112,6 +112,6 @@ while ($row = DB_fetch_array($result)) {
 		</tr>';
 }
 echo '</tbody>
-    </table>';
+		</table>';
 
 ?>

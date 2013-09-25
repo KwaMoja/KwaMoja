@@ -132,7 +132,11 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 		} elseif ($myrow['weekindex'] > 27) {
 			$futureplan += $myrow['supplyquantity'];
 		} else {
-			$weeklyplan[$myrow['weekindex']] += $myrow['supplyquantity'];
+			if (isset($weeklyplan[$myrow['weekindex']])) {
+				$weeklyplan[$myrow['weekindex']] += $myrow['supplyquantity'];
+			} else {
+				$weeklyplan[$myrow['weekindex']] = $myrow['supplyquantity'];
+			}
 		}
 	} //end of while loop
 	// The following sorts the $Supplies array by mrpdate. Have to sort because are loading
