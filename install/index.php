@@ -72,7 +72,7 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 			break;
 		case 'mysql':
 			$DBExistsResult = @mysql_query($DBExistsSql, $db);
-			$PrivilegesResult = @mysqli_query($PrivilegesSql, $db);
+			$PrivilegesResult = @mysql_query($PrivilegesSql, $db);
 			$rows = @mysql_num_rows($DBExistsResult);
 			$Privileges = @mysql_num_rows($PrivilegesResult);
 			break;

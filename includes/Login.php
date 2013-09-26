@@ -48,7 +48,7 @@ if (get_magic_quotes_gpc()) {
 		<tr>
 			<th colspan="2">
 				<div id="login_logo">
-					<a href="http://www.kwamoja.com" target="_blank"><img src="companies/logo.png" style="width:100%" /></a>
+					<a href="http://www.kwamoja.com" target="_blank"><img src="css/logo.png" style="width:100%" /></a>
 				</div>
 			</th>
 		</tr>
