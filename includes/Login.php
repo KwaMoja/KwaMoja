@@ -5,7 +5,7 @@
 include('LanguageSetup.php');
 
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
-	$demo_text = _('login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('kwamoja') . '</i>';
+	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('kwamoja') . '</i>';
 } elseif (!isset($demo_text)) {
 	$demo_text = _('Please login here');
 }
@@ -86,7 +86,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 			if ($CompanyEntry == $DefaultCompany) {
 				echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			} else {
-				echo '<option  value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
+				echo '<option value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			}
 		}
 	}
@@ -101,11 +101,11 @@ if ($AllowCompanySelectionBox === 'Hide') {
 					<label><?php
 echo _('User name');
 ?>:</label>
-					<input type="text" autofocus="autofocus" required="required" name="UserNameEntryField" maxlength="20" /><br />
+					<input type="text" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="<?php echo _('User name'); ?>" maxlength="20" /><br />
 					<label><?php
 echo _('Password');
 ?>:</label>
-					<input type="password" required="required" name="Password" />
+					<input type="password" required="required" name="Password" placeholder="<?php echo _('Password'); ?>" />
 	   <div id="demo_text">
 	   <?php
 if (isset($demo_text)) {
