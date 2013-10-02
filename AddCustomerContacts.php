@@ -15,7 +15,7 @@ if (isset($_POST['DebtorNo'])) {
 } elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
+echo '<div class="toplink"><a href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a></div>';
 $SQLname = "SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname, $db);
 $row = DB_fetch_array($Result);

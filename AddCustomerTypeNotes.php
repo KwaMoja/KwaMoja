@@ -15,7 +15,7 @@ if (isset($_POST['DebtorType'])) {
 } elseif (isset($_GET['DebtorType'])) {
 	$DebtorType = $_GET['DebtorType'];
 }
-echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorType=' . $DebtorType . '">' . _('Back to Select Customer') . '</a><br />';
+echo '<div class="toplink"><a href="' . $RootPath . '/SelectCustomer.php?DebtorType=' . $DebtorType . '">' . _('Back to Select Customer') . '</a></div>';
 
 if (isset($_POST['submit'])) {
 

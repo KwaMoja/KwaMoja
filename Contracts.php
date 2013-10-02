@@ -102,7 +102,7 @@ if (isset($_SESSION['Contract' . $identifier]) and (isset($_POST['EnterContractB
 }
 /* end of if going to contract BOM or contract requriements */
 
-echo '<a href="' . $RootPath . '/SelectContract.php">' . _('Back to Contract Selection') . '</a><br />';
+echo '<div class="toplink"><a href="' . $RootPath . '/SelectContract.php">' . _('Back to Contract Selection') . '</a></div>';
 
 //attempting to upload the drawing image file
 if (isset($_FILES['Drawing']) and $_FILES['Drawing']['name'] != '' and $_SESSION['Contract' . $identifier]->ContractRef != '') {
@@ -769,6 +769,7 @@ if (!isset($_SESSION['Contract' . $identifier]->DebtorNo) or $_SESSION['Contract
 						</tr>';
 
 		$k = 0; //row counter to determine background colour
+		$j = 0;
 		$LastCustomer = '';
 		while ($myrow = DB_fetch_array($result_CustSelect)) {
 

@@ -17,7 +17,6 @@ if (empty($_GET['identifier'])) {
 }
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial'] == 'yes') {
@@ -25,7 +24,6 @@ if (isset($_GET['NewSpecial']) and $_GET['NewSpecial'] == 'yes') {
 }
 
 if (!isset($_SESSION['SupplierID'])) {
-	echo '<br /><br />';
 	prnMsg(_('To set up a special') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
 	include('includes/footer.inc');
@@ -33,9 +31,8 @@ if (!isset($_SESSION['SupplierID'])) {
 }
 
 if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID'] == '') {
+	prnMsg( _('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page'), 'info');
 	echo '<br />
-		<br />' . _('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page') . '
-		<br />
 		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
 	include('includes/footer.inc');
 	exit;
@@ -167,8 +164,7 @@ if (!isset($_SESSION['SPL' . $identifier]->BranchCode)) {
 		//end of while loop
 
 		echo '</table>';
-		echo '</div>
-			  </form>';
+		echo '</form>';
 		include('includes/footer.inc');
 		exit;
 
@@ -760,7 +756,6 @@ echo '<div class="centre">
 		<br />
 		<br />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
-	</div>
 	</div>
 	</form>';
 

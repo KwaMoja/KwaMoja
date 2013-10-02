@@ -372,6 +372,12 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Email';
 		$i++;
 	}
+	if (mb_strlen($_POST['URL']) >50) {
+		$InputError = 1;
+		prnMsg(_('The URL address must be 50 characters or less long'),'error');
+		$Errors[$i] = 'URL';
+		$i++;
+	}
 	if (mb_strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'), 'error');
@@ -467,9 +473,10 @@ if (isset($_POST['submit'])) {
 							address5='" . $_POST['Address5'] . "',
 							address6='" . $_POST['Address6'] . "',
 							telephone='" . $_POST['Phone'] . "',
-							fax = '" . $_POST['Fax'] . "',
-							email = '" . $_POST['Email'] . "',
-							supptype = '" . $_POST['SupplierType'] . "',
+							fax='" . $_POST['Fax'] . "',
+							email='" . $_POST['Email'] . "',
+							url='" . $_POST['URL'] . "',
+							supptype='" . $_POST['SupplierType'] . "',
 							currcode='" . $_POST['CurrCode'] . "',
 							suppliersince='" . $SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
@@ -495,9 +502,10 @@ if (isset($_POST['submit'])) {
 							address5='" . $_POST['Address5'] . "',
 							address6='" . $_POST['Address6'] . "',
 							telephone='" . $_POST['Phone'] . "',
-							fax = '" . $_POST['Fax'] . "',
-							email = '" . $_POST['Email'] . "',
-							supptype = '" . $_POST['SupplierType'] . "',
+							fax='" . $_POST['Fax'] . "',
+							email='" . $_POST['Email'] . "',
+							url='" . $_POST['URL'] . "',
+							supptype='" . $_POST['SupplierType'] . "',
 							suppliersince='" . $SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
@@ -531,6 +539,7 @@ if (isset($_POST['submit'])) {
 										telephone,
 										fax,
 										email,
+										url,
 										supptype,
 										currcode,
 										suppliersince,
@@ -555,6 +564,7 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['Phone'] . "',
 									'" . $_POST['Fax'] . "',
 									'" . $_POST['Email'] . "',
+									'" . $_POST['URL'] . "',
 									'" . $_POST['SupplierType'] . "',
 									'" . $_POST['CurrCode'] . "',
 									'" . $SQL_SupplierSince . "',
@@ -587,6 +597,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['Phone']);
 			unset($_POST['Fax']);
 			unset($_POST['Email']);
+			unset($_POST['URL']);
 			unset($_POST['SupplierType']);
 			unset($_POST['CurrCode']);
 			unset($SQL_SupplierSince);
@@ -659,31 +670,37 @@ if (!isset($SupplierID)) {
 	/*if the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="New" value="Yes" />';
 
 	echo '<table class="selection">';
-	echo '<tr><td>' . _('Supplier Code') . ':</td>
+	echo '<tr>
+			<td>' . _('Supplier Code') . ':</td>
 			<td><input type="text" name="SupplierID" size="11" required="required" minlength="1" maxlength="10" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Supplier Name') . ':</td>
+	echo '<tr>
+			<td>' . _('Supplier Name') . ':</td>
 			<td><input type="text" name="SuppName" size="42" required="required" minlength="1" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 1 (Street)') . ':</td>
+	echo '<tr>
+			<td>' . _('Address Line 1 (Street)') . ':</td>
 			<td><input type="text" name="Address1" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 2 (Street)') . ':</td>
+	echo '<tr>
+			<td>' . _('Address Line 2 (Street)') . ':</td>
 			<td><input type="text" name="Address2" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 3 (Suburb/City)') . ':</td>
+	echo '<tr>
+			<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
 			<td><input type="text" name="Address3" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 4 (State/Province)') . ':</td>
+	echo '<tr>
+			<td>' . _('Address Line 4 (State/Province)') . ':</td>
 			<td><input type="text" name="Address4" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Address Line 5 (Postal Code)') . ':</td>
+	echo '<tr>
+			<td>' . _('Address Line 5 (Postal Code)') . ':</td>
 			<td><input type="text" name="Address5" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
 
@@ -702,16 +719,24 @@ if (!isset($SupplierID)) {
 	echo '</select></td>
 		</tr>';
 
-	echo '<tr><td>' . _('Telephone') . ':</td>
+	echo '<tr>
+			<td>' . _('Telephone') . ':</td>
 			<td><input type="tel" name="Phone" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Facsimile') . ':</td>
+	echo '<tr>
+			<td>' . _('Facsimile') . ':</td>
 			<td><input type="tel" name="Fax" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Email Address') . ':</td>
+	echo '<tr>
+			<td>' . _('Email Address') . ':</td>
 			<td><input type="email" name="Email" size="30" minlength="0" maxlength="40" /></td>
 		</tr>';
-	echo '<tr><td>' . _('Supplier Type') . ':</td>
+	echo '<tr>
+			<td>' . _('URL') . ':</td>
+			<td><input type="url" name="url" size="30" minlength="0" maxlength="50" /></td>
+		</tr>';
+	echo '<tr>
+			<td>' . _('Supplier Type') . ':</td>
 			<td><select minlength="0" name="SupplierType">';
 	$result = DB_query("SELECT typeid, typename FROM suppliertype", $db);
 	while ($myrow = DB_fetch_array($result)) {
@@ -763,7 +788,8 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Tax Reference') . ':</td>
+	echo '<tr>
+			<td>' . _('Tax Reference') . ':</td>
 			<td><input type="text" name="TaxRef" size="21" minlength="0" maxlength="20" /></td></tr>';
 
 	$result = DB_query("SELECT currency, currabrev FROM currencies", $db);
@@ -815,43 +841,42 @@ if (!isset($SupplierID)) {
 		</table>
 		<br />
 		<div class="centre"><input type="submit" name="submit" value="' . _('Insert New Supplier') . '" /></div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 } else {
 
 	//SupplierID exists - either passed when calling the form or from the form itself
 
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT supplierid,
-				suppname,
-				address1,
-				address2,
-				address3,
-				address4,
-				address5,
-				address6,
-				telephone,
-				fax,
-				email,
-				supptype,
-				currcode,
-				suppliersince,
-				paymentterms,
-				bankpartics,
-				bankref,
-				bankact,
-				remittance,
-				taxgroupid,
-				factorcompanyid,
-				taxref
-			FROM suppliers
-			WHERE supplierid = '" . $SupplierID . "'";
+						suppname,
+						address1,
+						address2,
+						address3,
+						address4,
+						address5,
+						address6,
+						telephone,
+						fax,
+						email,
+						url,
+						supptype,
+						currcode,
+						suppliersince,
+						paymentterms,
+						bankpartics,
+						bankref,
+						bankact,
+						remittance,
+						taxgroupid,
+						factorcompanyid,
+						taxref
+					FROM suppliers
+					WHERE supplierid = '" . $SupplierID . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -867,6 +892,7 @@ if (!isset($SupplierID)) {
 		$_POST['Phone'] = $myrow['telephone'];
 		$_POST['Fax'] = $myrow['fax'];
 		$_POST['Email'] = $myrow['email'];
+		$_POST['URL'] = $myrow['url'];
 		$_POST['SupplierType'] = $myrow['supptype'];
 		$_POST['SupplierSince'] = ConvertSQLDate($myrow['suppliersince']);
 		$_POST['PaymentTerms'] = $myrow['paymentterms'];
@@ -940,6 +966,11 @@ if (!isset($SupplierID)) {
 			<td>' . _('Email Address') . ':</td>
 			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="42" minlength="0" maxlength="40" /></td>
 		</tr>';
+	echo '<tr>
+			<td>' . _('URL') . ':</td>
+			<td><input type="url" name="URL" value="' . $_POST['URL'] . '" size="42" minlength="0" maxlength="40" /></td>
+		</tr>';
+
 	echo '<tr>
 			<td>' . _('Supplier Type') . ':</td>
 			<td><select required="required" minlength="1" name="SupplierType">';
@@ -1032,7 +1063,8 @@ if (!isset($SupplierID)) {
 
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Tax Group') . ':</td>
+	echo '<tr>
+			<td>' . _('Tax Group') . ':</td>
 			<td><select minlength="0" name="TaxGroup">';
 
 	DB_data_seek($result, 0);
@@ -1052,24 +1084,19 @@ if (!isset($SupplierID)) {
 	echo '</select></td></tr></table>';
 
 	if (isset($_POST['New'])) {
-		echo '<br />
-				<div class="centre">
+		echo '<div class="centre">
 					 <input type="submit" name="submit" value="' . _('Add These New Supplier Details') . '" />
 				</div>';
 	} else {
-		echo '<br />
-				<div class="centre">
+		echo '<div class="centre">
 					<input type="submit" name="submit" value="' . _('Update Supplier') . '" />
-				</div>
-			<br />';
-		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo '<br />
-			<div class="centre">
+				</div>';
+		prnMsg( _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
+		echo '<div class="centre">
 				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />
 			</div>';
 	}
-	echo '</div>
-		  </form>';
+	echo '</form>';
 } // end of main ifs
 
 include('includes/footer.inc');

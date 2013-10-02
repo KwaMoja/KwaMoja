@@ -91,7 +91,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4,
 					telephone,
-					email
+					email,
+					url
 				FROM suppliers
 				ORDER BY suppname";
 	} else {
@@ -107,7 +108,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							address3,
 							address4,
 							telephone,
-							email
+							email,
+							url
 						FROM suppliers
 						WHERE suppname " . LIKE . " '" . $SearchString . "'
 						ORDER BY suppname";
@@ -121,7 +123,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 							address3,
 							address4,
 							telephone,
-							email
+							email,
+							url
 						FROM suppliers
 						WHERE supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'
 						ORDER BY supplierid";
@@ -212,7 +215,6 @@ if (isset($_SESSION['SupplierID'])) {
 		</table>';
 }
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
 	<table cellpadding="3" class="selection">
@@ -284,6 +286,7 @@ if (isset($_POST['Search'])) {
 					<th>' . _('Address 4') . '</th>
 					<th>' . _('Telephone') . '</th>
 					<th>' . _('Email') . '</th>
+					<th>' . _('URL') . '</th>
 				</tr>';
 		while (($myrow = DB_fetch_array($result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
@@ -302,6 +305,7 @@ if (isset($_POST['Search'])) {
 					<td>' . $myrow['address4'] . '</td>
 					<td>' . $myrow['telephone'] . '</td>
 					<td><a href="mailto://' . $myrow['email'] . '">' . $myrow['email'] . '</a></td>
+					<td><a href="'.$myrow['url'].'"target="_blank">' . $myrow['url']. '</a></td>
 				</tr>';
 			$RowIndex = $RowIndex + 1;
 			//end of page full new headings if
@@ -331,8 +335,7 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 		<input type="submit" name="Next" value="' . _('Next') . '" />';
 	echo '<br />';
 }
-echo '</div>
-	  </form>';
+echo '</form>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {

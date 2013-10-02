@@ -10,8 +10,7 @@ if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
-	<br />
+echo '<div class="toplink"><a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a></div>
 	<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';

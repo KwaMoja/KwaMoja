@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 		/*if $FromCriteria is not set then show a form to allow input	*/
@@ -133,7 +133,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 
 		echo '</table>
-				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
+				<div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
 			 </form>';
 
 	}

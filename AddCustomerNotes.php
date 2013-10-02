@@ -16,8 +16,7 @@ if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
-echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>
-	<br />';
+echo '<div class="toplink"><a href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a></div>';
 
 if (isset($_POST['submit'])) {
 

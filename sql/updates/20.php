@@ -90,6 +90,7 @@ $db);
 AddIndex(array('locationname'), 'locations', 'locationname', $db);
 
 DropPrimaryKey('chartmaster', 'accountcode', $db);
+DropConstraint('bankaccounts', 'bankaccounts_ibfk_1', $db);
 DropConstraint('chartdetails', 'chartdetails_ibfk_1', $db);
 DropConstraint('gltrans', 'gltrans_ibfk_1', $db);
 DropConstraint('pcexpenses', 'pcexpenses_ibfk_1', $db);
@@ -97,6 +98,12 @@ DropConstraint('pctabs', 'pctabs_ibfk_5', $db);
 DropConstraint('taxauthorities', 'taxauthorities_ibfk_1', $db);
 ChangeColumnType('accountcode', 'chartmaster', 'varchar(20)', 'NOT NULL', '0', $db);
 AddPrimaryKey('chartmaster', 'accountcode', $db);
+AddConstraint('bankaccounts', 'bankaccounts_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
+AddConstraint('chartdetails', 'chartdetails_ibfk_1', 'accountcode', 'chartmaster', 'accountcode', $db);
+AddConstraint('gltrans', 'gltrans_ibfk_1', 'account', 'chartmaster', 'accountcode', $db);
+AddConstraint('pcexpenses', 'pcexpenses_ibfk_1', 'glaccount', 'chartmaster', 'accountcode', $db);
+AddConstraint('pctabs', 'pctabs_ibfk_5', 'glaccountassignment', 'chartmaster', 'accountcode', $db);
+AddConstraint('taxauthorities', 'taxauthorities_ibfk_1', 'taxglcode', 'chartmaster', 'accountcode', $db);
 
 
 ChangeColumnName('papersize', 'labels', 'DOUBLE', 'NOT NULL', '0', 'pagewidth', $db);

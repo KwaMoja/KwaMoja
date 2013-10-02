@@ -286,8 +286,8 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 
 	$Title = _('Tax Reporting');
 	include('includes/header.inc');
-
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Tax Reports') . '" alt="' . $Title . '" />' . $Title . '</p>';
+	echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
+	echo '<p class="page_title_text noPrint"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Tax Reports') . '" alt="' . $Title . '" />' . $Title . '</p>';
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -343,7 +343,6 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 
 
 	echo '</table>
-		<br />
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>

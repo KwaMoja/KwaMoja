@@ -43,8 +43,9 @@ if (isset($_POST['MoveGroup'])) {
 	$ErrMsg = _('An error occurred in moving the account group');
 	$DbgMsg = _('The SQL that was used to move the account group was');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	echo '<div class="toplink"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
 	prnMsg(_('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'], 'success');
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
 } //isset($_POST['MoveGroup'])
 
 if (isset($_POST['submit'])) {
@@ -310,12 +311,11 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 
 
 if (isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	echo '<div class="toplink"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
 } //isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])
 
 if (!isset($_GET['delete'])) {
 	echo '<form onSubmit="return VerifyForm(this)" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
@@ -345,6 +345,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['PandL'] = $myrow['pandl'];
 		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
+		echo '<p class="page_title_text noPrint"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+
 		echo '<table class="selection">';
 		echo '<tr>
 				<th colspan="2">' . _('Edit Account Group Details') . '</th>
@@ -373,7 +375,7 @@ if (!isset($_GET['delete'])) {
 			$_POST['PandL'] = '';
 		} //!isset($_POST['PandL'])
 
-		echo '<br /><table class="selection">';
+		echo '<table class="selection">';
 		echo '<tr>
 				<th colspan="2">' . _('New Account Group Details') . '</th>
 			</tr>';
@@ -458,7 +460,6 @@ if (!isset($_GET['delete'])) {
 
 	echo '</table><br />';
 
-	echo '</div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

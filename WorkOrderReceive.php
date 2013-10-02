@@ -19,17 +19,15 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockID);
 }
-echo '<div>
+echo '<div class="toplink">
 		<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders') . '</a>
 		<br />
 		<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $SelectedWO . '">' . _('Back to Costing') . '</a>
-		<br />
 	</div>';
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($SelectedWO) or !isset($StockID)) {
@@ -113,7 +111,6 @@ if (isset($_POST['Process'])) { //user hit the process the work order receipts e
 
 	if (DB_num_rows($WOResult) == 0) {
 		prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
-		echo '</div>';
 		echo '</form>';
 		include('includes/footer.inc');
 		exit;
@@ -728,7 +725,6 @@ if (isset($_POST['Process'])) { //user hit the process the work order receipts e
 			unset($_POST['QualityText' . $i]);
 			unset($_POST['QtyReqd' . $i]);
 		}
-		echo '</div>';
 		echo '</form>';
 		/*end of process work order goods received entry */
 		include('includes/footer.inc');
@@ -764,7 +760,6 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult) == 0) {
 	prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
-	echo '</div>';
 	echo '</form>';
 	include('includes/footer.inc');
 	exit;
@@ -773,7 +768,6 @@ $WORow = DB_fetch_array($WOResult);
 
 if ($WORow['closed'] == 1) {
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'), 'info');
-	echo '</div>';
 	echo '</form>';
 	include('includes/footer.inc');
 	exit;
@@ -838,8 +832,7 @@ while ($LocRow = DB_fetch_array($LocResult)) {
 }
 echo '</select></td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 
 //Now Setup the form for entering quantities received
 echo '<table class="selection">';
@@ -907,8 +900,7 @@ if ($WORow['controlled'] == 1) { //controlled
 				<td colspan="5"></td>
 			</tr>
 			</table>';
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 			</div>';
 	} else { //controlled but not serialised - just lot/batch control
@@ -956,8 +948,7 @@ if ($WORow['controlled'] == 1) { //controlled
 				 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
 			  </tr>
 			  </table>';
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 			</div>';
 	} //end of lot/batch control
@@ -969,12 +960,10 @@ if ($WORow['controlled'] == 1) { //controlled
 			<td><input type="text" required="required" minlength="1" maxlength="10" class="number" name="Qty" /></td>
 		</tr>
 		</table>';
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 		</div>';
 }
-echo '</div>';
 echo '</form>';
 
 include('includes/footer.inc');

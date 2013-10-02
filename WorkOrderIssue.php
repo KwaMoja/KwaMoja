@@ -12,10 +12,10 @@ if (isset($_GET['StockID'])){
 	$_POST['StockID']=$_GET['StockID'];
 }
 
-echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
-	<br />';
-echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a>
-	<br />';
+echo '<div class="toplink">
+		<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />
+		<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $_POST['WO'] . '">' . _('Back to Costing'). '</a>
+	</div>';
 
 echo '<p class="page_title_text noPrint" ><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
 	_('Search') . '" alt="" />' . ' ' . $Title.'</p>';

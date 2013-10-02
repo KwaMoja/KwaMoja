@@ -13,10 +13,14 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here,
 otherwise you'll be wasting your time */
 
-$PathToLanguage = './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+if ($_SESSION['Language'] == 'en_GB.utf8') {
+	$PathToLanguage = './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.pot';
+} else {
+	$PathToLanguage = './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+}
 $PathToNewLanguage = './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
+echo '<a class="toplink" href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
 echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
@@ -76,12 +80,14 @@ if (isset($_POST['submit'])) {
 	/* now we need to parse the resulting array into something we can show the user */
 
 	$j = 1;
-
-	for ($i = 17; $i <= $LangFileEntries; $i++) {
+	$AlsoIn = array();
+	$DefaultText = array();
+	$ModuleText = array();
+	for ($i = 17; $i < $LangFileEntries; $i++) {
 		/* start at line 18 to skip the header */
 		if (mb_substr($LangFile[$i], 0, 2) == '#:') {
 			/* it's a module reference */
-			$AlsoIn[$j] .= str_replace(' ', '<br />', mb_substr($LangFile[$i], 3)) . '<br />';
+			$AlsoIn[$j] = str_replace(' ', '<br />', mb_substr($LangFile[$i], 3)) . '<br />';
 		} elseif (mb_substr($LangFile[$i], 0, 5) == 'msgid') {
 			$DefaultText[$j] = mb_substr($LangFile[$i], 7, mb_strlen($LangFile[$i]) - 9);
 		} elseif (mb_substr($LangFile[$i], 0, 6) == 'msgstr') {

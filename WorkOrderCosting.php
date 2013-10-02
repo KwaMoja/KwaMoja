@@ -14,8 +14,7 @@ if (isset($_GET['WO'])) {
 	unset($SelectedWO);
 }
 
-echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders') . '</a>
-	<br />
+echo '<div class="toplink"><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders') . '</a></div>
 	<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';

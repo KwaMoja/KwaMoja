@@ -199,7 +199,7 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 
 if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Sections') . '</a></div>';
+	echo '<div class="toplink"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Sections') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
@@ -209,6 +209,7 @@ if (!isset($_GET['delete'])) {
 
 	if (isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
+		echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
 
 		$sql = "SELECT sectionid,
 				sectionname
@@ -259,9 +260,7 @@ if (!isset($_GET['delete'])) {
 			<td colspan="2"><div class="centre"><input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
 		</tr>
 		</table>
-		<br />';
-
-	echo '</form>';
+		</form>';
 
 } //end if record deleted no point displaying form to add record
 

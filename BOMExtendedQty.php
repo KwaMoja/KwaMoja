@@ -249,7 +249,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Title = _('Quantity Extended BOM Listing');
 	include('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -264,23 +264,24 @@ if (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr>
 			<td>' . _('Selection Option') . ':</td>
-			<td><select minlength="0" name="Select">
-				<option selected="selected" value="All">' . _('Show All Parts') . '</option>
-				<option value="Shortages">' . _('Only Show Shortages') . '</option>
-			</select></td>
+			<td>
+				<select minlength="0" name="Select">
+					<option selected="selected" value="All">' . _('Show All Parts') . '</option>
+					<option value="Shortages">' . _('Only Show Shortages') . '</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td>' . _('Print Option') . ':</td>
-			<td><select minlength="0" name="Fill">
-				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-				<option value="no">' . _('Plain Print') . '</option>
-			</select></td>
+			<td>
+				<select minlength="0" name="Fill">
+					<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+					<option value="no">' . _('Plain Print') . '</option>
+				</select>
+			</td>
 		</tr>
 		</table>
-		<br />
-		<br />
 		<div class="centre">
-			<br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
 		</form>';

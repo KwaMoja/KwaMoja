@@ -122,10 +122,6 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 }
 
 if (isset($_POST['SearchSupplier'])) {
-	if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-		prnMsg(_('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info');
-		echo '<br />';
-	}
 	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
 		$_POST['Keywords'] = ' ';
 	}
@@ -428,7 +424,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 	$ItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 	while ($ItemsRow = DB_fetch_array($ItemsResult)) {
-		if ($ItemsRow['stockid'] == $_POST['StockID']) {
+		if (isset($_POST['StockID']) and $ItemsRow['stockid'] == $_POST['StockID']) {
 			echo '<option selected="selected" value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . ' - ' . $ItemsRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . ' - ' . $ItemsRow['description'] . '</option>';
