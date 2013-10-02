@@ -105,7 +105,7 @@ echo '<tr>
 		<td>' . _('Stock Category From') . ':</td>
 		<td><select required="required" minlength="1" name="StkCatFrom">';
 
-$sql = "SELECT categoryid, categorydescription FROM stockcategory";
+$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
 
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
@@ -136,7 +136,7 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</select></td></tr>';
 
 if (!isset($_POST['RoundingFactor'])) {
-	$_POST['RoundingFactor'] = 1;
+	$_POST['RoundingFactor'] = 0.01;
 }
 
 if (!isset($_POST['PriceStartDate'])) {
