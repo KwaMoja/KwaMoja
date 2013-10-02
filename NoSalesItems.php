@@ -16,7 +16,7 @@ if (!(isset($_POST['Search']))) {
 			<td>' . _('Select Location') . '</td>
 			<td>:</td>
 			<td>
-				<select minlength="0" name="Location[]" multiple="multiple">';
+				<select minlength="1" required="required" name="Location[]" multiple="multiple">';
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$sql = "SELECT locationname,
 						loccode
