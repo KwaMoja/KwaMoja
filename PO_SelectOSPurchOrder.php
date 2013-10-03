@@ -49,8 +49,7 @@ if (isset($OrderNumber) and $OrderNumber != '') {
 } //isset($OrderNumber) and $OrderNumber != ''
 else {
 	if (isset($SelectedSupplier)) {
-		echo '<br />
-				<div class="page_help_text noPrint">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
+		echo '<div class="page_help_text noPrint">' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type="hidden" name="SelectedSupplier" value="' . $SelectedSupplier . '" />
 				</div>';
 	} //isset($SelectedSupplier)
@@ -60,9 +59,6 @@ else {
 }
 
 if (isset($_POST['SearchParts'])) {
-	if (isset($_POST['Keywords']) and isset($_POST['StockCode'])) {
-		echo '<div class="page_help_text noPrint">' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.</div>';
-	} //isset($_POST['Keywords']) and isset($_POST['StockCode'])
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -138,10 +134,10 @@ $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
 
 if (!isset($OrderNumber) or $OrderNumber == '') {
 	if (isset($SelectedSupplier)) {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+		echo '<div class="toplink"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a></div>';
 	} //isset($SelectedSupplier)
 	else {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+		echo '<div class="toplink"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a></div>';
 	}
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<table class="selection">
@@ -242,16 +238,13 @@ echo '<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="
 echo '<td><b>' . _('OR') . '</b>' . _('Enter extract of the') . ' ' . '<b>' . _('Stock Code') . '</b>:</td>';
 echo '<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 echo '<table>
 		<tr>
 			<td><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
 				<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></td>
 		</tr>
 	</table>';
-
-echo '<br />';
 
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">

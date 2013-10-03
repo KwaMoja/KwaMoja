@@ -301,7 +301,7 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])) {
 }
 
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<form id="SupplierPurchasing" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">
@@ -366,10 +366,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
 		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
-			echo '<br />' . $SQL;
-		}
+		echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 		include('includes/footer.inc');
 		exit;
 	} else {
@@ -414,10 +411,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 				$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
-					echo '<br />' . $SQL;
-				}
+				echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 				include('includes/footer.inc');
 				exit;
 			}
@@ -438,10 +432,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 				$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
-					echo '<br />' . $SQL;
-				}
+				echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 				include('includes/footer.inc');
 				exit;
 			}
@@ -467,10 +458,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 				$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
-					echo '<br />' . $SQL;
-				}
+				echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 				include('includes/footer.inc');
 				exit;
 			}
@@ -498,10 +486,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 				$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				prnMsg(_('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
-					echo '<br />' . $SQL;
-				}
+				echo '<div class="toplink"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 				include('includes/footer.inc');
 				exit;
 			}
@@ -528,7 +513,7 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 		}
 		/*end preferred supplier items while loop */
 		echo '<tr>
-				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return MakeConfirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
+				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return MakeConfirm(\'' . _('This will create a purchase order for all of these items for immediate delivery. Are you sure?') . '\', \'Confirm Purchase Order\', this);"/></td>
 			</tr>
 			</table>';
 
