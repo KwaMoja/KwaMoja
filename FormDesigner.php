@@ -177,10 +177,10 @@ $Papers = array(
 	'A5_Portrait',
 	'A3_Landscape',
 	'A3_Portrait',
-	'letter_Portrait',
-	'letter_Landscape',
-	'legal_Portrait',
-	'legal_Landscape'
+	'Letter_Portrait',
+	'Letter_Landscape',
+	'Legal_Portrait',
+	'Legal_Landscape'
 ); // Possible paper sizes/orientations
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="Form" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';

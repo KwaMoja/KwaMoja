@@ -90,7 +90,7 @@ switch ($PaperSize) {
 		$Right_Margin = 40;
 		break;
 
-	case 'A3_landscape':
+	case 'A3_Landscape':
 
 		$DocumentPaper = 'A3';
 		$DocumentOrientation = 'L';
@@ -103,7 +103,7 @@ switch ($PaperSize) {
 		$Right_Margin = 40;
 		break;
 
-	case 'letter':
+	case 'Letter':
 
 		$DocumentPaper = 'LETTER';
 		$DocumentOrientation = 'P';
@@ -116,7 +116,7 @@ switch ($PaperSize) {
 		$Right_Margin = 36; // Half inch = 72/2
 		break;
 
-	case 'letter_landscape':
+	case 'Letter_Landscape': // 279mm x 216mm
 
 		$DocumentPaper = 'LETTER';
 		$DocumentOrientation = 'L';
@@ -129,30 +129,30 @@ switch ($PaperSize) {
 		$Right_Margin = 36; // Half inch = 72/2
 		break;
 
-	case 'legal':
+	case 'Legal':
 
 		$DocumentPaper = 'LEGAL';
 		$DocumentOrientation = 'P';
 
-		$Page_Width = 612;
-		$Page_Height = 1008;
-		$Top_Margin = 50;
-		$Bottom_Margin = 40;
-		$Left_Margin = 30;
-		$Right_Margin = 25;
+		$Page_Width = 612; // 72 * 8.5 inch
+		$Page_Height = 1008; // 72 * 14 inch
+		$Top_Margin = 50; // Half inch = 72/2
+		$Bottom_Margin = 40; // Half inch = 72/2
+		$Left_Margin = 30; // Half inch = 72/2
+		$Right_Margin = 25; // Half inch = 72/2
 		break;
 
-	case 'legal_landscape':
+	case 'Legal_Landscape':
 
 		$DocumentPaper = 'LEGAL';
 		$DocumentOrientation = 'L';
 
-		$Page_Width = 1008;
-		$Page_Height = 612;
-		$Top_Margin = 50;
-		$Bottom_Margin = 40;
-		$Left_Margin = 30;
-		$Right_Margin = 25;
+		$Page_Width = 1008; // 72 * 14 inch
+		$Page_Height = 612; // 72 * 8.5 inch
+		$Top_Margin = 50; // Half inch = 72/2
+		$Bottom_Margin = 40; // Half inch = 72/2
+		$Left_Margin = 30; // Half inch = 72/2
+		$Right_Margin = 25; // Half inch = 72/2
 		break;
 	default:
 		$DocumentOrientation = 'L';
