@@ -449,35 +449,39 @@ if (isset($_POST['EnterLine'])) {
 		prnMsg(_('Cannot Enter this order line') . '</b><br />' . _('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	} //!Is_Date($_POST['ReqDelDate'])
 
-	/*It's not a stock item */
-
-	/*need to check GL Code is valid if GLLink is active
-	 *[icedlava] GL Code is required for non stock item variance in price vs purchase order when supplier invoice generated else
-	 *there will be an sql error  in SupplierInvoice.php without a valid GL Code
+	/*It's not a stock item
+	 * need to check GL Code is valid if GLLink is active
+	 * [icedlava] GL Code is required for non stock item variance in price vs purchase order when supplier invoice generated even if stock not linked to GL, but AP is else
+	 * there will be an sql error  in SupplierInvoice.php without a valid GL Code
 	 */
-	$sql = "SELECT accountname
-				FROM chartmaster
-				WHERE accountcode ='" . $_POST['GLCode'] . "'";
-	$ErrMsg = _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the details of the account, but failed was');
-	$GLValidResult = DB_query($sql, $db, $ErrMsg, $DbgMsg, false, false);
-	if (DB_error_no($db) != 0) {
-		$AllowUpdate = false;
-		prnMsg(_('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
-		if ($debug == 1) {
-			prnMsg(_('The SQL used to validate the code entered was') . ' ' . $sql, 'error');
-		} //$debug == 1
-		include('includes/footer.inc');
-		exit;
-	} //DB_error_no($db) != 0
-	if (DB_num_rows($GLValidResult) == 0) {
-		/*The GLCode entered does not exist */
-		$AllowUpdate = false;
-		prnMsg(_('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'), 'error');
-	} //DB_num_rows($GLValidResult) == 0
+	if ($_SESSION['PO'.$identifier]->GLLink == 1 or $_SESSION['CompanyRecord']['gllink_creditors'] == 1) {
+		$sql = "SELECT accountname
+					FROM chartmaster
+					WHERE accountcode ='" . $_POST['GLCode'] . "'";
+		$ErrMsg = _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
+		$DbgMsg = _('The SQL used to retrieve the details of the account, but failed was');
+		$GLValidResult = DB_query($sql, $db, $ErrMsg, $DbgMsg, false, false);
+		if (DB_error_no($db) != 0) {
+			$AllowUpdate = false;
+			prnMsg(_('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
+			if ($debug == 1) {
+				prnMsg(_('The SQL used to validate the code entered was') . ' ' . $sql, 'error');
+			} //$debug == 1
+			include('includes/footer.inc');
+			exit;
+		} //DB_error_no($db) != 0
+		if (DB_num_rows($GLValidResult) == 0) {
+			/*The GLCode entered does not exist */
+			$AllowUpdate = false;
+			prnMsg(_('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'), 'error');
+		} //DB_num_rows($GLValidResult) == 0
+		else {
+			$myrow = DB_fetch_row($GLValidResult);
+			$GLAccountName = $myrow[0];
+		}
+	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
 	else {
-		$myrow = DB_fetch_row($GLValidResult);
-		$GLAccountName = $myrow[0];
+		$_POST['GLCode'] = 0;
 	}
 
 	if ($_POST['AssetID'] != 'Not an Asset') {

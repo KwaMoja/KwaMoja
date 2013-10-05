@@ -26,11 +26,11 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopName'] != $_POST['X_ShopName']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopName']) . "' WHERE confname = 'ShopName'";
 		}
-		if ($_SESSION['ShopTitle'] != $_POST['X_ShopTitle'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTitle']) ."' WHERE confname = 'ShopTitle'";
+		if ($_SESSION['ShopTitle'] != $_POST['X_ShopTitle']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopTitle']) . "' WHERE confname = 'ShopTitle'";
 		}
-		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
+		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) . "' WHERE confname = 'ShopManagerEmail'";
 		}
 		if ($_SESSION['ShopPrivacyStatement'] != $_POST['X_ShopPrivacyStatement']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopPrivacyStatement']) . "' WHERE confname = 'ShopPrivacyStatement'";
@@ -53,24 +53,24 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShopBranchCode'] != $_POST['X_ShopBranchCode']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopBranchCode'] . "' WHERE confname = 'ShopBranchCode'";
 		}
-		if ($_SESSION['ShopShowOnlyAvailableItems'] != $_POST['X_ShopShowOnlyAvailableItems'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowOnlyAvailableItems']."' WHERE confname = 'ShopShowOnlyAvailableItems'";
+		if ($_SESSION['ShopShowOnlyAvailableItems'] != $_POST['X_ShopShowOnlyAvailableItems']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopShowOnlyAvailableItems'] . "' WHERE confname = 'ShopShowOnlyAvailableItems'";
 		}
-		if ($_SESSION['ShopShowQOHColumn'] != $_POST['X_ShopShowQOHColumn'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopShowQOHColumn']."' WHERE confname = 'ShopShowQOHColumn'";
+		if ($_SESSION['ShopShowQOHColumn'] != $_POST['X_ShopShowQOHColumn']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopShowQOHColumn'] . "' WHERE confname = 'ShopShowQOHColumn'";
 		}
 		if (isset($_POST['X_ShopStockLocations'])) {
 			$ShopStockLocations = '';
-			foreach ($_POST['X_ShopStockLocations'] as $Location){
-				$ShopStockLocations .= $Location .',';
+			foreach ($_POST['X_ShopStockLocations'] as $Location) {
+				$ShopStockLocations .= $Location . ',';
 			}
-			$ShopStockLocations = mb_substr($ShopStockLocations,0,mb_strlen($ShopStockLocations)-1);
-			if ($_SESSION['ShopStockLocations'] != $ShopStockLocations){
+			$ShopStockLocations = mb_substr($ShopStockLocations, 0, mb_strlen($ShopStockLocations) - 1);
+			if ($_SESSION['ShopStockLocations'] != $ShopStockLocations) {
 				$SQL[] = "UPDATE config SET confvalue='" . $ShopStockLocations . "' WHERE confname='ShopStockLocations'";
 			}
 		}
-		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopAllowSurcharges']."' WHERE confname = 'ShopAllowSurcharges'";
+		if ($_SESSION['ShopAllowSurcharges'] != $_POST['X_ShopAllowSurcharges']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowSurcharges'] . "' WHERE confname = 'ShopAllowSurcharges'";
 		}
 		if ($_SESSION['ShopAllowCreditCards'] != $_POST['X_ShopAllowCreditCards']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopAllowCreditCards'] . "' WHERE confname = 'ShopAllowCreditCards'";
@@ -98,6 +98,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ShopPayPalBankAccount'] != $_POST['X_ShopPayPalBankAccount']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopPayPalBankAccount'] . "' WHERE confname = 'ShopPayPalBankAccount'";
+		}
+		if ($_SESSION['ShopFreightModule'] != $_POST['X_ShopFreightModule']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShopFreightModule'] . "' WHERE confname = 'ShopFreightModule'";
 		}
 
 		if (!$AllowDemoMode) {
@@ -189,14 +192,14 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Test or Live Mode') . ':</td>
 		<td><select name="X_ShopMode">';
-		if ($_SESSION['ShopMode'] == 'test' or $AllowDemoMode) {
-			echo '<option selected="selected" value="test">' . _('Test') . '</option>
+if ($_SESSION['ShopMode'] == 'test' or $AllowDemoMode) {
+	echo '<option selected="selected" value="test">' . _('Test') . '</option>
 				<option value="live">' . _('Live') . '</option>';
-		} else {
-			echo '<option value="test">' . _('Test') . '</option>
+} else {
+	echo '<option value="test">' . _('Test') . '</option>
 				<option selected="selected" value="live">' . _('Live') . '</option>';
-		}
-		echo '</select></td>
+}
+echo '</select></td>
 		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
 	</tr>';
 
@@ -235,7 +238,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Privacy Statement') . ':</td>
 		<td><textarea name="X_ShopPrivacyStatement" rows="8" cols="60">' . stripslashes($_SESSION['ShopPrivacyStatement']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .  '</td>
+		<td>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') . '</td>
 	</tr>';
 //Terms and Conditions
 echo '<tr>
@@ -247,7 +250,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('About Us') . ':</td>
 		<td><textarea name="X_ShopAboutUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopAboutUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') .'</td>
+		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') . '</td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Contact Us') . ':</td>
@@ -258,7 +261,7 @@ echo '<tr>
 echo '<tr>
 		<td>' . _('Freight Policy') . ':</td>
 		<td><textarea name="X_ShopFreightPolicy" rows="8" cols="60">' . stripslashes($_SESSION['ShopFreightPolicy']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .'</td>
+		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') . '</td>
 	</tr>';
 
 echo '<tr>
@@ -293,8 +296,8 @@ echo '</select></td>
 		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want webSHOP visitors to know how many stock do you currently hold.') . '</td>
 	</tr>';
 
-if (mb_strlen($_SESSION['ShopStockLocations'])>1){
-	$Locations = explode(',',$_SESSION['ShopStockLocations']);
+if (mb_strlen($_SESSION['ShopStockLocations']) > 1) {
+	$Locations = explode(',', $_SESSION['ShopStockLocations']);
 } else {
 	$Locations = array();
 }
@@ -302,17 +305,16 @@ if (mb_strlen($_SESSION['ShopStockLocations'])>1){
 echo '<tr>
 		<td>' . _('Stock Locations') . ':</td>
 		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
-$LocResult = DB_query("SELECT loccode, locationname FROM locations",$db);
-while ($LocRow = DB_fetch_array($LocResult)){
-	if (in_array($LocRow['loccode'],$Locations)){
-		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+$LocResult = DB_query("SELECT loccode, locationname FROM locations", $db);
+while ($LocRow = DB_fetch_array($LocResult)) {
+	if (in_array($LocRow['loccode'], $Locations)) {
+		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] .'</option>';
+		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] . '</option>';
 	}
 }
 echo '</select></td>
-		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') .
-		'</td>
+		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
 	</tr>';
 
 echo '<tr>
@@ -343,6 +345,37 @@ while ($ItemsRow = DB_fetch_array($DummyItemsResult)) {
 echo '</select></td>
 		<td>' . _('Select the KwaMoja service item to use for payment surcharges to be processed as') . '</td>
 	</tr>';
+
+echo '<tr>
+		<td>' . _('Freight Calculations') . ':</td>
+		<td><select name="X_ShopFreightModule">';
+
+$FreightModules = array(
+	array(
+		'MethodName' => 'No Freight',
+		'MethodCode' => 'NoFreight'
+	),
+	array(
+		'MethodName' => 'Default calculation',
+		'MethodCode' => 'Default'
+	),
+	array(
+		'MethodName' => 'Australia Post API',
+		'MethodCode' => 'AusPost'
+	)
+);
+
+foreach ($FreightModules as $FreightCalc) {
+	if ($_SESSION['ShopFreightModule'] == $FreightCalc['MethodCode']) {
+		echo '<option selected="selected" value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+	} else {
+		echo '<option value="' . $FreightCalc['MethodCode'] . '">' . $FreightCalc['MethodName'] . '</option>';
+	}
+}
+echo '</select>
+			</td>
+			<td>' . _('Select the freight calculation method to use for the webSHOP') . '</td>
+		</tr>';
 
 echo '<tr>
 		<th colspan="3">' . _('Bank Transfer Settings') . '</th>
