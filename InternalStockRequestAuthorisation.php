@@ -3,6 +3,8 @@
 include('includes/session.inc');
 
 $Title = _('Authorise Internal Stock Requests');
+$ViewTopic = 'Inventory';
+$BookMark = 'AuthoriseRequest';
 
 include('includes/header.inc');
 
@@ -41,7 +43,6 @@ $sql = "SELECT stockrequest.dispatchid,
 $result = DB_query($sql, $db);
 
 echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">';
 
@@ -99,9 +100,8 @@ while ($myrow = DB_fetch_array($result)) {
 		</tr>';
 } //end while header loop
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update') . '" /></div>
-	  </div>
-	  </form>';
+echo '<div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update') . '" /></div>
+	</form>';
 
 include('includes/footer.inc');
 ?>

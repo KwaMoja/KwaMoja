@@ -3,6 +3,8 @@
 include('includes/DefineStockRequestClass.php');
 
 include('includes/session.inc');
+$ViewTopic = 'Inventory';
+$BookMark = 'CreateRequest';
 $Title = _('Create an Internal Materials Request');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -136,7 +138,6 @@ echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $T
 
 if (isset($_GET['Edit'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
@@ -163,11 +164,9 @@ if (isset($_GET['Edit'])) {
 			<td><input type="text" class="number" name="Quantity" value="' . locale_number_format($_SESSION['Request']->LineItems[$_GET['Edit']]->Quantity, $_SESSION['Request']->LineItems[$_GET['Edit']]->DecimalPlaces) . '" /></td>
 		</tr>';
 	echo '<input type="hidden" name="LineNumber" value="' . $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber . '" />';
-	echo '</table>
-		<br />';
+	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="Edit" value="' . _('Update Line') . '" />
-		</div>
 		</div>
 		</form>';
 	include('includes/footer.inc');
@@ -175,7 +174,6 @@ if (isset($_GET['Edit'])) {
 }
 
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">';
@@ -251,12 +249,10 @@ echo '<tr>
 		<td>' . _('Narrative') . ':</td>
 		<td><textarea name="Narrative" cols="30" rows="5">' . $_SESSION['Request']->Narrative . '</textarea></td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 
 echo '<div class="centre">
 		<input type="submit" name="Update" value="' . _('Update') . '" />
-	</div>
 	</div>
 	</form>';
 
@@ -268,7 +264,6 @@ if (!isset($_SESSION['Request']->Location)) {
 //****************MUESTRO LA TABLA CON LOS REGISTROS DE LA TRANSFERENCIA*************************************
 $i = 0; //Line Item Array pointer
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br />
 	<table class="selection">
@@ -308,8 +303,6 @@ echo '</table>
 	<br />
 	<div class="centre">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
-	</div>
-	<br />
 	</div>
 	</form>';
 
@@ -368,11 +361,9 @@ if (isset($_POST['StockCode'])) {
 }
 echo '</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
-	</div>
-	<br />';
+	</div>';
 
 echo '</form>';
 
@@ -520,7 +511,6 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])) {
 /* display list if there is more than one record */
 if (isset($searchresult) and !isset($_POST['Select'])) {
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
@@ -605,9 +595,7 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-			  </div>
-			  </form>
-			  <br />';
+			</form>';
 	}
 }
 /* end display list if there is more than one record */

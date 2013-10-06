@@ -3,6 +3,8 @@
 include('includes/session.inc');
 
 $Title = _('Fulfil Stock Requests');
+$ViewTopic = 'Inventory';
+$BookMark = 'FulfilRequest';
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -209,7 +211,6 @@ if (isset($_POST['UpdateAll'])) {
 
 if (!isset($_POST['Location'])) {
 	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -245,10 +246,9 @@ if (!isset($_POST['Location'])) {
 		}
 	}
 	echo '</select></td></tr>';
-	echo '</table><br />';
+	echo '</table>';
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . _('Show Requests') . '" /></div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 	include('includes/footer.inc');
 	exit;
 }
