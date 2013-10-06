@@ -288,7 +288,6 @@ if (isset($_POST['CommitBatch'])) {
 			<br />';
 
 		echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?identifier=' . $identifier) . '">';
-		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Has the cheque been printed') . '?
 			<br />
@@ -299,8 +298,7 @@ if (isset($_POST['CommitBatch'])) {
 			<input type="submit" name="PaymentCancelled" value="' . _('No / Cancel Payment') . '" />';
 
 		echo '<br />Payment amount = ' . $_SESSION['PaymentDetail' . $identifier]->Amount;
-		echo '</div>
-			  </form>';
+		echo '</form>';
 
 	} //(!isset($_POST['ChequePrinted'])) and (!isset($_POST['PaymentCancelled'])) and ($myrow[0] == 1)
 	else {
@@ -583,18 +581,17 @@ if (isset($_POST['CommitBatch'])) {
 			$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 		} //$TransType == 22
 		else {
-			foreach ($_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem) {
-				$SQL = "INSERT INTO banktrans (transno,
-											type,
-											bankact,
-											ref,
-											chequeno,
-											exrate,
-											functionalexrate,
-											transdate,
-											banktranstype,
-											amount,
-											currcode)
+			$SQL = "INSERT INTO banktrans (transno,
+										type,
+										bankact,
+										ref,
+										chequeno,
+										exrate,
+										functionalexrate,
+										transdate,
+										banktranstype,
+										amount,
+										currcode)
 						VALUES ('" . $TransNo . "',
 								'" . $TransType . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Account . "',
@@ -604,13 +601,12 @@ if (isset($_POST['CommitBatch'])) {
 								'" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "',
 								'" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "',
-								'" . -$PaymentItem->Amount . "',
+								'" . -$_SESSION['PaymentDetail' . $identifier]->Amount . "',
 								'" . $_SESSION['PaymentDetail' . $identifier]->Currency . "' )";
 
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-				$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-			} //$_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem
+			$ErrMsg = _('Cannot insert a bank transaction because');
+			$DbgMsg = _('Cannot insert a bank transaction using the SQL');
+			$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 		}
 
 		DB_Txn_Commit($db);
