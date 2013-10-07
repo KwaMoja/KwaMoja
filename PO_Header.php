@@ -249,7 +249,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 
 /* end of if isset _POST'EnterLines' */
 
-echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?identifier=' . $identifier . '">' . _('Back to Purchase Orders') . '</a></span>';
+echo '<div class="toplink"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?identifier=' . $identifier . '">' . _('Back to Purchase Orders') . '</a></div>';
 
 /*The page can be called with ModifyOrderNumber=x where x is a purchase
  * order number. The page then looks up the details of order x and allows

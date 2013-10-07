@@ -22,7 +22,7 @@ if (!isset($_SESSION['PO' . $identifier])) {
 include('includes/header.inc');
 
 if (!isset($_POST['Commit'])) {
-	echo '<a href="' . $RootPath . '/PO_Header.php?identifier=' . $identifier . '">' . _('Back To Purchase Order Header') . '</a><br />';
+	echo '<div class="toplink"><a href="' . $RootPath . '/PO_Header.php?identifier=' . $identifier . '">' . _('Back To Purchase Order Header') . '</a></div>';
 } //!isset($_POST['Commit'])
 
 if (isset($_POST['UpdateLines']) or isset($_POST['Commit'])) {
@@ -235,11 +235,10 @@ if (isset($_POST['Commit'])) {
 			} //$_SESSION['PO' . $identifier]->LineItems as $POLine
 
 			/* end of the loop round the detail line items on the order */
-			echo '<p />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO' . $identifier]->SupplierName . ' ' . _('has been created'), 'success');
 			if ($_SESSION['PO' . $identifier]->AllowPrintPO == 1 and ($_SESSION['PO' . $identifier]->Status == 'Authorised' or $_SESSION['PO' . $identifier]->Status == 'Printed')) {
 
-				echo '<br /><div class="centre"><a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+				echo '<div class="centre"><a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
 			}
 		} //$_SESSION['ExistingOrder'] == 0
 		else {
@@ -382,7 +381,6 @@ if (isset($_POST['Commit'])) {
 			} //$_SESSION['PO' . $identifier]->LineItems as $POLine
 
 			/* end of the loop round the detail line items on the order */
-			echo '<br /><br />';
 			prnMsg(_('Purchase Order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('has been updated'), 'success');
 			if ($_SESSION['PO' . $identifier]->AllowPrintPO == 1 and ($_SESSION['PO' . $identifier]->Status == 'Authorised' or $_SESSION['PO' . $identifier]->Status == 'Printed')) {
 				echo '<br /><div class="centre"><a target="_blank" href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
@@ -686,7 +684,6 @@ if (isset($_POST['NewItem']) and !empty($_POST['PO_ItemsResubmitFormValue']) and
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 echo '<form onSubmit="return VerifyForm(this);" id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */
@@ -763,15 +760,15 @@ if (count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit']
 	} //$_SESSION['PO' . $identifier]->LineItems as $POLine
 
 	$DisplayTotal = locale_number_format($_SESSION['PO' . $identifier]->Total, $_SESSION['PO' . $identifier]->CurrDecimalPlaces);
-	echo '<tr><td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
-						<td class="number"><b>' . $DisplayTotal . '</b></td>
-			</tr></table>';
-	echo '<br />
-			<div class="centre">
-			<input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '" />';
-
-	echo '&nbsp;<input type="submit" name="Commit" value="' . _('Process Order') . '" />
-			</div>';
+	echo '<tr>
+			<td colspan="9" class="number">' . _('TOTAL') . _(' excluding Tax') . '</td>
+			<td class="number"><b>' . $DisplayTotal . '</b></td>
+		</tr>
+	</table>';
+	echo '<div class="centre">
+			<input type="submit" name="UpdateLines" value="' . _('Update Order Lines') . '" />
+			&nbsp;<input type="submit" name="Commit" value="' . _('Process Order') . '" />
+		</div>';
 
 } //count($_SESSION['PO' . $identifier]->LineItems) > 0 and !isset($_GET['Edit'])
 
@@ -1144,11 +1141,10 @@ if (!isset($_GET['Edit'])) {
 			<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $RootPath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td>
 		</tr>
 		</table>
-		<br />
 
 		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />
 		<input type="submit" name="NonStockOrder" value="' . _('Order a non stock item') . '" />
-		</div><br />';
+		</div>';
 
 	$PartsDisplayed = 0;
 } //!isset($_GET['Edit'])
@@ -1222,7 +1218,6 @@ if (isset($SearchResult)) {
 	echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="Order some" /></div>';
 } //end if SearchResults to show
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>
