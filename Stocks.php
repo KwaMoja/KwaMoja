@@ -963,7 +963,7 @@ foreach ($ItemDescriptionLanguages as $DescriptionLanguage) {
 		}
 		echo '<tr>
 			<td>' . $LanguagesArray[$DescriptionLanguage]['LanguageName'] . ' ' . _('Description') . ':</td>
-			<td><input type="text" name="' . $PostVariableName . '" size="52" required="required" minlength="1" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
+			<td><input type="text" name="' . $PostVariableName . '" size="52" minlength="0" maxlength="50" value="' . $_POST[$PostVariableName] . '" /></td>
 		</tr>';
 	}
 }
