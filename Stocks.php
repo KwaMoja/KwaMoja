@@ -57,7 +57,6 @@ if (isset($_POST['New'])) {
 echo '<div class="toplink">
 		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
 	</div>
-	<br />
 	<p class="page_title_text noPrint" >
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
@@ -843,7 +842,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="New" value="' . $New . '" />
 	<table class="selection">';
 
-if (isset($StockID)) {
+if (isset($StockID) and $StockID != '') {
 	echo '<table width="100%">
 			<tr>
 				<td><input class="image" src="css/' . $Theme . '/images/previous.png" type="image" name="PreviousItem" title="' . _('Previous Item') . '" value="" /></td>
