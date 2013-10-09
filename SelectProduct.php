@@ -81,13 +81,11 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 	} else {
 		$ItemStatus = '';
 	}
+	echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus ;
+
+
 	echo '<table width="90%">
 			<tr>
-				<th colspan="3"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b title="' . $myrow['longdescription'] . '">' . ' ' . $StockID . ' - ' . $myrow['description'] . '</b> ' . $ItemStatus . '</th>
-			</tr>';
-
-
-	echo '<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
 	$sql = "SELECT abccategory FROM abcstock WHERE stockid='" . $StockID . "'";
@@ -336,17 +334,17 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 		$Demand += $DemandRow[0];
 	}
 	echo '<tr>
-		<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-		<td style="width:17%" class="select">' . $QOH . '</td>
-	</tr>';
+			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
+			<td style="width:17%" class="select">' . $QOH . '</td>
+		</tr>';
 	echo '<tr>
-		<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
-		<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
-	</tr>';
+			<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
+			<td style="width:17%" class="select">' . locale_number_format($Demand, $myrow['decimalplaces']) . '</td>
+		</tr>';
 	echo '<tr>
-		<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-		<td style="width:17%" class="select">' . $QOO . '</td>
-	</tr>
+			<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
+			<td style="width:17%" class="select">' . $QOO . '</td>
+		</tr>
 	</table>'; //end of nested table
 	echo '</td>'; //end cell of master table
 
@@ -380,7 +378,8 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 								WHERE purchdata.stockid = '" . $StockID . "'
 							ORDER BY purchdata.preferred DESC, purchdata.effectivefrom DESC", $db);
 		while ($SuppRow = DB_fetch_array($SuppResult)) {
-			echo '<tr><td class="select">' . $SuppRow['suppname'] . '</td>
+			echo '<tr>
+					<td class="select">' . $SuppRow['suppname'] . '</td>
 					<td class="select">' . locale_number_format($SuppRow['price'] / $SuppRow['conversionfactor'], $SuppRow['decimalplaces']) . '</td>
 					<td class="select">' . $SuppRow['currcode'] . '</td>
 					<td class="select">' . ConvertSQLDate($SuppRow['effectivefrom']) . '</td>
@@ -398,7 +397,7 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 		echo '</table>';
 		DB_data_seek($result, 0);
 	}
-	echo '</td></tr></table><br />'; // end first item details table
+	echo '</td></tr></table>'; // end first item details table
 	echo '<table width="90%"><tr>
 		<th style="width:33%">' . _('Item Inquiries') . '</th>
 		<th style="width:33%">' . _('Item Transactions') . '</th>
@@ -516,7 +515,6 @@ if (!isset($_POST['Search']) and (isset($_POST['Select']) or isset($_SESSION['Se
 	echo '</td></tr></table>';
 } // end displaying item options if there is one and only one record
 echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
@@ -555,8 +553,7 @@ if (isset($_POST['StockCode'])) {
 }
 echo '</td></tr></table><br />';
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
-echo '</div>
-	  </form>';
+echo '</form>';
 // query for list of record(s)
 if (isset($_POST['Go']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
 	$_POST['Search'] = 'Search';
@@ -803,8 +800,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-			  </form>
-			  <br />';
+			</form>';
 	}
 }
 /* end display list if there is more than one record */

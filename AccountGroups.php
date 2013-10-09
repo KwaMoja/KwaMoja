@@ -130,7 +130,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (isset($_POST['OldGroupName']) and $InputError != 1) {
-		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 		if ($_POST['OldGroupName'] !== $_POST['GroupName']) {
 			DB_IgnoreForeignKeys($db);
 			$sql = "UPDATE chartmaster SET group_='" . $_POST['GroupName'] . "' WHERE group_='" . $_POST['OldGroupName'] . "'";
@@ -197,7 +197,7 @@ elseif (isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
-		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<input type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
 				<td>' . _('Parent Group') . ':' . '</td>
 				<td><select minlength="0" tabindex="2" name="DestinyAccountGroup">';
@@ -217,7 +217,7 @@ elseif (isset($_GET['delete'])) {
 		echo '<tr>
 				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
 			</tr>
-		  </table>';
+		</table>';
 
 	} //$myrow['groups'] > 0
 	else {
@@ -380,7 +380,7 @@ if (!isset($_GET['delete'])) {
 				<th colspan="2">' . _('New Account Group Details') . '</th>
 			</tr>';
 		echo '<tr>
-				 <td><input  type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
+				 <td><input type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
 			</tr>';
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
@@ -434,15 +434,15 @@ if (!isset($_GET['delete'])) {
 			<td><select required="required" minlength="1" tabindex="4" name="PandL">';
 
 	echo '<option selected="selected" value=""></option>';
-	if ($_POST['PandL'] === 1) {
+	if ($_POST['PandL'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
-	} //$_POST['PandL'] === 1
+	} //$_POST['PandL'] == 1
 	else {
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	if ($_POST['PandL'] === 0) {
+	if ($_POST['PandL'] == 0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
-	} //$_POST['PandL'] === 0
+	} //$_POST['PandL'] == 0
 	else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}

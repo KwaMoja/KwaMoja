@@ -43,12 +43,12 @@ if (isset($_POST['PrintPDF'])) {
 
 	// This finds the top level
 	$sql = "INSERT INTO passbom (part, sortpart)
-			   SELECT bom.component AS part,
-					  CONCAT(bom.parent,bom.component) AS sortpart
-			  FROM bom
-			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= CURRENT_DATE
-			  AND bom.effectiveafter <= CURRENT_DATE";
+				SELECT bom.component AS part,
+					CONCAT(bom.parent,bom.component) AS sortpart
+				FROM bom
+				WHERE bom.parent ='" . $_POST['Part'] . "'
+					AND bom.effectiveto >= CURRENT_DATE
+					AND bom.effectiveafter <= CURRENT_DATE";
 	$result = DB_query($sql, $db);
 
 	$LevelCounter = 2;
@@ -63,19 +63,19 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter,
 				effectiveto,
 				quantity)
-			  SELECT bom.parent,
-					 bom.component,
-					 CONCAT(bom.parent,bom.component) AS sortpart,
-					 " . $LevelCounter . " AS level,
-					 bom.workcentreadded,
-					 bom.loccode,
-					 bom.effectiveafter,
-					 bom.effectiveto,
-					 bom.quantity
-			  FROM bom
-			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveto >= CURRENT_DATE
-			  AND bom.effectiveafter <= CURRENT_DATE";
+			SELECT bom.parent,
+					bom.component,
+					CONCAT(bom.parent,bom.component) AS sortpart,
+					" . $LevelCounter . " AS level,
+					bom.workcentreadded,
+					bom.loccode,
+					bom.effectiveafter,
+					bom.effectiveto,
+					bom.quantity
+				FROM bom
+				WHERE bom.parent ='" . $_POST['Part'] . "'
+					AND bom.effectiveto >= CURRENT_DATE
+					AND bom.effectiveafter <= CURRENT_DATE";
 	$result = DB_query($sql, $db);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -96,19 +96,19 @@ if (isset($_POST['PrintPDF'])) {
 					effectiveafter,
 					effectiveto,
 					quantity)
-				  SELECT bom.parent,
-						 bom.component,
-						 CONCAT(passbom.sortpart,bom.component) AS sortpart,
-						 $LevelCounter as level,
-						 bom.workcentreadded,
-						 bom.loccode,
-						 bom.effectiveafter,
-						 bom.effectiveto,
-						 bom.quantity
-				 FROM bom, passbom
-				 WHERE bom.parent = passbom.part
-				  AND bom.effectiveto >= CURRENT_DATE
-				  AND bom.effectiveafter <= CURRENT_DATE";
+				SELECT bom.parent,
+						bom.component,
+						CONCAT(passbom.sortpart,bom.component) AS sortpart,
+						$LevelCounter as level,
+						bom.workcentreadded,
+						bom.loccode,
+						bom.effectiveafter,
+						bom.effectiveto,
+						bom.quantity
+				FROM bom, passbom
+				WHERE bom.parent = passbom.part
+					AND bom.effectiveto >= CURRENT_DATE
+					AND bom.effectiveafter <= CURRENT_DATE";
 			$result = DB_query($sql, $db);
 
 			$sql = "DROP TABLE IF EXISTS passbom2";
@@ -127,12 +127,12 @@ if (isset($_POST['PrintPDF'])) {
 
 
 			$sql = "INSERT INTO passbom (part, sortpart)
-					   SELECT bom.component AS part,
-							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
-					   FROM bom,passbom2
-					   WHERE bom.parent = passbom2.part
-						AND bom.effectiveto >= CURRENT_DATE
-						AND bom.effectiveafter <= CURRENT_DATE";
+						SELECT bom.component AS part,
+							CONCAT(passbom2.sortpart,bom.component) AS sortpart
+						FROM bom,passbom2
+						WHERE bom.parent = passbom2.part
+							AND bom.effectiveto >= CURRENT_DATE
+							AND bom.effectiveafter <= CURRENT_DATE";
 			$result = DB_query($sql, $db);
 
 
@@ -159,9 +159,9 @@ if (isset($_POST['PrintPDF'])) {
 
 
 	$sql = "SELECT stockmaster.stockid,
-				   stockmaster.description
-			  FROM stockmaster
-			  WHERE stockid = " . "'" . $_POST['Part'] . "'";
+					stockmaster.description
+				FROM stockmaster
+				WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result, $db);
 	$assembly = $_POST['Part'];
@@ -244,7 +244,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
-		  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">';
 	echo '<tr>
 			<td>' . _('Part') . ':</td>
@@ -294,7 +294,7 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 	$YPos -= $line_height;
 
 	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('Indented BOM Listing'));
-	$pdf->addTextWrap($Page_Width - $Right_Margin - 105, $YPos, 160, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber, 'left');
+	$pdf->addTextWrap($Page_Width - $Right_Margin - 105, $YPos, 160, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . ' ' . _('Page') . ' ' . $PageNumber, 'left');
 
 	$YPos -= (2 * $line_height);
 

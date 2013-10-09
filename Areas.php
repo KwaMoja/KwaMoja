@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedArea) and $InputError != 1) {
 
-		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
 		$sql = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "',
 								parentarea='" . $_POST['ParentArea'] . "'

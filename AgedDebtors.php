@@ -126,7 +126,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 					END
 				) AS due,
 			SUM(
-			  		CASE WHEN (paymentterms.daysbeforedue > 0)
+					CASE WHEN (paymentterms.daysbeforedue > 0)
 						THEN
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
 							THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
@@ -356,11 +356,11 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc
 								ELSE 0 END)
 						END) AS overdue2
-				   FROM debtorsmaster,
+					FROM debtorsmaster,
 						paymentterms,
 						debtortrans,
 						systypes
-				   WHERE systypes.typeid = debtortrans.type
+					WHERE systypes.typeid = debtortrans.type
 						AND debtorsmaster.paymentterms = paymentterms.termsindicator
 						AND debtorsmaster.debtorno = debtortrans.debtorno
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
