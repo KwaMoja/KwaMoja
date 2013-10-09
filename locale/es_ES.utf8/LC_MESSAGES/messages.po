@@ -17172,7 +17172,7 @@ msgstr "Costo Extendido"
 #: POReport.php:1235 POReport.php:1292 SalesInquiry.php:708
 #: SalesInquiry.php:728 SalesInquiry.php:879
 msgid "Invoiced Qty"
-msgstr "Cantidad Facturada"
+msgstr "Cant. facturada"
 
 #: POReport.php:549 POReport.php:611 POReport.php:1219 POReport.php:1235
 #: SalesInquiry.php:708 SalesInquiry.php:728
@@ -17241,7 +17241,7 @@ msgstr "Todas las Categorías"
 
 #: POReport.php:1433 SalesInquiry.php:1072
 msgid "Sort By"
-msgstr "Ordenar Por"
+msgstr "Ordenar por"
 
 #: POReport.php:1449 SalesInquiry.php:1089
 msgid "Summary Type"
@@ -17921,7 +17921,7 @@ msgstr "Actualizar Líneas"
 #: PO_Items.php:772
 #, fuzzy
 msgid "Process Order"
-msgstr "Procesar Pedidos EDI"
+msgstr "Procesar Pedido"
 
 #: PO_Items.php:785
 msgid "General Ledger Code"
@@ -18265,7 +18265,7 @@ msgstr "El SQL usado para obtener los códigos buscados fue"
 #: PO_SelectOSPurchOrder.php:141 PO_SelectOSPurchOrder.php:144
 #: sql/updates/42.php:106
 msgid "Add Purchase Order"
-msgstr "Crear Orden de Compra"
+msgstr "Agregar orden de compra"
 
 #: PO_SelectOSPurchOrder.php:149 PO_SelectPurchOrder.php:115
 #: Shipt_Select.php:105
@@ -21255,7 +21255,7 @@ msgstr "No parecen tener una conexión a Internet . "
 
 #: ReprintGRN.php:4
 msgid "Reprint a GRN"
-msgstr "Reimprimir una Recepción"
+msgstr "Reimprimir una NRB"
 
 #: ReprintGRN.php:18
 msgid "Select a purchase order"
@@ -21267,7 +21267,7 @@ msgstr "Introduzca un Número de Orden de Compra"
 
 #: ReprintGRN.php:25
 msgid "Show GRNs"
-msgstr "Mostrar Recepciones"
+msgstr "Mostrar NRB"
 
 #: ReprintGRN.php:35
 msgid "You must enter a purchase order number in the box above"
@@ -21291,7 +21291,7 @@ msgstr "Línea Orden de Compra"
 
 #: ReprintGRN.php:82
 msgid "GRN Number"
-msgstr "Número de Recepción"
+msgstr "Número de NRB"
 
 #: ReprintGRN.php:86 SelectWorkOrder.php:330 StockLocTransferReceive.php:445
 #: WorkOrderCosting.php:111 WorkOrderReceive.php:968
@@ -21325,7 +21325,7 @@ msgstr "Devolver Bienes Recibidos de"
 
 #: ReverseGRN.php:52
 msgid "Could not get the details of the GRN selected for reversal because"
-msgstr "No se pudo obtener el detalle de la Remisión seleccionada porque"
+msgstr "No se pudo obtener el detalle de NRB seleccionada porque"
 
 #: ReverseGRN.php:53
 msgid "The following SQL to retrieve the GRN details was used"
