@@ -627,11 +627,15 @@ if (isset($_POST['CommitBatch'])) {
 
 		/*Set up a newy in case user wishes to enter another */
 		if (isset($LastSupplier) and $LastSupplier != '') {
-			$sql = "SELECT suppname FROM suppliers
+			$SupplierSQL = "SELECT suppname FROM suppliers
 					WHERE supplierid='" . $LastSupplier . "'";
-			$result = DB_query($sql, $db);
-			$myrow = DB_fetch_array($result);
-			echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' . _('Enter another Payment for') . ' ' . $myrow['suppname'] . '</a>';
+			$SupplierResult = DB_query($SupplierSQL, $db);
+			$SupplierRow = DB_fetch_array($SupplierResult);
+			$IdSQL = "SELECT id FROM supptrans WHERE type=22 AND transno='" . $TransNo . "'";
+			$IdResult = DB_query($IdSQL, $db);
+			$IdRow = DB_fetch_array($IdResult);
+			echo '<br /><a href="' . $RootPath . '/SupplierAllocations.php?AllocTrans=' . $IdRow['id'] . '">' . _('Allocate this payment') . '</a>';
+			echo '<br /><a href="' . $RootPath . '/Payments.php?SupplierID=' . $LastSupplier . '">' . _('Enter another Payment for') . ' ' . $SupplierRow['suppname'] . '</a>';
 		} //isset($LastSupplier) and $LastSupplier != ''
 		else {
 			echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Enter another General Ledger Payment') . '</a><br />';
