@@ -600,33 +600,33 @@ if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A3') {
 	echo '<option value="A3">' . _('A3') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A3_landscape') {
-	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A3_Landscape') {
+	echo '<option selected="selected" value="A3_Landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
+	echo '<option value="A3_Landscape">' . _('A3') . ' ' . _('landscape') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'letter') {
-	echo '<option selected="selected" value="letter">' . _('Letter') . '</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'Letter') {
+	echo '<option selected="selected" value="Letter">' . _('Letter') . '</option>';
 } else {
-	echo '<option value="letter">' . _('Letter') . '</option>';
+	echo '<option value="Letter">' . _('Letter') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'letter_landscape') {
-	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'Letter_Landscape') {
+	echo '<option selected="selected" value="Letter_Landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
+	echo '<option value="Letter_Landscape">' . _('Letter') . ' ' . _('landscape') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'legal') {
-	echo '<option selected="selected" value="legal">' . _('Legal') . '</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'Legal') {
+	echo '<option selected="selected" value="Legal">' . _('Legal') . '</option>';
 } else {
-	echo '<option value="legal">' . _('Legal') . '</option>';
+	echo '<option value="Legal">' . _('Legal') . '</option>';
 }
-if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'legal_landscape') {
-	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
+if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'Legal_Landscape') {
+	echo '<option selected="selected" value="Legal_Landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 } else {
-	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
+	echo '<option value="Legal_Landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 }
 
 echo '</select></td>
