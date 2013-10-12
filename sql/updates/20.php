@@ -51,7 +51,6 @@ NewScript('InternalStockRequestAuthorisation.php', '1', $db);
 
 AddColumn('issueglact', 'stockcategory', 'INT', 'NOT NULL', '0', 'adjglact', $db);
 executeSQL("UPDATE `stockcategory` SET `issueglact`=`adjglact`", $db);
-InsertRecord('systypes', array('typeid', 'typename'), array('38', 'Stock Requests'), array('typeid', 'typename'), array('38', 'Stock Requests'), $db);
 
 NewConfigValue('ShowStockidOnImages','0', $db);
 

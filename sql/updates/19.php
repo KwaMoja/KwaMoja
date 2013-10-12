@@ -39,7 +39,6 @@ $db);
 
 NewScript('SupplierTenderCreate.php', '4', $db);
 AddColumn('cancreatetender', 'www_users', 'TINYINT(1)', 'NOT NULL', '0', 'fullaccess', $db);
-InsertRecord('systypes', array('typeid', 'typename'), array('37', 'Tenders'), array('typeid', 'typename'), array('37', 'Tenders'), $db);
 
 NewConfigValue('StandardCostDecimalPlaces','2', $db);
 

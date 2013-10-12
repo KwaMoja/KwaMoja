@@ -174,8 +174,6 @@ CreateTable("pickinglistdetails", "CREATE TABLE `pickinglistdetails` (
   PRIMARY KEY (`pickinglistno`, `pickinglistlineno`)
 )", $db);
 
-InsertRecord('systypes', array('typeid', 'typename'), array(19, 'Picking List'), array('typeid', 'typename'), array(19, 'Picking List'), $db);
-
 /* Database changes required to add start and end dates for sales prices
  */
 
@@ -410,8 +408,6 @@ ChangeColumnType('recqty', 'loctransfers', 'double', 'NOT NULL', 0.0, $db);
 /* New system type needed for contract work
  */
 
-InsertRecord('systypes', array('typeid', 'typename'), array('32', 'Contract Close'), array('typeid', 'typename', 'typeno'), array('32', 'Contract Close', '1'), $db);
-
 /* Add extra columns to reports
  */
 
@@ -634,11 +630,6 @@ if (DB_num_rows($result)!=0) {
 
 DropColumn('stockid', 'fixedassets', $db);
 
-InsertRecord('systypes', array('typeid', 'typename'), array('41', 'Asset Addition'), array('typeid', 'typename', 'typeno'), array('41', 'Asset Addition', '1'), $db);
-InsertRecord('systypes', array('typeid', 'typename'), array('42', 'Asset Category Change'), array('typeid', 'typename', 'typeno'), array('42', 'Asset Category Change', '1'), $db);
-InsertRecord('systypes', array('typeid', 'typename'), array('43', 'Delete w/down asset'), array('typeid', 'typename', 'typeno'), array('43', 'Delete w/down asset', '1'), $db);
-InsertRecord('systypes', array('typeid', 'typename'), array('44', 'Depreciation'), array('typeid', 'typename', 'typeno'), array('44', 'Depreciation', '1'), $db);
-
 CreateTable('fixedassettrans', "CREATE TABLE fixedassettrans(
 id INT( 11 ) NOT NULL AUTO_INCREMENT ,
 assetid INT( 11 ) NOT NULL ,
@@ -656,8 +647,6 @@ INDEX (transdate)
 )", $db);
 
 AddColumn('assetid', 'purchorderdetails', 'int(11)', 'NOT NULL', 0, 'total_amount', $db);
-
-InsertRecord('systypes', array('typeid', 'typename'), array('49', 'Import Fixed Assets'), array('typeid', 'typename', 'typeno'), array('49', 'Import Fixed Assets', '1'), $db);
 
 /* New database stuff to move the page security levels to a
  * database table.

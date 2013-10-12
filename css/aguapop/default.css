@@ -250,7 +250,7 @@ border-width:0;
 }
 
 input:required,select:required,textarea:required {
-background-color:#C0C3FF;
+background-color:#D0F0D0;
 }
 
 input.image:hover {
