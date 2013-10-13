@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 14:57+0100\n"
+"POT-Creation-Date: 2013-10-13 09:52+0100\n"
 "PO-Revision-Date: 2013-08-08 22:23+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -173,7 +173,7 @@ msgstr "क्या आप इस रैंकिंग समूह को न
 #: Locations.php:423 MRPDemandTypes.php:119 MRPDemands.php:307
 #: MailingGroupMaintenance.php:191 MaintenanceTasks.php:117
 #: Manufacturers.php:216 PO_AuthorisationLevels.php:149 PO_Items.php:755
-#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1123
+#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1127
 #: PcAssignCashToTab.php:273 PcClaimExpensesFromTab.php:274 PcExpenses.php:224
 #: PcExpensesTypeTab.php:188 PcTabs.php:236 PcTypeTabs.php:176 Prices.php:246
 #: Prices_Customer.php:276 PurchData.php:308 PurchData.php:685
@@ -2752,7 +2752,7 @@ msgstr "जांच के लिए चयन मानदंड"
 
 #: BankMatching.php:88 BankReconciliation.php:103 Currencies.php:219
 #: CustomerReceipt.php:741 DailyBankTransactions.php:30
-#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:767
+#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:771
 #: TaxAuthorities.php:159 TaxAuthorities.php:311
 msgid "Bank Account"
 msgstr "बैंक खाता"
@@ -2777,7 +2777,7 @@ msgstr "से"
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
 #: PDFDeliveryDifferences.php:310 PDFOrderStatus.php:102
 #: PDFOrderStatus.php:276 PDFOrdersInvoiced.php:94 PDFOrdersInvoiced.php:291
-#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:745
+#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:749
 #: PcReportTab.php:103 PricesBasedOnMarkUp.php:225 PricesBasedOnMarkUp.php:364
 #: PrintCustStatements.php:41 PrintCustTrans.php:53 PrintCustTrans.php:56
 #: PrintCustTransPortrait.php:51 PrintCustTransPortrait.php:54
@@ -2883,7 +2883,7 @@ msgstr "चयनित मानदंडों के साथ भुगत�
 msgid "Payments to be matched"
 msgstr "मिलान किया जा करने के लिए भुगतान"
 
-#: BankMatching.php:257 Payments.php:1098
+#: BankMatching.php:257 Payments.php:1102
 msgid "Cheque No"
 msgstr "चैक नहीं"
 
@@ -2896,8 +2896,8 @@ msgstr "रेफरी"
 #: CustWhereAlloc.php:117 CustomerAllocations.php:324 CustomerReceipt.php:889
 #: CustomerTransInquiry.php:109 GLJournalInquiry.php:92
 #: ImportBankTransAnalysis.php:202 ImportBankTransAnalysis.php:275
-#: PaymentAllocations.php:64 Payments.php:1078 Payments.php:1083
-#: Payments.php:1099 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
+#: PaymentAllocations.php:64 Payments.php:1082 Payments.php:1087
+#: Payments.php:1103 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:233
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:172 PcReportTab.php:331
 #: PrintCheque.php:81 PrintCheque.php:95 SelectCreditItems.php:611
@@ -2973,7 +2973,7 @@ msgstr "बैंक खातों क्योंकि SQL से नही�
 
 #: BankReconciliation.php:100 CustomerReceipt.php:729
 #: DailyBankTransactions.php:26 MonthlyBankTransactions.php:24
-#: Payments.php:763 SuppPaymentRun.php:318
+#: Payments.php:767 SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "एसक्यूएल को बैंक खातों पाने के लिये प्रयुक्त किया गया था"
 
@@ -2987,13 +2987,13 @@ msgstr "आपको पहले चाहिए"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "define the bank accounts"
 msgstr "बैंक खातों को परिभाषित"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "and general ledger accounts to be affected"
 msgstr "और सामान्य खाता बही खातों प्रभावित होने के लिए"
 
@@ -3167,7 +3167,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "आप सुनिश्चित हैं कि आप इस मूल्य को नष्ट करना चाहते हैं?"
 
 #: COGSGLPostings.php:190 CustomerReceipt.php:1016 GLJournal.php:384
-#: GLTransInquiry.php:41 Payments.php:1100 SupplierTransInquiry.php:154
+#: GLTransInquiry.php:41 Payments.php:1104 SupplierTransInquiry.php:154
 #: TaxAuthorities.php:156 TaxAuthorities.php:157 sql/updates/42.php:210
 msgid "GL Account"
 msgstr "जीएल खाता"
@@ -3388,7 +3388,7 @@ msgstr "शेयर लेनदेन के लिए जीएल प्र�
 #: ImportBankTransAnalysis.php:178 InternalStockRequest.php:255
 #: InternalStockRequestAuthorisation.php:103
 #: InternalStockRequestFulfill.php:369 MRPCalendar.php:318
-#: PO_AuthoriseMyOrders.php:140 Payments.php:939 PcAuthorizeExpenses.php:102
+#: PO_AuthoriseMyOrders.php:140 Payments.php:943 PcAuthorizeExpenses.php:102
 #: PcAuthorizeExpenses.php:283 PricesByCost.php:226 PurchData.php:705
 #: ReorderLevelLocation.php:127 SMTPServer.php:137 SecurityTokens.php:99
 #: SelectCreditItems.php:885 SellThroughSupport.php:460 ShopParameters.php:586
@@ -5724,7 +5724,7 @@ msgstr "जाल"
 #: GLJournal.php:387 GLJournalInquiry.php:91 ImportBankTransAnalysis.php:203
 #: ImportBankTransAnalysis.php:283 InternalStockRequest.php:249
 #: InternalStockRequestAuthorisation.php:55
-#: InternalStockRequestFulfill.php:295 Payments.php:1101
+#: InternalStockRequestFulfill.php:295 Payments.php:1105
 #: SelectOrderItems.php:1484 SellThroughSupport.php:262
 #: SellThroughSupport.php:437 SuppContractChgs.php:76 SuppContractChgs.php:164
 #: SuppTransGLAnalysis.php:102 SuppTransGLAnalysis.php:213
@@ -7052,7 +7052,7 @@ msgid "Alloc"
 msgstr "Alloc"
 
 #: CustWhereAlloc.php:134 EmailCustTrans.php:10 SalesInquiry.php:964
-#: SupplierCredit.php:1106 Z_CheckAllocs.php:82
+#: SupplierCredit.php:1106 Z_CheckAllocs.php:82 sql/updates/9.php:59
 msgid "Credit Note"
 msgstr "क्रेडिट नोट"
 
@@ -7060,7 +7060,7 @@ msgstr "क्रेडिट नोट"
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:395 PcReportTab.php:174 PcReportTab.php:333
 #: Z_CheckAllocs.php:84 Z_SalesIntegrityCheck.php:87
-#: Z_SalesIntegrityCheck.php:102
+#: Z_SalesIntegrityCheck.php:102 sql/updates/9.php:60
 msgid "Receipt"
 msgstr "रसीद"
 
@@ -7199,7 +7199,7 @@ msgstr "आवंटन प्रक्रिया"
 
 #: CustomerAllocations.php:395 CustomerReceipt.php:1080
 #: InternalStockCategoriesByRole.php:133 InternalStockCategoriesByRole.php:219
-#: Payments.php:1091 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
+#: Payments.php:1095 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
 #: PcAuthorizeExpenses.php:320 PcClaimExpensesFromTab.php:173
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:341 PcExpensesTypeTab.php:139
 #: PcExpensesTypeTab.php:227 PcTabs.php:473 PcTypeTabs.php:244
@@ -7868,11 +7868,11 @@ msgstr "रसीद एंट्री"
 msgid "A bank account must be selected for this receipt"
 msgstr "एक बैंक खाते में इस रसीद के लिए चयनित होना चाहिए"
 
-#: CustomerReceipt.php:60 Payments.php:721
+#: CustomerReceipt.php:60 Payments.php:725
 msgid "The bank account name cannot be retrieved because"
 msgstr "बैंक खाते का नाम इसलिए नहीं वापस लाया जा सकता"
 
-#: CustomerReceipt.php:70 Payments.php:732
+#: CustomerReceipt.php:70 Payments.php:736
 msgid "The bank account number"
 msgstr "बैंक खाता संख्या"
 
@@ -7892,11 +7892,11 @@ msgstr "कार्यात्मक विनिमय दर संख्य
 msgid "Changing the currency of the receipt means that existing entries need to be re-done - only customers trading in the selected currency can be selected"
 msgstr "प्राप्ति की मुद्रा बदलने का मतलब है कि मौजूदा प्रविष्टियों के लिए फिर से किया जाना चाहिए - चुनी मुद्रा में ही ग्राहकों को व्यापार चुना जा सकता है"
 
-#: CustomerReceipt.php:174 Payments.php:679
+#: CustomerReceipt.php:174 Payments.php:683
 msgid "No General Ledger code has been chosen"
 msgstr "कोई सामान्य खाता बही कोड चुना गया है"
 
-#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:663 Payments.php:679
+#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:667 Payments.php:683
 msgid "so this GL analysis item could not be added"
 msgstr "इसलिए इस जीएल विश्लेषण आइटम जोड़ा नहीं जा सका"
 
@@ -8012,7 +8012,7 @@ msgid "The customer details could not be retrieved because"
 msgstr "ग्राहक विवरण वजह से पुनः प्राप्त नहीं कर सकता"
 
 #: CustomerReceipt.php:728 DailyBankTransactions.php:25
-#: MonthlyBankTransactions.php:23 Payments.php:762
+#: MonthlyBankTransactions.php:23 Payments.php:766
 msgid "The bank accounts could not be retrieved because"
 msgstr "बैंक खातों वजह से हो सकता है नहीं लिया गया"
 
@@ -8044,8 +8044,8 @@ msgstr "कोई मुद्राओं अभी तक परिभाष�
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "प्राप्ति तक एक मुद्रा परिभाषित किया गया है नहीं किया जा सकता है प्रवेश"
 
-#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:850
-#: Payments.php:871
+#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:854
+#: Payments.php:875
 msgid "Suggested rate:"
 msgstr "सुझाया दर:"
 
@@ -8057,11 +8057,11 @@ msgstr "रसीद विनिमय दर"
 msgid "The exchange rate between the currency of the bank account currency and the currency of the receipt"
 msgstr "बैंक खाता की मुद्रा मुद्रा और प्राप्ति की मुद्रा के बीच विनिमय दर"
 
-#: CustomerReceipt.php:836 Payments.php:880
+#: CustomerReceipt.php:836 Payments.php:884
 msgid "Functional Exchange Rate"
 msgstr "कार्यात्मक विनिमय दर"
 
-#: CustomerReceipt.php:838 Payments.php:882
+#: CustomerReceipt.php:838 Payments.php:886
 msgid "The exchange rate between the currency of the business (the functional currency) and the currency of the bank account"
 msgstr "व्यापार (कार्यात्मक मुद्रा) की मुद्रा के बीच विनिमय दर और बैंक खाता की मुद्रा"
 
@@ -8073,7 +8073,7 @@ msgstr "रसीद लिखें"
 #: ExchangeRateTrend.php:50 FreightCosts.php:67 GLJournal.php:134
 #: GLJournal.php:373 InternalStockCategoriesByRole.php:132
 #: InternalStockCategoriesByRole.php:218 OffersReceived.php:112
-#: Payments.php:1090 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
+#: Payments.php:1094 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
 #: PcAuthorizeExpenses.php:319 PcClaimExpensesFromTab.php:172
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:340 PcExpensesTypeTab.php:138
 #: PcExpensesTypeTab.php:226 PcTabs.php:472 PcTypeTabs.php:243
@@ -8089,7 +8089,7 @@ msgstr "बैंकिंग"
 msgid "Banked into the"
 msgstr "बैंकिंग में"
 
-#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:752
+#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:756
 #: SelectSalesOrder.php:226 SelectSalesOrder.php:387 SpecialOrder.php:466
 msgid "on"
 msgstr "पर"
@@ -8109,7 +8109,7 @@ msgstr "प्राप्त"
 #: CustomerReceipt.php:893 GLAccountInquiry.php:186 GLAccountReport.php:340
 #: GLJournalInquiry.php:93 ImportBankTransAnalysis.php:204
 #: ImportBankTransAnalysis.php:288 InternalStockRequestFulfill.php:332
-#: Payments.php:1102 PcExpenses.php:190 PcExpenses.php:315
+#: Payments.php:1106 PcExpenses.php:190 PcExpenses.php:315
 #: SuppTransGLAnalysis.php:103 SupplierCredit.php:457 SupplierInvoice.php:792
 msgid "Tag"
 msgstr "टैग"
@@ -8127,12 +8127,12 @@ msgid "GL Receipt entry form"
 msgstr "जीएल रसीद प्रवेश फार्म"
 
 #: CustomerReceipt.php:993 GLAccountCSV.php:61 GLAccountInquiry.php:77
-#: GLAccountReport.php:271 Payments.php:956 StockAdjustments.php:491
+#: GLAccountReport.php:271 Payments.php:960 StockAdjustments.php:491
 #: SuppTransGLAnalysis.php:154
 msgid "Select Tag"
 msgstr "टैग चुनें"
 
-#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1043
+#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1047
 msgid "No General ledger accounts have been set up yet"
 msgstr "कोई सामान्य खाता बही खातों तक किया गया है अभी तक निर्धारित"
 
@@ -8140,7 +8140,7 @@ msgstr "कोई सामान्य खाता बही खातों �
 msgid "receipts cannot be entered against GL accounts until the GL accounts are set up"
 msgstr "प्राप्तियों जीएल खातों खिलाफ दर्ज नहीं किया जब तक जीएल खातों की स्थापना कर सकते हैं"
 
-#: CustomerReceipt.php:1062 Payments.php:1154
+#: CustomerReceipt.php:1062 Payments.php:1158
 msgid "Amount of Discount"
 msgstr "छूट की राशि"
 
@@ -8637,7 +8637,7 @@ msgid "Select criteria for inquiry"
 msgstr "जांच के लिए मापदंडों का चयन"
 
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "बैंक खाते अभी तक परिभाषित नहीं किया गया है. आपको पहले चाहिए"
 
@@ -10693,6 +10693,7 @@ msgid "GRAND Total"
 msgstr "कुल योग"
 
 #: FixedAssetDepreciation.php:267 FixedAssetRegister.php:378
+#: sql/updates/9.php:85
 msgid "Depreciation"
 msgstr "मूल्यह्रास"
 
@@ -11812,7 +11813,7 @@ msgstr "बजट"
 msgid "General ledger account election"
 msgstr "सामान्य खाता बही खाते का चुनाव"
 
-#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1037
+#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1041
 msgid "Select GL Account"
 msgstr "चयन जीएल खाता"
 
@@ -11949,7 +11950,7 @@ msgstr "जीएल एक बैंक खाते को शामिल प
 msgid "Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment"
 msgstr "बैंक खाता सामान्य खाता बही प्रविष्टियों या तो एक बैंक खाता प्राप्ति या एक बैंक खाता भुगतान द्वारा दर्ज होना चाहिए"
 
-#: GLJournal.php:169 Payments.php:663
+#: GLJournal.php:169 Payments.php:667
 msgid "The manual GL code entered does not exist in the database"
 msgstr "जीएल पुस्तिका प्रवेश कोड डेटाबेस में मौजूद नहीं है"
 
@@ -11981,7 +11982,7 @@ msgstr "जीएल टैग"
 msgid "Select a general ledger account code"
 msgstr "एक सामान्य खाता बही खाता कोड का चयन करें"
 
-#: GLJournal.php:366 Payments.php:1065 Payments.php:1071
+#: GLJournal.php:366 Payments.php:1069 Payments.php:1075
 msgid "GL Narrative"
 msgstr "जीएल कथा"
 
@@ -15869,7 +15870,7 @@ msgstr "चयन अवधि के लिए:"
 msgid "and Month Ending"
 msgstr "और सहित "
 
-#: MonthlyBankTransactions.php:155
+#: MonthlyBankTransactions.php:155 sql/updates/9.php:87
 #, fuzzy
 msgid "Opening Balance"
 msgstr "शेष राशि के रूप में"
@@ -16747,7 +16748,7 @@ msgid "Enter the date to which the transactions are to be listed"
 msgstr "दिनांक दर्ज करें, जिसके लिए लेनदेन करने के लिए सूचीबद्ध किया जाना है"
 
 #: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:52
-#: PrintCustTransPortrait.php:50 SalesInquiry.php:963
+#: PrintCustTransPortrait.php:50 SalesInquiry.php:963 sql/updates/9.php:58
 msgid "Sales Invoice"
 msgstr "बिक्री चालान"
 
@@ -16756,23 +16757,23 @@ msgstr "बिक्री चालान"
 msgid "Sales Credit Note"
 msgstr "बिक्री क्रडिट नोट"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 sql/updates/9.php:62
 msgid "Location Transfer"
 msgstr "स्थान स्थानांतरण"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 sql/updates/9.php:63
 msgid "Stock Adjustment"
 msgstr "शेयर समायोजन"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 sql/updates/9.php:70
 msgid "Purchase Order Delivery"
 msgstr "खरीद आदेश डिलिवरी"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 sql/updates/9.php:71
 msgid "Work Order Receipt"
 msgstr "कार्य आदेश रसीद"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 sql/updates/9.php:72
 msgid "Work Order Issue"
 msgstr "कार्य आदेश जारी"
 
@@ -16865,6 +16866,7 @@ msgid "Enter Another Date"
 msgstr "एक और दिनांक दर्ज करें"
 
 #: PDFPickingList.php:203 includes/PDFPickingListHeader.inc:13
+#: sql/updates/9.php:65
 msgid "Picking List"
 msgstr "सूची उठा"
 
@@ -17907,7 +17909,7 @@ msgstr "आप सेटअप प्राधिकरण कर सकते �
 #: PO_Items.php:692 PO_Items.php:695 PO_OrderDetails.php:88
 #: PO_PDFPurchOrder.php:202 PO_PDFPurchOrder.php:357
 #: PurchaseByPrefSupplier.php:293 SelectSalesOrder.php:226
-#: SelectSalesOrder.php:387 SpecialOrder.php:466
+#: SelectSalesOrder.php:387 SpecialOrder.php:466 sql/updates/9.php:64
 msgid "Purchase Order"
 msgstr "खरीद आदेश"
 
@@ -18831,7 +18833,7 @@ msgid "Go back"
 msgstr "वापस जाओ"
 
 #: PaymentAllocations.php:62 PaymentAllocations.php:63 Payments.php:613
-#: Payments.php:742 PrintCustStatements.php:382
+#: Payments.php:746 PrintCustStatements.php:382
 msgid "Payment"
 msgstr "भुगतान"
 
@@ -19190,122 +19192,127 @@ msgstr "सम्मिलित बैंक खाते में जमा �
 msgid "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr "सम्मिलित बैंक खाते SQL का उपयोग कर क्रेडिट के लिए एक जीएल लेन - देन नहीं कर सकते"
 
-#: Payments.php:634
+#: Payments.php:637
+#, fuzzy
+msgid "Allocate this payment"
+msgstr "लदान को खोजने में असमर्थ"
+
+#: Payments.php:638
 msgid "Enter another Payment for"
 msgstr "एक और भुगतान के लिए दर्ज करें"
 
-#: Payments.php:637
+#: Payments.php:641
 msgid "Enter another General Ledger Payment"
 msgstr "एक और सामान्य खाता बही भुगतान दर्ज"
 
-#: Payments.php:667
+#: Payments.php:671
 msgid "The Cheque/Voucher number has already been used"
 msgstr "चैक / वाउचर संख्या पहले से ही उपयोग किया गया है"
 
-#: Payments.php:667 Payments.php:676
+#: Payments.php:671 Payments.php:680
 msgid "This GL analysis item could not be added"
 msgstr "इस जीएल विश्लेषण आइटम जोड़ा नहीं जा सका"
 
-#: Payments.php:676
+#: Payments.php:680
 msgid "The cheque number has already been used"
 msgstr "चेक संख्या पहले से ही उपयोग किया गया है"
 
-#: Payments.php:722
+#: Payments.php:726
 msgid "SQL used to retrieve the bank account name was"
 msgstr "एसक्यूएल को वापस लाने के बैंक खाते का नाम इस्तेमाल किया गया था"
 
-#: Payments.php:732
+#: Payments.php:736
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr "एक बैंक खाते के रूप में एक वैध सामान्य खाता बही खाते के साथ सेट नहीं है अप"
 
-#: Payments.php:749
+#: Payments.php:753
 msgid "from the"
 msgstr "से"
 
-#: Payments.php:794
+#: Payments.php:798
 msgid "Date Paid"
 msgstr "दिनांक भुगतान"
 
-#: Payments.php:801
+#: Payments.php:805
 msgid "Currency of Payment"
 msgstr "भुगतान की मुद्रा"
 
-#: Payments.php:809
+#: Payments.php:813
 msgid "No currencies are defined yet. Payments cannot be entered until a currency is defined"
 msgstr "कोई मुद्राओं अभी तक परिभाषित कर रहे हैं. भुगतान जब तक एक मुद्रा परिभाषित किया गया है नहीं किया जा सकता है प्रवेश"
 
-#: Payments.php:821
+#: Payments.php:825
 msgid "The transaction currency does not need to be the same as the bank account currency"
 msgstr "लेनदेन मुद्रा में बैंक खाते की मुद्रा के रूप में ही होने की जरूरत नहीं"
 
-#: Payments.php:829 Suppliers.php:803 Suppliers.php:1040
+#: Payments.php:833 Suppliers.php:803 Suppliers.php:1040
 msgid "Supplier Currency"
 msgstr "आपूर्तिकर्ता मुद्रा"
 
-#: Payments.php:863
+#: Payments.php:867
 msgid "Payment Exchange Rate"
 msgstr "भुगतान विनिमय दर"
 
-#: Payments.php:865
+#: Payments.php:869
 msgid "The exchange rate between the currency of the bank account currency and the currency of the payment"
 msgstr "बैंक खाता की मुद्रा मुद्रा और भुगतान की मुद्रा के बीच विनिमय दर"
 
-#: Payments.php:886
+#: Payments.php:890
 msgid "Payment type"
 msgstr "भुगतान के प्रकार"
 
-#: Payments.php:921
+#: Payments.php:925
 msgid "Cheque Number"
 msgstr "चैक नंबर"
 
-#: Payments.php:922
+#: Payments.php:926
 msgid "(if using pre-printed stationery)"
 msgstr "(पूर्व मुद्रित स्टेशनरी का उपयोग करते हुए अगर)"
 
-#: Payments.php:935
+#: Payments.php:939
 msgid "Reference / Narrative"
 msgstr "संदर्भ / कथा"
 
-#: Payments.php:936
+#: Payments.php:940
 msgid "(Max. length 80 characters)"
 msgstr "(अधिकतम लंबाई 80 वर्ण)"
 
-#: Payments.php:950
+#: Payments.php:954
 msgid "General Ledger Payment Analysis Entry"
 msgstr "सामान्य खाता बही भुगतान विश्लेषण एंट्री"
 
-#: Payments.php:981 Payments.php:987
+#: Payments.php:985 Payments.php:991
 msgid "Enter GL Account Manually"
 msgstr "जीएल खाता मैन्युअली दर्ज करें"
 
-#: Payments.php:993
+#: Payments.php:997
 #, fuzzy
 msgid "Select GL Group"
 msgstr "चयन जीएल खाता"
 
-#: Payments.php:1004
+#: Payments.php:1008
 #, fuzzy
 msgid "No General ledger account groups have been set up yet"
 msgstr "कोई सामान्य खाता बही खातों तक किया गया है अभी तक निर्धारित"
 
-#: Payments.php:1004 Payments.php:1043
+#: Payments.php:1008 Payments.php:1047
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr "भुगतान जीएल खातों के खिलाफ नहीं जा विश्लेषण किया जब तक जीएल खातों की स्थापना कर सकते हैं"
 
-#: Payments.php:1059 Payments.php:1162
+#: Payments.php:1063 Payments.php:1166
 msgid "Cheque/Voucher Number"
 msgstr "चैक / वाउचर नंबर"
 
-#: Payments.php:1123
+#: Payments.php:1127
 #, fuzzy
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "क्या आप वाकई इस शाखा को नष्ट करना चाहते हैं?"
 
-#: Payments.php:1136 Payments.php:1166
+#: Payments.php:1140 Payments.php:1170
 msgid "Accept and Process Payment"
 msgstr "स्वीकार करने और प्रक्रिया भुगतान"
 
-#: Payments.php:1146
+#: Payments.php:1150
 msgid "Amount of Payment"
 msgstr "भुगतान की राशि"
 
@@ -19397,7 +19404,7 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr "आप पहले प्राधिकृत करने के लिए एक खुदरा रोकड़ टैब का चयन करना होगा"
 
 #: PcAuthorizeExpenses.php:44 PcAuthorizeExpenses.php:46 SuppLoginSetup.php:27
-#: sql/updates/12.php:220 sql/updates/42.php:37
+#: sql/updates/12.php:218 sql/updates/42.php:37
 msgid "Petty Cash"
 msgstr "फुटकर अदायगी"
 
@@ -23247,7 +23254,7 @@ msgstr "आदेश के प्रकार"
 
 #: SalesInquiry.php:944 SelectCompletedOrder.php:65
 #: Z_SalesIntegrityCheck.php:123 includes/PDFSalesOrder_generic.inc:17
-#: includes/PDFSalesOrder_generic.inc:20
+#: includes/PDFSalesOrder_generic.inc:20 sql/updates/9.php:74
 msgid "Sales Order"
 msgstr "बिक्री आदेश"
 
@@ -29587,7 +29594,7 @@ msgstr "इसे पुनः नहीं दर्ज कर सकते ह
 msgid "Shipment charge against"
 msgstr "लदान के खिलाफ आरोप"
 
-#: SupplierInvoice.php:1127
+#: SupplierInvoice.php:1127 sql/updates/9.php:82
 msgid "Asset Addition"
 msgstr "संपत्ति जुड़ाव"
 
@@ -29784,7 +29791,7 @@ msgid "There are no suppliers returned, one reason maybe no email addresses set 
 msgstr "लौटा कोई आपूर्तिकर्ताओं रहे हैं , एक कारण हो सकता है कोई ईमेल उन आपूर्तिकर्ताओं के लिए निर्धारित पते"
 
 #: SupplierTenderCreate.php:704 SupplierTenders.php:77 SupplierTenders.php:155
-#: SupplierTenders.php:417 SupplierTenders.php:533
+#: SupplierTenders.php:417 SupplierTenders.php:533 sql/updates/9.php:78
 msgid "Tenders"
 msgstr "निविदाएं"
 
@@ -34342,7 +34349,7 @@ msgstr "फ़ील्ड नाम यहां पाया जा सकत�
 msgid "File to import"
 msgstr "आयात के लिए फ़ाइल"
 
-#: Z_ImportFixedAssets.php:6
+#: Z_ImportFixedAssets.php:6 sql/updates/9.php:86
 msgid "Import Fixed Assets"
 msgstr "आयात फिक्स्ड आस्तियों"
 
@@ -41994,144 +42001,144 @@ msgstr "utf8_general_ci को बदला नहीं जा सकता"
 msgid "is already utf8_general_ci"
 msgstr "पहले से ही utf8_general_ci है"
 
-#: sql/updates/12.php:215
+#: sql/updates/12.php:213
 msgid "Order Entry/Inquiries customer access only"
 msgstr "आदेश एंट्री / पूछताछ ग्राहक का उपयोग केवल"
 
-#: sql/updates/12.php:216
+#: sql/updates/12.php:214
 msgid "Basic Reports and Inquiries with selection options"
 msgstr "मूल रिपोर्ट और चयन के विकल्प के साथ पूछताछ"
 
-#: sql/updates/12.php:217
+#: sql/updates/12.php:215
 #, fuzzy
 msgid "Credit notes and AR management"
 msgstr "क्रेडिट नोट संख्या"
 
-#: sql/updates/12.php:218
+#: sql/updates/12.php:216
 #, fuzzy
 msgid "Purchasing data/PO Entry/Reorder Levels "
 msgstr "पुन: व्यवस्थित बनाए रखने के स्तर"
 
-#: sql/updates/12.php:219
+#: sql/updates/12.php:217
 #, fuzzy
 msgid "Accounts Payable"
 msgstr "खाते का नाम"
 
-#: sql/updates/12.php:221
+#: sql/updates/12.php:219
 #, fuzzy
 msgid "Bank Reconciliations"
 msgstr "बैंक सुलह"
 
-#: sql/updates/12.php:222
+#: sql/updates/12.php:220
 #, fuzzy
 msgid "General ledger reports/inquiries"
 msgstr "सामान्य खाता बही लाभ हानि जांच"
 
-#: sql/updates/12.php:223 sql/updates/12.php:231
+#: sql/updates/12.php:221 sql/updates/12.php:229
 #, fuzzy
 msgid "Supplier centre - Supplier access only"
 msgstr "बीच में आपूर्तिकर्ता के लिए प्रदायक शेष"
 
-#: sql/updates/12.php:224
+#: sql/updates/12.php:222
 #, fuzzy
 msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "जनरल लेजर रखरखाव , शेयर वैल्यूएशन और विन्यास"
 
-#: sql/updates/12.php:225
+#: sql/updates/12.php:223
 #, fuzzy
 msgid "Inventory Management and Pricing"
 msgstr "इन्वेंटरी प्लानिंग"
 
-#: sql/updates/12.php:226 sql/updates/12.php:227 sql/updates/12.php:228
+#: sql/updates/12.php:224 sql/updates/12.php:225 sql/updates/12.php:226
 msgid "Unknown"
 msgstr "अज्ञात"
 
-#: sql/updates/12.php:229
+#: sql/updates/12.php:227
 #, fuzzy
 msgid "User Management and System Administration"
 msgstr "सिर्फ सिस्टम प्रशासक"
 
-#: sql/updates/12.php:481
+#: sql/updates/12.php:477
 msgid "The fixedassets table has been updated from stockmaster"
 msgstr "Fixedassets तालिका stockmaster से अद्यतन किया गया है"
 
-#: sql/updates/12.php:483
+#: sql/updates/12.php:479
 msgid "The fixedassets table could not be updated from stockmaster"
 msgstr "Fixedassets तालिका stockmaster से अपडेट नहीं हो पाया"
 
-#: sql/updates/12.php:486
+#: sql/updates/12.php:482
 msgid "The fixedassets table is already correct"
 msgstr "Fixedassets तालिका पहले से ही सही है"
 
-#: sql/updates/12.php:512
+#: sql/updates/12.php:508
 msgid "The fixedassetcategories table has been updated from stockcategory"
 msgstr "Fixedassetcategories तालिका stockcategory से अद्यतन किया गया है"
 
-#: sql/updates/12.php:514
+#: sql/updates/12.php:510
 msgid "The fixedassetcategories table could not be updated from stockcategory"
 msgstr "Fixedassetcategories तालिका stockcategory से अपडेट नहीं हो पाया"
 
-#: sql/updates/12.php:517
+#: sql/updates/12.php:513
 msgid "The fixedassetcategories table is already correct"
 msgstr "Fixedassetcategories तालिका पहले से ही सही है"
 
-#: sql/updates/12.php:529
+#: sql/updates/12.php:525
 msgid "The fixedassetcategories have been removed from stockcategory"
 msgstr "Fixedassetcategories stockcategory से हटा दिया गया है"
 
-#: sql/updates/12.php:531
+#: sql/updates/12.php:527
 msgid "The fixedassetcategories table could not be removed from stockcategory"
 msgstr "Fixedassetcategories तालिका stockcategory से हटाया नहीं जा सकता"
 
-#: sql/updates/12.php:534
+#: sql/updates/12.php:530
 msgid "The stockcategory table is already correct"
 msgstr "Stockcategory तालिका पहले से ही सही है"
 
-#: sql/updates/12.php:548 sql/updates/12.php:565
+#: sql/updates/12.php:544 sql/updates/12.php:561
 msgid "The fixed assets have been removed from stockitemproperties"
 msgstr "अचल संपत्तियों stockitemproperties से हटा दिया गया है"
 
-#: sql/updates/12.php:550 sql/updates/12.php:567
+#: sql/updates/12.php:546 sql/updates/12.php:563
 msgid "The fixed assets could not be removed from stockitemproperties"
 msgstr "अचल संपत्तियों stockitemproperties से हटाया नहीं जा सकता"
 
-#: sql/updates/12.php:553 sql/updates/12.php:570
+#: sql/updates/12.php:549 sql/updates/12.php:566
 msgid "The fixed assets have already been removed from stockitemproperties"
 msgstr "अचल संपत्ति पहले से ही stockitemproperties से हटा दिया गया है"
 
-#: sql/updates/12.php:580
+#: sql/updates/12.php:576
 msgid "The fixed assets have been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्तियों stockserialitems , stockmaster , और stockcategory टेबल से हटा दिया गया है"
 
-#: sql/updates/12.php:582
+#: sql/updates/12.php:578
 msgid "The fixed assets could not be removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्तियों stockserialitems , stockmaster , और stockcategory टेबल से हटाया नहीं जा सकता"
 
-#: sql/updates/12.php:585
+#: sql/updates/12.php:581
 msgid "The fixed assets have already been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्ति पहले से ही stockserialitems , stockmaster , और stockcategory टेबल से हटा दिया गया है"
 
-#: sql/updates/12.php:599
+#: sql/updates/12.php:595
 msgid "The fixed assets have been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्तियों stockmoves , stockmaster , और stockcategory टेबल से हटा दिया गया है"
 
-#: sql/updates/12.php:601
+#: sql/updates/12.php:597
 msgid "The fixed assets could not be removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्तियों stockmoves , stockmaster , और stockcategory टेबल से हटाया नहीं जा सकता"
 
-#: sql/updates/12.php:604
+#: sql/updates/12.php:600
 msgid "The fixed assets have already been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "अचल संपत्ति पहले से ही stockmoves , stockmaster , और stockcategory टेबल से हटा दिया गया है"
 
-#: sql/updates/12.php:612 sql/updates/12.php:627
+#: sql/updates/12.php:608 sql/updates/12.php:623
 msgid "The fixed assets have been removed from stockmaster table"
 msgstr "अचल संपत्तियों stockmaster मेज से हटा दिया गया है"
 
-#: sql/updates/12.php:614 sql/updates/12.php:629
+#: sql/updates/12.php:610 sql/updates/12.php:625
 msgid "The fixed assets could not be removed from stockmaster table"
 msgstr "अचल संपत्तियों stockmaster तालिका से हटाया नहीं जा सकता"
 
-#: sql/updates/12.php:617 sql/updates/12.php:632
+#: sql/updates/12.php:613 sql/updates/12.php:628
 msgid "The fixed assets have already been removed from stockmaster table"
 msgstr "अचल संपत्ति पहले से ही stockmaster मेज से हटा दिया गया है"
 
@@ -42946,6 +42953,101 @@ msgstr "आप एक ही सप्लायर पसंदीदा सप�
 msgid "Import Sales Prices From CSV File"
 msgstr "आयात बिक्री मूल्य सूची"
 
+#: sql/updates/9.php:54
+#, fuzzy
+msgid "Journal - GL"
+msgstr "पत्रिका"
+
+#: sql/updates/9.php:55
+#, fuzzy
+msgid "Payment - GL"
+msgstr "भुगतान"
+
+#: sql/updates/9.php:56
+#, fuzzy
+msgid "Receipt - GL"
+msgstr "रसीद"
+
+#: sql/updates/9.php:57
+#, fuzzy
+msgid "Standing Journal"
+msgstr "स्थायी आदेश"
+
+#: sql/updates/9.php:61
+#, fuzzy
+msgid "Journal - Debtors"
+msgstr "जर्नल प्रविष्टि"
+
+#: sql/updates/9.php:66
+#, fuzzy
+msgid "Purchase Invoice"
+msgstr "चालान प्रक्रिया"
+
+#: sql/updates/9.php:67
+#, fuzzy
+msgid "Debit Note"
+msgstr "क्रेडिट नोट"
+
+#: sql/updates/9.php:68
+#, fuzzy
+msgid "Creditors Payment"
+msgstr "ग्राहक भुगतान"
+
+#: sql/updates/9.php:69
+#, fuzzy
+msgid "Creditors Journal"
+msgstr "मूल्यह्रास जर्नल"
+
+#: sql/updates/9.php:73
+#, fuzzy
+msgid "Work Order Variance"
+msgstr "कार्य आदेश संदर्भ"
+
+#: sql/updates/9.php:75
+#, fuzzy
+msgid "Shipment Close"
+msgstr "लदान की लागत"
+
+#: sql/updates/9.php:76
+#, fuzzy
+msgid "Contract Close"
+msgstr "संपर्क संहिता"
+
+#: sql/updates/9.php:77
+#, fuzzy
+msgid "Cost Update"
+msgstr "स्टॉक मूल्य अद्यतन"
+
+#: sql/updates/9.php:79
+#, fuzzy
+msgid "Stock Requests"
+msgstr "दिखाएँ आस्तियों"
+
+#: sql/updates/9.php:80
+#, fuzzy
+msgid "Exchange Difference"
+msgstr "विनिमय अंतर का"
+
+#: sql/updates/9.php:81
+#, fuzzy
+msgid "Work Order"
+msgstr "कार्य आदेश"
+
+#: sql/updates/9.php:83
+#, fuzzy
+msgid "Asset Category Change"
+msgstr "संपत्ति श्रेणी "
+
+#: sql/updates/9.php:84
+#, fuzzy
+msgid "Delete w/down asset"
+msgstr "संपत्ति हटाना"
+
+#: sql/updates/9.php:88
+#, fuzzy
+msgid "Auto Debtor Number"
+msgstr "कोई देनदार संख्या"
+
 #~ msgid "Select from a list of your commonly used tasks"
 #~ msgstr "आपके आमतौर पर इस्तेमाल किया कार्यों की एक सूची से चयन करें"
 
@@ -43310,9 +43412,6 @@ msgstr "आयात बिक्री मूल्य सूची"
 
 #~ msgid "Select an existing outstanding work order"
 #~ msgstr "किसी मौजूदा उत्कृष्ट कार्य आदेश का चयन करें"
-
-#~ msgid "Work Order Reference"
-#~ msgstr "कार्य आदेश संदर्भ"
 
 #~ msgid "Factory Location"
 #~ msgstr "फैक्टरी स्थान"

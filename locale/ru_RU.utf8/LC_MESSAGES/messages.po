@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 2.9b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 14:57+0100\n"
+"POT-Creation-Date: 2013-10-13 09:52+0100\n"
 "PO-Revision-Date: 2013-08-08 22:28+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -175,7 +175,7 @@ msgstr "Вы уверены, что хотите удалить этот рей�
 #: Locations.php:423 MRPDemandTypes.php:119 MRPDemands.php:307
 #: MailingGroupMaintenance.php:191 MaintenanceTasks.php:117
 #: Manufacturers.php:216 PO_AuthorisationLevels.php:149 PO_Items.php:755
-#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1123
+#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1127
 #: PcAssignCashToTab.php:273 PcClaimExpensesFromTab.php:274 PcExpenses.php:224
 #: PcExpensesTypeTab.php:188 PcTabs.php:236 PcTypeTabs.php:176 Prices.php:246
 #: Prices_Customer.php:276 PurchData.php:308 PurchData.php:685
@@ -2752,7 +2752,7 @@ msgstr "Критерии отбора запрос"
 
 #: BankMatching.php:88 BankReconciliation.php:103 Currencies.php:219
 #: CustomerReceipt.php:741 DailyBankTransactions.php:30
-#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:767
+#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:771
 #: TaxAuthorities.php:159 TaxAuthorities.php:311
 msgid "Bank Account"
 msgstr "Банковский счет"
@@ -2777,7 +2777,7 @@ msgstr "от"
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
 #: PDFDeliveryDifferences.php:310 PDFOrderStatus.php:102
 #: PDFOrderStatus.php:276 PDFOrdersInvoiced.php:94 PDFOrdersInvoiced.php:291
-#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:745
+#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:749
 #: PcReportTab.php:103 PricesBasedOnMarkUp.php:225 PricesBasedOnMarkUp.php:364
 #: PrintCustStatements.php:41 PrintCustTrans.php:53 PrintCustTrans.php:56
 #: PrintCustTransPortrait.php:51 PrintCustTransPortrait.php:54
@@ -2883,7 +2883,7 @@ msgstr "Не удалось получить данные по выбранны�
 msgid "Payments to be matched"
 msgstr "Платежи быть согласованы"
 
-#: BankMatching.php:257 Payments.php:1098
+#: BankMatching.php:257 Payments.php:1102
 msgid "Cheque No"
 msgstr "Номер чека"
 
@@ -2896,8 +2896,8 @@ msgstr "Ссылка"
 #: CustWhereAlloc.php:117 CustomerAllocations.php:324 CustomerReceipt.php:889
 #: CustomerTransInquiry.php:109 GLJournalInquiry.php:92
 #: ImportBankTransAnalysis.php:202 ImportBankTransAnalysis.php:275
-#: PaymentAllocations.php:64 Payments.php:1078 Payments.php:1083
-#: Payments.php:1099 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
+#: PaymentAllocations.php:64 Payments.php:1082 Payments.php:1087
+#: Payments.php:1103 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:233
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:172 PcReportTab.php:331
 #: PrintCheque.php:81 PrintCheque.php:95 SelectCreditItems.php:611
@@ -2973,7 +2973,7 @@ msgstr "Не удалось получить банковские счета, т
 
 #: BankReconciliation.php:100 CustomerReceipt.php:729
 #: DailyBankTransactions.php:26 MonthlyBankTransactions.php:24
-#: Payments.php:763 SuppPaymentRun.php:318
+#: Payments.php:767 SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "SQL для получения банковских счетов был"
 
@@ -2987,13 +2987,13 @@ msgstr "Сначала необходимо"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "define the bank accounts"
 msgstr "определите сначала банковские счета"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "and general ledger accounts to be affected"
 msgstr "и будут затронуты счета главной книги"
 
@@ -3167,7 +3167,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "Вы уверены, что хотите удалить эту цену?"
 
 #: COGSGLPostings.php:190 CustomerReceipt.php:1016 GLJournal.php:384
-#: GLTransInquiry.php:41 Payments.php:1100 SupplierTransInquiry.php:154
+#: GLTransInquiry.php:41 Payments.php:1104 SupplierTransInquiry.php:154
 #: TaxAuthorities.php:156 TaxAuthorities.php:157 sql/updates/42.php:210
 msgid "GL Account"
 msgstr "Счет в главной книге"
@@ -3388,7 +3388,7 @@ msgstr "Создать GL записей для операций с товаро
 #: ImportBankTransAnalysis.php:178 InternalStockRequest.php:255
 #: InternalStockRequestAuthorisation.php:103
 #: InternalStockRequestFulfill.php:369 MRPCalendar.php:318
-#: PO_AuthoriseMyOrders.php:140 Payments.php:939 PcAuthorizeExpenses.php:102
+#: PO_AuthoriseMyOrders.php:140 Payments.php:943 PcAuthorizeExpenses.php:102
 #: PcAuthorizeExpenses.php:283 PricesByCost.php:226 PurchData.php:705
 #: ReorderLevelLocation.php:127 SMTPServer.php:137 SecurityTokens.php:99
 #: SelectCreditItems.php:885 SellThroughSupport.php:460 ShopParameters.php:586
@@ -5724,7 +5724,7 @@ msgstr "Нетто"
 #: GLJournal.php:387 GLJournalInquiry.php:91 ImportBankTransAnalysis.php:203
 #: ImportBankTransAnalysis.php:283 InternalStockRequest.php:249
 #: InternalStockRequestAuthorisation.php:55
-#: InternalStockRequestFulfill.php:295 Payments.php:1101
+#: InternalStockRequestFulfill.php:295 Payments.php:1105
 #: SelectOrderItems.php:1484 SellThroughSupport.php:262
 #: SellThroughSupport.php:437 SuppContractChgs.php:76 SuppContractChgs.php:164
 #: SuppTransGLAnalysis.php:102 SuppTransGLAnalysis.php:213
@@ -7052,7 +7052,7 @@ msgid "Alloc"
 msgstr "Распред."
 
 #: CustWhereAlloc.php:134 EmailCustTrans.php:10 SalesInquiry.php:964
-#: SupplierCredit.php:1106 Z_CheckAllocs.php:82
+#: SupplierCredit.php:1106 Z_CheckAllocs.php:82 sql/updates/9.php:59
 msgid "Credit Note"
 msgstr "Кредит-нота"
 
@@ -7060,7 +7060,7 @@ msgstr "Кредит-нота"
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:395 PcReportTab.php:174 PcReportTab.php:333
 #: Z_CheckAllocs.php:84 Z_SalesIntegrityCheck.php:87
-#: Z_SalesIntegrityCheck.php:102
+#: Z_SalesIntegrityCheck.php:102 sql/updates/9.php:60
 msgid "Receipt"
 msgstr "Банковская квитанция"
 
@@ -7199,7 +7199,7 @@ msgstr "Провести распределения"
 
 #: CustomerAllocations.php:395 CustomerReceipt.php:1080
 #: InternalStockCategoriesByRole.php:133 InternalStockCategoriesByRole.php:219
-#: Payments.php:1091 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
+#: Payments.php:1095 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
 #: PcAuthorizeExpenses.php:320 PcClaimExpensesFromTab.php:173
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:341 PcExpensesTypeTab.php:139
 #: PcExpensesTypeTab.php:227 PcTabs.php:473 PcTypeTabs.php:244
@@ -7868,11 +7868,11 @@ msgstr "Банковскаая квитанция"
 msgid "A bank account must be selected for this receipt"
 msgstr "Для этой квитанции должен быть выбран банковский счет"
 
-#: CustomerReceipt.php:60 Payments.php:721
+#: CustomerReceipt.php:60 Payments.php:725
 msgid "The bank account name cannot be retrieved because"
 msgstr "Не удалось получить название банковского счёта, так как"
 
-#: CustomerReceipt.php:70 Payments.php:732
+#: CustomerReceipt.php:70 Payments.php:736
 msgid "The bank account number"
 msgstr "Банковский счет номер"
 
@@ -7892,11 +7892,11 @@ msgstr "Функциональный курс обмена валют долже
 msgid "Changing the currency of the receipt means that existing entries need to be re-done - only customers trading in the selected currency can be selected"
 msgstr "Изменение валюты означает, что существующие записи необходимо повторно ввести - только клиенты, торгующие в выбранной валюте могут быть выбраны"
 
-#: CustomerReceipt.php:174 Payments.php:679
+#: CustomerReceipt.php:174 Payments.php:683
 msgid "No General Ledger code has been chosen"
 msgstr "Не выбран код в главной книге"
 
-#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:663 Payments.php:679
+#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:667 Payments.php:683
 msgid "so this GL analysis item could not be added"
 msgstr "поэтому пункт анализа главной книги не может быть добавлен"
 
@@ -8012,7 +8012,7 @@ msgid "The customer details could not be retrieved because"
 msgstr "Данные о клиенте не могут быть получены, так как"
 
 #: CustomerReceipt.php:728 DailyBankTransactions.php:25
-#: MonthlyBankTransactions.php:23 Payments.php:762
+#: MonthlyBankTransactions.php:23 Payments.php:766
 msgid "The bank accounts could not be retrieved because"
 msgstr "Этибанковские счета не могут быть получены ,так как"
 
@@ -8044,8 +8044,8 @@ msgstr "Не определены валюты"
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Невозможно ввести банковские квитанции пока не определена валюта"
 
-#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:850
-#: Payments.php:871
+#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:854
+#: Payments.php:875
 msgid "Suggested rate:"
 msgstr "Предлагаемая ставка:"
 
@@ -8057,11 +8057,11 @@ msgstr "Обменный курс в квитанции"
 msgid "The exchange rate between the currency of the bank account currency and the currency of the receipt"
 msgstr "Обменный курс между валютой счета и валютой квитанции"
 
-#: CustomerReceipt.php:836 Payments.php:880
+#: CustomerReceipt.php:836 Payments.php:884
 msgid "Functional Exchange Rate"
 msgstr "Функциональный курс обмена"
 
-#: CustomerReceipt.php:838 Payments.php:882
+#: CustomerReceipt.php:838 Payments.php:886
 msgid "The exchange rate between the currency of the business (the functional currency) and the currency of the bank account"
 msgstr "Обменный курс между функциональной валюты и валютой счета"
 
@@ -8073,7 +8073,7 @@ msgstr "Тип квитанции"
 #: ExchangeRateTrend.php:50 FreightCosts.php:67 GLJournal.php:134
 #: GLJournal.php:373 InternalStockCategoriesByRole.php:132
 #: InternalStockCategoriesByRole.php:218 OffersReceived.php:112
-#: Payments.php:1090 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
+#: Payments.php:1094 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
 #: PcAuthorizeExpenses.php:319 PcClaimExpensesFromTab.php:172
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:340 PcExpensesTypeTab.php:138
 #: PcExpensesTypeTab.php:226 PcTabs.php:472 PcTypeTabs.php:243
@@ -8089,7 +8089,7 @@ msgstr "Объединенные"
 msgid "Banked into the"
 msgstr "объединенные в"
 
-#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:752
+#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:756
 #: SelectSalesOrder.php:226 SelectSalesOrder.php:387 SpecialOrder.php:466
 msgid "on"
 msgstr "на"
@@ -8109,7 +8109,7 @@ msgstr "получено"
 #: CustomerReceipt.php:893 GLAccountInquiry.php:186 GLAccountReport.php:340
 #: GLJournalInquiry.php:93 ImportBankTransAnalysis.php:204
 #: ImportBankTransAnalysis.php:288 InternalStockRequestFulfill.php:332
-#: Payments.php:1102 PcExpenses.php:190 PcExpenses.php:315
+#: Payments.php:1106 PcExpenses.php:190 PcExpenses.php:315
 #: SuppTransGLAnalysis.php:103 SupplierCredit.php:457 SupplierInvoice.php:792
 msgid "Tag"
 msgstr "Тег"
@@ -8127,12 +8127,12 @@ msgid "GL Receipt entry form"
 msgstr "GL Приходная запись формы"
 
 #: CustomerReceipt.php:993 GLAccountCSV.php:61 GLAccountInquiry.php:77
-#: GLAccountReport.php:271 Payments.php:956 StockAdjustments.php:491
+#: GLAccountReport.php:271 Payments.php:960 StockAdjustments.php:491
 #: SuppTransGLAnalysis.php:154
 msgid "Select Tag"
 msgstr "Выберите тег"
 
-#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1043
+#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1047
 msgid "No General ledger accounts have been set up yet"
 msgstr "Еще не созданы счета главной книги"
 
@@ -8140,7 +8140,7 @@ msgstr "Еще не созданы счета главной книги"
 msgid "receipts cannot be entered against GL accounts until the GL accounts are set up"
 msgstr "нельзя ввести квитанцию для счета в главной книге до тех пор, пока не сконфигурированы счета в гланой книге"
 
-#: CustomerReceipt.php:1062 Payments.php:1154
+#: CustomerReceipt.php:1062 Payments.php:1158
 msgid "Amount of Discount"
 msgstr "Количество по скидке"
 
@@ -8637,7 +8637,7 @@ msgid "Select criteria for inquiry"
 msgstr "Выберите критерии запроса"
 
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "Банковские счета еще не определены. Вы должны сначала"
 
@@ -10691,6 +10691,7 @@ msgid "GRAND Total"
 msgstr "Итого"
 
 #: FixedAssetDepreciation.php:267 FixedAssetRegister.php:378
+#: sql/updates/9.php:85
 msgid "Depreciation"
 msgstr "Амортизация"
 
@@ -11810,7 +11811,7 @@ msgstr "Бюджеты"
 msgid "General ledger account election"
 msgstr "Главная книга избирательный счет"
 
-#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1037
+#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1041
 msgid "Select GL Account"
 msgstr "Выберите счет в главной книге"
 
@@ -11947,7 +11948,7 @@ msgstr "Журналы главной книги, затрагивающие б�
 msgid "Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment"
 msgstr "Записи о счете в главной книге должны быть введены либо квитанцией на счет или оплатой на счет"
 
-#: GLJournal.php:169 Payments.php:663
+#: GLJournal.php:169 Payments.php:667
 msgid "The manual GL code entered does not exist in the database"
 msgstr "Введенный вручную код главной книги не существует в базе данных"
 
@@ -11979,7 +11980,7 @@ msgstr "Тег главной книги"
 msgid "Select a general ledger account code"
 msgstr "Выберите код счета главной книги"
 
-#: GLJournal.php:366 Payments.php:1065 Payments.php:1071
+#: GLJournal.php:366 Payments.php:1069 Payments.php:1075
 msgid "GL Narrative"
 msgstr "Сводные данные по главной книге"
 
@@ -15864,7 +15865,7 @@ msgstr "Выберите окончание периода:"
 msgid "and Month Ending"
 msgstr "и в том числе "
 
-#: MonthlyBankTransactions.php:155
+#: MonthlyBankTransactions.php:155 sql/updates/9.php:87
 #, fuzzy
 msgid "Opening Balance"
 msgstr "Остаток по состоянию на"
@@ -16742,7 +16743,7 @@ msgid "Enter the date to which the transactions are to be listed"
 msgstr "Введите дату, операции на которую должны быть показаны"
 
 #: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:52
-#: PrintCustTransPortrait.php:50 SalesInquiry.php:963
+#: PrintCustTransPortrait.php:50 SalesInquiry.php:963 sql/updates/9.php:58
 msgid "Sales Invoice"
 msgstr "Счет продажи"
 
@@ -16751,23 +16752,23 @@ msgstr "Счет продажи"
 msgid "Sales Credit Note"
 msgstr "Кредит-нота продажи"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 sql/updates/9.php:62
 msgid "Location Transfer"
 msgstr "Передачи места"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 sql/updates/9.php:63
 msgid "Stock Adjustment"
 msgstr "Корректировка товаров"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 sql/updates/9.php:70
 msgid "Purchase Order Delivery"
 msgstr "Доставка заказа на покупку"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 sql/updates/9.php:71
 msgid "Work Order Receipt"
 msgstr "Получение заказа на работу"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 sql/updates/9.php:72
 msgid "Work Order Issue"
 msgstr "Выпуск заказа на работу"
 
@@ -16860,6 +16861,7 @@ msgid "Enter Another Date"
 msgstr "Введите другую дату"
 
 #: PDFPickingList.php:203 includes/PDFPickingListHeader.inc:13
+#: sql/updates/9.php:65
 msgid "Picking List"
 msgstr "Список выбора"
 
@@ -17902,7 +17904,7 @@ msgstr "Вы можете установить разрешения"
 #: PO_Items.php:692 PO_Items.php:695 PO_OrderDetails.php:88
 #: PO_PDFPurchOrder.php:202 PO_PDFPurchOrder.php:357
 #: PurchaseByPrefSupplier.php:293 SelectSalesOrder.php:226
-#: SelectSalesOrder.php:387 SpecialOrder.php:466
+#: SelectSalesOrder.php:387 SpecialOrder.php:466 sql/updates/9.php:64
 msgid "Purchase Order"
 msgstr "Заказ на покупку"
 
@@ -18827,7 +18829,7 @@ msgid "Go back"
 msgstr "Вернуться назад"
 
 #: PaymentAllocations.php:62 PaymentAllocations.php:63 Payments.php:613
-#: Payments.php:742 PrintCustStatements.php:382
+#: Payments.php:746 PrintCustStatements.php:382
 msgid "Payment"
 msgstr "&#1055;&#1083;&#1072;&#1090;&#1077;&#1078;"
 
@@ -19186,122 +19188,127 @@ msgstr "Не удается вставить проводку в главную 
 msgid "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr "Не удается вставить проводку в главную книгу для кредита банковского счета использования SQL"
 
-#: Payments.php:634
+#: Payments.php:637
+#, fuzzy
+msgid "Allocate this payment"
+msgstr "Не удалось найти поставку"
+
+#: Payments.php:638
 msgid "Enter another Payment for"
 msgstr "Введите следующий платеж для"
 
-#: Payments.php:637
+#: Payments.php:641
 msgid "Enter another General Ledger Payment"
 msgstr "Введите следующий платеж в главную книгу"
 
-#: Payments.php:667
+#: Payments.php:671
 msgid "The Cheque/Voucher number has already been used"
 msgstr "Чек / номер ваучера уже был использован"
 
-#: Payments.php:667 Payments.php:676
+#: Payments.php:671 Payments.php:680
 msgid "This GL analysis item could not be added"
 msgstr "Этот пункт анализа анадиза главной книги не может быть добавлен"
 
-#: Payments.php:676
+#: Payments.php:680
 msgid "The cheque number has already been used"
 msgstr "Номер чека уже был использован"
 
-#: Payments.php:722
+#: Payments.php:726
 msgid "SQL used to retrieve the bank account name was"
 msgstr "SQL получения имени баковского счета"
 
-#: Payments.php:732
+#: Payments.php:736
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr "не настроен, как банковский счет со счетом в главной книге"
 
-#: Payments.php:749
+#: Payments.php:753
 msgid "from the"
 msgstr "от"
 
-#: Payments.php:794
+#: Payments.php:798
 msgid "Date Paid"
 msgstr "Дата оплаты"
 
-#: Payments.php:801
+#: Payments.php:805
 msgid "Currency of Payment"
 msgstr "Валюта платежа"
 
-#: Payments.php:809
+#: Payments.php:813
 msgid "No currencies are defined yet. Payments cannot be entered until a currency is defined"
 msgstr "Валюты неопределены. Платежи не могут быть введены до тех пор, пока не будут определены валюты"
 
-#: Payments.php:821
+#: Payments.php:825
 msgid "The transaction currency does not need to be the same as the bank account currency"
 msgstr "Валюта сделки не обязательно должна совпадать с валютой счета банка"
 
-#: Payments.php:829 Suppliers.php:803 Suppliers.php:1040
+#: Payments.php:833 Suppliers.php:803 Suppliers.php:1040
 msgid "Supplier Currency"
 msgstr "Вылюта поставщика"
 
-#: Payments.php:863
+#: Payments.php:867
 msgid "Payment Exchange Rate"
 msgstr "Обменный курс платежа"
 
-#: Payments.php:865
+#: Payments.php:869
 msgid "The exchange rate between the currency of the bank account currency and the currency of the payment"
 msgstr "Обменный курс между валютой счета и валютой платежа"
 
-#: Payments.php:886
+#: Payments.php:890
 msgid "Payment type"
 msgstr "Способ оплаты"
 
-#: Payments.php:921
+#: Payments.php:925
 msgid "Cheque Number"
 msgstr "Номер чека"
 
-#: Payments.php:922
+#: Payments.php:926
 msgid "(if using pre-printed stationery)"
 msgstr "(Если с используются заранее отпечатанная бумага)"
 
-#: Payments.php:935
+#: Payments.php:939
 msgid "Reference / Narrative"
 msgstr "Ссылка / Описание"
 
-#: Payments.php:936
+#: Payments.php:940
 msgid "(Max. length 80 characters)"
 msgstr "(Максимальная длина 80 символов)"
 
-#: Payments.php:950
+#: Payments.php:954
 msgid "General Ledger Payment Analysis Entry"
 msgstr "Запись о платеже в главной книге"
 
-#: Payments.php:981 Payments.php:987
+#: Payments.php:985 Payments.php:991
 msgid "Enter GL Account Manually"
 msgstr "Введите счет главной книги вручную"
 
-#: Payments.php:993
+#: Payments.php:997
 #, fuzzy
 msgid "Select GL Group"
 msgstr "Выберите счет в главной книге"
 
-#: Payments.php:1004
+#: Payments.php:1008
 #, fuzzy
 msgid "No General ledger account groups have been set up yet"
 msgstr "Еще не созданы счета главной книги"
 
-#: Payments.php:1004 Payments.php:1043
+#: Payments.php:1008 Payments.php:1047
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr "платежи не могут быть проанализированы для счетов главной книги до тех пор пока счета не настроены"
 
-#: Payments.php:1059 Payments.php:1162
+#: Payments.php:1063 Payments.php:1166
 msgid "Cheque/Voucher Number"
 msgstr "Номер чека / ваучера"
 
-#: Payments.php:1123
+#: Payments.php:1127
 #, fuzzy
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "Вы уверены, что хотите удалить этот филиал?"
 
-#: Payments.php:1136 Payments.php:1166
+#: Payments.php:1140 Payments.php:1170
 msgid "Accept and Process Payment"
 msgstr "Принятьт и обработатьплатеж"
 
-#: Payments.php:1146
+#: Payments.php:1150
 msgid "Amount of Payment"
 msgstr "Количество в платеже"
 
@@ -19393,7 +19400,7 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr "Вы должны сначала выбратьПетти Tab наличными Авторизоваться"
 
 #: PcAuthorizeExpenses.php:44 PcAuthorizeExpenses.php:46 SuppLoginSetup.php:27
-#: sql/updates/12.php:220 sql/updates/42.php:37
+#: sql/updates/12.php:218 sql/updates/42.php:37
 msgid "Petty Cash"
 msgstr "Небольшая подотчетная сумма"
 
@@ -23243,7 +23250,7 @@ msgstr "Тип заказа"
 
 #: SalesInquiry.php:944 SelectCompletedOrder.php:65
 #: Z_SalesIntegrityCheck.php:123 includes/PDFSalesOrder_generic.inc:17
-#: includes/PDFSalesOrder_generic.inc:20
+#: includes/PDFSalesOrder_generic.inc:20 sql/updates/9.php:74
 msgid "Sales Order"
 msgstr "Заказ на продажу"
 
@@ -29583,7 +29590,7 @@ msgstr "Не может быть введено еще раз"
 msgid "Shipment charge against"
 msgstr "Цены поставок напротив"
 
-#: SupplierInvoice.php:1127
+#: SupplierInvoice.php:1127 sql/updates/9.php:82
 msgid "Asset Addition"
 msgstr "Добавление активов"
 
@@ -29780,7 +29787,7 @@ msgid "There are no suppliers returned, one reason maybe no email addresses set 
 msgstr "Там нет поставщиков вернулся , одной из причин может быть, никакая электронная почта не адреса, установленные для тех поставщиков"
 
 #: SupplierTenderCreate.php:704 SupplierTenders.php:77 SupplierTenders.php:155
-#: SupplierTenders.php:417 SupplierTenders.php:533
+#: SupplierTenders.php:417 SupplierTenders.php:533 sql/updates/9.php:78
 msgid "Tenders"
 msgstr "Торги"
 
@@ -34339,7 +34346,7 @@ msgstr "Имена полей можно найти здесь"
 msgid "File to import"
 msgstr "Файл для импорта"
 
-#: Z_ImportFixedAssets.php:6
+#: Z_ImportFixedAssets.php:6 sql/updates/9.php:86
 msgid "Import Fixed Assets"
 msgstr "Импорт основных активов"
 
@@ -34766,7 +34773,7 @@ msgstr "Сделать перерасчет"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?"
-"Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно опубликовать сделки из главной книги за выбранный период?\n"
+"Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно отправить все общие финансовые транзакции , так как выбранный период это может занять некоторое время?Вы уверены, что хотите повторно опубликовать сделки из главной книги за выбранный период?\n"
 "\t   .... Это может занять некоторое время?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -38055,7 +38062,7 @@ msgstr "Сокращенное название компании, которое
 #, fuzzy
 msgid "to try logging in again"
 msgstr ", чтобы попытаться войти снова"
-", чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти сновапопытаться войти в\n"
+", чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти снова, чтобы попытаться войти сновапопытаться войти в\n"
 "снова"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41999,144 +42006,144 @@ msgstr "не может быть изменена , чтобы utf8_general_ci"
 msgid "is already utf8_general_ci"
 msgstr "уже utf8_general_ci"
 
-#: sql/updates/12.php:215
+#: sql/updates/12.php:213
 msgid "Order Entry/Inquiries customer access only"
 msgstr "Отложенный ордер / Запросы клиентов доступ только"
 
-#: sql/updates/12.php:216
+#: sql/updates/12.php:214
 msgid "Basic Reports and Inquiries with selection options"
 msgstr "Основные доклады и запросы с выбором вариантов"
 
-#: sql/updates/12.php:217
+#: sql/updates/12.php:215
 #, fuzzy
 msgid "Credit notes and AR management"
 msgstr "Номер кредитной записи"
 
-#: sql/updates/12.php:218
+#: sql/updates/12.php:216
 #, fuzzy
 msgid "Purchasing data/PO Entry/Reorder Levels "
 msgstr "Обслуживать уровень запасов"
 
-#: sql/updates/12.php:219
+#: sql/updates/12.php:217
 #, fuzzy
 msgid "Accounts Payable"
 msgstr "Название счета"
 
-#: sql/updates/12.php:221
+#: sql/updates/12.php:219
 #, fuzzy
 msgid "Bank Reconciliations"
 msgstr "Банковское согласование"
 
-#: sql/updates/12.php:222
+#: sql/updates/12.php:220
 #, fuzzy
 msgid "General ledger reports/inquiries"
 msgstr "Исследование неполученной прибыли в главной книге"
 
-#: sql/updates/12.php:223 sql/updates/12.php:231
+#: sql/updates/12.php:221 sql/updates/12.php:229
 #, fuzzy
 msgid "Supplier centre - Supplier access only"
 msgstr "Баланс между поставщиками"
 
-#: sql/updates/12.php:224
+#: sql/updates/12.php:222
 #, fuzzy
 msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Главная книга техническое обслуживание, оценки запасов и конфигурации"
 
-#: sql/updates/12.php:225
+#: sql/updates/12.php:223
 #, fuzzy
 msgid "Inventory Management and Pricing"
 msgstr "Планирование ассортимента"
 
-#: sql/updates/12.php:226 sql/updates/12.php:227 sql/updates/12.php:228
+#: sql/updates/12.php:224 sql/updates/12.php:225 sql/updates/12.php:226
 msgid "Unknown"
 msgstr "неизвестный"
 
-#: sql/updates/12.php:229
+#: sql/updates/12.php:227
 #, fuzzy
 msgid "User Management and System Administration"
 msgstr "Только системный администратор"
 
-#: sql/updates/12.php:481
+#: sql/updates/12.php:477
 msgid "The fixedassets table has been updated from stockmaster"
 msgstr "Fixedassets таблица была обновлена ​​с stockmaster"
 
-#: sql/updates/12.php:483
+#: sql/updates/12.php:479
 msgid "The fixedassets table could not be updated from stockmaster"
 msgstr "Fixedassets таблице не может быть обновлена ​​с stockmaster"
 
-#: sql/updates/12.php:486
+#: sql/updates/12.php:482
 msgid "The fixedassets table is already correct"
 msgstr "Fixedassets таблица уже правильное"
 
-#: sql/updates/12.php:512
+#: sql/updates/12.php:508
 msgid "The fixedassetcategories table has been updated from stockcategory"
 msgstr "В таблице fixedassetcategories был обновлен с stockcategory"
 
-#: sql/updates/12.php:514
+#: sql/updates/12.php:510
 msgid "The fixedassetcategories table could not be updated from stockcategory"
 msgstr "Fixedassetcategories таблице не может быть обновлена ​​с stockcategory"
 
-#: sql/updates/12.php:517
+#: sql/updates/12.php:513
 msgid "The fixedassetcategories table is already correct"
 msgstr "Fixedassetcategories таблица уже правильное"
 
-#: sql/updates/12.php:529
+#: sql/updates/12.php:525
 msgid "The fixedassetcategories have been removed from stockcategory"
 msgstr "Fixedassetcategories были удалены из stockcategory"
 
-#: sql/updates/12.php:531
+#: sql/updates/12.php:527
 msgid "The fixedassetcategories table could not be removed from stockcategory"
 msgstr "Fixedassetcategories таблицы не могут быть удалены из stockcategory"
 
-#: sql/updates/12.php:534
+#: sql/updates/12.php:530
 msgid "The stockcategory table is already correct"
 msgstr "В таблице stockcategory уже правильное"
 
-#: sql/updates/12.php:548 sql/updates/12.php:565
+#: sql/updates/12.php:544 sql/updates/12.php:561
 msgid "The fixed assets have been removed from stockitemproperties"
 msgstr "Основные средства были удалены из stockitemproperties"
 
-#: sql/updates/12.php:550 sql/updates/12.php:567
+#: sql/updates/12.php:546 sql/updates/12.php:563
 msgid "The fixed assets could not be removed from stockitemproperties"
 msgstr "Основные средства, не могут быть удалены из stockitemproperties"
 
-#: sql/updates/12.php:553 sql/updates/12.php:570
+#: sql/updates/12.php:549 sql/updates/12.php:566
 msgid "The fixed assets have already been removed from stockitemproperties"
 msgstr "Основных средств уже были удалены из stockitemproperties"
 
-#: sql/updates/12.php:580
+#: sql/updates/12.php:576
 msgid "The fixed assets have been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Основные средства были удалены из stockserialitems , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:582
+#: sql/updates/12.php:578
 msgid "The fixed assets could not be removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Основные средства, не могут быть удалены из stockserialitems , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:585
+#: sql/updates/12.php:581
 msgid "The fixed assets have already been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Основных средств уже были удалены из stockserialitems , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:599
+#: sql/updates/12.php:595
 msgid "The fixed assets have been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Основные средства были удалены из stockmoves , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:601
+#: sql/updates/12.php:597
 msgid "The fixed assets could not be removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Основные средства, не могут быть удалены из stockmoves , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:604
+#: sql/updates/12.php:600
 msgid "The fixed assets have already been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Основных средств уже были удалены из stockmoves , stockmaster и stockcategory таблицы"
 
-#: sql/updates/12.php:612 sql/updates/12.php:627
+#: sql/updates/12.php:608 sql/updates/12.php:623
 msgid "The fixed assets have been removed from stockmaster table"
 msgstr "Основные средства были удалены из таблицы stockmaster"
 
-#: sql/updates/12.php:614 sql/updates/12.php:629
+#: sql/updates/12.php:610 sql/updates/12.php:625
 msgid "The fixed assets could not be removed from stockmaster table"
 msgstr "Основные средства, не могут быть удалены из таблицы stockmaster"
 
-#: sql/updates/12.php:617 sql/updates/12.php:632
+#: sql/updates/12.php:613 sql/updates/12.php:628
 msgid "The fixed assets have already been removed from stockmaster table"
 msgstr "Основных средств уже были удалены из таблицы stockmaster"
 
@@ -42951,6 +42958,101 @@ msgstr "Вы должны сделать только одного постав�
 msgid "Import Sales Prices From CSV File"
 msgstr "Импорт продаж Прайс-лист"
 
+#: sql/updates/9.php:54
+#, fuzzy
+msgid "Journal - GL"
+msgstr "Журнал"
+
+#: sql/updates/9.php:55
+#, fuzzy
+msgid "Payment - GL"
+msgstr "&#1055;&#1083;&#1072;&#1090;&#1077;&#1078;"
+
+#: sql/updates/9.php:56
+#, fuzzy
+msgid "Receipt - GL"
+msgstr "Банковская квитанция"
+
+#: sql/updates/9.php:57
+#, fuzzy
+msgid "Standing Journal"
+msgstr "Регламент"
+
+#: sql/updates/9.php:61
+#, fuzzy
+msgid "Journal - Debtors"
+msgstr "Запись в журнале"
+
+#: sql/updates/9.php:66
+#, fuzzy
+msgid "Purchase Invoice"
+msgstr "Обработать счет"
+
+#: sql/updates/9.php:67
+#, fuzzy
+msgid "Debit Note"
+msgstr "Кредит-нота"
+
+#: sql/updates/9.php:68
+#, fuzzy
+msgid "Creditors Payment"
+msgstr "Платежи клиентов"
+
+#: sql/updates/9.php:69
+#, fuzzy
+msgid "Creditors Journal"
+msgstr "Журнал амортизации"
+
+#: sql/updates/9.php:73
+#, fuzzy
+msgid "Work Order Variance"
+msgstr "Ссылка на наряд на работы"
+
+#: sql/updates/9.php:75
+#, fuzzy
+msgid "Shipment Close"
+msgstr "Стоимость доставки"
+
+#: sql/updates/9.php:76
+#, fuzzy
+msgid "Contract Close"
+msgstr "Код контакта"
+
+#: sql/updates/9.php:77
+#, fuzzy
+msgid "Cost Update"
+msgstr "Обновление стоимости товра"
+
+#: sql/updates/9.php:79
+#, fuzzy
+msgid "Stock Requests"
+msgstr "Показать активы"
+
+#: sql/updates/9.php:80
+#, fuzzy
+msgid "Exchange Difference"
+msgstr "Курсовая разница для"
+
+#: sql/updates/9.php:81
+#, fuzzy
+msgid "Work Order"
+msgstr "Наряд на работы"
+
+#: sql/updates/9.php:83
+#, fuzzy
+msgid "Asset Category Change"
+msgstr "Категория активов "
+
+#: sql/updates/9.php:84
+#, fuzzy
+msgid "Delete w/down asset"
+msgstr "Удалить актив"
+
+#: sql/updates/9.php:88
+#, fuzzy
+msgid "Auto Debtor Number"
+msgstr "Нет должника Количество"
+
 #~ msgid "Select from a list of your commonly used tasks"
 #~ msgstr "Выберите из списка часто используемые задачи"
 
@@ -43374,9 +43476,6 @@ msgstr "Импорт продаж Прайс-лист"
 
 #~ msgid "Select an existing outstanding work order"
 #~ msgstr "Выберите существующий неуплаченный наряд на работы"
-
-#~ msgid "Work Order Reference"
-#~ msgstr "Ссылка на наряд на работы"
 
 #~ msgid "Factory Location"
 #~ msgstr "Расположение фабрики"

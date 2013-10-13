@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KwaMoja 4.081\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 14:57+0100\n"
+"POT-Creation-Date: 2013-10-13 09:52+0100\n"
 "PO-Revision-Date: 2013-08-08 22:20+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: TecnoSoluciones.com <webmaster@tecnosoluciones.com>\n"
@@ -174,7 +174,7 @@ msgstr "¿Está seguro que desea eliminar este grupo ranking?"
 #: Locations.php:423 MRPDemandTypes.php:119 MRPDemands.php:307
 #: MailingGroupMaintenance.php:191 MaintenanceTasks.php:117
 #: Manufacturers.php:216 PO_AuthorisationLevels.php:149 PO_Items.php:755
-#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1123
+#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1127
 #: PcAssignCashToTab.php:273 PcClaimExpensesFromTab.php:274 PcExpenses.php:224
 #: PcExpensesTypeTab.php:188 PcTabs.php:236 PcTypeTabs.php:176 Prices.php:246
 #: Prices_Customer.php:276 PurchData.php:308 PurchData.php:685
@@ -2719,7 +2719,7 @@ msgstr "Criterios de selección para la investigación"
 
 #: BankMatching.php:88 BankReconciliation.php:103 Currencies.php:219
 #: CustomerReceipt.php:741 DailyBankTransactions.php:30
-#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:767
+#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:771
 #: TaxAuthorities.php:159 TaxAuthorities.php:311
 msgid "Bank Account"
 msgstr "Cuenta Bancaria"
@@ -2744,7 +2744,7 @@ msgstr "Desde"
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
 #: PDFDeliveryDifferences.php:310 PDFOrderStatus.php:102
 #: PDFOrderStatus.php:276 PDFOrdersInvoiced.php:94 PDFOrdersInvoiced.php:291
-#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:745
+#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:749
 #: PcReportTab.php:103 PricesBasedOnMarkUp.php:225 PricesBasedOnMarkUp.php:364
 #: PrintCustStatements.php:41 PrintCustTrans.php:53 PrintCustTrans.php:56
 #: PrintCustTransPortrait.php:51 PrintCustTransPortrait.php:54
@@ -2850,7 +2850,7 @@ msgstr "No se pudo recuperr los pagos con el criterio seleccionado porque"
 msgid "Payments to be matched"
 msgstr "Los pagos que se ajustará"
 
-#: BankMatching.php:257 Payments.php:1098
+#: BankMatching.php:257 Payments.php:1102
 msgid "Cheque No"
 msgstr "Nº Talón"
 
@@ -2863,8 +2863,8 @@ msgstr "Ref."
 #: CustWhereAlloc.php:117 CustomerAllocations.php:324 CustomerReceipt.php:889
 #: CustomerTransInquiry.php:109 GLJournalInquiry.php:92
 #: ImportBankTransAnalysis.php:202 ImportBankTransAnalysis.php:275
-#: PaymentAllocations.php:64 Payments.php:1078 Payments.php:1083
-#: Payments.php:1099 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
+#: PaymentAllocations.php:64 Payments.php:1082 Payments.php:1087
+#: Payments.php:1103 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:233
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:172 PcReportTab.php:331
 #: PrintCheque.php:81 PrintCheque.php:95 SelectCreditItems.php:611
@@ -2940,7 +2940,7 @@ msgstr "No se pudo obtener las cuentas bancarias mediante SQL porque"
 
 #: BankReconciliation.php:100 CustomerReceipt.php:729
 #: DailyBankTransactions.php:26 MonthlyBankTransactions.php:24
-#: Payments.php:763 SuppPaymentRun.php:318
+#: Payments.php:767 SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "El SQL usado para obtener las cuentas bancarias fue"
 
@@ -2954,13 +2954,13 @@ msgstr "Antes debe"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "define the bank accounts"
 msgstr "definir cuentas bancarias"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "and general ledger accounts to be affected"
 msgstr "y cuentas contables a ser afectadas"
 
@@ -3133,7 +3133,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "¿Confirma que desea eliminar este registro contable del costo de ventas brutas?"
 
 #: COGSGLPostings.php:190 CustomerReceipt.php:1016 GLJournal.php:384
-#: GLTransInquiry.php:41 Payments.php:1100 SupplierTransInquiry.php:154
+#: GLTransInquiry.php:41 Payments.php:1104 SupplierTransInquiry.php:154
 #: TaxAuthorities.php:156 TaxAuthorities.php:157 sql/updates/42.php:210
 msgid "GL Account"
 msgstr "Cuenta contable"
@@ -3354,7 +3354,7 @@ msgstr "Crear asientos contables para transacciones de Existencias"
 #: ImportBankTransAnalysis.php:178 InternalStockRequest.php:255
 #: InternalStockRequestAuthorisation.php:103
 #: InternalStockRequestFulfill.php:369 MRPCalendar.php:318
-#: PO_AuthoriseMyOrders.php:140 Payments.php:939 PcAuthorizeExpenses.php:102
+#: PO_AuthoriseMyOrders.php:140 Payments.php:943 PcAuthorizeExpenses.php:102
 #: PcAuthorizeExpenses.php:283 PricesByCost.php:226 PurchData.php:705
 #: ReorderLevelLocation.php:127 SMTPServer.php:137 SecurityTokens.php:99
 #: SelectCreditItems.php:885 SellThroughSupport.php:460 ShopParameters.php:586
@@ -5683,7 +5683,7 @@ msgstr "Neto"
 #: GLJournal.php:387 GLJournalInquiry.php:91 ImportBankTransAnalysis.php:203
 #: ImportBankTransAnalysis.php:283 InternalStockRequest.php:249
 #: InternalStockRequestAuthorisation.php:55
-#: InternalStockRequestFulfill.php:295 Payments.php:1101
+#: InternalStockRequestFulfill.php:295 Payments.php:1105
 #: SelectOrderItems.php:1484 SellThroughSupport.php:262
 #: SellThroughSupport.php:437 SuppContractChgs.php:76 SuppContractChgs.php:164
 #: SuppTransGLAnalysis.php:102 SuppTransGLAnalysis.php:213
@@ -6991,7 +6991,7 @@ msgid "Alloc"
 msgstr "Provisión"
 
 #: CustWhereAlloc.php:134 EmailCustTrans.php:10 SalesInquiry.php:964
-#: SupplierCredit.php:1106 Z_CheckAllocs.php:82
+#: SupplierCredit.php:1106 Z_CheckAllocs.php:82 sql/updates/9.php:59
 msgid "Credit Note"
 msgstr "Abono"
 
@@ -6999,7 +6999,7 @@ msgstr "Abono"
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:395 PcReportTab.php:174 PcReportTab.php:333
 #: Z_CheckAllocs.php:84 Z_SalesIntegrityCheck.php:87
-#: Z_SalesIntegrityCheck.php:102
+#: Z_SalesIntegrityCheck.php:102 sql/updates/9.php:60
 msgid "Receipt"
 msgstr "Ingreso"
 
@@ -7138,7 +7138,7 @@ msgstr "Procesar Asignaciones"
 
 #: CustomerAllocations.php:395 CustomerReceipt.php:1080
 #: InternalStockCategoriesByRole.php:133 InternalStockCategoriesByRole.php:219
-#: Payments.php:1091 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
+#: Payments.php:1095 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
 #: PcAuthorizeExpenses.php:320 PcClaimExpensesFromTab.php:173
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:341 PcExpensesTypeTab.php:139
 #: PcExpensesTypeTab.php:227 PcTabs.php:473 PcTypeTabs.php:244
@@ -7795,11 +7795,11 @@ msgstr "Ingreso de Ingreso"
 msgid "A bank account must be selected for this receipt"
 msgstr "Debe ser seleccionada una cuenta bancaria para este recibo"
 
-#: CustomerReceipt.php:60 Payments.php:721
+#: CustomerReceipt.php:60 Payments.php:725
 msgid "The bank account name cannot be retrieved because"
 msgstr "No se pudo obtener el nombre de la cuenta bancaria porque"
 
-#: CustomerReceipt.php:70 Payments.php:732
+#: CustomerReceipt.php:70 Payments.php:736
 msgid "The bank account number"
 msgstr "El número de cuenta bancaria"
 
@@ -7819,11 +7819,11 @@ msgstr "La tasa de cambio funcional debe ser numérica"
 msgid "Changing the currency of the receipt means that existing entries need to be re-done - only customers trading in the selected currency can be selected"
 msgstr "Cambiar la moneda del ingreso implica que las entradas existentes han de ser rehechas - sólo podrá seleccionar clientes operando en la moneda seleccionada"
 
-#: CustomerReceipt.php:174 Payments.php:679
+#: CustomerReceipt.php:174 Payments.php:683
 msgid "No General Ledger code has been chosen"
 msgstr "No ha sido elegido un código contable"
 
-#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:663 Payments.php:679
+#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:667 Payments.php:683
 msgid "so this GL analysis item could not be added"
 msgstr "por tanto, no se pudo agregar este ítem de análisis contable"
 
@@ -7939,7 +7939,7 @@ msgid "The customer details could not be retrieved because"
 msgstr "No se pudieron obtener los detalles del cliente porque"
 
 #: CustomerReceipt.php:728 DailyBankTransactions.php:25
-#: MonthlyBankTransactions.php:23 Payments.php:762
+#: MonthlyBankTransactions.php:23 Payments.php:766
 msgid "The bank accounts could not be retrieved because"
 msgstr "No se pudo obtener las cuentas bancarias porque"
 
@@ -7971,8 +7971,8 @@ msgstr "No se han definido monedas aún"
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "No se pueden entrar recibos mientras no defina una moneda"
 
-#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:850
-#: Payments.php:871
+#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:854
+#: Payments.php:875
 msgid "Suggested rate:"
 msgstr "Tasa sugerida:"
 
@@ -7984,11 +7984,11 @@ msgstr "Tasa de Cambio del Ingreso"
 msgid "The exchange rate between the currency of the bank account currency and the currency of the receipt"
 msgstr "La tasa de cambio entre la moneda de la cuenta bancaria y la moneda del ingreso"
 
-#: CustomerReceipt.php:836 Payments.php:880
+#: CustomerReceipt.php:836 Payments.php:884
 msgid "Functional Exchange Rate"
 msgstr "Tasa de Cambio Funcional"
 
-#: CustomerReceipt.php:838 Payments.php:882
+#: CustomerReceipt.php:838 Payments.php:886
 msgid "The exchange rate between the currency of the business (the functional currency) and the currency of the bank account"
 msgstr "La tasa de cambio entre la divisa del negocio (la divisa funcional) y la divisa de la cuenta bancaria"
 
@@ -8000,7 +8000,7 @@ msgstr "Tipo de Ingreso"
 #: ExchangeRateTrend.php:50 FreightCosts.php:67 GLJournal.php:134
 #: GLJournal.php:373 InternalStockCategoriesByRole.php:132
 #: InternalStockCategoriesByRole.php:218 OffersReceived.php:112
-#: Payments.php:1090 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
+#: Payments.php:1094 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
 #: PcAuthorizeExpenses.php:319 PcClaimExpensesFromTab.php:172
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:340 PcExpensesTypeTab.php:138
 #: PcExpensesTypeTab.php:226 PcTabs.php:472 PcTypeTabs.php:243
@@ -8016,7 +8016,7 @@ msgstr "Depositado"
 msgid "Banked into the"
 msgstr "En la Cuenta Bancaria de"
 
-#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:752
+#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:756
 #: SelectSalesOrder.php:226 SelectSalesOrder.php:387 SpecialOrder.php:466
 msgid "on"
 msgstr "a"
@@ -8036,7 +8036,7 @@ msgstr "Recibido"
 #: CustomerReceipt.php:893 GLAccountInquiry.php:186 GLAccountReport.php:340
 #: GLJournalInquiry.php:93 ImportBankTransAnalysis.php:204
 #: ImportBankTransAnalysis.php:288 InternalStockRequestFulfill.php:332
-#: Payments.php:1102 PcExpenses.php:190 PcExpenses.php:315
+#: Payments.php:1106 PcExpenses.php:190 PcExpenses.php:315
 #: SuppTransGLAnalysis.php:103 SupplierCredit.php:457 SupplierInvoice.php:792
 msgid "Tag"
 msgstr "Centro de Costo (Tag)"
@@ -8054,12 +8054,12 @@ msgid "GL Receipt entry form"
 msgstr "Pantalla Registro de recibos GL"
 
 #: CustomerReceipt.php:993 GLAccountCSV.php:61 GLAccountInquiry.php:77
-#: GLAccountReport.php:271 Payments.php:956 StockAdjustments.php:491
+#: GLAccountReport.php:271 Payments.php:960 StockAdjustments.php:491
 #: SuppTransGLAnalysis.php:154
 msgid "Select Tag"
 msgstr "Seleccionar Centro de Costo"
 
-#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1043
+#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1047
 msgid "No General ledger accounts have been set up yet"
 msgstr "No se han configurado cuentas contables aún"
 
@@ -8067,7 +8067,7 @@ msgstr "No se han configurado cuentas contables aún"
 msgid "receipts cannot be entered against GL accounts until the GL accounts are set up"
 msgstr "los ingresos no pueden entrarse en cuentas contables hasta que se configuren las cuentas"
 
-#: CustomerReceipt.php:1062 Payments.php:1154
+#: CustomerReceipt.php:1062 Payments.php:1158
 msgid "Amount of Discount"
 msgstr "Descuento"
 
@@ -8560,7 +8560,7 @@ msgid "Select criteria for inquiry"
 msgstr "Seleccione los criterios para la investigación"
 
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "Cuentas de Banco sin definir. Primero debe"
 
@@ -10580,6 +10580,7 @@ msgid "GRAND Total"
 msgstr "GRAN Total"
 
 #: FixedAssetDepreciation.php:267 FixedAssetRegister.php:378
+#: sql/updates/9.php:85
 msgid "Depreciation"
 msgstr "Amortización"
 
@@ -11694,7 +11695,7 @@ msgstr "Presupuestos"
 msgid "General ledger account election"
 msgstr "Electoral cuenta del libro mayor general"
 
-#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1037
+#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1041
 msgid "Select GL Account"
 msgstr "Seleccionar cuenta contable"
 
@@ -11828,7 +11829,7 @@ msgstr "No puede entrar Diarios contables que involucran una cuenta bancaria"
 msgid "Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment"
 msgstr "Las entradas contables de las cuentas bancarias deben ser introducidas por un ingreso o un pago en cuenta bancaria"
 
-#: GLJournal.php:169 Payments.php:663
+#: GLJournal.php:169 Payments.php:667
 msgid "The manual GL code entered does not exist in the database"
 msgstr "El código contable manual indicado no existe en la base de datos"
 
@@ -11860,7 +11861,7 @@ msgstr "Centro de Costo"
 msgid "Select a general ledger account code"
 msgstr "Seleccione un código de cuenta del libro mayor general"
 
-#: GLJournal.php:366 Payments.php:1065 Payments.php:1071
+#: GLJournal.php:366 Payments.php:1069 Payments.php:1075
 msgid "GL Narrative"
 msgstr "Observaciones Contables"
 
@@ -15630,7 +15631,7 @@ msgstr "Seleccione Período:"
 msgid "and Month Ending"
 msgstr "y el Mes de clausura"
 
-#: MonthlyBankTransactions.php:155
+#: MonthlyBankTransactions.php:155 sql/updates/9.php:87
 msgid "Opening Balance"
 msgstr "Saldo de apertura"
 
@@ -16492,7 +16493,7 @@ msgid "Enter the date to which the transactions are to be listed"
 msgstr "Introduzca la fecha hasta la que se listarán las transacciones"
 
 #: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:52
-#: PrintCustTransPortrait.php:50 SalesInquiry.php:963
+#: PrintCustTransPortrait.php:50 SalesInquiry.php:963 sql/updates/9.php:58
 msgid "Sales Invoice"
 msgstr "Factura de Venta"
 
@@ -16501,23 +16502,23 @@ msgstr "Factura de Venta"
 msgid "Sales Credit Note"
 msgstr "Abono"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 sql/updates/9.php:62
 msgid "Location Transfer"
 msgstr "Transferencia de Localidad"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 sql/updates/9.php:63
 msgid "Stock Adjustment"
 msgstr "Ajuste de Existencia"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 sql/updates/9.php:70
 msgid "Purchase Order Delivery"
 msgstr "Despacho de Orden de Compra"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 sql/updates/9.php:71
 msgid "Work Order Receipt"
 msgstr "Recibo de Orden de Trabajo"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 sql/updates/9.php:72
 msgid "Work Order Issue"
 msgstr "Emisión de Orden de Trabajo"
 
@@ -16608,6 +16609,7 @@ msgid "Enter Another Date"
 msgstr "Introduzca otra fecha"
 
 #: PDFPickingList.php:203 includes/PDFPickingListHeader.inc:13
+#: sql/updates/9.php:65
 msgid "Picking List"
 msgstr "Lista de Recolección"
 
@@ -17634,7 +17636,7 @@ msgstr "Usted puede configurar las autorizaciones"
 #: PO_Items.php:692 PO_Items.php:695 PO_OrderDetails.php:88
 #: PO_PDFPurchOrder.php:202 PO_PDFPurchOrder.php:357
 #: PurchaseByPrefSupplier.php:293 SelectSalesOrder.php:226
-#: SelectSalesOrder.php:387 SpecialOrder.php:466
+#: SelectSalesOrder.php:387 SpecialOrder.php:466 sql/updates/9.php:64
 msgid "Purchase Order"
 msgstr "Orden de Compra"
 
@@ -18533,7 +18535,7 @@ msgid "Go back"
 msgstr "Volver"
 
 #: PaymentAllocations.php:62 PaymentAllocations.php:63 Payments.php:613
-#: Payments.php:742 PrintCustStatements.php:382
+#: Payments.php:746 PrintCustStatements.php:382
 msgid "Payment"
 msgstr "Pago"
 
@@ -18882,119 +18884,124 @@ msgstr "No puede agregar una transacción contable en el haber de la cuenta banc
 msgid "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr "No se puede insertar una transacción contable para el crédito de cuenta bancaria a través de SQL"
 
-#: Payments.php:634
+#: Payments.php:637
+#, fuzzy
+msgid "Allocate this payment"
+msgstr "No se puede localizar el Envío"
+
+#: Payments.php:638
 msgid "Enter another Payment for"
 msgstr "Introduzca otro pago por"
 
-#: Payments.php:637
+#: Payments.php:641
 msgid "Enter another General Ledger Payment"
 msgstr "Introduzca otro pago Contable"
 
-#: Payments.php:667
+#: Payments.php:671
 msgid "The Cheque/Voucher number has already been used"
 msgstr "El número de Cheque/Talón ya ha sido usado"
 
-#: Payments.php:667 Payments.php:676
+#: Payments.php:671 Payments.php:680
 msgid "This GL analysis item could not be added"
 msgstr "No se pudo añadir este ítem de análisis contable"
 
-#: Payments.php:676
+#: Payments.php:680
 msgid "The cheque number has already been used"
 msgstr "El número de talón ya ha sido usado"
 
-#: Payments.php:722
+#: Payments.php:726
 msgid "SQL used to retrieve the bank account name was"
 msgstr "El SQL usado para obtener el nombre de la cuenta bancaria fue"
 
-#: Payments.php:732
+#: Payments.php:736
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr "no está configurada como una cuenta bancaria con una cuenta contable válida"
 
-#: Payments.php:749
+#: Payments.php:753
 msgid "from the"
 msgstr "desde el"
 
-#: Payments.php:794
+#: Payments.php:798
 msgid "Date Paid"
 msgstr "Pagado el día"
 
-#: Payments.php:801
+#: Payments.php:805
 msgid "Currency of Payment"
 msgstr "Moneda del Pago"
 
-#: Payments.php:809
+#: Payments.php:813
 msgid "No currencies are defined yet. Payments cannot be entered until a currency is defined"
 msgstr "No se han definido divisas aún. No puede entrar pagos hasta que no defina una moneda"
 
-#: Payments.php:821
+#: Payments.php:825
 msgid "The transaction currency does not need to be the same as the bank account currency"
 msgstr "La moneda de la transacción no necesita ser la misma moneda de la cuenta bancaria"
 
-#: Payments.php:829 Suppliers.php:803 Suppliers.php:1040
+#: Payments.php:833 Suppliers.php:803 Suppliers.php:1040
 msgid "Supplier Currency"
 msgstr "Moneda del Proveedor"
 
-#: Payments.php:863
+#: Payments.php:867
 msgid "Payment Exchange Rate"
 msgstr "Tasa de Cambio del Pago"
 
-#: Payments.php:865
+#: Payments.php:869
 msgid "The exchange rate between the currency of the bank account currency and the currency of the payment"
 msgstr "La tasa de cambio entre la moneda de la cuenta bancaria y la moneda del pago"
 
-#: Payments.php:886
+#: Payments.php:890
 msgid "Payment type"
 msgstr "Tipo de Pago"
 
-#: Payments.php:921
+#: Payments.php:925
 msgid "Cheque Number"
 msgstr "Número del Talón"
 
-#: Payments.php:922
+#: Payments.php:926
 msgid "(if using pre-printed stationery)"
 msgstr "(si se usa impreso de imprenta)"
 
-#: Payments.php:935
+#: Payments.php:939
 msgid "Reference / Narrative"
 msgstr "Referencia/Observaciones"
 
-#: Payments.php:936
+#: Payments.php:940
 msgid "(Max. length 80 characters)"
 msgstr "(80 caracteres máximo)"
 
-#: Payments.php:950
+#: Payments.php:954
 msgid "General Ledger Payment Analysis Entry"
 msgstr "Ingreso de Análisis de Pagos Contables"
 
-#: Payments.php:981 Payments.php:987
+#: Payments.php:985 Payments.php:991
 msgid "Enter GL Account Manually"
 msgstr "Introduzca Manualmente la Cuenta Contable"
 
-#: Payments.php:993
+#: Payments.php:997
 msgid "Select GL Group"
 msgstr "Seleccionar un Grupo de Cuentas Contables"
 
-#: Payments.php:1004
+#: Payments.php:1008
 msgid "No General ledger account groups have been set up yet"
 msgstr "Aún no se han configurado grupos de cuentas contables"
 
-#: Payments.php:1004 Payments.php:1043
+#: Payments.php:1008 Payments.php:1047
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr "los pagos no pueden ser analizados respecto a cuentas contables hasta que las cuentas estén configuradas"
 
-#: Payments.php:1059 Payments.php:1162
+#: Payments.php:1063 Payments.php:1166
 msgid "Cheque/Voucher Number"
 msgstr "Número de Talón"
 
-#: Payments.php:1123
+#: Payments.php:1127
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "¿Confirma que desea eliminar este artículo de análisis de pago?"
 
-#: Payments.php:1136 Payments.php:1166
+#: Payments.php:1140 Payments.php:1170
 msgid "Accept and Process Payment"
 msgstr "Aceptar y Procesar el Pago"
 
-#: Payments.php:1146
+#: Payments.php:1150
 msgid "Amount of Payment"
 msgstr "Importe del Pago"
 
@@ -19080,7 +19087,7 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr "Primero debe seleccionar una ficha de Caja Chica a Autorizar"
 
 #: PcAuthorizeExpenses.php:44 PcAuthorizeExpenses.php:46 SuppLoginSetup.php:27
-#: sql/updates/12.php:220 sql/updates/42.php:37
+#: sql/updates/12.php:218 sql/updates/42.php:37
 msgid "Petty Cash"
 msgstr "Caja Chica"
 
@@ -22836,7 +22843,7 @@ msgstr "Tipo de Orden"
 
 #: SalesInquiry.php:944 SelectCompletedOrder.php:65
 #: Z_SalesIntegrityCheck.php:123 includes/PDFSalesOrder_generic.inc:17
-#: includes/PDFSalesOrder_generic.inc:20
+#: includes/PDFSalesOrder_generic.inc:20 sql/updates/9.php:74
 msgid "Sales Order"
 msgstr "Pedido de Venta"
 
@@ -29099,7 +29106,7 @@ msgstr "No puede ser ingresado nuevamente"
 msgid "Shipment charge against"
 msgstr "Cargo de Envío respecto a"
 
-#: SupplierInvoice.php:1127
+#: SupplierInvoice.php:1127 sql/updates/9.php:82
 msgid "Asset Addition"
 msgstr "Adición de activos"
 
@@ -29271,7 +29278,7 @@ msgid "There are no suppliers returned, one reason maybe no email addresses set 
 msgstr "No hay proveedores devueltos , una de las razones tal vez no direcciones de correo electrónico establecido para los proveedores"
 
 #: SupplierTenderCreate.php:704 SupplierTenders.php:77 SupplierTenders.php:155
-#: SupplierTenders.php:417 SupplierTenders.php:533
+#: SupplierTenders.php:417 SupplierTenders.php:533 sql/updates/9.php:78
 msgid "Tenders"
 msgstr "Licitaciones"
 
@@ -33724,7 +33731,7 @@ msgstr "Los nombres de los Campos se encuentran aquí."
 msgid "File to import"
 msgstr "Archivo a importar"
 
-#: Z_ImportFixedAssets.php:6
+#: Z_ImportFixedAssets.php:6 sql/updates/9.php:86
 msgid "Import Fixed Assets"
 msgstr "Importar los Activos Fijos"
 
@@ -41137,144 +41144,144 @@ msgstr "no podía ser cambiado a utf8_general_ci"
 msgid "is already utf8_general_ci"
 msgstr "Ya es utf8_general_ci"
 
-#: sql/updates/12.php:215
+#: sql/updates/12.php:213
 msgid "Order Entry/Inquiries customer access only"
 msgstr "Orden de entrada / acceso al cliente Preguntas única"
 
-#: sql/updates/12.php:216
+#: sql/updates/12.php:214
 msgid "Basic Reports and Inquiries with selection options"
 msgstr "Informes y consultas básicas con opciones de selección"
 
-#: sql/updates/12.php:217
+#: sql/updates/12.php:215
 #, fuzzy
 msgid "Credit notes and AR management"
 msgstr "Abono número"
 
-#: sql/updates/12.php:218
+#: sql/updates/12.php:216
 #, fuzzy
 msgid "Purchasing data/PO Entry/Reorder Levels "
 msgstr "Administrar niveles de recompra"
 
-#: sql/updates/12.php:219
+#: sql/updates/12.php:217
 #, fuzzy
 msgid "Accounts Payable"
 msgstr "Cuenta"
 
-#: sql/updates/12.php:221
+#: sql/updates/12.php:219
 #, fuzzy
 msgid "Bank Reconciliations"
 msgstr "Conciliación Bancaria"
 
-#: sql/updates/12.php:222
+#: sql/updates/12.php:220
 #, fuzzy
 msgid "General ledger reports/inquiries"
 msgstr "Consultar Ganancias y Pérdidas Contables"
 
-#: sql/updates/12.php:223 sql/updates/12.php:231
+#: sql/updates/12.php:221 sql/updates/12.php:229
 #, fuzzy
 msgid "Supplier centre - Supplier access only"
 msgstr "Saldos de Proveedor de los Proveedores entre"
 
-#: sql/updates/12.php:224
+#: sql/updates/12.php:222
 #, fuzzy
 msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Mantenimiento Contabilidad , las acciones de evaluación y configuración"
 
-#: sql/updates/12.php:225
+#: sql/updates/12.php:223
 #, fuzzy
 msgid "Inventory Management and Pricing"
 msgstr "Planificación de Inventario"
 
-#: sql/updates/12.php:226 sql/updates/12.php:227 sql/updates/12.php:228
+#: sql/updates/12.php:224 sql/updates/12.php:225 sql/updates/12.php:226
 msgid "Unknown"
 msgstr "desconocido"
 
-#: sql/updates/12.php:229
+#: sql/updates/12.php:227
 #, fuzzy
 msgid "User Management and System Administration"
 msgstr "Sólo Administrador Sistema"
 
-#: sql/updates/12.php:481
+#: sql/updates/12.php:477
 msgid "The fixedassets table has been updated from stockmaster"
 msgstr "La tabla fixedassets ha sido actualizado desde Stockmaster"
 
-#: sql/updates/12.php:483
+#: sql/updates/12.php:479
 msgid "The fixedassets table could not be updated from stockmaster"
 msgstr "La tabla fixedassets No se pudo actualizar desde Stockmaster"
 
-#: sql/updates/12.php:486
+#: sql/updates/12.php:482
 msgid "The fixedassets table is already correct"
 msgstr "La tabla fixedassets ya está correcta"
 
-#: sql/updates/12.php:512
+#: sql/updates/12.php:508
 msgid "The fixedassetcategories table has been updated from stockcategory"
 msgstr "La tabla fixedassetcategories ha sido actualizado desde stockcategory"
 
-#: sql/updates/12.php:514
+#: sql/updates/12.php:510
 msgid "The fixedassetcategories table could not be updated from stockcategory"
 msgstr "La tabla fixedassetcategories No se pudo actualizar desde stockcategory"
 
-#: sql/updates/12.php:517
+#: sql/updates/12.php:513
 msgid "The fixedassetcategories table is already correct"
 msgstr "La tabla fixedassetcategories ya está correcta"
 
-#: sql/updates/12.php:529
+#: sql/updates/12.php:525
 msgid "The fixedassetcategories have been removed from stockcategory"
 msgstr "Los fixedassetcategories se han eliminado de stockcategory"
 
-#: sql/updates/12.php:531
+#: sql/updates/12.php:527
 msgid "The fixedassetcategories table could not be removed from stockcategory"
 msgstr "La tabla fixedassetcategories no podía ser removido de stockcategory"
 
-#: sql/updates/12.php:534
+#: sql/updates/12.php:530
 msgid "The stockcategory table is already correct"
 msgstr "La tabla stockcategory ya está correcta"
 
-#: sql/updates/12.php:548 sql/updates/12.php:565
+#: sql/updates/12.php:544 sql/updates/12.php:561
 msgid "The fixed assets have been removed from stockitemproperties"
 msgstr "Los activos fijos se han eliminado de stockitemproperties"
 
-#: sql/updates/12.php:550 sql/updates/12.php:567
+#: sql/updates/12.php:546 sql/updates/12.php:563
 msgid "The fixed assets could not be removed from stockitemproperties"
 msgstr "Los activos fijos no pueden ser removidos de stockitemproperties"
 
-#: sql/updates/12.php:553 sql/updates/12.php:570
+#: sql/updates/12.php:549 sql/updates/12.php:566
 msgid "The fixed assets have already been removed from stockitemproperties"
 msgstr "Los activos fijos ya han sido retirados de stockitemproperties"
 
-#: sql/updates/12.php:580
+#: sql/updates/12.php:576
 msgid "The fixed assets have been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos se han eliminado de stockserialitems , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:582
+#: sql/updates/12.php:578
 msgid "The fixed assets could not be removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos no pueden ser removidos de stockserialitems , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:585
+#: sql/updates/12.php:581
 msgid "The fixed assets have already been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos ya han sido retirados de stockserialitems , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:599
+#: sql/updates/12.php:595
 msgid "The fixed assets have been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos se han eliminado de stockmoves , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:601
+#: sql/updates/12.php:597
 msgid "The fixed assets could not be removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos no pueden ser removidos de stockmoves , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:604
+#: sql/updates/12.php:600
 msgid "The fixed assets have already been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Los activos fijos ya han sido retirados de stockmoves , Stockmaster y tablas stockcategory"
 
-#: sql/updates/12.php:612 sql/updates/12.php:627
+#: sql/updates/12.php:608 sql/updates/12.php:623
 msgid "The fixed assets have been removed from stockmaster table"
 msgstr "Los activos fijos se han eliminado de la tabla Stockmaster"
 
-#: sql/updates/12.php:614 sql/updates/12.php:629
+#: sql/updates/12.php:610 sql/updates/12.php:625
 msgid "The fixed assets could not be removed from stockmaster table"
 msgstr "Los activos fijos no pueden ser retirados de la mesa Stockmaster"
 
-#: sql/updates/12.php:617 sql/updates/12.php:632
+#: sql/updates/12.php:613 sql/updates/12.php:628
 msgid "The fixed assets have already been removed from stockmaster table"
 msgstr "Los activos fijos ya han sido retirados de la mesa Stockmaster"
 
@@ -42068,6 +42075,101 @@ msgstr "deberá asiganar al menos un proveedor como preferido"
 msgid "Import Sales Prices From CSV File"
 msgstr "Importar lista de precios de un archivo CSV"
 
+#: sql/updates/9.php:54
+#, fuzzy
+msgid "Journal - GL"
+msgstr "Diario"
+
+#: sql/updates/9.php:55
+#, fuzzy
+msgid "Payment - GL"
+msgstr "Pago"
+
+#: sql/updates/9.php:56
+#, fuzzy
+msgid "Receipt - GL"
+msgstr "Ingreso"
+
+#: sql/updates/9.php:57
+#, fuzzy
+msgid "Standing Journal"
+msgstr "Parando Orden"
+
+#: sql/updates/9.php:61
+#, fuzzy
+msgid "Journal - Debtors"
+msgstr "Ingreso del Diario"
+
+#: sql/updates/9.php:66
+#, fuzzy
+msgid "Purchase Invoice"
+msgstr "Procesar Factura"
+
+#: sql/updates/9.php:67
+#, fuzzy
+msgid "Debit Note"
+msgstr "Abono"
+
+#: sql/updates/9.php:68
+#, fuzzy
+msgid "Creditors Payment"
+msgstr "Pagos de Clientes"
+
+#: sql/updates/9.php:69
+#, fuzzy
+msgid "Creditors Journal"
+msgstr "Diario de Amortización"
+
+#: sql/updates/9.php:73
+#, fuzzy
+msgid "Work Order Variance"
+msgstr "Referencia de la Orden de Trabajo"
+
+#: sql/updates/9.php:75
+#, fuzzy
+msgid "Shipment Close"
+msgstr "Costos de Envío"
+
+#: sql/updates/9.php:76
+#, fuzzy
+msgid "Contract Close"
+msgstr "Código del Contacto"
+
+#: sql/updates/9.php:77
+#, fuzzy
+msgid "Cost Update"
+msgstr "Actualizar Costo de Existencia"
+
+#: sql/updates/9.php:79
+#, fuzzy
+msgid "Stock Requests"
+msgstr "Mostrar Requisiciones"
+
+#: sql/updates/9.php:80
+#, fuzzy
+msgid "Exchange Difference"
+msgstr "Diferencia de Tasa de Cambio de"
+
+#: sql/updates/9.php:81
+#, fuzzy
+msgid "Work Order"
+msgstr "Orden de trabajo"
+
+#: sql/updates/9.php:83
+#, fuzzy
+msgid "Asset Category Change"
+msgstr "Código de la Categoría de Activo"
+
+#: sql/updates/9.php:84
+#, fuzzy
+msgid "Delete w/down asset"
+msgstr "Eliminar Activo"
+
+#: sql/updates/9.php:88
+#, fuzzy
+msgid "Auto Debtor Number"
+msgstr "No hay Número de Deudor"
+
 #~ msgid "Select from a list of your commonly used tasks"
 #~ msgstr "Seleccione de una lista de las tareas más comunes"
 
@@ -42549,9 +42651,6 @@ msgstr "Importar lista de precios de un archivo CSV"
 
 #~ msgid "Select an existing outstanding work order"
 #~ msgstr "Seleccionar una Orden de Trabajo Pendiente"
-
-#~ msgid "Work Order Reference"
-#~ msgstr "Referencia de la Orden de Trabajo"
 
 #~ msgid "Factory Location"
 #~ msgstr "Ubicación de la Fábrica"
@@ -43383,9 +43482,6 @@ msgstr "Importar lista de precios de un archivo CSV"
 
 #~ msgid "Are you sure you wish to delete this asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised."
 #~ msgstr "¿Está seguro que desea eliminar esta categoría de activo? Se harán comprobaciones adicionales antes de eliminarse realmente para asegurar que no se compromete la integridad de los datos."
-
-#~ msgid "Asset Category Code"
-#~ msgstr "Código de la Categoría de Activo"
 
 #~ msgid "Fixed Asset GL Code"
 #~ msgstr "Cuenta de Activo Fijo"

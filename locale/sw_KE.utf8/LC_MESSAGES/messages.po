@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web-erp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 14:57+0100\n"
+"POT-Creation-Date: 2013-10-13 09:52+0100\n"
 "PO-Revision-Date: 2013-08-08 22:30+0100\n"
 "Last-Translator: Tim Schofield <tim@weberpafrica.com>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -173,7 +173,7 @@ msgstr "Je una uhakika unataka kufuta kundi hili cheo ?"
 #: Locations.php:423 MRPDemandTypes.php:119 MRPDemands.php:307
 #: MailingGroupMaintenance.php:191 MaintenanceTasks.php:117
 #: Manufacturers.php:216 PO_AuthorisationLevels.php:149 PO_Items.php:755
-#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1123
+#: PaymentMethods.php:206 PaymentTerms.php:203 Payments.php:1127
 #: PcAssignCashToTab.php:273 PcClaimExpensesFromTab.php:274 PcExpenses.php:224
 #: PcExpensesTypeTab.php:188 PcTabs.php:236 PcTypeTabs.php:176 Prices.php:246
 #: Prices_Customer.php:276 PurchData.php:308 PurchData.php:685
@@ -2750,7 +2750,7 @@ msgstr "Vigezo vya uteuzi kwa ajili ya uchunguzi"
 
 #: BankMatching.php:88 BankReconciliation.php:103 Currencies.php:219
 #: CustomerReceipt.php:741 DailyBankTransactions.php:30
-#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:767
+#: MonthlyBankTransactions.php:28 PDFChequeListing.php:45 Payments.php:771
 #: TaxAuthorities.php:159 TaxAuthorities.php:311
 msgid "Bank Account"
 msgstr "Akaunti ya benki"
@@ -2775,7 +2775,7 @@ msgstr "kutoka"
 #: PDFDeliveryDifferences.php:201 PDFDeliveryDifferences.php:214
 #: PDFDeliveryDifferences.php:310 PDFOrderStatus.php:102
 #: PDFOrderStatus.php:276 PDFOrdersInvoiced.php:94 PDFOrdersInvoiced.php:291
-#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:745
+#: PDFRemittanceAdvice.php:57 PO_PDFPurchOrder.php:364 Payments.php:749
 #: PcReportTab.php:103 PricesBasedOnMarkUp.php:225 PricesBasedOnMarkUp.php:364
 #: PrintCustStatements.php:41 PrintCustTrans.php:53 PrintCustTrans.php:56
 #: PrintCustTransPortrait.php:51 PrintCustTransPortrait.php:54
@@ -2881,7 +2881,7 @@ msgstr "Malipo na vigezo hakuweza kuchaguliwa kuwa retrieved sababu"
 msgid "Payments to be matched"
 msgstr "Malipo kwa kuendana"
 
-#: BankMatching.php:257 Payments.php:1098
+#: BankMatching.php:257 Payments.php:1102
 msgid "Cheque No"
 msgstr "Hundi No"
 
@@ -2894,8 +2894,8 @@ msgstr "Ref"
 #: CustWhereAlloc.php:117 CustomerAllocations.php:324 CustomerReceipt.php:889
 #: CustomerTransInquiry.php:109 GLJournalInquiry.php:92
 #: ImportBankTransAnalysis.php:202 ImportBankTransAnalysis.php:275
-#: PaymentAllocations.php:64 Payments.php:1078 Payments.php:1083
-#: Payments.php:1099 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
+#: PaymentAllocations.php:64 Payments.php:1082 Payments.php:1087
+#: Payments.php:1103 PcAssignCashToTab.php:236 PcAssignCashToTab.php:362
 #: PcAuthorizeExpenses.php:90 PcClaimExpensesFromTab.php:233
 #: PcClaimExpensesFromTab.php:379 PcReportTab.php:172 PcReportTab.php:331
 #: PrintCheque.php:81 PrintCheque.php:95 SelectCreditItems.php:611
@@ -2971,7 +2971,7 @@ msgstr "akaunti ya benki inaweza kuwa retrieved na SQL sababu"
 
 #: BankReconciliation.php:100 CustomerReceipt.php:729
 #: DailyBankTransactions.php:26 MonthlyBankTransactions.php:24
-#: Payments.php:763 SuppPaymentRun.php:318
+#: Payments.php:767 SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "SQL kutumika Retrieve akaunti ya benki alikuwa"
 
@@ -2985,13 +2985,13 @@ msgstr "Lazima kwanza"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "define the bank accounts"
 msgstr "define akaunti ya benki"
 
 #: BankReconciliation.php:110 CustomerReceipt.php:749
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "and general ledger accounts to be affected"
 msgstr "na jumla ya kitabu akaunti ya kuathirika"
 
@@ -3165,7 +3165,7 @@ msgid "Are you sure you wish to delete this COGS GL posting record?"
 msgstr "Una uhakika unataka kufuta bei?"
 
 #: COGSGLPostings.php:190 CustomerReceipt.php:1016 GLJournal.php:384
-#: GLTransInquiry.php:41 Payments.php:1100 SupplierTransInquiry.php:154
+#: GLTransInquiry.php:41 Payments.php:1104 SupplierTransInquiry.php:154
 #: TaxAuthorities.php:156 TaxAuthorities.php:157 sql/updates/42.php:210
 msgid "GL Account"
 msgstr "GL Akaunti"
@@ -3386,7 +3386,7 @@ msgstr "Kujenga entries GL kwa shughuli za hisa"
 #: ImportBankTransAnalysis.php:178 InternalStockRequest.php:255
 #: InternalStockRequestAuthorisation.php:103
 #: InternalStockRequestFulfill.php:369 MRPCalendar.php:318
-#: PO_AuthoriseMyOrders.php:140 Payments.php:939 PcAuthorizeExpenses.php:102
+#: PO_AuthoriseMyOrders.php:140 Payments.php:943 PcAuthorizeExpenses.php:102
 #: PcAuthorizeExpenses.php:283 PricesByCost.php:226 PurchData.php:705
 #: ReorderLevelLocation.php:127 SMTPServer.php:137 SecurityTokens.php:99
 #: SelectCreditItems.php:885 SellThroughSupport.php:460 ShopParameters.php:586
@@ -5722,7 +5722,7 @@ msgstr "Wavu"
 #: GLJournal.php:387 GLJournalInquiry.php:91 ImportBankTransAnalysis.php:203
 #: ImportBankTransAnalysis.php:283 InternalStockRequest.php:249
 #: InternalStockRequestAuthorisation.php:55
-#: InternalStockRequestFulfill.php:295 Payments.php:1101
+#: InternalStockRequestFulfill.php:295 Payments.php:1105
 #: SelectOrderItems.php:1484 SellThroughSupport.php:262
 #: SellThroughSupport.php:437 SuppContractChgs.php:76 SuppContractChgs.php:164
 #: SuppTransGLAnalysis.php:102 SuppTransGLAnalysis.php:213
@@ -7050,7 +7050,7 @@ msgid "Alloc"
 msgstr "Alloc"
 
 #: CustWhereAlloc.php:134 EmailCustTrans.php:10 SalesInquiry.php:964
-#: SupplierCredit.php:1106 Z_CheckAllocs.php:82
+#: SupplierCredit.php:1106 Z_CheckAllocs.php:82 sql/updates/9.php:59
 msgid "Credit Note"
 msgstr "Angalia mikopo"
 
@@ -7058,7 +7058,7 @@ msgstr "Angalia mikopo"
 #: PcAuthorizeExpenses.php:93 PcClaimExpensesFromTab.php:236
 #: PcClaimExpensesFromTab.php:395 PcReportTab.php:174 PcReportTab.php:333
 #: Z_CheckAllocs.php:84 Z_SalesIntegrityCheck.php:87
-#: Z_SalesIntegrityCheck.php:102
+#: Z_SalesIntegrityCheck.php:102 sql/updates/9.php:60
 msgid "Receipt"
 msgstr "Risiti"
 
@@ -7197,7 +7197,7 @@ msgstr "Mchakato wa Bajeti"
 
 #: CustomerAllocations.php:395 CustomerReceipt.php:1080
 #: InternalStockCategoriesByRole.php:133 InternalStockCategoriesByRole.php:219
-#: Payments.php:1091 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
+#: Payments.php:1095 PcAssignCashToTab.php:179 PcAssignCashToTab.php:390
 #: PcAuthorizeExpenses.php:320 PcClaimExpensesFromTab.php:173
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:341 PcExpensesTypeTab.php:139
 #: PcExpensesTypeTab.php:227 PcTabs.php:473 PcTypeTabs.php:244
@@ -7866,11 +7866,11 @@ msgstr "Risiti Entry"
 msgid "A bank account must be selected for this receipt"
 msgstr "akaunti ya benki lazima kuchaguliwa kwa ofisi hii"
 
-#: CustomerReceipt.php:60 Payments.php:721
+#: CustomerReceipt.php:60 Payments.php:725
 msgid "The bank account name cannot be retrieved because"
 msgstr "Jina ya akaunti ya benki hawezi kuwa retrieved sababu"
 
-#: CustomerReceipt.php:70 Payments.php:732
+#: CustomerReceipt.php:70 Payments.php:736
 msgid "The bank account number"
 msgstr "Idadi ya akaunti ya benki"
 
@@ -7890,11 +7890,11 @@ msgstr "Ya kazi badala ya kiwango cha aliingia lazima numeric"
 msgid "Changing the currency of the receipt means that existing entries need to be re-done - only customers trading in the selected currency can be selected"
 msgstr "Kubadilisha sarafu ya kupokewa kwa maana kwamba zilizopo entries haja ya kuwa na re-done - tu wateja wa biashara katika sarafu ya kuchaguliwa anaweza kuchaguliwa"
 
-#: CustomerReceipt.php:174 Payments.php:679
+#: CustomerReceipt.php:174 Payments.php:683
 msgid "No General Ledger code has been chosen"
 msgstr "Hakuna kificho Mkuu Ledger amechaguliwa"
 
-#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:663 Payments.php:679
+#: CustomerReceipt.php:174 GLJournal.php:169 Payments.php:667 Payments.php:683
 msgid "so this GL analysis item could not be added"
 msgstr "ili bidhaa hii GL uchambuzi inaweza kuwa aliongeza"
 
@@ -8010,7 +8010,7 @@ msgid "The customer details could not be retrieved because"
 msgstr "maelezo ya mteja inaweza kuwa retrieved sababu"
 
 #: CustomerReceipt.php:728 DailyBankTransactions.php:25
-#: MonthlyBankTransactions.php:23 Payments.php:762
+#: MonthlyBankTransactions.php:23 Payments.php:766
 msgid "The bank accounts could not be retrieved because"
 msgstr "akaunti ya benki inaweza kuwa retrieved sababu"
 
@@ -8042,8 +8042,8 @@ msgstr "sarafu Hakuna defined bado"
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr "Risiti hawezi kuwa aliingia mpaka sarafu hufafanuliwa"
 
-#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:850
-#: Payments.php:871
+#: CustomerReceipt.php:810 CustomerReceipt.php:828 Payments.php:854
+#: Payments.php:875
 msgid "Suggested rate:"
 msgstr "Alipendekeza kiwango:"
 
@@ -8055,11 +8055,11 @@ msgstr "Risiti Thamani ya Shilingi"
 msgid "The exchange rate between the currency of the bank account currency and the currency of the receipt"
 msgstr "Kiwango cha ubadilishaji kati ya sarafu ya fedha za akaunti ya benki na fedha ya ofisi ya"
 
-#: CustomerReceipt.php:836 Payments.php:880
+#: CustomerReceipt.php:836 Payments.php:884
 msgid "Functional Exchange Rate"
 msgstr "Kazi Thamani ya Shilingi"
 
-#: CustomerReceipt.php:838 Payments.php:882
+#: CustomerReceipt.php:838 Payments.php:886
 msgid "The exchange rate between the currency of the business (the functional currency) and the currency of the bank account"
 msgstr "Kiwango cha ubadilishaji kati ya fedha za biashara (sarafu kazi) na sarafu ya akaunti ya benki"
 
@@ -8071,7 +8071,7 @@ msgstr "Aina risiti"
 #: ExchangeRateTrend.php:50 FreightCosts.php:67 GLJournal.php:134
 #: GLJournal.php:373 InternalStockCategoriesByRole.php:132
 #: InternalStockCategoriesByRole.php:218 OffersReceived.php:112
-#: Payments.php:1090 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
+#: Payments.php:1094 PcAssignCashToTab.php:178 PcAssignCashToTab.php:389
 #: PcAuthorizeExpenses.php:319 PcClaimExpensesFromTab.php:172
 #: PcClaimExpensesFromTab.php:403 PcExpenses.php:340 PcExpensesTypeTab.php:138
 #: PcExpensesTypeTab.php:226 PcTabs.php:472 PcTypeTabs.php:243
@@ -8087,7 +8087,7 @@ msgstr "Banked"
 msgid "Banked into the"
 msgstr "Banked katika"
 
-#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:752
+#: CustomerReceipt.php:884 PO_Items.php:238 Payments.php:756
 #: SelectSalesOrder.php:226 SelectSalesOrder.php:387 SpecialOrder.php:466
 msgid "on"
 msgstr "juu"
@@ -8107,7 +8107,7 @@ msgstr "Alipokea"
 #: CustomerReceipt.php:893 GLAccountInquiry.php:186 GLAccountReport.php:340
 #: GLJournalInquiry.php:93 ImportBankTransAnalysis.php:204
 #: ImportBankTransAnalysis.php:288 InternalStockRequestFulfill.php:332
-#: Payments.php:1102 PcExpenses.php:190 PcExpenses.php:315
+#: Payments.php:1106 PcExpenses.php:190 PcExpenses.php:315
 #: SuppTransGLAnalysis.php:103 SupplierCredit.php:457 SupplierInvoice.php:792
 msgid "Tag"
 msgstr "Tag"
@@ -8125,12 +8125,12 @@ msgid "GL Receipt entry form"
 msgstr "GL Stakabadhi kuingia fomu"
 
 #: CustomerReceipt.php:993 GLAccountCSV.php:61 GLAccountInquiry.php:77
-#: GLAccountReport.php:271 Payments.php:956 StockAdjustments.php:491
+#: GLAccountReport.php:271 Payments.php:960 StockAdjustments.php:491
 #: SuppTransGLAnalysis.php:154
 msgid "Select Tag"
 msgstr "Tag kuchagua"
 
-#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1043
+#: CustomerReceipt.php:1022 GLBudgets.php:53 Payments.php:1047
 msgid "No General ledger accounts have been set up yet"
 msgstr "Hakuna akaunti kitabu Mkuu zimeanzishwa bado"
 
@@ -8138,7 +8138,7 @@ msgstr "Hakuna akaunti kitabu Mkuu zimeanzishwa bado"
 msgid "receipts cannot be entered against GL accounts until the GL accounts are set up"
 msgstr "risiti hawezi kuwa aliingia dhidi ya akaunti GL mpaka akaunti GL ni kuanzisha"
 
-#: CustomerReceipt.php:1062 Payments.php:1154
+#: CustomerReceipt.php:1062 Payments.php:1158
 msgid "Amount of Discount"
 msgstr "Kiasi cha Discount"
 
@@ -8635,7 +8635,7 @@ msgid "Select criteria for inquiry"
 msgstr "Kuchagua vigezo kwa ajili ya uchunguzi"
 
 #: DailyBankTransactions.php:36 MonthlyBankTransactions.php:34
-#: Payments.php:774 SuppPaymentRun.php:331
+#: Payments.php:778 SuppPaymentRun.php:331
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr "Benki akaunti bado defined. Lazima kwanza"
 
@@ -10690,6 +10690,7 @@ msgid "GRAND Total"
 msgstr "Grand Total"
 
 #: FixedAssetDepreciation.php:267 FixedAssetRegister.php:378
+#: sql/updates/9.php:85
 msgid "Depreciation"
 msgstr "Uchakavu"
 
@@ -11809,7 +11810,7 @@ msgstr "bajeti"
 msgid "General ledger account election"
 msgstr "Mkuu leja akaunti uchaguzi"
 
-#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1037
+#: GLBudgets.php:38 GLJournal.php:287 Payments.php:1041
 msgid "Select GL Account"
 msgstr "Kuchagua GL Akaunti"
 
@@ -11946,7 +11947,7 @@ msgstr "GL majarida yanayohusiana na akaunti ya benki hawezi kuwa aliingia"
 msgid "Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment"
 msgstr "Akaunti ya benki entries kitabu jumla lazima kuwa aliingia kwa aidha risiti ya akaunti ya benki au malipo ya akaunti ya benki"
 
-#: GLJournal.php:169 Payments.php:663
+#: GLJournal.php:169 Payments.php:667
 msgid "The manual GL code entered does not exist in the database"
 msgstr "GL mwongozo wa kanuni aliingia haipo katika orodha ya"
 
@@ -11978,7 +11979,7 @@ msgstr "Tag GL"
 msgid "Select a general ledger account code"
 msgstr "Kuchagua mkuu wa kitabu akaunti code"
 
-#: GLJournal.php:366 Payments.php:1065 Payments.php:1071
+#: GLJournal.php:366 Payments.php:1069 Payments.php:1075
 msgid "GL Narrative"
 msgstr "GL Hadithi"
 
@@ -15863,7 +15864,7 @@ msgstr "Kuchagua Period To:"
 msgid "and Month Ending"
 msgstr "na ikiwa ni pamoja na "
 
-#: MonthlyBankTransactions.php:155
+#: MonthlyBankTransactions.php:155 sql/updates/9.php:87
 #, fuzzy
 msgid "Opening Balance"
 msgstr "Usawa kama ilivyo"
@@ -16741,7 +16742,7 @@ msgid "Enter the date to which the transactions are to be listed"
 msgstr "Kuingia katika tarehe ambayo shughuli ni kuwa waliotajwa"
 
 #: PDFPeriodStockTransListing.php:43 PrintCustTrans.php:52
-#: PrintCustTransPortrait.php:50 SalesInquiry.php:963
+#: PrintCustTransPortrait.php:50 SalesInquiry.php:963 sql/updates/9.php:58
 msgid "Sales Invoice"
 msgstr "Mauzo ankara"
 
@@ -16750,23 +16751,23 @@ msgstr "Mauzo ankara"
 msgid "Sales Credit Note"
 msgstr "Mauzo ya Mikopo Kumbuka"
 
-#: PDFPeriodStockTransListing.php:45
+#: PDFPeriodStockTransListing.php:45 sql/updates/9.php:62
 msgid "Location Transfer"
 msgstr "Location Transfer"
 
-#: PDFPeriodStockTransListing.php:46
+#: PDFPeriodStockTransListing.php:46 sql/updates/9.php:63
 msgid "Stock Adjustment"
 msgstr "Hisa Adjustment"
 
-#: PDFPeriodStockTransListing.php:47
+#: PDFPeriodStockTransListing.php:47 sql/updates/9.php:70
 msgid "Purchase Order Delivery"
 msgstr "Kununua Order Delivery"
 
-#: PDFPeriodStockTransListing.php:48
+#: PDFPeriodStockTransListing.php:48 sql/updates/9.php:71
 msgid "Work Order Receipt"
 msgstr "Kazi Order risiti"
 
-#: PDFPeriodStockTransListing.php:49
+#: PDFPeriodStockTransListing.php:49 sql/updates/9.php:72
 msgid "Work Order Issue"
 msgstr "Kazi Order Suala"
 
@@ -16859,6 +16860,7 @@ msgid "Enter Another Date"
 msgstr "Kuingia mwingine Date"
 
 #: PDFPickingList.php:203 includes/PDFPickingListHeader.inc:13
+#: sql/updates/9.php:65
 msgid "Picking List"
 msgstr "Picking Orodha"
 
@@ -17901,7 +17903,7 @@ msgstr "Unaweza auktorisationer kuanzisha"
 #: PO_Items.php:692 PO_Items.php:695 PO_OrderDetails.php:88
 #: PO_PDFPurchOrder.php:202 PO_PDFPurchOrder.php:357
 #: PurchaseByPrefSupplier.php:293 SelectSalesOrder.php:226
-#: SelectSalesOrder.php:387 SpecialOrder.php:466
+#: SelectSalesOrder.php:387 SpecialOrder.php:466 sql/updates/9.php:64
 msgid "Purchase Order"
 msgstr "Kununua Order"
 
@@ -18825,7 +18827,7 @@ msgid "Go back"
 msgstr "Kurudi nyuma"
 
 #: PaymentAllocations.php:62 PaymentAllocations.php:63 Payments.php:613
-#: Payments.php:742 PrintCustStatements.php:382
+#: Payments.php:746 PrintCustStatements.php:382
 msgid "Payment"
 msgstr "Malipo"
 
@@ -19184,122 +19186,127 @@ msgstr "Hawezi Insert shughuli GL kwa ajili ya mikopo kwa sababu ya akaunti ya b
 msgid "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr "Hawezi Insert shughuli GL kwa ajili ya mikopo ya akaunti ya benki kwa kutumia SQL"
 
-#: Payments.php:634
+#: Payments.php:637
+#, fuzzy
+msgid "Allocate this payment"
+msgstr "Imeshindwa Shipment"
+
+#: Payments.php:638
 msgid "Enter another Payment for"
 msgstr "Malipo ya kuingia mwingine"
 
-#: Payments.php:637
+#: Payments.php:641
 msgid "Enter another General Ledger Payment"
 msgstr "Kuingia mwingine Mkuu Ledger Malipo"
 
-#: Payments.php:667
+#: Payments.php:671
 msgid "The Cheque/Voucher number has already been used"
 msgstr "Ya hundi / idadi Vocha tayari kutumika"
 
-#: Payments.php:667 Payments.php:676
+#: Payments.php:671 Payments.php:680
 msgid "This GL analysis item could not be added"
 msgstr "Bidhaa hii GL uchambuzi inaweza kuwa aliongeza"
 
-#: Payments.php:676
+#: Payments.php:680
 msgid "The cheque number has already been used"
 msgstr "idadi ya kuangalia tayari kutumika"
 
-#: Payments.php:722
+#: Payments.php:726
 msgid "SQL used to retrieve the bank account name was"
 msgstr "SQL kutumika Retrieve ya akaunti ya benki, jina lake"
 
-#: Payments.php:732
+#: Payments.php:736
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr "si kuweka juu kama akaunti ya benki na akaunti ya jumla halali kitabu"
 
-#: Payments.php:749
+#: Payments.php:753
 msgid "from the"
 msgstr "kutoka"
 
-#: Payments.php:794
+#: Payments.php:798
 msgid "Date Paid"
 msgstr "Kulipwa tarehe"
 
-#: Payments.php:801
+#: Payments.php:805
 msgid "Currency of Payment"
 msgstr "Sarafu ya Malipo ya"
 
-#: Payments.php:809
+#: Payments.php:813
 msgid "No currencies are defined yet. Payments cannot be entered until a currency is defined"
 msgstr "sarafu Hakuna defined bado. Matokeo hawezi kuwa aliingia mpaka sarafu hufafanuliwa"
 
-#: Payments.php:821
+#: Payments.php:825
 msgid "The transaction currency does not need to be the same as the bank account currency"
 msgstr "Sarafu ya manunuzi haina haja ya kuwa sawa na fedha za akaunti ya benki"
 
-#: Payments.php:829 Suppliers.php:803 Suppliers.php:1040
+#: Payments.php:833 Suppliers.php:803 Suppliers.php:1040
 msgid "Supplier Currency"
 msgstr "Wasambazaji Currency"
 
-#: Payments.php:863
+#: Payments.php:867
 msgid "Payment Exchange Rate"
 msgstr "Malipo Thamani ya Shilingi"
 
-#: Payments.php:865
+#: Payments.php:869
 msgid "The exchange rate between the currency of the bank account currency and the currency of the payment"
 msgstr "Kiwango cha ubadilishaji kati ya sarafu ya fedha za akaunti ya benki na sarafu ya malipo"
 
-#: Payments.php:886
+#: Payments.php:890
 msgid "Payment type"
 msgstr "Malipo ya aina"
 
-#: Payments.php:921
+#: Payments.php:925
 msgid "Cheque Number"
 msgstr "Hundi Idadi"
 
-#: Payments.php:922
+#: Payments.php:926
 msgid "(if using pre-printed stationery)"
 msgstr "(Kama kutumia kabla ya kuchapishwa vifaa vya)"
 
-#: Payments.php:935
+#: Payments.php:939
 msgid "Reference / Narrative"
 msgstr "Rejea / Hadithi"
 
-#: Payments.php:936
+#: Payments.php:940
 msgid "(Max. length 80 characters)"
 msgstr "(Max. urefu herufi 80)"
 
-#: Payments.php:950
+#: Payments.php:954
 msgid "General Ledger Payment Analysis Entry"
 msgstr "Malipo ya jumla Ledger Uchambuzi Entry"
 
-#: Payments.php:981 Payments.php:987
+#: Payments.php:985 Payments.php:991
 msgid "Enter GL Account Manually"
 msgstr "Akaunti ya kuingia GL manually"
 
-#: Payments.php:993
+#: Payments.php:997
 #, fuzzy
 msgid "Select GL Group"
 msgstr "Kuchagua GL Akaunti"
 
-#: Payments.php:1004
+#: Payments.php:1008
 #, fuzzy
 msgid "No General ledger account groups have been set up yet"
 msgstr "Hakuna akaunti kitabu Mkuu zimeanzishwa bado"
 
-#: Payments.php:1004 Payments.php:1043
+#: Payments.php:1008 Payments.php:1047
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr "Matokeo hawawezi kuchambuliwa dhidi ya akaunti GL mpaka akaunti GL ni kuanzisha"
 
-#: Payments.php:1059 Payments.php:1162
+#: Payments.php:1063 Payments.php:1166
 msgid "Cheque/Voucher Number"
 msgstr "Hundi / Vocha Idadi"
 
-#: Payments.php:1123
+#: Payments.php:1127
 #, fuzzy
 msgid "Are you sure you wish to delete this payment analysis item?"
 msgstr "Una uhakika unataka kufuta tawi?"
 
-#: Payments.php:1136 Payments.php:1166
+#: Payments.php:1140 Payments.php:1170
 msgid "Accept and Process Payment"
 msgstr "Kukubali na Malipo ya Mchakato"
 
-#: Payments.php:1146
+#: Payments.php:1150
 msgid "Amount of Payment"
 msgstr "Malipo ya kiasi cha"
 
@@ -19391,7 +19398,7 @@ msgid "You Must First Select a Petty Cash Tab To Authorise"
 msgstr "Lazima Kwanza Chagua Petty Cash Tab Ili Authorise"
 
 #: PcAuthorizeExpenses.php:44 PcAuthorizeExpenses.php:46 SuppLoginSetup.php:27
-#: sql/updates/12.php:220 sql/updates/42.php:37
+#: sql/updates/12.php:218 sql/updates/42.php:37
 msgid "Petty Cash"
 msgstr "Fedha ndogo ndogo"
 
@@ -23242,7 +23249,7 @@ msgstr "Aina ili"
 
 #: SalesInquiry.php:944 SelectCompletedOrder.php:65
 #: Z_SalesIntegrityCheck.php:123 includes/PDFSalesOrder_generic.inc:17
-#: includes/PDFSalesOrder_generic.inc:20
+#: includes/PDFSalesOrder_generic.inc:20 sql/updates/9.php:74
 msgid "Sales Order"
 msgstr "Mauzo Order"
 
@@ -29582,7 +29589,7 @@ msgstr "Haiwezi kuwa aliingia tena"
 msgid "Shipment charge against"
 msgstr "Transport kosa"
 
-#: SupplierInvoice.php:1127
+#: SupplierInvoice.php:1127 sql/updates/9.php:82
 msgid "Asset Addition"
 msgstr "Aidha mali"
 
@@ -29779,7 +29786,7 @@ msgid "There are no suppliers returned, one reason maybe no email addresses set 
 msgstr "Hakuna wauzaji walirudi, sababu moja labda email hakuna addresses kuweka kwa wauzaji hao"
 
 #: SupplierTenderCreate.php:704 SupplierTenders.php:77 SupplierTenders.php:155
-#: SupplierTenders.php:417 SupplierTenders.php:533
+#: SupplierTenders.php:417 SupplierTenders.php:533 sql/updates/9.php:78
 msgid "Tenders"
 msgstr "Zabuni"
 
@@ -34337,7 +34344,7 @@ msgstr "Majina ya shamba inaweza kupatikana hapa"
 msgid "File to import"
 msgstr "Picha ya kuagiza"
 
-#: Z_ImportFixedAssets.php:6
+#: Z_ImportFixedAssets.php:6 sql/updates/9.php:86
 msgid "Import Fixed Assets"
 msgstr "Kuagiza Fixed Assets"
 
@@ -34764,7 +34771,7 @@ msgstr "Kufanya Recalculation"
 #, fuzzy
 msgid "Are you sure you wish to re-post all general ledger transactions since the selected period this can take some time?"
 msgstr "Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?"
-"Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Una uhakika unataka tena baada ya malipo yote kitabu ujumla tangu kipindi cha kuchaguliwa\n"
+"Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Je una uhakika unataka upya baada ya kila shughuli leja mkuu tangu kipindi kuchaguliwa hii inaweza kuchukua muda ?Una uhakika unataka tena baada ya malipo yote kitabu ujumla tangu kipindi cha kuchaguliwa\n"
 "\t   .... hii inaweza kuchukua muda?"
 
 #: Z_RePostGLFromPeriod.php:58
@@ -38053,7 +38060,7 @@ msgstr "Jina kampuni abbreviation aliingia saa login lazima pia kuwa kampuni dir
 #, fuzzy
 msgid "to try logging in again"
 msgstr "kujaribu kuingia ndani tena"
-"kujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kukata magogo katika\n"
+"kujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kuingia ndani tenakujaribu kukata magogo katika\n"
 "tena"
 
 #: includes/ConnectDB_mariadb.inc:33 includes/ConnectDB_mysql.inc:21
@@ -41997,143 +42004,143 @@ msgstr "haikuweza iliyopita na utf8_general_ci"
 msgid "is already utf8_general_ci"
 msgstr "tayari ni utf8_general_ci"
 
-#: sql/updates/12.php:215
+#: sql/updates/12.php:213
 msgid "Order Entry/Inquiries customer access only"
 msgstr "Ili Entry / maulizo upatikanaji wateja tu"
 
-#: sql/updates/12.php:216
+#: sql/updates/12.php:214
 msgid "Basic Reports and Inquiries with selection options"
 msgstr "Msingi Ripoti na maulizo na chaguzi uteuzi"
 
-#: sql/updates/12.php:217
+#: sql/updates/12.php:215
 #, fuzzy
 msgid "Credit notes and AR management"
 msgstr "Kumbuka mikopo idadi"
 
-#: sql/updates/12.php:218
+#: sql/updates/12.php:216
 #, fuzzy
 msgid "Purchasing data/PO Entry/Reorder Levels "
 msgstr "Kudumisha reorder Ngazi"
 
-#: sql/updates/12.php:219
+#: sql/updates/12.php:217
 #, fuzzy
 msgid "Accounts Payable"
 msgstr "Jina akaunti"
 
-#: sql/updates/12.php:221
+#: sql/updates/12.php:219
 #, fuzzy
 msgid "Bank Reconciliations"
 msgstr "Benki ya Upatanisho"
 
-#: sql/updates/12.php:222
+#: sql/updates/12.php:220
 #, fuzzy
 msgid "General ledger reports/inquiries"
 msgstr "Ujumla Ledger Faida Kupoteza Uchunguzi"
 
-#: sql/updates/12.php:223 sql/updates/12.php:231
+#: sql/updates/12.php:221 sql/updates/12.php:229
 #, fuzzy
 msgid "Supplier centre - Supplier access only"
 msgstr "Wasambazaji Bakaa Kwa Suppliers kati"
 
-#: sql/updates/12.php:224
+#: sql/updates/12.php:222
 msgid "General Ledger Maintenance, stock valuation and Configuration"
 msgstr "Mkuu wa kitabu matengenezo, hisa na hesabu Upangiaji"
 
-#: sql/updates/12.php:225
+#: sql/updates/12.php:223
 #, fuzzy
 msgid "Inventory Management and Pricing"
 msgstr "Hesabu ya Mipango"
 
-#: sql/updates/12.php:226 sql/updates/12.php:227 sql/updates/12.php:228
+#: sql/updates/12.php:224 sql/updates/12.php:225 sql/updates/12.php:226
 msgid "Unknown"
 msgstr "haijulikani"
 
-#: sql/updates/12.php:229
+#: sql/updates/12.php:227
 #, fuzzy
 msgid "User Management and System Administration"
 msgstr "Tu System Administrator"
 
-#: sql/updates/12.php:481
+#: sql/updates/12.php:477
 msgid "The fixedassets table has been updated from stockmaster"
 msgstr "Meza fixedassets imekuwa updated kutoka stockmaster"
 
-#: sql/updates/12.php:483
+#: sql/updates/12.php:479
 msgid "The fixedassets table could not be updated from stockmaster"
 msgstr "Meza fixedassets haikuweza updated kutoka stockmaster"
 
-#: sql/updates/12.php:486
+#: sql/updates/12.php:482
 msgid "The fixedassets table is already correct"
 msgstr "Meza fixedassets tayari ni sahihi"
 
-#: sql/updates/12.php:512
+#: sql/updates/12.php:508
 msgid "The fixedassetcategories table has been updated from stockcategory"
 msgstr "Meza fixedassetcategories imekuwa updated kutoka stockcategory"
 
-#: sql/updates/12.php:514
+#: sql/updates/12.php:510
 msgid "The fixedassetcategories table could not be updated from stockcategory"
 msgstr "Meza fixedassetcategories haikuweza updated kutoka stockcategory"
 
-#: sql/updates/12.php:517
+#: sql/updates/12.php:513
 msgid "The fixedassetcategories table is already correct"
 msgstr "Meza fixedassetcategories tayari ni sahihi"
 
-#: sql/updates/12.php:529
+#: sql/updates/12.php:525
 msgid "The fixedassetcategories have been removed from stockcategory"
 msgstr "Fixedassetcategories zimeondolewa kutoka stockcategory"
 
-#: sql/updates/12.php:531
+#: sql/updates/12.php:527
 msgid "The fixedassetcategories table could not be removed from stockcategory"
 msgstr "Meza fixedassetcategories hakuweza kuondolewa kutoka stockcategory"
 
-#: sql/updates/12.php:534
+#: sql/updates/12.php:530
 msgid "The stockcategory table is already correct"
 msgstr "Meza stockcategory tayari ni sahihi"
 
-#: sql/updates/12.php:548 sql/updates/12.php:565
+#: sql/updates/12.php:544 sql/updates/12.php:561
 msgid "The fixed assets have been removed from stockitemproperties"
 msgstr "Mali ya kudumu zimeondolewa kutoka stockitemproperties"
 
-#: sql/updates/12.php:550 sql/updates/12.php:567
+#: sql/updates/12.php:546 sql/updates/12.php:563
 msgid "The fixed assets could not be removed from stockitemproperties"
 msgstr "Mali ya kudumu hakuweza kuondolewa kutoka stockitemproperties"
 
-#: sql/updates/12.php:553 sql/updates/12.php:570
+#: sql/updates/12.php:549 sql/updates/12.php:566
 msgid "The fixed assets have already been removed from stockitemproperties"
 msgstr "Mali ya kudumu tayari kuondolewa kutoka stockitemproperties"
 
-#: sql/updates/12.php:580
+#: sql/updates/12.php:576
 msgid "The fixed assets have been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu zimeondolewa kutoka stockserialitems , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:582
+#: sql/updates/12.php:578
 msgid "The fixed assets could not be removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu hakuweza kuondolewa kutoka stockserialitems , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:585
+#: sql/updates/12.php:581
 msgid "The fixed assets have already been removed from stockserialitems, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu tayari kuondolewa kutoka stockserialitems , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:599
+#: sql/updates/12.php:595
 msgid "The fixed assets have been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu zimeondolewa kutoka stockmoves , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:601
+#: sql/updates/12.php:597
 msgid "The fixed assets could not be removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu hakuweza kuondolewa kutoka stockmoves , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:604
+#: sql/updates/12.php:600
 msgid "The fixed assets have already been removed from stockmoves, stockmaster, and stockcategory tables"
 msgstr "Mali ya kudumu tayari kuondolewa kutoka stockmoves , stockmaster , na meza stockcategory"
 
-#: sql/updates/12.php:612 sql/updates/12.php:627
+#: sql/updates/12.php:608 sql/updates/12.php:623
 msgid "The fixed assets have been removed from stockmaster table"
 msgstr "Mali ya kudumu zimeondolewa kutoka meza stockmaster"
 
-#: sql/updates/12.php:614 sql/updates/12.php:629
+#: sql/updates/12.php:610 sql/updates/12.php:625
 msgid "The fixed assets could not be removed from stockmaster table"
 msgstr "Mali ya kudumu Isingeweza kuondolewa kutoka meza stockmaster"
 
-#: sql/updates/12.php:617 sql/updates/12.php:632
+#: sql/updates/12.php:613 sql/updates/12.php:628
 msgid "The fixed assets have already been removed from stockmaster table"
 msgstr "Mali ya kudumu tayari kuondolewa kutoka meza stockmaster"
 
@@ -42948,6 +42955,101 @@ msgstr "unapaswa kufanya moja wasambazaji tu muuzaji wa preferred"
 msgid "Import Sales Prices From CSV File"
 msgstr "Mauzo ya Bei kuagiza Orodha"
 
+#: sql/updates/9.php:54
+#, fuzzy
+msgid "Journal - GL"
+msgstr "Journal"
+
+#: sql/updates/9.php:55
+#, fuzzy
+msgid "Payment - GL"
+msgstr "Malipo"
+
+#: sql/updates/9.php:56
+#, fuzzy
+msgid "Receipt - GL"
+msgstr "Risiti"
+
+#: sql/updates/9.php:57
+#, fuzzy
+msgid "Standing Journal"
+msgstr "Amesimama ili"
+
+#: sql/updates/9.php:61
+#, fuzzy
+msgid "Journal - Debtors"
+msgstr "Journal Entry"
+
+#: sql/updates/9.php:66
+#, fuzzy
+msgid "Purchase Invoice"
+msgstr "Mchakato ankara"
+
+#: sql/updates/9.php:67
+#, fuzzy
+msgid "Debit Note"
+msgstr "Angalia mikopo"
+
+#: sql/updates/9.php:68
+#, fuzzy
+msgid "Creditors Payment"
+msgstr "Malipo ya wateja"
+
+#: sql/updates/9.php:69
+#, fuzzy
+msgid "Creditors Journal"
+msgstr "Uchakavu Journal"
+
+#: sql/updates/9.php:73
+#, fuzzy
+msgid "Work Order Variance"
+msgstr "Kazi Order Reference"
+
+#: sql/updates/9.php:75
+#, fuzzy
+msgid "Shipment Close"
+msgstr "Transport Kukadiria Gharama"
+
+#: sql/updates/9.php:76
+#, fuzzy
+msgid "Contract Close"
+msgstr "Kuwasiliana na Kanuni"
+
+#: sql/updates/9.php:77
+#, fuzzy
+msgid "Cost Update"
+msgstr "Gharama hisa Mwisho"
+
+#: sql/updates/9.php:79
+#, fuzzy
+msgid "Stock Requests"
+msgstr "Kuonyesha Mali"
+
+#: sql/updates/9.php:80
+#, fuzzy
+msgid "Exchange Difference"
+msgstr "Kubadilishana tofauti ya"
+
+#: sql/updates/9.php:81
+#, fuzzy
+msgid "Work Order"
+msgstr "Kazi ili"
+
+#: sql/updates/9.php:83
+#, fuzzy
+msgid "Asset Category Change"
+msgstr "Mali Jamii "
+
+#: sql/updates/9.php:84
+#, fuzzy
+msgid "Delete w/down asset"
+msgstr "Kufuta mali"
+
+#: sql/updates/9.php:88
+#, fuzzy
+msgid "Auto Debtor Number"
+msgstr "Hakuna Idadi deni"
+
 #~ msgid "Select from a list of your commonly used tasks"
 #~ msgstr "Kuchagua kutoka orodha ya majukumu yako ya kawaida kutumika"
 
@@ -43370,9 +43472,6 @@ msgstr "Mauzo ya Bei kuagiza Orodha"
 
 #~ msgid "Select an existing outstanding work order"
 #~ msgstr "Kuchagua kazi bora zilizopo ili"
-
-#~ msgid "Work Order Reference"
-#~ msgstr "Kazi Order Reference"
 
 #~ msgid "Factory Location"
 #~ msgstr "Kiwanda Location"
