@@ -350,7 +350,7 @@ if ($_SESSION['PO' . $identifier]->SomethingReceived() == 0 and isset($_POST['Pr
 					</table>';
 			}
 			echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Select a different purchase order for receiving goods against') . '</a></div>';
-			echo '<div class="centre"><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNumber . '">' . _('Re-read the updated purchase order for receiving goods against') . '</a></div>';
+			echo '<div class="centre"><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO' . $identifier]->OrderNo . '">' . _('Re-read the updated purchase order for receiving goods against') . '</a></div>';
 			unset($_SESSION['PO' . $identifier]->LineItems);
 			unset($_SESSION['PO' . $identifier]);
 			unset($_POST['ProcessGoodsReceived']);
