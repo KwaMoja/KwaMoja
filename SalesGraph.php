@@ -88,7 +88,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 				</td>
 			</tr>';
 
-	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas");
+	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescriptions");
 
 	if (!isset($_POST['SalesArea'])) {
 		$_POST['SalesArea'] = '';
@@ -112,7 +112,7 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 				</td>
 			</tr>';
 
-	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory");
+	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
@@ -142,9 +142,10 @@ if ((!isset($_POST['FromPeriod']) or !isset($_POST['ToPeriod'])) or $SelectADiff
 
 	$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 	if ($_SESSION['SalesmanLogin'] != '') {
-		$SQL .= " WHERE salesmancode='" . $_SESSION['SalesmanLogin'] . "'";
+		$SQL .= " WHERE salesmancode='" . $_SESSION['SalesmanLogin'] . "' ORDER BY salesmanname";
 		$_POST['Salesperson'] = $_SESSION['SalesmanLogin'];
 	} else if (!isset($_POST['SalesmanCode'])) {
+		$SQL .= ' ORDER BY salesmanname';
 		$_POST['SalesmanCode'] = 'All';
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
 	} else {
