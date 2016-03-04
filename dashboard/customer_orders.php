@@ -48,15 +48,15 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<table  style="max-width:100%;width:99%;" border="0" cellspacing="0" cellpadding="2">
       <tr>
         <th colspan="6" style="margin:0px;padding:0px;background: transparent;">
 			<div class="CanvasTitle">' . _('Latest customer orders') . '
-				<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+				<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 			</div>
         </th>
       </tr>';
@@ -86,7 +86,7 @@ $SQL = 'SELECT salesorders.orderno,
 					salesorders.orddate
 			ORDER BY salesorders.orderno LIMIT 5';
 
-$SalesOrdersResult = DB_query($SQL, $db);
+$SalesOrdersResult = DB_query($SQL);
 
 $TotalSalesOrders = 0;
 echo '<tr>
@@ -105,7 +105,7 @@ while ($row = DB_fetch_array($SalesOrdersResult)) {
 		$k = 0;
 	} else {
 		echo '<tr class="OddTableRows">';
-		$k++;
+		++$k;
 	}
 
 	$FormatedOrderValue = locale_number_format($row['ordervalue'], $row['currdecimalplaces']);

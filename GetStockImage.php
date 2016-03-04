@@ -1,7 +1,9 @@
 <?php
 
+include('includes/session.inc');
+
 /*
- * http:///KwaMoja/GetStockImage.php?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
+ * /GetStockImage.php?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
  *
  * automake - if specified allows autocreate images
  * stockid - if not specified it produces a blank image if set to empty string uses default stock image
@@ -54,18 +56,11 @@ function DecodeBgColor($ColourStr) {
 		);
 }
 
-if (!function_exists('imagecreatefrompng')) {
-	$Title = _('Image Manipulation Script Problem');
-	include('includes/header.inc');
-	prnMsg(_('This script requires the gd image functions to be available to php - this needs to be enabled in your server php version before this script can be used'), 'error');
-	include('includes/footer.inc');
-	exit;
-}
 $DefaultImage = 'DefaultItem.png';
 
 $FilePath = $_SESSION['part_pics_dir'] . '/';
 
-$StockID = trim(mb_strtoupper($_GET['StockID']));
+$StockId = trim(mb_strtoupper($_GET['StockID']));
 if (isset($_GET['bgcolor']))
 	$BackgroundColour = $_GET['bgcolor'];
 if (isset($_GET['textcolor']))
@@ -108,17 +103,17 @@ if (isset($_GET['notextbg'])) {
 }
 
 // Extension requirements and Stock ID Isolation
-if ($StockID == '') {
-	$StockID = $DefaultImage;
+if ($StockId == '') {
+	$StockId = $DefaultImage;
 	$blanktext = true;
 }
 
-$i = strrpos($StockID, '.');
+$i = strrpos($StockId, '.');
 if ($i === false)
 	$type = 'png';
 else {
-	$type = strtolower(mb_substr($StockID, $i + 1, mb_strlen($StockID)));
-	$StockID = mb_substr($StockID, 0, $i);
+	$type = strtolower(mb_substr($StockId, $i + 1, mb_strlen($StockId)));
+	$StockId = mb_substr($StockId, 0, $i);
 	if ($blanktext and !isset($text))
 		$text = '';
 }
@@ -129,16 +124,16 @@ if ($style == 'jpg') {
 	$functype = 'jpeg';
 }
 
-$tmpFileName = $FilePath . $StockID;
+$tmpFileName = $FilePath . $StockId;
 // First check for an image this is not the type requested
 if (file_exists($tmpFileName . '.jpg')) {
-	$FileName = $StockID . '.jpg';
+	$FileName = $StockId . '.jpg';
 	$IsJpeg = true;
 } elseif (file_exists($tmpFileName . '.jpeg')) {
-	$FileName = $StockID . '.jpeg';
+	$FileName = $StockId . '.jpeg';
 	$IsJpeg = true;
 } elseif (file_exists($tmpFileName . '.png')) {
-	$FileName = $StockID . '.png';
+	$FileName = $StockId . '.png';
 	$IsJpeg = false;
 } else {
 	$FileName = $DefaultImage;
@@ -201,7 +196,7 @@ if ($automake and !isset($FileName)) {
 	}
 
 	if (!isset($text))
-		$text = $StockID;
+		$text = $StockId;
 	if (mb_strlen($text) > 0) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
@@ -300,7 +295,7 @@ if ($automake and !isset($FileName)) {
 	//	$ixtextbgcolor = imagecolorallocatealpha($im,
 	//		0,0,0,0);
 	if (!isset($text))
-		$text = $StockID;
+		$text = $StockId;
 	if (mb_strlen($text) > 0) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
@@ -326,7 +321,7 @@ if ($bevel) {
 	imageline($im, imagesx($im) - 1, 0, imagesx($im) - 1, imagesy($im) - 1, $silver); // right
 }
 // Set up headers
-header('Content-Disposition: filename=' . $StockID . '.' . $type);
+header('Content-Disposition: filename=' . $StockId . '.' . $type);
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 header('Content-type: image/' . $style);

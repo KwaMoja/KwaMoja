@@ -19,6 +19,18 @@ font-family:inherit;
 a {
 color:blue;
 text-decoration:none;
+display:block;
+}
+
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
 }
 
 a:hover {
@@ -144,7 +156,7 @@ color:#300;
 text-align:right;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 

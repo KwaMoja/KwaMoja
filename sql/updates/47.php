@@ -12,42 +12,42 @@ CreateTable('fixedassettasks',
   PRIMARY KEY (`taskid`),
   KEY `assetid` (`assetid`),
   KEY `userresponsible` (`userresponsible`)
-)", $db);
+)");
 
-NewConfigValue('ShopName', '', $db);
-NewConfigValue('ShopContactUs', '', $db);
-NewConfigValue('ShopPrivacyStatement', '', $db);
-NewConfigValue('ShopFreightPolicy', '', $db);
-NewConfigValue('ShopTermsConditions', '', $db);
-NewConfigValue('ShopDebtorNo', '', $db);
-NewConfigValue('ShopBranchCode', '', $db);
-NewConfigValue('ShopAboutUs', '', $db);
-NewConfigValue('ShopMode', '', $db);
-NewConfigValue('ShopPayPalUser', '', $db);
-NewConfigValue('ShopPayPalPassword', '', $db);
-NewConfigValue('ShopPayPalSignature', '', $db);
-NewConfigValue('ShopPayPalProUser', '', $db);
-NewConfigValue('ShopPayPalProPassword', '', $db);
-NewConfigValue('ShopPayPalProSignature', '', $db);
-NewConfigValue('ShopCreditCardGateway', 'PayFlowPro', $db);
-NewConfigValue('ShopPayFlowUser', '', $db);
-NewConfigValue('ShopPayFlowPassword', '', $db);
-NewConfigValue('ShopPayFlowVendor', '', $db);
-NewConfigValue('ShopPayFlowMerchant', '', $db);
-NewConfigValue('ShopAllowPayPal', '1', $db);
-NewConfigValue('ShopAllowCreditCards', '1', $db);
-NewConfigValue('ShopAllowBankTransfer', '1', $db);
-NewConfigValue('ShopAllowSurcharges', '1', $db);
-NewConfigValue('ShopPayPalSurcharge', '0.034', $db);
-NewConfigValue('ShopBankTransferSurcharge', '0.0', $db);
-NewConfigValue('ShopCreditCardSurcharge', '0.029', $db);
-NewConfigValue('ShopPayPalBankAccount', '1030', $db);
-NewConfigValue('ShopCreditCardBankAccount', '1030', $db);
-NewConfigValue('ShopSwipeHQMerchantID', '', $db);
-NewConfigValue('ShopSwipeHQAPIKey', '', $db);
-NewConfigValue('ShopSurchargeStockID', '', $db);
-NewConfigValue('ItemDescriptionLanguages', '', $db);
-NewConfigValue('SmtpSetting', '', $db);
+NewConfigValue('ShopName', '');
+NewConfigValue('ShopContactUs', '');
+NewConfigValue('ShopPrivacyStatement', '');
+NewConfigValue('ShopFreightPolicy', '');
+NewConfigValue('ShopTermsConditions', '');
+NewConfigValue('ShopDebtorNo', '');
+NewConfigValue('ShopBranchCode', '');
+NewConfigValue('ShopAboutUs', '');
+NewConfigValue('ShopMode', '');
+NewConfigValue('ShopPayPalUser', '');
+NewConfigValue('ShopPayPalPassword', '');
+NewConfigValue('ShopPayPalSignature', '');
+NewConfigValue('ShopPayPalProUser', '');
+NewConfigValue('ShopPayPalProPassword', '');
+NewConfigValue('ShopPayPalProSignature', '');
+NewConfigValue('ShopCreditCardGateway', 'PayFlowPro');
+NewConfigValue('ShopPayFlowUser', '');
+NewConfigValue('ShopPayFlowPassword', '');
+NewConfigValue('ShopPayFlowVendor', '');
+NewConfigValue('ShopPayFlowMerchant', '');
+NewConfigValue('ShopAllowPayPal', '1');
+NewConfigValue('ShopAllowCreditCards', '1');
+NewConfigValue('ShopAllowBankTransfer', '1');
+NewConfigValue('ShopAllowSurcharges', '1');
+NewConfigValue('ShopPayPalSurcharge', '0.034');
+NewConfigValue('ShopBankTransferSurcharge', '0.0');
+NewConfigValue('ShopCreditCardSurcharge', '0.029');
+NewConfigValue('ShopPayPalBankAccount', '1030');
+NewConfigValue('ShopCreditCardBankAccount', '1030');
+NewConfigValue('ShopSwipeHQMerchantID', '');
+NewConfigValue('ShopSwipeHQAPIKey', '');
+NewConfigValue('ShopSurchargeStockID', '');
+NewConfigValue('ItemDescriptionLanguages', '');
+NewConfigValue('SmtpSetting', '');
 
 CreateTable('stockdescriptiontranslations',
 "CREATE TABLE IF NOT EXISTS `stockdescriptiontranslations` (
@@ -55,13 +55,12 @@ CreateTable('stockdescriptiontranslations',
   `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
   `descriptiontranslation` varchar(50) NOT NULL,
   PRIMARY KEY (`stockid`,`language_id`)
-)"
-,$db);
+)");
 
-AddColumn('language_id', 'debtorsmaster', 'VARCHAR( 10 )', 'NOT NULL', 'en_GB.utf8', 'typeid', $db);
-AddColumn('salesperson', 'debtortrans', 'VARCHAR( 4 )', 'NOT NULL', 'DE', 'packages', $db);
+AddColumn('language_id', 'debtorsmaster', 'VARCHAR( 10 )', 'NOT NULL', 'en_GB.utf8', 'typeid');
+AddColumn('salesperson', 'debtortrans', 'VARCHAR( 4 )', 'NOT NULL', 'DE', 'packages');
 
-AddIndex(array('salesperson'), 'debtortrans', 'salesperson', $db);
+AddIndex(array('salesperson'), 'debtortrans', 'salesperson');
 
 CreateTable('manufacturers',
 "CREATE TABLE IF NOT EXISTS `manufacturers` (
@@ -71,8 +70,7 @@ CreateTable('manufacturers',
   `manufacturers_image` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`manufacturers_id`),
   KEY (`manufacturers_name`)
-)",
-$db);
+)");
 
 CreateTable('salescattranslations',
 "CREATE TABLE IF NOT EXISTS `salescattranslations` (
@@ -80,14 +78,13 @@ CreateTable('salescattranslations',
   `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
   `salescattranslation` varchar(40) NOT NULL,
   PRIMARY KEY (`salescatid`,`language_id`)
-)",
-$db);
+)");
 
-AddColumn('manufacturers_id', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'stockid', $db);
-AddColumn('featured', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'manufacturers_id', $db);
+AddColumn('manufacturers_id', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'stockid');
+AddColumn('featured', 'salescatprod', 'INT( 11 )', 'NOT NULL', '0', 'manufacturers_id');
 
-AddIndex(array('manufacturers_id'), 'salescatprod', 'manufacturers_id', $db);
+AddIndex(array('manufacturers_id'), 'salescatprod', 'manufacturers_id');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

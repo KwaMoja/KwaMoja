@@ -1,7 +1,7 @@
 <?php
 
-NewScript('Z_ChangeGLAccountCode.php',  '15', $db);
+NewScript('Z_ChangeGLAccountCode.php',  '15');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

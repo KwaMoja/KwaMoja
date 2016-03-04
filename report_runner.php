@@ -3,11 +3,9 @@
 //--------------------------------------------------------------------
 // report_runner.php
 // This program is designed to run reports in batch command mode for
-// kwamoja. Much thanks to Phil Daintree as the major author of KWAMOJA.
 //
 // --------------------------------------------------------------------
 // Written by Alan B Jones (mor3ton@yahoo.com)
-// based on code orgiginally from kwamoja
 // (c) alan jones 2006.
 // (c) 2006 logic works Ltd and others
 // licenced under the terms of the GPL V(2)
@@ -17,9 +15,8 @@
 //--------------------------------------------------------------------
 //you must tell the script where you main installation is located
 //Rememeber this is different for each location
-//$kwamoja_home=/srv/www/htdocs/kwamoja
 
-$usage = "USAGE\n" . $argv[0] . ":\n" . "     -r reportnumber (the number of the kwamoja report)\n" . "     -n reportname   (the name you want to give the report)\n" . "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n" . "     -d database name (the mysql db to use for the data for the report)\n" . "     [-t reporttext ]  (some words you want to send with the report-optional)\n" . "     [ -H kwamojaHOME]  (the home directory for kwamoja - or edit the php file)\n";
+$usage = "USAGE\n" . $argv[0] . ":\n" . "     -r reportnumber (the number of the report)\n" . "     -n reportname   (the name you want to give the report)\n" . "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n" . "     -d database name (the mysql db to use for the data for the report)\n" . "     [-t reporttext ]  (some words you want to send with the report-optional)\n" . "     [ -H HOMEDIR]  (the home directory for" .  $ProjectName . " - or edit the php file)\n";
 
 if ($argc < 7) {
 	echo $usage;
@@ -28,28 +25,28 @@ if ($argc < 7) {
 for ($i = 1; $i < $argc; $i++) {
 	switch ($argv[$i]) {
 		case '-r':
-			$i++;
+			++$i;
 			$reportnumber = $argv[$i];
 			break;
 		case '-n':
-			$i++;
+			++$i;
 			$reportname = $argv[$i];
 			break;
 		case '-e':
-			$i++;
+			++$i;
 			$emailaddresses = $argv[$i];
 			break;
 		case '-d':
-			$i++;
+			++$i;
 			$DatabaseName = $argv[$i];
 			break;
 		case '-H':
-			$i++;
-			$KWAMOJAHOME = $argv[$i];
+			++$i;
+			$HOMEDIR = $argv[$i];
 			break;
 		case '-t':
-			$i++;
-			$mailtext = $argv[$i];
+			++$i;
+			$Mailtext = $argv[$i];
 			break;
 		default:
 			echo "unknown option" . $argv[$i] . "\n";
@@ -64,15 +61,15 @@ if (($reportname == "") or ($reportnumber == "") or ($emailaddresses == "")) {
 	exit;
 }
 // do we have a variable
-if ($KWAMOJAHOME != "") {
-	$kwamoja_home = $KWAMOJAHOME;
+if ($HOMEDIR != "") {
+	$home = $HOMEDIR;
 }
 
-if ($kwamoja_home == "") {
-	echo "kwamoja home is not set in this file or -H is not set";
+if ($home == "") {
+	echo "THe home folder is not set in this file or -H is not set";
 }
-// change directory to the kwamoja home to get all the includes to work nicely
-chdir($kwamoja_home);
+// change directory to the home directory to get all the includes to work nicely
+chdir($home);
 
 // get me the report name from the command line
 
@@ -90,39 +87,39 @@ include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/PDFSalesAnalysis.inc');
 
 include('includes/htmlMimeMail.php');
-$mail = new htmlMimeMail();
+$Mail = new htmlMimeMail();
 
 if ($Counter > 0) {
 	/* the number of lines of the sales report is more than 0  ie there is a report to send! */
-	$pdfcode = $pdf->output();
+	$PDFcode = $PDF->output();
 	$fp = fopen($_SESSION['reports_dir'] . "/" . $reportname, "wb");
-	fwrite($fp, $pdfcode);
+	fwrite($fp, $PDFcode);
 	fclose($fp);
 
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . "/" . $reportname);
-	$mail->setText($mailtext . "\nPlease find herewith " . $reportname . "  report");
-	$mail->setSubject($reportname . " Report");
-	$mail->addAttachment($attachment, $reportname, 'application/pdf');
+	$attachment = $Mail->getFile($_SESSION['reports_dir'] . "/" . $reportname);
+	$Mail->setText($Mailtext . "\nPlease find herewith " . $reportname . "  report");
+	$Mail->setSubject($reportname . " Report");
+	$Mail->addAttachment($attachment, $reportname, 'application/pdf');
 	if ($_SESSION['SmtpSetting'] == 0) {
-		$mail->setFrom("");
-		$result = $mail->send($Recipients);
+		$Mail->setFrom("");
+		$Result = $Mail->send($Recipients);
 	} else {
-		$result = SendmailBySmtp($mail, $Recipients);
+		$Result = SendmailBySmtp($Mail, $Recipients);
 	}
 
 } else {
-	$mail->setText("Error running automated sales report number $ReportID");
+	$Mail->setText("Error running automated sales report number $ReportID");
 	if ($_SESSION['SmtpSetting'] == 0) {
-		$mail->setFrom("Do_not_reply_" . $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
-		$result = $mail->send($Recipients);
+		$Mail->setFrom("Do_not_reply_" . $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+		$Result = $Mail->send($Recipients);
 	} else {
-		$result = SendmailBySmtp($mail, $Recipients);
+		$Result = SendmailBySmtp($Mail, $Recipients);
 	}
 	if ($_SESSION['SmtpSetting'] == 0) {
-		$mail->setFrom("Do_not_reply_" . $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
-		$result = $mail->send($Recipients);
+		$Mail->setFrom("Do_not_reply_" . $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+		$Result = $Mail->send($Recipients);
 	} else {
-		$result = SendmailBySmtp($mail, $Recipients);
+		$Result = SendmailBySmtp($Mail, $Recipients);
 	}
 }
 

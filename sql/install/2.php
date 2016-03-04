@@ -9,7 +9,7 @@ CreateTable('abcstock',
   KEY `abcstock_ibfk_2` (`stockid`),
   CONSTRAINT `abcstock_ibfk_1` FOREIGN KEY (`groupid`) REFERENCES `abcgroups` (`groupid`),
   CONSTRAINT `abcstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-)", $db);
+)");
 
 
 ?>

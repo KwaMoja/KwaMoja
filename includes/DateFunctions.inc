@@ -14,7 +14,7 @@ or d.m.Y  for Germany ;) Juergen Ruemmler heinrich@ruemmler.net
 
 */
 
-function Is_date($DateEntry) {
+function is_date($DateEntry) {
 
 	$DateEntry = Trim($DateEntry);
 
@@ -82,7 +82,7 @@ function Is_date($DateEntry) {
 		return 0;
 	}
 
-} //end of Is_Date function
+} //end of is_date function
 
 
 function MonthAndYearFromSQLDate($DateEntry) {
@@ -175,7 +175,7 @@ function GetWeekDayText($WeekDayNumber) {
 }
 
 function DisplayDateTime() {
-	return GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('G:i');
+	return _(date('l j F G:i'));
 }
 
 function DayOfWeekFromSQLDate($DateEntry) {
@@ -1002,18 +1002,18 @@ function CalcEarliestDispatchDate() {
 	return $EarliestDispatch;
 }
 
-function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
+function CreatePeriod($PeriodNo, $PeriodEnd) {
 	$GetPrdSQL = "INSERT INTO periods (periodno,
 													lastdate_in_period)
 												VALUES (
 													'" . $PeriodNo . "',
 													'" . Date('Y-m-d', $PeriodEnd) . "')";
 	$ErrMsg = _('An error occurred in adding a new period number');
-	$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 }
 
-function PeriodExists($TransDate, &$db) {
+function PeriodExists($TransDate) {
 
 	/* Find the date a month on */
 	$MonthAfterTransDate = Mktime(0, 0, 0, Date('m', $TransDate) + 1, Date('d', $TransDate), Date('Y', $TransDate));
@@ -1021,7 +1021,7 @@ function PeriodExists($TransDate, &$db) {
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 	if (DB_num_rows($GetPrdResult) == 0) {
 		return false;
@@ -1031,7 +1031,7 @@ function PeriodExists($TransDate, &$db) {
 
 }
 
-function GetPeriod($TransDate, &$db, $UseProhibit = true) {
+function GetPeriod($TransDate, $UseProhibit = true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
 
@@ -1053,7 +1053,7 @@ function GetPeriod($TransDate, &$db, $UseProhibit = true) {
 		$TransDate = mktime(0, 0, 0, $Date_Array[1], $Date_Array[2], $Date_Array[0]);
 	}
 
-	if (Is_Date(ConvertSQLDate($_SESSION['ProhibitPostingsBefore'])) and $UseProhibit) { //then the ProhibitPostingsBefore configuration is set
+	if (is_date(ConvertSQLDate($_SESSION['ProhibitPostingsBefore'])) and $UseProhibit) { //then the ProhibitPostingsBefore configuration is set
 		$Date_Array = explode('-', $_SESSION['ProhibitPostingsBefore']);
 		$ProhibitPostingsBefore = mktime(0, 0, 0, $Date_Array[1], $Date_Array[2], $Date_Array[0]);
 
@@ -1063,30 +1063,30 @@ function GetPeriod($TransDate, &$db, $UseProhibit = true) {
 		}
 	}
 	/* Find the unix timestamp of the last period end date in periods table */
-	$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
-	if (is_null($myrow[0])) {
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d', mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))) . "')", $db, _('Could not insert first period'));
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d', mktime(0, 0, 0, Date('m') + 2, 0, Date('Y'))) . "')", $db, _('Could not insert second period'));
+	if (is_null($MyRow[0])) {
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d', mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))) . "')", _('Could not insert first period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d', mktime(0, 0, 0, Date('m') + 2, 0, Date('Y'))) . "')", _('Could not insert second period'));
 		$LastPeriod = 1;
 		$LastPeriodEnd = mktime(0, 0, 0, Date('m') + 2, 0, Date('Y'));
 	} else {
-		$Date_Array = explode('-', $myrow[0]);
+		$Date_Array = explode('-', $MyRow[0]);
 		$LastPeriodEnd = mktime(0, 0, 0, $Date_Array[1] + 1, 0, (int) $Date_Array[0]);
-		$LastPeriod = $myrow[1];
+		$LastPeriod = $MyRow[1];
 	}
 	/* Find the unix timestamp of the first period end date in periods table */
-	$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	$Date_Array = explode('-', $myrow[0]);
+	$SQL = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	$Date_Array = explode('-', $MyRow[0]);
 	$FirstPeriodEnd = mktime(0, 0, 0, $Date_Array[1], 0, (int) $Date_Array[0]);
-	$FirstPeriod = $myrow[1];
+	$FirstPeriod = $MyRow[1];
 
 	/* If the period number doesn't exist */
-	if (!PeriodExists($TransDate, $db)) {
+	if (!PeriodExists($TransDate)) {
 		/* if the transaction is after the last period */
 
 		if ($TransDate > $LastPeriodEnd) {
@@ -1100,14 +1100,14 @@ function GetPeriod($TransDate, &$db, $UseProhibit = true) {
 					$LastPeriodEnd = mktime(0, 0, 0, 2, 0, Date('Y', $LastPeriodEnd) + 1);
 				}
 				$LastPeriod++;
-				CreatePeriod($LastPeriod, $LastPeriodEnd, $db);
+				CreatePeriod($LastPeriod, $LastPeriodEnd);
 			}
 		} else {
 			/* The transaction is before the first period */
 			$PeriodEnd = mktime(0, 0, 0, Date('m', $TransDate), 0, Date('Y', $TransDate));
 			$Period = $FirstPeriod - 1;
 			while ($FirstPeriodEnd > $PeriodEnd) {
-				CreatePeriod($Period, $FirstPeriodEnd, $db);
+				CreatePeriod($Period, $FirstPeriodEnd);
 				$Period--;
 				if (Date('m', $FirstPeriodEnd) > 0) {
 					$FirstPeriodEnd = mktime(0, 0, 0, Date('m', $FirstPeriodEnd), 0, Date('Y', $FirstPeriodEnd));
@@ -1116,15 +1116,15 @@ function GetPeriod($TransDate, &$db, $UseProhibit = true) {
 				}
 			}
 		}
-	} else if (!PeriodExists(mktime(0, 0, 0, Date('m', $TransDate) + 1, Date('d', $TransDate), Date('Y', $TransDate)), $db)) {
+	} else if (!PeriodExists(mktime(0, 0, 0, Date('m', $TransDate) + 1, Date('d', $TransDate), Date('Y', $TransDate)))) {
 		/* Make sure the following months period exists */
-		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_row($result);
-		$Date_Array = explode('-', $myrow[0]);
+		$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		$Date_Array = explode('-', $MyRow[0]);
 		$LastPeriodEnd = mktime(0, 0, 0, $Date_Array[1] + 2, 0, (int) $Date_Array[0]);
-		$LastPeriod = $myrow[1];
-		CreatePeriod($LastPeriod + 1, $LastPeriodEnd, $db);
+		$LastPeriod = $MyRow[1];
+		CreatePeriod($LastPeriod + 1, $LastPeriodEnd);
 	}
 
 	/* Now return the period number of the transaction */
@@ -1136,10 +1136,10 @@ function GetPeriod($TransDate, &$db, $UseProhibit = true) {
 					AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
-	$myrow = DB_fetch_row($GetPrdResult);
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
+	$MyRow = DB_fetch_row($GetPrdResult);
 
-	return $myrow[0];
+	return $MyRow[0];
 }
 
 ?>

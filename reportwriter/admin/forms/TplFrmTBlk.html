@@ -116,23 +116,23 @@ document.onmousedown = mouseSelect;
 		</select></div>
 	  </td>
       <td><select name="Processing">
-        <?php foreach($TextProcessing as $key => $value) {
-			if ($Params['Processing']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+        <?php foreach($TextProcessing as $Key => $Value) {
+			if ($Params['Processing']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?></select></td>
     </tr>
     <tr bordercolor="#FFFFFF" bgcolor="#CCCCCC">
       <td colspan="4"><div align="center"><?php echo RPT_FLDLIST; ?></div></td>
     </tr>
 	<?php if (is_array($Params['Seq'])) {
-		while ($myrow = array_shift($Params['Seq'])) {
-			echo'<tr><td align="center">'.$myrow['TblSeqNum'].'</td>';
-			echo'<td align="center">'.$myrow['TblField'].'</td>';
-			echo'<td align="center">'.$TextProcessing[$myrow['Processing']].'</td>';
-			echo'<td><input type="image" name="up'.$myrow['TblSeqNum'].'" value="up" src="../images/upicon.png" border="0">
-			<input type="image" name="dn'.$myrow['TblSeqNum'].'" value="dn" src="../images/downicon.png" border="0">
-			<input type="image" name="ed'.$myrow['TblSeqNum'].'" value="ed" src="../images/editicon.png" border="0">
-			<input type="image" name="rm'.$myrow['TblSeqNum'].'" value="rm" src="../images/delicon.png" border="0" onClick="return confirm(\'Delete this field?\')">
+		while ($MyRow = array_shift($Params['Seq'])) {
+			echo'<tr><td align="center">'.$MyRow['TblSeqNum'].'</td>';
+			echo'<td align="center">'.$MyRow['TblField'].'</td>';
+			echo'<td align="center">'.$TextProcessing[$MyRow['Processing']].'</td>';
+			echo'<td><input type="image" name="up'.$MyRow['TblSeqNum'].'" value="up" src="../images/upicon.png" border="0">
+			<input type="image" name="dn'.$MyRow['TblSeqNum'].'" value="dn" src="../images/downicon.png" border="0">
+			<input type="image" name="ed'.$MyRow['TblSeqNum'].'" value="ed" src="../images/editicon.png" border="0">
+			<input type="image" name="rm'.$MyRow['TblSeqNum'].'" value="rm" src="../images/delicon.png" border="0" onClick="return confirm(\'Delete this field?\')">
 			</td></tr>';
 		}
 	} else {
@@ -170,27 +170,27 @@ document.onmousedown = mouseSelect;
 	<tr>
       <td><?php echo RPT_FONT; ?></td>
       <td><select name="Font">
-          <?php foreach($Fonts as $key => $value) {
-			if ($Params['Font']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+          <?php foreach($Fonts as $Key => $Value) {
+			if ($Params['Font']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
       </select></td>
     </tr>
 	<tr>
       <td><?php echo RPT_SIZE; ?></td>
       <td><select name="FontSize">
-          <?php foreach($FontSizes as $key => $value) {
-			if ($Params['FontSize']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+          <?php foreach($FontSizes as $Key => $Value) {
+			if ($Params['FontSize']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
       </select></td>
     </tr>
 	<tr>
       <td><?php echo RPT_ALIGN; ?></td>
       <td><select name="FontAlign">
-          <?php foreach($FontAlign as $key => $value) {
-			if ($Params['FontAlign']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+          <?php foreach($FontAlign as $Key => $Value) {
+			if ($Params['FontAlign']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
       </select></td>
     </tr>
@@ -208,9 +208,9 @@ document.onmousedown = mouseSelect;
       <td><input name="Color" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
         <div align="center">
           <select name="FontColor">
-            <?php foreach($FontColors as $key => $value) {
-			if ($Params['FontColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+            <?php foreach($FontColors as $Key => $Value) {
+			if ($Params['FontColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
           </select>
       </div></td>
@@ -229,18 +229,18 @@ document.onmousedown = mouseSelect;
 		<?php if (!$Params['Line'] or $Params['Line']=='0') $selected=' checked'; else $selected=''; ?>
       <td><input name="Line" type="radio" value="0"<?php echo $selected; ?>><?php echo RPT_NOBRDR; ?></td>
       <td><?php echo RPT_LINEWIDTH; ?><select name="LineSize">
-	  <?php foreach($LineSizes as $key => $value) {
-			if ($Params['LineSize']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+	  <?php foreach($LineSizes as $Key => $Value) {
+			if ($Params['LineSize']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
     <tr>
 		<?php if ($Params['Line']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="BrdrColor">
-	  <?php foreach($FontColors as $key => $value) {
-			if ($Params['BrdrColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+	  <?php foreach($FontColors as $Key => $Value) {
+			if ($Params['BrdrColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
       <td><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />
@@ -261,9 +261,9 @@ document.onmousedown = mouseSelect;
 		<?php if ($Params['Fill']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Fill" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="FillColor">
-	  <?php foreach($FontColors as $key => $value) {
-			if ($Params['FillColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+	  <?php foreach($FontColors as $Key => $Value) {
+			if ($Params['FillColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Fill']=='2') $selected=' checked'; else $selected=''; ?>
       <td><input name="Fill" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />

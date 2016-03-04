@@ -9,7 +9,7 @@ CreateTable('paymentterms',
   PRIMARY KEY (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-)", $db);
+)");
 
 
 ?>

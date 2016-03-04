@@ -9,6 +9,6 @@ CreateTable('modules',
   `sequence` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`secroleid`,`modulelink`),
   CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`)
-)", $db);
+)");
 
 ?>

@@ -10,11 +10,11 @@ include('includes/header.inc');
 //
 
 // Context Navigation and Title
-echo '<a href="' . $RootPath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
+echo '<a href="' . $RootPath . '/index.php?Application=AR">' . _('Back to Customers') . '</a>';
 echo '<div class="centre"><h3>' . $Title . '</h3></div>';
 
 // Page Border
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -24,7 +24,7 @@ $DefaultFromPeriod = (!isset($_POST['FromPeriod']) or $_POST['FromPeriod'] == ''
 
 if (!isset($_POST['ToPeriod']) or $_POST['ToPeriod'] == '') {
 	$SQL = "SELECT Max(periodno) FROM periods";
-	$prdResult = DB_query($SQL, $db);
+	$prdResult = DB_query($SQL);
 	$MaxPrdrow = DB_fetch_row($prdResult);
 	DB_free_result($prdResult);
 	$DefaultToPeriod = $MaxPrdrow[0];
@@ -33,14 +33,14 @@ if (!isset($_POST['ToPeriod']) or $_POST['ToPeriod'] == '') {
 }
 
 echo '<tr>
-			<td>' . _('Start Period:') . '</td>
-			<td><select minlength="0" name="FromPeriod">';
+			<td>' . _('Start Period') . ':</td>
+			<td><select name="FromPeriod">';
 
-$ToSelect = '<tr><td>' . _('End Period:') . '</td>
-					<td><select minlength="0" name="ToPeriod">';
+$ToSelect = '<tr><td>' . _('End Period') . ':</td>
+					<td><select name="ToPeriod">';
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
-$perResult = DB_query($SQL, $db);
+$perResult = DB_query($SQL);
 
 while ($perRow = DB_fetch_array($perResult)) {
 	$FromSelected = ($perRow['periodno'] == $DefaultFromPeriod) ? 'selected="selected"' : '';
@@ -85,7 +85,7 @@ if (isset($_POST['Show'])) {
 				FROM chartdetails
 				WHERE period = " . $CurPeriod . "
 				AND accountcode=" . $_SESSION['CompanyRecord']['debtorsact'];
-		$dtResult = DB_query($SQL, $db);
+		$dtResult = DB_query($SQL);
 		$dtRow = DB_fetch_array($dtResult);
 		DB_free_result($dtResult);
 
@@ -97,7 +97,7 @@ if (isset($_POST['Show'])) {
 			$j = 0;
 		} else {
 			echo '<tr class="EvenTableRows">';
-			$j++;
+			++$j;
 		}
 		echo '<td>' . $CurPeriod . '</td>
 					<td class="number">' . locale_number_format($dtRow['bfwd'], 2) . '</td>';
@@ -106,7 +106,7 @@ if (isset($_POST['Show'])) {
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND (type=10 OR type=11)";
-		$invResult = DB_query($SQL, $db);
+		$invResult = DB_query($SQL);
 		$invRow = DB_fetch_array($invResult);
 		DB_free_result($invResult);
 
@@ -118,7 +118,7 @@ if (isset($_POST['Show'])) {
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND type=12";
-		$recResult = DB_query($SQL, $db);
+		$recResult = DB_query($SQL);
 		$recRow = DB_fetch_array($recResult);
 		DB_free_result($recResult);
 

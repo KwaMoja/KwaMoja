@@ -7,7 +7,7 @@ CreateTable('tenderitems',
   `quantity` varchar(40) NOT NULL DEFAULT '',
   `units` varchar(20) NOT NULL DEFAULT 'each',
   PRIMARY KEY (`tenderid`,`stockid`)
-)", $db);
+)");
 
 
 ?>

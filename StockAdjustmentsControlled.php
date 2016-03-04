@@ -10,12 +10,12 @@ include('includes/header.inc');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other stock adjustment sessions on the same machine  */
-	$identifier = date('U');
+	$Identifier = date('U');
 } else {
-	$identifier = $_GET['identifier'];
+	$Identifier = $_GET['identifier'];
 }
 
-if (!isset($_SESSION['Adjustment' . $identifier])) {
+if (!isset($_SESSION['Adjustment' . $Identifier])) {
 	/* This page can only be called when a stock adjustment is pending */
 	echo '<div class="centre"><a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' . _('Enter A Stock Adjustment') . '</a><br />';
 	prnMsg(_('This page can only be opened if a stock adjustment for a controlled item has been entered') . '<br />', 'error');
@@ -23,14 +23,14 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	include('includes/footer.inc');
 	exit;
 }
-if (isset($_SESSION['Adjustment' . $identifier])) {
+if (isset($_SESSION['Adjustment' . $Identifier])) {
 	if (isset($_GET['AdjType']) and $_GET['AdjType'] != '') {
-		$_SESSION['Adjustment' . $identifier]->AdjustmentType = $_GET['AdjType'];
+		$_SESSION['Adjustment' . $Identifier]->AdjustmentType = $_GET['AdjType'];
 	}
 }
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem = $_SESSION['Adjustment' . $identifier];
+$LineItem = $_SESSION['Adjustment' . $Identifier];
 
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1) {
@@ -41,15 +41,15 @@ if ($LineItem->Controlled != 1) {
 }
 
 /*****  get the page going now... *****/
-echo '<div class="centre">';
+echo '<div class="toplink">
+		<a href="' . $RootPath . '/StockAdjustments.php?identifier=' . urlencode($Identifier) . '">' . _('Back to Adjustment Screen') . '</a>
+	</div>';
 
-echo '<br /><a href="' . $RootPath . '/StockAdjustments.php?identifier=' . $identifier . '">' . _('Back to Adjustment Screen') . '</a>';
-
-echo '<br /><b>' . _('Adjustment of controlled item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription;
+echo '<p class="page_title_text" >' . _('Adjustment of controlled item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription;
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['Adjustment' . $identifier]->StockLocation;
-$StockID = $LineItem->StockID;
+$LocationOut = $_SESSION['Adjustment' . $Identifier]->StockLocation;
+$StockId = $LineItem->StockID;
 if ($LineItem->AdjustmentType == 'ADD') {
 	echo '<br />' . _('Adding Items') . '...';
 	$ItemMustExist = false;
@@ -65,12 +65,12 @@ if ($LineItem->AdjustmentType == 'ADD') {
 	include('includes/footer.inc');
 	exit;
 }
-echo '</b></div>';
+echo '</p>';
 include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */
-$_SESSION['Adjustment' . $identifier]->Quantity = $TotalQuantity;
+$_SESSION['Adjustment' . $Identifier]->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the adjustment without keying, showing only when keying */
 include('includes/footer.inc');

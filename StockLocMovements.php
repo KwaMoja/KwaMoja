@@ -6,73 +6,65 @@ $Title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection">
 	 <tr>
-		 <td>  ' . _('From Stock Location') . ':<select required="required" minlength="1" name="StockLocation"> ';
+		 <td>  ' . _('From Stock Location') . ':<select required="required" name="StockLocation"> ';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations";
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
-	if (!isset($_POST['StockLocation'])) {
-		$_POST['StockLocation'] = 'All';
-	}
-} else {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-	if (!isset($_POST['StockLocation'])) {
-		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-	}
+$SQL = "SELECT locationname,
+				locations.loccode
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1";
+echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+if (!isset($_POST['StockLocation'])) {
+	$_POST['StockLocation'] = 'All';
 }
 
-$resultStkLocs = DB_query($sql, $db);
-while ($myrow = DB_fetch_array($resultStkLocs)) {
+$ResultStkLocs = DB_query($SQL);
+while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
-		if ($myrow['loccode'] == $_POST['StockLocation']) {
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		if ($MyRow['loccode'] == $_POST['StockLocation']) {
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 
 echo '</select>';
 
-if (!isset($_POST['BeforeDate']) or !Is_Date($_POST['BeforeDate'])) {
+if (!isset($_POST['BeforeDate']) or !is_date($_POST['BeforeDate'])) {
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])) {
+if (!isset($_POST['AfterDate']) or !is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
-echo ' ' . _('Show Movements before') . ': <input type="text" name="BeforeDate" size="12" required="required" minlength="1" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
-echo ' ' . _('But after') . ': <input type="text" name="AfterDate" size="12" required="required" minlength="1" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
+echo ' ' . _('Show Movements before') . ': <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="BeforeDate" size="12" required="required" maxlength="12" value="' . $_POST['BeforeDate'] . '" />';
+echo ' ' . _('But after') . ': <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="AfterDate" size="12" required="required" maxlength="12" value="' . $_POST['AfterDate'] . '" />';
 echo '</td>
 	 </tr>
-	 </table>
-	 <br />';
+	 </table>';
 echo '<div class="centre">
 		   <input type="submit" name="ShowMoves" value="' . _('Show Stock Movements') . '" />
-	 </div>
-	 <br />';
+	 </div>';
 
+if ($_POST['StockLocation'] == 'All') {
+	$_POST['StockLocation'] = '%%';
+}
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				systypes.typename,
 				stockmoves.type,
 				stockmoves.transno,
@@ -88,14 +80,13 @@ $sql = "SELECT stockmoves.stockid,
 			FROM stockmoves
 			INNER JOIN systypes ON stockmoves.type=systypes.typeid
 			INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
-			WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
+			WHERE  stockmoves.loccode " . LIKE . " '" . $_POST['StockLocation'] . "'
 			AND stockmoves.trandate >= '" . $SQLAfterDate . "'
 			AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
 			AND hidemovt=0
 			ORDER BY stkmoveno DESC";
-
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
-$MovtsResult = DB_query($sql, $db, $ErrMsg);
+$MovtsResult = DB_query($SQL, $ErrMsg);
 
 echo '<table cellpadding="5" cellspacing="4 "class="selection">
 		<tr>
@@ -113,7 +104,7 @@ echo '<table cellpadding="5" cellspacing="4 "class="selection">
 
 $k = 0; //row colour counter
 
-while ($myrow = DB_fetch_array($MovtsResult)) {
+while ($MyRow = DB_fetch_array($MovtsResult)) {
 
 	if ($k == 1) {
 		echo '<tr class="OddTableRows">';
@@ -123,7 +114,7 @@ while ($myrow = DB_fetch_array($MovtsResult)) {
 		$k = 1;
 	}
 
-	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
+	$DisplayTranDate = ConvertSQLDate($MyRow['trandate']);
 
 
 	printf('<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
@@ -136,13 +127,12 @@ while ($myrow = DB_fetch_array($MovtsResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>', mb_strtoupper($myrow['stockid']), mb_strtoupper($myrow['stockid']), $myrow['typename'], $myrow['transno'], $DisplayTranDate, $myrow['debtorno'], locale_number_format($myrow['qty'], $myrow['decimalplaces']), $myrow['reference'], locale_number_format($myrow['price'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['discountpercent'] * 100, 2), locale_number_format($myrow['newqoh'], $myrow['decimalplaces']));
+				</tr>', mb_strtoupper($MyRow['stockid']), mb_strtoupper($MyRow['stockid']), $MyRow['typename'], $MyRow['transno'], $DisplayTranDate, $MyRow['debtorno'], locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), $MyRow['reference'], locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['discountpercent'] * 100, 2), locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']));
 }
 //end of while loop
 
 echo '</table>';
-echo '</div>
-	  </form>';
+echo '</form>';
 
 include('includes/footer.inc');
 

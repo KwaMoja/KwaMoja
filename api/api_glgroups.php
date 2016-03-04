@@ -1,11 +1,11 @@
 <?php
 
 /* Check that the account group doesn't already exist'*/
-function VerifyAccountGroup($AccountGroup, $i, $Errors, $db) {
+function VerifyAccountGroup($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='" . $AccountGroup . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] > 0) {
 		$Errors[$i] = GLAccountGroupAlreadyExists;
@@ -14,11 +14,11 @@ function VerifyAccountGroup($AccountGroup, $i, $Errors, $db) {
 }
 
 /* Check that the account sectiont already exists'*/
-function VerifyAccountSectionExists($AccountSection, $i, $Errors, $db) {
+function VerifyAccountSectionExists($AccountSection, $i, $Errors) {
 	$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='" . $AccountSection . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = GLAccountSectionDoesntExist;
@@ -43,11 +43,11 @@ function VerifySequenceInTB($sequenceintb, $i, $Errors) {
 }
 
 /* Check that the parent group exists*/
-function VerifyParentGroupExists($AccountGroup, $i, $Errors, $db) {
+function VerifyParentGroupExists($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='" . $AccountGroup . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0 and $AccountGroup != '') {
 		$Errors[$i] = AccountGroupDoesntExist;
@@ -62,26 +62,26 @@ function InsertGLAccountGroup($AccountGroupDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($AccountGroupDetails as $key => $value) {
-		$AccountGroupDetails[$key] = DB_escape_string($value);
+	foreach ($AccountGroupDetails as $Key => $Value) {
+		$AccountGroupDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyAccountGroup($AccountGroupDetails['groupname'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyAccountSectionExists($AccountGroupDetails['sectioninaccounts'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyAccountGroup($AccountGroupDetails['groupname'], sizeof($Errors), $Errors);
+	$Errors = VerifyAccountSectionExists($AccountGroupDetails['sectioninaccounts'], sizeof($Errors), $Errors);
 	if (isset($AccountGroupDetails['pandl'])) {
 		$Errors = VerifyPandL($AccountGroupDetails['pandl'], sizeof($Errors), $Errors);
 	}
-	$Errors = VerifyParentGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyParentGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors);
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($AccountGroupDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($AccountGroupDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
-		$sql = "INSERT INTO accountgroups ('" . mb_substr($FieldNames, 0, -2) . "')
+		$SQL = "INSERT INTO accountgroups ('" . mb_substr($FieldNames, 0, -2) . "')
 					VALUES ('" . mb_substr($FieldValues, 0, -2) . "' ) ";
-		$result = DB_Query($sql, $db);
-		if (DB_error_no($db) != 0) {
+		$Result = DB_Query($SQL);
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

@@ -1,8 +1,8 @@
 <?php
 
-NewConfigValue('ShopShowOnlyAvailableItems', '0', $db);
-NewConfigValue('ShopShowQOHColumn', '1', $db);
+NewConfigValue('ShopShowOnlyAvailableItems', '0');
+NewConfigValue('ShopShowQOHColumn', '1');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

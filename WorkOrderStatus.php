@@ -12,62 +12,41 @@ if (isset($_GET['WO'])) {
 	unset($SelectedWO);
 }
 if (isset($_GET['StockID'])) {
-	$StockID = $_GET['StockID'];
+	$StockId = $_GET['StockID'];
 } elseif (isset($_POST['StockID'])) {
-	$StockID = $_POST['StockID'];
+	$StockId = $_POST['StockID'];
 } else {
-	unset($StockID);
+	unset($StockId);
 }
 
 
 $ErrMsg = _('Could not retrieve the details of the selected work order item');
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT workorders.loccode,
-					locations.locationname,
-					workorders.requiredby,
-					workorders.startdate,
-					workorders.closed,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					stockmaster.units,
-					woitems.qtyreqd,
-					woitems.qtyrecd
-				FROM workorders
-				INNER JOIN locations
-					ON workorders.loccode=locations.loccode
-				INNER JOIN woitems
-					ON workorders.wo=woitems.wo
-				INNER JOIN stockmaster
-					ON woitems.stockid=stockmaster.stockid
-				WHERE woitems.stockid='" . $StockID . "'
-					AND woitems.wo ='" . $SelectedWO . "'";
-} else {
-	$sql = "SELECT workorders.loccode,
-					locations.locationname,
-					workorders.requiredby,
-					workorders.startdate,
-					workorders.closed,
-					stockmaster.description,
-					stockmaster.decimalplaces,
-					stockmaster.units,
-					woitems.qtyreqd,
-					woitems.qtyrecd
-				FROM workorders
-				INNER JOIN locations
-					ON workorders.loccode=locations.loccode
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				INNER JOIN woitems
-					ON workorders.wo=woitems.wo
-				INNER JOIN stockmaster
-					ON woitems.stockid=stockmaster.stockid
-				WHERE woitems.stockid='" . $StockID . "'
-					AND woitems.wo ='" . $SelectedWO . "'
-					AND www_users.userid='" . $_SESSION['UserID'] . "'";
-}
+$SQL = "SELECT workorders.loccode,
+				locations.locationname,
+				workorders.requiredby,
+				workorders.startdate,
+				workorders.closed,
+				stockmaster.description,
+				stockmaster.decimalplaces,
+				stockmaster.units,
+				woitems.qtyreqd,
+				woitems.qtyrecd
+			FROM workorders
+			INNER JOIN locations
+				ON workorders.loccode=locations.loccode
+			INNER JOIN woitems
+				ON workorders.wo=woitems.wo
+			INNER JOIN stockmaster
+				ON woitems.stockid=stockmaster.stockid
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE woitems.stockid='" . $StockId . "'
+				AND woitems.wo ='" . $SelectedWO . "'";
 
-$WOResult = DB_query($sql, $db, $ErrMsg);
+$WOResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($WOResult) == 0) {
 	prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
@@ -77,10 +56,10 @@ if (DB_num_rows($WOResult) == 0) {
 $WORow = DB_fetch_array($WOResult);
 
 echo '<div class="toplink"><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders') . '</a><br />';
-echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $SelectedWO . '">' . _('Back to Costing') . '</a></div>';
+echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . urlencode($SelectedWO) . '">' . _('Back to Costing') . '</a></div>';
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 echo '<table cellpadding="2" class="selection">
@@ -88,7 +67,7 @@ echo '<table cellpadding="2" class="selection">
 		<td class="label">' . _('Work order Number') . ':</td>
 		<td>' . $SelectedWO . '</td>
 		<td class="label">' . _('Item') . ':</td>
-		<td>' . $StockID . ' - ' . $WORow['description'] . '</td>
+		<td>' . $StockId . ' - ' . $WORow['description'] . '</td>
 	</tr>
  	<tr>
 		<td class="label">' . _('Manufactured at') . ':</td>
@@ -124,14 +103,28 @@ echo '<tr>
 			<th>' . _('Qty Issued') . '</th>
 		</tr>';
 
-$RequirmentsResult = DB_query("SELECT worequirements.stockid,
-										stockmaster.description,
-										stockmaster.decimalplaces,
-										autoissue,
-										qtypu
-									FROM worequirements INNER JOIN stockmaster
-									ON worequirements.stockid=stockmaster.stockid
-									WHERE wo='" . $SelectedWO . "'", $db);
+$RequirementsSQL = "SELECT worequirements.stockid,
+							stockmaster.description,
+							stockmaster.decimalplaces,
+							autoissue,
+							qtypu
+						FROM worequirements
+						INNER JOIN stockmaster
+							ON worequirements.stockid=stockmaster.stockid
+						WHERE wo='" . $SelectedWO . "'
+							AND worequirements.parentstockid='" . $StockId . "'";
+$RequirmentsResult = DB_query($RequirementsSQL);
+
+$IssuedAlreadyResult = DB_query("SELECT stockid,
+										SUM(-qty) AS total
+									FROM stockmoves
+									WHERE stockmoves.type=28
+										AND reference='" . $SelectedWO . "'
+									GROUP BY stockid");
+
+while ($IssuedRow = DB_fetch_array($IssuedAlreadyResult)) {
+	$IssuedAlreadyRow[$IssuedRow['stockid']] = $IssuedRow['total'];
+}
 
 while ($RequirementsRow = DB_fetch_array($RequirmentsResult)) {
 	if ($RequirementsRow['autoissue'] == 0) {
@@ -143,16 +136,31 @@ while ($RequirementsRow = DB_fetch_array($RequirmentsResult)) {
 					<td class="notavailable">' . _('Auto Issue') . '</td>
 					<td class="notavailable">' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
 	}
-	$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
-										WHERE stockmoves.type=28
-										AND stockid='" . $RequirementsRow['stockid'] . "'
-										AND reference='" . $SelectedWO . "'", $db);
-	$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
-
-	echo '<td align="right">' . locale_number_format($WORow['qtyreqd'] * $RequirementsRow['qtypu'], $RequirementsRow['decimalplaces']) . '</td>
-			<td align="right">' . locale_number_format($IssuedAlreadyRow[0], $RequirementsRow['decimalplaces']) . '</td></tr>';
+	if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])) {
+		$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
+		unset($IssuedAlreadyRow[$RequirementsRow['stockid']]);
+	} else {
+		$Issued= 0;
+	}
+	echo '<td class="number">' . locale_number_format($WORow['qtyreqd'] * $RequirementsRow['qtypu'], $RequirementsRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($Issued, $RequirementsRow['decimalplaces']) . '</td></tr>';
 }
 
+/* Now do any additional issues of items not in the BOM */
+foreach ($IssuedAlreadyRow as $StockId=>$Issued) {
+	$RequirementsSQL = "SELECT stockmaster.description,
+								stockmaster.decimalplaces
+						FROM stockmaster
+						WHERE stockid='" . $StockId . "'";
+	$RequirmentsResult = DB_query($RequirementsSQL);
+	$RequirementsRow = DB_fetch_array($RequirmentsResult);
+	echo '<tr>
+			<td>' . _('Additional Issue') . '</td>
+			<td>' . $StockId . ' - ' . $RequirementsRow['description'] . '</td>';
+	echo '<td class="number">0</td>
+			<td class="number">' . locale_number_format($Issued, $RequirementsRow['decimalplaces']) . '</td>
+		</tr>';
+}
 echo '</table>';
 
 include('includes/footer.inc');

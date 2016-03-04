@@ -14,62 +14,92 @@
  * be applicable in a PO and possible other situations...
  */
 
-if ($_POST['EntryType'] == 'KEYED'){
-        /*Also a multi select box for adding bundles to the dispatch without keying */
-     $sql = "SELECT serialno, quantity
-			FROM stockserialitems
-			WHERE stockid='" . $StockID . "'
-			AND loccode ='" . $LocationOut."'
-			AND quantity > 0";
+if ($_POST['EntryType'] == 'KEYED') {
+	/*Also a multi select box for adding bundles to the dispatch without keying */
 
-	$ErrMsg = '<br />'. _('Could not retrieve the items for'). ' ' . $StockID;
-    $Bundles = DB_query($sql,$db, $ErrMsg );
+	$SQL = "SELECT serialno,
+				quantity,
+				(SELECT SUM(moveqty)
+					FROM pickserialdetails
+					INNER JOIN pickreqdetails on pickreqdetails.detailno=pickserialdetails.detailno
+					INNER JOIN pickreq on pickreq.prid=pickreqdetails.prid
+					AND pickreq.closed=0
+					WHERE pickserialdetails.serialno=stockserialitems.serialno
+					AND pickserialdetails.stockid=stockserialitems.stockid) as qtypickedtotal,
+				(SELECT SUM(moveqty)
+					FROM pickserialdetails
+					INNER JOIN pickreqdetails on pickreqdetails.detailno=pickserialdetails.detailno
+					INNER JOIN pickreq on pickreq.prid=pickreqdetails.prid
+					AND pickreq.orderno='" . $OrderstoPick . "'
+					AND pickreq.closed=0
+					WHERE pickserialdetails.serialno=stockserialitems.serialno
+					AND pickserialdetails.stockid=stockserialitems.stockid) as qtypickedthisorder
+		FROM stockserialitems
+		INNER JOIN locationusers
+			ON locationusers.loccode=stockserialitems.loccode
+			AND locationusers.userid='" . $_SESSION['UserID'] . "'
+			AND locationusers.canupd=1
+		WHERE stockid='" . $StockId . "'
+		AND stockserialitems.loccode ='" . $LocationOut . "'
+		AND quantity > 0
+		ORDER BY createdate, quantity";
+	$ErrMsg = '<br />' . _('Could not retrieve the items for') . ' ' . $StockId;
+	$Bundles = DB_query($SQL, $ErrMsg);
 	echo '<table class="selection"><tr>';
-	if (DB_num_rows($Bundles)>0){
-		$AllSerials=array();
+	if (DB_num_rows($Bundles) > 0) {
+		$AllSerials = array();
 
-		foreach ($LineItem->SerialItems as $Itm){
+		foreach ($LineItem->SerialItems as $Itm) {
 			$AllSerials[$Itm->BundleRef] = $Itm->BundleQty;
 		}
 
-		echo '<td valign="top"><b>'. _('Select Existing Items'). '</b><br />';
+		echo '<td valign="top"><b>' . _('Select Existing Items') . '</b><br />';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" method="post" class="noPrint">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="LineNo" value="' . $LineNo . '">
-			<input type="hidden" name="StockID" value="' . $StockID . '">
+			<input type="hidden" name="StockID" value="' . $StockId . '">
 			<input type="hidden" name="EntryType" value="KEYED">
-			<input type="hidden" name="identifier" value="' . $identifier . '">
+			<input type="hidden" name="identifier" value="' . $Identifier . '">
 			<input type="hidden" name="EditControlled" value="true">
 			<select name=Bundles[] multiple="multiple">';
 
-		$id=0;
-		$ItemsAvailable=0;
-		while ($myrow=DB_fetch_array($Bundles,$db)){
-			if ($LineItem->Serialised==1){
-				if ( !array_key_exists($myrow['serialno'], $AllSerials) ){
-					echo '<option value="' . $myrow['serialno'] . '">' . $myrow['serialno'].'</option>';
+		$id = 0;
+		$ItemsAvailable = 0;
+		while ($MyRow = DB_fetch_array($Bundles)) {
+			if (is_null($MyRow['qtypickedtotal'])) {
+				$MyRow['qtypickedtotal'] = 0;
+			}
+			if (is_null($MyRow['qtypickedthisorder'])) {
+				$MyRow['qtypickedthisorder'] = 0;
+			}
+			if ($LineItem->Serialised == 1) {
+				if (!array_key_exists($MyRow['serialno'], $AllSerials)) {
+					echo '<option value="' . $MyRow['serialno'] . '">' . $MyRow['serialno'] . '</option>';
 					$ItemsAvailable++;
 				}
 			} else {
-				if ( !array_key_exists($myrow['serialno'], $AllSerials)  or
-					($myrow['quantity'] - $AllSerials[$myrow['serialno']] >= 0) ) {
+				if (!array_key_exists($MyRow['serialno'], $AllSerials) or ($MyRow['quantity'] - $AllSerials[$MyRow['serialno']] >= 0)) {
 					//Use the $InOutModifier to ajust the negative or postive direction of the quantity. Otherwise the calculated quantity is wrong.
-					$RecvQty = $myrow['quantity'] - $InOutModifier*$AllSerials[$myrow['serialno']];
-					echo '<option value="' . $myrow['serialno'] . '/|/'. $RecvQty .'">' . $myrow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</option>';
+					if (isset($AllSerials[$MyRow['serialno']])) {
+						$RecvQty = $MyRow['quantity'] - $InOutModifier * $AllSerials[$MyRow['serialno']];
+					} else {
+							$RecvQty = $MyRow['quantity'];
+					}
+					echo '<option value="' . $MyRow['serialno'] . '/|/' . $RecvQty . '">' . $MyRow['serialno'] . ' - ' . _('Qty left') . ': ' . $RecvQty . '</option>';
 					$ItemsAvailable += $RecvQty;
 				}
 			}
 		}
 		echo '</select>
 			<br />';
-		echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '"></div>
+		echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="' . _('Enter') . '"></div>
 			<br />';
 		echo '</form>';
 		echo $ItemsAvailable . ' ' . _('items available');
 		echo '</td>';
 	} else {
-		echo '<td>'. prnMsg( _('There does not appear to be any of') . ' ' . $StockID . ' ' . _('left in'). ' '. $LocationOut , 'warn') . '</td>';
+		echo '<td>' . prnMsg(_('There does not appear to be any of') . ' ' . $StockId . ' ' . _('left in') . ' ' . $LocationOut, 'warn') . '</td>';
 	}
 	echo '</tr></table>';
 }

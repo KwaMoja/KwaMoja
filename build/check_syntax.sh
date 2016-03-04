@@ -5,13 +5,13 @@ cd $ROOT_DIR
 for f in `find . -name "*.php" -o -name "*.inc"`
 do
     newname=`echo $f | cut -c3-`
-    filename="$ROOT_DIR/$newname"
-    echo $filename
-    output=$((php -l $filename ) 2>&1)
+    FileName="$ROOT_DIR/$newname"
+#    echo $FileName
+    output=$((php -l $FileName ) 2>&1)
 
     if [ $? != 0 ]
     then
-		echo '**Error** '$output >> ~/kwamoja$(date +%Y%m%d).log
-		echo '' >> ~/kwamoja$(date +%Y%m%d).log
+		echo '**Error** '$output
+		echo ''
     fi
 done

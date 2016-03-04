@@ -10,9 +10,9 @@ function GetDefaultCurrency($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT currencydefault FROM companies WHERE coycode=1";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "SELECT currencydefault FROM companies WHERE coycode=1";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -28,9 +28,9 @@ function GetDefaultPriceList($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT confvalue FROM config WHERE confname='DefaultPriceList'";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "SELECT confvalue FROM config WHERE confname='DefaultPriceList'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -46,9 +46,9 @@ function GetDefaultDateFormat($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -63,9 +63,9 @@ function GetReportsDirectory($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT confvalue FROM config WHERE confname='reports_dir'";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "SELECT confvalue FROM config WHERE confname='reports_dir'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -80,9 +80,9 @@ function GetDefaultLocation($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "select defaultlocation from www_users where userid='" . $user . "'";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "select defaultlocation from www_users where userid='" . $user . "'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -98,9 +98,45 @@ function GetDefaultShipper($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT confvalue from config WHERE confname='Default_Shipper'";
-	$result = DB_query($sql, $db);
-	$answer = DB_fetch_array($result);
+	$SQL = "SELECT confvalue from config WHERE confname='Default_Shipper'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
+	$ReturnValue[0] = 0;
+	$ReturnValue[1] = $answer;
+	return $ReturnValue;
+}
+
+/* This function returns the default area for patients in KwaMoja.
+ */
+
+function GetDefaultArea($user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db) == 'integer') {
+		$Errors[0] = NoAuthorisation;
+		return $Errors;
+	}
+	$SQL = "SELECT confvalue from config WHERE confname='DefaultArea'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
+	$ReturnValue[0] = 0;
+	$ReturnValue[1] = $answer;
+	return $ReturnValue;
+}
+
+/* This function returns the default sales person for patients in KwaMoja.
+ */
+
+function GetDefaultSalesPerson($user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db) == 'integer') {
+		$Errors[0] = NoAuthorisation;
+		return $Errors;
+	}
+	$SQL = "SELECT confvalue from config WHERE confname='DefaultSalesPerson'";
+	$Result = api_DB_query($SQL);
+	$answer = DB_fetch_array($Result);
 	$ReturnValue[0] = 0;
 	$ReturnValue[1] = $answer;
 	return $ReturnValue;
@@ -115,7 +151,7 @@ function CreatePOSDataFull($POSDebtorNo, $POSBranchCode, $User, $Password) {
 	if (gettype($db) == 'integer') {
 		return NoAuthorisation;
 	}
-	$Result = Create_POS_Data_Full($POSDebtorNo, $POSBranchCode, dirname(__FILE__) . '/../', $db);
+	$Result = Create_POS_Data_Full($POSDebtorNo, $POSBranchCode, dirname(__FILE__) . '/../');
 	if ($Result == 1) {
 		$ReturnValue = 0;
 	} else {
@@ -130,7 +166,7 @@ function DeletePOSData($User, $Password) {
 	if (gettype($db) == 'integer') {
 		return NoAuthorisation;
 	}
-	$Result = Delete_POS_Data(dirname(__FILE__) . '/../', $db);
+	$Result = Delete_POS_Data(dirname(__FILE__) . '/../');
 	if ($Result == 1) {
 		return 0;
 	} else {

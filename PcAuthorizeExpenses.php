@@ -2,7 +2,7 @@
 
 include('includes/session.inc');
 $Title = _('Authorisation of Petty Cash Expenses');
-/* KwaMoja manual links before header.inc */
+/* Manual links before header.inc */
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.inc');
@@ -41,13 +41,13 @@ if (isset($_POST['Go'])) {
 }
 
 if (isset($SelectedTabs)) {
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Petty Cash') . '" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . '' . $SelectedTabs . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Petty Cash') . '" alt="" />' . _('Authorisation Of Petty Cash Expenses') . ' ' . $SelectedTabs . '</p>';
 } else {
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Petty Cash') . '" alt="" />' . _('Authorisation Of Petty Cash Expenses ') . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Petty Cash') . '" alt="" />' . _('Authorisation Of Petty Cash Expenses') . '</p>';
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($Days)) {
@@ -57,10 +57,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<br /><table class="selection">';
 	echo '<tr>
 			<th colspan="7">' . _('Detail Of Movement For Last ') . ': ';
-	echo '<input type="text" class="number" name="Days" value="' . $Days . '" minlength="0" maxlength="3" size="4" />' . _('Days');
+	echo '<input type="text" class="number" name="Days" value="' . $Days . '" maxlength="3" size="4" />' . _('Days');
 	echo '<input type="submit" name="Go" value="' . _('Go') . '" /></th></tr>';
 
-	$sql = "SELECT pcashdetails.counterindex,
+	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,
 				pcashdetails.codeexpense,
@@ -80,9 +80,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				AND pctabs.currency = currencies.currabrev
 				AND pcashdetails.tabcode = '" . $SelectedTabs . "'
 				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '" . $Days . "' DAY)
+				AND pcashdetails.codeexpense<>'ASSIGNCASH'
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
 	echo '<tr>
 		<th>' . _('Date') . '</th>
@@ -96,47 +97,47 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 	$k = 0; //row colour counter
 
-	while ($myrow = DB_fetch_array($result)) {
-		$CurrDecimalPlaces = $myrow['decimalplaces'];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
-		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$myrow['counterindex']])) {
+		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 
-			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
+			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
 
-			if ($myrow['rate'] == 1) { // functional currency
-				$Amount = $myrow['amount'];
+			if ($MyRow['rate'] == 1) { // functional currency
+				$Amount = $MyRow['amount'];
 			} else { // other currencies
-				$Amount = $myrow['amount'] / $myrow['rate'];
+				$Amount = $MyRow['amount'] / $MyRow['rate'];
 			}
 
-			if ($myrow['codeexpense'] == 'ASSIGNCASH') {
+			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
 				$type = 2;
-				$AccountFrom = $myrow['glaccountassignment'];
-				$AccountTo = $myrow['glaccountpcash'];
+				$AccountFrom = $MyRow['glaccountassignment'];
+				$AccountTo = $MyRow['glaccountpcash'];
 				$TagTo = 0;
 			} else {
 				$type = 1;
 				$Amount = -$Amount;
-				$AccountFrom = $myrow['glaccountpcash'];
+				$AccountFrom = $MyRow['glaccountpcash'];
 				$SQLAccExp = "SELECT glaccount,
 									tag
 								FROM pcexpenses
-								WHERE codeexpense = '" . $myrow['codeexpense'] . "'";
-				$ResultAccExp = DB_query($SQLAccExp, $db);
-				$myrowAccExp = DB_fetch_array($ResultAccExp);
-				$AccountTo = $myrowAccExp['glaccount'];
-				$TagTo = $myrowAccExp['tag'];
+								WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
+				$ResultAccExp = DB_query($SQLAccExp);
+				$MyRowAccExp = DB_fetch_array($ResultAccExp);
+				$AccountTo = $MyRowAccExp['glaccount'];
+				$TagTo = $MyRowAccExp['tag'];
 			}
 
 			//get typeno
-			$typeno = GetNextTransNo($type, $db);
+			$typeno = GetNextTransNo($type);
 
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . DB_escape_string($myrow['notes']) . ' - ' . $myrow['receipt'];
+			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']) . ' - ' . $MyRow['receipt'];
 			//insert to gltrans
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 
-			$sqlFrom = "INSERT INTO `gltrans` (`counterindex`,
+			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
 											`type`,
 											`typeno`,
 											`chequeno`,
@@ -152,7 +153,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $type . "',
 											'" . $typeno . "',
 											0,
-											'" . $myrow['date'] . "',
+											'" . $MyRow['date'] . "',
 											'" . $PeriodNo . "',
 											'" . $AccountFrom . "',
 											'" . $Narrative . "',
@@ -161,9 +162,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'',
 											'" . $TagTo . "')";
 
-			$ResultFrom = DB_Query($sqlFrom, $db, '', '', true);
+			$ResultFrom = DB_Query($SQLFrom, '', '', true);
 
-			$sqlTo = "INSERT INTO `gltrans` (`counterindex`,
+			$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
 										`type`,
 										`typeno`,
 										`chequeno`,
@@ -179,7 +180,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $type . "',
 										'" . $typeno . "',
 										0,
-										'" . $myrow['date'] . "',
+										'" . $MyRow['date'] . "',
 										'" . $PeriodNo . "',
 										'" . $AccountTo . "',
 										'" . $Narrative . "',
@@ -188,11 +189,11 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'',
 										'" . $TagTo . "')";
 
-			$ResultTo = DB_Query($sqlTo, $db, '', '', true);
+			$ResultTo = DB_Query($SQLTo, '', '', true);
 
-			if ($myrow['codeexpense'] == 'ASSIGNCASH') {
+			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
 				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2, $db);
+				$ReceiptTransNo = GetNextTransNo(2);
 				$SQLBank = "INSERT INTO banktrans (transno,
 												type,
 												bankact,
@@ -202,30 +203,33 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												transdate,
 												banktranstype,
 												amount,
-												currcode)
-										VALUES ('" . $ReceiptTransNo . "',
-											1,
-											'" . $AccountFrom . "',
-											'" . $Narrative . "',
-											1,
-											'" . $myrow['rate'] . "',
-											'" . $myrow['date'] . "',
-											'Cash',
-											'" . -$myrow['amount'] . "',
-											'" . $myrow['currency'] . "'
-										)";
+												currcode,
+												userid
+											) VALUES (
+												'" . $ReceiptTransNo . "',
+												2,
+												'" . $AccountFrom . "',
+												'" . $Narrative . "',
+												1,
+												'" . $MyRow['rate'] . "',
+												'" . $MyRow['date'] . "',
+												'Cash',
+												'" . -$MyRow['amount'] . "',
+												'" . $MyRow['currency'] . "',
+												'" . $_SESSION['UserID'] . "'
+											)";
 				$ErrMsg = _('Cannot insert a bank transaction because');
 				$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-				$resultBank = DB_query($SQLBank, $db, $ErrMsg, $DbgMsg, true);
+				$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
 
 			}
 
-			$sql = "UPDATE pcashdetails
-					SET authorized = '" . Date('Y-m-d') . "',
+			$SQL = "UPDATE pcashdetails
+					SET authorized = CURRENT_DATE,
 					posted = 1
-					WHERE counterindex = '" . $myrow['counterindex'] . "'";
-			$resultupdate = DB_query($sql, $db, '', '', true);
-			DB_Txn_Commit($db);
+					WHERE counterindex = '" . $MyRow['counterindex'] . "'";
+			$Resultupdate = DB_query($SQL, '', '', true);
+			DB_Txn_Commit();
 		}
 
 		if ($k == 1) {
@@ -235,40 +239,41 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
-		if ($myrow['posted'] == 0) {
+		if ($MyRow['posted'] == 0) {
 			$Posted = _('No');
 		} else {
 			$Posted = _('Yes');
 		}
-		echo '<td>' . ConvertSQLDate($myrow['date']) . '</td>
-			<td>' . $myrow['codeexpense'] . '</td>
-			<td class="number">' . locale_number_format($myrow['amount'], $CurrDecimalPlaces) . '</td>
+		echo '<td>' . ConvertSQLDate($MyRow['date']) . '</td>
+			<td>' . $MyRow['codeexpense'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
 			<td>' . $Posted . '</td>
-			<td>' . $myrow['notes'] . '</td>
-			<td>' . $myrow['receipt'] . '</td>';
+			<td>' . $MyRow['notes'] . '</td>
+			<td>' . $MyRow['receipt'] . '</td>';
 
-		if (isset($_POST[$myrow['counterindex']])) {
+		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
 		} else {
 			//compare against raw SQL format date, then convert for display.
-			if (($myrow['authorized'] != '0000-00-00')) {
-				echo '<td>' . ConvertSQLDate($myrow['authorized']);
+			if (($MyRow['authorized'] != '0000-00-00')) {
+				echo '<td>' . ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td align="right"><input type="checkbox" name="' . $myrow['counterindex'] . '" />';
+				echo '<td align="right"><input type="checkbox" name="' . $MyRow['counterindex'] . '" />';
 			}
 		}
 
-		echo '<input type="hidden" name="SelectedIndex" value="' . $myrow['counterindex'] . '" />';
+		echo '<input type="hidden" name="SelectedIndex" value="' . $MyRow['counterindex'] . '" />';
 		echo '</td></tr>';
 
 
 	} //end of looping
 
-	$sqlamount = "SELECT sum(amount)
+	$SQLamount = "SELECT sum(amount)
 			FROM pcashdetails
-			WHERE tabcode='" . $SelectedTabs . "'";
+			WHERE tabcode='" . $SelectedTabs . "'
+				AND codeexpense<>'ASSIGNCASH'";
 
-	$ResultAmount = DB_query($sqlamount, $db);
+	$ResultAmount = DB_query($SQLamount);
 	$Amount = DB_fetch_array($ResultAmount);
 
 	if (!isset($Amount['0'])) {
@@ -288,33 +293,33 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br /><table class="selection">'; //Main table
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE authorizer='" . $_SESSION['UserID'] . "'";
+		WHERE authorizerexpenses='" . $_SESSION['UserID'] . "'";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
 	echo '<tr>
 			<td>' . _('Authorise expenses to Petty Cash Tab') . ':</td>
-			<td><select required="required" minlength="1" name="SelectedTabs">';
+			<td><select required="required" name="SelectedTabs">';
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['tabcode'] == $_POST['SelectTabs']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
+		echo $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
 	echo '</table>'; // close main table
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
 								<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';

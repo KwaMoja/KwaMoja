@@ -33,22 +33,22 @@ $SQL = "SELECT categoryid,
 				categorydescription
 			FROM fixedassetcategories
 			ORDER BY categorydescription";
-$result = DB_query($SQL, $db);
-if (DB_num_rows($result) == 0) {
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) == 0) {
 	prnMsg( _('There are no asset categories currently defined please use the link below to set them up') . '<br /><a href="' . $RootPath . '/FixedAssetCategories.php">' . _('Define Asset Categories') . '</a>', 'warn');
 	include('includes/footer.inc');
 	exit;
 }
 // end of showing search facilities
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
+		<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 		<table class="selection">
 		<tr>
 			<td>' . _('In Asset Category') . ':</td>
-			<td><select minlength="0" name="AssetCategory">';
+			<td><select name="AssetCategory">';
 
 if (!isset($_POST['AssetCategory'])) {
 	$_POST['AssetCategory'] = 'ALL';
@@ -59,26 +59,26 @@ if ($_POST['AssetCategory'] == 'ALL') {
 	echo '<option value="ALL">' . _('Any asset category') . '</option>';
 }
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['categoryid'] == $_POST['AssetCategory']) {
-		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($MyRow['categoryid'] == $_POST['AssetCategory']) {
+		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td>
 	<td>' . _('Enter partial description') . ':</td>
 	<td>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" size="20" minlength="0" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />';
 }
 echo '</td>
 	</tr>
 	<tr>
 		<td>' . _('Asset Location') . ':</td>
-		<td><select minlength="0" name="AssetLocation">';
+		<td><select name="AssetLocation">';
 
 if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
@@ -88,13 +88,13 @@ if ($_POST['AssetLocation'] == 'ALL') {
 } else {
 	echo '<option value="ALL">' . _('Any asset location') . '</option>';
 }
-$result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations", $db);
+$Result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations");
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['locationid'] == $_POST['AssetLocation']) {
-		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($MyRow['locationid'] == $_POST['AssetLocation']) {
+		echo '<option selected="selected" value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+		echo '<option value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
 	}
 }
 echo '</select>';
@@ -103,9 +103,9 @@ echo '  </td>
 		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>
 		<td>';
 if (isset($_POST['AssetCode'])) {
-	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" minlength="0" maxlength="13" />';
+	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
 } else {
-	echo '<input type="text" name="AssetCode" size="15" minlength="0" maxlength="13" />';
+	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
 echo '</td>
 	</tr>
@@ -205,7 +205,7 @@ if (isset($_POST['Search']) or isset($_POST['Go']) or isset($_POST['Next']) or i
 
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No assets were returned by this search please re-enter alternative criteria to try again'), 'info');
@@ -234,7 +234,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			echo '<select minlength="0" name="PageOffset">';
+			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -253,8 +253,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		}
 		echo '</form>';
 
-		echo '<form onSubmit="return VerifyForm(this);" action="FixedAssetItems.php" method="post">';
-		echo '<div>';
+		echo '<form action="FixedAssetItems.php" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">
 				<tr>
@@ -268,24 +267,23 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
-		while (($myrow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+		while (($MyRow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
 			} else {
 				echo '<tr class="OddTableRows">';
-				$k++;
+				++$k;
 			}
-			echo '<td><input type="submit" name="Select" value="' . $myrow['assetid'] . '" /></td>
-					<td>' . $myrow['description'] . '</td>
-					<td>' . $myrow['locationdescription'] . '</td>
-					<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>
+			echo '<td><input type="submit" name="Select" value="' . $MyRow['assetid'] . '" /></td>
+					<td>' . $MyRow['description'] . '</td>
+					<td>' . $MyRow['locationdescription'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['datepurchased']) . '</td>
 				</tr>';
 		}
 		//end of while loop
 		echo '</table>';
-		echo '</div>
-		  </form>';
+		echo '</form>';
 	} // there were records to list
 }
 /* end display list if there is more than one record */

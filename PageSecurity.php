@@ -4,27 +4,26 @@ include('includes/session.inc');
 $Title = _('Page Security Levels');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['Update']) and $AlloDemoMode != true) {
 	foreach ($_POST as $ScriptName => $PageSecurityValue) {
 		if ($ScriptName != 'Update' and $ScriptName != 'FormID') {
 			$ScriptName = mb_substr($ScriptName, 0, mb_strlen($ScriptName) - 4) . '.php';
-			$sql = "UPDATE scripts SET pagesecurity='" . $PageSecurityValue . "' WHERE script='" . $ScriptName . "'";
-			$UpdateResult = DB_query($sql, $db, _('Could not update the page security value for the script because'));
+			$SQL = "UPDATE scripts SET pagesecurity='" . $PageSecurityValue . "' WHERE script='" . $ScriptName . "'";
+			$UpdateResult = DB_query($SQL, _('Could not update the page security value for the script because'));
 		}
 	}
 }
 
-$sql = "SELECT script,
+$SQL = "SELECT script,
 			pagesecurity,
 			description
 		FROM scripts";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-echo '<br /><form onSubmit="return VerifyForm(this);" method="post" class="noPrint" id="PageSecurity" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" id="PageSecurity" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">';
@@ -33,14 +32,14 @@ $TokenSql = "SELECT tokenid,
 					tokenname
 			FROM securitytokens
 			ORDER BY tokenname";
-$TokenResult = DB_query($TokenSql, $db);
+$TokenResult = DB_query($TokenSql);
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	echo '<tr>
-			<td>' . $myrow['script'] . '</td>
-			<td><select minlength="0" name="' . $myrow['script'] . '">';
+			<td>' . $MyRow['script'] . '</td>
+			<td><select name="' . $MyRow['script'] . '">';
 	while ($myTokenRow = DB_fetch_array($TokenResult)) {
-		if ($myTokenRow['tokenid'] == $myrow['pagesecurity']) {
+		if ($myTokenRow['tokenid'] == $MyRow['pagesecurity']) {
 			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
 		} else {
 			echo '<option value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
@@ -51,12 +50,10 @@ while ($myrow = DB_fetch_array($result)) {
 	DB_data_seek($TokenResult, 0);
 }
 
-echo '</table><br />';
+echo '</table>';
 
 echo '<div class="centre">
 		<input type="submit" name="Update" value="' . _('Update Security Levels') . '" />
-	</div>
-	<br />
 	</div>
 	</form>';
 

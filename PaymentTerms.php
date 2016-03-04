@@ -6,8 +6,8 @@ $Title = _('Payment Terms Maintenance');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedTerms'])) {
 	$SelectedTerms = $_GET['SelectedTerms'];
@@ -36,38 +36,38 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must exist'), 'error');
 		$Errors[$i] = 'TermsIndicator';
-		$i++;
+		++$i;
 	}
-	if (mb_strlen($_POST['TermsIndicator']) > 2) {
+	if (mb_strlen(stripslashes($_POST['TermsIndicator'])) > 2) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must be two characters or less long'), 'error');
 		$Errors[$i] = 'TermsIndicator';
-		$i++;
+		++$i;
 	}
 	if (empty($_POST['DayNumber']) or !is_numeric(filter_number_format($_POST['DayNumber'])) or filter_number_format($_POST['DayNumber']) <= 0) {
 		$InputError = 1;
 		prnMsg(_('The number of days or the day in the following month must be numeric'), 'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;
+		++$i;
 	}
 	if (empty($_POST['Terms']) or mb_strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
 		prnMsg(_('The terms description must be forty characters or less long'), 'error');
 		$Errors[$i] = 'Terms';
-		$i++;
+		++$i;
 	}
 
 	if ($_POST['DayNumber'] > 30 and empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg(_('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected'), 'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;
+		++$i;
 	}
 	if ($_POST['DayNumber'] > 360 and !empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg(_('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days'), 'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;
+		++$i;
 	}
 
 	if (isset($SelectedTerms) and $InputError != 1) {
@@ -75,26 +75,26 @@ if (isset($_POST['submit'])) {
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		if (isset($_POST['DaysOrFoll']) and $_POST['DaysOrFoll'] == 'on') {
-			$sql = "UPDATE paymentterms SET
+			$SQL = "UPDATE paymentterms SET
 							terms='" . $_POST['Terms'] . "',
 							dayinfollowingmonth=0,
 							daysbeforedue='" . filter_number_format($_POST['DayNumber']) . "'
-					WHERE termsindicator = '" . $SelectedTerms . "'";
+					WHERE termsindicator = '" . stripslashes($SelectedTerms) . "'";
 		} else {
-			$sql = "UPDATE paymentterms SET
+			$SQL = "UPDATE paymentterms SET
 							terms='" . $_POST['Terms'] . "',
 							dayinfollowingmonth='" . filter_number_format($_POST['DayNumber']) . "',
 							daysbeforedue=0
-						WHERE termsindicator = '" . $SelectedTerms . "'";
+						WHERE termsindicator = '" . stripslashes($SelectedTerms) . "'";
 		}
 
-		$msg = _('The payment terms definition record has been updated') . '.';
+		$Msg = _('The payment terms definition record has been updated') . '.';
 	} else if ($InputError != 1) {
 
 		/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
 
-		if ($_POST['DaysOrFoll'] == 'on') {
-			$sql = "INSERT INTO paymentterms (termsindicator,
+		if (isset($_POST['DaysOrFoll']) and $_POST['DaysOrFoll'] == 'on') {
+			$SQL = "INSERT INTO paymentterms (termsindicator,
 								terms,
 								daysbeforedue,
 								dayinfollowingmonth)
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 							0
 						)";
 		} else {
-			$sql = "INSERT INTO paymentterms (termsindicator,
+			$SQL = "INSERT INTO paymentterms (termsindicator,
 								terms,
 								daysbeforedue,
 								dayinfollowingmonth)
@@ -117,12 +117,12 @@ if (isset($_POST['submit'])) {
 							)";
 		}
 
-		$msg = _('The payment terms definition record has been added') . '.';
+		$Msg = _('The payment terms definition record has been added') . '.';
 	}
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql, $db);
-		prnMsg($msg, 'success');
+		$Result = DB_query($SQL);
+		prnMsg($Msg, 'success');
 		unset($SelectedTerms);
 		unset($_POST['DaysOrFoll']);
 		unset($_POST['TermsIndicator']);
@@ -135,24 +135,24 @@ if (isset($_POST['submit'])) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '" . $SelectedTerms . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
+	$SQL = "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '" . $SelectedTerms . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
 		prnMsg(_('Cannot delete this payment term because customer accounts have been created referring to this term'), 'warn');
-		echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this payment term');
+		echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this payment term');
 	} else {
-		$sql = "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '" . $SelectedTerms . "'";
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0] > 0) {
+		$SQL = "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '" . $SelectedTerms . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0] > 0) {
 			prnMsg(_('Cannot delete this payment term because supplier accounts have been created referring to this term'), 'warn');
-			echo '<br /> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this payment term');
+			echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('supplier accounts that refer to this payment term');
 		} else {
 			//only delete if used in neither customer or supplier accounts
 
-			$sql = "DELETE FROM paymentterms WHERE termsindicator='" . $SelectedTerms . "'";
-			$result = DB_query($sql, $db);
+			$SQL = "DELETE FROM paymentterms WHERE termsindicator='" . $SelectedTerms . "'";
+			$Result = DB_query($SQL);
 			prnMsg(_('The payment term definition record has been deleted') . '!', 'success');
 		}
 	}
@@ -167,8 +167,8 @@ if (!isset($SelectedTerms)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms";
-	$result = DB_query($sql, $db);
+	$SQL = "SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -181,30 +181,31 @@ if (!isset($SelectedTerms)) {
 			<th>' . _('Due After (Days)') . '</th>
 		</tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
-		if ($myrow['dayinfollowingmonth'] == 0) {
+		if ($MyRow['dayinfollowingmonth'] == 0) {
 			$FollMthText = _('N/A');
 		} else {
-			$FollMthText = $myrow['dayinfollowingmonth'] . _('th');
+			$FollMthText = $MyRow['dayinfollowingmonth'] . _('th');
 		}
 
-		if ($myrow['daysbeforedue'] == 0) {
+		if ($MyRow['daysbeforedue'] == 0) {
 			$DueAfterText = _('N/A');
 		} else {
-			$DueAfterText = $myrow['daysbeforedue'] . ' ' . _('days');
+			$DueAfterText = $MyRow['daysbeforedue'] . ' ' . _('days');
 		}
 
-		printf('<tr><td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedTerms=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedTerms=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this payment term?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['termsindicator'], $myrow['terms'], $FollMthText, $DueAfterText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow[0]);
+		echo '<tr>
+				<td>' . $MyRow['termsindicator'] . '</td>
+				<td>' . $MyRow['terms'] . '</td>
+				<td>' . $FollMthText . '</td>
+				<td>' . $DueAfterText . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTerms=' . urlencode($MyRow[0]) . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTerms=' . urlencode($MyRow[0]) . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this payment term?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>';
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {
@@ -215,32 +216,30 @@ if (isset($SelectedTerms)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTerms)) {
 		//editing an existing payment terms
 
-		$sql = "SELECT termsindicator,
+		$SQL = "SELECT termsindicator,
 						terms,
 						daysbeforedue,
 						dayinfollowingmonth
 					FROM paymentterms
 					WHERE termsindicator='" . $SelectedTerms . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['TermsIndicator'] = $myrow['termsindicator'];
-		$_POST['Terms'] = $myrow['terms'];
-		$DaysBeforeDue = $myrow['daysbeforedue'];
-		$DayInFollowingMonth = $myrow['dayinfollowingmonth'];
+		$_POST['TermsIndicator'] = $MyRow['termsindicator'];
+		$_POST['Terms'] = $MyRow['terms'];
+		$DaysBeforeDue = $MyRow['daysbeforedue'];
+		$DayInFollowingMonth = $MyRow['dayinfollowingmonth'];
 
 		echo '<input type="hidden" name="SelectedTerms" value="' . $SelectedTerms . '" />';
 		echo '<input type="hidden" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" />';
-		echo '<br />
-			<table class="selection">';
+		echo '<table class="selection">';
 		echo '<tr>
 				<th colspan="6"><h3>' . _('Update Payment Terms.') . '</h3></th>
 			</tr>';
@@ -267,13 +266,13 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 		echo '<tr>
 				<td>' . _('Term Code') . ':</td>
-				<td><input type="text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="2" /></td>
+				<td><input type="text" class="AlphaNumeric" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" size="3" autofocus="autofocus" required="required" maxlength="2" /></td>
 			</tr>';
 	}
 
 	echo '<tr>
 			<td>' . _('Terms Description') . ':</td>
-			<td><input type="text" name="Terms" value="' . $_POST['Terms'] . '" size="35" required="required" minlength="1" maxlength="40" /></td>
+			<td><input type="text" name="Terms" value="' . $_POST['Terms'] . '" size="35" required="required" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Due After A Given No. Of Days') . ':</td>
@@ -284,7 +283,7 @@ if (!isset($_GET['delete'])) {
 	echo '  /></td>
 		</tr>
 		<tr><td>' . _('Days (Or Day In Following Month)') . ':</td>
-			<td><input type="text" name="DayNumber" class="number"  size="4" minlength="0" maxlength="3" value="';
+			<td><input type="text" name="DayNumber" maxvalue="30" class="integer" size="3" maxlength="3" value="';
 	if ($DaysBeforeDue != 0) {
 		echo locale_number_format($DaysBeforeDue, 0);
 	} else {
@@ -295,12 +294,10 @@ if (!isset($_GET['delete'])) {
 	echo '" /></td>
 		</tr>
 		</table>
-		<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');

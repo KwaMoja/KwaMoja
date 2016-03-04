@@ -8,15 +8,15 @@ include('includes/header.inc');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 
 if (isset($_GET['Complete'])) {
-	$result = DB_query("UPDATE fixedassettasks SET lastcompleted='" . Date('Y-m-d') . "' WHERE taskid='" . $_GET['TaskID'] . "'", $db);
+	$Result = DB_query("UPDATE fixedassettasks SET lastcompleted=CURRENT_DATE WHERE taskid='" . $_GET['TaskID'] . "'");
 }
 
 
-$sql = "SELECT taskid,
+$SQL = "SELECT taskid,
 				fixedassettasks.assetid,
 				description,
 				taskdescription,
@@ -36,7 +36,7 @@ $sql = "SELECT taskid,
 		ORDER BY ADDDATE(lastcompleted,frequencydays) DESC";
 
 $ErrMsg = _('The maintenance schedule cannot be retrieved because');
-$Result = DB_query($sql, $db, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">
 	 <tr>
@@ -50,10 +50,10 @@ echo '<table class="selection">
 		<th>' . _('Now Complete') . '</th>
 	</tr>';
 
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
-	if ($myrow['manager'] != '') {
-		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $myrow['manager'] . "'", $db);
+	if ($MyRow['manager'] != '') {
+		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $MyRow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$ManagerName = $ManagerRow['realname'];
 	} else {
@@ -61,14 +61,14 @@ while ($myrow = DB_fetch_array($Result)) {
 	}
 
 	echo '<tr>
-			<td>' . $myrow['taskid'] . '</td>
-			<td>' . $myrow['description'] . '</td>
-			<td>' . $myrow['taskdescription'] . '</td>
-			<td>' . ConvertSQLDate($myrow['lastcompleted']) . '</td>
-			<td>' . ConvertSQLDate($myrow['duedate']) . '</td>
-			<td>' . $myrow['realname'] . '</td>
+			<td>' . $MyRow['taskid'] . '</td>
+			<td>' . $MyRow['description'] . '</td>
+			<td>' . $MyRow['taskdescription'] . '</td>
+			<td>' . ConvertSQLDate($MyRow['lastcompleted']) . '</td>
+			<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
+			<td>' . $MyRow['realname'] . '</td>
 			<td>' . $ManagerName . '</td>
-			<td><a href="' . $RootPath . '/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $myrow['taskid'] . '" onclick="return confirm(\'' . _('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . _('Mark Completed') . '</a></td>
+			<td><a href="' . $RootPath . '/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $MyRow['taskid'] . '" onclick="return confirm(\'' . _('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . _('Mark Completed') . '</a></td>
 		</tr>';
 }
 

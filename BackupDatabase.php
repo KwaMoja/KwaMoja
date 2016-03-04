@@ -3,7 +3,7 @@
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
 include('includes/session.inc');
-$Title = _('Backup KwaMoja Database');
+$Title = _('Backup Database');
 include('includes/header.inc');
 
 if (isset($_GET['BackupFile'])) {
@@ -31,7 +31,7 @@ if (isset($_GET['BackupFile'])) {
 } else {
 
 	$BackupFile = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
-	$Command = 'mysqldump --opt -h' . $host . ' -u' . $DBUser . ' -p' . $DBPassword . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' . $_SERVER['DOCUMENT_ROOT'] . $BackupFile;
+	$Command = 'mysqldump --opt -h' . $Host . ' -u' . $DBUser . ' -p' . $DBPassword . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' . $_SERVER['DOCUMENT_ROOT'] . $BackupFile;
 
 
 	$CommandOutput = array();
@@ -50,13 +50,13 @@ if (isset($_GET['BackupFile'])) {
 /*
 //this could be a weighty file attachment!!
 include('includes/htmlMimeMail.php');
-$mail = new htmlMimeMail();
-$attachment = $mail->getFile( $BackupFile);
-$mail->setText(_('KwaMoja backup file attached'));
-$mail->addAttachment($attachment, $BackupFile, 'application/gz');
-$mail->setSubject(_('Database Backup'));
-$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-$result = $mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
+$Mail = new htmlMimeMail();
+$attachment = $Mail->getFile( $BackupFile);
+$Mail->setText(_('Backup file attached'));
+$Mail->addAttachment($attachment, $BackupFile, 'application/gz');
+$Mail->setSubject(_('Database Backup'));
+$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+$Result = $Mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
 
 prnMsg(_('A backup of the database has been taken and emailed to you'), 'info');
 unlink($BackupFile); // would be a security issue to leave it there for all to download/see

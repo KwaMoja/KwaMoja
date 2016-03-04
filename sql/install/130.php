@@ -14,7 +14,7 @@ CreateTable('suppliercontacts',
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`)
-)", $db);
+)");
 
 
 ?>

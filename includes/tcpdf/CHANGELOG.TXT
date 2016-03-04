@@ -720,7 +720,7 @@
 
 5.8.002 (2010-08-14)
 	- HTML alignments were improved
-	- IMPORTANT: Default regular expression to find spaces has been changed to exclude the non-breaking-space (160 DEC- A0 HEX). if you are using setSpacesRE() method, please read the new documentation.
+	- IMPORTANT: Default regular expression to find spaces has been changed to exclude the non-breaking-space (160 DEC- A0 HEX). If you are using setSpacesRE() method, please read the new documentation.
 	- Example n. 1 was updated.
 
 5.8.001 (2010-08-12)
@@ -880,8 +880,8 @@
 
 5.2.000 (2010-06-02)
 	- IMPORTANT: Support for font subsetting was added by default to reduce the size of documents using large unicode font files.
-		if you embed the whole font in the PDF, the person on the other end can make changes to it even if he didn't have your font.
-		if you subset the font, file size of the PDF will be smaller but the person who receives your PDF would need to have your same font in order to make changes to your PDF.
+		If you embed the whole font in the PDF, the person on the other end can make changes to it even if he didn't have your font.
+		If you subset the font, file size of the PDF will be smaller but the person who receives your PDF would need to have your same font in order to make changes to your PDF.
 	- The signature of the SetFont() and AddFont() methods were changed to include the font subsetting option (subsetting is applied by default).
 	- Examples 14 and 54 were updated.
 
@@ -1311,7 +1311,7 @@
 	- The signature of the checkPageBreak() was changed. The parameter $addpage was added to turn off the automatic page creation.
 
 4.6.016 (2009-06-16)
-	- Method setSpacesRE() was added to set the regular expression used for detecting withespaces or word separators. if you are using chinese, try: setSpacesRE('/[\s\p{Z}\p{Lo}]/');, otherwise you can use setSpacesRE('/[\s\p{Z}]/');
+	- Method setSpacesRE() was added to set the regular expression used for detecting withespaces or word separators. If you are using chinese, try: setSpacesRE('/[\s\p{Z}\p{Lo}]/');, otherwise you can use setSpacesRE('/[\s\p{Z}]/');
 	- The method _putinfo() now automatically fills the metadata with '?' in case of empty string.
 
 4.6.015 (2009-06-11)

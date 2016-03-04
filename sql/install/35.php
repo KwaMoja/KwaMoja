@@ -11,7 +11,7 @@ CreateTable('discountmatrix',
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`),
   CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`)
-)", $db);
+)");
 
 
 ?>

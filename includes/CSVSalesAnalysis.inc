@@ -7,7 +7,7 @@ function stripcomma($str) { //because we're using comma as a delimiter
 $fp = fopen($_SESSION['reports_dir'] . "/SalesAnalysis.csv", "w");
 
 
-while ($myrow = DB_fetch_row($result)) {
+while ($MyRow = DB_fetch_row($Result)) {
 
 	/*First off check that at least one of the columns of data has some none zero amounts */
 	$ThisLineHasOutput = False;
@@ -15,18 +15,18 @@ while ($myrow = DB_fetch_row($result)) {
 	$NumberOfFields = DB_num_rows($ColsResult);
 
 	for ($i = 3; $i <= $NumberOfFields + 7; $i++) {
-		if (abs($myrow[$i]) > 0.009) {
+		if (abs($MyRow[$i]) > 0.009) {
 			$ThisLineHasOutput = True;
 		}
 	}
 	if ($ThisLineHasOutput == True) {
 		$line = '';
 		for ($i = 0; $i <= $NumberOfFields + 7; $i++) {
-			if (isset($myrow[$i])) {
+			if (isset($MyRow[$i])) {
 				if ($i > 0) {
 					$line .= ',';
 				}
-				$line .= stripcomma($myrow[$i]);
+				$line .= stripcomma($MyRow[$i]);
 			}
 		}
 		fputs($fp, $line . "\n");

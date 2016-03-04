@@ -15,7 +15,7 @@ CreateTable('shipmentcharges',
   KEY `TransType_2` (`transtype`),
   CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`shiptref`),
   CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`typeid`)
-)", $db);
+)");
 
 
 ?>

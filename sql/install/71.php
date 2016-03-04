@@ -11,7 +11,7 @@ CreateTable('mrpplannedorders',
   `mrpdate` date DEFAULT NULL,
   `updateflag` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)", $db);
+)");
 
 
 ?>

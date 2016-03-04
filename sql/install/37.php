@@ -9,7 +9,7 @@ CreateTable('edi_orders_segs',
   PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-)", $db);
+)");
 
 
 ?>

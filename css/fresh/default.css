@@ -100,6 +100,17 @@ color:blue;
 text-decoration:none;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 a:hover {
 color:blue;
 text-decoration:underline;
@@ -154,7 +165,7 @@ background-color:maroon;
 color:#FFF;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -339,8 +350,6 @@ display:inline;
 }
 
 #QuickMenuDiv li a {
-background:#B4BB86;
-border:thin outset #5A5F00;
 color:#5A5F00;
 padding:8px;
 margin-right: 4px;

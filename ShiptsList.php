@@ -4,7 +4,7 @@ include('includes/session.inc');
 $Title = _('Shipments Open Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Open Shipments for') . ' ' . $_GET['SupplierName'] . '.</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Open Shipments for') . ' ' . $_GET['SupplierName'] . '.</p>';
 
 if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])) {
 	echo '<br />';
@@ -19,8 +19,8 @@ $SQL = "SELECT shiptref,
 				shipmentdate
 			FROM shipments
 			WHERE supplierid='" . $_GET['SupplierID'] . "'";
-$ErrMsg = _('No shipments were returned from the database because') . ' - ' . DB_error_msg($db);
-$ShiptsResult = DB_query($SQL, $db, $ErrMsg);
+$ErrMsg = _('No shipments were returned from the database because') . ' - ' . DB_error_msg();
+$ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult) == 0) {
 	prnMsg(_('There are no open shipments currently set up for') . ' ' . $_GET['SupplierName'], 'warn');
@@ -39,7 +39,7 @@ echo '<table cellpadding="2" class="selection">
 
 $k = 0; //row colour counter
 
-while ($myrow = DB_fetch_array($ShiptsResult)) {
+while ($MyRow = DB_fetch_array($ShiptsResult)) {
 	if ($k == 1) {
 		echo '<tr class="OddTableRows">';
 		$k = 0;
@@ -48,10 +48,10 @@ while ($myrow = DB_fetch_array($ShiptsResult)) {
 		$k = 1;
 	}
 
-	echo '<td><a href="' . $RootPath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'] . '">' . $myrow['shiptref'] . '</a></td>
-			<td>' . $myrow['vessel'] . '</td>
-			<td>' . ConvertSQLDate($myrow['shipmentdate']) . '</td>
-			<td>' . ConvertSQLDate($myrow['eta']) . '</td>
+	echo '<td><a href="' . $RootPath . '/Shipments.php?SelectedShipment=' . urlencode($MyRow['shiptref']) . '">' . $MyRow['shiptref'] . '</a></td>
+			<td>' . $MyRow['vessel'] . '</td>
+			<td>' . ConvertSQLDate($MyRow['shipmentdate']) . '</td>
+			<td>' . ConvertSQLDate($MyRow['eta']) . '</td>
 		</tr>';
 
 }

@@ -6,7 +6,7 @@ CreateTable('edi_orders_seg_groups',
   `maxoccur` int(4) NOT NULL DEFAULT '0',
   `parentseggroup` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`seggroupno`)
-)", $db);
+)");
 
 
 ?>

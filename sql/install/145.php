@@ -14,7 +14,7 @@ CreateTable('tenders',
   `closed` int(2) NOT NULL DEFAULT '0',
   `requiredbydate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`tenderid`)
-)", $db);
+)");
 
 
 ?>

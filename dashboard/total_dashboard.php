@@ -40,16 +40,16 @@ echo '<style>
 
 echo '</head><body style="background:transparent;">';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<div class="centre">
 		<table border="0" cellspacing="0" style="max-width:100%;width:99%;" cellpadding="2" class="selection">
 			<tr>
 				<th colspan="2" style="margin:0px;padding:0px;background: transparent;">
 					<div class="CanvasTitle">' . _('Sales/Purchase Order Report') . '
-						<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+						<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 					</div>
 				</th>
 			</tr>
@@ -83,7 +83,7 @@ $SQL = "SELECT salesorders.orderno,
 
 
 
-$SalesOrdersResult = DB_query($SQL, $db);
+$SalesOrdersResult = DB_query($SQL);
 
 $TotalSalesOrders = 0;
 while ($row = DB_fetch_array($SalesOrdersResult)) {
@@ -122,7 +122,7 @@ $SQL = "SELECT purchorders.orderno,
 						purchorders.status,
 						suppliers.currcode,
 						currencies.decimalplaces LIMIT 5";
-$SalesOrdersResult2 = DB_query($SQL, $db);
+$SalesOrdersResult2 = DB_query($SQL);
 $TotalPurchaseOrders = 0;
 while ($row = DB_fetch_array($SalesOrdersResult2)) {
 
@@ -162,7 +162,7 @@ $SQL = "SELECT salesorders.orderno,
 					salesorders.printedpackingslip,
 					salesorders.poplaced
 				ORDER BY salesorders.orderno";
-$SalesOrdersResult1 = DB_query($SQL, $db);
+$SalesOrdersResult1 = DB_query($SQL);
 $TotalOutstanding = 0;
 while ($row = DB_fetch_array($SalesOrdersResult1)) {
 	$TotalOutstanding += $row['ordervalue'];

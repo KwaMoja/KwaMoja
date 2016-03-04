@@ -6,7 +6,7 @@ CreateTable('salestypes',
   `sales_type` varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-)", $db);
+)");
 
 
 ?>

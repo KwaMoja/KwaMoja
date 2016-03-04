@@ -29,10 +29,10 @@ CreateTable('www_users',
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
   CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
-)", $db);
+)");
 
-$sql = "INSERT INTO securitygroups SELECT secroleid, tokenid FROM securityroles, securitytokens";
-executeSQL($sql, $db);
+$SQL = "INSERT INTO securitygroups SELECT secroleid, tokenid FROM securityroles, securitytokens";
+executeSQL($SQL);
 
 if (is_writable($PathPrefix . 'companies/' . $_SESSION['DatabaseName'])) {
 	$FileHandle = fopen($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');

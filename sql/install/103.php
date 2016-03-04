@@ -13,7 +13,7 @@ CreateTable('salesglpostings',
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-)", $db);
+)");
 
 
 ?>

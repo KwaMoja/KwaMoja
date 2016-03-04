@@ -9,6 +9,6 @@ CreateTable('securitygroups',
   KEY `tokenid` (`tokenid`),
   CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
   CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
-)", $db);
+)");
 
 ?>

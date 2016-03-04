@@ -13,7 +13,7 @@ CreateTable('cogsglpostings',
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-)", $db);
+)");
 
 
 ?>

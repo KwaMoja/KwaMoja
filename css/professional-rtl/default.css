@@ -106,6 +106,18 @@ background-color:#B0C4DE;
 a {
 color:blue;
 text-decoration:none;
+display:block;
+}
+
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
 }
 
 .centre {
@@ -170,7 +182,7 @@ color:#300;
 text-align:right;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 

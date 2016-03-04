@@ -7,26 +7,26 @@ include('includes/session.inc');
 /* Was the Cancel button pressed the last time through ? */
 
 if (isset($_POST['cancel'])) {
-
 	header('Location:' . $RootPath . '/Z_poAdmin.php');
 	exit;
-
 }
 
-$Title = _('New Language');
-
+$Title = _('New Language');// _('Add a New Language to the System')
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_poAddLanguage';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
-$DefaultLanguage = 'en_GB'; // the default language IS English ...
+/* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
+echo '<div class="toplink">
+		<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>
+	</div>';
 
-/* Your webserver user MUST have read/write access to here,
-otherwise you'll be wasting your time */
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Add a New Language to the System') . '" />' . ' ' .  _('Add a New Language to the System') . '</p>';
 
+echo '<div class="page_help_text">' . _('Utility to create a new language file') . _('Current language is') . ' ' . $_SESSION['Language'] . '</div>';
+
+$DefaultLanguage = 'en_GB';// The default language is English-United Kingdom (British English).
 $PathToDefault = './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
-
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
-echo '<br /><br />&nbsp;' . _('Utility to create a new language file');
-echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
 
 if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 
@@ -40,8 +40,7 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 		$_POST['NewLanguage'] = mb_substr($_POST['NewLanguage'], 0, 3) . mb_strtoupper(mb_substr($_POST['NewLanguage'], 3, 2));
 
 		echo '<div class="centre">';
-		echo '<br />';
-		echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -54,7 +53,6 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 		} else {
 			prnMsg(_('This language cannot be added because it already exists!'), 'error');
 			echo '</form>';
-			echo '</div>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -65,7 +63,6 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 		prnMsg(_('Done. You should now change to your newly created language from the user settings link above. Then you can edit the new language file header and use the language module editor to translate the system strings'), 'info');
 
 		echo '</form>';
-		echo '</div>';
 		include('includes/footer.inc');
 		exit;
 	}
@@ -73,19 +70,18 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 }
 
 
-echo '<div class="centre">';
-echo '<br />';
 prnMsg(_('This utility will create a new language and a new language translation file for it from the system default') . '<br /><br />' . _('If the language already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
-echo '<br /></div>';
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table><tr>';
-echo '<td>' . _('Full code of the new language in the format en_US') . '</td>';
-echo '<td><input type="text" size="5" name="NewLanguage" />';
-echo '</td></tr></table>';
+echo '<table>
+		<tr>
+			<td>' . _('Full code of the new language in the format en_US') . '</td>
+			<td><input type="text" size="5" name="NewLanguage" /></td>
+		</tr>
+	</table>';
 
-echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
+echo '<input type="submit" name="submit" value="' . _('Proceed') . '" />';
 echo '</form>';
 
 include('includes/footer.inc');

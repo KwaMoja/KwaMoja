@@ -14,7 +14,7 @@ CreateTable('deliverynotes',
   KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`),
   CONSTRAINT `deliverynotes_ibfk_1` FOREIGN KEY (`salesorderno`) REFERENCES `salesorders` (`orderno`),
   CONSTRAINT `deliverynotes_ibfk_2` FOREIGN KEY (`salesorderno`, `salesorderlineno`) REFERENCES `salesorderdetails` (`orderno`, `orderlineno`)
-)", $db);
+)");
 
 
 ?>

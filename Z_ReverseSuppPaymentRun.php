@@ -8,7 +8,7 @@ $Title = _('Reverse and Delete Supplier Payments');
 include('includes/header.inc');
 
 /*Only do deletions if user hits the button */
-if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
+if (isset($_POST['RevPayts']) and is_date($_POST['PaytDate']) == 1) {
 
 	$SQLTranDate = FormatDateForSQL($_POST['PaytDate']);
 
@@ -22,7 +22,7 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
 		WHERE supptrans.type = 22
 		AND trandate = '" . $SQLTranDate . "'";
 
-	$Result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	prnMsg(_('The number of payments that will be deleted is') . ' :' . DB_num_rows($Result), 'info');
 
 	while ($Payment = DB_fetch_array($Result)) {
@@ -35,7 +35,7 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
 			ON supptrans.id=suppallocs.transid_allocto
 			WHERE suppallocs.transid_allocfrom = " . $Payment['id'];
 
-		$AllocsResult = DB_query($SQL, $db);
+		$AllocsResult = DB_query($SQL);
 		while ($Alloc = DB_fetch_array($AllocsResult)) {
 
 			$SQL = "UPDATE supptrans SET settled=0,
@@ -45,13 +45,13 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
 										AND transno='" . $Alloc['transno'] . "'";
 
 			$ErrMsg = _('The update to the suppliers charges that were settled by the payment failed because');
-			$UpdResult = DB_query($SQL, $db, $ErrMsg);
+			$UpdResult = DB_query($SQL, $ErrMsg);
 
 		}
 
 		prnMsg(' ... ' . _('reversed the allocations'), 'info');
 		$SQL = "DELETE FROM suppallocs WHERE transid_allocfrom='" . $Payment['id'] . "'";
-		$DelResult = DB_query($SQL, $db);
+		$DelResult = DB_query($SQL);
 		prnMsg(' ... ' . _('deleted the SuppAllocs records'), 'info');
 
 		$SQL = "DELETE FROM supptrans
@@ -59,18 +59,18 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
 			AND transno='" . $Payment['transno'] . "'
 			AND trandate='" . $SQLTranDate . "'";
 
-		$DelResult = DB_query($SQL, $db);
+		$DelResult = DB_query($SQL);
 		prnMsg(_('Deleted the SuppTran record'), 'success');
 
 		$SQL = "DELETE FROM gltrans WHERE typeno='" . $Payment['transno'] . "' AND type=22";
-		$DelResult = DB_query($SQL, $db);
+		$DelResult = DB_query($SQL);
 		prnMsg(' .... ' . _('the GLTrans records (if any)'), 'info');
 
 		$SQL = "DELETE FROM banktrans
 				WHERE ref='" . $Payment['suppreference'] . ' ' . $Payment['supplierno'] . "'
 				AND amount=" . $Payment['ovamount'] . "
 				AND transdate = '" . $SQLTranDate . "'";
-		$DelResult = DB_query($SQL, $db);
+		$DelResult = DB_query($SQL);
 		prnMsg(' .... ' . _('and the BankTrans record'), 'info');
 
 	}
@@ -79,10 +79,10 @@ if (isset($_POST['RevPayts']) and Is_Date($_POST['PaytDate']) == 1) {
 }
 
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br />' . _('Enter the date of the payment run') . ': <input type="text" name="PaytDate" minlength="0" maxlength="11" size="11" value="' . $_POST['PaytDate'] . '" />';
+echo '<br />' . _('Enter the date of the payment run') . ': <input type="text" name="PaytDate" maxlength="11" size="11" value="' . $_POST['PaytDate'] . '" />';
 echo '<input type="submit" name="RevPayts" value="' . _('Reverse Supplier Payments on the Date Entered') . '" />';
 echo '</div>
 	  </form>';

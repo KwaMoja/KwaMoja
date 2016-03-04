@@ -47,34 +47,34 @@
     <tr>
       <td><?php echo RPT_FONT; ?></td>
       <td><select name="Font">
-		<?php foreach($Fonts as $key => $value) {
-			if ($Params['Font']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($Fonts as $Key => $Value) {
+			if ($Params['Font']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
     <tr>
       <td><?php echo RPT_SIZE; ?></td>
       <td><select name="FontSize">
-		<?php foreach($FontSizes as $key => $value) {
-			if ($Params['FontSize']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($FontSizes as $Key => $Value) {
+			if ($Params['FontSize']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
     <tr>
       <td><?php echo RPT_ALIGN; ?></td>
       <td><select name="FontAlign">
-		<?php foreach($FontAlign as $key => $value) {
-			if ($Params['FontAlign']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($FontAlign as $Key => $Value) {
+			if ($Params['FontAlign']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
     <tr>
 		<?php if (!$Params['Color'] or $Params['Color']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Color" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 	  <div align="center"><select name="FontColor">
-		<?php foreach($FontColors as $key => $value) {
-			if ($Params['FontColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($FontColors as $Key => $Value) {
+			if ($Params['FontColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Color']=='2') $selected=' checked'; else $selected=''; ?>
       <td nowrap><input name="Color" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />
@@ -95,9 +95,9 @@
 		<?php if ($Params['Line']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="BrdrColor">
-		<?php foreach($FontColors as $key => $value) {
-			if ($Params['BrdrColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($FontColors as $Key => $Value) {
+			if ($Params['BrdrColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
       <td nowrap><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />
@@ -110,9 +110,9 @@
     <tr>
       <td><?php echo RPT_LINEWIDTH; ?></td>
       <td><select name="LineSize">
-		<?php foreach($LineSizes as $key => $value) {
-			if ($Params['LineSize']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($LineSizes as $Key => $Value) {
+			if ($Params['LineSize']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
     <tr bordercolor="#FFFFFF" bgcolor="#CCCCCC">
@@ -126,9 +126,9 @@
 		<?php if ($Params['Fill']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Fill" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_STDCOLOR; ?><br />
 		<div align="center"><select name="FillColor">
-		<?php foreach($FontColors as $key => $value) {
-			if ($Params['FillColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($FontColors as $Key => $Value) {
+			if ($Params['FillColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></div></td>
 		<?php if ($Params['Fill']=='2') $selected=' checked'; else $selected=''; ?>
       <td nowrap><input name="Fill" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br />

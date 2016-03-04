@@ -9,7 +9,7 @@ CreateTable('paymentmethods',
   `usepreprintedstationery` tinyint(4) NOT NULL DEFAULT '0',
   `opencashdrawer` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`paymentid`)
-)", $db);
+)");
 
 
 ?>

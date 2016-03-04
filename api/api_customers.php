@@ -2,14 +2,14 @@
 
 /* Verify that the debtor number is valid, and doesn't already
 exist.*/
-function VerifyDebtorNo($DebtorNumber, $i, $Errors, $db) {
+function VerifyDebtorNo($DebtorNumber, $i, $Errors) {
 	if ((mb_strlen($DebtorNumber) < 1) or (mb_strlen($DebtorNumber) > 10)) {
 		$Errors[$i] = IncorrectDebtorNumberLength;
 	}
 	$Searchsql = "SELECT count(debtorno)
   					 FROM debtorsmaster
 					 WHERE debtorno='" . $DebtorNumber . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] != 0) {
 		$Errors[$i] = DebtorNoAlreadyExists;
@@ -18,11 +18,11 @@ function VerifyDebtorNo($DebtorNumber, $i, $Errors, $db) {
 }
 
 /* Check that the debtor number exists*/
-function VerifyDebtorExists($DebtorNumber, $i, $Errors, $db) {
+function VerifyDebtorExists($DebtorNumber, $i, $Errors) {
 	$Searchsql = "SELECT count(debtorno)
 					 FROM debtorsmaster
 					 WHERE debtorno='" . $DebtorNumber . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = DebtorDoesntExist;
@@ -47,11 +47,11 @@ function VerifyAddressLine($AddressLine, $length, $i, $Errors) {
 }
 
 /* Check that the currency code is set up in the kwamoja database */
-function VerifyCurrencyCode($CurrCode, $i, $Errors, $db) {
+function VerifyCurrencyCode($CurrCode, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(currabrev)
 					  FROM currencies
 					  WHERE currabrev='" . $CurrCode . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = CurrencyCodeNotSetup;
@@ -60,11 +60,11 @@ function VerifyCurrencyCode($CurrCode, $i, $Errors, $db) {
 }
 
 /* Check that the sales type is set up in the kwamoja database */
-function VerifySalesType($SalesType, $i, $Errors, $db) {
+function VerifySalesType($SalesType, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					  WHERE typeabbrev='" . $SalesType . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = SalesTypeNotSetup;
@@ -74,18 +74,18 @@ function VerifySalesType($SalesType, $i, $Errors, $db) {
 
 /* Check that the clientsince date is a valid date */
 function VerifyClientSince($ClientSince, $i, $Errors) {
-	if (!Is_Date($ClientSince)) {
+	if (!is_date($ClientSince)) {
 		//			$Errors[$i] = InvalidClientSinceDate;
 	}
 	return $Errors;
 }
 
 /* Check that the hold reason is set up in the kwamoja database */
-function VerifyHoldReason($HoldReason, $i, $Errors, $db) {
+function VerifyHoldReason($HoldReason, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(reasoncode)
 					 FROM holdreasons
 					  WHERE reasoncode='" . $HoldReason . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = HoldReasonNotSetup;
@@ -94,11 +94,11 @@ function VerifyHoldReason($HoldReason, $i, $Errors, $db) {
 }
 
 /* Check that the payment terms are set up in the kwamoja database */
-function VerifyPaymentTerms($PaymentTerms, $i, $Errors, $db) {
+function VerifyPaymentTerms($PaymentTerms, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(termsindicator)
 					 FROM paymentterms
 					  WHERE termsindicator='" . $PaymentTerms . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = PaymentTermsNotSetup;
@@ -132,7 +132,7 @@ function VerifyLastPaid($LastPaid, $i, $Errors) {
 
 /* Check that the last paid date is a valid date */
 function VerifyLastPaidDate($ClientSince, $i, $Errors) {
-	if (!Is_Date($ClientSince)) {
+	if (!is_date($ClientSince)) {
 		$Errors[$i] = InvalidLastPaidDate;
 	}
 	return $Errors;
@@ -228,11 +228,11 @@ function VerifyCustomerPOLine($CustomerPOLine, $i, $Errors) {
 }
 
 /* Check that the customer type is set up in the kwamoja database */
-function VerifyCustomerType($debtortype, $i, $Errors, $db) {
+function VerifyCustomerType($debtortype, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
 					  WHERE typeid='" . $debtortype . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_row($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = CustomerTypeNotSetup;
@@ -253,19 +253,19 @@ array of one to many error codes.
 function InsertCustomer($CustomerDetails, $user = '', $password = '') {
 	$Errors = array();
 	$db = db($user, $password);
-	if (gettype($db) == 'integer') {
-		$Errors[0] = NoAuthorisation;
-		return $Errors;
-	}
-	foreach ($CustomerDetails as $key => $value) {
-		$CustomerDetails[$key] = DB_escape_string($value);
+//	if (gettype($db) == 'integer') {
+//		$Errors[0] = NoAuthorisation;
+//		return $Errors;
+//	}
+	foreach ($CustomerDetails as $Key => $Value) {
+		$CustomerDetails[$Key] = DB_escape_string($Value);
 	}
 	$autonumbersql = "SELECT confvalue FROM config
 						 WHERE confname='AutoDebtorNo'";
-	$autonumberresult = DB_query($autonumbersql, $db);
+	$autonumberresult = api_DB_query($autonumbersql);
 	$autonumber = DB_fetch_row($autonumberresult);
 	if ($autonumber[0] == 0) {
-		$Errors = VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors);
 	} else {
 		$CustomerDetails['debtorno'] = '';
 	}
@@ -289,19 +289,35 @@ function InsertCustomer($CustomerDetails, $user = '', $password = '') {
 		$Errors = VerifyAddressLine($CustomerDetails['address6'], 15, sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['currcode'])) {
-		$Errors = VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors);
+	} else {
+		$Answer = GetDefaultCurrency($user, $password);
+		if ($Answer[0] == 0) {
+			$CustomerDetails['currcode'] = $Answer[1]['currencydefault'];
+		} else {
+			$CustomerDetails['currcode'] = 'GBP';
+		}
 	}
 	if (isset($CustomerDetails['salestype'])) {
-		$Errors = VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors);
+	} else {
+		$Answer = GetDefaultPriceList($user, $password);
+		if ($Answer[0] == 0) {
+			$CustomerDetails['salestype'] = $Answer[1]['confvalue'];
+		} else {
+			$CustomerDetails['salestype'] = 'DE';
+		}
 	}
 	if (isset($CustomerDetails['clientsince'])) {
 		$Errors = VerifyClientSince($CustomerDetails['clientsince'], sizeof($Errors), $Errors);
+	} else {
+		$CustomerDetails['clientsince'] = date('Y-m-d');
 	}
 	if (isset($CustomerDetails['holdreason'])) {
-		$Errors = VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['paymentterms'])) {
-		$Errors = VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['discount'])) {
 		$Errors = VerifyDiscount($CustomerDetails['discount'], sizeof($Errors), $Errors);
@@ -349,18 +365,18 @@ function InsertCustomer($CustomerDetails, $user = '', $password = '') {
 		$Errors = VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['typeid'])) {
-		$Errors = VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 	}
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($CustomerDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($CustomerDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= "'" . $Value . "', ";
 	}
-	$sql = 'INSERT INTO debtorsmaster (' . mb_substr($FieldNames, 0, -2) . ') ' . 'VALUES (' . mb_substr($FieldValues, 0, -2) . ') ';
+	$SQL = "INSERT INTO debtorsmaster (" . mb_substr($FieldNames, 0, -2) . ") VALUES (" . mb_substr($FieldValues, 0, -2) . ") ";
 	if (sizeof($Errors) == 0) {
-		$result = DB_Query($sql, $db);
-		if (DB_error_no($db) != 0) {
+		$Result = api_DB_Query($SQL, $db);
+		if ($_SESSION['db_err_msg'] != '') {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -384,14 +400,14 @@ function ModifyCustomer($CustomerDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($CustomerDetails as $key => $value) {
-		$CustomerDetails[$key] = DB_escape_string($value);
+	foreach ($CustomerDetails as $Key => $Value) {
+		$CustomerDetails[$Key] = DB_escape_string($Value);
 	}
 	if (!isset($CustomerDetails['debtorno'])) {
 		$Errors[sizeof($Errors)] = NoDebtorNumber;
 		return $Errors;
 	}
-	$Errors = VerifyDebtorExists($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($CustomerDetails['debtorno'], sizeof($Errors), $Errors);
 	if (in_array(DebtorDoesntExist, $Errors)) {
 		return $Errors;
 	}
@@ -417,19 +433,35 @@ function ModifyCustomer($CustomerDetails, $user, $password) {
 		$Errors = VerifyAddressLine($CustomerDetails['address6'], 15, sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['currcode'])) {
-		$Errors = VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCurrencyCode($CustomerDetails['currcode'], sizeof($Errors), $Errors);
+	} else {
+		$Answer = GetDefaultCurrency($user, $password);
+		if ($Answer[0] == 0) {
+			$CustomerDetails['currcode'] = $Answer[1]['currencydefault'];
+		} else {
+			$CustomerDetails['currcode'] = 'GBP';
+		}
 	}
 	if (isset($CustomerDetails['salestype'])) {
-		$Errors = VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifySalesType($CustomerDetails['salestype'], sizeof($Errors), $Errors);
+	} else {
+		$Answer = GetDefaultPriceList($user, $password);
+		if ($Answer[0] == 0) {
+			$CustomerDetails['salestype'] = $Answer[1]['confvalue'];
+		} else {
+			$CustomerDetails['salestype'] = 'DE';
+		}
 	}
 	if (isset($CustomerDetails['clientsince'])) {
 		$Errors = VerifyClientSince($CustomerDetails['clientsince'], sizeof($Errors), $Errors);
+	} else {
+		$CustomerDetails['clientsince'] = date('Y-m-d');
 	}
 	if (isset($CustomerDetails['holdreason'])) {
-		$Errors = VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyHoldReason($CustomerDetails['holdreason'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['paymentterms'])) {
-		$Errors = VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyPaymentTerms($CustomerDetails['paymentterms'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['discount'])) {
 		$Errors = VerifyDiscount($CustomerDetails['discount'], sizeof($Errors), $Errors);
@@ -477,16 +509,16 @@ function ModifyCustomer($CustomerDetails, $user, $password) {
 		$Errors = VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
 	}
 	if (isset($CustomerDetails['typeid'])) {
-		$Errors = VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 	}
-	$sql = 'UPDATE debtorsmaster SET ';
-	foreach ($CustomerDetails as $key => $value) {
-		$sql .= $key . '="' . $value . '", ';
+	$SQL = 'UPDATE debtorsmaster SET ';
+	foreach ($CustomerDetails as $Key => $Value) {
+		$SQL .= $Key . "='" . $Value . "', ";
 	}
-	$sql = mb_substr($sql, 0, -2) . " WHERE debtorno='" . $CustomerDetails['debtorno'] . "'";
+	$SQL = mb_substr($SQL, 0, -2) . " WHERE debtorno='" . $CustomerDetails['debtorno'] . "'";
 	if (sizeof($Errors) == 0) {
-		$result = DB_Query($sql, $db);
-		if (DB_error_no($db) != 0) {
+		$Result = api_DB_Query($SQL, $db);
+		if ($_SESSION['db_err_msg'] != '') {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -506,14 +538,14 @@ function GetCustomer($DebtorNumber, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT * FROM debtorsmaster WHERE debtorno='" . $DebtorNumber . "'";
-	$result = DB_Query($sql, $db);
+	$SQL = "SELECT * FROM debtorsmaster WHERE debtorno='" . $DebtorNumber . "'";
+	$Result = api_DB_Query($SQL);
 	$Errors[0] = 0; // None found.
-	$Errors[1] = DB_fetch_array($result);
+	$Errors[1] = DB_fetch_array($Result);
 
 	return $Errors;
 }
@@ -528,15 +560,15 @@ function SearchCustomers($Field, $Criteria, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = 'SELECT debtorno
+	$SQL = 'SELECT debtorno
 			FROM debtorsmaster
 			WHERE ' . $Field . " LIKE '%" . $Criteria . "%'";
-	$result = DB_Query($sql, $db);
+	$Result = api_DB_Query($SQL);
 	$DebtorList = array(
 		0
 	); // First element: no errors
-	while ($myrow = DB_fetch_array($result)) {
-		$DebtorList[] = $myrow[0];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$DebtorList[] = $MyRow[0];
 	}
 	return $DebtorList;
 }

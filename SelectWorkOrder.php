@@ -4,8 +4,9 @@ include('includes/session.inc');
 $Title = _('Search Work Orders');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<div class="toplink"><a href="' . $RootPath . '/WorkOrderEntry.php?New=True">' . _('New Work Order') . '</a></div>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -106,16 +107,16 @@ if (isset($_POST['SearchParts'])) {
 
 	$ErrMsg = _('No items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 }
 
 if (isset($_POST['StockID'])) {
-	$StockID = trim(mb_strtoupper($_POST['StockID']));
+	$StockId = trim(mb_strtoupper($_POST['StockID']));
 } elseif (isset($_GET['StockID'])) {
-	$StockID = trim(mb_strtoupper($_GET['StockID']));
+	$StockId = trim(mb_strtoupper($_GET['StockID']));
 }
 
-if (!isset($StockID)) {
+if (!isset($StockId)) {
 
 	/* Not appropriate really to restrict search by date since may miss older
 	ouststanding orders
@@ -127,39 +128,35 @@ if (!isset($StockID)) {
 		if (isset($SelectedStockItem)) {
 			echo _('For the item') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
-		echo _('Work Order number') . ': <input type="text" autofocus="autofocus" name="WO" minlength="0" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select minlength="0" name="StockLocation"> ';
+		echo _('Work Order number') . ': <input type="text" autofocus="autofocus" name="WO" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
-		if ($_SESSION['RestrictLocations'] == 0) {
-			$sql = "SELECT locationname,
-							loccode
-						FROM locations";
-		} else {
-			$sql = "SELECT locationname,
-							loccode
-						FROM locations
-						INNER JOIN www_users
-							ON locations.loccode=www_users.defaultlocation
-						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-		}
+		$SQL = "SELECT locationname,
+						locations.loccode
+					FROM locations
+					INNER JOIN locationusers
+						ON locationusers.loccode=locations.loccode
+						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canview=1
+					WHERE locations.usedforwo=1";
 
-		$resultStkLocs = DB_query($sql, $db);
+		$ResultStkLocs = DB_query($SQL);
 
-		while ($myrow = DB_fetch_array($resultStkLocs)) {
+		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			if (isset($_POST['StockLocation'])) {
-				if ($myrow['loccode'] == $_POST['StockLocation']) {
-					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				if ($MyRow['loccode'] == $_POST['StockLocation']) {
+					echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				} else {
-					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
-			} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 		}
 
 		echo '</select> &nbsp;&nbsp;';
-		echo '<select minlength="0" name="ClosedOrOpen">';
+		echo '<select name="ClosedOrOpen">';
 
 		if (isset($_GET['ClosedOrOpen']) and $_GET['ClosedOrOpen'] == 'Closed_Only') {
 			$_POST['ClosedOrOpen'] = 'Closed_Only';
@@ -175,7 +172,9 @@ if (!isset($StockID)) {
 
 		echo '</select> &nbsp;&nbsp;';
 		echo '<input type="submit" name="SearchOrders" value="' . _('Search') . '" />';
-		echo '&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php?New=True">' . _('New Work Order') . '</a></td></tr></table><br />';
+		echo '</td>
+			</tr>
+		</table>';
 	}
 
 	$SQL = "SELECT categoryid,
@@ -183,7 +182,7 @@ if (!isset($StockID)) {
 			FROM stockcategory
 			ORDER BY categorydescription";
 
-	$result1 = DB_query($SQL, $db);
+	$Result1 = DB_query($SQL);
 
 	echo '<table class="selection">
 			<tr>
@@ -191,19 +190,19 @@ if (!isset($StockID)) {
 			</tr>
 			<tr>
 				<td>' . _('Select a stock category') . ':
-	  			<select minlength="0" name="StockCat">';
+	  			<select name="StockCat">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 
 	echo '</select></td>
 	  		<td>' . _('Enter text extract(s) in the description') . ':</td>
-	  		<td><input type="text" name="Keywords" size="20" minlength="0" maxlength="25" /></td>
+	  		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 		</tr>
 	  	<tr><td></td>
 	  		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-	  		<td><input type="text" name="StockCode" size="15" minlength="0" maxlength="18" /></td>
+	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
 	  	</tr>
 	  </table><br />';
 	echo '<div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
@@ -222,21 +221,21 @@ if (!isset($StockID)) {
 
 		$k = 0; //row colour counter
 
-		while ($myrow = DB_fetch_array($StockItemsResult)) {
+		while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
 			} else {
 				echo '<tr class="OddTableRows">';
-				$k++;
+				++$k;
 			}
 
 			printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
-					</tr>', $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), $myrow['units']);
+					</tr>', $MyRow['stockid'], $MyRow['description'], locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']), $MyRow['units']);
 
 		}
 		//end of while loop
@@ -267,10 +266,16 @@ if (!isset($StockID)) {
 								workorders.requiredby,
 								workorders.startdate
 						FROM workorders
-						INNER JOIN woitems ON workorders.wo=woitems.wo
-						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+						INNER JOIN woitems
+							ON workorders.wo=woitems.wo
+						INNER JOIN stockmaster
+							ON woitems.stockid=stockmaster.stockid
+						INNER JOIN locationusers
+							ON locationusers.loccode=workorders.loccode
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+							AND locationusers.canview=1
 						WHERE workorders.closed='" . $ClosedOrOpen . "'
-						AND workorders.wo='" . $SelectedWO . "'
+							AND workorders.wo='" . $SelectedWO . "'
 						ORDER BY workorders.wo,
 								woitems.stockid";
 		} else {
@@ -286,8 +291,14 @@ if (!isset($StockID)) {
 									workorders.requiredby,
 									workorders.startdate
 							FROM workorders
-							INNER JOIN woitems ON workorders.wo=woitems.wo
-							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							INNER JOIN woitems
+								ON workorders.wo=woitems.wo
+							INNER JOIN stockmaster
+								ON woitems.stockid=stockmaster.stockid
+							INNER JOIN locationusers
+								ON locationusers.loccode=workorders.loccode
+								AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+								AND locationusers.canview=1
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND woitems.stockid='" . $SelectedStockItem . "'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
@@ -303,8 +314,14 @@ if (!isset($StockID)) {
 									workorders.requiredby,
 									workorders.startdate
 							FROM workorders
-							INNER JOIN woitems ON workorders.wo=woitems.wo
-							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
+							INNER JOIN woitems
+								ON workorders.wo=woitems.wo
+							INNER JOIN stockmaster
+								ON woitems.stockid=stockmaster.stockid
+							INNER JOIN locationusers
+								ON locationusers.loccode=workorders.loccode
+								AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+								AND locationusers.canview=1
 							WHERE workorders.closed='" . $ClosedOrOpen . "'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,
@@ -313,7 +330,7 @@ if (!isset($StockID)) {
 		} //end not order number selected
 
 		$ErrMsg = _('No works orders were returned by the SQL because');
-		$WorkOrdersResult = DB_query($SQL, $db, $ErrMsg);
+		$WorkOrdersResult = DB_query($SQL, $ErrMsg);
 
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult) > 0) {
@@ -322,9 +339,10 @@ if (!isset($StockID)) {
 					<tr>
 						<th>' . _('Modify') . '</th>
 						<th>' . _('Status') . '</th>
-						<th>' . _('Receive') . '</th>
 						<th>' . _('Issue To') . '</th>
+						<th>' . _('Receive') . '</th>
 						<th>' . _('Costing') . '</th>
+						<th>' . _('Paperwork') . '</th>
 						<th>' . _('Item') . '</th>
 						<th>' . _('Quantity Required') . '</th>
 						<th>' . _('Quantity Received') . '</th>
@@ -334,38 +352,40 @@ if (!isset($StockID)) {
 					</tr>';
 
 			$k = 0; //row colour counter
-			while ($myrow = DB_fetch_array($WorkOrdersResult)) {
+			while ($MyRow = DB_fetch_array($WorkOrdersResult)) {
 
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
 					$k = 0;
 				} else {
 					echo '<tr class="OddTableRows">';
-					$k++;
+					++$k;
 				}
 
-				$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
-				$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-				$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-				$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
-				$Costing_WO = $RootPath . '/WorkOrderCosting.php?WO=' . $myrow['wo'];
+				$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . urlencode($MyRow['wo']);
+				$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' . urlencode($MyRow['wo']) . '&amp;StockID=' . urlencode($MyRow['stockid']);
+				$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' . urlencode($MyRow['wo']) . '&amp;StockID=' . urlencode($MyRow['stockid']);
+				$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' . urlencode($MyRow['wo']) . '&amp;StockID=' . urlencode($MyRow['stockid']);
+				$Costing_WO = $RootPath . '/WorkOrderCosting.php?WO=' . urlencode($MyRow['wo']);
+				$Printing_WO = $RootPath . '/PDFWOPrint.php?WO=' . urlencode($MyRow['wo']) . '&amp;StockID=' . urlencode($MyRow['stockid']);
 
-				$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
-				$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
+				$FormatedRequiredByDate = ConvertSQLDate($MyRow['requiredby']);
+				$FormatedStartDate = ConvertSQLDate($MyRow['startdate']);
 
 
 				printf('<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
-					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
+					<td><a href="%s">' . _('Receive') . '</a></td>
 					<td><a href="%s">' . _('Costing') . '</a></td>
+					<td><a href="%s">' . _('Print W/O') . '</a></td>
 					<td>%s - %s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', $ModifyPage, $myrow['wo'], $Status_WO, $Receive_WO, $Issue_WO, $Costing_WO, $myrow['stockid'], $myrow['description'], locale_number_format($myrow['qtyreqd'], $myrow['decimalplaces']), locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']), locale_number_format($myrow['qtyreqd'] - $myrow['qtyrecd'], $myrow['decimalplaces']), $FormatedStartDate, $FormatedRequiredByDate);
+					</tr>', $ModifyPage, $MyRow['wo'], $Status_WO, $Issue_WO, $Receive_WO, $Costing_WO, $Printing_WO, $MyRow['stockid'], $MyRow['description'], locale_number_format($MyRow['qtyreqd'], $MyRow['decimalplaces']), locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']), locale_number_format($MyRow['qtyreqd'] - $MyRow['qtyrecd'], $MyRow['decimalplaces']), $FormatedStartDate, $FormatedRequiredByDate);
 
 			}
 			//end of while loop

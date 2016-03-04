@@ -58,7 +58,7 @@ else {
 }
 
 // Save $_POST['SummaryType'] in $SaveSummaryType because change $_POST['SummaryType'] when
-// create $sql
+// create $SQL
 if (isset($_POST['SummaryType'])) {
 	$SaveSummaryType = $_POST['SummaryType'];
 } //isset($_POST['SummaryType'])
@@ -67,15 +67,15 @@ else {
 }
 
 if (isset($_POST['submit'])) {
-	submit($db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $Theme);
+	submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $_SESSION['Theme']);
 } //isset($_POST['submit'])
 else {
-	display($db);
+	display();
 }
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $Theme) {
+function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType, $RootPath, $CurrentTheme) {
 	//initialise no input errors
 	$InputError = 0;
 
@@ -84,14 +84,14 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 
 	//first off validate inputs sensible
 
-	if (!Is_Date($_POST['FromDate'])) {
+	if (!is_date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'), 'error');
-	} //!Is_Date($_POST['FromDate'])
-	if (!Is_Date($_POST['ToDate'])) {
+	} //!is_date($_POST['FromDate'])
+	if (!is_date($_POST['ToDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'), 'error');
-	} //!Is_Date($_POST['ToDate'])
+	} //!is_date($_POST['ToDate'])
 
 	if ($_POST['ReportType'] == 'Summary' and $_POST['DateType'] == 'Order' and $_POST['SummaryType'] == 'transno') {
 		$InputError = 1;
@@ -108,7 +108,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 	// TempStockmoves function creates a temporary table of stockmoves that is used when the DateType
 	// is Invoice Date
 	if ($_POST['DateType'] == 'Invoice') {
-		TempStockmoves($db);
+		TempStockmoves();
 	} //$_POST['DateType'] == 'Invoice'
 
 
@@ -197,7 +197,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		if ($_POST['ReportType'] == 'Detail') {
 			if ($_POST['DateType'] == 'Order') {
-				$sql = "SELECT salesorderdetails.orderno,
+				$SQL = "SELECT salesorderdetails.orderno,
 							   salesorderdetails.stkcode,
 							   salesorderdetails.itemdue,
 							   salesorders.debtorno,
@@ -205,7 +205,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+							   (salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 							   (salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced or
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -227,7 +227,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			} //$_POST['DateType'] == 'Order'
 			else {
 				// Selects by tempstockmoves.trandate not order date
-				$sql = "SELECT salesorderdetails.orderno,
+				$SQL = "SELECT salesorderdetails.orderno,
 							   salesorderdetails.stkcode,
 							   salesorderdetails.itemdue,
 							   salesorders.debtorno,
@@ -235,7 +235,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							   salesorders.branchcode,
 							   salesorderdetails.quantity,
 							   salesorderdetails.qtyinvoiced,
-							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) * -1 / currencies.rate as extprice,
+							   (tempstockmoves.qty * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) * -1 / currencies.rate) as extprice,
 							   (tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 							   IF(salesorderdetails.quantity = salesorderdetails.qtyinvoiced or
 								  salesorderdetails.completed = 1,'Completed','Open') as linestatus,
@@ -275,10 +275,10 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			} //$_POST['SummaryType'] == 'extprice'
 			if ($_POST['DateType'] == 'Order') {
 				if ($_POST['SummaryType'] == 'extprice' or $_POST['SummaryType'] == 'stkcode') {
-					$sql = "SELECT salesorderdetails.stkcode,
+					$SQL = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost,
 								   stockmaster.description,
 								   stockmaster.decimalplaces
@@ -299,12 +299,12 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 								   ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'extprice' or $_POST['SummaryType'] == 'stkcode'
 				elseif ($_POST['SummaryType'] == 'orderno') {
-					$sql = "SELECT salesorderdetails.orderno,
+					$SQL = "SELECT salesorderdetails.orderno,
 								   salesorders.debtorno,
 								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -325,11 +325,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 					if ($_POST['SummaryType'] == 'name') {
 						$orderby = 'name';
 					} //$_POST['SummaryType'] == 'name'
-					$sql = "SELECT debtorsmaster.debtorno,
+					$SQL = "SELECT debtorsmaster.debtorno,
 								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -347,11 +347,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'debtorno' or $_POST['SummaryType'] == 'name'
 					elseif ($_POST['SummaryType'] == 'month') {
-					$sql = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
+					$SQL = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -368,11 +368,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'month'
 					elseif ($_POST['SummaryType'] == 'categoryid') {
-					$sql = "SELECT stockmaster.categoryid,
+					$SQL = "SELECT stockmaster.categoryid,
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -390,11 +390,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'categoryid'
 					elseif ($_POST['SummaryType'] == 'salesman') {
-					$sql = "SELECT custbranch.salesman,
+					$SQL = "SELECT custbranch.salesman,
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -411,11 +411,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'salesman'
 					elseif ($_POST['SummaryType'] == 'area') {
-					$sql = "SELECT custbranch.area,
+					$SQL = "SELECT custbranch.area,
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent)) / currencies.rate as extprice,
+								   SUM(salesorderdetails.quantity * salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate) as extprice,
 								   SUM(salesorderdetails.quantity * stockmaster.actualcost) as extcost
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
@@ -435,10 +435,10 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			else {
 				// Selects by tempstockmoves.trandate not order date
 				if ($_POST['SummaryType'] == 'extprice' or $_POST['SummaryType'] == 'stkcode') {
-					$sql = "SELECT salesorderdetails.stkcode,
+					$SQL = "SELECT salesorderdetails.stkcode,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   stockmaster.description,
 								   SUM(tempstockmoves.qty * -1) as qty
@@ -460,12 +460,12 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'extprice' or $_POST['SummaryType'] == 'stkcode'
 				elseif ($_POST['SummaryType'] == 'orderno') {
-					$sql = "SELECT salesorderdetails.orderno,
+					$SQL = "SELECT salesorderdetails.orderno,
 								   salesorders.debtorno,
 								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -490,11 +490,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 					if ($_POST['SummaryType'] == 'name') {
 						$orderby = 'name';
 					} //$_POST['SummaryType'] == 'name'
-					$sql = "SELECT debtorsmaster.debtorno,
+					$SQL = "SELECT debtorsmaster.debtorno,
 								   debtorsmaster.name,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -515,11 +515,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'debtorno' or $_POST['SummaryType'] == 'name'
 					elseif ($_POST['SummaryType'] == 'month') {
-					$sql = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
+					$SQL = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -540,11 +540,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'month'
 					elseif ($_POST['SummaryType'] == 'categoryid') {
-					$sql = "SELECT stockmaster.categoryid,
+					$SQL = "SELECT stockmaster.categoryid,
 								   stockcategory.categorydescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -565,11 +565,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'categoryid'
 					elseif ($_POST['SummaryType'] == 'salesman') {
-					$sql = "SELECT custbranch.salesman,
+					$SQL = "SELECT custbranch.salesman,
 								   salesman.salesmanname,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -590,11 +590,11 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 							ORDER BY " . $orderby;
 				} //$_POST['SummaryType'] == 'salesman'
 					elseif ($_POST['SummaryType'] == 'area') {
-					$sql = "SELECT custbranch.area,
+					$SQL = "SELECT custbranch.area,
 								   areas.areadescription,
 								   SUM(salesorderdetails.quantity) as quantity,
 								   SUM(salesorderdetails.qtyinvoiced) as qtyinvoiced,
-								   SUM(tempstockmoves.qty * tempstockmoves.price) * -1 as extprice,
+								   SUM(tempstockmoves.qty * tempstockmoves.price * -1 / currencies.rate) as extprice,
 								   SUM(tempstockmoves.qty * tempstockmoves.standardcost) * -1 as extcost,
 								   SUM(tempstockmoves.qty * -1) as qty
 								   FROM tempstockmoves
@@ -617,7 +617,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 			}
 		} // End of if ($_POST['ReportType']
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql, $db, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$ctr = 0;
 		$TotalQty = 0;
 		$TotalExtCost = 0;
@@ -687,7 +687,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 				<tr>
 					<th colspan="15">
 						<h3>' . _('Sales Inquiry') . '
-							<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+							<img src="' . $RootPath . '/css/' . $CurrentTheme . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="" onclick="window.print();" />
 						</h3>
 					</th>
 				</tr>';
@@ -732,7 +732,7 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 						</tr>', _('Order No'), _('Trans. No'), _('Stock Code'), _('Order Date'), _('Debtor No'), _('Debtor Name'), _('Branch Name'), _('Invoiced Qty'), _('Extended Cost'), _('Extended Price'), _('Line Status'), _('Invoiced'), _('Salesman'), _('Area'), _('Item Description'));
 			}
 			$linectr = 0;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$linectr++;
 				if ($_POST['DateType'] == 'Order') {
 					printf('<tr>
@@ -751,9 +751,9 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 								<td class="select"> %-10s </td>
 								<td class="select"> %-10s </td>
 								<td class="select"> %-40s </td<
-							/tr>', $myrow['orderno'], $myrow['stkcode'], ConvertSQLDate($myrow['orddate']), $myrow['debtorno'], $myrow['name'], $myrow['brname'], locale_number_format($myrow['quantity'], $myrow['decimalplaces']), locale_number_format($myrow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['qtyinvoiced'], $myrow['decimalplaces']), $myrow['linestatus'], ConvertSQLDate($myrow['itemdue']), $myrow['salesman'], $myrow['area'], $myrow['description']);
+							/tr>', $MyRow['orderno'], $MyRow['stkcode'], ConvertSQLDate($MyRow['orddate']), $MyRow['debtorno'], $MyRow['name'], $MyRow['brname'], locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']), locale_number_format($MyRow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['qtyinvoiced'], $MyRow['decimalplaces']), $MyRow['linestatus'], ConvertSQLDate($MyRow['itemdue']), $MyRow['salesman'], $MyRow['area'], $MyRow['description']);
 					print '<br/>';
-					$TotalQty += $myrow['quantity'];
+					$TotalQty += $MyRow['quantity'];
 				} //$_POST['DateType'] == 'Order'
 				else {
 					// Detail for Invoiced Date
@@ -773,14 +773,14 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 								<td class="select"> %-10s </td>
 								<td class="select"> %-10s </td>
 								<td class="select"> %-40s </td>
-							</tr>', $myrow['orderno'], $myrow['transno'], $myrow['stkcode'], ConvertSQLDate($myrow['orddate']), $myrow['debtorno'], $myrow['name'], $myrow['brname'], locale_number_format($myrow['qty'], $myrow['decimalplaces']), locale_number_format($myrow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), $myrow['linestatus'], ConvertSQLDate($myrow['trandate']), $myrow['salesman'], $myrow['area'], $myrow['description']);
+							</tr>', $MyRow['orderno'], $MyRow['transno'], $MyRow['stkcode'], ConvertSQLDate($MyRow['orddate']), $MyRow['debtorno'], $MyRow['name'], $MyRow['brname'], locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), locale_number_format($MyRow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), $MyRow['linestatus'], ConvertSQLDate($MyRow['trandate']), $MyRow['salesman'], $MyRow['area'], $MyRow['description']);
 					print '<br/>';
-					$TotalQty += $myrow['qty'];
+					$TotalQty += $MyRow['qty'];
 				}
-				$lastdecimalplaces = $myrow['decimalplaces'];
-				$TotalExtCost += $myrow['extcost'];
-				$TotalExtPrice += $myrow['extprice'];
-				$TotalInvQty += $myrow['qtyinvoiced'];
+				$lastdecimalplaces = $MyRow['decimalplaces'];
+				$TotalExtCost += $MyRow['extcost'];
+				$TotalExtPrice += $MyRow['extprice'];
+				$TotalInvQty += $MyRow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
 			if ($_POST['DateType'] == 'Order') {
@@ -885,29 +885,29 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 
 			$column7 = ' ';
 			$linectr = 0;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$linectr++;
 				if ($SummaryType == 'orderno') {
-					$column7 = $myrow['name'];
+					$column7 = $MyRow['name'];
 				} //$SummaryType == 'orderno'
 				if ($SummaryType == 'transno') {
-					$column7 = $myrow['orderno'];
+					$column7 = $MyRow['orderno'];
 				} //$SummaryType == 'transno'
 				if ($_POST['DateType'] == 'Order') {
 					// quantity is from salesorderdetails
-					$DisplayQty = $myrow['quantity'];
+					$DisplayQty = $MyRow['quantity'];
 				} //$_POST['DateType'] == 'Order'
 				else {
 					// qty is from stockmoves
-					$DisplayQty = $myrow['qty'];
+					$DisplayQty = $MyRow['qty'];
 				}
-				printf('	%-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s', $myrow[$SummaryType], $myrow[$Description], locale_number_format($DisplayQty, 2), locale_number_format($myrow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['qtyinvoiced'], 2), $column7);
+				printf('	%-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s', $MyRow[$SummaryType], $MyRow[$Description], locale_number_format($DisplayQty, 2), locale_number_format($MyRow['extcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['extprice'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($MyRow['qtyinvoiced'], 2), $column7);
 
 				print '<br/>';
 				$TotalQty += $DisplayQty;
-				$TotalExtCost += $myrow['extcost'];
-				$TotalExtPrice += $myrow['extprice'];
-				$TotalInvQty += $myrow['qtyinvoiced'];
+				$TotalExtCost += $MyRow['extcost'];
+				$TotalExtPrice += $MyRow['extprice'];
+				$TotalInvQty += $MyRow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
 			printf('	%-30s | %-40s | %12s | %14s | %14s | %14s', _('Totals'), _('Lines - ') . $linectr, locale_number_format($TotalQty, 2), locale_number_format($TotalExtCost, $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($TotalExtPrice, $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($TotalInvQty, 2), ' ');
@@ -919,22 +919,19 @@ function submit(&$db, $PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $Debto
 } // End of function submit()
 
 
-function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display() //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	{
 	// Display form fields. This function is called the first time
 	// the page is called.
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
-		  <div>
-			<br/>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>';
 
 	echo '<tr>
 			<td>' . _('Report Type') . ':</td>
-			<td><select required="required" minlength="1" name="ReportType">
+			<td><select required="required" name="ReportType">
 				<option selected="selected" value="Detail">' . _('Detail') . '</option>
 				<option value="Summary">' . _('Summary') . '</option>
 			</select></td>
@@ -944,7 +941,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Order Type') . ':</td>
-			<td><select required="required" minlength="1" name="OrderType">
+			<td><select required="required" name="OrderType">
 				<option selected="selected" value="0">' . _('Sales Order') . '</option>
 				<option value="1">' . _('Quotation') . '</option>
 			</select></td>
@@ -953,7 +950,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Date Type') . ':</td>
-			<td><select required="required" minlength="1" name="DateType">
+			<td><select required="required" name="DateType">
 				<option selected="selected" value="Order">' . _('Order Date') . '</option>
 				<option value="Invoice">' . _('Invoice Date') . '</option>
 			</select></td>
@@ -962,7 +959,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Invoice Type') . ':</td>
-			<td><select required="required" minlength="1" name="InvoiceType">
+			<td><select required="required" name="InvoiceType">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="10">' . _('Sales Invoice') . '</option>
 				<option value="11">' . _('Credit Note') . '</option>
@@ -973,45 +970,45 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" required="required" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" required="required" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['PartNumber'])) {
 		$_POST['PartNumber'] = '';
 	} //!isset($_POST['PartNumber'])
 	echo '<tr>
 			<td>' . _('Stock Code') . ':</td>
-			<td><select required="required" minlength="1" name="PartNumberOp">
+			<td><select required="required" name="PartNumberOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
 			<td>&nbsp;</td>
-			<td><input type="text" name="PartNumber" size="20" minlength="0" maxlength="20" value="' . $_POST['PartNumber'] . '" /></td>
+			<td><input type="text" name="PartNumber" size="20" maxlength="20" value="' . $_POST['PartNumber'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorNo'])) {
 		$_POST['DebtorNo'] = '';
 	} //!isset($_POST['DebtorNo'])
 	echo '<tr>
 			<td>' . _('Customer Code') . ':</td>
-			<td><select required="required" minlength="1" name="DebtorNoOp">
+			<td><select required="required" name="DebtorNoOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
 			</select></td>
 			<td>&nbsp;</td>
-			<td><input type="text" name="DebtorNo" size="10" minlength="0" maxlength="10" value="' . $_POST['DebtorNo'] . '" /></td>
+			<td><input type="text" name="DebtorNo" size="10" maxlength="10" value="' . $_POST['DebtorNo'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['DebtorName'])) {
 		$_POST['DebtorName'] = '';
 	} //!isset($_POST['DebtorName'])
 	echo '<tr>
 			<td>' . _('Customer Name') . ':</td>
-			<td><select required="required" minlength="1" name="DebtorNameOp">
+			<td><select required="required" name="DebtorNameOp">
 				<option selected="selected" value="LIKE">' . _('Begins With') . '</option>
 				<option value="Equals">' . _('Equals') . '</option>
 			</select></td>
 			<td>&nbsp;</td>
-			<td><input type="text" name="DebtorName" size="30" minlength="0" maxlength="30" value="' . $_POST['DebtorName'] . '" /></td>
+			<td><input type="text" name="DebtorName" size="30" maxlength="30" value="' . $_POST['DebtorName'] . '" /></td>
 		</tr>';
 	if (!isset($_POST['OrderNo'])) {
 		$_POST['OrderNo'] = '';
@@ -1020,12 +1017,12 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 			<td>' . _('Order Number') . ':</td>
 			<td>' . _('Equals') . '</td>
 			<td>&nbsp;</td>
-			<td><input type="text" name="OrderNo" size="10" minlength="0" maxlength="10" value="' . $_POST['OrderNo'] . '" /></td>
+			<td><input type="text" name="OrderNo" size="10" maxlength="10" value="' . $_POST['OrderNo'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Line Item Status') . ':</td>
-			<td><select minlength="0" name="LineStatus">
+			<td><select name="LineStatus">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="Completed">' . _('Completed') . '</option>
 				<option value="Open">' . _('Not Completed') . '</option>
@@ -1035,13 +1032,13 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr>
 			<td>' . _('Stock Categories') . ':</td>
-			<td><select minlength="0" name="Category">';
+			<td><select name="Category">';
 
-	$CategoryResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory", $db);
+	$CategoryResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory");
 	echo '<option selected="selected" value="All">' . _('All Categories') . '</option>';
-	while ($myrow = DB_fetch_array($CategoryResult)) {
-		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
-	} //$myrow = DB_fetch_array($CategoryResult)
+	while ($MyRow = DB_fetch_array($CategoryResult)) {
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+	} //$MyRow = DB_fetch_array($CategoryResult)
 	echo '</select></td>
 		</tr>';
 
@@ -1053,29 +1050,30 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 		echo '</td>';
 	} else {
 		echo '<td><select name="Salesman">';
-		$sql = "SELECT salesmancode, salesmanname FROM salesman";
-		$SalesmanResult = DB_query($sql,$db);
-		echo '<option selected="selected" value="All">' . _('All Salesmen')  . '</option>';
-		while ($myrow = DB_fetch_array($SalesmanResult)){
-			echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname']  . '</option>';
+		$SQL = "SELECT salesmancode, salesmanname FROM salesman";
+		$SalesmanResult = DB_query($SQL);
+		echo '<option selected="selected" value="All">' . _('All Salesmen') . '</option>';
+		while ($MyRow = DB_fetch_array($SalesmanResult)) {
+			echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 		}
 		echo '</select></td>';
-	}	echo '</tr>';
+	}
+	echo '</tr>';
 
 	// Use name='Areas[]' multiple - if want to create an array for Areas and allow multiple selections
 	echo '<tr><td>' . _('For Sales Areas') . ':</td>
-				<td><select minlength="0" name="Area">';
-	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas", $db);
+				<td><select name="Area">';
+	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas");
 	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
-	while ($myrow = DB_fetch_array($AreasResult)) {
-		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
-	} //$myrow = DB_fetch_array($AreasResult)
+	while ($MyRow = DB_fetch_array($AreasResult)) {
+		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+	} //$MyRow = DB_fetch_array($AreasResult)
 	echo '</select></td></tr>';
 
 	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr>
 			<td>' . _('Sort By') . ':</td>
-			<td><select minlength="0" name="SortBy">
+			<td><select name="SortBy">
 				<option selected="selected" value="salesorderdetails.orderno">' . _('Order Number') . '</option>
 				<option value="salesorderdetails.stkcode">' . _('Stock Code') . '</option>
 				<option value="debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Code') . '</option>
@@ -1092,7 +1090,7 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 
 	echo '<tr><td>&nbsp;</td></tr>';
 	echo '<tr><td>' . _('Summary Type') . ':</td>
-			<td><select minlength="0" name="SummaryType">
+			<td><select name="SummaryType">
 				<option selected="selected" value="orderno">' . _('Order Number') . '</option>
 				<option value="transno">' . _('Transaction Number') . '</option>
 				<option value="stkcode">' . _('Stock Code') . '</option>
@@ -1115,14 +1113,12 @@ function display(&$db) //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_###
 			<td>&nbsp;</td>
 			<td><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></td>
 		</tr>
-		</table>
-	<br />';
-	echo '</div>
-		 </form>';
+		</table>';
+	echo '</form>';
 
 } // End of function display()
 
-function TempStockmoves(&$db) {
+function TempStockmoves() {
 	// When report based on Invoice Date, use stockmoves as the main file, but credit
 	// notes, which are type 11 in stockmoves, do not have the order number in the
 	// reference field; instead they have "Ex Inv - " and then the transno from the
@@ -1133,25 +1129,25 @@ function TempStockmoves(&$db) {
 	$FromDate = FormatDateForSQL($_POST['FromDate']);
 	$ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	$sql = "CREATE TEMPORARY TABLE tempstockmoves LIKE stockmoves";
+	$SQL = "CREATE TEMPORARY TABLE tempstockmoves LIKE stockmoves";
 	$ErrMsg = _('The SQL to the create temp stock moves table failed with the message');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$sql = "INSERT tempstockmoves
+	$SQL = "INSERT tempstockmoves
 			  SELECT * FROM stockmoves
 			  WHERE (stockmoves.type='10' OR stockmoves.type='11')
 			  AND stockmoves.trandate >='" . $FromDate . "' AND stockmoves.trandate <='" . $ToDate . "'";
 	$ErrMsg = _('The SQL to insert temporary stockmoves records failed with the message');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$sql = "UPDATE tempstockmoves, stockmoves
+	$SQL = "UPDATE tempstockmoves, stockmoves
 			  SET tempstockmoves.reference = stockmoves.reference
 			  WHERE tempstockmoves.type='11'
 				AND SUBSTR(tempstockmoves.reference,10,10) = stockmoves.transno
 				AND tempstockmoves.stockid = stockmoves.stockid
 				AND stockmoves.type ='10'";
 	$ErrMsg = _('The SQL to update tempstockmoves failed with the message');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 
 } // End of function TempStockmoves

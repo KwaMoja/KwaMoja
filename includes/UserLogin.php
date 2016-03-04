@@ -20,10 +20,14 @@ define('UL_MAINTENANCE', 5);
  *	See define() statements above.
  */
 
-function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
+function userLogin($Name, $Password, $SysAdminEmail = '') {
 
-	global $debug;
-
+	global $Debug;
+	setcookie('Login', $_SESSION['DatabaseName'], time() + 3600 * 24 * 30);
+	if (isset($_COOKIE['Module'])) {
+		$_GET['Application'] = $_COOKIE['Module'];
+	}
+	$_SESSION['LastActivity'] = time();
 	if (!isset($_SESSION['AccessLevel']) or $_SESSION['AccessLevel'] == '' or (isset($Name) and $Name != '')) {
 		/* if not logged in */
 		$_SESSION['AccessLevel'] = '';
@@ -38,82 +42,146 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 		if (!isset($Name) or $Name == '') {
 			return UL_SHOWLOGIN;
 		}
-		$sql = "SELECT *
+		$SQL = "SELECT *
 				FROM www_users
-				WHERE www_users.userid='" . $Name . "'
-				AND (www_users.password='" . CryptPass($Password) . "'
-				OR  www_users.password='" . $Password . "')";
+				WHERE www_users.userid='" . $Name . "'";
 		$ErrMsg = _('Could not retrieve user details on login because');
-		$debug = 1;
-		$Auth_Result = DB_query($sql, $db, $ErrMsg);
+		$PasswordVerified = false;
+		$AuthResult = DB_query($SQL, $ErrMsg);
+
+		if (DB_num_rows($AuthResult) > 0) {
+			$MyRow = DB_fetch_array($AuthResult);
+			if (VerifyPass($Password, $MyRow['password'])) {
+				$PasswordVerified = true;
+		    } elseif (isset($GLOBALS['CryptFunction'])) {
+				/*if the password stored in the DB was compiled the old way,
+				 * the previous comparison will fail,
+				 * try again with the old hashing algorithm,
+				 * then re-hash the password using the new algorithm.
+				 * The next version should not have $CryptFunction anymore for new installs.
+				 */
+				switch ($GLOBALS['CryptFunction']) {
+					case 'sha1':
+						if ($MyRow['password'] == sha1($Password)) {
+							$PasswordVerified = true;
+						}
+						break;
+					case 'md5':
+						if ($MyRow['password'] == md5($Password)) {
+							$PasswordVerified = true;
+						}
+						break;
+					default:
+						if ($MyRow['password'] == $Password) {
+							$PasswordVerified = true;
+						}
+				}
+				if ($PasswordVerified) {
+					$SQL = "UPDATE www_users SET password = '" . CryptPass($Password) . "'"
+							. " WHERE userid = '" . $Name . "'";
+					DB_query($SQL);
+				}
+
+		    }
+		}
+
 		// Populate session variables with data base results
-		if (DB_num_rows($Auth_Result) > 0) {
-			$myrow = DB_fetch_array($Auth_Result);
-			if ($myrow['blocked'] == 1) {
+		if ($PasswordVerified) {
+			if ($MyRow['blocked'] == 1) {
 				//the account is blocked
 				return UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
-			$_SESSION['UserID'] = $myrow['userid'];
+			$_SESSION['UserID'] = $MyRow['userid'];
 			$_SESSION['AttemptsCounter'] = 0;
-			$_SESSION['AccessLevel'] = $myrow['fullaccess'];
-			$_SESSION['CustomerID'] = $myrow['customerid'];
-			$_SESSION['UserBranch'] = $myrow['branchcode'];
-			$_SESSION['DefaultPageSize'] = $myrow['pagesize'];
-			$_SESSION['UserStockLocation'] = $myrow['defaultlocation'];
-			$_SESSION['RestrictLocations'] = $myrow['restrictlocations'];
-			$_SESSION['UserEmail'] = $myrow['email'];
-			$_SESSION['ModulesEnabled'] = explode(",", $myrow['modulesallowed']);
-			$_SESSION['UsersRealName'] = $myrow['realname'];
-			$_SESSION['Theme'] = $myrow['theme'];
-			$_SESSION['Language'] = $myrow['language'];
-			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
-			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
-			$_SESSION['AllowedDepartment'] = $myrow['department'];
-			$_SESSION['ScreenFontSize'] = $myrow['fontsize'];
+			$_SESSION['AccessLevel'] = $MyRow['fullaccess'];
+			$_SESSION['CustomerID'] = $MyRow['customerid'];
+			$_SESSION['UserBranch'] = $MyRow['branchcode'];
+			$_SESSION['DefaultPageSize'] = $MyRow['pagesize'];
+			$_SESSION['UserStockLocation'] = $MyRow['defaultlocation'];
+			if (isset($MyRow['restrictlocations'])) {
+				$_SESSION['RestrictLocations'] = $MyRow['restrictlocations'];
+			} else {
+				$_SESSION['RestrictLocations'] = 1;
+			}
+			$_SESSION['UserEmail'] = $MyRow['email'];
+			$_SESSION['ModulesEnabled'] = explode(",", $MyRow['modulesallowed']);
+			$_SESSION['UsersRealName'] = $MyRow['realname'];
+			$_SESSION['Theme'] = $MyRow['theme'];
+			require_once 'MobileDetect.php';
+			$MobileDetect = new Mobile_Detect;
+			if ($MobileDetect->isMobile()) {
+				$_SESSION['Theme'] = 'mobile';
+			}
+			$_SESSION['Language'] = $MyRow['language'];
+			$_SESSION['SalesmanLogin'] = $MyRow['salesman'];
+			$_SESSION['CanCreateTender'] = $MyRow['cancreatetender'];
+			$_SESSION['AllowedDepartment'] = $MyRow['department'];
+			if (isset($MyRow['fontsize'])) {
+				switch ($MyRow['fontsize']) {
+					case 0:
+						$_SESSION['ScreenFontSize'] = '8pt';
+						break;
+					case 1:
+						$_SESSION['ScreenFontSize'] = '10pt';
+						break;
+					case 2:
+						$_SESSION['ScreenFontSize'] = '12pt';
+						break;
+					default:
+						$_SESSION['ScreenFontSize'] = '10pt';
+				}
+			} else {
+				$_SESSION['ScreenFontSize'] = 0;
+			}
+			if (isset($MyRow['defaulttag'])) {
+				$_SESSION['DefaultTag'] = $MyRow['defaulttag'];
+			} else {
+				$_SESSION['DefaultTag'] = '8pt';
+			}
 
-			if (isset($myrow['pdflanguage'])) {
-				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
+			if (isset($MyRow['pdflanguage'])) {
+				$_SESSION['PDFLanguage'] = $MyRow['pdflanguage'];
 			} else {
 				$_SESSION['PDFLanguage'] = '0'; //default to latin western languages
 			}
 
-			if ($myrow['displayrecordsmax'] > 0) {
-				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
+			if ($MyRow['displayrecordsmax'] > 0) {
+				$_SESSION['DisplayRecordsMax'] = $MyRow['displayrecordsmax'];
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax']; // default comes from config.php
 			}
 
-			$sql = "UPDATE www_users SET lastvisitdate='" . date('Y-m-d H:i:s') . "'
+			$SQL = "UPDATE www_users SET lastvisitdate='" . date('Y-m-d H:i:s') . "'
 							WHERE www_users.userid='" . $Name . "'";
-			$Auth_Result = DB_query($sql, $db);
+			$AuthResult = DB_query($SQL);
 			/*get the security tokens that the user has access to */
-			$sql = "SELECT tokenid
+			$SQL = "SELECT tokenid
 						FROM securitygroups
 						WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
-			$Sec_Result = DB_query($sql, $db);
+			$SecResult = DB_query($SQL);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
-			if (DB_num_rows($Sec_Result) == 0) {
+			if (DB_num_rows($SecResult) == 0) {
 				return UL_CONFIGERR;
 			} else {
 				$i = 0;
 				$UserIsSysAdmin = FALSE;
-				while ($myrow = DB_fetch_row($Sec_Result)) {
-					if ($myrow[0] == 15) {
+				while ($MyRow = DB_fetch_row($SecResult)) {
+					if ($MyRow[0] == 15) {
 						$UserIsSysAdmin = TRUE;
 					}
-					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
-					$i++;
+					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
+					++$i;
 				}
 			}
 			// check if only maintenance users can access KwaMoja
-			$sql = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
-			$Maintenance_Result = DB_query($sql, $db);
-			if (DB_num_rows($Maintenance_Result) == 0) {
+			$SQL = "SELECT confvalue FROM config WHERE confname = 'DB_Maintenance'";
+			$MaintenanceResult = DB_query($SQL);
+			if (DB_num_rows($MaintenanceResult) == 0) {
 				return UL_CONFIGERR;
 			} else {
-				$myMaintenanceRow = DB_fetch_row($Maintenance_Result);
-				if (($myMaintenanceRow[0] == -1) AND ($UserIsSysAdmin == FALSE)) {
+				$MyMaintenanceRow = DB_fetch_row($MaintenanceResult);
+				if (($MyMaintenanceRow[0] == -1) and ($UserIsSysAdmin == FALSE)) {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
 					return UL_MAINTENANCE;
@@ -125,10 +193,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 				$_SESSION['AttemptsCounter'] = 0;
 			} elseif ($_SESSION['AttemptsCounter'] >= 5 and isset($Name)) {
 				/*User blocked from future accesses until sysadmin releases */
-				$sql = "UPDATE www_users
+				$SQL = "UPDATE www_users
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
-				$Auth_Result = DB_query($sql, $db);
+				$AuthResult = DB_query($SQL);
 				if ($SysAdminEmail != '') {
 					$EmailSubject = _('User access blocked') . ' ' . $Name;
 					$EmailText = _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' . Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
@@ -137,10 +205,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 
 					} else {
 						include('includes/htmlMimeMail.php');
-						$mail = new htmlMimeMail();
-						$mail->setSubject($EmailSubject);
-						$mail->setText($EmailText);
-						$result = SendmailBySmtp($mail, array(
+						$Mail = new htmlMimeMail();
+						$Mail->setSubject($EmailSubject);
+						$Mail->setText($EmailText);
+						$Result = SendmailBySmtp($Mail, array(
 							$SysAdminEmail
 						));
 					}

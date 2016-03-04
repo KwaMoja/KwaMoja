@@ -1,12 +1,12 @@
 <?php
 
-NewScript('SecurityTokens.php', 15, $db);
-NewScript('SalesByTypePeriodInquiry.php', 2, $db);
-NewScript('SalesCategoryPeriodInquiry.php', 2, $db);
-NewScript('SalesTopItemsInquiry.php', 2, $db);
+NewScript('SecurityTokens.php', 15);
+NewScript('SalesByTypePeriodInquiry.php', 2);
+NewScript('SalesCategoryPeriodInquiry.php', 2);
+NewScript('SalesTopItemsInquiry.php', 2);
 
-ChangeConfigValue('VersionNumber', '4.04', $db);
+ChangeConfigValue('VersionNumber', '4.04');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

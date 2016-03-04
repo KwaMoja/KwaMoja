@@ -2,12 +2,12 @@
 
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Tabs');
-/* KwaMoja manual links before header.inc */
+/* Manual links before header.inc */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabSetup';
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
@@ -24,6 +24,7 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['TabLimit']);
 	unset($_POST['SelectAssigner']);
 	unset($_POST['SelectAuthoriser']);
+	unset($_POST['SelectAuthoriserExpenses']);
 	unset($_POST['GLAccountCash']);
 	unset($_POST['GLAccountPcashTab']);
 }
@@ -50,57 +51,58 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		prnMsg('<br />' . _('The Tab code cannot be an empty string or spaces'), 'error');
 		$Errors[$i] = 'TabCode';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['TabCode']) > 20) {
 		$InputError = 1;
 		echo prnMsg(_('The Tab code must be twenty characters or less long'), 'error');
 		$Errors[$i] = 'TabCode';
-		$i++;
+		++$i;
 	} elseif (($_POST['SelectUser']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a User for this tab'), 'error');
 		$Errors[$i] = 'UserName';
-		$i++;
+		++$i;
 	} elseif (($_POST['SelectTabs']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a type of tab from the list'), 'error');
 		$Errors[$i] = 'TabType';
-		$i++;
+		++$i;
 	} elseif (($_POST['SelectAssigner']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a User to assign cash to this tab'), 'error');
 		$Errors[$i] = 'AssignerName';
-		$i++;
+		++$i;
 	} elseif (($_POST['SelectAuthoriser']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a User to authorise this tab'), 'error');
 		$Errors[$i] = 'AuthoriserName';
-		$i++;
+		++$i;
 	} elseif (($_POST['GLAccountCash']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a General ledger code for the cash to be assigned from'), 'error');
 		$Errors[$i] = 'GLCash';
-		$i++;
+		++$i;
 	} elseif (($_POST['GLAccountPcashTab']) == '') {
 		$InputError = 1;
 		echo prnMsg(_('You must select a General ledger code for this petty cash tab'), 'error');
 		$Errors[$i] = 'GLTab';
-		$i++;
+		++$i;
 	}
 
 	if (isset($SelectedTab) and $InputError != 1) {
 
-		$sql = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
+		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
 									tablimit = '" . filter_number_format($_POST['TabLimit']) . "',
 									assigner = '" . $_POST['SelectAssigner'] . "',
 									authorizer = '" . $_POST['SelectAuthoriser'] . "',
+									authorizerexpenses = '" . $_POST['SelectAuthoriserExpenses'] . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "'
 				WHERE tabcode = '" . $SelectedTab . "'";
 
-		$msg = _('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been updated');
+		$Msg = _('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
 
 		// First check the type is not being duplicated
@@ -109,7 +111,7 @@ if (isset($_POST['Submit'])) {
 					 FROM pctabs
 					 WHERE tabcode = '" . $_POST['TabCode'] . "'";
 
-		$CheckResult = DB_query($checkSql, $db);
+		$CheckResult = DB_query($checkSql);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ($CheckRow[0] > 0) {
@@ -119,7 +121,7 @@ if (isset($_POST['Submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO pctabs	(tabcode,
+			$SQL = "INSERT INTO pctabs	(tabcode,
 							 			 usercode,
 										 typetabcode,
 										 currency,
@@ -138,15 +140,15 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "')";
 
-			$msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] . ' ' . _('has been created');
+			$Msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] . ' ' . _('has been created');
 
 		}
 	}
 
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql, $db);
-		prnMsg($msg, 'success');
+		$Result = DB_query($SQL);
+		prnMsg($Msg, 'success');
 		unset($SelectedTab);
 		unset($_POST['SelectUser']);
 		unset($_POST['TabCode']);
@@ -161,9 +163,9 @@ if (isset($_POST['Submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 
-	$sql = "DELETE FROM pctabs WHERE tabcode='" . $SelectedTab . "'";
+	$SQL = "DELETE FROM pctabs WHERE tabcode='" . $SelectedTab . "'";
 	$ErrMsg = _('The Tab record could not be deleted because');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been deleted'), 'success');
 	unset($SelectedTab);
 	unset($_GET['delete']);
@@ -176,29 +178,34 @@ if (!isset($SelectedTab)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT tabcode,
+	$SQL = "SELECT tabcode,
 					usercode,
 					typetabdescription,
 					currabrev,
 					tablimit,
 					assigner,
 					authorizer,
+					authorizerexpenses,
 					glaccountassignment,
 					glaccountpcash,
 					currencies.decimalplaces,
 					chartmaster1.accountname AS glactassigntname,
 					chartmaster2.accountname AS glactpcashname
-				FROM pctabs INNER JOIN currencies
-				ON pctabs.currency=currencies.currabrev
+				FROM pctabs
+				INNER JOIN currencies
+					ON pctabs.currency=currencies.currabrev
 				INNER JOIN pctypetabs
-				ON pctabs.typetabcode=pctypetabs.typetabcode
+					ON pctabs.typetabcode=pctypetabs.typetabcode
 				INNER JOIN chartmaster AS chartmaster1 ON
-				pctabs.glaccountassignment = chartmaster1.accountcode
+					pctabs.glaccountassignment = chartmaster1.accountcode
 				INNER JOIN chartmaster AS chartmaster2 ON
-				pctabs.glaccountpcash = chartmaster2.accountcode
+					pctabs.glaccountpcash = chartmaster2.accountcode
+				WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+					AND chartmaster1.language='" . $_SESSION['ChartLanguage'] . "'
+					AND chartmaster2.language='" . $_SESSION['ChartLanguage'] . "'
 				ORDER BY tabcode";
-	$result = DB_query($sql, $db);
-	if (DB_num_rows($result) > 0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
 		echo '<br /><table class="selection">';
 		echo '<tr>
 				<th>' . _('Tab Code') . '</th>
@@ -207,14 +214,15 @@ if (!isset($SelectedTab)) {
 				<th>' . _('Currency') . '</th>
 				<th>' . _('Limit') . '</th>
 				<th>' . _('Assigner') . '</th>
-				<th>' . _('Authoriser') . '</th>
+				<th>' . _('Authoriser - Payment') . '</th>
+				<th>' . _('Authoriser - Expenses') . '</th>
 				<th>' . _('GL Account For Cash Assignment') . '</th>
 				<th>' . _('GL Account Petty Cash Tab') . '</th>
 			</tr>';
 
 		$k = 0; //row colour counter
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
@@ -232,9 +240,10 @@ if (!isset($SelectedTab)) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td><a href="%sSelectedTab=%s">' . _('Edit') . '</a></td>
 					<td><a href="%sSelectedTab=%s&amp;delete=yes" onclick=\' return MakeConfirm("' . _('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
-					</tr>', $myrow['tabcode'], $myrow['usercode'], $myrow['typetabdescription'], $myrow['currabrev'], locale_number_format($myrow['tablimit'], $myrow['decimalplaces']), $myrow['assigner'], $myrow['authorizer'], $myrow['glaccountassignment'] . ' - ' . $myrow['glactassigntname'], $myrow['glaccountpcash'] . ' - ' . $myrow['glactpcashname'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['tabcode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['tabcode']);
+					</tr>', $MyRow['tabcode'], $MyRow['usercode'], $MyRow['typetabdescription'], $MyRow['currabrev'], locale_number_format($MyRow['tablimit'], $MyRow['decimalplaces']), $MyRow['assigner'], $MyRow['authorizer'],  $MyRow['authorizerexpenses'], $MyRow['glaccountassignment'] . ' - ' . $MyRow['glactassigntname'], $MyRow['glaccountpcash'] . ' - ' . $MyRow['glactpcashname'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow['tabcode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow['tabcode']);
 		}
 		//END WHILE LIST LOOP
 		echo '</table>';
@@ -248,42 +257,43 @@ if (isset($SelectedTab)) {
 }
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />'; //Main table
 
 	if (isset($SelectedTab) and $SelectedTab != '') {
 
-		$sql = "SELECT * FROM pctabs
+		$SQL = "SELECT * FROM pctabs
 				WHERE tabcode='" . $SelectedTab . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['TabCode'] = $myrow['tabcode'];
-		$_POST['SelectUser'] = $myrow['usercode'];
-		$_POST['SelectTabs'] = $myrow['typetabcode'];
-		$_POST['SelectCurrency'] = $myrow['currency'];
-		$_POST['TabLimit'] = locale_number_format($myrow['tablimit']);
-		$_POST['SelectAssigner'] = $myrow['assigner'];
-		$_POST['SelectAuthoriser'] = $myrow['authorizer'];
-		$_POST['GLAccountCash'] = $myrow['glaccountassignment'];
-		$_POST['GLAccountPcashTab'] = $myrow['glaccountpcash'];
+		$_POST['TabCode'] = $MyRow['tabcode'];
+		$_POST['SelectUser'] = $MyRow['usercode'];
+		$_POST['SelectTabs'] = $MyRow['typetabcode'];
+		$_POST['SelectCurrency'] = $MyRow['currency'];
+		$_POST['TabLimit'] = locale_number_format($MyRow['tablimit']);
+		$_POST['SelectAssigner'] = $MyRow['assigner'];
+		$_POST['SelectAuthoriser'] = $MyRow['authorizer'];
+		$_POST['SelectAuthoriserExpenses'] = $MyRow['authorizerexpenses'];
+		$_POST['GLAccountCash'] = $MyRow['glaccountassignment'];
+		$_POST['GLAccountPcashTab'] = $MyRow['glaccountpcash'];
 
 
 		echo '<input type="hidden" name="SelectedTab" value="' . $SelectedTab . '" />';
 		echo '<input type="hidden" name="TabCode" value="' . $_POST['TabCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
-				<td>' . _('Tab Code') . ':</td>
-				<td>' . $_POST['TabCode'] . '</td>
+					<td>' . _('Tab Code') . ':</td>
+					<td>' . $_POST['TabCode'] . '</td>
 				</tr>';
 	} else {
 		// This is a new type so the user may volunteer a type code
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Tab Code') . ':</td>
-					<td><input type="text" required="required" minlength="1" maxlength="20" name="TabCode" /></td>
+					<td><input type="text" required="required" maxlength="20" name="TabCode" /></td>
 				</tr>';
 
 	}
@@ -294,71 +304,71 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('User Name') . ':</td>
-			<td><select required="required" minlength="1" name="SelectUser">';
+			<td><select required="required" name="SelectUser">';
 
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users ORDER BY userid";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectUser']) and $myrow['userid'] == $_POST['SelectUser']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectUser']) and $MyRow['userid'] == $_POST['SelectUser']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['userid'] . '">' . $myrow['userid'] . ' - ' . $myrow['realname'] . '</option>';
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 
 	} //end while loop get user
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<tr>
 			<td>' . _('Type Of Tab') . ':</td>
-			<td><select required="required" minlength="1" name="SelectTabs">';
+			<td><select required="required" name="SelectTabs">';
 
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs
 			ORDER BY typetabcode";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['typetabcode'] == $_POST['SelectTabs']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectTabs']) and $MyRow['typetabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['typetabcode'] . '">' . $myrow['typetabcode'] . ' - ' . $myrow['typetabdescription'] . '</option>';
+		echo $MyRow['typetabcode'] . '">' . $MyRow['typetabcode'] . ' - ' . $MyRow['typetabdescription'] . '</option>';
 
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<tr>
 			<td>' . _('Currency') . ':</td>
-			<td><select required="required" minlength="1" name="SelectCurrency">';
+			<td><select required="required" name="SelectCurrency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectCurrency']) and $myrow['currabrev'] == $_POST['SelectCurrency']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectCurrency']) and $MyRow['currabrev'] == $_POST['SelectCurrency']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		echo $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 
 	} //end while loop get type of tab
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	if (!isset($_POST['TabLimit'])) {
 		$_POST['TabLimit'] = 0;
@@ -367,106 +377,133 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Limit Of Tab') . ':</td>
 			<td>
-				<input type="text" class="number" name="TabLimit" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['TabLimit'] . '" />
+				<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="' . $_POST['TabLimit'] . '" />
 			</td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Assigner') . ':</td>
-			<td><select required="required" minlength="1" name="SelectAssigner">';
+			<td><select required="required" name="SelectAssigner">';
 
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectAssigner']) and $myrow['userid'] == $_POST['SelectAssigner']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectAssigner']) and $MyRow['userid'] == $_POST['SelectAssigner']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['userid'] . '">' . $myrow['userid'] . ' - ' . $myrow['realname'] . '</option>';
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 
 	} //end while loop get assigner
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<tr>
-			<td>' . _('Authoriser') . ':</td>
-			<td><select required="required" minlength="1" name="SelectAuthoriser">';
+			<td>' . _('Authoriser - Payment') . ':</td>
+			<td><select required="required" name="SelectAuthoriser">';
 
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectAuthoriser']) and $myrow['userid'] == $_POST['SelectAuthoriser']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectAuthoriser']) and $MyRow['userid'] == $_POST['SelectAuthoriser']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['userid'] . '">' . $myrow['userid'] . ' - ' . $myrow['realname'] . '</option>';
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 
 	} //end while loop get authoriser
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
 
 	echo '<tr>
-			<td>' . _('GL Account Cash Assignment') . ':</td>
-			<td><select required="required" minlength="1" name="GLAccountCash">';
+			<td>' . _('Authoriser - Expenses') . ':</td>
+			<td><select required="required" name="SelectAuthoriserExpenses">';
 
-	$SQL = "SELECT chartmaster.accountcode,
-					chartmaster.accountname
-			FROM chartmaster INNER JOIN bankaccounts
-			ON chartmaster.accountcode = bankaccounts.accountcode
-			ORDER BY chartmaster.accountcode";
+	$SQL = "SELECT userid,
+					realname
+			FROM www_users
+			ORDER BY userid";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['GLAccountCash']) and $myrow['accountcode'] == $_POST['GLAccountCash']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectAuthoriserExpenses']) and $MyRow['userid'] == $_POST['SelectAuthoriserExpenses']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
+	} //end while loop get authoriser
+
+	echo '</select></td></tr>';
+	DB_free_result($Result);
+
+	echo '<tr>
+			<td>' . _('GL Account Cash Assignment') . ':</td>
+			<td><select required="required" name="GLAccountCash">';
+
+	$SQL = "SELECT chartmaster.accountcode,
+					chartmaster.accountname
+			FROM chartmaster
+			INNER JOIN bankaccounts
+				ON chartmaster.accountcode = bankaccounts.accountcode
+			WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+			ORDER BY chartmaster.accountcode";
+
+	$Result = DB_query($SQL);
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['GLAccountCash']) and $MyRow['accountcode'] == $_POST['GLAccountCash']) {
+			echo '<option selected="selected" value="';
+		} else {
+			echo '<option value="';
+		}
+		echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 
 	} //end while loop
 
 	echo '</select></td></tr>';
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<tr>
 			<td>' . _('GL Account Petty Cash Tab') . ':</td>
-			<td><select required="required" minlength="1" name="GLAccountPcashTab">';
+			<td><select required="required" name="GLAccountPcashTab">';
 
-	$SQL = "SELECT accountcode, accountname
-			FROM chartmaster
-			ORDER BY accountcode";
+	$SQL = "SELECT accountcode,
+					accountname
+				FROM chartmaster
+				WHERE language='" . $_SESSION['ChartLanguage'] . "'
+				ORDER BY accountcode";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['GLAccountPcashTab']) and $myrow['accountcode'] == $_POST['GLAccountPcashTab']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['GLAccountPcashTab']) and $MyRow['accountcode'] == $_POST['GLAccountPcashTab']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 
 	} //end while loop
 
 	echo '</select></td></tr>';
 	echo '</table>'; // close main table
-	DB_free_result($result);
+	DB_free_result($Result);
 
 	echo '<br /><div class="centre">
 		<input type="submit" name="Submit" value="' . _('Accept') . '" />

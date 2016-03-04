@@ -9,30 +9,28 @@ CreateTable('custcontacts',
   `phoneno` varchar(20) NOT NULL,
   `notes` varchar(255) NOT NULL,
   PRIMARY KEY  (`contid`)
-)",
-$db);
+)");
 
-AddColumn('taxref', 'suppliers', 'VARCHAR(20)', 'NOT NULL', '', 'factorcompanyid', $db);
+AddColumn('taxref', 'suppliers', 'VARCHAR(20)', 'NOT NULL', '', 'factorcompanyid');
 
 CreateTable('tags',
 "CREATE TABLE `tags` (
 `tagref` tinyint(4) NOT NULL auto_increment,
 `tagdescription` varchar(50) NOT NULL,
 PRIMARY KEY (`tagref`)
-)",
-$db);
+)");
 
-AddColumn('tag', 'gltrans', 'TINYINT(4)', 'NOT NULL', "0", 'jobref', $db);
+AddColumn('tag', 'gltrans', 'TINYINT(4)', 'NOT NULL', "0", 'jobref');
 
-DropColumn('vtiger_accountid', 'custbranch', $db);
-DropColumn('vtiger_accountid', 'salesorders', $db);
-DropColumn('vtiger_productid', 'stockmaster', $db);
-DeleteConfigValue('vtiger_integration', $db);
+DropColumn('vtiger_accountid', 'custbranch');
+DropColumn('vtiger_accountid', 'salesorders');
+DropColumn('vtiger_productid', 'stockmaster');
+DeleteConfigValue('vtiger_integration');
 
-AddColumn('lat', 'custbranch', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'braddress6', $db);
-AddColumn('lng', 'custbranch', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'lat', $db);
-AddColumn('lat', 'suppliers', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'address6', $db);
-AddColumn('lng', 'suppliers', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'lat', $db);
+AddColumn('lat', 'custbranch', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'braddress6');
+AddColumn('lng', 'custbranch', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'lat');
+AddColumn('lat', 'suppliers', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'address6');
+AddColumn('lng', 'suppliers', 'FLOAT( 10, 6 )', 'NOT NULL', "0.0", 'lat');
 
 CreateTable('geocode_param',
 "CREATE TABLE `geocode_param` (
@@ -43,27 +41,25 @@ CreateTable('geocode_param',
  `map_height` varchar(10) NOT NULL default '',
  `map_width` varchar(10) NOT NULL default '',
  `map_host` varchar(50) NOT NULL default ''
-)",
-$db);
+)");
 
-NewConfigValue('geocode_integration', '0', $db);
+NewConfigValue('geocode_integration', '0');
 
-NewConfigValue('DefaultCustomerType', '1', $db);
+NewConfigValue('DefaultCustomerType', '1');
 
 CreateTable('debtortype',
 "CREATE TABLE `debtortype` (
 `typeid` tinyint(4) NOT NULL auto_increment,
 `typename` varchar(100) NOT NULL,
 PRIMARY KEY (`typeid`)
-)",
-$db);
+)");
 
-InsertRecord('debtortype', array( 'typeid' , 'typename' ), array(NULL, 'Default'), array( 'typeid' , 'typename' ), array(NULL, 'Default'), $db);
+InsertRecord('debtortype', array( 'typeid' , 'typename' ), array(NULL, 'Default'), array( 'typeid' , 'typename' ), array(NULL, 'Default'));
 
-AddColumn('typeid', 'debtorsmaster', 'TINYINT(4)', 'NOT NULL', "1", 'customerpoline', $db);
-AddConstraint('debtorsmaster', 'debtorsmaster_ibfk_5', 'typeid', 'debtortype', 'typeid', $db);
+AddColumn('typeid', 'debtorsmaster', 'TINYINT(4)', 'NOT NULL', "1", 'customerpoline');
+AddConstraint('debtorsmaster', 'debtorsmaster_ibfk_5', 'typeid', 'debtortype', 'typeid');
 
-AddColumn('effectivefrom', 'purchdata', 'DATE', 'NOT NULL', "0000-00-00", 'preferred', $db);
+AddColumn('effectivefrom', 'purchdata', 'DATE', 'NOT NULL', "0000-00-00", 'preferred');
 
 CreateTable('debtortypenotes',
 "CREATE TABLE `debtortypenotes` (
@@ -74,8 +70,7 @@ CreateTable('debtortypenotes',
 `date` date NOT NULL default '0000-00-00',
 `priority` varchar(20) NOT NULL,
 PRIMARY KEY (`noteid`)
-)",
-$db);
+)");
 
 CreateTable('custnotes',
 "CREATE TABLE `custnotes` (
@@ -86,16 +81,15 @@ CreateTable('custnotes',
 `date` date NOT NULL default '0000-00-00',
 `priority` varchar(20) NOT NULL,
 PRIMARY KEY (`noteid`)
-)",
-$db);
+)");
 
-NewConfigValue('Extended_CustomerInfo', '0', $db);
-NewConfigValue('Extended_SupplierInfo', '0', $db);
+NewConfigValue('Extended_CustomerInfo', '0');
+NewConfigValue('Extended_SupplierInfo', '0');
 
-ChangeColumnType('area', 'salesglpostings', 'VARCHAR(3)', 'NOT NULL', '', $db);
-ChangeColumnType('area', 'salesanalysis', 'VARCHAR(3)', 'NOT NULL', '', $db);
-ChangeColumnType('trandate', 'debtortrans', 'DATE', 'NOT NULL', '0000-00-00', $db);
+ChangeColumnType('area', 'salesglpostings', 'VARCHAR(3)', 'NOT NULL', '');
+ChangeColumnType('area', 'salesanalysis', 'VARCHAR(3)', 'NOT NULL', '');
+ChangeColumnType('trandate', 'debtortrans', 'DATE', 'NOT NULL', '0000-00-00');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

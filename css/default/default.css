@@ -97,6 +97,17 @@ color:blue;
 text-decoration:none;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 img {
 border:none;
 vertical-align:middle;
@@ -146,7 +157,7 @@ background-color:#B06161;
 color:#FFF;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -347,7 +358,6 @@ margin-top:2px;
 
 #QuickMenuDiv li {
 display:inline;
-border-left:thin ridge #588BB6;
 padding:14px 12px;
 }
 

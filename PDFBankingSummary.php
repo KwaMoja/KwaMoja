@@ -9,29 +9,29 @@ if (isset($_GET['BatchNo'])) {
 
 if (!isset($_POST['BatchNo'])) {
 	$Title = _('Create PDF Print Out For A Batch Of Receipts');
-	/* KwaMoja manual links before header.inc */
+	/* Manual links before header.inc */
 	$ViewTopic = 'ARReports';
 	$BookMark = 'BankingSummary';
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
 
-	$sql = "SELECT DISTINCT
+	$SQL = "SELECT DISTINCT
 			transno,
 			transdate
 		FROM banktrans
 		WHERE type=12
 		ORDER BY transno DESC";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<table class="selection" summary="' . _('Details of the batch to be re-printed') . '">
 					<tr>
 						<td>' . _('Select the batch number of receipts to be printed') . ':</td>
-						<td><select autofocus="autofocus" required="required" minlength="1" name="BatchNo">';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['transno'] . '">' . _('Batch') . ' ' . $myrow['transno'] . ' - ' . ConvertSqlDate($myrow['transdate']) . '</option>';
+						<td><select autofocus="autofocus" required="required" name="BatchNo">';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['transno'] . '">' . _('Batch') . ' ' . $MyRow['transno'] . ' - ' . ConvertSqlDate($MyRow['transdate']) . '</option>';
 	}
 	echo '</select></td>
 			</tr>
@@ -66,7 +66,7 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
-	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
@@ -76,16 +76,16 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 		exit;
 	}
 	/* OK get the row of receipt batch header info from the BankTrans table */
-	$myrow = DB_fetch_array($Result);
-	$ExRate = $myrow['exrate'];
-	$FunctionalExRate = $myrow['functionalexrate'];
-	$Currency = $myrow['currcode'];
-	$BankTransType = $myrow['banktranstype'];
-	$BankedDate = $myrow['transdate'];
-	$BankActName = $myrow['bankaccountname'];
-	$BankActNumber = $myrow['bankaccountnumber'];
-	$BankingReference = $myrow['ref'];
-	$BankCurrDecimalPlaces = $myrow['currdecimalplaces'];
+	$MyRow = DB_fetch_array($Result);
+	$ExRate = $MyRow['exrate'];
+	$FunctionalExRate = $MyRow['functionalexrate'];
+	$Currency = $MyRow['currcode'];
+	$BankTransType = $MyRow['banktranstype'];
+	$BankedDate = $MyRow['transdate'];
+	$BankActName = $MyRow['bankaccountname'];
+	$BankActNumber = $MyRow['bankaccountnumber'];
+	$BankingReference = $MyRow['ref'];
+	$BankCurrDecimalPlaces = $MyRow['currdecimalplaces'];
 
 	$SQL = "SELECT debtorsmaster.name,
 			ovamount,
@@ -96,12 +96,12 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 		WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
 		AND debtortrans.type=12";
 
-	$CustRecs = DB_query($SQL, $db, '', '', false, false);
-	if (DB_error_no($db) != 0) {
+	$CustRecs = DB_query($SQL, '', '', false, false);
+	if (DB_error_no() != 0) {
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include('includes/header.inc');
 		prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'], 'error');
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL, 'error');
 		}
 		include('includes/footer.inc');
@@ -112,15 +112,15 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 		FROM gltrans
 		WHERE gltrans.typeno='" . $_POST['BatchNo'] . "'
 		AND gltrans.type=12 and gltrans.amount <0
-		AND gltrans.account !='" . $myrow['bankact'] . "'
+		AND gltrans.account !='" . $MyRow['bankact'] . "'
 		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
-	$GLRecs = DB_query($SQL, $db, '', '', false, false);
-	if (DB_error_no($db) != 0) {
+	$GLRecs = DB_query($SQL, '', '', false, false);
+	if (DB_error_no() != 0) {
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
 		include('includes/header.inc');
 		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'], 'error');
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br />' . $SQL, 'error');
 		}
 		include('includes/footer.inc');
@@ -132,23 +132,23 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 
 	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-	$pdf->addInfo('Title', _('Banking Summary'));
-	$pdf->addInfo('Subject', _('Banking Summary Number') . ' ' . $_POST['BatchNo']);
+	$PDF->addInfo('Title', _('Banking Summary'));
+	$PDF->addInfo('Subject', _('Banking Summary Number') . ' ' . $_POST['BatchNo']);
 	$line_height = 12;
 	$PageNumber = 0;
 	$TotalBanked = 0;
 
 	include('includes/PDFBankingSummaryPageHeader.inc');
 
-	while ($myrow = DB_fetch_array($CustRecs)) {
+	while ($MyRow = DB_fetch_array($CustRecs)) {
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format(-$myrow['ovamount'], $BankCurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 65, $YPos, 150, $FontSize, $myrow['name'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 215, $YPos, 100, $FontSize, $myrow['invtext'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 315, $YPos, 100, $FontSize, $myrow['reference'], 'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format(-$MyRow['ovamount'], $BankCurrDecimalPlaces), 'right');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin + 65, $YPos, 150, $FontSize, $MyRow['name'], 'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin + 215, $YPos, 100, $FontSize, $MyRow['invtext'], 'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin + 315, $YPos, 100, $FontSize, $MyRow['reference'], 'left');
 
 		$YPos -= ($line_height);
-		$TotalBanked -= $myrow['ovamount'];
+		$TotalBanked -= $MyRow['ovamount'];
 
 		if ($YPos - (2 * $line_height) < $Bottom_Margin) {
 			/*Then set up a new page */
@@ -159,12 +159,12 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 	/* end of while there are customer receipts in the batch to print */
 
 	/* Right now print out the GL receipt entries in the batch */
-	while ($myrow = DB_fetch_array($GLRecs)) {
+	while ($MyRow = DB_fetch_array($GLRecs)) {
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format((-$myrow['amount'] * $ExRate * $FunctionalExRate), $BankCurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 65, $YPos, 300, $FontSize, $myrow['narrative'], 'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format((-$MyRow['amount'] * $ExRate * $FunctionalExRate), $BankCurrDecimalPlaces), 'right');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin + 65, $YPos, 300, $FontSize, $MyRow['narrative'], 'left');
 		$YPos -= ($line_height);
-		$TotalBanked += (-$myrow['amount'] * $ExRate);
+		$TotalBanked += (-$MyRow['amount'] * $ExRate);
 
 		if ($YPos - (2 * $line_height) < $Bottom_Margin) {
 			/*Then set up a new page */
@@ -176,11 +176,11 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo'] != '') {
 
 
 	$YPos -= $line_height;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format($TotalBanked, 2), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin + 65, $YPos, 300, $FontSize, _('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
+	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, locale_number_format($TotalBanked, 2), 'right');
+	$LeftOvers = $PDF->addTextWrap($Left_Margin + 65, $YPos, 300, $FontSize, _('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 }
 
 ?>

@@ -6,7 +6,7 @@ CreateTable('mailgroups',
   `groupname` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `groupname` (`groupname`)
-)", $db);
+)");
 
 
 ?>

@@ -25,11 +25,11 @@ if (!isset($_SESSION['JournalDetail'])) {
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
 	$SQL = "SELECT accountcode FROM bankaccounts";
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	$i = 0;
-	while ($Act = DB_fetch_row($result)) {
+	while ($Act = DB_fetch_row($Result)) {
 		$_SESSION['JournalDetail']->BankAccounts[$i] = $Act[0];
-		$i++;
+		++$i;
 	}
 
 }
@@ -37,7 +37,7 @@ if (!isset($_SESSION['JournalDetail'])) {
 if (isset($_POST['JournalProcessDate'])) {
 	$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
 
-	if (!Is_Date($_POST['JournalProcessDate'])) {
+	if (!is_date($_POST['JournalProcessDate'])) {
 		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
 	}
@@ -53,12 +53,12 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	A GL entry is created for each GL entry
 	*/
 
-	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate, $db);
+	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate);
 
 	/*Start a transaction to do the whole lot inside */
-	$result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 
-	$TransNo = GetNextTransNo(0, $db);
+	$TransNo = GetNextTransNo(0);
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		$SQL = "INSERT INTO gltrans (type,
@@ -80,7 +80,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		if ($_POST['JournalType'] == 'Reversing') {
 			$SQL = "INSERT INTO gltrans (type,
@@ -103,13 +103,13 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 
 			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-			$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		}
 	}
 
 
 	$ErrMsg = _('Cannot commit the changes');
-	$result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 
 	prnMsg(_('Journal') . ' ' . $TransNo . ' ' . _('has been successfully entered'), 'success');
 
@@ -146,11 +146,11 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' and $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
-				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration'), 'warn');
+				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by ') . $ProjectName . _('. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
 			}
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' and $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
-				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration'), 'warn');
+				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by ') . $ProjectName . _('. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
 			}
 		}
@@ -162,15 +162,16 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		if ($AllowThisPosting) {
 			$SQL = "SELECT accountname
 				FROM chartmaster
-				WHERE accountcode='" . $_POST['GLManualCode'] . "'";
-			$Result = DB_query($SQL, $db);
+				WHERE accountcode='" . $_POST['GLManualCode'] . "'
+					AND language='" . $_SESSION['ChartLanguage'] ."'";
+			$Result = DB_query($SQL);
 
 			if (DB_num_rows($Result) == 0) {
 				prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'), 'warn');
 				unset($_POST['GLManualCode']);
 			} else {
-				$myrow = DB_fetch_array($Result);
-				$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']), $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname'], $_POST['tag']);
+				$MyRow = DB_fetch_array($Result);
+				$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $MyRow['accountname'], $_POST['tag']);
 			}
 		}
 	} else {
@@ -178,12 +179,12 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' and $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
 
-				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration'), 'warn');
+				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by ') . $ProjectName . _('. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
 			}
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' and $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
 
-				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by KwaMoja. This setting can be disabled in System Configuration'), 'warn');
+				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by ') . $ProjectName . _('. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
 			}
 		}
@@ -201,10 +202,13 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 			if (!isset($_POST['GLAmount'])) {
 				$_POST['GLAmount'] = 0;
 			}
-			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $_POST['GLCode'] . "'";
-			$Result = DB_query($SQL, $db);
-			$myrow = DB_fetch_array($Result);
-			$_SESSION['JournalDetail']->add_to_glanalysis(filter_number_format($_POST['GLAmount']), $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname'], $_POST['tag']);
+			$SQL = "SELECT accountname
+						FROM chartmaster
+						WHERE accountcode='" . $_POST['GLCode'] . "'
+							AND language='" . $_SESSION['ChartLanguage'] ."'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_array($Result);
+			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $MyRow['accountname'], $_POST['tag']);
 		}
 	}
 
@@ -227,17 +231,16 @@ if (isset($Cancel)) {
 }
 
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="form">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 // A new table in the first column of the main table
 
-if (!Is_Date($_SESSION['JournalDetail']->JnlDate)) {
+if (!is_date($_SESSION['JournalDetail']->JnlDate)) {
 	// Default the date to the last day of the previous month
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
 }
@@ -249,13 +252,13 @@ echo '<table>
 							<td>' . _('Date to Process Journal') . ':</td>';
 
 if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
-	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
+	echo '<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
 } else {
-	echo '<td><input type="text" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
+	echo '<td><input type="text" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="JournalProcessDate" required="required" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" /></td>';
 }
 
 echo '<td>' . _('Type') . ':</td>
-		<td><select minlength="0" name="JournalType">';
+		<td><select name="JournalType">';
 
 if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
@@ -270,7 +273,6 @@ echo '</select></td>
 	</table>';
 /* close off the table in the first column  */
 
-echo '<br />';
 echo '<table class="selection" width="70%">';
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
@@ -291,20 +293,20 @@ echo '<tr>
 
 //Select the tag
 echo '<tr>
-		<td><select minlength="0" name="tag">';
+		<td><select name="tag">';
 
 $SQL = "SELECT tagref,
 				tagdescription
 		FROM tags
 		ORDER BY tagref";
 
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 echo '<option value="0">0 - ' . _('None') . '</option>';
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $myrow['tagref']) {
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
+		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
 echo '</select></td>';
@@ -315,27 +317,34 @@ if (!isset($_POST['GLManualCode'])) {
 }
 
 if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
-	echo '<td><input class="number" type="text" autofocus="autofocus" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
+	echo '<td><input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
 } else {
-	echo '<td><input class="number" type="text" name="GLManualCode" minlength="0" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
+	echo '<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  /></td>';
 }
 
-$sql = "SELECT accountcode,
-			accountname
+$SQL="SELECT chartmaster.accountcode,
+			chartmaster.accountname
 		FROM chartmaster
-		ORDER BY accountcode";
+		INNER JOIN glaccountusers
+			ON glaccountusers.accountcode=chartmaster.accountcode
+			AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
+			AND glaccountusers.canupd=1
+		WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+		ORDER BY chartmaster.accountcode";
 
-$result = DB_query($sql, $db);
-echo '<td><select minlength="0" name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
+$Result = DB_query($SQL);
+echo '<td><select name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
 echo '<option value="">' . _('Select a general ledger account code') . '</option>';
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $myrow['accountcode']) {
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
+		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+		</td>
+	</tr>';
 
 if (!isset($_POST['GLNarrative'])) {
 	$_POST['GLNarrative'] = '';
@@ -347,14 +356,13 @@ if (!isset($_POST['Debit'])) {
 	$_POST['Debit'] = 0;
 }
 
-echo '</tr>
-	<tr>
+echo '<tr>
 		<th>' . _('Debit') . '</th>
-		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, ' . 'Credit' . ')" minlength="0" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, ' . 'Credit' . ')" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<th>' . _('Credit') . '</th>
-		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, ' . 'Debit' . ')" minlength="0" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, ' . 'Debit' . ')" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -364,16 +372,13 @@ echo '</tr>
 	<tr>
 		<th></th>
 		<th>' . _('GL Narrative') . '</th>
-		<td><input type="text" name="GLNarrative" minlength="0" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>
+		<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" /></td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 /*Close the main table */
 echo '<div class="centre">
 		<input type="submit" name="Process" value="' . _('Accept') . '" />
-	</div>
-	<br />
-	<br />';
+	</div>';
 
 echo '<table class="selection" width="85%">
 		<tr>
@@ -397,17 +402,17 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		$j = 0;
 	} else {
 		echo '<tr class="EvenTableRows">';
-		$j++;
+		++$j;
 	}
-	$sql = "SELECT tagdescription
+	$SQL = "SELECT tagdescription
 			FROM tags
 			WHERE tagref='" . $JournalItem->tag . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	if ($JournalItem->tag == 0) {
 		$TagDescription = _('None');
 	} else {
-		$TagDescription = $myrow[0];
+		$TagDescription = $MyRow[0];
 	}
 	echo '<td>' . $JournalItem->tag . ' - ' . $TagDescription . '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
@@ -446,18 +451,13 @@ echo '</table>
 	</table>';
 
 if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['JournalDetail']->GLItemCounter > 0) {
-	echo '<br />
-			<br />
-			<div class="centre">
+	echo '<div class="centre">
 				<input type="submit" name="CommitBatch" value="' . _('Accept and Process Journal') . '" />
 			</div>';
 } elseif (count($_SESSION['JournalDetail']->GLEntries) > 0) {
-	echo '<br />
-		<br />';
 	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed'), 'warn');
 }
 
-echo '</div>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

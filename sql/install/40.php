@@ -12,7 +12,7 @@ CreateTable('emailsettings',
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-)", $db);
+)");
 
 
 ?>

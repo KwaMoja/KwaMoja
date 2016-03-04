@@ -9,7 +9,7 @@ CreateTable('levels',
   `shrinkfactor` double NOT NULL DEFAULT '0',
   `eoq` double NOT NULL DEFAULT '0',
   KEY `part` (`part`)
-)", $db);
+)");
 
 
 ?>

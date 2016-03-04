@@ -11,16 +11,16 @@ include('includes/header.inc');
 
 if (empty($_GET['identifier'])) {
 	if (empty($_POST['identifier'])) {
-		$identifier = date('U');
+		$Identifier = date('U');
 	} else {
-		$identifier = $_POST['identifier'];
+		$Identifier = $_POST['identifier'];
 	}
 } else {
-	$identifier = $_GET['identifier'];
+	$Identifier = $_GET['identifier'];
 }
 
 
-if (!isset($_SESSION['PO' . $identifier])) {
+if (!isset($_SESSION['PO' . $Identifier])) {
 	/* This page can only be called with a purchase order number for receiving*/
 	echo '<div class="centre">
 			<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Select a purchase order to receive') . '</a>
@@ -45,7 +45,7 @@ if (isset($_GET['LineNo']) and $_GET['LineNo'] > 0) {
 }
 
 global $LineItem;
-$LineItem =& $_SESSION['PO' . $identifier]->LineItems[$LineNo];
+$LineItem =& $_SESSION['PO' . $Identifier]->LineItems[$LineNo];
 
 if ($LineItem->Controlled != 1) {
 	/*This page only relavent for controlled items */
@@ -63,15 +63,14 @@ Get the page going....
 ********************************************/
 echo '<div class="centre">
 		<br />
-		<a href="' . $RootPath . '/GoodsReceived.php?identifier=' . $identifier . '">' . _('Back To Purchase Order') . ' # ' . $_SESSION['PO' . $identifier]->OrderNo . '</a>
-		<br />
-		<h4>' . _('Receive controlled item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO' . $identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO' . $identifier]->SupplierName . '</h4>
+		<a href="' . $RootPath . '/GoodsReceived.php?identifier=' . urlencode($Identifier) . '">' . _('Back To Purchase Order') . ' # ' . $_SESSION['PO' . $Identifier]->OrderNo . '</a>
+		<h4>' . _('Receive controlled item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['PO' . $Identifier]->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO' . $Identifier]->SupplierName . '</h4>
 	</div>';
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['PO' . $identifier]->Location;
+$LocationOut = $_SESSION['PO' . $Identifier]->Location;
 $ItemMustExist = false;
-$StockID = $LineItem->StockID;
+$StockId = $LineItem->StockID;
 $InOutModifier = 1;
 $ShowExisting = false;
 include('includes/InputSerialItems.php');
@@ -80,7 +79,7 @@ include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-$_SESSION['PO' . $identifier]->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalQuantity;
+$_SESSION['PO' . $Identifier]->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalQuantity;
 
 include('includes/footer.inc');
 ?>

@@ -32,12 +32,18 @@ if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
 }
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="' . _('General Ledger Account Inquiry') . '" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="' . _('General Ledger Account Inquiry') . '" />' . ' ' . _('General Ledger Account Inquiry') . '</p>';
 
-echo '<div class="page_help_text noPrint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
+if (isset($SelectedAccount) and $_SESSION['CompanyRecord']['retainedearnings'] == $SelectedAccount) {
+	prnMsg(_('The retained earnings account is managed separately by the system, and therefore cannot be inquired upon. See manual for details'), 'info');
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select another account') . '</a>';
+	include('includes/footer.inc');
+	exit;
+}
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple periods') . '</div>';
+
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* Get the start and periods, depending on how this script was called*/
@@ -48,24 +54,35 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 	$FirstPeriodSelected = $_GET['FromPeriod'];
 	$LastPeriodSelected = $_GET['ToPeriod'];
 } else { // Otherwise just highlight the current period
-	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
+	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 }
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m'), 0, Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection" summary="' . _('Inquiry Selection Criteria') . '">
+echo '<table class="selection" summary="', _('Inquiry Selection Criteria'), '">
 		<tr>
-			<td>' . _('Account') . ':</td><td><select minlength="0" name="Account">';
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
-$Account = DB_query($sql, $db);
-while ($myrow = DB_fetch_array($Account, $db)) {
-	if ($myrow['accountcode'] == $SelectedAccount) {
-		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+			<td>', _('Account'), ':</td>
+			<td><select name="Account">';
+$SQL = "SELECT chartmaster.accountcode,
+			   chartmaster.accountname
+		FROM chartmaster
+		INNER JOIN glaccountusers
+			ON glaccountusers.accountcode=chartmaster.accountcode
+			AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
+			AND glaccountusers.canview=1
+		WHERE chartmaster.accountcode<>'" . $_SESSION['CompanyRecord']['retainedearnings'] . "'
+			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+		ORDER BY chartmaster.accountcode";
+echo $SQL;
+$Account = DB_query($SQL);
+while ($MyRow = DB_fetch_array($Account)) {
+	if (isset($SelectedAccount) and $MyRow['accountcode'] == $SelectedAccount) {
+		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 	} else {
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 	}
 }
 echo '</select>
@@ -74,44 +91,48 @@ echo '</select>
 
 //Select the tag
 echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-			<td><select minlength="0" name="tag">';
+		<td>', _('Select Tag'), ':</td>
+		<td><select name="tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
 		FROM tags
-		ORDER BY tagref";
+		ORDER BY tagdescription";
 
-$result = DB_query($SQL, $db);
-echo '<option value="0">0 - ' . _('All tags') . '</option>';
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $myrow['tagref']) {
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+$Result = DB_query($SQL);
+echo '<option value="0">0 - ', _('All tags'), '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
+		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+		echo '<option value="', $MyRow['tagref'] . '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	}
 }
-echo '</select></td></tr><tr> <td>' . _('For Period range') . ':</td><td><select minlength="0" name="Period[]" size="12" multiple="multiple">';
-$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-$Periods = DB_query($sql, $db);
+echo '</select>
+			</td>
+		</tr>
+		<tr>
+			<td>', _('For Period range'), ':</td>
+			<td><select name="Period[]" size="12" multiple="multiple">';
+$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
+$Periods = DB_query($SQL);
 $id = 0;
-while ($myrow = DB_fetch_array($Periods, $db)) {
-	if (isset($FirstPeriodSelected) and $myrow['periodno'] >= $FirstPeriodSelected and $myrow['periodno'] <= $LastPeriodSelected) {
-		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
+while ($MyRow = DB_fetch_array($Periods)) {
+	if (isset($FirstPeriodSelected) and $MyRow['periodno'] >= $FirstPeriodSelected and $MyRow['periodno'] <= $LastPeriodSelected) {
+		echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 		$id++;
 	} else {
-		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
+		echo '<option value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td>
+echo '</select>
+			</td>
 		</tr>
-		</table>
-		<br />
-		<div class="centre">
-				<input type="submit" name="Show" value="' . _('Show Account Transactions') . '" />
-		</div>
-		</div>
-		</form>';
+	</table>
+	<div class="centre">
+		<input type="submit" name="Show" value="', _('Show Account Transactions'), '" />
+	</div>
+</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -123,11 +144,14 @@ if (isset($_POST['Show'])) {
 		exit;
 	}
 	/*Is the account a balance sheet or a profit and loss account */
-	$result = DB_query("SELECT pandl
+	$Result = DB_query("SELECT pandl
 				FROM accountgroups
-				INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
-				WHERE chartmaster.accountcode='" . $SelectedAccount . "'", $db);
-	$PandLRow = DB_fetch_row($result);
+				INNER JOIN chartmaster
+					ON accountgroups.groupcode=chartmaster.groupcode
+					AND accountgroups.language=chartmaster.language
+				WHERE chartmaster.accountcode='" . $SelectedAccount . "'
+					AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'");
+	$PandLRow = DB_fetch_row($Result);
 	if ($PandLRow[0] == 1) {
 		$PandLAccount = True;
 	} else {
@@ -135,12 +159,13 @@ if (isset($_POST['Show'])) {
 		/*its a balance sheet account */
 	}
 
-	$sql= "SELECT counterindex,
+	$SQL = "SELECT counterindex,
 				type,
 				typename,
 				gltrans.typeno,
 				trandate,
 				narrative,
+				chequeno,
 				amount,
 				periodno,
 				gltrans.tag,
@@ -154,43 +179,48 @@ if (isset($_POST['Show'])) {
 			AND periodno>='" . $FirstPeriodSelected . "'
 			AND periodno<='" . $LastPeriodSelected . "'";
 
-	if ($_POST['tag']!=0) {
-		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
+	if ($_POST['tag'] != 0) {
+		$SQL = $SQL . " AND tag='" . $_POST['tag'] . "'";
 	}
 
-	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
+	$SQL = $SQL . " ORDER BY periodno, gltrans.trandate, counterindex";
 
-	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
-	$NameResult = DB_query($NameSQL, $db);
+	$NameSQL = "SELECT accountname
+					FROM chartmaster
+					WHERE accountcode='" . $SelectedAccount . "'
+						AND language='" . $_SESSION['ChartLanguage'] . "'";
+	$NameResult = DB_query($NameSQL);
 	$NameRow = DB_fetch_array($NameResult);
 	$SelectedAccountName = $NameRow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
-	$TransResult = DB_query($sql, $db, $ErrMsg);
+	$TransResult = DB_query($SQL, $ErrMsg);
 
-	echo '<br />
-			<table class="selection" summary="' . _('General Ledger account inquiry details') . '">
-			<tr>
-				<th colspan="8">
-					<b>' . _('Transactions for account') . ' ' . $SelectedAccount . ' - ' . $SelectedAccountName . '</b>
-					<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
-				</th>
-			</tr>
-			<tr>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Number') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Debit') . '</th>
-				<th>' . _('Credit') . '</th>
-				<th>' . _('Narrative') . '</th>
-				<th>' . _('Balance') . '</th>
-				<th>' . _('Tag') . '</th>
-			</tr>';
+	echo '<table class="selection" summary="', _('General Ledger account inquiry details'), '">
+			<thead>
+				<tr>
+					<th colspan="9">
+						<b>', _('Transactions for account'), ' ', $SelectedAccount, ' - ', $SelectedAccountName, '</b>
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+					</th>
+				</tr>
+				<tr>
+					<th>', _('Type'), '</th>
+					<th>', _('Trans no'), '</th>
+					<th>', _('Cheque'), '</th>
+					<th>', _('Date'), '</th>
+					<th>', _('Debit'), '</th>
+					<th>', _('Credit'), '</th>
+					<th>', _('Narrative'), '</th>
+					<th>', _('Balance'), '</th>
+					<th>', _('Tag'), '</th>
+				</tr>
+			</thead>';
 
 	if ($PandLAccount == True) {
 		$RunningTotal = 0;
 	} else {
 		// added to fix bug with Brought Forward Balance always being zero
-		$sql = "SELECT bfwd,
+		$SQL = "SELECT bfwd,
 						actual,
 						period
 					FROM chartdetails
@@ -198,18 +228,29 @@ if (isset($_POST['Show'])) {
 					AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-		$ChartDetailsResult = DB_query($sql, $db, $ErrMsg);
+		$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-		$RunningTotal = $ChartDetailRow['bfwd'];
+		if ($_POST['tag'] == 0) {
+			$_POST['tag'] = '%%';
+		}
+		$BfwdSQL = "SELECT sum(amount) as bfwd
+						FROM gltrans
+						WHERE account='" . $SelectedAccount . "'
+							AND periodno<" . $FirstPeriodSelected . "
+							AND tag like '" . $_POST['tag'] . "'";
+		$BfwdResult = DB_query($BfwdSQL);
+		$BfwdRow = DB_fetch_array($BfwdResult);
+
+		$RunningTotal = $BfwdRow['bfwd'];
 		if ($RunningTotal < 0) { //its a credit balance b/fwd
 			echo '<tr>
-					<td colspan="4"><b>' . _('Brought Forward Balance') . '</b></td>
+					<td colspan="5"><b>' . _('Brought Forward Balance') . '</b></td>
 					<td class="number"><b>' . locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				</tr>';
 		} else { //its a debit balance b/fwd
 			echo '<tr>
-					<td colspan="3"><b>' . _('Brought Forward Balance') . '</b></td>
+					<td colspan="4"><b>' . _('Brought Forward Balance') . '</b></td>
 					<td class="number"><b>' . locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				</tr>';
 		}
@@ -220,12 +261,12 @@ if (isset($_POST['Show'])) {
 	$j = 1;
 	$k = 0; //row colour counter
 	$IntegrityReport = '';
-	while ($myrow = DB_fetch_array($TransResult)) {
-		if ($myrow['periodno'] != $PeriodNo) {
+	while ($MyRow = DB_fetch_array($TransResult)) {
+		if ($MyRow['periodno'] != $PeriodNo) {
 			if ($PeriodNo != -9999) { //ie its not the first time around
 				/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
-				$sql = "SELECT bfwd,
+				$SQL = "SELECT bfwd,
 								actual,
 								period
 							FROM chartdetails
@@ -233,26 +274,31 @@ if (isset($_POST['Show'])) {
 								AND chartdetails.period='" . $PeriodNo . "'";
 
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-				$ChartDetailsResult = DB_query($sql, $db, $ErrMsg);
+				$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-				echo '<tr>
-						<td colspan="3"><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
-				if ($PeriodTotal < 0) { //its a credit balance b/fwd
-					if ($PandLAccount == True) {
-						$RunningTotal = 0;
+				if ($PeriodNo != -9999) {
+					$PeriodSQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
+					$PeriodResult = DB_query($PeriodSQL);
+					$PeriodRow = DB_fetch_array($PeriodResult);
+					echo '<tr>
+							<td colspan="4"><b>' . _('Total for period ending') . ' ' . ConvertSQLDate($PeriodRow['lastdate_in_period']) . '</b></td>';
+					if ($PeriodTotal < 0) { //its a credit balance b/fwd
+						if ($PandLAccount == True) {
+							//							$RunningTotal = 0;
+						}
+						echo '<td></td>
+									<td class="number"><b>' . locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+									<td></td>
+								</tr>';
+					} else { //its a debit balance b/fwd
+						if ($PandLAccount == True) {
+							//								$RunningTotal = 0;
+						}
+						echo '<td class="number"><b>' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+									<td colspan="2"></td>
+								</tr>';
 					}
-					echo '<td></td>
-							<td class="number"><b>' . locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-							<td></td>
-						</tr>';
-				} else { //its a debit balance b/fwd
-					if ($PandLAccount == True) {
-						$RunningTotal = 0;
-					}
-					echo '<td class="number"><b>' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-							<td colspan="2"></td>
-						</tr>';
 				}
 				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo . _('Account movement per transaction') . ': ' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal - $ChartDetailRow['actual'], 3);
 
@@ -260,7 +306,7 @@ if (isset($_POST['Show'])) {
 					$ShowIntegrityReport = True;
 				}
 			}
-			$PeriodNo = $myrow['periodno'];
+			$PeriodNo = $MyRow['periodno'];
 			$PeriodTotal = 0;
 		}
 
@@ -269,25 +315,25 @@ if (isset($_POST['Show'])) {
 			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k++;
+			++$k;
 		}
 
-		$RunningTotal += $myrow['amount'];
-		$PeriodTotal += $myrow['amount'];
+		$RunningTotal += $MyRow['amount'];
+		$PeriodTotal += $MyRow['amount'];
 
-		if ($myrow['amount'] >= 0) {
-			$DebitAmount = locale_number_format($myrow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
+		if ($MyRow['amount'] >= 0) {
+			$DebitAmount = locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 			$CreditAmount = '';
 		} else {
-			$CreditAmount = locale_number_format(-$myrow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
+			$CreditAmount = locale_number_format(-$MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 			$DebitAmount = '';
 		}
 
-		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
-		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['typeno'];
 
-		$tagsql = "SELECT tagdescription FROM tags WHERE tagref='" . $myrow['tag'] . "'";
-		$tagresult = DB_query($tagsql, $db);
+		$tagsql = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+		$tagresult = DB_query($tagsql);
 		$tagrow = DB_fetch_array($tagresult);
 		if ($tagrow['tagdescription'] == '') {
 			$tagrow['tagdescription'] = _('None');
@@ -295,18 +341,36 @@ if (isset($_POST['Show'])) {
 		printf('<td>%s</td>
 				<td class="number"><a href="%s">%s</a></td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number"><b>%s</b></td>
 				<td>%s</td>
-			</tr>', $myrow['typename'], $URL_to_TransDetail, $myrow['typeno'], $FormatedTranDate, $DebitAmount, $CreditAmount, $myrow['narrative'], locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), $tagrow['tagdescription']);
+			</tr>', _($MyRow['typename']), $URL_to_TransDetail, $MyRow['typeno'], $MyRow['chequeno'], $FormatedTranDate, $DebitAmount, $CreditAmount, $MyRow['narrative'], locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), $tagrow['tagdescription']);
 
 	}
+	if ($PeriodNo != -9999) {
+		$PeriodSQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
+		$PeriodResult = DB_query($PeriodSQL);
+		$PeriodRow = DB_fetch_array($PeriodResult);
+		echo '<tr>
+				<td colspan="3"><b>' . _('Total for period ending') . ' ' . ConvertSQLDate($PeriodRow['lastdate_in_period']) . '</b></td>';
+		if ($PeriodTotal < 0) { //its a credit balance b/fwd
+			echo '<td></td>
+					<td class="number"><b>' . locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+					<td></td>
+				</tr>';
+		} else { //its a debit balance b/fwd
+			echo '<td class="number"><b>' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+					<td colspan="2"></td>
+				</tr>';
+		}
+	}
 
-	echo '<tr><td colspan="3"><b>';
+	echo '<tr><td colspan="4"><b>';
 	if ($PandLAccount == True) {
-		echo _('Total Period Movement');
+		echo _('Total Movement for selected periods');
 	} else {
 		/*its a balance sheet account*/
 		echo _('Balance C/Fwd');

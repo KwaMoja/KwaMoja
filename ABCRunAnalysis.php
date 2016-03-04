@@ -6,8 +6,8 @@ $Title = _('Run stock ranking analysis');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/rank.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/rank.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_POST['Submit'])) {
@@ -19,10 +19,10 @@ if (isset($_POST['Submit'])) {
 		exit;
 	}
 
-	$result = DB_query("DELETE FROM abcstock WHERE groupid='" . $_POST['GroupID'] . "'", $db);
+	$Result = DB_query("DELETE FROM abcstock WHERE groupid='" . $_POST['GroupID'] . "'");
 
 	/*Firstly get the parameters needed */
-	$sql = "SELECT groupid,
+	$SQL = "SELECT groupid,
 					groupname,
 					methodid,
 					apercentage,
@@ -32,18 +32,18 @@ if (isset($_POST['Submit'])) {
 					months
 				FROM abcgroups
 				WHERE groupid='" . $_POST['GroupID'] . "'";
-	$result = DB_query($sql, $db);
-	$Parameters = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$Parameters = DB_fetch_array($Result);
 
-	$result = DB_query("DROP TABLE IF EXISTS tempabc", $db);
-	$sql = "CREATE TEMPORARY TABLE tempabc (
+	$Result = DB_query("DROP TABLE IF EXISTS tempabc");
+	$SQL = "CREATE TEMPORARY TABLE tempabc (
 				stockid varchar(20),
 				consumption INT(11)) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql, $db, _('Create of tempabc failed because'));
+	$Result = DB_query($SQL, _('Create of tempabc failed because'));
 
-	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
-	$sql = "INSERT INTO tempabc
+	$SQL = "INSERT INTO tempabc
 					(SELECT stockid,
 					-SUM(qty)*price AS consumption
 				FROM stockmoves
@@ -53,74 +53,74 @@ if (isset($_POST['Submit'])) {
 				GROUP BY stockid
 				ORDER BY consumption)";
 	$ErrMsg = _('Problem populating tempabc table');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$sql = "SELECT COUNT(stockid) AS numofitems FROM tempabc WHERE consumption<>0";
-	$result = DB_query($sql, $db, _('Problem counting items'));
-	$myrow = DB_fetch_array($result);
-	$NumberOfItems = $myrow['numofitems'];
+	$SQL = "SELECT COUNT(stockid) AS numofitems FROM tempabc WHERE consumption<>0";
+	$Result = DB_query($SQL, _('Problem counting items'));
+	$MyRow = DB_fetch_array($Result);
+	$NumberOfItems = $MyRow['numofitems'];
 	$AItems = round($NumberOfItems * $Parameters['apercentage'] / 100, 0);
 	$BItems = round($NumberOfItems * $Parameters['bpercentage'] / 100, 0);
 	$CItems = $NumberOfItems - $AItems - $BItems;
 
-	$sql = "SELECT stockid,
+	$SQL = "SELECT stockid,
 					consumption
 				FROM tempabc
 				WHERE consumption<>0
 				ORDER BY consumption DESC";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		switch ($i) {
 			case ($i <= $AItems):
 				$InsertSQL = "INSERT INTO abcstock VALUES(
 															'" . $_POST['GroupID'] . "',
-															'" . $myrow['stockid'] . "',
+															'" . $MyRow['stockid'] . "',
 															'A'
 														)";
-				$InsertResult = DB_query($InsertSQL, $db);
+				$InsertResult = DB_query($InsertSQL);
 				break;
 			case ($i > $AItems and $i <= ($AItems + $BItems)):
 				$InsertSQL = "INSERT INTO abcstock VALUES(
 															'" . $_POST['GroupID'] . "',
-															'" . $myrow['stockid'] . "',
+															'" . $MyRow['stockid'] . "',
 															'B'
 														)";
-				$InsertResult = DB_query($InsertSQL, $db);
+				$InsertResult = DB_query($InsertSQL);
 				break;
 			default:
 				$InsertSQL = "INSERT INTO abcstock VALUES(
 															'" . $_POST['GroupID'] . "',
-															'" . $myrow['stockid'] . "',
+															'" . $MyRow['stockid'] . "',
 															'C'
 														)";
-				$InsertResult = DB_query($InsertSQL, $db);
+				$InsertResult = DB_query($InsertSQL);
 		}
-		$i++;
+		++$i;
 	}
-	$sql = "INSERT INTO abcstock (SELECT '" . $_POST['GroupID'] . "',
+	$SQL = "INSERT INTO abcstock (SELECT '" . $_POST['GroupID'] . "',
 										stockid,
 										'" . $Parameters['zerousage'] . "'
 									FROM tempabc
 									WHERE consumption=0)";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
-	$sql = "INSERT INTO abcstock (SELECT '" . $_POST['GroupID'] . "',
+	$SQL = "INSERT INTO abcstock (SELECT '" . $_POST['GroupID'] . "',
 										stockmaster.stockid,
 										'" . $Parameters['zerousage'] . "'
 									FROM stockmaster
 									LEFT JOIN tempabc
 										ON stockmaster.stockid=tempabc.stockid
 									WHERE consumption is NULL)";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
-	$result = DB_query("DROP TABLE IF EXISTS tempabc", $db);
+	$Result = DB_query("DROP TABLE IF EXISTS tempabc");
 
 	prnMsg(_('The ABC analysis has been successfully run'), 'success');
 } else {
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="ABCAnalysis">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="ABCAnalysis">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>
@@ -131,16 +131,16 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr class="EvenTableRows">
 				<td>' . _('Ranking group') . '</td>
-				<td><select required="required" minlength="1" name="GroupID">';
+				<td><select required="required" name="GroupID">';
 
-	$sql = "SELECT groupid,
+	$SQL = "SELECT groupid,
 					groupname
 				FROM abcgroups";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
 	echo '<option value=""></option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['groupid'] . '">' . $myrow['groupname'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['groupid'] . '">' . $MyRow['groupname'] . '</option>';
 	}
 
 	echo '</select>

@@ -22,6 +22,9 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 		case 'mysqli':
 			$_SESSION['Installer']['DBPort'] = 3306;
 			break;
+		case 'postgres':
+			$_SESSION['Installer']['DBPort'] = 5432;
+			break;
 		default:
 			$_SESSION['Installer']['DBPort'] = 3306;
 			break;
@@ -46,19 +49,22 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	/* Try to connect to the DBMS */
 	switch($_SESSION['Installer']['DBMS']) {
 		case 'mariadb':
-			$db = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
+			$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
 			break;
 		case 'mysql':
-			$db = @mysql_connect($_SESSION['Installer']['HostName'] . ':' . $_SESSION['Installer']['DBPort'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
+			$DB = @mysql_connect($_SESSION['Installer']['HostName'] . ':' . $_SESSION['Installer']['DBPort'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
 			break;
 		case 'mysqli':
-			$db = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
+			$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
+			break;
+		case 'posgres':
+			$DB = pg_connect('host=' . $_SESSION['Installer']['HostName'] . ' dbname=kwamoja port=5432 user=postgres');;
 			break;
 		default:
-			$db = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
+			$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
 			break;
 	}
-	if (!$db) {
+	if (!$DB) {
 		$Errors[] = _('Failed to connect the database management system');
 	}
 
@@ -68,26 +74,26 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . $_SESSION['Installer']['UserName'] . "'@'" . $_SESSION['Installer']['HostName'] . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
 	switch($_SESSION['Installer']['DBMS']) {
 		case 'mariadb':
-			$DBExistsResult = @mysqli_query($db, $DBExistsSql);
-			$PrivilegesResult = mysqli_query($db, $PrivilegesSql);
+			$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
+			$PrivilegesResult = mysqli_query($DB, $PrivilegesSql);
 			$rows = @mysqli_num_rows($DBExistsResult);
 			$Privileges = @mysqli_num_rows($PrivilegesResult);
 			break;
 		case 'mysql':
-			$DBExistsResult = @mysql_query($DBExistsSql, $db);
-			$PrivilegesResult = @mysql_query($PrivilegesSql, $db);
+			$DBExistsResult = @mysql_query($DBExistsSql, $DB);
+			$PrivilegesResult = @mysql_query($PrivilegesSql, $DB);
 			$rows = @mysql_num_rows($DBExistsResult);
 			$Privileges = @mysql_num_rows($PrivilegesResult);
 			break;
 		case 'mysqli':
-			$DBExistsResult = @mysqli_query($db, $DBExistsSql);
-			$PrivilegesResult = @mysqli_query($db, $PrivilegesSql);
+			$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
+			$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
 			$rows = @mysqli_num_rows($DBExistsResult);
 			$Privileges = @mysqli_num_rows($PrivilegesResult);
 			break;
 		default:
-			$DBExistsResult = @mysqli_query($db, $DBExistsSql);
-			$PrivilegesResult = @mysqli_query($db, $PrivilegesSql);
+			$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
+			$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
 			$rows = @mysqli_num_rows($DBExistsResult);
 			$Privileges = @mysqli_num_rows($PrivilegesResult);
 			break;
@@ -96,36 +102,36 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 		if ($Privileges == 0) {
 			$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
 		} else { /* Then we can create the database */
-			$sql = "CREATE DATABASE " . $_SESSION['Installer']['Database'];
+			$SQL = "CREATE DATABASE " . $_SESSION['Installer']['Database'];
 			switch($_SESSION['Installer']['DBMS']) {
 				case 'mariadb':
-					$Result = @mysqli_query($db, $sql);
+					$Result = @mysqli_query($DB, $SQL);
 					break;
 				case 'mysql':
-					$Result = @mysql_query($sql, $db);
+					$Result = @mysql_query($SQL, $DB);
 					break;
 				case 'mysqli':
-					$Result = @mysqli_query($db, $sql);
+					$Result = @mysqli_query($DB, $SQL);
 					break;
 				default:
-					$Result = @mysqli_query($db, $sql);
+					$Result = @mysqli_query($DB, $SQL);
 					break;
 			}
 		}
 	} else { /* Need to make sure any data is removed from existing DB */
-		$sql = "SELECT 'TRUNCATE TABLE ' + table_name + ';' FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $_SESSION['Installer']['Database'] . "'";
+		$SQL = "SELECT 'TRUNCATE TABLE ' + table_name + ';' FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $_SESSION['Installer']['Database'] . "'";
 		switch($_SESSION['Installer']['DBMS']) {
 			case 'mariadb':
-				$Result = @mysqli_query($db, $sql);
+				$Result = @mysqli_query($DB, $SQL);
 				break;
 			case 'mysql':
-				$Result = @mysql_query($sql, $db);
+				$Result = @mysql_query($SQL, $DB);
 				break;
 			case 'mysqli':
-				$Result = @mysqli_query($db, $sql);
+				$Result = @mysqli_query($DB, $SQL);
 				break;
 			default:
-				$Result = @mysqli_query($db, $sql);
+				$Result = @mysqli_query($DB, $SQL);
 				break;
 		}
 	}
@@ -146,7 +152,7 @@ if (isset($_GET['New']) or isset($_POST['cancel'])) { /* If the installer is jus
 	$_SESSION['Installer']['CurrentPage'] = 1;
 	$_SESSION['Installer']['Language'] = 'en_GB.utf8';
 	$_SESSION['Installer']['CoA'] = 'en_GB-utf8.php';
-	$_SESSION['Installer']['DBMS'] = 'mariadb';
+	$_SESSION['Installer']['DBMS'] = 'postgres';
 	$_SESSION['Installer']['DBExt'] = 1;
 	$_SESSION['Installer']['HostName'] = 'localhost';
 	$_SESSION['Installer']['UserName'] = 'root';

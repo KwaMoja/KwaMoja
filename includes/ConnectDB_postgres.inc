@@ -5,11 +5,11 @@ define('LIKE', 'ILIKE');
 if (!isset($DBPort)) {
 	$DBPort = 5432;
 }
-/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
+/* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname=' . $_SESSION['DatabaseName'];
 
-if (isset($host) and ($host != "")) {
-	$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+if (isset($Host) and ($Host != "")) {
+	$PgConnStr = 'host=' . $Host . ' ' . $PgConnStr;
 }
 
 if (isset($DBPort) and ($DBPort != "")) {
@@ -28,7 +28,7 @@ global $db; // Make sure it IS global, regardless of our context
 $db = pg_connect($PgConnStr);
 
 if (!$db) {
-	if ($debug == 1) {
+	if ($Debug == 1) {
 		echo '<br />' . $PgConnStr . '<br />';
 	}
 	echo '<br />' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br /><br />' . _(' Try logging in with an alternative company name.');
@@ -41,12 +41,12 @@ require_once($PathPrefix . 'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
-function DB_connect($host, $DBUser, $DBPassword, $DBPort) {
-	/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
+function DB_connect($Host, $DBUser, $DBPassword, $DBPort) {
+	/* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 	$PgConnStr = 'dbname=' . $_SESSION['DatabaseName'];
 
-	if (isset($host) and ($host != "")) {
-		$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+	if (isset($Host) and ($Host != "")) {
+		$PgConnStr = 'host=' . $Host . ' ' . $PgConnStr;
 	}
 
 	if (isset($DBPort) and ($DBPort != "")) {
@@ -63,28 +63,29 @@ function DB_connect($host, $DBUser, $DBPassword, $DBPort) {
 	return pg_connect($PgConnStr);
 }
 
-function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
+function DB_query($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
 
-	global $debug;
+	global $db;
+	global $Debug;
 	global $PathPrefix;
 
-	$result = pg_query($Conn, $SQL);
+	$Result = pg_query($db, $SQL);
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
 	}
 	//if (DB_error_no($Conn) != 0){
-	if (!$result and $TrapErrors) {
+	if (!$Result and $TrapErrors) {
 		if ($TrapErrors) {
 			require_once($PathPrefix . 'includes/header.inc');
 		}
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg($Conn), 'error', _('DB ERROR:'));
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $DebugMessage . "<br />$SQL<br />";
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
-			$Result = DB_query($SQL, $Conn);
-			if (DB_error_no($Conn) != 0) {
+			$Result = DB_query($SQL);
+			if (DB_error_no() != 0) {
 				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:'));
 			}
 		}
@@ -93,7 +94,7 @@ function DB_query($SQL, &$Conn, $ErrorMessage = '', $DebugMessage = '', $Transac
 			exit;
 		}
 	}
-	return $result;
+	return $Result;
 
 }
 
@@ -135,49 +136,74 @@ function DB_affected_rows(&$ResultIndex) {
 	return pg_affected_rows($ResultIndex);
 }
 
-function DB_error_no(&$Conn) {
-	return DB_error_msg($Conn) == "" ? 0 : -1;
+function DB_error_no() {
+	global $db;
+	return DB_error_msg() == "" ? 0 : -1;
 }
 
-function DB_error_msg(&$Conn) {
-	return pg_last_error($Conn);
+function DB_error_msg() {
+	global $db;
+	return pg_last_error($db);
 }
 
-function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
-	$tempres = DB_query("SELECT currval('" . $table . "_" . $fieldname . "_seq') FROM " . $table, $Conn);
-	$Res = pg_fetch_result($tempres, 0, 0);
-	DB_free_result($tempres);
-	return $Res;
+function DB_Last_Insert_ID($Table, $FieldName) {
+	global $db;
+	$TemporaryResult = DB_query("SELECT currval('" . $Table . "_" . $FieldName . "_seq') FROM " . $Table);
+	$Result = pg_fetch_result($TemporaryResult, 0, 0);
+	DB_free_result($TemporaryResult);
+	return $Result;
 }
 
 function DB_escape_string($String) {
-	return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, 'ISO-8859-1'));
+	return pg_escape_string($String);
 }
 
-function INTERVAL($val, $Inter) {
+function interval($Value, $Interval) {
 	global $DBType;
-	return "\n(CAST( (" . $val . ") as text ) or ' " . $Inter . "')::interval\n";
+	return "\n" . 'interval ' . $Value . ' ' . $Interval . "\n";
 }
-function DB_show_tables(&$Conn, $TableName = '%') {
-	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name " . LIKE . " '" . $TableName . "'", $Conn);
+
+function DB_show_tables($TableName = '%') {
+	global $db;
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name " . LIKE . " '" . $TableName . "'");
 	return $Result;
 }
-function DB_show_fields($TableName, &$Conn) {
-	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'", $Conn);
+
+function DB_show_fields($TableName) {
+	global $db;
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
 	if (DB_num_rows($Result) == 1) {
-		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'", $Conn);
+		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
 		return $Result;
 	}
 }
-function DB_Maintenance($Conn) {
+
+function DB_Maintenance() {
+	global $db;
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'), 'info');
 
-	$Result = DB_query('VACUUM ANALYZE', $Conn);
+	$Result = DB_query('VACUUM ANALYZE');
 
 	$Result = DB_query("UPDATE config
-				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'", $Conn);
+				SET confvalue=CURRENT_DATE
+				WHERE confname='DB_Maintenance_LastRun'");
+}
+
+function DB_select_database($DBName) {
+	global $db;
+	mysqli_select_db($db, $DBName);
+}
+
+function DB_set_timezone() {
+	$Now = new DateTime();
+	$Minutes = $Now->getOffset() / 60;
+	$Sign = ($Minutes < 0 ? -1 : 1);
+	$Minutes = abs($Minutes);
+	$Hours = floor($Minutes / 60);
+	$Minutes -= $Hours * 60;
+	$Offset = sprintf('%+d:%02d', $Hours * $Sign, $Minutes);
+	$Result = DB_query("SET time_zone='" . $Offset . "'");
 }
 
 ?>

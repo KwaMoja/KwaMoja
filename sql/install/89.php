@@ -8,7 +8,7 @@ CreateTable('purchorderauth',
   `authlevel` int(11) NOT NULL DEFAULT '0',
   `offhold` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`,`currabrev`)
-)", $db);
+)");
 
 
 ?>

@@ -9,7 +9,7 @@ $BookMark = 'AccountGroups';
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-function CheckForRecursiveGroup($ParentGroupName, $GroupName, $db) {
+function CheckForRecursiveGroup($ParentGroupCode, $GroupCode) {
 	/* returns true ie 1 if the group contains the parent group as a child group
 	ie the parent group results in a recursive group structure otherwise false ie 0 */
 
@@ -17,16 +17,17 @@ function CheckForRecursiveGroup($ParentGroupName, $GroupName, $db) {
 	$DbgMsg = _('The SQL that was used to retrieve the account groups of the parent account group and that failed in the process was');
 
 	do {
-		$SQL = "SELECT parentgroupname
+		$SQL = "SELECT parentgroupcode
 				FROM accountgroups
-				WHERE groupname='" . $GroupName . "'";
+				WHERE groupcode='" . $GroupCode . "'
+					AND language='" . $_SESSION['ChartLanguage'] . "'";
 
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		$MyRow = DB_fetch_row($Result);
-		if ($ParentGroupName == $MyRow[0]) {
+		if ($ParentGroupCode == $MyRow[0]) {
 			return true;
 		} //$ParentGroupName == $MyRow[0]
-		$GroupName = $MyRow[0];
+		$GroupCode = $MyRow[0];
 	} while ($MyRow[0] != '');
 	return false;
 } //end of function CheckForRecursiveGroupName
@@ -36,19 +37,27 @@ if (isset($Errors)) {
 	unset($Errors);
 } //isset($Errors)
 
-$Errors = array();
-
 if (isset($_POST['MoveGroup'])) {
 	$SQL = "UPDATE chartmaster SET group_='" . $_POST['DestinyAccountGroup'] . "' WHERE group_='" . $_POST['OriginalAccountGroup'] . "'";
 	$ErrMsg = _('An error occurred in moving the account group');
 	$DbgMsg = _('The SQL that was used to move the account group was');
-	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-	echo '<div class="toplink"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
-	prnMsg(_('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'], 'success');
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	echo '<div class="toplink">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">', _('Review Account Groups'), '</a>
+		</div>';
+	prnMsg(_('All accounts in the account group') . ': ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group') . ': ' . $_POST['DestinyAccountGroup'], 'success');
+	echo '<p class="page_title_text" >
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', $Title, '
+		</p>';
 } //isset($_POST['MoveGroup'])
 
 if (isset($_POST['submit'])) {
+
+	foreach ($_POST as $Key=>$Value) {
+		if (mb_substr($Key, 0, 9) == 'GroupName') {
+			$GroupNames[mb_substr($Key, -5) . '.utf8'] = $Value;
+		}
+	}
 	//initialise no input errors assumed initially before we test
 
 	$InputError = 0;
@@ -59,28 +68,27 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$SQL = "SELECT count(groupname)
 			FROM accountgroups
-			WHERE groupname='" . $_POST['GroupName'] . "'";
+			WHERE groupcode='" . $_POST['GroupCode'] . "'
+				AND language='" . $_SESSION['ChartLanguage'] . "'";
 
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
 	$ErrMsg = _('Could not check whether the group exists because');
 
-	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 	$MyRow = DB_fetch_row($Result);
 
 	if ($MyRow[0] != 0 and $_POST['SelectedAccountGroup'] == '') {
 		$InputError = 1;
-		prnMsg(_('The account group name already exists in the database'), 'error');
+		prnMsg(_('The account group code already exists in the database'), 'error');
 	} //$MyRow[0] != 0 and $_POST['SelectedAccountGroup'] == ''
-	if (ContainsIllegalCharacters($_POST['GroupName'])) {
-		$InputError = 1;
-		prnMsg(_('The account group name cannot contain the character') . " '&' " . _('or the character') . "' '", 'error');
-	} //ContainsIllegalCharacters($_POST['GroupName'])
-	if (mb_strlen($_POST['GroupName']) == 0) {
-		$InputError = 1;
-		prnMsg(_('The account group name must be at least one character long'), 'error');
-	} //mb_strlen($_POST['GroupName']) == 0
-	if ($_POST['ParentGroupName'] != '') {
-		if (CheckForRecursiveGroup($_POST['GroupName'], $_POST['ParentGroupName'], $db)) {
+	foreach ($GroupNames as $GroupName) {
+		if (mb_strlen($GroupName) == 0) {
+			$InputError = 1;
+			prnMsg(_('All the account group names must be at least one character long'), 'error');
+		} //mb_strlen($_POST['GroupName']) == 0
+	}
+	if ($_POST['ParentGroup'] != '') {
+		if (CheckForRecursiveGroup($_POST['GroupCode'], $_POST['ParentGroup'])) {
 			$InputError = 1;
 			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'), 'error');
 		} else {
@@ -88,12 +96,13 @@ if (isset($_POST['submit'])) {
 						sequenceintb,
 						sectioninaccounts
 					FROM accountgroups
-					WHERE groupname='" . $_POST['ParentGroupName'] . "'";
+					WHERE groupcode='" . $_POST['ParentGroup'] . "'
+						AND language='" . $_SESSION['ChartLanguage'] . "'";
 
 			$DbgMsg = _('The SQL that was used to retrieve the information was');
 			$ErrMsg = _('Could not check whether the group is recursive because');
 
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			$ParentGroupRow = DB_fetch_array($Result);
 			$_POST['SequenceInTB'] = $ParentGroupRow['sequenceintb'];
@@ -118,116 +127,147 @@ if (isset($_POST['submit'])) {
 	$SQL = "SELECT COUNT(pandl) AS porl
 				FROM accountgroups
 				WHERE sectioninaccounts='" . $_POST['SectionInAccounts'] . "'
-					AND pandl='" . ((int) ($_POST['PandL'] xor 1)) . "'";
-	$Result = DB_query($SQL, $db);
+					AND pandl='" . ((int) ($_POST['PandL'] xor 1)) . "'
+					AND language='" . $_SESSION['ChartLanguage'] . "'";
+	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow['porl'] > 0) {
 		$InputError = 1;
 		prnMsg(_('You are trying to mix Balance Sheet groups with P and L groups within the same Account Section'), 'error');
 	}
 
-	if (isset($_POST['OldGroupName']) and $InputError != 1) {
-		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
-		if ($_POST['OldGroupName'] !== $_POST['GroupName']) {
-			DB_IgnoreForeignKeys($db);
-			$SQL = "UPDATE chartmaster SET group_='" . $_POST['GroupName'] . "' WHERE group_='" . $_POST['OldGroupName'] . "'";
-			$ErrMsg = _('An error occurred in renaming the account group');
-			$DbgMsg = _('The SQL that was used to rename the account group was');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-			$SQL = "UPDATE accountgroups SET parentgroupname='" . $_POST['GroupName'] . "' WHERE parentgroupname='" . $_POST['OldGroupName'] . "'";
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-			DB_ReinstateForeignKeys($db);
-		}
-		$SQL = "UPDATE accountgroups SET groupname='" . $_POST['GroupName'] . "',
-										sectioninaccounts='" . $_POST['SectionInAccounts'] . "',
-										pandl='" . $_POST['PandL'] . "',
-										sequenceintb='" . $_POST['SequenceInTB'] . "',
-										parentgroupname='" . $_POST['ParentGroupName'] . "'
-									WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
-		$ErrMsg = _('An error occurred in updating the account group');
-		$DbgMsg = _('The SQL that was used to update the account group was');
+	$ParentGroupSQL = "SELECT groupname FROM accountgroups WHERE groupcode='" . $_POST['ParentGroup'] . "' AND language='" . $_SESSION['ChartLanguage'] . "'";
+	$ParentGroupResult = DB_query($ParentGroupSQL);
+	$ParentGroupRow = DB_fetch_array($ParentGroupResult);
 
-		$msg = _('Record Updated');
+	if (isset($_POST['OldGroupCode']) and $InputError != 1) {
+		foreach ($GroupNames as $GroupLanguage=>$GroupName) {
+			/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
+			if ($_POST['OldGroupCode'] !== $_POST['GroupCode']) {
+				DB_IgnoreForeignKeys();
+				$SQL = "UPDATE chartmaster SET group_='" . $GroupName . "',
+												groupcode='" . $_POST['GroupCode'] . "'
+											WHERE groupcode='" . $_POST['OldGroupCode'] . "'
+												AND language='" . $GroupLanguage . "'";
+				$ErrMsg = _('An error occurred in renaming the account group');
+				$DbgMsg = _('The SQL that was used to rename the account group was');
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+				$SQL = "UPDATE accountgroups SET parentgroupname='" . $_POST['GroupName'] . "' WHERE parentgroupcode='" . $_POST['OldGroupCode'] . "'";
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+				DB_ReinstateForeignKeys();
+			}
+			$SQL = "UPDATE accountgroups SET groupname='" . $GroupName . "',
+											groupcode='" . $_POST['GroupCode'] . "',
+											sectioninaccounts='" . $_POST['SectionInAccounts'] . "',
+											pandl='" . $_POST['PandL'] . "',
+											sequenceintb='" . $_POST['SequenceInTB'] . "',
+											parentgroupcode='" . $_POST['ParentGroup'] . "',
+											parentgroupname='" . DB_escape_string($ParentGroupRow['groupname']) . "'
+										WHERE groupcode = '" . $_POST['SelectedAccountGroup'] . "'
+											AND language='" . $GroupLanguage . "'";
+			$ErrMsg = _('An error occurred in updating the account group');
+			$DbgMsg = _('The SQL that was used to update the account group was');
+			$Result = DB_query($SQL);
+			if (DB_error_no($Result) === 0) {
+				prnMsg( _('Account Group has been updated for language') . ' ' . $GroupLanguage, 'success');
+			} else {
+				prnMsg( _('Account Group could not be updated for language') . ' ' . $GroupLanguage, 'error');
+			}
+		}
 	} elseif ($InputError != 1) {
 		/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account group form */
+		foreach ($GroupNames as $GroupLanguage=>$GroupName) {
+			$SQL = "INSERT INTO accountgroups ( groupname,
+												groupcode,
+												language,
+												sectioninaccounts,
+												sequenceintb,
+												pandl,
+												parentgroupcode,
+												parentgroupname
+											) VALUES (
+												'" . $GroupName . "',
+												'" . $_POST['GroupCode'] . "',
+												'" . $GroupLanguage . "',
+												'" . $_POST['SectionInAccounts'] . "',
+												'" . $_POST['SequenceInTB'] . "',
+												'" . $_POST['PandL'] . "',
+												'" . $_POST['ParentGroup'] . "',
+												'" . DB_escape_string($ParentGroupRow['groupname']) . "')";
+			$ErrMsg = _('An error occurred in inserting the account group');
+			$DbgMsg = _('The SQL that was used to insert the account group was');
 
-		$SQL = "INSERT INTO accountgroups ( groupname,
-											sectioninaccounts,
-											sequenceintb,
-											pandl,
-											parentgroupname
-										) VALUES (
-											'" . $_POST['GroupName'] . "',
-											'" . $_POST['SectionInAccounts'] . "',
-											'" . $_POST['SequenceInTB'] . "',
-											'" . $_POST['PandL'] . "',
-											'" . $_POST['ParentGroupName'] . "')";
-		$ErrMsg = _('An error occurred in inserting the account group');
-		$DbgMsg = _('The SQL that was used to insert the account group was');
-		$msg = _('Record inserted');
+			$Result = DB_query($SQL);
+			if (DB_error_no($Result) === 0) {
+				prnMsg( _('Account Group has been inserted for language') . ' ' . $GroupLanguage, 'success');
+			} else {
+				prnMsg( _('Account Group could not be inserted for language') . ' ' . $GroupLanguage, 'error');
+			}
+		}
 	} //$InputError != 1
 
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-		prnMsg($msg, 'success');
 		unset($_POST['SelectedAccountGroup']);
+		unset($_POST['GroupCode']);
 		unset($_POST['GroupName']);
 		unset($_POST['SequenceInTB']);
+		unset($GroupNames);
 	} //$InputError != 1
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartMaster'
 
-	$SQL = "SELECT COUNT(group_) AS groups FROM chartmaster WHERE chartmaster.group_='" . $_GET['SelectedAccountGroup'] . "'";
+	$SQL = "SELECT COUNT(group_) AS groups FROM chartmaster WHERE chartmaster.groupcode='" . $_GET['SelectedAccountGroup'] . "'";
 	$ErrMsg = _('An error occurred in retrieving the group information from chartmaster');
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
-	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow['groups'] > 0) {
 		prnMsg(_('Cannot delete this account group because general ledger accounts have been created using this group'), 'warn');
 		echo '<br />' . _('There are') . ' ' . $MyRow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
-		echo '<br /><form onSubmit="VerifyForm(this)" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
 		echo '<input type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<table class="selection">';
 		echo '<tr>
-				<td>' . _('Parent Group') . ':' . '</td>
-				<td><select minlength="0" tabindex="2" name="DestinyAccountGroup">';
+				<td>', _('Parent Group'), ':', '</td>
+				<td><select tabindex="2" name="DestinyAccountGroup">';
 
-		$SQL = "SELECT groupname FROM accountgroups";
-		$GroupResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		$SQL = "SELECT groupcode, groupname FROM accountgroups";
+		$GroupResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 		while ($GroupRow = DB_fetch_array($GroupResult)) {
 			if (isset($_POST['ParentGroupName']) and $_POST['ParentGroupName'] == $GroupRow['groupname']) {
-				echo '<option selected="selected" value="' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8') . '">' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8') . '</option>';
+				echo '<option selected="selected" value="', htmlentities($GroupRow['groupcode'], ENT_QUOTES, 'UTF-8'), '">', $GroupRow['groupcode'] . ' - ' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8'), '</option>';
 			} else {
-				echo '<option value="' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8') . '">' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8') . '</option>';
+				echo '<option value="', htmlentities($GroupRow['groupcode'], ENT_QUOTES, 'UTF-8'), '">', $GroupRow['groupcode'] . ' - ' . htmlentities($GroupRow['groupname'], ENT_QUOTES, 'UTF-8'), '</option>';
 			}
 		} //$GroupRow = DB_fetch_array($GroupResult)
-		echo '</select>';
-		echo '</td></tr>';
-		echo '<tr>
-				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
-			</tr>
-		</table>';
+		echo '</select>
+					</td>
+				</tr>
+			</table>';
+		echo '<div class="centre">
+				<input tabindex="6" type="submit" name="MoveGroup" value="', _('Move Group'), '" />
+			</div>';
 
 	} else {
-		$SQL = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
+		$SQL = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupcode = '" . $_GET['SelectedAccountGroup'] . "'";
 		$ErrMsg = _('An error occurred in retrieving the parent group information');
 		$DbgMsg = _('The SQL that was used to retrieve the information was');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow['groupnames'] > 0) {
 			prnMsg(_('Cannot delete this account group because it is a parent account group of other account group(s)'), 'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow['groupnames'] . ' ' . _('account groups that have this group as its/there parent account group');
+			echo '<br />', _('There are'), ' ', $MyRow['groupnames'], ' ', _('account groups that have this group as its/there parent account group');
 
 		} else {
-			$SQL = "DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
+			$SQL = "DELETE FROM accountgroups WHERE groupcode='" . $_GET['SelectedAccountGroup'] . "'";
 			$ErrMsg = _('An error occurred in deleting the account group');
 			$DbgMsg = _('The SQL that was used to delete the account group was');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 			prnMsg($_GET['SelectedAccountGroup'] . ' ' . _('group has been deleted') . '!', 'success');
 		}
 
@@ -244,28 +284,41 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 	or deletion of the records*/
 
 	$SQL = "SELECT groupname,
+					groupcode,
 					sectionname,
 					sequenceintb,
 					pandl,
+					parentgroupcode,
 					parentgroupname
 			FROM accountgroups
-			LEFT JOIN accountsection ON sectionid = sectioninaccounts
-			ORDER BY sequenceintb";
+			LEFT JOIN accountsection
+				ON sectionid = sectioninaccounts
+				AND accountgroups.language=accountsection.language
+			WHERE accountgroups.language='" . $_SESSION['ChartLanguage'] . "'
+			ORDER BY groupcode";
 
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
-	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	echo '<p class="page_title_text" >
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', $Title, '
+		</p>';
 
 	echo '<table class="selection">
-			<tr>
-				<th class="SortableColumn">' . _('Group Name') . '</th>
-				<th class="SortableColumn">' . _('Section') . '</th>
-				<th class="SortableColumn">' . _('Sequence In TB') . '</th>
-				<th>' . _('Profit and Loss') . '</th>
-				<th>' . _('Parent Group') . '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th class="SortedColumn">', _('Group Code'), '</th>
+					<th class="SortedColumn">', _('Group Name'), '</th>
+					<th class="SortedColumn">', _('Section'), '</th>
+					<th class="SortedColumn">', _('Sequence In TB'), '</th>
+					<th>', _('Profit and Loss'), '</th>
+					<th>', _('Parent Group Code'), '</th>
+					<th>', _('Parent Group Name'), '</th>
+					<th colspan="2"></th>
+				</tr>
+			</thead>';
 
+	echo '<tbody>';
 	$k = 0; //row colour counter
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($k == 1) {
@@ -273,7 +326,7 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k++;
+			++$k;
 		}
 
 		switch ($MyRow['pandl']) {
@@ -288,64 +341,74 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 				break;
 		} //end of switch statement
 
-		echo '<td>' . htmlspecialchars($MyRow['groupname'], ENT_QUOTES, 'UTF-8') . '</td>
-			<td>' . $MyRow['sectionname'] . '</td>
-			<td>' . $MyRow['sequenceintb'] . '</td>
-			<td>' . $PandLText . '</td>
-			<td>' . $MyRow['parentgroupname'] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES, 'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES, 'UTF-8') . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td></tr>';
+		echo '<td>', $MyRow['groupcode'], '</td>
+			<td>', $MyRow['groupname'], '</td>
+			<td>', $MyRow['sectionname'], '</td>
+			<td class="number">', $MyRow['sequenceintb'], '</td>
+			<td>', $PandLText, '</td>
+			<td>', $MyRow['parentgroupcode'], '</td>
+			<td>', $MyRow['parentgroupname'], '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupcode']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupcode']), ENT_QUOTES, 'UTF-8'), '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+		</tr>';
 
 	} //END WHILE LIST LOOP
+	echo '</tbody>';
 	echo '</table>';
 } //end of ifs and buts!
 
 
 if (isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<div class="toplink"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	echo '<div class="toplink">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Review Account Groups'), '</a>
+		</div>';
 } //isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])
 
 if (!isset($_GET['delete'])) {
-	echo '<form onSubmit="return VerifyForm(this)" method="post" class="noPrint" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" id="AccountGroups" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
 
 		$SQL = "SELECT groupname,
+						groupcode,
 						sectioninaccounts,
 						sequenceintb,
 						pandl,
-						parentgroupname
+						parentgroupcode,
+						language
 				FROM accountgroups
-				WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
+				WHERE groupcode='" . $_GET['SelectedAccountGroup'] . "'";
 
 		$ErrMsg = _('An error occurred in retrieving the account group information');
 		$DbgMsg = _('The SQL that was used to retrieve the account group and that failed in the process was');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('The account group name does not exist in the database'), 'error');
 			include('includes/footer.inc');
 			exit;
 		} //DB_num_rows($Result) == 0
-		$MyRow = DB_fetch_array($Result);
+		while ($MyRow = DB_fetch_array($Result)) {
 
-		$_POST['GroupName'] = $MyRow['groupname'];
-		$_POST['SectionInAccounts'] = $MyRow['sectioninaccounts'];
-		$_POST['SequenceInTB'] = $MyRow['sequenceintb'];
-		$_POST['PandL'] = $MyRow['pandl'];
-		$_POST['ParentGroupName'] = $MyRow['parentgroupname'];
+			$_POST['GroupCode'] = $MyRow['groupcode'];
+			$GroupNames[$MyRow['language']] = $MyRow['groupname'];
+			$_POST['SectionInAccounts'] = $MyRow['sectioninaccounts'];
+			$_POST['SequenceInTB'] = $MyRow['sequenceintb'];
+			$_POST['PandL'] = $MyRow['pandl'];
+			$_POST['ParentGroup'] = $MyRow['parentgroupcode'];
+		}
 
-		echo '<p class="page_title_text noPrint"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
+
+		echo '<input type="hidden" name="SelectedAccountGroup" value="', stripslashes($_GET['SelectedAccountGroup']), '" /></td>
+				<input type="hidden" name="OldGroupName" value="', $_POST['GroupName'], '" />
+				<input type="hidden" name="OldGroupCode" value="', $_POST['GroupCode'], '" />';
 
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2">' . _('Edit Account Group Details') . '</th>
+				<th colspan="2">', _('Edit Account Group Details'), '</th>
 			</tr>';
-		echo '<tr>
-				 <td><input type="hidden" name="SelectedAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" /></td>
-				 <td><input type="hidden" name="OldGroupName" value="' . $_POST['GroupName'] . '" /></td>
-			 </tr>';
 
 	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
@@ -355,6 +418,9 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['GroupName'])) {
 			$_POST['GroupName'] = '';
 		} //!isset($_POST['GroupName'])
+		if (!isset($_POST['GroupCode'])) {
+			$_POST['GroupCode'] = '';
+		} //!isset($_POST['GroupCode'])
 		if (!isset($_POST['SectionInAccounts'])) {
 			$_POST['SectionInAccounts'] = '';
 		} //!isset($_POST['SectionInAccounts'])
@@ -365,85 +431,99 @@ if (!isset($_GET['delete'])) {
 			$_POST['PandL'] = '';
 		} //!isset($_POST['PandL'])
 
+		echo '<input type="hidden" name="SelectedAccountGroup" value="', $_POST['SelectedAccountGroup'], '" />';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2">' . _('New Account Group Details') . '</th>
-			</tr>';
-		echo '<tr>
-				 <td><input type="hidden" name="SelectedAccountGroup" value="' . $_POST['SelectedAccountGroup'] . '" /></td>
+				<th colspan="2">', _('New Account Group Details'), '</th>
 			</tr>';
 	} //!isset($_POST['MoveGroup'])
 	echo '<tr>
-				<td>' . _('Account Group Name') . ':' . '</td>
-				<td><input tabindex="1" type="text" name="GroupName" size="50" autofocus="autofocus" required="required" minlength="3" maxlength="50" value="' . $_POST['GroupName'] . '" /></td>
-			</tr>';
-	echo '<tr>
-			<td>' . _('Parent Group') . ':' . '</td>
-			<td><select minlength="0" tabindex="2" name="ParentGroupName">';
+			<td>', _('Account Group Code'), ':</td>
+			<td><input tabindex="1" class="integer" type="text" name="GroupCode" size="10" autofocus="autofocus" required="required" maxlength="10" value="', $_POST['GroupCode'], '" /></td>
+		</tr>';
 
-	$SQL = "SELECT groupname FROM accountgroups";
-	$groupresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
-	if (!isset($_POST['ParentGroupName'])) {
+	$SQL = "SELECT DISTINCT language FROM accountgroups";
+	$LanguageResult = DB_query($SQL);
+	while ($LanguageRow = DB_fetch_array($LanguageResult)) {
+		if (!isset($GroupNames[$LanguageRow['language']])) {
+			$GroupNames[$LanguageRow['language']] = '';
+		}
+		echo '<tr>
+				<td>' . _('Account Group Name') . ' (' . $LanguagesArray[$LanguageRow['language']]['LanguageName'] . ') :' . '</td>
+				<td><input tabindex="2" type="text" name="GroupName' . mb_substr($LanguageRow['language'], 0, 5) . '" autofocus="autofocus" required="required" size="50" maxlength="150" value="' . $GroupNames[$LanguageRow['language']] . '" /></td>
+			</tr>';
+	}
+
+	$SQL = "SELECT groupcode, groupname FROM accountgroups WHERE language='" . $_SESSION['ChartLanguage'] . "' ORDER BY groupcode";
+	$GroupResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	echo '<tr>
+			<td>', _('Parent Group'), ':</td>
+			<td><select tabindex="2" name="ParentGroup">';
+
+	if (!isset($_POST['ParentGroup'])) {
 		echo '<option selected="selected" value="">' . _('Top Level Group') . '</option>';
 	} else {
 		echo '<option value="">' . _('Top Level Group') . '</option>';
 	}
 
-	while ($grouprow = DB_fetch_array($groupresult)) {
-		if (isset($_POST['ParentGroupName']) and $_POST['ParentGroupName'] == $grouprow['groupname']) {
-			echo '<option selected="selected" value="' . htmlspecialchars($grouprow['groupname'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($grouprow['groupname'], ENT_QUOTES, 'UTF-8') . '</option>';
+	while ($GroupRow = DB_fetch_array($GroupResult)) {
+		if (isset($_POST['ParentGroup']) and $_POST['ParentGroup'] == $GroupRow['groupcode']) {
+			echo '<option selected="selected" value="', $GroupRow['groupcode'], '">', $GroupRow['groupcode'] . ' - ' . $GroupRow['groupname'], '</option>';
 		} else {
-			echo '<option value="' . htmlspecialchars($grouprow['groupname'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($grouprow['groupname'], ENT_QUOTES, 'UTF-8') . '</option>';
+			echo '<option value="', $GroupRow['groupcode'], '">', $GroupRow['groupcode'] . ' - ' . $GroupRow['groupname'], '</option>';
 		}
-	} //$grouprow = DB_fetch_array($groupresult)
-	echo '</select>';
-	echo '</td></tr>';
+	} //$GroupRow = DB_fetch_array($GroupResult)
+	echo '</select>
+				</td>
+			</tr>';
 
+	$SQL = "SELECT sectionid, sectionname FROM accountsection WHERE language='" . $_SESSION['ChartLanguage'] . "' ORDER BY sectionid";
+	$SecResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	echo '<tr>
-			<td>' . _('Section In Accounts') . ':' . '</td>
-			<td><select required="required" minlength="1" tabindex="3" name="SectionInAccounts">';
-
-	$SQL = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
-	$secresult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+			<td>', _('Section In Accounts'), ':</td>
+			<td><select required="required" tabindex="3" name="SectionInAccounts">';
 	echo '<option value=""></option>';
-	while ($secrow = DB_fetch_array($secresult)) {
-		if ($_POST['SectionInAccounts'] == $secrow['sectionid']) {
-			echo '<option selected="selected" value="' . $secrow['sectionid'] . '">' . $secrow['sectionname'] . ' (' . $secrow['sectionid'] . ')</option>';
+	while ($SecRow = DB_fetch_array($SecResult)) {
+		if ($_POST['SectionInAccounts'] == $SecRow['sectionid']) {
+			echo '<option selected="selected" value="', $SecRow['sectionid'], '">', $SecRow['sectionname'], ' (' . $SecRow['sectionid'], ')</option>';
 		} else {
-			echo '<option value="' . $secrow['sectionid'] . '">' . $secrow['sectionname'] . ' (' . $secrow['sectionid'] . ')</option>';
+			echo '<option value="', $SecRow['sectionid'], '">', $SecRow['sectionname'], ' (', $SecRow['sectionid'], ')</option>';
 		}
-	} //$secrow = DB_fetch_array($secresult)
-	echo '</select>';
-	echo '</td></tr>';
+	} //$SecRow = DB_fetch_array($SecResult)
+	echo '</select>
+				</td>
+			</tr>';
 
 	echo '<tr>
-			<td>' . _('Profit and Loss') . ':' . '</td>
-			<td><select required="required" minlength="1" tabindex="4" name="PandL">';
+			<td>', _('Profit and Loss'), ':</td>
+			<td><select required="required" tabindex="4" name="PandL">';
 
 	echo '<option selected="selected" value=""></option>';
 	if ($_POST['PandL'] == 1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">', _('Yes'), '</option>';
 	}
 	if ($_POST['PandL'] == 0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">', _('No'), '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">', _('No'), '</option>';
 	}
 
-	echo '</select></td></tr>';
+	echo '</select>
+				</td>
+			</tr>';
 
 	echo '<tr>
-			<td>' . _('Sequence In TB') . ':' . '</td>
-			<td><input tabindex="5" type="text" required="required" minlength="1" maxlength="4" name="SequenceInTB" class="integer" value="' . $_POST['SequenceInTB'] . '" /></td>
+			<td>', _('Sequence In TB'), ':</td>
+			<td><input tabindex="5" type="text" required="required" maxlength="4" name="SequenceInTB" class="integer" value="', $_POST['SequenceInTB'], '" /></td>
 		</tr>';
 
-	echo '<tr>
-			<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Enter Information') . '" /></div></td>
-		</tr>';
+	echo '</table>';
 
-	echo '</table><br />';
+	echo '<div class="centre">
+			<input tabindex="6" type="submit" name="submit" value="', _('Enter Information'), '" />
+		</div>';
 
 	echo '</form>';
 

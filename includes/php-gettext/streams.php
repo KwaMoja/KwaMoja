@@ -86,12 +86,12 @@ class FileReader {
   var $_fd;
   var $_length;
 
-  function FileReader($filename) {
-    if (file_exists($filename)) {
+  function FileReader($FileName) {
+    if (file_exists($FileName)) {
 
-      $this->_length=filesize($filename);
+      $this->_length=filesize($FileName);
       $this->_pos = 0;
-      $this->_fd = fopen($filename,'rb');
+      $this->_fd = fopen($FileName,'rb');
       if (!$this->_fd) {
         $this->error = 3; // Cannot read file, probably permissions
         return false;
@@ -143,11 +143,11 @@ class FileReader {
 // Preloads entire file in memory first, then creates a StringReader
 // over it (it assumes knowledge of StringReader internals)
 class CachedFileReader extends StringReader {
-  function CachedFileReader($filename) {
-    if (file_exists($filename)) {
+  function CachedFileReader($FileName) {
+    if (file_exists($FileName)) {
 
-      $length=filesize($filename);
-      $fd = fopen($filename,'rb');
+      $length=filesize($FileName);
+      $fd = fopen($FileName,'rb');
 
       if (!$fd) {
         $this->error = 3; // Cannot read file, probably permissions

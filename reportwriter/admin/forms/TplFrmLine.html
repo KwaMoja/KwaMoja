@@ -57,9 +57,9 @@
 		<?php if (!$Params['Line'] or $Params['Line']=='1') $selected=' checked'; else $selected=''; ?>
       <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>>        <?php echo RPT_STDCOLOR; ?><br />
 		<select name="BrdrColor">
-		  <?php foreach($FontColors as $key => $value) {
-			if ($Params['BrdrColor']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		  <?php foreach($FontColors as $Key => $Value) {
+			if ($Params['BrdrColor']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
 	    </select></td>
 		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
@@ -73,9 +73,9 @@
     <tr>
       <td><?php echo RPT_LINEWIDTH; ?></td>
       <td><select name="LineSize">
-		<?php foreach($LineSizes as $key => $value) {
-			if ($Params['LineSize']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($LineSizes as $Key => $Value) {
+			if ($Params['LineSize']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?> </select></td>
     </tr>
   </table>

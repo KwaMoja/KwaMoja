@@ -1,8 +1,8 @@
 <?php
 
-NewConfigValue('ShopShowTopCategoryMenu', '1', $db);
-NewConfigValue('ShopShowLogoAndShopName', '1', $db);
+NewConfigValue('ShopShowTopCategoryMenu', '1');
+NewConfigValue('ShopShowLogoAndShopName', '1');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

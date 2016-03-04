@@ -1,5 +1,5 @@
 <?php
-
+include('../includes/CountriesArray.php');
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<fieldset>
 			<legend>' . _('Company Settings') . '</legend>
@@ -15,16 +15,13 @@ echo '<fieldset>
 				<label for="COA">' . _("Chart of Accounts") . ': </label>
 				<select name="COA">';
 
-$COAs = scandir('coa');
-$COAs = array_diff($COAs, array(
-	'.',
-	'..'
-));
+$COAs = glob('coa/*.sql');
+
 foreach ($COAs as $Value) {
 	if ($Value == $_SESSION['Installer']['CoA']) {
-		echo '<option value="' . $Value . '" selected="true">' . $Value . '</option>';
+		echo '<option value="' . $Value . '" selected="true">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2)] . '</option>';
 	} else {
-		echo '<option value="' . $Value . '">' . $Value . '</option>';
+		echo '<option value="' . $Value . '">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2)] . '</option>';
 	}
 }
 echo '</select>

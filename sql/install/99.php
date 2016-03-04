@@ -27,7 +27,7 @@ CreateTable('salesanalysis',
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-)", $db);
+)");
 
 
 ?>

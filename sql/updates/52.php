@@ -1,7 +1,7 @@
 <?php
 
-AddColumn('destinationcountry', 'freightcosts', 'VARCHAR( 40 )', 'NOT NULL', '', 'locationfrom', $db);
+AddColumn('destinationcountry', 'freightcosts', 'VARCHAR( 40 )', 'NOT NULL', '', 'locationfrom');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

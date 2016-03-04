@@ -12,7 +12,7 @@ CreateTable('mrpsupplies',
   `updateflag` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `part` (`part`)
-)", $db);
+)");
 
 
 ?>

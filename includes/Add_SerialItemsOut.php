@@ -12,7 +12,7 @@ if (isset($_POST['AddBatches'])) {
 	}
 	for ($i = 0; $i < $loop_max; $i++) {
 		if (isset($_POST['SerialNo' . $i]) and mb_strlen($_POST['SerialNo' . $i]) > 0) {
-			$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
+			$ExistingBundleQty = ValidBundleRef($StockId, $LocationOut, $_POST['SerialNo' . $i]);
 			if ($ExistingBundleQty > 0) {
 				$AddThisBundle = true;
 				/*If the user enters a duplicate serial number the later one over-writes

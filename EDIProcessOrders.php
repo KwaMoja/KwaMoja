@@ -35,8 +35,8 @@ If the order processed ok then move the file to processed and go on to next file
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
 
 
-$sql = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
-$OrderSeg = DB_query($sql, $db);
+$SQL = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
+$OrderSeg = DB_query($SQL);
 $i = 0;
 $Seg = array();
 
@@ -46,7 +46,7 @@ while ($SegRow = DB_fetch_array($OrderSeg)) {
 		'MaxOccur' => $SegRow['maxoccur'],
 		'SegGroup' => $SegRow['seggroup']
 	);
-	$i++;
+	++$i;
 }
 
 $TotalNoOfSegments = $i - 1;
@@ -450,7 +450,7 @@ while (false !== ($OrderFile = readdir($dirhandle))) {
 						/*Look up the EAN Code given $NAD[1] for the buyer */
 						if ($NAD_C082[2] == 9) {
 							/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
-							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1", $db);
+							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1");
 							if (DB_num_rows($InvoiceeResult) != 1) {
 								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('So that is the end of the road for this message');
 								$TryNextFile = True;
@@ -509,7 +509,7 @@ while (false !== ($OrderFile = readdir($dirhandle))) {
 														defaultlocation,
 														phoneno,
 														email
-												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1", $db);
+												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1");
 						if (DB_num_rows($BranchResult) != 1) {
 							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' . _('or several that match this store number') . '. ' . _('This order could not be processed further');
 							$TryNextFile = True;
@@ -556,15 +556,15 @@ while (false !== ($OrderFile = readdir($dirhandle))) {
 	/*Thats the end of the message or had to abort */
 	if (mb_strlen($EmailText) > 10) {
 		/*Now send the email off to the appropriate person */
-		$mail = new htmlMimeMail();
-		$mail->setText($EmailText);
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+		$Mail = new htmlMimeMail();
+		$Mail->setText($EmailText);
+		$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 
 		if ($TryNextFile == True) {
 			/*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
 
-			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''", $db);
+			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''");
 			if (DB_num_rows($Result) == 0) {
 				/*There are no sysadmins with email address specified */
 
@@ -578,15 +578,15 @@ while (false !== ($OrderFile = readdir($dirhandle))) {
 				$i = 0;
 				while ($SysAdminsRow = DB_fetch_array($Result)) {
 					$Recipients[$i] = "'" . $SysAdminsRow['realname'] . "' <" . $SysAdminsRow['email'] . ">";
-					$i++;
+					++$i;
 				}
 			}
 			$TryNextFile = False;
 			/*reset the abort to false before hit next file*/
-			$mail->setSubject(_('EDI Order Message Error'));
+			$Mail->setSubject(_('EDI Order Message Error'));
 		} else {
 
-			$mail->setSubject(_('EDI Order Message') . ' ' . $Order->CustRef);
+			$Mail->setSubject(_('EDI Order Message') . ' ' . $Order->CustRef);
 			$EDICustServPerson = $_SESSION['PurchasingManagerEmail'];
 			$Recipients = array(
 				$EDICustServPerson
@@ -594,9 +594,9 @@ while (false !== ($OrderFile = readdir($dirhandle))) {
 		}
 
 		if ($_SESSION['SmtpSetting'] == 0) {
-			$MessageSent = $mail->send($Recipients);
+			$MessageSent = $Mail->send($Recipients);
 		} else {
-			$MessageSent = SendmailBySmtp($mail, $Recipients);
+			$MessageSent = SendmailBySmtp($Mail, $Recipients);
 		}
 
 		echo $EmailText;

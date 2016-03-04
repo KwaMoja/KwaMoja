@@ -13,7 +13,7 @@ CreateTable('lastcostrollup',
   `newmatcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newlabcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL DEFAULT '0.0000'
-)", $db);
+)");
 
 
 ?>

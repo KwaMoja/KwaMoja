@@ -15,7 +15,7 @@ CreateTable('jobcards',
   `completedate` date DEFAULT NULL,
   `invoice` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)", $db);
+)");
 
 
 ?>

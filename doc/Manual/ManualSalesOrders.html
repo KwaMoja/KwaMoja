@@ -40,9 +40,9 @@
 <div class="floatright">
 	<a class="minitext" href="#top">⬆ Top</a>
 </div>
-<h3>Delivery Details</h3>
+<h3><a id="DeliveryDetails">Delivery Details</a>a></h3>
 <p>By default the delivery details are obtained from the physical address of the branch. However, any of the information in this screen can be over-ridden. This information prints on the dispatch/packing slip and on the invoice.</p>
-<p>The inventory location where the stock for the order is to be drawn from is defaulted from the customer branch record. However, it is possible to select an alternative inventory location if the order is to be picked from elsewhere.</p>
+<p>The inventory location where the stock for the order is to be drawn from is defaulted from the customer branch record. However, it is possible to select an alternative inventory location if the order is to be picked from elsewhere. Inventory locations are defined by system administrators in <i><u>Main Menu</u></i> &gt; <i><u>Setup</u></i> &gt; <i>Inventory Setup</i> &gt; <i><a href="ManualContents.php?ViewTopic=Inventory#Locations">Inventory Locations Maintenance</a></i>.</p>
 <p>The customer's order reference should be entered here and the most appropriate freight company should be selected. The system keeps track of the last freight company used to deliver to the branch and uses this as the default, if it is over-ridden then this new value is stored against the branch.</p>
 <p>It is possible to go back to the line item entry screen retaining all the data entered on the delivery details screen by clicking on the modify line items button. If the inventory location to draw from has been changed the colouring of the background of the line items will be updated to reflect the stock available at the new location to pick from.</p>
 <p>If the automatic freight calculations are being used - see the parameters in config.php, the freight cost will be calculated based on the sum of the whole order cubic metres and weight. The best shipping company will also be returned. The user can choose to charge the freight calculated or just use the cheapest freight company. The freight charge calculated can be over-ridden if required.</p>

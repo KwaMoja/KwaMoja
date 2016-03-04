@@ -83,15 +83,15 @@
 	{
 
 		$outAr=array();
-		foreach($server->dmap as $key => $val)
+		foreach($server->dmap as $Key => $val)
 		{
-			$outAr[]=new xmlrpcval($key, 'string');
+			$outAr[]=new xmlrpcval($Key, 'string');
 		}
 		if($server->allow_system_funcs)
 		{
-			foreach($GLOBALS['_xmlrpcs_dmap'] as $key => $val)
+			foreach($GLOBALS['_xmlrpcs_dmap'] as $Key => $val)
 			{
-				$outAr[]=new xmlrpcval($key, 'string');
+				$outAr[]=new xmlrpcval($Key, 'string');
 			}
 		}
 		return new xmlrpcresp(new xmlrpcval($outAr, 'array'));
@@ -243,26 +243,26 @@
 		}
 		$numParams = $params->arraysize();
 
-		$msg = new xmlrpcmsg($methName->scalarval());
+		$Msg = new xmlrpcmsg($methName->scalarval());
 		for($i = 0; $i < $numParams; $i++)
 		{
-			if(!$msg->addParam($params->arraymem($i)))
+			if(!$Msg->addParam($params->arraymem($i)))
 			{
-				$i++;
+				++$i;
 				return _xmlrpcs_multicall_error(new xmlrpcresp(0,
 					$GLOBALS['xmlrpcerr']['incorrect_params'],
 					$GLOBALS['xmlrpcstr']['incorrect_params'] . ": probable xml error in param " . $i));
 			}
 		}
 
-		$result = $server->execute($msg);
+		$Result = $server->execute($Msg);
 
-		if($result->faultCode() != 0)
+		if($Result->faultCode() != 0)
 		{
-			return _xmlrpcs_multicall_error($result);		// Method returned fault.
+			return _xmlrpcs_multicall_error($Result);		// Method returned fault.
 		}
 
-		return new xmlrpcval(array($result->value()), 'array');
+		return new xmlrpcval(array($Result->value()), 'array');
 	}
 
 	function _xmlrpcs_multicall_do_call_phpvals($server, $call)
@@ -299,19 +299,19 @@
 		foreach($call['params'] as $val)
 			$pt[] = php_2_xmlrpc_type(gettype($val));
 
-		$result = $server->execute($call['methodName'], $call['params'], $pt);
+		$Result = $server->execute($call['methodName'], $call['params'], $pt);
 
-		if($result->faultCode() != 0)
+		if($Result->faultCode() != 0)
 		{
-			return _xmlrpcs_multicall_error($result);		// Method returned fault.
+			return _xmlrpcs_multicall_error($Result);		// Method returned fault.
 		}
 
-		return new xmlrpcval(array($result->value()), 'array');
+		return new xmlrpcval(array($Result->value()), 'array');
 	}
 
 	function _xmlrpcs_multicall($server, $m)
 	{
-		$result = array();
+		$Result = array();
 		// let accept a plain list of php parameters, beside a single xmlrpc msg object
 		if (is_object($m))
 		{
@@ -320,7 +320,7 @@
 			for($i = 0; $i < $numCalls; $i++)
 			{
 				$call = $calls->arraymem($i);
-				$result[$i] = _xmlrpcs_multicall_do_call($server, $call);
+				$Result[$i] = _xmlrpcs_multicall_do_call($server, $call);
 			}
 		}
 		else
@@ -328,11 +328,11 @@
 			$numCalls=count($m);
 			for($i = 0; $i < $numCalls; $i++)
 			{
-				$result[$i] = _xmlrpcs_multicall_do_call_phpvals($server, $m[$i]);
+				$Result[$i] = _xmlrpcs_multicall_do_call_phpvals($server, $m[$i]);
 			}
 		}
 
-		return new xmlrpcresp(new xmlrpcval($result, 'array'));
+		return new xmlrpcresp(new xmlrpcval($Result, 'array'));
 	}
 
 	$GLOBALS['_xmlrpcs_dmap']=array(
@@ -375,7 +375,7 @@
 	* NB: in fact a user defined error handler can only handle WARNING, NOTICE and USER_* errors.
 	*
 	*/
-	function _xmlrpcs_errorHandler($errcode, $errstring, $filename=null, $lineno=null, $context=null)
+	function _xmlrpcs_errorHandler($errcode, $errstring, $FileName=null, $lineno=null, $context=null)
 	{
 		// obey the @ protocol
 		if (error_reporting() == 0)
@@ -406,11 +406,11 @@
 				if(is_array($GLOBALS['_xmlrpcs_prev_ehandler']))
 				{
 					// the following works both with static class methods and plain object methods as error handler
-					call_user_func_array($GLOBALS['_xmlrpcs_prev_ehandler'], array($errcode, $errstring, $filename, $lineno, $context));
+					call_user_func_array($GLOBALS['_xmlrpcs_prev_ehandler'], array($errcode, $errstring, $FileName, $lineno, $context));
 				}
 				else
 				{
-					$GLOBALS['_xmlrpcs_prev_ehandler']($errcode, $errstring, $filename, $lineno, $context);
+					$GLOBALS['_xmlrpcs_prev_ehandler']($errcode, $errstring, $FileName, $lineno, $context);
 				}
 			}
 		}
@@ -452,7 +452,7 @@
 		*/
 		var $phpvals_encoding_options = array( 'auto_dates' );
 		/// controls wether the server is going to echo debugging messages back to the client as comments in response body. valid values: 0,1,2,3
-		var $debug = 1;
+		var $Debug = 1;
 		/**
 		* Controls behaviour of server when invoked user function throws an exception:
 		* 0 = catch it and return an 'internal error' xmlrpc response (default)
@@ -488,7 +488,7 @@
 		* Storage for internal debug info
 		* @access private
 		*/
-		var $debug_info = '';
+		var $Debug_info = '';
 		/**
 		* Extra data passed at runtime to method handling functions. Used only by EPI layer
 		*/

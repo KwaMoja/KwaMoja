@@ -14,7 +14,7 @@ CreateTable('stockcatproperties',
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`),
   CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
-)", $db);
+)");
 
 
 ?>

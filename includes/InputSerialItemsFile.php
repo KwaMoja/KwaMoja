@@ -80,8 +80,8 @@ if (!isset($_SESSION['CurImportFile'])) {
 	$LineItem->SerialItemsValid = false;
 }
 if ((isset($_FILES['ImportFile']) and $_FILES['ImportFile']['name'] == '') and $_SESSION['CurImportFile'] == '') {
-	$msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
-	prnMsg($msg);
+	$Msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
+	prnMsg($Msg);
 	$LineItem->SerialItemsValid = false;
 	echo '</td></tr></table>';
 	include('includes/footer.inc');
@@ -158,7 +158,7 @@ if ($ShowFileInfo) {
 			<td>' . ($invalid_imports == 0 ? getMsg(_('Valid'), 'success') : getMsg(_('Invalid'), 'error')) . '</td>
 		</tr>
 	</table><br />';
-	$filename = $_SESSION['CurImportFile']['tmp_name'];
+	$FileName = $_SESSION['CurImportFile']['tmp_name'];
 }
 
 if ($invalid_imports > 0 and !$_SESSION['CurImportFile']['Processed']) {
@@ -168,7 +168,7 @@ if ($invalid_imports > 0 and !$_SESSION['CurImportFile']['Processed']) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="submit" name="ValidateFile" value="' . _('Validate File') . '" />
 			<input type="hidden" name="LineNo" value="' . $LineNo . '" />
-			<input type="hidden" name="StockID" value="' . $StockID . '" />
+			<input type="hidden" name="StockID" value="' . $StockId . '" />
 			<input type="hidden" name="EntryType" value="FILE" />
 			</form>
 			<p>' . _('1st 10 Lines of File') . '....</p>
@@ -185,7 +185,7 @@ if ($invalid_imports > 0 and !$_SESSION['CurImportFile']['Processed']) {
 	echo '<button type="submit" name="ValidateFile">' . _('Update Batches') . '</button>
 			<input type="hidden" name="LineNo" value="' . $LineNo . '" />
 			<input type="hidden" name="InvalidImports" value="' . $invalid_imports . '" />
-			<input type="hidden" name="StockID" value="' . $StockID . '" />
+			<input type="hidden" name="StockID" value="' . $StockId . '" />
 			<input type="hidden" name="EntryType" value="FILE" /><br />';
 	//Otherwise we have all valid records. show the first (100)  for visual verification.
 	echo '<br /><table class="selection">
@@ -200,9 +200,9 @@ if ($invalid_imports > 0 and !$_SESSION['CurImportFile']['Processed']) {
 	foreach ($LineItem->SerialItems as $SItem) {
 		echo '<tr>
 				<td>' . $SItem->BundleRef . '</td>
-				<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($SItem->BundleQty, $LineItem->DecimalPlaces) . '</td>
 			</tr>';
-		$i++;
+		++$i;
 		if ($i == 100) {
 			break;
 		}

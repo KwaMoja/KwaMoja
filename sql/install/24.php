@@ -10,7 +10,7 @@ CreateTable('custcontacts',
   `notes` varchar(255) NOT NULL,
   `email` varchar(55) NOT NULL,
   PRIMARY KEY (`contid`)
-)", $db);
+)");
 
 
 ?>

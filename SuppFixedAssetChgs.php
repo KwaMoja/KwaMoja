@@ -35,12 +35,12 @@ if (isset($_POST['AddAssetToInvoice'])) {
 		}
 	} //$_POST['AssetID'] == ''
 	else {
-		$result = DB_query("SELECT assetid FROM fixedassets WHERE assetid='" . $_POST['AssetID'] . "'", $db);
-		if (DB_num_rows($result) == 0) {
+		$Result = DB_query("SELECT assetid FROM fixedassets WHERE assetid='" . $_POST['AssetID'] . "'");
+		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('The asset ID entered manually is not a valid fixed asset. If you do not know the asset reference, select it from the list'), 'error');
 			$InputError = True;
 			unset($_POST['AssetID']);
-		} //DB_num_rows($result) == 0
+		} //DB_num_rows($Result) == 0
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Amount']))) {
@@ -62,23 +62,24 @@ if (isset($_GET['Delete'])) {
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<div class="centre"><p class="page_title_text noPrint" >' . _('Fixed Assets on Invoice') . ' ';
+	echo '<div class="centre"><p class="page_title_text" >' . _('Fixed Assets on Invoice') . ' ';
 } //$_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'
 else {
-	echo '<div class="centre"><p class="page_title_text noPrint" >' . _('Fixed Asset credits on Credit Note') . ' ';
+	echo '<div class="centre"><p class="page_title_text" >' . _('Fixed Asset credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p></div>';
 echo '<table class="selection">
-		<tbody>
+		<thead>
 			<tr>
-				<th class="SortableColumn">' . _('Asset ID') . '</th>
-				<th class="SortableColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('Asset ID') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
 				<th>' . _('Amount') . '</th>
-			</tr>';
+			</tr>
+		</thead>';
 
 $TotalAssetValue = 0;
-
+echo '<tbody>';
 foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset) {
 	echo '<tr>
 			<td>' . $EnteredAsset->AssetID . '</td>
@@ -106,7 +107,7 @@ else {
 }
 
 /*Set up a form to allow input of new Shipment charges */
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
@@ -119,29 +120,29 @@ echo '<br /><table class="selection">';
 
 echo '<tr>
 		<td>' . _('Enter Asset ID') . ':</td>
-		<td><input type="integer" name="AssetID" size="5" required="required" minlength="1" maxlength="6" value="' . $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' . _('New Fixed Asset') . '</a></td>
+		<td><input type="integer" name="AssetID" size="5" required="required" maxlength="6" value="' . $_POST['AssetID'] . '" /> <a href="FixedAssetItems.php" target="_blank">' . _('New Fixed Asset') . '</a></td>
 	</tr>';
 echo '<tr>
 		<td><b>' . _('OR') . ' </b>' . _('Select from list') . ':</td>
-		<td><select minlength="0" name="AssetSelection">';
+		<td><select name="AssetSelection">';
 
-$sql = "SELECT assetid,
+$SQL = "SELECT assetid,
 			description
 		FROM fixedassets
 		WHERE cost=0
 		ORDER BY assetid DESC";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['AssetSelection']) and $myrow['AssetID'] == $_POST['AssetSelection']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['AssetSelection']) and $MyRow['AssetID'] == $_POST['AssetSelection']) {
 		echo '<option selected="selected" value="';
-	} //isset($_POST['AssetSelection']) and $myrow['AssetID'] == $_POST['AssetSelection']
+	} //isset($_POST['AssetSelection']) and $MyRow['AssetID'] == $_POST['AssetSelection']
 	else {
 		echo '<option value="';
 	}
-	echo $myrow['assetid'] . '">' . $myrow['assetid'] . ' - ' . $myrow['description'] . '</option>';
-} //$myrow = DB_fetch_array($result)
+	echo $MyRow['assetid'] . '">' . $MyRow['assetid'] . ' - ' . $MyRow['description'] . '</option>';
+} //$MyRow = DB_fetch_array($Result)
 
 echo '</select></td>
 	</tr>';
@@ -151,7 +152,7 @@ if (!isset($_POST['Amount'])) {
 } //!isset($_POST['Amount'])
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 echo '</table>';
 

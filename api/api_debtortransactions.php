@@ -2,11 +2,11 @@
 
 /* Check that the transaction number is unique
  * for this type of transaction*/
-function VerifyTransNo($TransNo, $Type, $i, $Errors, $db) {
+function VerifyTransNo($TransNo, $Type, $i, $Errors) {
 	$Searchsql = "SELECT count(transno)
 				FROM debtortrans
 				WHERE type='" . $Type . "' and transno='" . $TransNo . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] > 0) {
 		$Errors[$i] = TransactionNumberAlreadyExists;
@@ -48,11 +48,11 @@ function ConvertToSQLDate($DateEntry) {
 /* Check that the transaction date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target KwaMoja company */
-function VerifyTransactionDate($TranDate, $i, $Errors, $db) {
-	$sql = "SELECT confvalue FROM config WHERE confname='" . DefaultDateFormat . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
-	$DateFormat = $myrow[0];
+function VerifyTransactionDate($TranDate, $i, $Errors) {
+	$SQL = "SELECT confvalue FROM config WHERE confname='" . DefaultDateFormat . "'";
+	$Result = api_DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$DateFormat = $MyRow[0];
 	if (mb_strpos($TranDate, '/') > 0) {
 		$DateArray = explode('/', $TranDate);
 	} elseif (mb_strpos($TranDate, '.') > 0) {
@@ -84,11 +84,11 @@ function VerifyTransactionDate($TranDate, $i, $Errors, $db) {
 /* Find the period number from the transaction date */
 /* Why use this function over GetPeriod we already have this function included in DateFunctions.inc
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
-function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
-	$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
-	$DateFormat = $myrow[0];
+function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
+	$SQL = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+	$Result = api_DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$DateFormat = $MyRow[0];
 	if (mb_strstr('/', $PeriodEnd)) {
 		$Date_Array = explode('/', $PeriodEnd);
 	} elseif (mb_strstr('.', $PeriodEnd)) {
@@ -116,10 +116,10 @@ function GetPeriodFromTransactionDate($TranDate, $i, $Errors, $db) {
 	$Month = $DateArray[1];
 	$Year = $DateArray[0];
 	$Date = $Year . '-' . $Month . '-' . $Day;
-	$sql = "SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
-	return $myrow[0];
+	$SQL = "SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
+	$Result = api_DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0];
 }
 
 /* Verify that the Settled flag is a 1 or 0 */
@@ -248,21 +248,21 @@ function VerifyConsignment($consignment, $i, $Errors) {
  * This function also in SQL_CommonFunctions...better to use it from there as it covers all cases
  * and not limited to stk='any'!!
  *
- function GetSalesGLCode($salesarea, $partnumber, $db) {
- $sql="SELECT salesglcode FROM salesglpostings
+ function GetSalesGLCode($salesarea, $partnumber) {
+ $SQL="SELECT salesglcode FROM salesglpostings
  WHERE stkcat='any'";
- $result=DB_query($sql, $db);
- $myrow=DB_fetch_array($result);
- return $myrow[0];
+ $Result=api_DB_query($SQL);
+ $MyRow=DB_fetch_array($Result);
+ return $MyRow[0];
  }
  */
 
 /* Retrieves the default debtors code for KwaMoja */
 function GetDebtorsGLCode($db) {
-	$sql = "SELECT debtorsact FROM companies";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
-	return $myrow[0];
+	$SQL = "SELECT debtorsact FROM companies";
+	$Result = api_DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0];
 }
 
 
@@ -293,10 +293,10 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 											pytdiscountact,
 											gllink_debtors
 										FROM companies
-										WHERE coycode=1", $db);
+										WHERE coycode=1");
 
 	$CompanyRecord = DB_fetch_array($ReadCoyResult);
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Errors[] = NoCompanyRecord;
 	}
 
@@ -307,8 +307,8 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 							ON debtorsmaster.currcode=currencies.currabrev
 							WHERE debtorno = '" . $Receipt['debtorno'] . "'";
 
-	$CurrResult = api_DB_query($CustCurrencySQL, $db);
-	if (DB_error_no($db) != 0) {
+	$CurrResult = api_DB_query($CustCurrencySQL);
+	if (DB_error_no() != 0) {
 		$Errors[] = DebtorDoesntExist;
 	}
 
@@ -320,8 +320,8 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 					FROM bankaccounts INNER JOIN currencies
 					ON bankaccounts.currcode = currencies.currabrev
 					WHERE accountcode='" . $Receipt['bankaccount'] . "'";
-	$BankActResult = api_DB_query($SQL, $db);
-	if (DB_error_no($db) != 0) {
+	$BankActResult = api_DB_query($SQL);
+	if (DB_error_no() != 0) {
 		$Errors[] = InvalidBankAccount;
 	}
 
@@ -342,9 +342,9 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 	$ReceiptExRate = $CustCurrRow['rate'] / $BankActRow['rate'];
 	$FunctionalExRate = $BankActRow['rate'];
 
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
-	$ReceiptNo = GetNextTransNo(12, $db);
+	$ReceiptNo = GetNextTransNo(12);
 	$PeriodNo = GetCurrentPeriod($db);
 	/*now enter the BankTrans entry */
 
@@ -369,7 +369,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 						'" . round($Receipt['amountfx'] / $ReceiptExRate, 4) . "',
 						'" . $CustCurrRow['currcode'] . "')";
 
-	$result = api_DB_query($SQL, $db, '', '', true);
+	$Result = api_DB_query($SQL, $db, '', '', true);
 
 
 	if ($CompanyRecord['gllink_debtors'] == 1) {
@@ -389,7 +389,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 						'" . $Receipt['reference'] . "',
 						'" . round((-$Receipt['amountfx'] - $Receipt['discountfx']) / $CustCurrRow['rate'], 4) . "')";
 
-		$result = api_DB_query($SQL, $db, '', '', true);
+		$Result = api_DB_query($SQL, $db, '', '', true);
 
 		if ($Receipt['discountfx'] != 0) {
 			$SQL = "INSERT INTO gltrans ( type,
@@ -407,7 +407,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['discountfx'] / $CustCurrRow['rate'], 4) . "')";
 
-			$result = api_DB_query($SQL, $db, '', '', true);
+			$Result = api_DB_query($SQL, $db, '', '', true);
 		}
 		/*and debit bank account with the receipt */
 		$SQL = "INSERT INTO gltrans ( type,
@@ -426,7 +426,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['amountfx'] / $CustCurrRow['rate'], 4) . "')";
 
-		$result = api_DB_query($SQL, $db, '', '', true);
+		$Result = api_DB_query($SQL, $db, '', '', true);
 
 	}
 	/* end if GL linked to debtors */
@@ -454,17 +454,17 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 							'" . -$Receipt['discountfx'] . "',
 							'" . $Receipt['paymentmethod'] . "')";
 
-	$result = api_DB_query($SQL, $db, '', '', true);
+	$Result = api_DB_query($SQL, $db, '', '', true);
 
 	$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
 						lastpaid='" . $Receipt['amountfx'] . "'
 					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
 
-	$result = api_DB_query($SQL, $db, '', '', true);
+	$Result = api_DB_query($SQL, $db, '', '', true);
 
 
 	if (sizeof($Errors) == 0) {
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 		$Errors[0] = 0;
 		$Errors[1] = $ReceiptNo;
 	} else {
@@ -504,8 +504,8 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 	}
 
 
-	$Errors = VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyBranchNoExists($Header['debtorno'], $Header['branchcode'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($Header['debtorno'], sizeof($Errors), $Errors);
+	$Errors = VerifyBranchNoExists($Header['debtorno'], $Header['branchcode'], sizeof($Errors), $Errors);
 	/*Does not deal with serialised/lot track items - for use by POS */
 	/*Get Company Defaults */
 	$ReadCoyResult = api_DB_query("SELECT debtorsact,
@@ -513,10 +513,10 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 												gllink_debtors,
 												gllink_stock
 										FROM companies
-										WHERE coycode=1", $db);
+										WHERE coycode=1");
 
 	$CompanyRecord = DB_fetch_array($ReadCoyResult);
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Errors[] = NoCompanyRecord;
 	}
 
@@ -533,24 +533,24 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 							WHERE custbranch.debtorno = '" . $Header['debtorno'] . "'
 							AND custbranch.branchcode='" . $Header['branchcode'] . "'";
 
-	$HeaderResult = api_DB_query($HeaderSQL, $db);
-	if (DB_error_no($db) != 0) {
+	$HeaderResult = api_DB_query($HeaderSQL);
+	if (DB_error_no() != 0) {
 		$Errors[] = NoReadCustomerBranch;
 	}
 
 	$CN_Header = DB_fetch_array($HeaderResult);
 
-	$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $Header['fromstkloc'] . "'", $db);
-	if (DB_error_no($db) != 0) {
+	$TaxProvResult = api_DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $Header['fromstkloc'] . "'");
+	if (DB_error_no() != 0) {
 		$Errors[] = NoTaxProvince;
 	}
-	$myrow = DB_fetch_row($TaxProvResult);
-	$DispTaxProvinceID = $myrow[0];
+	$MyRow = DB_fetch_row($TaxProvResult);
+	$DispTaxProvinceID = $MyRow[0];
 
 	/*Start an SQL transaction */
-	$result = DB_Txn_Begin($db);
+	$Result = DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
-	$CreditNoteNo = GetNextTransNo(11, $db);
+	$CreditNoteNo = GetNextTransNo(11);
 	$PeriodNo = GetCurrentPeriod($db);
 
 	$TotalFXNetCredit = 0;
@@ -562,13 +562,16 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 	foreach ($LineDetails as $CN_Line) {
 
 		$LineSQL = "SELECT taxcatid,
-								mbflag,
-								materialcost+labourcost+overheadcost AS standardcost
+							mbflag,
+							stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS standardcost
 						FROM stockmaster
-						WHERE stockid ='" . $CN_Line['stockid'] . "'";
+						LEFT JOIN stockcosts
+							ON stockcosts.stockid=stockmaster.stockid
+							AND stockcosts.succeeded=0
+						WHERE stockcosts.stockid ='" . $CN_Line['stockid'] . "'";
 
-		$LineResult = api_DB_query($LineSQL, $db);
-		if (DB_error_no($db) != 0 or DB_num_rows($LineResult) == 0) {
+		$LineResult = api_DB_query($LineSQL);
+		if (DB_error_no() != 0 or DB_num_rows($LineResult) == 0) {
 			$Errors[] = NoReadItem;
 			return $Errors;
 		}
@@ -596,38 +599,38 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 					AND taxauthrates.taxcatid = '" . $LineRow['taxcatid'] . "'
 					ORDER BY taxgrouptaxes.calculationorder";
 
-		$GetTaxRatesResult = api_DB_query($SQL, $db);
+		$GetTaxRatesResult = api_DB_query($SQL);
 
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Errors[] = TaxRatesFailed;
 		}
 
 		$LineTaxAmount = 0;
 
-		while ($myrow = DB_fetch_array($GetTaxRatesResult)) {
-			if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
-				$TaxTotals[$myrow['taxauthid']]['FXAmount'] = 0;
+		while ($MyRow = DB_fetch_array($GetTaxRatesResult)) {
+			if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
+				$TaxTotals[$MyRow['taxauthid']]['FXAmount'] = 0;
 			}
-			$TaxAuthID = $myrow['taxauthid'];
-			$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
-			$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
-			$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+			$TaxAuthID = $MyRow['taxauthid'];
+			$TaxTotals[$MyRow['taxauthid']]['GLCode'] = $MyRow['taxglcode'];
+			$TaxTotals[$MyRow['taxauthid']]['TaxRate'] = $MyRow['taxrate'];
+			$TaxTotals[$MyRow['taxauthid']]['TaxAuthDescription'] = $MyRow['description'];
 
-			if ($myrow['taxontax'] == 1) {
-				$TaxAuthAmount = ($LineNetAmount + $LineTaxAmount) * $myrow['taxrate'];
+			if ($MyRow['taxontax'] == 1) {
+				$TaxAuthAmount = ($LineNetAmount + $LineTaxAmount) * $MyRow['taxrate'];
 			} else {
-				$TaxAuthAmount = $LineNetAmount * $myrow['taxrate'];
+				$TaxAuthAmount = $LineNetAmount * $MyRow['taxrate'];
 			}
-			$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
+			$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
 
 			/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 			so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
-			$LineTaxes[$LineCounter][$myrow['calculationorder']] = array(
-				'TaxCalculationOrder' => $myrow['calculationorder'],
-				'TaxAuthID' => $myrow['taxauthid'],
-				'TaxAuthDescription' => $myrow['description'],
-				'TaxRate' => $myrow['taxrate'],
-				'TaxOnTax' => $myrow['taxontax'],
+			$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array(
+				'TaxCalculationOrder' => $MyRow['calculationorder'],
+				'TaxAuthID' => $MyRow['taxauthid'],
+				'TaxAuthDescription' => $MyRow['description'],
+				'TaxRate' => $MyRow['taxrate'],
+				'TaxOnTax' => $MyRow['taxontax'],
 				'TaxAuthAmount' => $TaxAuthAmount
 			);
 			$LineTaxAmount += $TaxAuthAmount;
@@ -647,7 +650,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 						FROM locstock
 						WHERE locstock.stockid='" . $CN_Line['stockid'] . "'
 						AND loccode= '" . $Header['fromstkloc'] . "'";
-			$Result = api_DB_query($SQL, $db);
+			$Result = api_DB_query($SQL);
 
 			if (DB_num_rows($Result) == 1) {
 				$LocQtyRow = DB_fetch_row($Result);
@@ -703,17 +706,19 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 			$StandardCost = 0;
 			/*To start with - accumulate the cost of the comoponents for use in journals later on */
 			$SQL = "SELECT bom.component,
-								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
-							FROM bom INNER JOIN stockmaster
-							ON bom.component=stockmaster.stockid
-							WHERE bom.parent='" . $CN_Line['stockid'] . "'
-							AND bom.effectiveto >= '" . Date('Y-m-d') . "'
-							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+							bom.quantity,
+							stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS standard
+						FROM bom
+						LEFT JOIN stockcosts
+							ON bom.component=stockcosts.stockid
+							AND succeeded=0
+						WHERE bom.parent='" . $CN_Line['stockid'] . "'
+							AND bom.effectiveto > CURRENT_DATE
+							AND bom.effectiveafter <= CURRENT_DATE";
 
-			$AssResult = api_DB_query($SQL, $db);
+			$AssResult = api_DB_query($SQL);
 
-			while ($AssParts = DB_fetch_array($AssResult, $db)) {
+			while ($AssParts = DB_fetch_array($AssResult)) {
 
 				$StandardCost += ($AssParts['standard'] * $AssParts['quantity']);
 				/* Need to get the current location quantity
@@ -723,7 +728,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 							WHERE locstock.stockid='" . $AssParts['component'] . "'
 							AND loccode= '" . $Header['fromstkloc'] . "'";
 
-				$Result = api_DB_query($SQL, $db);
+				$Result = api_DB_query($SQL);
 				if (DB_num_rows($Result) == 1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -761,14 +766,14 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 												 0,
 												 '" . ($QtyOnHandPrior - ($AssParts['quantity'] * $CN_Line['qty'])) . "'	)";
 
-				$Result = DB_query($SQL, $db, '', '', true);
+				$Result = api_DB_query($SQL, $db, '', '', true);
 
 				$SQL = "UPDATE locstock
 							SET quantity = locstock.quantity - " . ($AssParts['quantity'] * $CN_Line['qty']) . "
 							WHERE locstock.stockid = '" . $AssParts['component'] . "'
 							AND loccode = '" . $Header['fromlocstk'] . "'";
 
-				$Result = DB_query($SQL, $db, '', '', true);
+				$Result = api_DB_query($SQL, $db, '', '', true);
 			}
 			/* end of assembly explosion and updates */
 		}
@@ -825,7 +830,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 							'" . $Tax['TaxCalculationOrder'] . "',
 							'" . $Tax['TaxOnTax'] . "')";
 
-			$Result = DB_query($SQL, $db, '', '', true);
+			$Result = api_DB_query($SQL, $db, '', '', true);
 		}
 
 		/*Insert Sales Analysis records */
@@ -865,23 +870,23 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 
 		$Result = api_DB_query($SQL, $db, '', '', true);
 
-		$myrow = DB_fetch_row($Result);
+		$MyRow = DB_fetch_row($Result);
 
-		if ($myrow[0] > 0) {
+		if ($MyRow[0] > 0) {
 			/*Update the existing record that already exists */
 
 			$SQL = "UPDATE salesanalysis
 						SET amt=amt+" . ($CN_Line['price'] * $CN_Line['qty'] / $CN_Header['rate']) . ",
 						qty=qty +" . $CN_Line['qty'] . ",
 						disc=disc+" . ($CN_Line['discountpercent'] * $CN_Line['price'] * $CN_Line['qty'] / $CN_Header['rate']) . "
-						WHERE salesanalysis.area='" . $myrow[2] . "'
-						AND salesanalysis.salesperson='" . $myrow[3] . "'
+						WHERE salesanalysis.area='" . $MyRow[2] . "'
+						AND salesanalysis.salesperson='" . $MyRow[3] . "'
 						AND typeabbrev ='" . $Header['tpe'] . "'
 						AND periodno = '" . $PeriodNo . "'
 						AND cust  " . LIKE . " '" . $Header['debtorno'] . "'
 						AND custbranch  " . LIKE . "  '" . $Header['branchcode'] . "'
 						AND stockid  " . LIKE . " '" . $CN_Line['stockid'] . "'
-						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+						AND salesanalysis.stkcategory ='" . $MyRow[1] . "'
 						AND budgetoractual='1'";
 
 		} else {
@@ -937,14 +942,14 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 										'" . $CreditNoteNo . "',
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
-										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe'], $db) . "',
+										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']) . "',
 										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
 										'" . ($StandardCost * $CN_Line['qty']) . "')";
 
 			$Result = api_DB_query($SQL, $db, '', '', true);
 
 			/*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
-			$StockGLCode = GetStockGLCode($CN_Line['stockid'], $db);
+			$StockGLCode = GetStockGLCode($CN_Line['stockid']);
 
 			$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -969,7 +974,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 		if ($CompanyRecord['gllink_debtors'] == 1 and $CN_Line['price'] != 0) {
 
 			//Post sales transaction to GL credit sales
-			$SalesGLAccounts = GetSalesGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe'], $db);
+			$SalesGLAccounts = GetSalesGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']);
 
 			$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -1005,7 +1010,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 								'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " @ " . ($CN_Line['discountpercent'] * 100) . "%',
 								'" . ($CN_Line['price'] * $CN_Line['qty'] * $CN_Line['discountpercent'] / $CN_Header['rate']) . "')";
 
-				$Result = DB_query($SQL, $db, '', '', true);
+				$Result = api_DB_query($SQL, '', '', true);
 			}
 			/*end of if discount !=0 */
 
@@ -1063,7 +1068,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 
 			$Result = api_DB_query($SQL, $db, '', '', true);
 		}
-		EnsureGLEntriesBalance(11, $CreditNoteNo, $db);
+		EnsureGLEntriesBalance(11, $CreditNoteNo);
 
 	}
 	/*end of if Sales and GL integrated */
@@ -1174,7 +1179,7 @@ function CreateCreditNote($Header, $LineDetails, $User, $Password) {
 	}
 
 	if (sizeof($Errors) == 0) {
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 		$Errors[0] = 0;
 		$Errors[1] = $CreditNoteNo;
 	} else {
@@ -1200,20 +1205,20 @@ function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($InvoiceDetails as $key => $value) {
-		$InvoiceDetails[$key] = DB_escape_string($value);
+	foreach ($InvoiceDetails as $Key => $Value) {
+		$InvoiceDetails[$Key] = DB_escape_string($Value);
 	}
 	$PartCode = $InvoiceDetails['partcode'];
-	$Errors = VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors);
 	unset($InvoiceDetails['partcode']);
 	$SalesArea = $InvoiceDetails['salesarea'];
 	unset($InvoiceDetails['salesarea']);
-	$InvoiceDetails['transno'] = GetNextTransactionNo(10, $db);
+	$InvoiceDetails['transno'] = GetNextTransactionNo(10);
 	$InvoiceDetails['type'] = 10;
-	$Errors = VerifyDebtorExists($InvoiceDetails['debtorno'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyBranchNoExists($InvoiceDetails['debtorno'], $InvoiceDetails['branchcode'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyTransNO($InvoiceDetails['transno'], 10, sizeof($Errors), $Errors, $db);
-	$Errors = VerifyTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($InvoiceDetails['debtorno'], sizeof($Errors), $Errors);
+	$Errors = VerifyBranchNoExists($InvoiceDetails['debtorno'], $InvoiceDetails['branchcode'], sizeof($Errors), $Errors);
+	$Errors = VerifyTransNO($InvoiceDetails['transno'], 10, sizeof($Errors), $Errors);
+	$Errors = VerifyTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors);
 	if (isset($InvoiceDetails['settled'])) {
 		$Errors = VerifySettled($InvoiceDetails['settled'], sizeof($Errors), $Errors);
 	}
@@ -1262,23 +1267,23 @@ function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 	$FieldNames = '';
 	$FieldValues = '';
 	$InvoiceDetails['trandate'] = ConvertToSQLDate($InvoiceDetails['trandate']);
-	$InvoiceDetails['prd'] = GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
-	foreach ($InvoiceDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	$InvoiceDetails['prd'] = GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors);
+	foreach ($InvoiceDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
-		$result = DB_Txn_Begin($db);
-		$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames, 0, -2) . ")
+		$Result = DB_Txn_Begin();
+		$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames, 0, -2) . ")
 									VALUES ('" . mb_substr($FieldValues, 0, -2) . "') ";
-		$result = DB_Query($sql, $db);
-		$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10, $db) . "' WHERE typeid=10";
-		$result = DB_Query($sql, $db);
-		$SalesGLCode = GetSalesGLCode($SalesArea, $PartCode, $db);
+		$Result = api_DB_Query($SQL);
+		$SQL = "UPDATE systypes SET typeno='" . GetNextTransactionNo(10) . "' WHERE typeid=10";
+		$Result = api_DB_Query($SQL);
+		$SalesGLCode = GetSalesGLCode($SalesArea, $PartCode);
 		$DebtorsGLCode = GetDebtorsGLCode($db);
-		$sql = "INSERT INTO gltrans VALUES(null,
+		$SQL = "INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10, $db) . "',
+											'" . GetNextTransactionNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] . "',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1288,10 +1293,10 @@ function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-		$result = api_DB_Query($sql, $db);
-		$sql = "INSERT INTO gltrans VALUES(null,
+		$Result = api_DB_Query($SQL);
+		$SQL = "INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(10, $db) . "',
+											'" . GetNextTransactionNo(10) . "',
 											0,
 											'" . $InvoiceDetails['trandate'] . "',
 											'" . $InvoiceDetails['prd'] . "',
@@ -1301,9 +1306,9 @@ function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-		$result = api_DB_Query($sql, $db);
-		$result = DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		$Result = api_DB_Query($SQL);
+		$Result = DB_Txn_Commit();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -1334,7 +1339,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors);
 	/*Get the outstanding amount to allocate (all amounts in FX) from the transaction*/
 
 	if ($AllocDetails['type'] != '11' and $AllocDetails['type'] != 12) {
@@ -1347,7 +1352,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 				WHERE debtorno='" . $AllocDetails['debtorno'] . "'
 				AND type='" . $AllocDetails['type'] . "'
 				AND transno='" . $AllocDetails['transno'] . "'";
-	$Result = api_DB_query($SQL, $db);
+	$Result = api_DB_query($SQL);
 	$LeftToAllocRow = DB_fetch_array($Result);
 	if (DB_num_rows($Result) == 0) {
 		$Errors[0] = NoTransactionToAllocate;
@@ -1365,7 +1370,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 					AND type=10
 					AND reference='" . $AllocDetails['customerref'] . "'
 					AND ovamount+ovgst+ovdiscount-alloc >0";
-		$Result = api_DB_query($SQL, $db);
+		$Result = api_DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			$Errors[0] = NoTransactionToAllocate;
 			return $Errors;
@@ -1385,14 +1390,14 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 				$AllocateAmount = $OSInvRow['outstanding'];
 			}
 
-			DB_Txn_Begin($db);
+			DB_Txn_Begin();
 			/*Now insert the allocation records */
 			$SQL = "INSERT INTO custallocns (amt,
 												datealloc,
 												transid_allocfrom,
 												transid_allocto)
 									VALUE('" . $AllocateAmount . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . $LeftToAllocRow['id'] . "',
 										'" . $OSInvRow['id'] . "')";
 			$Result = api_DB_query($SQL, $db, '', '', true);
@@ -1417,7 +1422,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 					AND type=11
 					AND reference='" . $AllocDetails['customerref'] . "'
 					AND ovamount+ovgst+ovdiscount-alloc < -0.005";
-		$Result = api_DB_query($SQL, $db);
+		$Result = api_DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			// then we need to cast the net further afield and look for normal receipts to allocate to
 			$SQL = "SELECT id,
@@ -1428,7 +1433,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 					AND type=12
 					AND reference='" . $AllocDetails['customerref'] . "'
 					AND ovamount+ovgst+ovdiscount-alloc < 0";
-			$Result = api_DB_query($SQL, $db);
+			$Result = api_DB_query($SQL);
 		}
 		if (DB_num_rows($Result) == 0) { //then no trans to allocate this to
 			$Errors[0] = 'no transactions to allocate this to';
@@ -1436,7 +1441,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 		}
 		$LeftToAllocate = $LeftToAllocRow['lefttoalloc'];
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 		/* there could be several receipts to allocate against ... loop through until $LefToAllocate is exhausted */
 		while ($OSCreditRow = DB_fetch_array($Result)) {
 
@@ -1458,7 +1463,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 													transid_allocfrom,
 													transid_allocto)
 										VALUE('" . $AllocateAmount . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'" . $OSCreditRow['id'] . "',
 											'" . $LeftToAllocRow['id'] . "')";
 				$Result = api_DB_query($SQL, $db, '', '', true);
@@ -1474,7 +1479,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 		} //end loop around potential positive receipts not fully allocated already
 	}
 	if (sizeof($Errors) == 0) {
-		$Result = DB_Txn_Commit($db);
+		$Result = DB_Txn_Commit();
 		$Errors[0] = 0;
 	} else {
 		$Result = DB_Txn_Rollback($db);
@@ -1500,20 +1505,20 @@ function InsertSalesCredit($CreditDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($CreditDetails as $key => $value) {
-		$CreditDetails[$key] = DB_escape_string($value);
+	foreach ($CreditDetails as $Key => $Value) {
+		$CreditDetails[$Key] = DB_escape_string($Value);
 	}
 	$PartCode = $CreditDetails['partcode'];
-	$Errors = VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors);
 	unset($CreditDetails['partcode']);
 	$SalesArea = $CreditDetails['salesarea'];
 	unset($CreditDetails['salesarea']);
-	$CreditDetails['transno'] = GetNextTransactionNo(11, $db);
+	$CreditDetails['transno'] = GetNextTransactionNo(11);
 	$CreditDetails['type'] = 10;
-	$Errors = VerifyDebtorExists($CreditDetails['debtorno'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyBranchNoExists($CreditDetails['debtorno'], $CreditDetails['branchcode'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyTransNO($CreditDetails['transno'], 10, sizeof($Errors), $Errors, $db);
-	$Errors = VerifyTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyDebtorExists($CreditDetails['debtorno'], sizeof($Errors), $Errors);
+	$Errors = VerifyBranchNoExists($CreditDetails['debtorno'], $CreditDetails['branchcode'], sizeof($Errors), $Errors);
+	$Errors = VerifyTransNO($CreditDetails['transno'], 10, sizeof($Errors), $Errors);
+	$Errors = VerifyTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors);
 	if (isset($CreditDetails['settled'])) {
 		$Errors = VerifySettled($CreditDetails['settled'], sizeof($Errors), $Errors);
 	}
@@ -1562,23 +1567,23 @@ function InsertSalesCredit($CreditDetails, $user, $password) {
 	$FieldNames = '';
 	$FieldValues = '';
 	$CreditDetails['trandate'] = ConvertToSQLDate($CreditDetails['trandate']);
-	$CreditDetails['prd'] = GetPeriodFromTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors, $db);
-	foreach ($CreditDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	$CreditDetails['prd'] = GetPeriodFromTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors);
+	foreach ($CreditDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
-		$result = DB_Txn_Begin($db);
-		$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames, 0, -2) . ")
+		$Result = DB_Txn_Begin();
+		$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames, 0, -2) . ")
 						VALUES ('" . mb_substr($FieldValues, 0, -2) . "') ";
-		$result = DB_Query($sql, $db);
-		$sql = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11, $db) . "' WHERE typeid=10";
-		$result = DB_Query($sql, $db);
-		$SalesGLCode = GetSalesGLCode($SalesArea, $PartCode, $db);
+		$Result = api_DB_Query($SQL);
+		$SQL = "UPDATE systypes SET typeno='" . GetNextTransactionNo(11) . "' WHERE typeid=10";
+		$Result = api_DB_Query($SQL);
+		$SalesGLCode = GetSalesGLCode($SalesArea, $PartCode);
 		$DebtorsGLCode = GetDebtorsGLCode($db);
-		$sql = "INSERT INTO gltrans VALUES(null,
+		$SQL = "INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11, $db) . "',
+											'" . GetNextTransactionNo(11) . "',
 											0,
 											'" . $CreditDetails['trandate'] . "',
 											'" . $CreditDetails['prd'] . "',
@@ -1587,10 +1592,10 @@ function InsertSalesCredit($CreditDetails, $user, $password) {
 											'" . $CreditDetails['ovamount'] . "',
 											0,
 											'" . $CreditDetails['jobref'] . "')";
-		$result = DB_Query($sql, $db);
-		$sql = "INSERT INTO gltrans VALUES(null,
+		$Result = api_DB_Query($SQL);
+		$SQL = "INSERT INTO gltrans VALUES(null,
 											10,
-											'" . GetNextTransactionNo(11, $db) . "',
+											'" . GetNextTransactionNo(11) . "',
 											0,
 											'" . $CreditDetails['trandate'] . "',
 											'" . $CreditDetails['prd'] . "',
@@ -1599,9 +1604,9 @@ function InsertSalesCredit($CreditDetails, $user, $password) {
 											'" . (-intval($CreditDetails['ovamount'])) . "',
 											0,
 											'" . $CreditDetails['jobref'] . "')";
-		$result = DB_Query($sql, $db);
-		$result = DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		$Result = api_DB_Query($SQL);
+		$Result = DB_Txn_Commit();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

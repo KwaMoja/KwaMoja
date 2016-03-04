@@ -75,7 +75,7 @@ CreateTable('reports',
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-)", $db);
+)");
 
 
 ?>

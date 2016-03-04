@@ -9,7 +9,7 @@ CreateTable('internalstockcatrole',
   KEY `internalstockcatrole_ibfk_2` (`secroleid`),
   CONSTRAINT `internalstockcatrole_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
   CONSTRAINT `internalstockcatrole_ibfk_2` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`)
-)", $db);
+)");
 
 
 ?>

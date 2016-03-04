@@ -25,7 +25,7 @@ if (isset($_POST['CreateTemplate'])) {
 								  freightact
 								FROM currencies INNER JOIN companies
 								ON companies.currencydefault=currencies.currabrev
-								WHERE coycode='1'", $db);
+								WHERE coycode='1'");
 		$CurrRow = DB_fetch_array($CurrResult);
 
 
@@ -64,33 +64,61 @@ if (isset($_POST['CreateTemplate'])) {
 		$SQLScript .= "TRUNCATE TABLE taxcategories;\n";
 		$SQLScript .= "TRUNCATE TABLE taxprovinces;\n";
 
-		$GroupsResult = DB_query("SELECT groupname,
-									sectioninaccounts,
-									pandl,
-									sequenceintb,
-									parentgroupname
-									FROM accountgroups", $db);
+		$GroupsResult = DB_query("SELECT groupcode,
+										language,
+										groupname,
+										sectioninaccounts,
+										pandl,
+										sequenceintb,
+										parentgroupcode,
+										parentgroupname
+									FROM accountgroups");
 
 		while ($GroupRow = DB_fetch_array($GroupsResult)) {
-			$SQLScript .= "INSERT INTO accountgroups (groupname,sectioninaccounts,pandl, sequenceintb, parentgroupname)
-				   VALUES ('" . $GroupRow['groupname'] . "',
-					  '" . $GroupRow['sectioninaccounts'] . "',
-					  " . $GroupRow['pandl'] . ",
-					  " . $GroupRow['sequenceintb'] . ",
-					  '" . $GroupRow['parentgroupname'] . "');\n";
+			$SQLScript .= "INSERT INTO accountgroups (groupcode,
+													language,
+													groupname,
+													sectioninaccounts,
+													pandl,
+													sequenceintb,
+													parentgroupname,
+													parentgroupcode
+												) VALUES (
+													'" . $GroupRow['groupcode'] . "',
+													'" . $GroupRow['language'] . "',
+													'" . $GroupRow['groupname'] . "',
+													'" . $GroupRow['sectioninaccounts'] . "',
+													'" . $GroupRow['pandl'] . "',
+													'" . $GroupRow['sequenceintb'] . "',
+													'" . $GroupRow['parentgroupname'] . "',
+													'" . $GroupRow['parentgroupcode'] . "'
+												);\n";
 		}
 
-		$ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster", $db);
+		$ChartResult = DB_query("SELECT accountcode,
+										language,
+										accountname,
+										group_,
+										groupcode
+									FROM chartmaster");
 		$i = 0;
 		while ($ChartRow = DB_fetch_array($ChartResult)) {
 			if ($_POST['IncludeAccount_' . $i] == 'on') {
 
-				$SQLScript .= "INSERT INTO chartmaster (accountcode,accountname,group_)
-						   VALUES ('" . $ChartRow['accountcode'] . "',
-								'" . $ChartRow['accountname'] . "',
-								'" . $ChartRow['group_'] . "');\n";
+				$SQLScript .= "INSERT INTO chartmaster (accountcode,
+														language,
+														accountname,
+														group_,
+														groupcode
+													) VALUES (
+														'" . $ChartRow['accountcode'] . "',
+														'" . $ChartRow['language'] . "',
+														'" . $ChartRow['accountname'] . "',
+														'" . $ChartRow['group_'] . "',
+														'" . $ChartRow['groupcode'] . "'
+													);\n";
 			}
-			$i++;
+			++$i;
 		}
 
 		/*Now the tax set up */
@@ -104,7 +132,7 @@ if (isset($_POST['CreateTemplate'])) {
 										bankacctype,
 										bankacc,
 										bankswift
-										FROM taxauthorities", $db);
+										FROM taxauthorities");
 
 		while ($TaxAuthoritiesRow = DB_fetch_array($TaxAuthoritiesResult)) {
 			$SQLScript .= "INSERT INTO taxauthorities (taxid,
@@ -130,7 +158,7 @@ if (isset($_POST['CreateTemplate'])) {
 									 dispatchtaxprovince,
 									 taxcatid,
 									 taxrate
-									FROM taxauthrates", $db);
+									FROM taxauthrates");
 
 		while ($TaxAuthRatesRow = DB_fetch_array($TaxAuthRatesResult)) {
 			$SQLScript .= "INSERT INTO taxauthrates (taxauthority,
@@ -146,7 +174,7 @@ if (isset($_POST['CreateTemplate'])) {
 		/*taxgroups table */
 		$TaxGroupsResult = DB_query("SELECT taxgroupid,
 										taxgroupdescription
-										FROM taxgroups", $db);
+										FROM taxgroups");
 
 		while ($TaxGroupsRow = DB_fetch_array($TaxGroupsResult)) {
 			$SQLScript .= "INSERT INTO taxgroups (taxgroupid,
@@ -157,7 +185,7 @@ if (isset($_POST['CreateTemplate'])) {
 		/*tax categories table */
 		$TaxCategoriesResult = DB_query("SELECT taxcatid,
 										  taxcatname
-										FROM taxcategories", $db);
+										FROM taxcategories");
 
 		while ($TaxCategoriesRow = DB_fetch_array($TaxCategoriesResult)) {
 			$SQLScript .= "INSERT INTO taxcategories (taxcatid,
@@ -168,7 +196,7 @@ if (isset($_POST['CreateTemplate'])) {
 		/*tax provinces table */
 		$TaxProvincesResult = DB_query("SELECT taxprovinceid,
 										  taxprovincename
-										FROM taxprovinces", $db);
+										FROM taxprovinces");
 
 		while ($TaxProvincesRow = DB_fetch_array($TaxProvincesResult)) {
 			$SQLScript .= "INSERT INTO taxprovinces (taxprovinceid,
@@ -181,7 +209,7 @@ if (isset($_POST['CreateTemplate'])) {
 											 taxauthid,
 											 calculationorder,
 											 taxontax
-											FROM taxgrouptaxes", $db);
+											FROM taxgrouptaxes");
 
 		while ($TaxGroupTaxesRow = DB_fetch_array($TaxGroupTaxesResult)) {
 			$SQLScript .= "INSERT INTO taxgrouptaxes (taxgroupid,
@@ -202,19 +230,19 @@ if (isset($_POST['CreateTemplate'])) {
 		echo '<p><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] . '.sql">' . _('Show the sql template file produced') . '</a>';
 		include('includes/htmlMimeMail.php');
 		$Recipients = array(
-			'"Submissions" <submissions@kwamoja.com>'
+			'"Submissions" <' . $SubmissionsEmail . '>'
 		);
-		$mail = new htmlMimeMail();
+		$Mail = new htmlMimeMail();
 		$Host = $_SERVER['HTTP_HOST'];
-		$attachment = $mail->getFile('http://' . $Host . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] . '.sql');
-		$mail->setText('Please find company template ' . $_POST['TemplateName']);
-		$mail->addAttachment($attachment, 'CompanyTemplate.sql', 'application/txt');
-		$mail->setSubject('Company Template Submission');
+		$attachment = $Mail->getFile('http://' . $Host . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] . '.sql');
+		$Mail->setText('Please find company template ' . $_POST['TemplateName']);
+		$Mail->addAttachment($attachment, 'CompanyTemplate.sql', 'application/txt');
+		$Mail->setSubject('Company Template Submission');
 		if ($_SESSION['SmtpSetting'] == 0) {
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			$result = $mail->send($Recipients);
+			$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+			$Result = $Mail->send($Recipients);
 		} else {
-			$result = SendmailBySmtp($mail, $Recipients);
+			$Result = SendmailBySmtp($Mail, $Recipients);
 		}
 		/*end of SQL Script creation */
 	}
@@ -222,10 +250,10 @@ if (isset($_POST['CreateTemplate'])) {
 }
 /*end submit button hit */
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-prnMsg(_('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the KwaMoja project'), 'info');
+prnMsg(_('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the project'), 'info');
 
 echo _('Enter the name of the template to be created') . ':<input type="text" name="TemplateName" />';
 
@@ -234,7 +262,10 @@ prnMsg(_('Warning: All selected accounts will be exported - please de-select the
 echo '<table>';
 /*Show the chart of accounts to be exported for deslection of company specific ones */
 
-$ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster", $db);
+$ChartResult = DB_query("SELECT accountcode,
+								accountname
+							FROM chartmaster
+							WHERE language='" . $_SESSION['ChartLanguage'] . "'");
 
 echo '<tr>
 		<th>' . _('Account Code') . '</th>
@@ -247,7 +278,7 @@ while ($ChartRow = DB_fetch_array($ChartResult)) {
 			<td>' . htmlspecialchars($ChartRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
 			<td><input type="checkbox" name="IncludeAccount_' . $i . '" checked="checked" /></td>
 		</tr>';
-	$i++;
+	++$i;
 }
 
 echo '</table>';

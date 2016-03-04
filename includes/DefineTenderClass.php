@@ -53,20 +53,20 @@ class Tender {
 		$Headers = 'From: ' . $_SESSION['PurchasingManagerEmail'] . "\r\n" . 'Reply-To: ' . $_SESSION['PurchasingManagerEmail'] . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 		if ($_SESSION['SmtpSetting'] == 1) {
 			include('includes/htmlMimeMail.php');
-			$mail = new htmlMimeMail();
-			$mail->setText($EmailText);
-			$mail->setSubject($Subject);
-			$mail->setFrom($_SESSION['PurchasingManagerEmail']);
-			$mail->setHeader('Reply-To', $_SESSION['PurchasingManagerEmail']);
-			$mail->setCc($_SESSION['PurchasingManagerEmail']); //Set this as a copy for filing purpose
+			$Mail = new htmlMimeMail();
+			$Mail->setText($EmailText);
+			$Mail->setSubject($Subject);
+			$Mail->setFrom($_SESSION['PurchasingManagerEmail']);
+			$Mail->setHeader('Reply-To', $_SESSION['PurchasingManagerEmail']);
+			$Mail->setCc($_SESSION['PurchasingManagerEmail']); //Set this as a copy for filing purpose
 
 		}
 		foreach ($this->Suppliers as $Supplier) {
-			$result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
+			$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 			if ($_SESSION['SmtpSetting'] == 0) {
-				$result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
+				$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 			} else {
-				$result = SendmailBySmtp($mail, array(
+				$Result = SendmailBySmtp($Mail, array(
 					$Supplier->EmailAddress,
 					$_SESSION['PurchasingManagerEmail']
 				));
@@ -74,11 +74,11 @@ class Tender {
 		}
 	}
 
-	function save($db) {
+	function save() {
 		/* Does record exist for this tender
 		 */
 		if ($this->TenderId == '') {
-			$this->TenderId = GetNextTransNo(37, $db);
+			$this->TenderId = GetNextTransNo(37);
 			$HeaderSQL = "INSERT INTO tenders (tenderid,
 											location,
 											address1,
@@ -129,9 +129,9 @@ class Tender {
 											requiredbydate='" . FormatDateForSQL($this->RequiredByDate) . "'
 						WHERE tenderid = '" . $this->TenderId . "'";
 			foreach ($this->Suppliers as $Supplier) {
-				$sql = "DELETE FROM tendersuppliers
+				$SQL = "DELETE FROM tendersuppliers
 					WHERE  tenderid='" . $this->TenderId . "'";
-				$result = DB_query($sql, $db);
+				$Result = DB_query($SQL);
 				$SuppliersSQL[] = "INSERT INTO tendersuppliers (
 									tenderid,
 									supplierid,
@@ -141,9 +141,9 @@ class Tender {
 										'" . $Supplier->EmailAddress . "')";
 			}
 			foreach ($this->LineItems as $LineItem) {
-				$sql = "DELETE FROM tenderitems
+				$SQL = "DELETE FROM tenderitems
 						WHERE  tenderid='" . $this->TenderId . "'";
-				$result = DB_query($sql, $db);
+				$Result = DB_query($SQL);
 				$ItemsSQL[] = "INSERT INTO tenderitems (tenderid,
 														stockid,
 														quantity,
@@ -154,22 +154,22 @@ class Tender {
 										'" . $LineItem->Units . "')";
 			}
 		}
-		DB_Txn_Begin($db);
-		$result = DB_query($HeaderSQL, $db, '', '', True);
-		foreach ($SuppliersSQL as $sql) {
-			$result = DB_query($sql, $db, '', '', True);
+		DB_Txn_Begin();
+		$Result = DB_query($HeaderSQL, '', '', True);
+		foreach ($SuppliersSQL as $SQL) {
+			$Result = DB_query($SQL, '', '', True);
 		}
-		foreach ($ItemsSQL as $sql) {
-			$result = DB_query($sql, $db, '', '', True);
+		foreach ($ItemsSQL as $SQL) {
+			$Result = DB_query($SQL, '', '', True);
 		}
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 	}
 
-	function add_item_to_tender($LineNo, $StockID, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate) {
+	function add_item_to_tender($LineNo, $StockId, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate) {
 
 		if (isset($Qty) and $Qty != 0) {
 
-			$this->LineItems[$LineNo] = new LineDetails($LineNo, $StockID, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate);
+			$this->LineItems[$LineNo] = new LineDetails($LineNo, $StockId, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate);
 			$this->LinesOnTender++;
 			return 1;
 		}
@@ -200,7 +200,7 @@ class Tender {
 	}
 
 	function remove_supplier_from_tender(&$SupplierCode) {
-		unset($this->Suppliers[$SupplierCode]);
+		unset($this->Suppliers[stripslashes($SupplierCode)]);
 		$this->SuppliersOnTender--;
 	}
 
@@ -217,7 +217,7 @@ class Tender {
 class LineDetails {
 	/* PurchOrderDetails */
 	var $LineNo;
-	var $StockID;
+	var $StockId;
 	var $ItemDescription;
 	var $Quantity;
 	var $Price;

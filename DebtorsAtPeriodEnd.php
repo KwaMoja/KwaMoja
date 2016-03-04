@@ -5,30 +5,30 @@ include('includes/session.inc');
 if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_POST['FromCriteria']) >= 1 and isset($_POST['ToCriteria']) and mb_strlen($_POST['ToCriteria']) >= 1) {
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Customer Balance Listing'));
-	$pdf->addInfo('Subject', _('Customer Balances'));
+	$PDF->addInfo('Title', _('Customer Balance Listing'));
+	$PDF->addInfo('Subject', _('Customer Balances'));
 	$FontSize = 12;
 	$PageNumber = 0;
 	$line_height = 12;
 
-	$sql = "SELECT min(debtorno) AS fromcriteria,
+	$SQL = "SELECT min(debtorno) AS fromcriteria,
 					max(debtorno) AS tocriteria
 				FROM debtorsmaster";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
 	if ($_POST['FromCriteria']=='') {
-		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+		$_POST['FromCriteria'] = $MyRow['fromcriteria'];
 	}
 	if ($_POST['ToCriteria']=='') {
-		$_POST['Toriteria'] = $myrow['tocriteria'];
+		$_POST['Toriteria'] = $MyRow['tocriteria'];
 	}
 
 	/*Get the date of the last day in the period selected */
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd'] . "'";
-	$PeriodEndResult = DB_query($SQL, $db, _('Could not get the date of the last day in the period selected'));
+	$PeriodEndResult = DB_query($SQL, _('Could not get the date of the last day in the period selected'));
 	$PeriodRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
 
@@ -59,14 +59,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$CustomerResult = DB_query($SQL, $db, '', '', false, false);
+	$CustomerResult = DB_query($SQL, '', '', false, false);
 
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
 		include('includes/header.inc');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg($db), 'error');
+		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
@@ -86,7 +86,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	$TotBal = 0;
 
-	while ($DebtorBalances = DB_fetch_array($CustomerResult, $db)) {
+	while ($DebtorBalances = DB_fetch_array($CustomerResult)) {
 
 		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'] + $DebtorBalances['afterdatediffonexch'];
 		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
@@ -98,10 +98,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 3, $YPos, 220 - $Left_Margin, $FontSize, $DebtorBalances['debtorno'] . ' - ' . html_entity_decode($DebtorBalances['name'], ENT_QUOTES, 'UTF-8'), 'left');
-			$LeftOvers = $pdf->addTextWrap(220, $YPos, 60, $FontSize, $DisplayBalance, 'right');
-			$LeftOvers = $pdf->addTextWrap(280, $YPos, 60, $FontSize, $DisplayFXBalance, 'right');
-			$LeftOvers = $pdf->addTextWrap(350, $YPos, 100, $FontSize, $DebtorBalances['currency'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 3, $YPos, 220 - $Left_Margin, $FontSize, $DebtorBalances['debtorno'] . ' - ' . html_entity_decode($DebtorBalances['name'], ENT_QUOTES, 'UTF-8'), 'left');
+			$LeftOvers = $PDF->addTextWrap(220, $YPos, 60, $FontSize, $DisplayBalance, 'right');
+			$LeftOvers = $PDF->addTextWrap(280, $YPos, 60, $FontSize, $DisplayFXBalance, 'right');
+			$LeftOvers = $PDF->addTextWrap(350, $YPos, 100, $FontSize, $DebtorBalances['currency'], 'left');
 
 
 			$YPos -= $line_height;
@@ -120,56 +120,56 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
 
-	$LeftOvers = $pdf->addTextWrap(50, $YPos, 160, $FontSize, _('Total balances'), 'left');
-	$LeftOvers = $pdf->addTextWrap(220, $YPos, 60, $FontSize, $DisplayTotBalance, 'right');
+	$LeftOvers = $PDF->addTextWrap(50, $YPos, 160, $FontSize, _('Total balances'), 'left');
+	$LeftOvers = $PDF->addTextWrap(220, $YPos, 60, $FontSize, $DisplayTotBalance, 'right');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_DebtorBals_' . date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 
 } else {
 	/*The option to print PDF was not hit */
 
 	$Title = _('Debtor Balances');
-	/* KwaMoja manual links before header.inc */
+	/* Manual links before header.inc */
 	$ViewTopic = 'ARReports';
 	$BookMark = 'PriorMonthDebtors';
 	include('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Debtor Balances') . '" alt="' . _('Debtor Balances') . '" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Debtor Balances') . '" alt="' . _('Debtor Balances') . '" />' . ' ' . $Title . '</p><br />';
 
-	$sql = "SELECT min(debtorno) AS fromcriteria,
+	$SQL = "SELECT min(debtorno) AS fromcriteria,
 					max(debtorno) AS tocriteria
 				FROM debtorsmaster";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 		/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 			  <div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 		echo '<tr>
 				<td>' . _('From Customer Code') . ':</td>
-				<td><input tabindex="1" type="text" autofocus="autofocus" required="required" minlength="1" maxlength="10" size="7" name="FromCriteria" value="' . $myrow['fromcriteria'] . '" /></td>
+				<td><input tabindex="1" type="text" autofocus="autofocus" required="required" maxlength="10" size="7" name="FromCriteria" value="' . $MyRow['fromcriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" required="required" minlength="1" maxlength="10" size="7" name="ToCriteria" value="' . $myrow['tocriteria'] . '" /></td>
+				<td><input tabindex="2" type="text" required="required" maxlength="10" size="7" name="ToCriteria" value="' . $MyRow['tocriteria'] . '" /></td>
 			</tr>
 			<tr>
 				<td>' . _('Balances As At') . ':</td>
-				<td><select minlength="0" tabindex="3" name="PeriodEnd">';
+				<td><select tabindex="3" name="PeriodEnd">';
 
-		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-		$Periods = DB_query($sql, $db, _('Could not retrieve period data because'), _('The SQL that failed to get the period data was'));
+		$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
+		$Periods = DB_query($SQL, _('Could not retrieve period data because'), _('The SQL that failed to get the period data was'));
 
-		while ($myrow = DB_fetch_array($Periods, $db)) {
+		while ($MyRow = DB_fetch_array($Periods)) {
 
-			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 
 		}
 	}

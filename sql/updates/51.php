@@ -1,9 +1,9 @@
 <?php
 
-NewConfigValue('ShopShowLeftCategoryMenu', '1', $db);
-NewConfigValue('ShopStockLocations', '1', $db);
-DeleteConfigValue('ShopAdditionalStockLocations', $db);
+NewConfigValue('ShopShowLeftCategoryMenu', '1');
+NewConfigValue('ShopStockLocations', '1');
+DeleteConfigValue('ShopAdditionalStockLocations');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

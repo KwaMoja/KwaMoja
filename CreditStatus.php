@@ -15,10 +15,9 @@ if (isset($Errors)) {
 }
 $Errors = array();
 $InputError = 0;
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
-	</p>
-	<br />';
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+	</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -30,22 +29,22 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	$sql = "SELECT count(reasoncode)
+	$SQL = "SELECT count(reasoncode)
 			FROM holdreasons WHERE reasoncode='" . $_POST['ReasonCode'] . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
-	if ($myrow[0] != 0 and !isset($SelectedReason)) {
+	if ($MyRow[0] != 0 and !isset($SelectedReason)) {
 		$InputError = 1;
 		prnMsg(_('The credit status code already exists in the database'), 'error');
 		$Errors[$i] = 'ReasonCode';
-		$i++;
+		++$i;
 	}
 	if (!is_numeric($_POST['ReasonCode'])) {
 		$InputError = 1;
 		prnMsg(_('The status code name must be an integer'), 'error');
 		$Errors[$i] = 'ReasonCode';
-		$i++;
+		++$i;
 	}
 	if (mb_strlen($_POST['ReasonDescription']) > 30) {
 		$InputError = 1;
@@ -55,27 +54,29 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The credit status description must be entered'), 'error');
 		$Errors[$i] = 'ReasonDescription';
-		$i++;
+		++$i;
 	}
 
-	$msg = '';
+	$Msg = '';
 
 	if (isset($SelectedReason) and $InputError != 1) {
 
 		/*SelectedReason could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the delete code below*/
 
 		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices'] == 'on') {
-			$sql = "UPDATE holdreasons SET
+			$SQL = "UPDATE holdreasons SET
 							reasondescription='" . $_POST['ReasonDescription'] . "',
 							dissallowinvoices=1
 							WHERE reasoncode = '" . $SelectedReason . "'";
 		} else {
-			$sql = "UPDATE holdreasons SET
+			$SQL = "UPDATE holdreasons SET
 							reasondescription='" . $_POST['ReasonDescription'] . "',
 							dissallowinvoices=0
 							WHERE reasoncode = '" . $SelectedReason . "'";
 		}
-		$msg = _('The credit status record has been updated');
+		$Msg = _('The credit status record has been updated');
+		unset($SelectedReason);
+		unset($_POST['ReasonDescription']);
 
 	} else if ($InputError != 1) {
 
@@ -83,14 +84,14 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices'] == 'on') {
 
-			$sql = "INSERT INTO holdreasons (reasoncode,
+			$SQL = "INSERT INTO holdreasons (reasoncode,
 											reasondescription,
 											dissallowinvoices)
 									VALUES ('" . $_POST['ReasonCode'] . "',
 											'" . $_POST['ReasonDescription'] . "',
 											1)";
 		} else {
-			$sql = "INSERT INTO holdreasons (reasoncode,
+			$SQL = "INSERT INTO holdreasons (reasoncode,
 											reasondescription,
 											dissallowinvoices)
 									VALUES ('" . $_POST['ReasonCode'] . "',
@@ -98,34 +99,34 @@ if (isset($_POST['submit'])) {
 											0)";
 		}
 
-		$msg = _('A new credit status record has been inserted');
+		$Msg = _('A new credit status record has been inserted');
 		unset($SelectedReason);
 		unset($_POST['ReasonDescription']);
 	}
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql, $db);
-	if ($msg != '') {
-		prnMsg($msg, 'success');
+	$Result = DB_query($SQL);
+	if ($Msg != '') {
+		prnMsg($Msg, 'success');
 	}
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql = "SELECT COUNT(*)
+	$SQL = "SELECT COUNT(*)
 			FROM debtorsmaster
 			WHERE debtorsmaster.holdreason='" . $SelectedReason . "'";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
 		prnMsg(_('Cannot delete this credit status code because customer accounts have been created referring to it'), 'warn');
-		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this credit status code');
+		echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this credit status code');
 	} else {
 		//only delete if used in neither customer or supplier accounts
 
-		$sql = "DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
-		$result = DB_query($sql, $db);
+		$SQL = "DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
+		$Result = DB_query($SQL);
 		prnMsg(_('This credit status code has been deleted'), 'success');
 	}
 	//end if status code used in customer or supplier accounts
@@ -141,8 +142,8 @@ if (!isset($SelectedReason)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
-	$result = DB_query($sql, $db);
+	$SQL = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -152,9 +153,9 @@ if (!isset($SelectedReason)) {
 		</tr>';
 
 	$k = 0; //row colour counter
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
-		if ($myrow['dissallowinvoices'] == 0) {
+		if ($MyRow['dissallowinvoices'] == 0) {
 			$DissallowText = _('Invoice OK');
 		} else {
 			$DissallowText = '<b>' . _('NO INVOICING') . '</b>';
@@ -167,12 +168,12 @@ if (!isset($SelectedReason)) {
 			$k = 1;
 		}
 
-		printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['reasoncode'], $myrow['reasondescription'], $DissallowText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow['reasoncode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow['reasoncode']);
+		echo '<td>' . $MyRow['reasoncode'] . '</td>
+			<td>' . $MyRow['reasondescription'] . '</td>
+			<td>' . $DissallowText . '</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedReason=' . urlencode($MyRow['reasoncode']) . '">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedReason=' . urlencode($MyRow['reasoncode']) . '&delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -187,25 +188,24 @@ if (isset($SelectedReason)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError != 1)) {
 		//editing an existing status code
 
-		$sql = "SELECT reasoncode,
+		$SQL = "SELECT reasoncode,
 					reasondescription,
 					dissallowinvoices
 				FROM holdreasons
 				WHERE reasoncode='" . $SelectedReason . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['ReasonCode'] = $myrow['reasoncode'];
-		$_POST['ReasonDescription'] = $myrow['reasondescription'];
-		$_POST['DisallowInvoices'] = $myrow['dissallowinvoices'];
+		$_POST['ReasonCode'] = $MyRow['reasoncode'];
+		$_POST['ReasonDescription'] = $MyRow['reasondescription'];
+		$_POST['DisallowInvoices'] = $MyRow['dissallowinvoices'];
 
 		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '" />';
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';
@@ -219,11 +219,10 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['ReasonCode'])) {
 			$_POST['ReasonCode'] = '';
 		}
-		echo '<br />
-			<table class="selection">
+		echo '<table class="selection">
 			<tr>
 				<td>' . _('Status Code') . ':</td>
-				<td><input tabindex="1" type="text" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="2" /></td>
+				<td><input tabindex="1" class="integer" type="text" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" size="3" autofocus="autofocus" required="required" maxlength="2" /></td>
 			</tr>';
 	}
 
@@ -232,7 +231,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input tabindex="2" type="text" name="ReasonDescription" value="' . $_POST['ReasonDescription'] . '" size="28" required="required" minlength="1" maxlength="30" /></td>
+			<td><input tabindex="2" type="text" name="ReasonDescription" value="' . $_POST['ReasonDescription'] . '" size="28" required="required" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Disallow Invoices') . '</td>';
@@ -244,10 +243,8 @@ if (!isset($_GET['delete'])) {
 			</tr>';
 	}
 	echo '</table>
-			<br />
 			<div class="centre">
 				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
-			</div>
 			</div>
 			</form>';
 } //end if record deleted no point displaying form to add record

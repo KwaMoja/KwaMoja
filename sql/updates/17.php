@@ -1,7 +1,7 @@
 <?php
 
-ChangeConfigValue('VersionNumber', '4.05', $db);
+ChangeConfigValue('VersionNumber', '4.05');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

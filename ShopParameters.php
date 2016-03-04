@@ -6,7 +6,7 @@ $Title = _('Shop Configuration');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Shop Configuration') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Shop Configuration') . '" alt="" />' . $Title . '</p>';
 
 
 if (isset($_POST['submit'])) {
@@ -159,13 +159,13 @@ if (isset($_POST['submit'])) {
 
 		}
 		$ErrMsg = _('The shop configuration could not be updated because');
-		$DbgMsg = _('The SQL that failed was:');
+		$DbgMsg = _('The SQL that failed was') . ':';
 		if (sizeof($SQL) > 0) {
-			$result = DB_Txn_Begin($db);
+			$Result = DB_Txn_Begin();
 			foreach ($SQL as $SqlLine) {
-				$result = DB_query($SqlLine, $db, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SqlLine, $ErrMsg, $DbgMsg, true);
 			}
-			$result = DB_Txn_Commit($db);
+			$Result = DB_Txn_Commit();
 			prnMsg(_('Shop configuration updated'), 'success');
 
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
@@ -180,7 +180,6 @@ if (isset($_POST['submit'])) {
 /* end of if submit */
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table cellpadding="2" class="selection" width="98%">
 		<tr>
@@ -308,7 +307,7 @@ if (mb_strlen($_SESSION['ShopStockLocations']) > 1) {
 echo '<tr>
 		<td>' . _('Stock Locations') . ':</td>
 		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
-$LocResult = DB_query("SELECT loccode, locationname FROM locations", $db);
+$LocResult = DB_query("SELECT loccode, locationname FROM locations");
 while ($LocRow = DB_fetch_array($LocResult)) {
 	if (in_array($LocRow['loccode'], $Locations)) {
 		echo '<option selected="selected" value="' . $LocRow['loccode'] . '">' . $LocRow['locationname'] . '</option>';
@@ -322,7 +321,7 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Allow Payment Surcharges') . ':</td>
-		<td><select minlength="0" name="X_ShopAllowSurcharges">';
+		<td><select name="X_ShopAllowSurcharges">';
 if ($_SESSION['ShopAllowSurcharges'] == "1") {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -334,10 +333,10 @@ echo '</select></td>
 		<td>' . _('Add surcharges for different payment methods.') . '</td>
 	</tr>';
 
-$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'", $db);
+$DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'");
 echo '<tr>
 		<td>' . _('Surcharges Stock Item') . ':</td>
-		<td><select minlength="0" name="X_ShopSurchargeStockID">';
+		<td><select name="X_ShopSurchargeStockID">';
 while ($ItemsRow = DB_fetch_array($DummyItemsResult)) {
 	if ($_SESSION['ShopSurchargeStockID'] == $ItemsRow['stockid']) {
 		echo '<option selected="selected" value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . '-' . $ItemsRow['description'] . '</option>';
@@ -346,7 +345,7 @@ while ($ItemsRow = DB_fetch_array($DummyItemsResult)) {
 	}
 }
 echo '</select></td>
-		<td>' . _('Select the KwaMoja service item to use for payment surcharges to be processed as') . '</td>
+		<td>' . _('Select the service item to use for payment surcharges to be processed as') . '</td>
 	</tr>';
 
 echo '<tr>
@@ -386,7 +385,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Allow Bank Transfer Payment') . ':</td>
-		<td><select minlength="0" name="X_ShopAllowBankTransfer">';
+		<td><select name="X_ShopAllowBankTransfer">';
 if ($_SESSION['ShopAllowBankTransfer'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -409,7 +408,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Allow PayPal Payment') . ':</td>
-		<td><select minlength="0" name="X_ShopAllowPayPal">';
+		<td><select name="X_ShopAllowPayPal">';
 if ($_SESSION['ShopAllowPayPal'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -423,8 +422,8 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Pay Pal Bank Account') . ':</td>
-		<td><select minlength="0" name="X_ShopPayPalBankAccount">';
-$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts", $db);
+		<td><select name="X_ShopPayPalBankAccount">';
+$BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts");
 while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
 	if ($_SESSION['ShopPayPalBankAccount'] == $BankAccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
@@ -433,19 +432,22 @@ while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
 	}
 }
 echo '</select></td>
-		<td>' . _('Select the KwaMoja bank account to use for receipts processed by Pay Pal') . '</td>
+		<td>' . _('Select the bank account to use for receipts processed by Pay Pal') . '</td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('Pay Pal Commission Account') . ':</td>
 		<td><select name="X_ShopPayPalCommissionAccount">';
+
 $AccountsResult = DB_query("SELECT accountcode,
 									accountname
 								FROM chartmaster
 								INNER JOIN accountgroups
-									ON chartmaster.group_=accountgroups.groupname
+									ON chartmaster.groupcode=accountgroups.groupcode
+									AND chartmaster.language=accountgroups.language
 								WHERE accountgroups.pandl=1
-								ORDER BY chartmaster.accountcode", $db);
+									AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+								ORDER BY chartmaster.accountcode");
 while ($AccountRow = DB_fetch_array($AccountsResult)) {
 	if ($_SESSION['ShopPayPalCommissionAccount'] == $AccountRow['accountcode']) {
 		echo '<option selected="selected" value="' . $AccountRow['accountcode'] . '">' . $AccountRow['accountname'] . '</option>';
@@ -454,7 +456,7 @@ while ($AccountRow = DB_fetch_array($AccountsResult)) {
 	}
 }
 echo '</select></td>
-		<td>' . _('Select the webERP P/L account to use for commissions (transaction fees) charged by Pay Pal') . '</td>
+		<td>' . _('Select the P/L account to use for commissions (transaction fees) charged by Pay Pal') . '</td>
 	</tr>';
 
 echo '<tr>
@@ -492,7 +494,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Allow Credit Card Payments') . ':</td>
-		<td><select minlength="0" name="X_ShopAllowCreditCards">';
+		<td><select name="X_ShopAllowCreditCards">';
 if ($_SESSION['ShopAllowCreditCards'] == 1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -508,9 +510,9 @@ echo '<tr>
 		<td>' . _('Credit Card Gateway') . ':</td>
 		<td>';
 if ($AllowDemoMode) {
-	echo '<select minlength="0" name="SomeNameNotUsed">';
+	echo '<select name="SomeNameNotUsed">';
 } else {
-	echo '<select minlength="0" name="X_ShopCreditCardGateway">';
+	echo '<select name="X_ShopCreditCardGateway">';
 }
 if ($_SESSION['ShopCreditCardGateway'] == 'PayPalPro') {
 	echo '<option selected="selected" value="PayPalPro">' . _('PayPal Pro') . '</option>';
@@ -539,7 +541,7 @@ echo '<tr>
 
 echo '<tr>
 		<td>' . _('Credit Card Bank Account') . ':</td>
-		<td><select minlength="0" name="X_ShopCreditCardBankAccount">';
+		<td><select name="X_ShopCreditCardBankAccount">';
 DB_data_seek($BankAccountsResult, 0);
 while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
 	if ($_SESSION['ShopCreditCardBankAccount'] == $BankAccountRow['accountcode']) {
@@ -549,7 +551,7 @@ while ($BankAccountRow = DB_fetch_array($BankAccountsResult)) {
 	}
 }
 echo '</select></td>
-		<td>' . _('Select the KwaMoja bank account to use for receipts processed by credit card') . '</td>
+		<td>' . _('Select the bank account to use for receipts processed by credit card') . '</td>
 	</tr>';
 
 if ($AllowDemoMode) {
@@ -561,39 +563,39 @@ if ($AllowDemoMode) {
 	echo '<tr>
 			<td>' . _('PayPal Pro User') . ':</td>
 			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayPalProUser" value="' . $_SESSION['ShopPayPalProUser'] . '" /></td>
-			<td>' . _('The PayPal Pro Merchant User account for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' .  _('Merchant User account for credit card payment available in only USA and Canada') . '</td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('PayPal Pro Password') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalProPassword" value="' . $_SESSION['ShopPayPalProPassword'] . '" /></td>
-			<td>' . _('The PayPal Pro Merchant account password for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' . _('Merchant account password for credit card payment available in only USA and Canada') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('PayPal Pro Signature') . ':</td>
 			<td><input type="text" size="80" maxlength="80" name="X_ShopPayPalProSignature" value="' . $_SESSION['ShopPayPalProSignature'] . '" /></td>
-			<td>' . _('The PayPal Pro merchant account signature for credit card payment available in only USA and Canada') . '</td>
+			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' . _('merchant account signature for credit card payment available in only USA and Canada') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro User') . ':</td>
 			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayFlowUser" value="' . $_SESSION['ShopPayFlowUser'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Password') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowPassword" value="' . $_SESSION['ShopPayFlowPassword'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Vendor') . ':</td>
 			<td><input type="text" class="noSpecialChars" size="20" maxlength="20" name="X_ShopPayFlowVendor" value="' . $_SESSION['ShopPayFlowVendor'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Pay Flow Pro Merchant') . ':</td>
 			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowMerchant" value="' . $_SESSION['ShopPayFlowMerchant'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</td>
+			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('SwipeHQ Merchant ID') . ':</td>
@@ -607,8 +609,7 @@ if ($AllowDemoMode) {
 		</tr>';
 } //end of blocked inputs in demo mode
 echo '</table>
-		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
-	</div>
+		<div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
 	</form>';
 
 include('includes/footer.inc');

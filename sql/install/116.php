@@ -15,7 +15,7 @@ CreateTable('stockcategory',
   PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-)", $db);
+)");
 
 
 ?>

@@ -9,7 +9,7 @@ CreateTable('supptranstaxes',
   KEY `taxauthid` (`taxauthid`),
   CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
   CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
-)", $db);
+)");
 
 
 ?>

@@ -16,7 +16,7 @@ CreateTable('factorcompanies',
   `email` varchar(55) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `factor_name` (`coyname`)
-)", $db);
+)");
 
 
 ?>

@@ -2,14 +2,14 @@
 $PageSecurity=1;
 include('includes/session.inc');
 
-$sql = "SELECT caption
+$SQL = "SELECT caption
 			FROM favourites
 			WHERE userid='" . $_SESSION['UserID'] . "'
 				AND href='" . $_GET['Script'] . "'";
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result) == 0) {
-	$sql = "INSERT INTO favourites ( userid,
+if (DB_num_rows($Result) == 0) {
+	$SQL = "INSERT INTO favourites ( userid,
 									caption,
 									href
 								) VALUES (
@@ -17,12 +17,17 @@ if (DB_num_rows($result) == 0) {
 									'" . $_GET['Title'] . "',
 									'" . $_GET['Script'] . "'
 								)";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 } else {
-	$sql = "DELETE FROM favourites
+	$SQL = "DELETE FROM favourites
 					WHERE userid='" . $_SESSION['UserID'] . "'
 						AND href='" . $_GET['Script'] . "'";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
+}
+$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+$Result = DB_query($SQL);
+while ($MyRow = DB_fetch_array($Result)) {
+	$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
 }
 
 ?>

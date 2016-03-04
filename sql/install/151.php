@@ -14,7 +14,7 @@ CreateTable('workorders',
   KEY `RequiredBy` (`requiredby`),
   CONSTRAINT `workorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)", $db);
+)");
 
 
 ?>

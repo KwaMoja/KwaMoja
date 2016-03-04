@@ -6,25 +6,25 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	include('includes/PDFStarter.php');
 
-	$pdf->addInfo('Title', _('Supplier Balance Listing'));
-	$pdf->addInfo('Subject', _('Supplier Balances'));
+	$PDF->addInfo('Title', _('Supplier Balance Listing'));
+	$PDF->addInfo('Subject', _('Supplier Balances'));
 
 	$FontSize = 12;
 	$PageNumber = 0;
 	$line_height = 12;
 
-	$sql = "SELECT min(supplierid) AS fromcriteria,
+	$SQL = "SELECT min(supplierid) AS fromcriteria,
 					max(supplierid) AS tocriteria
 				FROM suppliers";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
 	if ($_POST['FromCriteria']=='') {
-		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+		$_POST['FromCriteria'] = $MyRow['fromcriteria'];
 	}
 	if ($_POST['ToCriteria']=='') {
-		$_POST['Toriteria'] = $myrow['tocriteria'];
+		$_POST['Toriteria'] = $MyRow['tocriteria'];
 	}
 
 	/*Now figure out the aged analysis for the Supplier range under review */
@@ -53,14 +53,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$SupplierResult = DB_query($SQL, $db);
+	$SupplierResult = DB_query($SQL);
 
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.inc');
-		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
+		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
@@ -79,22 +79,22 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	$TotBal = 0;
 
-	while ($SupplierBalances = DB_fetch_array($SupplierResult, $db)) {
+	while ($SupplierBalances = DB_fetch_array($SupplierResult)) {
 
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
 		if (ABS($Balance) > 0.009 or ABS($FXBalance) > 0.009) {
 
-			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'], $_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'], $_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'], $SupplierBalances['currdecimalplaces']);
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 220 - $Left_Margin, $FontSize, $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'], 'left');
-			$LeftOvers = $pdf->addTextWrap(220, $YPos, 60, $FontSize, $DisplayBalance, 'right');
-			$LeftOvers = $pdf->addTextWrap(280, $YPos, 60, $FontSize, $DisplayFXBalance, 'right');
-			$LeftOvers = $pdf->addTextWrap(350, $YPos, 100, $FontSize, $SupplierBalances['currency'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 220 - $Left_Margin, $FontSize, $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'], 'left');
+			$LeftOvers = $PDF->addTextWrap(220, $YPos, 60, $FontSize, $DisplayBalance, 'right');
+			$LeftOvers = $PDF->addTextWrap(280, $YPos, 60, $FontSize, $DisplayFXBalance, 'right');
+			$LeftOvers = $PDF->addTextWrap(350, $YPos, 100, $FontSize, $SupplierBalances['currency'], 'left');
 
 			$YPos -= $line_height;
 			if ($YPos < $Bottom_Margin + $line_height) {
@@ -112,10 +112,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 
 	$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
 
-	$LeftOvers = $pdf->addTextWrap(220, $YPos, 60, $FontSize, $DisplayTotBalance, 'right');
+	$LeftOvers = $PDF->addTextWrap(220, $YPos, 60, $FontSize, $DisplayTotBalance, 'right');
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 
 } else {
 	/*The option to print PDF was not hit */
@@ -123,60 +123,57 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCriteria']) and mb_strlen($_
 	$Title = _('Supplier Balances At A Period End');
 	include('includes/header.inc');
 
-	$sql = "SELECT min(supplierid) AS fromcriteria,
+	$SQL = "SELECT min(supplierid) AS fromcriteria,
 					max(supplierid) AS tocriteria
 				FROM suppliers";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
-		$_POST['FromCriteria'] = $myrow['fromcriteria'];
+		$_POST['FromCriteria'] = $MyRow['fromcriteria'];
 	}
 	if (!isset($_POST['ToCriteria'])) {
-		$_POST['ToCriteria'] = $myrow['fromcriteria'];
+		$_POST['ToCriteria'] = $MyRow['fromcriteria'];
 	}
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
 	echo '<tr>
 			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
+			<td><input type="text" required="required" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" required="required" minlength="1" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
+			<td><input type="text" required="required" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Balances As At') . ':</td>
-			<td><select required="required" minlength="1" name="PeriodEnd">';
+			<td><select required="required" name="PeriodEnd">';
 
-	$sql = "SELECT periodno,
+	$SQL = "SELECT periodno,
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
-	$Periods = DB_query($sql, $db, $ErrMsg);
+	$Periods = DB_query($SQL, $ErrMsg);
 
-	while ($myrow = DB_fetch_array($Periods, $db)) {
-		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'], 'M', -1) . '</option>';
+	while ($MyRow = DB_fetch_array($Periods)) {
+		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'], 'M', -1) . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
 
 	echo '</table>
-			<br />
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 	include('includes/footer.inc');
 }
 /*end of else not PrintPDF */

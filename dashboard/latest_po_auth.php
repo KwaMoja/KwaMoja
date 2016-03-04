@@ -48,15 +48,15 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<table style="max-width:100%;width:99%;" border="0" cellspacing="0" cellpadding="1" border="1">
 		<tr>
 			<th colspan="6" style="margin:0px;padding:0px;background: transparent;">
 				<div class="CanvasTitle">' . _('Purchase orders to authorise') . '
-					<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+					<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 				</div>
 			</th>
 		</tr>';
@@ -73,7 +73,7 @@ $SQL = "SELECT purchorders.*,
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator
 		WHERE status='Pending' LIMIT 5";
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 echo '<tbody>
 		<tr>
 			<th>' . _('Supplier') . '</th>
@@ -84,7 +84,7 @@ echo '<tbody>
 			<th>' . _('Status') . '</th>
 		</tr>';
 $k = 0;
-while ($row = DB_fetch_array($result)) {
+while ($row = DB_fetch_array($Result)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -97,7 +97,7 @@ while ($row = DB_fetch_array($result)) {
 					WHERE currabrev='" . $row['currcode'] . "'
 						AND userid='" . $_SESSION['UserID'] . "'";
 
-	$AuthResult = DB_query($AuthSQL, $db);
+	$AuthResult = DB_query($AuthSQL);
 	$myauthrow = DB_fetch_array($AuthResult);
 	$AuthLevel = $myauthrow['authlevel'];
 
@@ -107,7 +107,7 @@ while ($row = DB_fetch_array($result)) {
 						GROUP BY orderno";
 
 
-	$OrderValueResult = DB_query($OrderValueSQL, $db);
+	$OrderValueResult = DB_query($OrderValueSQL);
 	$MyOrderValueRow = DB_fetch_array($OrderValueResult);
 	$OrderValue = $MyOrderValueRow['ordervalue'];
 	$totalOV = $MyOrderValueRow['total'];

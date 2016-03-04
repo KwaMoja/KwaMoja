@@ -18,7 +18,7 @@ define('E_BAD_CHARS', 200);
 /**
  * Linear Barcode
  * Parent class for all linear barcode types
- * 
+ *
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
@@ -41,19 +41,19 @@ class linearBarcode extends barcode {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $text
 	 * @param int $modulesize
 	 */
 	public function __construct($text, $moduleSize=2, $allowedChars=null)
 	{
-		try {					
+		try {
 			parent::__construct($text, $moduleSize);
-			
+
 			if($allowedChars) {
 				$this->checkAllowedChars($text, $allowedChars);
 			}
-			
+
 		} catch (Exception $e) {
 			throw $e;
 		}
@@ -62,7 +62,7 @@ class linearBarcode extends barcode {
 
 	/**
 	 * Check Allowed Chars
-	 * 
+	 *
 	 * @param string $text
 	 * @param array $alloweChars
 	 * @return bool
@@ -78,7 +78,7 @@ class linearBarcode extends barcode {
 		return true;
 	}
 
-	
+
 
 	/**
 	 * Get Barcode Length
@@ -86,8 +86,8 @@ class linearBarcode extends barcode {
 	 */
 	protected function getBarcodeLen() {
 		$len = 0;
-		foreach ($this->biteCode as $value) {
-			$len += strlen($value);
+		foreach ($this->biteCode as $Value) {
+			$len += strlen($Value);
 		}
 		return $len;
 	}
@@ -96,7 +96,7 @@ class linearBarcode extends barcode {
 	/**
 	 * Draw
 	 * Create image with barcode
-	 * 
+	 *
 	 * @param bool $showText
 	 * @return image resource
 	 */
@@ -110,17 +110,17 @@ class linearBarcode extends barcode {
 		// Color set
 		$white = Imagecolorallocate ($im,255,255,255);
 		$black = Imagecolorallocate ($im,0,0,0);
-		
+
 
 		// Draw lines
 		$pos = 0;
-		foreach ($this->biteCode as $type => $values) {
+		foreach ($this->biteCode as $type => $Values) {
 			switch($type) {
 				case 'DATA':
 				case 'DATA2':
 					// Data
-					for($i=0;$i<strlen($values);$i++) {
-						$color = (($values{$i})=='1') ? $black : $white;
+					for($i=0;$i<strlen($Values);$i++) {
+						$color = (($Values{$i})=='1') ? $black : $white;
 						imagefilledrectangle($im, $pos*$this->moduleSize+$margin, $margin,
 								($pos+1)*$this->moduleSize+$margin,
 								$this->height-5*$this->moduleSize+$margin, $color);
@@ -130,9 +130,9 @@ class linearBarcode extends barcode {
 				default:
 					// Special chars
 					// will be longer
-					for($i=0;$i<strlen($values);$i++) {
-					
-						$color = (($values{$i})=='1') ? $black : $white;
+					for($i=0;$i<strlen($Values);$i++) {
+
+						$color = (($Values{$i})=='1') ? $black : $white;
 						imagefilledrectangle($im, $pos*$this->moduleSize+$margin, $margin,
 								($pos+1)*$this->moduleSize+$margin, $this->height+$margin,
 								$color);
@@ -150,26 +150,26 @@ class linearBarcode extends barcode {
 					$this->getBarcodeLen()*$this->moduleSize/2-$textWidth/2+$margin,
 					$this->height-$this->fontSize/2+$margin, $this->text, $black);
 		}
-		
+
 		return $im;
 	}
-	
-	
+
+
 	/**
 	 * Raw Data
 	 * Returns data in text representation
 	 * Black module is represented as 1 and white module as 0
-	 * 
+	 *
 	 * @return string $output
 	 */
 	public function rawData()
 	{
 		$ret = '';
-		foreach ($this->biteCode as $value) {
-			$ret .= $value;
+		foreach ($this->biteCode as $Value) {
+			$ret .= $Value;
 		}
 		return $ret;
 	}
-	
-	
+
+
 }

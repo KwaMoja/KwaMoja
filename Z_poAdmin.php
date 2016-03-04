@@ -5,9 +5,11 @@
 
 include('includes/session.inc');
 
-$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');
-
+$Title = _('UTILITY PAGE') . ' ' . _('that helps maintain language files');// _('Maintain Language Files')
+$ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
+$BookMark = 'Z_poAdmin';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Maintain Language Files') . '" />' . ' ' . _('Maintain Language Files') . '</p>';
 
 /* check if we have gettext - we're useless without it ... */
 
@@ -19,13 +21,13 @@ if (!function_exists('gettext')) {
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	prnMsg(_('You do not have write access to the required files please contact your system administrator'), 'error');
 } else {
-	echo '<p><a href="' . $RootPath . '/Z_poRebuildDefault.php">' . _('Rebuild the System Default Language File') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poAddLanguage.php">' . _('Add a New Language to the System') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangHeader.php">' . _('Edit a Language File Header') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangModule.php">' . _('Edit a Language File Module') . '</a>';
-	echo '<p><a href="' . $RootPath . '/Z_poEditLangRemaining.php">' . _('Edit Remaining Strings For This Language') . '</a>';
-	echo '<p><a href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po">' . _('Download messages.po file') . '</a>';
-	echo '<p><a href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.mo">' . _('Download messages.mo file') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_poRebuildDefault.php">' . _('Rebuild the System Default Language File') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_poAddLanguage.php">' . _('Add a New Language to the System') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_poEditLangHeader.php">' . _('Edit a Language File Header') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_poEditLangModule.php">' . _('Edit a Language File Module') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_poEditLangRemaining.php">' . _('Edit Remaining Strings For This Language') . '</a>';
+	echo '<a href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po">' . _('Download messages.po file') . '</a>';
+	echo '<a href="' . $RootPath . '/locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.mo">' . _('Download messages.mo file') . '</a>';
 }
 
 include('includes/footer.inc');

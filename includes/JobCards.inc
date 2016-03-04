@@ -1,16 +1,16 @@
 <?php
 
-function GetJobCards($db) {
+function GetJobCards() {
 	// No option selected yet, so show Customer Type drop down list
-	$sql = "SELECT id,
-							invoice,
-							createdate,
-							completedate,
-							description
-						FROM jobcards
-						WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
+	$SQL = "SELECT id,
+					invoice,
+					createdate,
+					completedate,
+					description
+				FROM jobcards
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 	$ErrMsg = _('The job cards can not be retrieved!');
-	$jobc_result = DB_query($sql, $db, $ErrMsg);
+	$jobc_result = DB_query($SQL, $ErrMsg);
 
 	// Error if no customer types setup
 	if (DB_num_rows($jobc_result) == 0) {
@@ -23,28 +23,28 @@ function GetJobCards($db) {
 	else {
 		echo '<tr>';
 		echo '<td colspan="5">';
-		while ($myrow = DB_fetch_array($jobc_result)) {
-			if ($myrow['completedate'] == NULL) {
-				$myrow['completedate'] = '0000-00-00';
-			} //$myrow['completedate'] == NULL
+		while ($MyRow = DB_fetch_array($jobc_result)) {
+			if ($MyRow['completedate'] == NULL) {
+				$MyRow['completedate'] = '0000-00-00';
+			} //$MyRow['completedate'] == NULL
 			echo '<tr>
-					<td width=10%><a href="JobCards.php?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&JobCardNo=' . $myrow['id'] . '&UpdateJob=1">' . $myrow['id'] . '</a></td>
-					<td width=10%>' . $myrow['invoice'] . '</td>
-					<td width=10%>' . ConvertSQLDate($myrow['createdate']) . '</td>
-					<td width=10%>' . ConvertSQLDate($myrow['completedate']) . '</td>
-					<td width=50%>' . $myrow['description'] . '</td>
-					<td width=10%><a href="#" onclick=window.open("JobCards.php?DebtorNo=' . $_SESSION['CustomerID'] . '&BranchNo=' . $_GET['BranchNo'] . '&JobCardNo=' . $myrow['id'] . '&UpdateJob=1&JobCPrint=1","Test")><center>Print</center></a></td>
+					<td width=10%><a href="JobCards.php?DebtorNo=' . urlencode($_SESSION['CustomerID']) . '&BranchNo=' . urlencode($_GET['BranchNo']) . '&JobCardNo=' . urlencode($MyRow['id']) . '&UpdateJob=1">' . $MyRow['id'] . '</a></td>
+					<td width=10%>' . $MyRow['invoice'] . '</td>
+					<td width=10%>' . ConvertSQLDate($MyRow['createdate']) . '</td>
+					<td width=10%>' . ConvertSQLDate($MyRow['completedate']) . '</td>
+					<td width=50%>' . $MyRow['description'] . '</td>
+					<td width=10%><a href="#" onclick=window.open("JobCards.php?DebtorNo=' . urlencode($_SESSION['CustomerID']) . '&BranchNo=' . urlencode($_GET['BranchNo']) . '&JobCardNo=' . urlencode($MyRow['id']) . '&UpdateJob=1&JobCPrint=1","Test")><center>Print</center></a></td>
 				</tr>';
-		} //$myrow = DB_fetch_array($jobc_result)
+		} //$MyRow = DB_fetch_array($jobc_result)
 		echo '</td>';
 		echo '</tr>';
 	}
 
 }
 
-function GetDebtorInfo($db, $printbk, $DebtorNo, $BranchCode) {
+function GetDebtorInfo($printbk, $DebtorNo, $BranchCode) {
 	// No option selected yet, so show Customer Type drop down list
-	$sql = "SELECT debtorsmaster.debtorno,
+	$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					debtorsmaster.address1,
 					debtorsmaster.address2,
@@ -68,37 +68,37 @@ function GetDebtorInfo($db, $printbk, $DebtorNo, $BranchCode) {
 					AND custbranch.debtorno='" . $DebtorNo . "'";
 
 	$ErrMsg = _('The job cards can not be retrieved!');
-	$jobc_result = DB_query($sql, $db, $ErrMsg);
-	$myrow = DB_fetch_array($jobc_result);
+	$jobc_result = DB_query($SQL, $ErrMsg);
+	$MyRow = DB_fetch_array($jobc_result);
 
 	// Error if no customer types setup
 	if (DB_num_rows($jobc_result) != 0) {
 		echo '<tr>
 				<td style="' . $printbk . '">
-					<b>' . _('Name') . ':</b>' . $myrow['name'] . '<br>
-					<b>' . _('Address 1') . ':</b>' . $myrow['address1'] . '<br>
-					<b>' . _('Address 2') . ':</b>' . $myrow['address2'] . '<br>
-					<b>' . _('Address 3') . ':</b>' . $myrow['address3'] . '<br>
-					<b>' . _('Address 4') . ':</b>' . $myrow['address4'] . '<br>
-					<b>' . _('Address 5') . ':</b>' . $myrow['address5'] . '<br>
+					<b>' . _('Name') . ':</b>' . $MyRow['name'] . '<br>
+					<b>' . _('Address 1') . ':</b>' . $MyRow['address1'] . '<br>
+					<b>' . _('Address 2') . ':</b>' . $MyRow['address2'] . '<br>
+					<b>' . _('Address 3') . ':</b>' . $MyRow['address3'] . '<br>
+					<b>' . _('Address 4') . ':</b>' . $MyRow['address4'] . '<br>
+					<b>' . _('Address 5') . ':</b>' . $MyRow['address5'] . '<br>
 				</td>';
 		echo '<td style="' . $printbk . '">
-				<b>' . _('Contact') . ':</b>' . $myrow['contactname'] . '<br>
-				<b>' . _('Telephone') . ':</b>' . $myrow['phoneno'] . '<br>
+				<b>' . _('Contact') . ':</b>' . $MyRow['contactname'] . '<br>
+				<b>' . _('Telephone') . ':</b>' . $MyRow['phoneno'] . '<br>
 				<b>' . _('E-Mail') . ':</b> <br>
-				<b>' . _('Fax') . ':</b> ' . $myrow['faxno'] . '<br>
+				<b>' . _('Fax') . ':</b> ' . $MyRow['faxno'] . '<br>
 			</td>
 		</tr>';
 	} //DB_num_rows($jobc_result) != 0
 
 }
 
-function GetJobCardNO($db) {
-	$sql = 'SELECT MAX(id) FROM jobcards';
+function GetJobCardNO() {
+	$SQL = 'SELECT MAX(id) FROM jobcards';
 	$ErrMsg = _('The job cards can not be retrieved!');
-	$jobc_result = DB_query($sql, $db, $ErrMsg);
-	$myrow = DB_fetch_row($jobc_result);
-	$ret = $myrow[0] + 1;
+	$jobc_result = DB_query($SQL, $ErrMsg);
+	$MyRow = DB_fetch_row($jobc_result);
+	$ret = $MyRow[0] + 1;
 	return $ret;
 
 }

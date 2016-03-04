@@ -11,65 +11,67 @@ if (isset($_POST['submit'])) {
 
 	$InputError = 0;
 
-	if (isset($_POST['FromDate']) and !Is_Date($_POST['FromDate'])) {
-		$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	if (isset($_POST['FromDate']) and !is_date($_POST['FromDate'])) {
+		$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError = 1;
 		unset($_POST['FromDate']);
 	}
-	if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])) {
-		$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	if (isset($_POST['ToDate']) and !is_date($_POST['ToDate'])) {
+		$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError = 1;
 		unset($_POST['ToDate']);
 	}
 	if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])) {
-		$msg = _('The date to must be after the date from');
+		$Msg = _('The date to must be after the date from');
 		$InputError = 1;
 		unset($_POST['ToDate']);
 		unset($_POST['FromoDate']);
 	}
-	if (isset($_POST['DistDate']) and !Is_Date($_POST['DistDate'])) {
-		$msg = _('The distribution start date must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	if (isset($_POST['DistDate']) and !is_date($_POST['DistDate'])) {
+		$Msg = _('The distribution start date must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError = 1;
 		unset($_POST['DistDate']);
 	}
 	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))) {
-		$msg = _('The quantity below which no demand will be created must be numeric');
+		$Msg = _('The quantity below which no demand will be created must be numeric');
 		$InputError = 1;
 	}
 	if (!is_numeric(filter_number_format($_POST['Multiplier']))) {
-		$msg = _('The multiplier is expected to be a positive number');
+		$Msg = _('The multiplier is expected to be a positive number');
 		$InputError = 1;
 	}
 
 	if ($InputError == 1) {
-		prnMsg($msg, 'error');
+		prnMsg($Msg, 'error');
 	}
 
-	$WhereCategory = " ";
-	if ($_POST['CategoryID'] != 'All') {
-		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['CategoryID'] . "' ";
-	}
 	$WhereLocation = " ";
 	if ($_POST['Location'] != 'All') {
 		$WhereLocation = " AND salesorders.fromstkloc ='" . $_POST['Location'] . "' ";
 	}
 
-	$sql = "SELECT salesorderdetails.stkcode,
+	$SQL = "SELECT salesorderdetails.stkcode,
 				  SUM(salesorderdetails.quantity) AS totqty,
 				  SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced,
 				  SUM(salesorderdetails.quantity * salesorderdetails.unitprice ) AS totextqty
-			FROM salesorders INNER JOIN salesorderdetails
+			FROM salesorders
+			INNER JOIN salesorderdetails
 				 ON salesorders.orderno = salesorderdetails.orderno
+			INNER JOIN locationusers
+				ON locationusers.loccode=salesorders.fromstkloc
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1
 			INNER JOIN stockmaster
-				 ON salesorderdetails.stkcode = stockmaster.stockid
+				ON salesorderdetails.stkcode = stockmaster.stockid
 			WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-			AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			" . $WhereLocation . "
-			" . $WhereCategory . "
-			AND salesorders.quotation=0
+				AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+				" . $WhereLocation . "
+				AND stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
+				AND stockmaster.discontinued=0
+				AND salesorders.quotation=0
 			GROUP BY salesorderdetails.stkcode";
-	//echo "<br />$sql<br />";
-	$result = DB_query($sql, $db);
+	//echo "<br />$SQL<br />";
+	$Result = DB_query($SQL);
 	// To get the quantity per period, get the whole number amount of the total quantity divided
 	// by the number of periods and also get the remainder from that calculation. Put the whole
 	// number quantity into each entry of the periodqty array, and add 1 to the periodqty array
@@ -113,11 +115,11 @@ if (isset($_POST['submit'])) {
 					  WHERE mrpcalendar.calendardate = '" . $datearray[0] . "'
 						AND cal2.manufacturingflag='1'
 						GROUP BY cal2.calendardate";
-	$resultdate = DB_query($calendarsql, $db);
-	$myrowdate = DB_fetch_array($resultdate);
+	$Resultdate = DB_query($calendarsql);
+	$MyRowdate = DB_fetch_array($Resultdate);
 	// If find date based on manufacturing calendar, change date in array
-	if ($myrowdate[0] != 0) {
-		$datearray[0] = $myrowdate[1];
+	if ($MyRowdate[0] != 0) {
+		$datearray[0] = $MyRowdate[1];
 	}
 
 	$date = date('Y-m-d', mktime(0, 0, 0, $mm, $dd, $yyyy));
@@ -139,21 +141,21 @@ if (isset($_POST['submit'])) {
 						  WHERE mrpcalendar.calendardate = '" . $datearray[$i] . "'
 							AND cal2.manufacturingflag='1'
 							GROUP BY cal2.calendardate";
-		$resultdate = DB_query($calendarsql, $db);
-		$myrowdate = DB_fetch_array($resultdate);
+		$Resultdate = DB_query($calendarsql);
+		$MyRowdate = DB_fetch_array($Resultdate);
 		// If find date based on manufacturing calendar, change date in array
-		if ($myrowdate[0] != 0) {
-			$datearray[$i] = $myrowdate[1];
+		if ($MyRowdate[0] != 0) {
+			$datearray[$i] = $MyRowdate[1];
 		}
 		$date = date('Y-m-d', $date);
 	}
 
 	$TotalRecords = 0;
-	while ($myrow = DB_fetch_array($result)) {
-		if (($myrow['totqty'] >= $ExcludeQty) and ($myrow['totextqty'] >= $ExcludeAmount)) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (($MyRow['totqty'] >= $ExcludeQty) and ($MyRow['totextqty'] >= $ExcludeAmount)) {
 			unset($PeriodQty);
 			$PeriodQty[] = ' ';
-			$TotalQty = $myrow['totqtyinvoiced'] * $Multiplier;
+			$TotalQty = $MyRow['totqtyinvoiced'] * $Multiplier;
 			$WholeNumber = floor($TotalQty / $_POST['PeriodNumber']);
 			$Remainder = ($TotalQty % $_POST['PeriodNumber']);
 			if ($WholeNumber > 0) {
@@ -169,16 +171,16 @@ if (isset($_POST['submit'])) {
 
 			$i = 0;
 			foreach ($PeriodQty as $demandqty) {
-				$sql = "INSERT INTO mrpdemands (stockid,
+				$SQL = "INSERT INTO mrpdemands (stockid,
 									mrpdemandtype,
 									quantity,
 									duedate)
-								VALUES ('" . $myrow['stkcode'] . "',
+								VALUES ('" . $MyRow['stkcode'] . "',
 									'" . $_POST['MRPDemandtype'] . "',
 									'" . $demandqty . "',
 									'" . $datearray[$i] . "')";
-				$insertresult = DB_query($sql, $db);
-				$i++;
+				$insertresult = DB_query($SQL);
+				++$i;
 				$TotalRecords++;
 
 			} // end of foreach for INSERT
@@ -190,55 +192,61 @@ if (isset($_POST['submit'])) {
 
 } // end if submit has been pressed
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">
-	<tr>
-		<td>' . _('Demand Type') . ':</td>
-		<td><select minlength="0" name="MRPDemandtype">';
-$sql = "SELECT mrpdemandtype,
+		<tr>
+			<td>' . _('Demand Type') . ':</td>
+			<td><select name="MRPDemandtype">';
+$SQL = "SELECT mrpdemandtype,
 				description
 		FROM mrpdemandtypes";
-$result = DB_query($sql, $db);
-while ($myrow = DB_fetch_array($result)) {
-	echo '<option value="' . $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' . $myrow['description'] . '</option>';
+$Result = DB_query($SQL);
+while ($MyRow = DB_fetch_array($Result)) {
+	echo '<option value="' . $MyRow['mrpdemandtype'] . '">' . $MyRow['mrpdemandtype'] . ' - ' . $MyRow['description'] . '</option>';
 } //end while loop
-echo '</select></td></tr>';
-echo '<tr><td>' . _('Inventory Category') . ':</td>
-		<td><select minlength="0" name="CategoryID">';
-echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
-$sql = "SELECT categoryid,
-			   categorydescription
-		FROM stockcategory";
-$result = DB_query($sql, $db);
-while ($myrow = DB_fetch_array($result)) {
-	echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
-} //end while loop
-echo '</select></td>
-		</tr>';
-echo '<tr><td>' . _('Inventory Location') . ':</td>
-		<td><select minlength="0" name="Location">';
+echo '</select>
+		</td>
+	</tr>';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations";
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
-} else {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
+echo '<tr>
+		<td>' . _('Inventory Categories') . ':</td>
+		<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription';
+	$CatResult = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($CatResult)) {
+		if (isset($_POST['Categories']) and in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
+		} else {
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
+	}
+	echo '</select>
+			</td>
+		</tr>';
+
+echo '<tr>
+		<td>' . _('Inventory Location') . ':</td>
+		<td><select name="Location">';
+
+$SQL = "SELECT locationname,
+				locations.loccode
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1";
+echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+$Result = DB_query($SQL);
+while ($MyRow = DB_fetch_array($Result)) {
+	echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 }
-$result = DB_query($sql, $db);
-while ($myrow = DB_fetch_array($result)) {
-	echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-}
-echo '</select></td></tr>';
+echo '</select>
+		</td>
+	</tr>';
 if (!isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 }
@@ -258,7 +266,7 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>
-		<td><select minlength="0" name="Period">
+		<td><select name="Period">
 			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
 			<option value="monthly">' . _('Monthly') . '</option>
 			</select></td>
@@ -277,18 +285,16 @@ echo '<tr>
 	</tr>
 	<tr>
 		<td>' . _('Multiplier') . ':</td>
-		<td><input type="text" class="integer" name="Multiplier" required="required" minlength="1" maxlength="2" size="2" value="1" /></td>
+		<td><input type="text" class="integer" name="Multiplier" required="required" maxlength="2" size="2" value="1" /></td>
 	</tr>
 	<tr>
 		<td></td>
 	</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Submit') . '" />
 	</div>';
-echo '</div>
-	  </form>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

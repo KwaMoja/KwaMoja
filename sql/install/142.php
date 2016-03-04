@@ -11,7 +11,7 @@ CreateTable('taxgrouptaxes',
   KEY `taxauthid` (`taxauthid`),
   CONSTRAINT `taxgrouptaxes_ibfk_1` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
   CONSTRAINT `taxgrouptaxes_ibfk_2` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
-)", $db);
+)");
 
 
 ?>

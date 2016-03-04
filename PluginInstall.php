@@ -7,11 +7,11 @@ $_SESSION['Updates']['Successes'] = 0;
 $_SESSION['Updates']['Warnings'] = 0;
 
 include('includes/UpgradeDB_' . $DBType . '.inc');
-$Title = _('Install a KwaMoja plugin');
+$Title = _('Install a Plugin');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/plugin.png" width="24px" title="' . _('Install Plugin') . '" alt="" />' . _('Install KwaMoja Plugin') . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/plugin.png" width="24px" title="' . _('Install Plugin') . '" alt="" />' . _('Install Plugin') . '</p>';
 
 if (isset($_POST['Install'])) {
 	$ZipFile = zip_open('plugins/' . $_POST['Available']);
@@ -88,8 +88,8 @@ if (isset($_POST['Install'])) {
 				$handle = fopen($TempName, "w");
 				fwrite($handle, $Code);
 				rename($TempName, $Script->name);
-				NewScript($Script->name, $Script->pagesecurity, $db);
-				prnMsg($Script->name . ' ' . _('has been successfully added to KwaMoja'), 'success');
+				NewScript($Script->name, $Script->pagesecurity);
+				prnMsg($Script->name . ' ' . _('has been successfully added'), 'success');
 			}
 		}
 		zip_close($ZipFile);
@@ -111,15 +111,15 @@ if (isset($_POST['Install'])) {
 	$ForceConfigReload = True;
 	prnMsg(_('The plugin has been successfully installed. You can now use it from the main menu'), 'success');
 } else {
-	echo '<form onSubmit="return VerifyForm(this);" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />';
 	if (!isset($_POST['reload'])) {
 
-		echo '<div class="page_help_text noPrint">' . _('Select the plugin that you wish to install from the list below.') . '</div>';
+		echo '<div class="page_help_text">' . _('Select the plugin that you wish to install from the list below.') . '</div>';
 		echo '<br /><div class="centre">
 				<div class="box_header">' . _('Available plugins') . '</div>
-				<select minlength="0" multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
+				<select multiple="multiple" name="Available" onclick="ReloadForm(reload);">';
 
 		$Plugins = scandir('plugins/');
 
@@ -214,12 +214,12 @@ function RemoveLine($FileName) {
 	fclose($fp);
 }
 
-function executeSQL($sql, $db, $TrapErrors = False) {
+function executeSQL($SQL, $TrapErrors = False) {
 	/* Run an sql statement and return an error code */
-	DB_IgnoreForeignKeys($db);
-	$result = DB_query($sql, $db, '', '', false, $TrapErrors);
-	$ErrorNumber = DB_error_no($db);
-	DB_ReinstateForeignKeys($db);
+	DB_IgnoreForeignKeys();
+	$Result = DB_query($SQL, '', '', false, $TrapErrors);
+	$ErrorNumber = DB_error_no();
+	DB_ReinstateForeignKeys();
 	return $ErrorNumber;
 }
 

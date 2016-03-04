@@ -10,24 +10,24 @@ include('includes/SQL_CommonFunctions.inc');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
-$result = DB_query("SELECT periods.lastdate_in_period,
+$Result = DB_query("SELECT periods.lastdate_in_period,
 							max(fixedassettrans.periodno)
 					FROM fixedassettrans INNER JOIN periods
 					ON fixedassettrans.periodno=periods.periodno
 					WHERE transtype=44
 					GROUP BY periods.lastdate_in_period
-					ORDER BY periods.lastdate_in_period DESC", $db);
+					ORDER BY periods.lastdate_in_period DESC");
 
-$LastDepnRun = DB_fetch_row($result);
+$LastDepnRun = DB_fetch_row($Result);
 
 $AllowUserEnteredProcessDate = true;
 
-if (DB_num_rows($result) == 0) { //then depn has never been run yet?
+if (DB_num_rows($Result) == 0) { //then depn has never been run yet?
 	/*in this case default depreciation calc to the last day of last month - and allow user to select a period */
 	if (!isset($_POST['ProcessDate'])) {
 		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
 	} else { //ProcessDate is set - make sure it is on the last day of the month selected
-		if (!Is_Date($_POST['ProcessDate'])) {
+		if (!is_date($_POST['ProcessDate'])) {
 			prnMsg(_('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 			$InputError = true;
 		} else {
@@ -42,7 +42,7 @@ if (DB_num_rows($result) == 0) { //then depn has never been run yet?
 
 
 /* Get list of assets for journal */
-$sql = "SELECT fixedassets.assetid,
+$SQL = "SELECT fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,
 			fixedassets.depnrate,
@@ -70,7 +70,7 @@ $sql = "SELECT fixedassets.assetid,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
 
-$AssetsResult = DB_query($sql, $db);
+$AssetsResult = DB_query($SQL);
 
 $InputError = false; //always hope for the best
 if (Date1GreaterThanDate2($_POST['ProcessDate'], Date($_SESSION['DefaultDateFormat']))) {
@@ -78,9 +78,9 @@ if (Date1GreaterThanDate2($_POST['ProcessDate'], Date($_SESSION['DefaultDateForm
 	$InputError = true;
 }
 if (isset($_POST['CommitDepreciation']) and $InputError == false) {
-	$result = DB_Txn_Begin($db);
-	$TransNo = GetNextTransNo(44, $db);
-	$PeriodNo = GetPeriod($_POST['ProcessDate'], $db);
+	$Result = DB_Txn_Begin();
+	$TransNo = GetNextTransNo(44);
+	$PeriodNo = GetPeriod($_POST['ProcessDate']);
 }
 
 echo '<br /><table>';
@@ -155,7 +155,7 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 		$k = 0;
 	} else {
 		echo '<tr class="OddTableRows">';
-		$k++;
+		++$k;
 	}
 	echo '<td>' . $AssetRow['assetid'] . '</td>
 		<td>' . $AssetRow['description'] . '</td>
@@ -194,7 +194,7 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -210,7 +210,7 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['accumdepnact'] . "',
 								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
 								'" . -$NewDepreciation . "')";
-		$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
@@ -226,19 +226,19 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 											'" . $TransNo . "',
 											'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'depn',
 											'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
-		$result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation . "
 				WHERE assetid = '" . $AssetRow['assetid'] . "'";
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
-		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was:');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated') . ': ';
+		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was') . ': ';
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr>
@@ -263,22 +263,20 @@ echo '</table>
 		<br />';
 
 if (isset($_POST['CommitDepreciation']) and $InputError == false) {
-	$result = DB_Txn_Commit($db);
+	$Result = DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'), 'success');
 	unset($_POST['ProcessDate']);
 	echo '<br /><a href="index.php">' . _('Return to main menu') . '</a>';
 	/*And post the journal too */
 	include('includes/GLPostings.inc');
 } else {
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="form">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />
-		<table class="selection" width="30%">
+	echo '<table class="selection" width="30%">
 		<tr>';
 	if ($AllowUserEnteredProcessDate) {
 		echo '<td>' . _('Date to Process Depreciation') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ProcessDate" required="required" minlength="1" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ProcessDate" required="required" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
 	} else {
 		echo '<td>' . _('Date to Process Depreciation') . ':</td>
 			<td>' . $_POST['ProcessDate'] . '</td>';
@@ -286,8 +284,6 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false) {
 	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="' . _('Commit Depreciation') . '" /></div></td>
 		</tr>
 		</table>
-		<br />
-		</div>
 		</form>';
 }
 include('includes/footer.inc');

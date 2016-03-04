@@ -5,8 +5,8 @@ include('includes/session.inc');
 if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Check Comparison Report'));
-	$pdf->addInfo('Subject', _('Inventory Check Comparison') . ' ' . Date($_SESSION['DefaultDateFormat']));
+	$PDF->addInfo('Title', _('Check Comparison Report'));
+	$PDF->addInfo('Subject', _('Inventory Check Comparison') . ' ' . Date($_SESSION['DefaultDateFormat']));
 	$PageNumber = 1;
 	$line_height = 15;
 
@@ -17,59 +17,63 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	/*First off do the Inventory Comparison file stuff */
 	if ($_POST['ReportOrClose'] == 'ReportAndClose') {
 
-		$sql = "SELECT stockcheckfreeze.stockid,
+		$SQL = "SELECT stockcheckfreeze.stockid,
 						stockcheckfreeze.loccode,
 						qoh,
-						materialcost+labourcost+overheadcost AS standardcost
-				FROM stockmaster INNER JOIN stockcheckfreeze
-				ON stockcheckfreeze.stockid=stockmaster.stockid
+						stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS standardcost
+				FROM stockmaster
+				INNER JOIN stockcheckfreeze
+					ON stockcheckfreeze.stockid=stockmaster.stockid
+				LEFT JOIN stockcosts
+					ON stockcosts.stockid=stockmaster.stockid
+					AND stockcosts.succeeded=0
 				ORDER BY stockcheckfreeze.loccode,
 						stockcheckfreeze.stockid";
 
-		$StockChecks = DB_query($sql, $db, '', '', false, false);
-		if (DB_error_no($db) != 0) {
+		$StockChecks = DB_query($SQL, '', '', false, false);
+		if (DB_error_no() != 0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<br />';
-			prnMsg(_('The inventory check file could not be retrieved because') . ' - ' . DB_error_msg($db), 'error');
+			prnMsg(_('The inventory check file could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug == 1) {
-				echo '<br />' . $sql;
+			if ($Debug == 1) {
+				echo '<br />' . $SQL;
 			}
 			include('includes/footer.inc');
 			exit;
 		}
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
-		$AdjustmentNumber = GetNextTransNo(17, $db);
+		$AdjustmentNumber = GetNextTransNo(17);
 
-		while ($myrow = DB_fetch_array($StockChecks)) {
+		while ($MyRow = DB_fetch_array($StockChecks)) {
 
-			$sql = "SELECT SUM(stockcounts.qtycounted) AS totcounted,
+			$SQL = "SELECT SUM(stockcounts.qtycounted) AS totcounted,
 					COUNT(stockcounts.stockid) AS noofcounts
 					FROM stockcounts
-					WHERE stockcounts.stockid='" . $myrow['stockid'] . "'
-					AND stockcounts.loccode='" . $myrow['loccode'] . "'";
+					WHERE stockcounts.stockid='" . $MyRow['stockid'] . "'
+					AND stockcounts.loccode='" . $MyRow['loccode'] . "'";
 
-			$StockCounts = DB_query($sql, $db);
-			if (DB_error_no($db) != 0) {
+			$StockCounts = DB_query($SQL);
+			if (DB_error_no() != 0) {
 				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<br />';
-				prnMsg(_('The inventory counts file could not be retrieved because') . ' - ' . DB_error_msg($db) . 'error');
+				prnMsg(_('The inventory counts file could not be retrieved because') . ' - ' . DB_error_msg() . 'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
-					echo '<br />' . $sql;
+				if ($Debug == 1) {
+					echo '<br />' . $SQL;
 				}
 				include('includes/footer.inc');
 				exit;
 			}
 
-			$StkCountResult = DB_query($sql, $db);
+			$StkCountResult = DB_query($SQL);
 			$StkCountRow = DB_fetch_array($StkCountResult);
 
-			$StockQtyDifference = $StkCountRow['totcounted'] - $myrow['qoh'];
+			$StockQtyDifference = $StkCountRow['totcounted'] - $MyRow['qoh'];
 
 			if ($_POST['ZeroCounts'] == 'Leave' and $StkCountRow['noofcounts'] == 0) {
 				$StockQtyDifference = 0;
@@ -77,15 +81,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 			if ($StockQtyDifference != 0) { // only adjust stock if there is an adjustment to make!!
 
-				DB_Txn_Begin($db);
+				DB_Txn_Begin();
 
 				// Need to get the current location quantity will need it later for the stock movement
 				$SQL = "SELECT locstock.quantity
 						FROM locstock
-					WHERE locstock.stockid='" . $myrow['stockid'] . "'
-					AND loccode= '" . $myrow['loccode'] . "'";
+					WHERE locstock.stockid='" . $MyRow['stockid'] . "'
+					AND loccode= '" . $MyRow['loccode'] . "'";
 
-				$Result = DB_query($SQL, $db);
+				$Result = DB_query($SQL);
 				if (DB_num_rows($Result) == 1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
@@ -99,15 +103,17 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 								transno,
 								loccode,
 								trandate,
+								userid,
 								prd,
 								reference,
 								qty,
 								newqoh)
-						VALUES ('" . $myrow['stockid'] . "',
+						VALUES ('" . $MyRow['stockid'] . "',
 							17,
 							'" . $AdjustmentNumber . "',
-							'" . $myrow['loccode'] . "',
+							'" . $MyRow['loccode'] . "',
 							'" . $SQLAdjustmentDate . "',
+							'" . $_SESSION['UserID'] . "',
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
@@ -116,19 +122,19 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement record was used');
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				$SQL = "UPDATE locstock
 						SET quantity = quantity + '" . $StockQtyDifference . "'
-						WHERE stockid='" . $myrow['stockid'] . "'
-						AND loccode='" . $myrow['loccode'] . "'";
+						WHERE stockid='" . $MyRow['stockid'] . "'
+						AND loccode='" . $MyRow['loccode'] . "'";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the stock record was used');
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-				if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and $myrow['standardcost'] > 0) {
+				if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and $MyRow['standardcost'] > 0) {
 
-					$StockGLCodes = GetStockGLCode($myrow['stockid'], $db);
+					$StockGLCodes = GetStockGLCode($MyRow['stockid']);
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
@@ -144,9 +150,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 												'" . $SQLAdjustmentDate . "',
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['adjglact'] . "',
-												'" . ($myrow['standardcost'] * -($StockQtyDifference)) . "',
-												'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+												'" . ($MyRow['standardcost'] * -($StockQtyDifference)) . "',
+												'" . $MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check') . "')";
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
@@ -163,13 +169,13 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 												'" . $SQLAdjustmentDate . "',
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['stockact'] . "',
-												'" . ($myrow['standardcost'] * $StockQtyDifference) . "',
-												'" . $myrow['stockid'] . " x " . $StockQtyDifference . " @ " . $myrow['standardcost'] . " - " . _('Inventory Check') . "')";
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+												'" . ($MyRow['standardcost'] * $StockQtyDifference) . "',
+												'" . $MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check') . "')";
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
-				DB_Txn_Commit($db);
+				DB_Txn_Commit();
 
 			} // end if $StockQtyDifference !=0
 
@@ -179,14 +185,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	// now do the report
 	$ErrMsg = _('The Inventory Comparison data could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the Inventory Comparison data was used');
-	$sql = "SELECT stockcheckfreeze.stockid,
+	$SQL = "SELECT stockcheckfreeze.stockid,
 					description,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					stockcheckfreeze.loccode,
 					locations.locationname,
 					stockcheckfreeze.qoh,
-					stockmaster.decimalplaces
+					stockmaster.decimalplaces,
+					bin
 				FROM stockcheckfreeze
 				INNER JOIN stockmaster
 					ON stockcheckfreeze.stockid=stockmaster.stockid
@@ -194,11 +201,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 					ON stockcheckfreeze.loccode=locations.loccode
 				INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
+				INNER JOIN locstock
+					ON stockcheckfreeze.loccode=locstock.loccode
+					AND stockcheckfreeze.stockid=locstock.stockid
 				ORDER BY stockcheckfreeze.loccode,
 						stockmaster.categoryid,
 						stockcheckfreeze.stockid";
 
-	$CheckedItems = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$CheckedItems = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($CheckedItems) == 0) {
 		$Title = _('Inventory Comparison Comparison Report');
@@ -219,18 +229,18 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$Location = '';
 	$Category = '';
 
-	while ($CheckItemRow = DB_fetch_array($CheckedItems, $db)) {
+	while ($CheckItemRow = DB_fetch_array($CheckedItems)) {
 
 		if ($Location != $CheckItemRow['loccode']) {
 			$FontSize = 14;
 			if ($Location != '') {
 				/*Then it is NOT the first time round */
 				/*draw a line under the Location*/
-				$pdf->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
+				$PDF->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
 				$YPos -= $line_height;
 			}
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260 - $Left_Margin, $FontSize, $CheckItemRow['loccode'] . ' - ' . $CheckItemRow['locationname'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 260 - $Left_Margin, $FontSize, $CheckItemRow['loccode'] . ' - ' . $CheckItemRow['locationname'], 'left');
 			$Location = $CheckItemRow['loccode'];
 			$YPos -= $line_height;
 		}
@@ -241,11 +251,11 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 			if ($Category != '') {
 				/*Then it is NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
-				$pdf->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
+				$PDF->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
 				$YPos -= $line_height;
 			}
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 15, $YPos, 260 - $Left_Margin, $FontSize, $CheckItemRow['categoryid'] . ' - ' . $CheckItemRow['categorydescription'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 15, $YPos, 260 - $Left_Margin, $FontSize, $CheckItemRow['categoryid'] . ' - ' . $CheckItemRow['categorydescription'], 'left');
 			$Category = $CheckItemRow['categoryid'];
 			$YPos -= $line_height;
 		}
@@ -256,15 +266,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 				WHERE loccode ='" . $Location . "'
 				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
-		$Counts = DB_query($SQL, $db, '', '', false, false);
+		$Counts = DB_query($SQL, '', '', false, false);
 
-		if (DB_error_no($db) != 0) {
+		if (DB_error_no() != 0) {
 			$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			echo '<br />';
-			prnMsg(_('The inventory counts could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db), 'error');
+			prnMsg(_('The inventory counts could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug == 1) {
+			if ($Debug == 1) {
 				echo '<br />' . $SQL;
 			}
 			include('includes/footer.inc');
@@ -274,22 +284,26 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		if ($CheckItemRow['qoh'] != 0 or DB_num_rows($Counts) > 0) {
 			$YPos -= $line_height;
 			$FontSize = 8;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 120, $FontSize, $CheckItemRow['stockid'], 'left');
-			$LeftOvers = $pdf->addTextWrap(135, $YPos, 180, $FontSize, $CheckItemRow['description'], 'left');
-			$LeftOvers = $pdf->addTextWrap(315, $YPos, 60, $FontSize, locale_number_format($CheckItemRow['qoh'], $CheckItemRow['decimalplaces']), 'right');
+			if (mb_strlen($CheckItemRow['bin']) > 0){
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 120, $FontSize, $CheckItemRow['stockid'] . ' - ' . _('Bin:') . $CheckItemRow['bin'], 'left');
+			} else {
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 120, $FontSize, $CheckItemRow['stockid'], 'left');
+			}
+			$LeftOvers = $PDF->addTextWrap(135, $YPos, 180, $FontSize, $CheckItemRow['description'], 'left');
+			$LeftOvers = $PDF->addTextWrap(315, $YPos, 60, $FontSize, locale_number_format($CheckItemRow['qoh'], $CheckItemRow['decimalplaces']), 'right');
 		}
 
 		if (DB_num_rows($Counts) == 0 and $CheckItemRow['qoh'] != 0){
-			$LeftOvers = $pdf->addTextWrap(380, $YPos, 160, $FontSize, _('No counts entered'), 'left');
+			$LeftOvers = $PDF->addTextWrap(380, $YPos, 160, $FontSize, _('No counts entered'), 'left');
 			if ($_POST['ZeroCounts'] == 'Adjust') {
-				$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format(-($CheckItemRow['qoh']), $CheckItemRow['decimalplaces']), 'right');
+				$LeftOvers = $PDF->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format(-($CheckItemRow['qoh']), $CheckItemRow['decimalplaces']), 'right');
 			}
 		} elseif (DB_num_rows($Counts) > 0) {
 			$TotalCount = 0;
-			while ($CountRow = DB_fetch_array($Counts, $db)) {
+			while ($CountRow = DB_fetch_array($Counts)) {
 
-				$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format(($CountRow['qtycounted']), $CheckItemRow['decimalplaces']), 'right');
-				$LeftOvers = $pdf->addTextWrap(440, $YPos, 100, $FontSize, $CountRow['reference'], 'left');
+				$LeftOvers = $PDF->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format(($CountRow['qtycounted']), $CheckItemRow['decimalplaces']), 'right');
+				$LeftOvers = $PDF->addTextWrap(440, $YPos, 100, $FontSize, $CountRow['reference'], 'left');
 				$TotalCount += $CountRow['qtycounted'];
 				$YPos -= $line_height;
 
@@ -298,12 +312,12 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 					include('includes/PDFStockComparisonPageHeader.inc');
 				}
 			} // end of loop printing count information
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 375 - $Left_Margin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
-			$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format($TotalCount, $CheckItemRow['decimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format($TotalCount - $CheckItemRow['qoh'], $CheckItemRow['decimalplaces']), 'right');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 375 - $Left_Margin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
+			$LeftOvers = $PDF->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format($TotalCount, $CheckItemRow['decimalplaces']), 'right');
+			$LeftOvers = $PDF->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format($TotalCount - $CheckItemRow['qoh'], $CheckItemRow['decimalplaces']), 'right');
 		} //end of if there are counts to print
 
-		$pdf->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
+		$PDF->line($Left_Margin, $YPos - 2, $Page_Width - $Right_Margin, $YPos - 2);
 
 		if ($YPos < $Bottom_Margin + $line_height) {
 			$PageNumber++;
@@ -315,16 +329,16 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 	$YPos -= (2 * $line_height);
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 
 	if ($_POST['ReportOrClose'] == 'ReportAndClose') {
 		//need to print the report first before this but don't risk re-adjusting all the stock!!
-		$sql = "TRUNCATE TABLE stockcheckfreeze";
-		$result = DB_query($sql, $db);
+		$SQL = "TRUNCATE TABLE stockcheckfreeze";
+		$Result = DB_query($SQL);
 
-		$sql = "TRUNCATE TABLE stockcounts";
-		$result = DB_query($sql, $db);
+		$SQL = "TRUNCATE TABLE stockcounts";
+		$Result = DB_query($SQL);
 	}
 
 } else {
@@ -333,15 +347,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$Title = _('Inventory Comparison Report');
 	include('includes/header.inc');
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
 	echo '<tr><td>' . _('Choose Option') . ':</td>
-			  <td><select required="required" minlength="1" name="ReportOrClose">';
+			  <td><select required="required" name="ReportOrClose">';
 
 	if (isset($_POST['ReportOrClose']) and $_POST['ReportOrClose'] == 'ReportAndClose') {
 		echo '<option selected="selected" value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
@@ -354,7 +367,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . _('Action for Zero Counts') . ':</td>
-			<td><select required="required" minlength="1" name="ZeroCounts">';
+			<td><select required="required" name="ZeroCounts">';
 
 	if (isset($_POST['ZeroCounts']) and $_POST['ZeroCounts'] == 'Adjust') {
 		echo '<option selected="selected" value="Adjust">' . _('Adjust System stock to Nil') . '</option>';
@@ -364,10 +377,14 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 
-	echo '</select></td></tr>';
-	echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>';
-	echo '</div>
-		  </form>';
+	echo '</select>
+			</td>
+		</tr>';
+	echo '</table>';
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>';
+	echo '</form>';
 
 	include('includes/footer.inc');
 

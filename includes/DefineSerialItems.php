@@ -1,20 +1,35 @@
 <?php
 
-function ValidBundleRef($StockID, $LocCode, $BundleRef) {
-	global $db;
+function ValidBundleRef($StockId, $LocCode, $BundleRef) {
 
 	$SQL = "SELECT quantity
 				FROM stockserialitems
-				WHERE stockid='" . $StockID . "'
+				WHERE stockid='" . $StockId . "'
 				AND loccode ='" . $LocCode . "'
 				AND serialno='" . $BundleRef . "'";
-	$Result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	} else {
-		$myrow = DB_fetch_row($Result);
-		return $myrow[0];
+		$MyRow = DB_fetch_row($Result);
+		return $MyRow[0];
 		/*The quantity in the bundle */
+	}
+}
+
+function GetExpiryDate ($StockId, $LocCode, $BundleRef){
+
+	$SQL = "SELECT expirationdate
+				FROM stockserialitems
+				WHERE stockid = '" . $StockId . "'
+				AND loccode = '" . $LocCode . "'
+				AND serialno = '" . $BundleRef . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0){
+		return '0000-00-00';
+	} else {
+		$MyRow = DB_fetch_row($Result);
+		return ConvertSQLDate($MyRow[0]);
 	}
 }
 

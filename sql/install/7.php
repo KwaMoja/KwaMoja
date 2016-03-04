@@ -7,7 +7,7 @@ CreateTable('audittrail',
   `querystring` text,
   KEY `UserID` (`userid`),
   CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`)
-)", $db);
+)");
 
 
 ?>

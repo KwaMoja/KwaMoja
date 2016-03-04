@@ -57,7 +57,7 @@ foreach ($LineItem->SerialItems as $Bundle) {
 	}
 
 
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . '&amp;identifier=' . $identifier . $CreditInvoice . '">' . _('Delete') . '</a></td>
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . '&amp;identifier=' . $Identifier . $CreditInvoice . '">' . _('Delete') . '</a></td>
 		</tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
@@ -78,10 +78,10 @@ if ($LineItem->Serialised == 1) {
 echo '</table></td><td valign="top">';
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" id="Ga6uF5Wa" method="post" class="noPrint">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" id="Ga6uF5Wa" method="post" class="noPrint">
 		<div>
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />
-		<input type="hidden" name="StockID" value="' . $StockID . '" />
+		<input type="hidden" name="StockID" value="' . $StockId . '" />
 		<input type="hidden" name="EntryType" value="KEYED" />
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -116,7 +116,9 @@ if ($EditControlled) {
 		if ($LineItem->Serialised == 1) {
 			echo '<input type="hidden" name="Qty' . $StartAddingAt . '" value="1" /></TR>';
 		} else if ($LineItem->Serialised == 0 and $Perishable == 1) {
-			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt . '" size="11" value="' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '" maxlength="10" /></tr>';
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '" maxlength="10" /></td>
+				<td><input type="text" name="ExpiryDate' . $StartAddingAt . '" size="11" value="' . $Bundle->ExpiryDate . '" alt="' . $_SESSION['DefaultDateFormat'] . '" maxlength="10" /></td>
+			</tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt . '" size="11" value="' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '" maxlength="10" /></tr>';
 		}

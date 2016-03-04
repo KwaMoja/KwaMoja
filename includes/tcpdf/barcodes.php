@@ -1047,13 +1047,13 @@ class TCPDFBarcode {
 			'200000'  /* END */
 		);
 		// ASCII characters for code A (ASCII 00 - 95)
-		$keys_a = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_';
-		$keys_a .= chr(0).chr(1).chr(2).chr(3).chr(4).chr(5).chr(6).chr(7).chr(8).chr(9);
-		$keys_a .= chr(10).chr(11).chr(12).chr(13).chr(14).chr(15).chr(16).chr(17).chr(18).chr(19);
-		$keys_a .= chr(20).chr(21).chr(22).chr(23).chr(24).chr(25).chr(26).chr(27).chr(28).chr(29);
-		$keys_a .= chr(30).chr(31);
+		$Keys_a = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_';
+		$Keys_a .= chr(0).chr(1).chr(2).chr(3).chr(4).chr(5).chr(6).chr(7).chr(8).chr(9);
+		$Keys_a .= chr(10).chr(11).chr(12).chr(13).chr(14).chr(15).chr(16).chr(17).chr(18).chr(19);
+		$Keys_a .= chr(20).chr(21).chr(22).chr(23).chr(24).chr(25).chr(26).chr(27).chr(28).chr(29);
+		$Keys_a .= chr(30).chr(31);
 		// ASCII characters for code B (ASCII 32 - 127)
-		$keys_b = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'.chr(127);
+		$Keys_b = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'.chr(127);
 		// special codes
 		$fnc_a = array(241 => 102, 242 => 97, 243 => 96, 244 => 101);
 		$fnc_b = array(241 => 102, 242 => 97, 243 => 96, 244 => 100);
@@ -1070,7 +1070,7 @@ class TCPDFBarcode {
 					if (($char_id >= 241) AND ($char_id <= 244)) {
 						$code_data[] = $fnc_a[$char_id];
 					} elseif (($char_id >= 0) AND ($char_id <= 95)) {
-						$code_data[] = strpos($keys_a, $char);
+						$code_data[] = strpos($Keys_a, $char);
 					} else {
 						return false;
 					}
@@ -1085,7 +1085,7 @@ class TCPDFBarcode {
 					if (($char_id >= 241) AND ($char_id <= 244)) {
 						$code_data[] = $fnc_b[$char_id];
 					} elseif (($char_id >= 32) AND ($char_id <= 127)) {
-						$code_data[] = strpos($keys_b, $char);
+						$code_data[] = strpos($Keys_b, $char);
 					} else {
 						return false;
 					}
@@ -1144,18 +1144,18 @@ class TCPDFBarcode {
 					$sequence = array_merge($sequence, $this->get128ABsequence($code));
 				}
 				// process the sequence
-				foreach ($sequence as $key => $seq) {
+				foreach ($sequence as $Key => $seq) {
 					switch($seq[0]) {
 						case 'A': {
-							if ($key == 0) {
+							if ($Key == 0) {
 								$startid = 103;
-							} elseif ($sequence[($key - 1)][0] != 'A') {
-								if (($seq[2] == 1) AND ($key > 0) AND ($sequence[($key - 1)][0] == 'B') AND (!isset($sequence[($key - 1)][3]))) {
+							} elseif ($sequence[($Key - 1)][0] != 'A') {
+								if (($seq[2] == 1) AND ($Key > 0) AND ($sequence[($Key - 1)][0] == 'B') AND (!isset($sequence[($Key - 1)][3]))) {
 									// single character shift
 									$code_data[] = 98;
 									// mark shift
-									$sequence[$key][3] = true;
-								} elseif (!isset($sequence[($key - 1)][3])) {
+									$sequence[$Key][3] = true;
+								} elseif (!isset($sequence[($Key - 1)][3])) {
 									$code_data[] = 101;
 								}
 							}
@@ -1165,25 +1165,25 @@ class TCPDFBarcode {
 								if (($char_id >= 241) AND ($char_id <= 244)) {
 									$code_data[] = $fnc_a[$char_id];
 								} else {
-									$code_data[] = strpos($keys_a, $char);
+									$code_data[] = strpos($Keys_a, $char);
 								}
 							}
 							break;
 						}
 						case 'B': {
-							if ($key == 0) {
+							if ($Key == 0) {
 								$tmpchr = ord($seq[1]{0});
-								if (($seq[2] == 1) AND ($tmpchr >= 241) AND ($tmpchr <= 244) AND isset($sequence[($key + 1)]) AND ($sequence[($key + 1)][0] != 'B')) {
-									switch ($sequence[($key + 1)][0]) {
+								if (($seq[2] == 1) AND ($tmpchr >= 241) AND ($tmpchr <= 244) AND isset($sequence[($Key + 1)]) AND ($sequence[($Key + 1)][0] != 'B')) {
+									switch ($sequence[($Key + 1)][0]) {
 										case 'A': {
 											$startid = 103;
-											$sequence[$key][0] = 'A';
+											$sequence[$Key][0] = 'A';
 											$code_data[] = $fnc_a[$tmpchr];
 											break;
 										}
 										case 'C': {
 											$startid = 105;
-											$sequence[$key][0] = 'C';
+											$sequence[$Key][0] = 'C';
 											$code_data[] = $fnc_a[$tmpchr];
 											break;
 										}
@@ -1192,13 +1192,13 @@ class TCPDFBarcode {
 								} else {
 									$startid = 104;
 								}
-							} elseif ($sequence[($key - 1)][0] != 'B') {
-								if (($seq[2] == 1) AND ($key > 0) AND ($sequence[($key - 1)][0] == 'A') AND (!isset($sequence[($key - 1)][3]))) {
+							} elseif ($sequence[($Key - 1)][0] != 'B') {
+								if (($seq[2] == 1) AND ($Key > 0) AND ($sequence[($Key - 1)][0] == 'A') AND (!isset($sequence[($Key - 1)][3]))) {
 									// single character shift
 									$code_data[] = 98;
 									// mark shift
-									$sequence[$key][3] = true;
-								} elseif (!isset($sequence[($key - 1)][3])) {
+									$sequence[$Key][3] = true;
+								} elseif (!isset($sequence[($Key - 1)][3])) {
 									$code_data[] = 100;
 								}
 							}
@@ -1208,15 +1208,15 @@ class TCPDFBarcode {
 								if (($char_id >= 241) AND ($char_id <= 244)) {
 									$code_data[] = $fnc_b[$char_id];
 								} else {
-									$code_data[] = strpos($keys_b, $char);
+									$code_data[] = strpos($Keys_b, $char);
 								}
 							}
 							break;
 						}
 						case 'C': {
-							if ($key == 0) {
+							if ($Key == 0) {
 								$startid = 105;
-							} elseif ($sequence[($key - 1)][0] != 'C') {
+							} elseif ($sequence[($Key - 1)][0] != 'C') {
 								$code_data[] = 99;
 							}
 							for ($i = 0; $i < $seq[2]; $i+=2) {
@@ -1231,8 +1231,8 @@ class TCPDFBarcode {
 		}
 		// calculate check character
 		$sum = $startid;
-		foreach ($code_data as $key => $val) {
-			$sum += ($val * ($key + 1));
+		foreach ($code_data as $Key => $val) {
+			$sum += ($val * ($Key + 1));
 		}
 		// add check character
 		$code_data[] = ($sum % 103);

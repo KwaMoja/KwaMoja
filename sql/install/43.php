@@ -11,7 +11,7 @@ CreateTable('fixedassetcategories',
   `defaultdepnrate` double NOT NULL DEFAULT '0.2',
   `defaultdepntype` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`)
-)", $db);
+)");
 
 
 ?>

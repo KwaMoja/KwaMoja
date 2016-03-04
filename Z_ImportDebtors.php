@@ -121,7 +121,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	//start database transaction
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	//loop through file rows
 	$row = 1;
@@ -139,8 +139,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($filerow as &$value) {
-			$value = trim($value);
+		foreach ($filerow as &$Value) {
+			$Value = trim($Value);
 		}
 
 		$_POST['DebtorNo'] = $filerow[0];
@@ -176,7 +176,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['typeid'] = $filerow[30];
 
 		if ($_POST['AutoDebtorNo'] == 1) {
-			$_POST['DebtorNo'] = GetNextTransNo(500, $db);
+			$_POST['DebtorNo'] = GetNextTransNo(500);
 		} else {
 			$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 		}
@@ -218,78 +218,73 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(_('The debtor code cannot be empty'), 'error');
 			$Errors[$i] = 'DebtorNo';
-			$i++;
-		} elseif ($_POST['AutoDebtorNo'] == 0 and (ContainsIllegalCharacters($_POST['DebtorNo']) or mb_strpos($_POST['DebtorNo'], ' '))) {
-			$InputError = 1;
-			prnMsg(_('The customer code cannot contain any of the following characters') . " . - ' &amp; + \" " . _('or a space'), 'error');
-			$Errors[$i] = 'DebtorNo';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['CustName']) > 40 or mb_strlen($_POST['CustName']) == 0) {
 			$InputError = 1;
 			prnMsg(_('The customer name must be entered and be forty characters or less long'), 'error');
 			$Errors[$i] = 'CustName';
-			$i++;
+			++$i;
 		} elseif (mb_strlen($_POST['Address1']) > 40) {
 			$InputError = 1;
 			prnMsg(_('The Line 1 of the address must be forty characters or less long'), 'error');
 			$Errors[$i] = 'Address1';
-			$i++;
+			++$i;
 		} elseif (mb_strlen($_POST['Address2']) > 40) {
 			$InputError = 1;
 			prnMsg(_('The Line 2 of the address must be forty characters or less long'), 'error');
 			$Errors[$i] = 'Address2';
-			$i++;
+			++$i;
 		} elseif (mb_strlen($_POST['Address3']) > 40) {
 			$InputError = 1;
 			prnMsg(_('The Line 3 of the address must be forty characters or less long'), 'error');
 			$Errors[$i] = 'Address3';
-			$i++;
+			++$i;
 		} elseif (mb_strlen($_POST['Address4']) > 50) {
 			$InputError = 1;
 			prnMsg(_('The Line 4 of the address must be fifty characters or less long'), 'error');
 			$Errors[$i] = 'Address4';
-			$i++;
+			++$i;
 		} elseif (mb_strlen($_POST['Address5']) > 20) {
 			$InputError = 1;
 			prnMsg(_('The Line 5 of the address must be twenty characters or less long'), 'error');
 			$Errors[$i] = 'Address5';
-			$i++;
+			++$i;
 		} elseif (!is_numeric(filter_number_format($_POST['CreditLimit']))) {
 			$InputError = 1;
 			prnMsg(_('The credit limit must be numeric'), 'error');
 			$Errors[$i] = 'CreditLimit';
-			$i++;
+			++$i;
 		} elseif (!is_numeric(filter_number_format($_POST['PymtDiscount']))) {
 			$InputError = 1;
 			prnMsg(_('The payment discount must be numeric'), 'error');
 			$Errors[$i] = 'PymtDiscount';
-			$i++;
-		} elseif (!Is_Date($_POST['ClientSince'])) {
+			++$i;
+		} elseif (!is_date($_POST['ClientSince'])) {
 			$InputError = 1;
 			prnMsg(_('The customer since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 			$Errors[$i] = 'ClientSince';
-			$i++;
+			++$i;
 		} elseif (!is_numeric(filter_number_format($_POST['Discount']))) {
 			$InputError = 1;
 			prnMsg(_('The discount percentage must be numeric'), 'error');
 			$Errors[$i] = 'Discount';
-			$i++;
+			++$i;
 		} elseif (filter_number_format($_POST['CreditLimit']) < 0) {
 			$InputError = 1;
 			prnMsg(_('The credit limit must be a positive number'), 'error');
 			$Errors[$i] = 'CreditLimit';
-			$i++;
+			++$i;
 		} elseif ((filter_number_format($_POST['PymtDiscount']) > 10) or (filter_number_format($_POST['PymtDiscount']) < 0)) {
 			$InputError = 1;
 			prnMsg(_('The payment discount is expected to be less than 10% and greater than or equal to 0'), 'error');
 			$Errors[$i] = 'PymtDiscount';
-			$i++;
+			++$i;
 		} elseif ((filter_number_format($_POST['Discount']) > 100) or (filter_number_format($_POST['Discount']) < 0)) {
 			$InputError = 1;
 			prnMsg(_('The discount is expected to be less than 100% and greater than or equal to 0'), 'error');
 			$Errors[$i] = 'Discount';
-			$i++;
+			++$i;
 		}
 
 		if (ContainsIllegalCharacters($_POST['EDIReference']) or mb_strstr($_POST['EDIReference'], ' ')) {
@@ -300,20 +295,20 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(_('The customers EDI reference code must be set when EDI Invoices or EDI orders are activated'), 'warn');
 			$Errors[$i] = 'EDIReference';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['EDIAddress']) < 4 and $_POST['EDIInvoices'] == 1) {
 			$InputError = 1;
 			prnMsg(_('The customers EDI email address or FTP server address must be entered if EDI Invoices are to be sent'), 'warn');
 			$Errors[$i] = 'EDIAddress';
-			$i++;
+			++$i;
 		}
 
 
 		if ($InputError != 1) {
-			$sql = "SELECT 1 FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "' LIMIT 1";
-			$result = DB_query($sql, $db);
-			$DebtorExists = (DB_num_rows($result) > 0);
+			$SQL = "SELECT 1 FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "' LIMIT 1";
+			$Result = DB_query($SQL);
+			$DebtorExists = (DB_num_rows($Result) > 0);
 			if ($DebtorExists and $_POST['UpdateIfExists'] != 1) {
 				$UpdatedNum++;
 			} else {
@@ -322,19 +317,19 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 				if ($DebtorExists) { //update
 					$UpdatedNum++;
-					$sql = "SELECT 1
+					$SQL = "SELECT 1
 							  FROM debtortrans
 							where debtorno = '" . $_POST['DebtorNo'] . "' LIMIT 1";
-					$result = DB_query($sql, $db);
+					$Result = DB_query($SQL);
 
 					$curr = false;
-					if (DB_num_rows($result) == 0) {
+					if (DB_num_rows($Result) == 0) {
 						$curr = true;
 					} else {
 						$CurrSQL = "SELECT currcode
 							FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
-						$CurrResult = DB_query($CurrSQL, $db);
+						$CurrResult = DB_query($CurrSQL);
 						$CurrRow = DB_fetch_array($CurrResult);
 						$OldCurrency = $CurrRow[0];
 						if ($OldCurrency != $_POST['CurrCode']) {
@@ -342,7 +337,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						}
 					}
 
-					$sql = "UPDATE debtorsmaster SET
+					$SQL = "UPDATE debtorsmaster SET
 							name='" . $_POST['CustName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',
@@ -352,9 +347,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							address6='" . $_POST['Address6'] . "',";
 
 					if ($curr)
-						$sql .= "currcode='" . $_POST['CurrCode'] . "',";
+						$SQL .= "currcode='" . $_POST['CurrCode'] . "',";
 
-					$sql .= "clientsince='" . $SQL_ClientSince . "',
+					$SQL .= "clientsince='" . $SQL_ClientSince . "',
 							holdreason='" . $_POST['HoldReason'] . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							discount='" . filter_number_format($_POST['Discount']) / 100 . "',
@@ -370,11 +365,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 					$ErrMsg = _('The customer could not be updated because');
-					$result = DB_query($sql, $db, $ErrMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 
 				} else { //insert
 					$InsertNum++;
-					$sql = "INSERT INTO debtorsmaster (
+					$SQL = "INSERT INTO debtorsmaster (
 							debtorno,
 							name,
 							address1,
@@ -421,7 +416,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							'" . $_POST['LanguageID'] . "')";
 
 					$ErrMsg = _('This customer could not be added because');
-					$result = DB_query($sql, $db, $ErrMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 				}
 			}
 
@@ -432,52 +427,52 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		$i = 0;
 
-		if (ContainsIllegalCharacters($_POST['BranchCode']) or mb_strstr($_POST['BranchCode'], ' ') or mb_strstr($_POST['BranchCode'], '-')) {
+		if (ContainsIllegalCharacters($_POST['BranchCode']) or mb_strstr($_POST['BranchCode'], ' ')) {
 			$InputError = 1;
 			prnMsg(_('The Branch code cannot contain any of the following characters') . " -  &amp; \' &lt; &gt;", 'error');
 			$Errors[$i] = 'BranchCode';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['BranchCode']) == 0) {
 			$InputError = 1;
 			prnMsg(_('The Branch code must be at least one character long'), 'error');
 			$Errors[$i] = 'BranchCode';
-			$i++;
+			++$i;
 		}
 		if (!is_numeric($_POST['FwdDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'), 'error');
 			$Errors[$i] = 'FwdDate';
-			$i++;
+			++$i;
 		}
 		if ($_POST['FwdDate'] > 30) {
 			$InputError = 1;
 			prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'), 'error');
 			$Errors[$i] = 'FwdDate';
-			$i++;
+			++$i;
 		}
 		if (!is_numeric(filter_number_format($_POST['EstDeliveryDays']))) {
 			$InputError = 1;
 			prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'), 'error');
 			$Errors[$i] = 'EstDeliveryDays';
-			$i++;
+			++$i;
 		}
 		if (filter_number_format($_POST['EstDeliveryDays']) > 60) {
 			$InputError = 1;
 			prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'), 'error');
 			$Errors[$i] = 'EstDeliveryDays';
-			$i++;
+			++$i;
 		}
 
 		if ($InputError != 1) {
-			if (DB_error_no($db) == 0) {
+			if (DB_error_no() == 0) {
 
-				$sql = "SELECT 1
+				$SQL = "SELECT 1
 				     FROM custbranch
            			 WHERE debtorno='" . $_POST['DebtorNo'] . "' AND
 				           branchcode='" . $_POST['BranchCode'] . "' LIMIT 1";
-				$result = DB_query($sql, $db);
-				$BranchExists = (DB_num_rows($result) > 0);
+				$Result = DB_query($SQL);
+				$BranchExists = (DB_num_rows($Result) > 0);
 				if ($BranchExists and $_POST['UpdateIfExists'] != 1) {
 					//do nothing
 				} else {
@@ -490,7 +485,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$Longitude = 0.0;
 					}
 					if ($BranchExists) {
-						$sql = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
+						$SQL = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
 									braddress1 = '" . $_POST['BrAddress1'] . "',
 									braddress2 = '" . $_POST['BrAddress2'] . "',
 									braddress3 = '" . $_POST['BrAddress3'] . "',
@@ -524,7 +519,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 					} else {
 
-						$sql = "INSERT INTO custbranch (branchcode,
+						$SQL = "INSERT INTO custbranch (branchcode,
 										debtorno,
 										brname,
 										braddress1,
@@ -591,19 +586,19 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					//run the SQL from either of the above possibilites
 
 					$ErrMsg = _('The branch record could not be inserted or updated because');
-					$result = DB_query($sql, $db, $ErrMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 
 
-					if (DB_error_no($db) == 0) {
-						prnMsg(_('New Item') . ' ' . $StockID . ' ' . _('has been added to the transaction'), 'info');
+					if (DB_error_no() == 0) {
+						prnMsg(_('New Item') . ' ' . $StockId . ' ' . _('has been added to the transaction'), 'info');
 					} else { //location insert failed so set some useful error info
 						$InputError = 1;
-						prnMsg(_($result), 'error');
+						prnMsg(_($Result), 'error');
 					}
 				}
 			} else { //item insert failed so set some useful error info
 				$InputError = 1;
-				prnMsg(_($result), 'error');
+				prnMsg(_($Result), 'error');
 			}
 
 		}
@@ -617,14 +612,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row ' . $row . '. Batch import has been rolled back.'), 'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg(_('Batch Import of') . ' ' . $FileName . ' ' . _('has been completed. All transactions committed to the database.'), 'success');
 		if ($_POST['UpdateIfExists'] == 1) {
-			prnMsg(_('Updated:') . ' ' . $UpdatedNum . ' ' . _('Insert:') . $InsertNum);
+			prnMsg(_('Updated') . ': ' . $UpdatedNum . ' ' . _('Insert') . ':' . $InsertNum);
 		} else {
-			prnMsg(_('Exist:') . ' ' . $UpdatedNum . ' ' . _('Insert:') . $InsertNum);
+			prnMsg(_('Exist') . ': ' . $UpdatedNum . ' ' . _('Insert') . ':' . $InsertNum);
 		}
 	}
 

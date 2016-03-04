@@ -10,7 +10,7 @@ CreateTable('geocode_param',
   `map_width` varchar(10) NOT NULL DEFAULT '',
   `map_host` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`geocodeid`)
-)", $db);
+)");
 
 
 ?>

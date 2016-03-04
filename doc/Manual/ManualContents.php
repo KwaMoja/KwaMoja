@@ -70,7 +70,7 @@ if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_PO
 			echo '</ul>' . "\n";
 		}
 		echo '</ul>' . "\n";
-		$j++;
+		++$j;
 	}
 	echo '</ul>' . "\n";
 }

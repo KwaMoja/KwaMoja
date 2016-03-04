@@ -15,9 +15,9 @@ require_once 'color_range.php';
 function test_count_data_sets($data, $data_type, $expected)
 {
   $n = count_data_sets($data, $data_type);
-  if ($n == $expected) $result = "Pass";
-  else $result = "FAIL: Expected $expected but got";
-  echo "$result: $n data sets, $data_type with " . count($data) . " records.\n";
+  if ($n == $expected) $Result = "Pass";
+  else $Result = "FAIL: Expected $expected but got";
+  echo "$Result: $n data sets, $data_type with " . count($data) . " records.\n";
 }
 
 function test_driver_count_data_sets()

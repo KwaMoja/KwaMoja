@@ -7,7 +7,7 @@ CreateTable('salescat',
   `salescatname` varchar(50) NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`salescatid`)
-)", $db);
+)");
 
 
 ?>

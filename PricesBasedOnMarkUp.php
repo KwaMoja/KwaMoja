@@ -4,22 +4,21 @@ include('includes/session.inc');
 $Title = _('Update Pricing');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
-echo '<br /><div class="page_help_text noPrint">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
+echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
-$PricesResult = DB_query($SQL, $db);
+$PricesResult = DB_query($SQL);
 
 echo '<br /><table class="selection">
 			 <tr>
 		  	   <td>' . _('Select the Price List to update') . ':</td>
-			   <td><select minlength="0" name="PriceList">';
+			   <td><select name="PriceList">';
 
 if (!isset($_POST['PriceList']) or $_POST['PriceList'] == '0') {
 	echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
@@ -37,17 +36,17 @@ echo '</select></td></tr>';
 
 $SQL = "SELECT currency, currabrev FROM currencies";
 
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 
 echo '<tr>
 		<td>' . _('Select the price list currency to update') . ':</td>
-		<td><select required="required" minlength="1" name="CurrCode">';
+		<td><select required="required" name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])) {
 	echo '<option selected="selected" value="0">' . _('No Price List Currency Selected') . '</option>';
 }
 
-while ($Currencies = DB_fetch_array($result)) {
+while ($Currencies = DB_fetch_array($Result)) {
 	if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $Currencies['currabrev']) {
 		echo '<option selected="selected" value="' . $Currencies['currabrev'] . '">' . $Currencies['currency'] . '</option>';
 	} else {
@@ -65,7 +64,7 @@ if ($_SESSION['WeightedAverageCosting'] == 1) {
 
 echo '<tr>
 		<td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
-		<td><select required="required" minlength="1" name="CostType">';
+		<td><select required="required" name="CostType">';
 if (isset($_POST['CostType']) and $_POST['CostType'] == 'PreferredSupplier') {
 	echo ' <option selected="selected" value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
 			<option value="StandardCost">' . $CostingBasis . '</option>
@@ -86,7 +85,7 @@ DB_data_seek($PricesResult, 0);
 if (isset($_POST['CostType']) and $_POST['CostType'] == 'OtherPriceList') {
 	echo '<tr>
 			<td>' . _('Select the Base Price List to Use') . ':</td>
-			<td><select required="required" minlength="1" name="BasePriceList">';
+			<td><select required="required" name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) or $_POST['BasePriceList'] == '0') {
 		echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
@@ -103,34 +102,34 @@ if (isset($_POST['CostType']) and $_POST['CostType'] == 'OtherPriceList') {
 
 echo '<tr>
 		<td>' . _('Stock Category From') . ':</td>
-		<td><select required="required" minlength="1" name="StkCatFrom">';
+		<td><select required="required" name="StkCatFrom">';
 
-$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
+$SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
 
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
-$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['StkCatFrom']) and $myrow['categoryid'] == $_POST['StkCatFrom']) {
-		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['StkCatFrom']) and $MyRow['categoryid'] == $_POST['StkCatFrom']) {
+		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 
-DB_data_seek($result, 0);
+DB_data_seek($Result, 0);
 
 echo '<tr>
 		<td>' . _('Stock Category To') . ':</td>
-		<td><select required="required" minlength="1" name="StkCatTo">';
+		<td><select required="required" name="StkCatTo">';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['StkCatFrom']) and $myrow['categoryid'] == $_POST['StkCatTo']) {
-		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['StkCatFrom']) and $MyRow['categoryid'] == $_POST['StkCatTo']) {
+		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	} else {
-		echo '<option  value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+		echo '<option  value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
@@ -149,17 +148,17 @@ if (!isset($_POST['PriceEndDate'])) {
 
 echo '<tr>
 		<td>' . _('Rounding Factor') . ':</td>
-		<td><input type="text" class="number" name="RoundingFactor" size="6" required="required" minlength="1" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td>
+		<td><input type="text" class="number" name="RoundingFactor" size="6" required="required" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('New Price To Be Effective From') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceStartDate" size="10" required="required" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PriceEndDate" size="10" required="required" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td>
 	</tr>';
 
 if (!isset($_POST['IncreasePercent'])) {
@@ -168,14 +167,14 @@ if (!isset($_POST['IncreasePercent'])) {
 
 echo '<tr>
 		<td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
-		<td><input type="text" name="IncreasePercent" class="number" size="4" required="required" minlength="1" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td>
-	</tr></table>';
+		<td><input type="text" name="IncreasePercent" class="number" size="4" required="required" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td>
+	</tr>
+</table>';
 
 
-echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
+echo '<div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
 
-echo '</div>
-	  </form>';
+echo '</form>';
 
 if (isset($_POST['UpdatePrices'])) {
 	$InputError = 0; //assume the best
@@ -188,11 +187,11 @@ if (isset($_POST['UpdatePrices'])) {
 		$InputError = 1;
 	}
 
-	if (!Is_Date($_POST['PriceEndDate']) and $_POST['PriceEndDate'] != '') {
+	if (!is_date($_POST['PriceEndDate']) and $_POST['PriceEndDate'] != '') {
 		$InputError = 1;
 		prnMsg(_('The date the new price is to be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	}
-	if (!Is_Date($_POST['PriceStartDate'])) {
+	if (!is_date($_POST['PriceStartDate'])) {
 		$InputError = 1;
 		prnMsg(_('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	}
@@ -244,69 +243,72 @@ if (isset($_POST['UpdatePrices'])) {
 			include('includes/footer.inc');
 			exit;
 		}
-		if (Is_Date($_POST['PriceEndDate'])) {
+		if (is_date($_POST['PriceEndDate'])) {
 			$SQLEndDate = FormatDateForSQL($_POST['PriceEndDate']);
 		} else {
 			$SQLEndDate = '0000-00-00';
 		}
-		$sql = "SELECT stockid,
-						materialcost+labourcost+overheadcost AS cost
+		$SQL = "SELECT stockid,
+						stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS cost
 				FROM stockmaster
+				LEFT JOIN stockcosts
+					ON stockmaster.stockid=stockcosts.stockid
+					AND stockcosts.succeeded=0
 				WHERE categoryid>='" . $_POST['StkCatFrom'] . "'
 				AND categoryid <='" . $_POST['StkCatTo'] . "'";
-		$PartsResult = DB_query($sql, $db);
+		$PartsResult = DB_query($SQL);
 
 		$IncrementPercentage = filter_number_format($_POST['IncreasePercent'] / 100);
 
-		$CurrenciesResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'", $db);
+		$CurrenciesResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_POST['CurrCode'] . "'");
 		$CurrencyRow = DB_fetch_row($CurrenciesResult);
 		$CurrencyRate = $CurrencyRow[0];
 
-		while ($myrow = DB_fetch_array($PartsResult)) {
+		while ($MyRow = DB_fetch_array($PartsResult)) {
 
 			//Figure out the cost to use
 			if ($_POST['CostType'] == 'PreferredSupplier') {
-				$sql = "SELECT purchdata.price/purchdata.conversionfactor/currencies.rate AS cost
+				$SQL = "SELECT purchdata.price/purchdata.conversionfactor/currencies.rate AS cost
 							FROM purchdata INNER JOIN suppliers
 								ON purchdata.supplierno=suppliers.supplierid
 								INNER JOIN currencies
 								ON suppliers.currcode=currencies.currabrev
-							WHERE purchdata.preferred=1 AND purchdata.stockid='" . $myrow['stockid'] . "'";
-				$ErrMsg = _('Could not get the supplier purchasing information for a preferred supplier for the item') . ' ' . $myrow['stockid'];
-				$PrefSuppResult = DB_query($sql, $db, $ErrMsg);
+							WHERE purchdata.preferred=1 AND purchdata.stockid='" . $MyRow['stockid'] . "'";
+				$ErrMsg = _('Could not get the supplier purchasing information for a preferred supplier for the item') . ' ' . $MyRow['stockid'];
+				$PrefSuppResult = DB_query($SQL, $ErrMsg);
 				if (DB_num_rows($PrefSuppResult) == 0) {
-					prnMsg(_('There is no preferred supplier data for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
+					prnMsg(_('There is no preferred supplier data for the item') . ' ' . $MyRow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
 					$Cost = 0;
 				} elseif (DB_num_rows($PrefSuppResult) > 1) {
-					prnMsg(_('There is more than a single preferred supplier data for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
+					prnMsg(_('There is more than a single preferred supplier data for the item') . ' ' . $MyRow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
 					$Cost = 0;
 				} else {
 					$PrefSuppRow = DB_fetch_row($PrefSuppResult);
 					$Cost = $PrefSuppRow[0];
 				}
 			} elseif ($_POST['CostType'] == 'OtherPriceList') {
-				$sql = "SELECT price FROM
+				$SQL = "SELECT price FROM
 								prices
 							WHERE typeabbrev= '" . $_POST['BasePriceList'] . "'
 								AND currabrev='" . $_POST['CurrCode'] . "'
 								AND debtorno=''
-								AND startdate <='" . Date('Y-m-d') . "'
-								AND (enddate >= '" . Date('Y-m-d') . "' OR enddate='0000-00-00')
-								AND stockid='" . $myrow['stockid'] . "'
+								AND startdate <=CURRENT_DATE
+								AND (enddate >= CURRENT_DATE OR enddate='0000-00-00')
+								AND stockid='" . $MyRow['stockid'] . "'
 							ORDER BY startdate DESC";
-				$ErrMsg = _('Could not get the base price for the item') . ' ' . $myrow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
-				$BasePriceResult = DB_query($sql, $db, $ErrMsg);
+				$ErrMsg = _('Could not get the base price for the item') . ' ' . $MyRow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
+				$BasePriceResult = DB_query($SQL, $ErrMsg);
 				if (DB_num_rows($BasePriceResult) == 0) {
-					prnMsg(_('There is no default price defined in the base price list for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
+					prnMsg(_('There is no default price defined in the base price list for the item') . ' ' . $MyRow['stockid'] . ' ' . _('prices will not be updated for this item'), 'warn');
 					$Cost = 0;
 				} else {
 					$BasePriceRow = DB_fetch_row($BasePriceResult);
 					$Cost = $BasePriceRow[0];
 				}
 			} else { //Must be using standard/weighted average costs
-				$Cost = $myrow['cost'];
+				$Cost = $MyRow['cost'];
 				if ($Cost <= 0) {
-					prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is:') . ' ' . $myrow['stockid'], 'warn');
+					prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is') . ': ' . $MyRow['stockid'], 'warn');
 				}
 			}
 			$_POST['RoundingFactor'] = filter_number_format($_POST['RoundingFactor']);
@@ -330,9 +332,9 @@ if (isset($_POST['UpdatePrices'])) {
 													WHERE typeabbrev= '" . $_POST['PriceList'] . "'
 													AND debtorno =''
 													AND currabrev='" . $_POST['CurrCode'] . "'
-													AND startdate <='" . Date('Y-m-d') . "'
-													AND (enddate>='" . Date('Y-m-d') . "' OR enddate='0000-00-00')
-													AND stockid='" . $myrow['stockid'] . "'", $db);
+													AND startdate <=CURRENT_DATE
+													AND (enddate>=CURRENT_DATE OR enddate='0000-00-00')
+													AND stockid='" . $MyRow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult) == 1) {
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'], 'd', -1);
 					$CurrentPriceRow = DB_fetch_array($CurrentPriceResult);
@@ -342,26 +344,26 @@ if (isset($_POST['UpdatePrices'])) {
 												AND debtorno=''
 												AND startdate ='" . $CurrentPriceRow['startdate'] . "'
 												AND enddate ='" . $CurrentPriceRow['enddate'] . "'
-												AND stockid='" . $myrow['stockid'] . "'";
-					$ErrMsg = _('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
-					$result = DB_query($UpdateSQL, $db, $ErrMsg);
+												AND stockid='" . $MyRow['stockid'] . "'";
+					$ErrMsg = _('Error updating prices for') . ' ' . $MyRow['stockid'] . ' ' . _('because');
+					$Result = DB_query($UpdateSQL, $ErrMsg);
 
 				}
-				$sql = "INSERT INTO prices (stockid,
+				$SQL = "INSERT INTO prices (stockid,
 												typeabbrev,
 												currabrev,
 												startdate,
 												enddate,
 												price)
-								VALUES ('" . $myrow['stockid'] . "',
+								VALUES ('" . $MyRow['stockid'] . "',
 										'" . $_POST['PriceList'] . "',
 										'" . $_POST['CurrCode'] . "',
 										'" . FormatDateForSQL($_POST['PriceStartDate']) . "',
 										'" . $SQLEndDate . "',
 								 		'" . filter_number_format($RoundedPrice) . "')";
-				$ErrMsg = _('Error inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('because');
-				$result = DB_query($sql, $db, $ErrMsg);
-				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice, 'info');
+				$ErrMsg = _('Error inserting new price for') . ' ' . $MyRow['stockid'] . ' ' . _('because');
+				$Result = DB_query($SQL, $ErrMsg);
+				prnMsg(_('Inserting new price for') . ' ' . $MyRow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice, 'info');
 
 			} // end if cost > 0
 		} //end while loop around items in the category

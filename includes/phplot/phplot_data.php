@@ -226,13 +226,13 @@ class PHPlot_Data extends PHPlot
         }
 
         $index += $offset;
-        foreach ($this->data as $key=>$val) {
-            foreach ($val as $key2=>$val2) {
-                if ($key2 >= $index) {
-                    if (isset($this->data[$key][$key2+1])) {
-                        $this->data[$key][$key2] = $this->data[$key][$key2+1];
+        foreach ($this->data as $Key=>$val) {
+            foreach ($val as $Key2=>$val2) {
+                if ($Key2 >= $index) {
+                    if (isset($this->data[$Key][$Key2+1])) {
+                        $this->data[$Key][$Key2] = $this->data[$Key][$Key2+1];
                     } else {
-                        unset($this->data[$key][$key2]);
+                        unset($this->data[$Key][$Key2]);
                     }
                 }
             }
@@ -256,11 +256,11 @@ class PHPlot_Data extends PHPlot
 
         $x += $offset; $y += $offset;
         reset($this->data);
-        while (list($key, $val) = each($this->data)) {
-            if ($this->data[$key][$y] == 0) {
-                $this->data[$key][$x] = 0;
+        while (list($Key, $val) = each($this->data)) {
+            if ($this->data[$Key][$y] == 0) {
+                $this->data[$Key][$x] = 0;
             } else {
-                $this->data[$key][$x] /= $this->data[$key][$y];
+                $this->data[$Key][$x] /= $this->data[$Key][$y];
             }
         }
 

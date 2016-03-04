@@ -10,8 +10,8 @@ include('includes/session.inc');
 $Title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $Complete = false;
@@ -78,7 +78,7 @@ if (isset($_POST['ModifyGRN'])) {
 	} //$_SESSION['Check_Price_Charged_vs_Order_Price'] == True and $_POST['OrderPrice'] != 0
 
 	if ($InputError == False) {
-		$_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNumber'], $_POST['PODetailItem'], $_POST['ItemCode'], $_POST['ItemDescription'], $_POST['QtyRecd'], $_POST['Prev_QuantityInv'], filter_number_format($_POST['This_QuantityInv']), $_POST['OrderPrice'], filter_number_format($_POST['ChgPrice']), $Complete, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->StdCostUnit, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->ShiptRef, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->JobRef, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->GLCode, $Hold);
+		$_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNumber'], $_POST['PODetailItem'], $_POST['ItemCode'], $_POST['ItemDescription'], $_POST['QtyRecd'], $_POST['Prev_QuantityInv'], filter_number_format($_POST['This_QuantityInv']), $_POST['OrderPrice'], filter_number_format($_POST['ChgPrice']), $Complete, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo' . $i]]->StdCostUnit, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo' . $i]]->ShiptRef, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo' . $i]]->JobRef, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo' . $i]]->GLCode, $Hold, $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo' . $i]]->SupplierRef);
 	} //$InputError == False
 } //isset($_POST['ModifyGRN'])
 
@@ -91,21 +91,23 @@ if (isset($_GET['Delete'])) {
 /*Show all the selected GRNs so far from the SESSION['SuppTrans']->GRNs array */
 
 echo '<table class="selection">
-		<tr>
-			<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
-		</tr>
-			<tbody>
-				<tr>
-					<th class="SortableColumn">' . _('Sequence') . ' #</th>
-					<th class="SortableColumn">' . _('Item Code') . '</th>
-					<th class="SortableColumn">' . _('Description') . '</th>
-					<th>' . _('Quantity Charged') . '</th>
-					<th>' . _('Price Charge in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-				</tr>';
+		<thead>
+			<tr>
+				<th colspan="6"><h3>' . _('Invoiced Goods Received Selected') . '</h3></th>
+			</tr>
+			<tr>
+				<th class="SortedColumn">' . _('Sequence') . ' #</th>
+				<th>' . _("Supplier's Ref") . '</th>
+				<th class="SortedColumn">' . _('Item Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th>' . _('Quantity Charged') . '</th>
+				<th>' . _('Price Charge in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			</tr>
+		</thead>';
 
 $TotalValueCharged = 0;
-
+echo '<tbody>';
 foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 	if ($EnteredGRN->ChgPrice > 1) {
 		$DisplayPrice = locale_number_format($EnteredGRN->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces);
@@ -114,10 +116,11 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 	}
 	echo '<tr>
 			<td>' . $EnteredGRN->GRNNo . '</td>
+			<td>' . $EnteredGRN->SupplierRef . '</td>
 			<td>' . $EnteredGRN->ItemCode . '</td>
 			<td>' . $EnteredGRN->ItemDescription . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->This_QuantityInv, 'Variable') . '</td>
-			<td class="number">' . $DisplayPrice  . '</td>
+			<td class="number">' . $DisplayPrice . '</td>
 			<td class="number">' . locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Modify=' . $EnteredGRN->GRNNo . '">' . _('Modify') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredGRN->GRNNo . '">' . _('Delete') . '</a></td>
@@ -133,11 +136,9 @@ echo '</tbody>
 			<td class="number"><h4>' . locale_number_format($TotalValueCharged, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 		</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
-	</div>
-	<br />';
+	</div>';
 
 
 /* Now get all the outstanding GRNs for this supplier from the database*/
@@ -152,6 +153,7 @@ $SQL = "SELECT grnbatch,
 				grns.qtyrecd,
 				grns.quantityinv,
 				grns.stdcostunit,
+				grns.supplierref,
 				purchorderdetails.glcode,
 				purchorderdetails.shiptref,
 				purchorderdetails.jobref,
@@ -164,37 +166,38 @@ $SQL = "SELECT grnbatch,
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 		AND grns.qtyrecd - grns.quantityinv > 0
 		ORDER BY grns.grnno";
-$GRNResults = DB_query($SQL, $db);
+$GRNResults = DB_query($SQL);
 
 if (DB_num_rows($GRNResults) == 0) {
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'), 'warn');
-	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID . '">' . _('Select Purchase Orders to Receive') . '</a></p></div>';
+	echo '<div class="centre">
+			<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . urlencode($_SESSION['SuppTrans']->SupplierID) . '">' . _('Select Purchase Orders to Receive') . '</a>
+		</div>';
 	include('includes/footer.inc');
 	exit;
 } //DB_num_rows($GRNResults) == 0
 
 /*Set up a table to show the GRNs outstanding for selection */
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_SESSION['SuppTransTmp'])) {
 	$_SESSION['SuppTransTmp'] = new SuppTrans;
-	while ($myrow = DB_fetch_array($GRNResults)) {
+	while ($MyRow = DB_fetch_array($GRNResults)) {
 		$GRNAlreadyOnInvoice = False;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
-			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
+			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
 				$GRNAlreadyOnInvoice = True;
-			} //$EnteredGRN->GRNNo == $myrow['grnno']
+			} //$EnteredGRN->GRNNo == $MyRow['grnno']
 		} //$_SESSION['SuppTrans']->GRNs as $EnteredGRN
-		if ($myrow['decimalplaces'] == '') {
-			$myrow['decimalplaces'] = 2;
-		} //$myrow['decimalplaces'] == ''
+		if ($MyRow['decimalplaces'] == '') {
+			$MyRow['decimalplaces'] = 2;
+		} //$MyRow['decimalplaces'] == ''
 		if ($GRNAlreadyOnInvoice == False) {
-			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'], $myrow['podetailitem'], $myrow['itemcode'], $myrow['itemdescription'], $myrow['qtyrecd'], $myrow['quantityinv'], $myrow['qtyrecd'] - $myrow['quantityinv'], $myrow['unitprice'], $myrow['unitprice'], $Complete, $myrow['stdcostunit'], $myrow['shiptref'], $myrow['jobref'], $myrow['glcode'], $myrow['orderno'], $myrow['assetid'], 0, $myrow['decimalplaces'], $myrow['grnbatch']);
+			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($MyRow['grnno'], $MyRow['podetailitem'], $MyRow['itemcode'], $MyRow['itemdescription'], $MyRow['qtyrecd'], $MyRow['quantityinv'], $MyRow['qtyrecd'] - $MyRow['quantityinv'], $MyRow['unitprice'], $MyRow['unitprice'], $Complete, $MyRow['stdcostunit'], $MyRow['shiptref'], $MyRow['jobref'], $MyRow['glcode'], $MyRow['orderno'], $MyRow['assetid'], 0, $MyRow['decimalplaces'], $MyRow['grnbatch'], $MyRow['supplierref']);
 		} //$GRNAlreadyOnInvoice == False
-	} //$myrow = DB_fetch_array($GRNResults)
+	} //$MyRow = DB_fetch_array($GRNResults)
 } //!isset($_SESSION['SuppTransTmp'])
 
 if (isset($_GET['Modify'])) {
@@ -218,9 +221,9 @@ if (isset($_GET['Modify'])) {
 		<td>' . $GRNTmp->GRNNo . '</td>
 		<td>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</td>
 		<td class="number">' . locale_number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv, $GRNTmp->DecimalPlaces) . '</td>
-		<td><input type="text" class="number" name="This_QuantityInv" value="' . locale_number_format($GRNTmp->This_QuantityInv, 'Variable') . '" size="11" required="required" minlength="1" maxlength="10" /></td>
+		<td><input type="text" class="number" name="This_QuantityInv" value="' . locale_number_format($GRNTmp->This_QuantityInv, 'Variable') . '" size="11" required="required" maxlength="10" /></td>
 		<td class="number">' . locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-		<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($GRNTmp->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" required="required" minlength="1" maxlength="10" /></td>
+		<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($GRNTmp->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" required="required" maxlength="10" /></td>
 	</tr>';
 	echo '</table>';
 
@@ -249,22 +252,26 @@ else {
 	if (count($_SESSION['SuppTransTmp']->GRNs) > 0) {
 		/*if there are any outstanding GRNs then */
 		echo '<table class="selection">
-				<tr>
-					<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
-				</tr>
-				<tr>
-					<th>' . _('Select') . '</th>
-					<th>' . _('Sequence') . ' #</th>
-					<th>' . _('Order') . '</th>
-					<th>' . _('Item Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Total Qty Received') . '</th>
-					<th>' . _('Qty Already Invoiced') . '</th>
-					<th>' . _('Qty Yet To Invoice') . '</th>
-					<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-					<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-				</tr>';
-
+				<thead>
+					<tr>
+						<th colspan="10"><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">' . _('Select') . '</th>
+						<th class="SortedColumn">' . _('Sequence') . ' #</th>
+						<th class="SortedColumn">' . _('GRN Number') . '</th>
+						<th class="SortedColumn">' . _('Supplier\'s Ref') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Total Qty Received') . '</th>
+						<th>' . _('Qty Already Invoiced') . '</th>
+						<th>' . _('Qty Yet To Invoice') . '</th>
+						<th>' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+					</tr>
+				</thead>';
+		echo '<tbody>';
 		$POs = array();
 		foreach ($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
 			$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;
@@ -285,19 +292,21 @@ else {
 					<td><input type="checkbox" name="GRNNo_' . $GRNTmp->GRNNo . '" /></td>';
 			}
 			echo '<td>' . $GRNTmp->GRNNo . '</td>
-			<td>' . $GRNTmp->PONo . '</td>
-			<td>' . $GRNTmp->ItemCode . '</td>
-			<td>' . $GRNTmp->ItemDescription . '</td>
-			<td class="number">' . locale_number_format($GRNTmp->QtyRecd, $GRNTmp->DecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($GRNTmp->Prev_QuantityInv, $GRNTmp->DecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format(($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $GRNTmp->DecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+				<td>' . $GRNTmp->GRNBatchNo . '</td>
+				<td>' . $GRNTmp->SupplierRef . '</td>
+				<td>' . $GRNTmp->PONo . '</td>
+				<td>' . $GRNTmp->ItemCode . '</td>
+				<td>' . $GRNTmp->ItemDescription . '</td>
+				<td class="number">' . locale_number_format($GRNTmp->QtyRecd, $GRNTmp->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($GRNTmp->Prev_QuantityInv, $GRNTmp->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $GRNTmp->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 			</tr>';
 		} //$_SESSION['SuppTransTmp']->GRNs as $GRNTmp
+		echo '</tbody>';
 		echo '</table>';
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="SelectAll" value="' . _('Select All') . '" />
 				<input type="submit" name="DeSelectAll" value="' . _('Deselect All') . '" />
 				<br />
@@ -306,7 +315,6 @@ else {
 	} //count($_SESSION['SuppTransTmp']->GRNs) > 0
 }
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

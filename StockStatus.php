@@ -1,109 +1,97 @@
 <?php
 
 include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 $Title = _('Stock Status');
 
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])) {
-	$StockID = trim(mb_strtoupper($_GET['StockID']));
+	$StockId = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])) {
-	$StockID = trim(mb_strtoupper($_POST['StockID']));
+	$StockId = trim(mb_strtoupper($_POST['StockID']));
 } else {
-	$StockID = '';
+	$StockId = '';
 }
 
 if (isset($_POST['UpdateBinLocations'])) {
 	foreach ($_POST as $PostVariableName => $Bin) {
 		if (mb_substr($PostVariableName, 0, 11) == 'BinLocation') {
-			$sql = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName, 11) . "' AND stockid='" . $StockID . "'";
-			$result = DB_query($sql, $db);
+			$SQL = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName, 11) . "' AND stockid='" . $StockId . "'";
+			$Result = DB_query($SQL);
 		}
 	}
 }
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 						   units,
 						   mbflag,
 						   decimalplaces,
 						   serialised,
 						   controlled
 					FROM stockmaster
-					WHERE stockid='" . $StockID . "'", $db, _('Could not retrieve the requested item'), _('The SQL used to retrieve the items was'));
+					WHERE stockid='" . $StockId . "'", _('Could not retrieve the requested item'), _('The SQL used to retrieve the items was'));
 
-$myrow = DB_fetch_array($result);
+$MyRow = DB_fetch_array($Result);
 
-$DecimalPlaces = $myrow['decimalplaces'];
-$Serialised = $myrow['serialised'];
-$Controlled = $myrow['controlled'];
+$DecimalPlaces = $MyRow['decimalplaces'];
+$Serialised = $MyRow['serialised'];
+$Controlled = $MyRow['controlled'];
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . ' ' . $StockId . ' - ' . $MyRow['description'] . ' : ' . _('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
 
 $Its_A_KitSet_Assembly_Or_Dummy = False;
-if ($myrow[2] == 'K') {
+if ($MyRow[2] == 'K') {
 	$Its_A_KitSet_Assembly_Or_Dummy = True;
 	prnMsg(_('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'), 'info');
-} elseif ($myrow[2] == 'A') {
+} elseif ($MyRow[2] == 'A') {
 	$Its_A_KitSet_Assembly_Or_Dummy = True;
 	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'), 'info');
-} elseif ($myrow[2] == 'D') {
+} elseif ($MyRow[2] == 'D') {
 	$Its_A_KitSet_Assembly_Or_Dummy = True;
 	prnMsg(_('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'), 'info');
 }
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockID . '" required="required" minlength="1" maxlength="20" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo _('Stock Code') . ':<input type="text" name="StockID" size="21" value="' . $StockId . '" required="required" maxlength="20" />';
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locstock.loccode,
-					locations.locationname,
-					locstock.quantity,
-					locstock.reorderlevel,
-					locstock.bin,
-					locations.managed
+$SQL = "SELECT locstock.loccode,
+				locations.locationname,
+				locstock.quantity,
+				locstock.reorderlevel,
+				locstock.bin,
+				locations.managed,
+				canupd
 			FROM locstock
 			INNER JOIN locations
 				ON locstock.loccode=locations.loccode
-			WHERE locstock.stockid = '" . $StockID . "'
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE locstock.stockid = '" . $StockId . "'
 			ORDER BY locations.locationname";
-} else {
-	$sql = "SELECT locstock.loccode,
-					locations.locationname,
-					locstock.quantity,
-					locstock.reorderlevel,
-					locstock.bin,
-					locations.managed
-			FROM locstock
-			INNER JOIN locations
-				ON locstock.loccode=locations.loccode
-			INNER JOIN www_users
-				ON locations.loccode=www_users.defaultlocation
-			WHERE locstock.stockid = '" . $StockID . "'
-				AND www_users.userid='" . $_SESSION['UserID'] . "'
-			ORDER BY locations.locationname";
-}
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to fetch the location details and failed was');
-$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<br />
-		<table class="selection">
-			<tbody>';
+echo '<table class="selection">
+			<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True) {
 	echo '<tr>
-			<th class="SortableColumn">' . _('Location') . '</th>
+			<th class="SortedColumn">' . _('Location') . '</th>
 			<th>' . _('Demand') . '</th>
 		</tr>';
 } else {
 	echo '<tr>
-			<th class="SortableColumn">' . _('Location') . '</th>
-			<th class="SortableColumn">' . _('Bin Location') . '</th>
+			<th class="SortedColumn">' . _('Location') . '</th>
+			<th class="SortedColumn">' . _('Bin Location') . '</th>
 			<th>' . _('Quantity On Hand') . '</th>
 			<th>' . _('Re-Order Level') . '</th>
 			<th>' . _('Demand') . '</th>
@@ -112,10 +100,10 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True) {
 			<th>' . _('On Order') . '</th>
 		</tr>';
 }
-
+echo '</thead>';
 $k = 0; //row colour counter
-
-while ($myrow = DB_fetch_array($LocStockResult)) {
+echo '<tbody>';
+while ($MyRow = DB_fetch_array($LocStockResult)) {
 
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
@@ -125,16 +113,16 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 		$k = 1;
 	}
 
-	$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+	$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 			FROM salesorderdetails INNER JOIN salesorders
 			ON salesorders.orderno = salesorderdetails.orderno
-			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
 			AND salesorderdetails.completed=0
 			AND salesorders.quotation=0
-			AND salesorderdetails.stkcode='" . $StockID . "'";
+			AND salesorderdetails.stkcode='" . $StockId . "'";
 
-	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
+	$DemandResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($DemandResult) == 1) {
 		$DemandRow = DB_fetch_row($DemandResult);
@@ -144,21 +132,21 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 	}
 
 	//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-	$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+	$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 			FROM salesorderdetails INNER JOIN salesorders
 			ON salesorders.orderno = salesorderdetails.orderno
 			INNER JOIN bom
 			ON salesorderdetails.stkcode=bom.parent
 			INNER JOIN stockmaster
 			ON stockmaster.stockid=bom.parent
-			WHERE salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
 			AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-			AND bom.component='" . $StockID . "'
+			AND bom.component='" . $StockId . "'
 			AND stockmaster.mbflag='A'
 			AND salesorders.quotation=0";
 
-	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
+	$DemandResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($DemandResult) == 1) {
 		$DemandRow = DB_fetch_row($DemandResult);
@@ -167,18 +155,18 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 
 	//Also the demand for the item as a component of works orders
 
-	$sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
+	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
 			FROM woitems INNER JOIN worequirements
 			ON woitems.stockid=worequirements.parentstockid
 			INNER JOIN workorders
 			ON woitems.wo=workorders.wo
 			AND woitems.wo=worequirements.wo
-			WHERE workorders.loccode='" . $myrow['loccode'] . "'
-			AND worequirements.stockid='" . $StockID . "'
+			WHERE workorders.loccode='" . $MyRow['loccode'] . "'
+			AND worequirements.stockid='" . $StockId . "'
 			AND workorders.closed=0";
 
-	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
+	$DemandResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($DemandResult) == 1) {
 		$DemandRow = DB_fetch_row($DemandResult);
@@ -187,48 +175,16 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False) {
 
-		$sql = "SELECT SUM(purchorderdetails.quantityord*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END) -
-							purchorderdetails.quantityrecd*(CASE WHEN purchdata.conversionfactor IS NULL THEN 1 ELSE purchdata.conversionfactor END))
-			FROM purchorders LEFT JOIN purchorderdetails
-			ON purchorders.orderno=purchorderdetails.orderno
-			LEFT JOIN purchdata ON purchorders.supplierno=purchdata.supplierno
-				AND purchorderdetails.itemcode=purchdata.stockid
-			WHERE purchorderdetails.itemcode='" . $StockID . "'
-			AND purchorders.intostocklocation='" . $myrow['loccode'] . "'
-			AND (purchorders.status<>'Cancelled'
-			AND purchorders.status<>'Pending'
-			AND purchorders.status<>'Rejected'
-			AND purchorders.status<>'Completed')";
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult) == 1) {
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO = $QOORow[0];
-		} else {
-			$QOO = 0;
-		}
-
-		//Also the on work order quantities
-		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-				FROM woitems INNER JOIN workorders
-				ON woitems.wo=workorders.wo
-				WHERE workorders.closed=0
-				AND workorders.loccode='" . $myrow['loccode'] . "'
-				AND woitems.stockid='" . $StockID . "'";
-		$ErrMsg = _('The quantity on work orders for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
-		$QOOResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-
-		if (DB_num_rows($QOOResult) == 1) {
-			$QOORow = DB_fetch_row($QOOResult);
-			$QOO += $QOORow[0];
-		}
+		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockId, $MyRow['loccode']);
+		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+		$QOO += GetQuantityOnOrderDueToWorkOrders($StockId, $MyRow['loccode']);
 
 		$InTransitSQL = "SELECT SUM(shipqty-recqty) as intransit
 						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND shiploc='" . $myrow['loccode'] . "'";
-		$InTransitResult = DB_query($InTransitSQL, $db);
+						WHERE stockid='" . $StockId . "'
+							AND shiploc='" . $MyRow['loccode'] . "'";
+		$InTransitResult = DB_query($InTransitSQL);
 		$InTransitRow = DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit'] != '') {
 			$InTransitQuantityOut = -$InTransitRow['intransit'];
@@ -238,9 +194,9 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 
 		$InTransitSQL = "SELECT SUM(-shipqty+recqty) as intransit
 						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND recloc='" . $myrow['loccode'] . "'";
-		$InTransitResult = DB_query($InTransitSQL, $db);
+						WHERE stockid='" . $StockId . "'
+							AND recloc='" . $MyRow['loccode'] . "'";
+		$InTransitResult = DB_query($InTransitSQL);
 		$InTransitRow = DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit'] != '') {
 			$InTransitQuantityIn = -$InTransitRow['intransit'];
@@ -249,27 +205,31 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 		}
 
 		if (($InTransitQuantityIn + $InTransitQuantityOut) < 0) {
-			$Available = $myrow['quantity'] - $DemandQty + ($InTransitQuantityIn + $InTransitQuantityOut);
+			$Available = $MyRow['quantity'] - $DemandQty + ($InTransitQuantityIn + $InTransitQuantityOut);
 		} else {
-			$Available = $myrow['quantity'] - $DemandQty;
+			$Available = $MyRow['quantity'] - $DemandQty;
 		}
-
-		echo '<td>' . $myrow['locationname'] . '</td>
-			<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" minlength="0" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		if ($MyRow['canupd']==1) {
+			echo '<td>' . $MyRow['locationname'] . '</td>
+				<td><input type="text" name="BinLocation' . $MyRow['loccode'] . '" value="' . $MyRow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		} else {
+			echo '<td>' . $MyRow['locationname'] . '</td>
+				<td> ' . $MyRow['bin'] . '</td>';
+		}
 
 		printf('<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				<td class="number">%s</td>', locale_number_format($myrow['quantity'], $DecimalPlaces), locale_number_format($myrow['reorderlevel'], $DecimalPlaces), locale_number_format($DemandQty, $DecimalPlaces), locale_number_format($InTransitQuantityIn + $InTransitQuantityOut, $DecimalPlaces), locale_number_format($Available, $DecimalPlaces), locale_number_format($QOO, $DecimalPlaces));
+				<td class="number">%s</td>', locale_number_format($MyRow['quantity'], $DecimalPlaces), locale_number_format($MyRow['reorderlevel'], $DecimalPlaces), locale_number_format($DemandQty, $DecimalPlaces), locale_number_format($InTransitQuantityIn + $InTransitQuantityOut, $DecimalPlaces), locale_number_format($Available, $DecimalPlaces), locale_number_format($QOO, $DecimalPlaces));
 
 		if ($Serialised == 1) {
 			/*The line is a serialised item*/
 
-			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $myrow['loccode'] . '&amp;StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $MyRow['loccode'] . '&amp;StockID=' . $StockId . '">' . _('Serial Numbers') . '</a></td></tr>';
 		} elseif ($Controlled == 1) {
-			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $myrow['loccode'] . '&amp;StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' . $StockId . '">' . _('Batches') . '</a></td></tr>';
 		} else {
 			echo '</tr>';
 		}
@@ -279,7 +239,7 @@ while ($myrow = DB_fetch_array($LocStockResult)) {
 
 		printf('<td>%s</td>
 				<td class="number">%s</td>
-				</tr>', $myrow['locationname'], locale_number_format($DemandQty, $DecimalPlaces));
+				</tr>', $MyRow['locationname'], locale_number_format($DemandQty, $DecimalPlaces));
 	}
 	//end of page full new headings if
 }
@@ -302,14 +262,14 @@ if (isset($_GET['DebtorNo'])) {
 if ($DebtorNo) {
 	/* display recent pricing history for this debtor and this stock item */
 
-	$sql = "SELECT stockmoves.trandate,
+	$SQL = "SELECT stockmoves.trandate,
 				stockmoves.qty,
 				stockmoves.price,
 				stockmoves.discountpercent
 			FROM stockmoves
 			WHERE stockmoves.debtorno='" . $DebtorNo . "'
 				AND stockmoves.type=10
-				AND stockmoves.stockid = '" . $StockID . "'
+				AND stockmoves.stockid = '" . $StockId . "'
 				AND stockmoves.hidemovt=0
 			ORDER BY stockmoves.trandate DESC";
 
@@ -318,70 +278,70 @@ if ($DebtorNo) {
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 	$DbgMsg = _('The SQL that failed was');
 
-	$MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	$k = 1;
 	$LastPrice = 0;
-	while ($myrow = DB_fetch_array($MovtsResult)) {
-		if ($LastPrice != $myrow['price'] or $LastDiscount != $myrow['discount']) {
+	while ($MyRow = DB_fetch_array($MovtsResult)) {
+		if ($LastPrice != $MyRow['price'] or $LastDiscount != $MyRow['discount']) {
 			/* consolidate price history for records with same price/discount */
-			if (isset($qty)) {
+			if (isset($Quantity)) {
 				$DateRange = ConvertSQLDate($FromDate);
 				if ($FromDate != $ToDate) {
 					$DateRange .= ' - ' . ConvertSQLDate($ToDate);
 				}
 				$PriceHistory[] = array(
 					$DateRange,
-					$qty,
+					$Quantity,
 					$LastPrice,
 					$LastDiscount
 				);
-				$k++;
+				++$k;
 				if ($k > 9) {
 					break;
 					/* 10 price records is enough to display */
 				}
-				if ($myrow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1))) {
+				if ($MyRow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1))) {
 					break;
 					/* stop displaying pirce history more than a year old once we have at least one  to display */
 				}
 			}
-			$LastPrice = $myrow['price'];
-			$LastDiscount = $myrow['discountpercent'];
-			$ToDate = $myrow['trandate'];
-			$qty = 0;
+			$LastPrice = $MyRow['price'];
+			$LastDiscount = $MyRow['discountpercent'];
+			$ToDate = $MyRow['trandate'];
+			$Quantity = 0;
 		}
-		$qty += $myrow['qty'];
-		$FromDate = $myrow['trandate'];
+		$Quantity += $MyRow['qty'];
+		$FromDate = $MyRow['trandate'];
 	}
-	if (isset($qty)) {
+	if (isset($Quantity)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
 			$DateRange .= ' - ' . ConvertSQLDate($ToDate);
 		}
 		$PriceHistory[] = array(
 			$DateRange,
-			$qty,
+			$Quantity,
 			$LastPrice,
 			$LastDiscount
 		);
 	}
 	if (isset($PriceHistory)) {
-		echo '<br />
-			<table class="selection">
-				<tr>
-					<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
-				</tr>
-			<tbody>
-				<tr>
-					<th class="SortableColumn">' . _('Date Range') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('Price') . '</th>
-					<th>' . _('Discount') . '</th>
-				</tr>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockId . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">' . _('Date Range') . '</th>
+						<th>' . _('Quantity') . '</th>
+						<th>' . _('Price') . '</th>
+						<th>' . _('Discount') . '</th>
+					</tr>
+				</thead>';
 
 		$k = 0; //row colour counter
-
+		echo '<tbody>';
 		foreach ($PriceHistory as $PreviousPrice) {
 
 			if ($k == 1) {
@@ -403,19 +363,19 @@ if ($DebtorNo) {
 	}
 	//end of while loop
 	else {
-		echo '<p>' . _('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
+		echo '<p>' . _('No history of sales of') . ' ' . $StockId . ' ' . _('to') . ' ' . $DebtorNo;
 	}
 } //end of displaying price history for a debtor
 
-echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>
-		<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>
-		<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>
-		<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockId) . '">' . _('Show Movements') . '</a>
+		<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockId) . '">' . _('Show Usage') . '</a>
+		<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockId) . '">' . _('Search Outstanding Sales Orders') . '</a>
+		<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockId) . '">' . _('Search Completed Sales Orders') . '</a>';
 if ($Its_A_KitSet_Assembly_Or_Dummy == False) {
-	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
+	echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockId) . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 }
 
-echo '</div></form>';
+echo '</form>';
 include('includes/footer.inc');
 
 ?>

@@ -9,6 +9,16 @@
  * - CreditItemsControlled.php
  */
 
+//bring up perishable variable here otherwise we cannot get it in Add_SerialItems.php
+$SQL = "SELECT perishable,
+				decimalplaces
+			FROM stockmaster
+			WHERE stockid='" . $StockId . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+$Perishable = $MyRow['perishable'];
+$DecimalPlaces = $MyRow['decimalplaces'];
+
 include('includes/Add_SerialItems.php');
 
 /*Setup the Data Entry Types */
@@ -37,7 +47,7 @@ if (!isset($RecvQty)) {
 	$RecvQty = 0;
 }
 if (!isset($_POST['EntryType']) or trim($_POST['EntryType']) == '') {
-	if ($RecvQty <= 50) {
+	if ($RecvQty <= 500000) {
 		$_POST['EntryType'] = 'KEYED';
 	} //elseif ($RecvQty <= 50) { $EntryType = "BARCODE"; }
 	else {
@@ -48,11 +58,10 @@ if (!isset($_POST['EntryType']) or trim($_POST['EntryType']) == '') {
 $invalid_imports = 0;
 $valid = true;
 
-echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" enctype="multipart/form-data" >';
-echo '<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+echo '<form method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" enctype="multipart/form-data" >';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />
-		<input type="hidden" name="StockID" value="' . $StockID . '" />';
+		<input type="hidden" name="StockID" value="' . $StockId . '" />';
 
 if (isset($_GET['CreditInvoice']) or isset($_POST['CreditInvoice'])) {
 	$CreditInvoice = '&amp;CreditInvoice=Yes';
@@ -92,25 +101,15 @@ echo ' value="FILE" />' . _('File Upload') . '&nbsp; <input type="file" name="Im
 		</td>
 	</tr>
 	</table>
-	</div>
 	</form>';
 
 global $TableHeader;
 /* Link to clear the list and start from scratch */
-$EditLink = '<br />
-			<div class="centre">
-					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' . _('Edit') . '</a> | ';
-
-$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' . _('Remove All') . '</a>
-			<br />
+$EditLink = '<div class="centre">
+					<a class="FontSize" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' . _('Edit') . '</a> | ';
+$RemoveLink = '<a class="FontSize" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' . _('Remove All') . '</a>
 			</div>';
 
-$sql = "SELECT perishable
-		FROM stockmaster
-		WHERE stockid='" . $StockID . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
-$Perishable = $myrow['perishable'];
 if ($LineItem->Serialised == 1) {
 	if ($Perishable == 0) {
 		$TableHeader .= '<tr>

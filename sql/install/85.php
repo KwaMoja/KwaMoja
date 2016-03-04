@@ -10,7 +10,7 @@ CreateTable('pickinglists',
   PRIMARY KEY (`pickinglistno`),
   KEY `pickinglists_ibfk_1` (`orderno`),
   CONSTRAINT `pickinglists_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
-)", $db);
+)");
 
 
 ?>

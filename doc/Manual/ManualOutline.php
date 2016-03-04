@@ -262,6 +262,10 @@ $TOC_Array = array (
 								 'Work order issues',
 								 'Closing work orders'
 								),
+	'QualityAssurance'  => array('Quality Assurance',
+								 'Overview',
+								 'Configuration'
+								),
 	'MRP'               => array('Material requirements planning',
 								 'MRP Overview',
 								 'Base data required',

@@ -387,10 +387,10 @@ class PHPlot
     protected function GetColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $result = array();
+        $Result = array();
         for ($i = 0; $i < $n; $i++)
-            $result[] = $this->GetColorIndex($color_array[$i]);
-        return $result;
+            $Result[] = $this->GetColorIndex($color_array[$i]);
+        return $Result;
     }
 
     /*
@@ -402,10 +402,10 @@ class PHPlot
     protected function GetDarkColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $result = array();
+        $Result = array();
         for ($i = 0; $i < $n; $i++)
-            $result[] = $this->GetDarkColorIndex($color_array[$i]);
-        return $result;
+            $Result[] = $this->GetDarkColorIndex($color_array[$i]);
+        return $Result;
     }
 
     /*
@@ -782,14 +782,14 @@ class PHPlot
         }
 
         // Build the string to be evaluated later by SetDashedStyle() with $which_ndxcolor set.
-        $result = '';
+        $Result = '';
         $vals = array('$which_ndxcol,', 'IMG_COLOR_TRANSPARENT,');
         $index = 0;
         foreach ($asked as $n) {
-            $result .= str_repeat($vals[$index], $n);
+            $Result .= str_repeat($vals[$index], $n);
             $index = 1 - $index;
         }
-        $this->default_dashed_style = "array($result)";
+        $this->default_dashed_style = "array($Result)";
 
         return TRUE;
     }
@@ -900,7 +900,7 @@ class PHPlot
             $fonts = array('LiberationSans-Regular.ttf',  // For Linux with a correct GD font search path
                            'Verdana.ttf', 'Arial.ttf', 'Helvetica.ttf', // For Windows, maybe others
                            'ttf-liberation/LiberationSans-Regular.ttf', // For Debian, Ubuntu, and friends
-                           'benjamingothic.ttf',  // Original PHPlot default 
+                           'benjamingothic.ttf',  // Original PHPlot default
                           );
             foreach ($fonts as $font) {
                 // First try the font name alone, to see if GD can find and load it.
@@ -2006,13 +2006,13 @@ class PHPlot
     protected function CheckOptionArray($opt, $acc, $func)
     {
         $opt_array = (array)$opt;
-        $result = array();
+        $Result = array();
         foreach ($opt_array as $option) {
             $choice = $this->CheckOption($option, $acc, $func);
             if (is_null($choice)) return NULL; // In case CheckOption error handler returns
-            $result[] = $choice;
+            $Result[] = $choice;
         }
-        return $result;
+        return $Result;
     }
 
     /*
@@ -2847,9 +2847,9 @@ class PHPlot
                         }
                     }
                 } else {    // Missing DV value
-                  $j++;
+                  ++$j;
                   if ($this->datatype_error_bars) $j += 2;
-                  elseif ($this->datatype_yz) $j++;
+                  elseif ($this->datatype_yz) ++$j;
                 }
             }
             if (!empty($all_dv)) {
@@ -2890,7 +2890,7 @@ class PHPlot
         if ($this->GetCallback('debug_scale')) {
             $this->DoCallback('debug_scale', __FUNCTION__, array(
                 'min_x' => $this->min_x, 'min_y' => $this->min_y,
-                'max_x' => $this->max_x, 'max_y' => $this->max_y, 
+                'max_x' => $this->max_x, 'max_y' => $this->max_y,
                 'min_z' => isset($this->min_z) ? $this->min_z : '',
                 'max_z' => isset($this->max_z) ? $this->max_z : ''));
         }

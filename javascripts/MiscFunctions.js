@@ -21,7 +21,7 @@ function MakeConfirm(e, t, n) {
 	document.getElementById("mask").style["display"] = "inline";
 	h = '<div id="dialog_header"><img src="css/' + th + '/images/help.png" />' + t + '</div><div id="dialog_main">' + e;
 	h = h + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />';
-	h = h + '<a href="' + url + '" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>';
+	h = h + '<a class="ButtonLink" href="' + url + '" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>';
 	document.getElementById("dialog").innerHTML = h;
 	document.getElementById("dialog").style.marginTop = -document.getElementById("dialog").offsetHeight + "px";
 	document.getElementById("dialog").style.marginLeft = -(document.getElementById("dialog").offsetWidth / 2) + "px";
@@ -33,6 +33,30 @@ function hideConfirm(e) {
 		document.getElementById("dialog").innerHTML = "";
 		document.getElementById("mask").style["display"] = "none"
 	}
+	return true
+}
+
+function expandTable(e) {
+	parent=e.cells[0].innerHTML;
+	table=e.parentNode;
+	for (var r = 1, i; i = table.rows[r]; r++) {
+		if (i.cells[3].innerHTML == parent) {
+			i.className='visible';
+		}
+	}
+	e.onclick=function onclick(event) {collapseTable(this)};
+	return true
+}
+
+function collapseTable(e) {
+	parent=e.cells[0].innerHTML;
+	table=e.parentNode;
+	for (var r = 1, i; i = table.rows[r]; r++) {
+		if (i.cells[3].innerHTML == parent) {
+			i.className='invisible';
+		}
+	}
+	e.onclick=function onclick(event) {expandTable(this)};
 	return true
 }
 
@@ -83,7 +107,7 @@ function assignComboToInput(e, t) {
 
 function inArray(e, t, n) {
 	for (i = 0; i < t.length; i++) {
-		if (e == t[i].value) {
+		if (e.value == t[i].value) {
 			return true
 		}
 	}
@@ -262,63 +286,15 @@ function changeDate() {
 	isDate(this.value, this.alt)
 }
 
-function VerifyForm(e) {
-	Clean = true;
-	Alert = "";
-	for (var t = 0, n = e.length; t < n; t++) {
-		if (e.elements[t].type == "text") {
-			var r = document.getElementsByName(e.elements[t].name);
-			Class = r[0].getAttribute("class");
-			if (r[0].getAttribute("minlength") > e.elements[t].value.length) {
-				if (e.elements[t].value.length == 0) {
-					Alert = Alert + "You must input a value in the field " + r[0].getAttribute("name") + "<br />"
-				} else {
-					Alert = Alert + r[0].getAttribute("name") + " field must be at least " + r[0].getAttribute("minlength") + " characters long" + "<br />"
-				}
-				r[0].className = Class + " inputerror";
-				Clean = false
-			} else {
-				r[0].className = Class
-			}
-		}
-		if (e.elements[t].type == "select-one") {
-			Class = e.elements[t].getAttribute("class");
-			if (e.elements[t].getAttribute("minlength") > 0 && e.elements[t].value.length == 0) {
-				Alert = Alert + "You must make a selection in the field " + e.elements[t].getAttribute("name") + "<br />";
-				e.elements[t].className = Class + " inputerror";
-				Clean = false
-			}
-		}
-		if (e.elements[t].type == "password") {
-			Class = e.elements[t].getAttribute("class");
-			if (e.elements[t].getAttribute("minlength") > 0 && e.elements[t].value.length == 0) {
-				Alert = Alert + "You must make a selection in the field " + e.elements[t].getAttribute("name") + "<br />";
-				e.elements[t].className = Class + " inputerror";
-				Clean = false
-			}
-		}
-		if (e.elements[t].type == "email") {
-			Class = e.elements[t].getAttribute("class");
-			if (e.elements[t].value.length > 0 && !validateEmail(e.elements[t].value)) {
-				Alert = Alert + "You have not entered a valid email address <br />";
-				e.elements[t].className = Class + " inputerror";
-				Clean = false
-			}
-		}
-	}
-	if (Alert != "") {
-		makeAlert(Alert, "Input Error")
-	}
-	return Clean
-}
-
 function SortSelect() {
 	selElem = this;
 	var e = new Array;
 	th = document.getElementById("Theme").value;
 	columnText = selElem.innerHTML;
-	table = selElem.parentNode.parentNode;
-	i = table.rows[0];
+	TableHeader = selElem.parentNode;
+	TableBodyElements = TableHeader.parentNode.parentNode.getElementsByTagName('tbody');
+	table = TableBodyElements[0];
+	i = TableHeader;
 	for (var t = 0, n; n = i.cells[t]; t++) {
 		if (i.cells[t].innerHTML == columnText) {
 			columnNumber = t;
@@ -340,7 +316,7 @@ function SortSelect() {
 			}
 		}
 	}
-	for (var r = 1, i; i = table.rows[r]; r++) {
+	for (var r = 0, i; i = table.rows[r]; r++) {
 		var o = new Array;
 		for (var t = 0, n; n = i.cells[t]; t++) {
 			if (i.cells[t].tagName == "TD") {
@@ -353,7 +329,7 @@ function SortSelect() {
 	e.sort(function (e, t) {
 		if (direction == "a") {
 			if (columnClass == "number") {
-				return parseFloat(e[columnNumber]) - parseFloat(t[columnNumber])
+				return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, ''))
 			} else if (columnClass == "date") {
 				da = new Date(e[columnNumber]);
 				db = new Date(t[columnNumber]);
@@ -363,7 +339,7 @@ function SortSelect() {
 			}
 		} else {
 			if (columnClass == "number") {
-				return parseFloat(t[columnNumber]) - parseFloat(e[columnNumber])
+				return parseFloat(t[columnNumber].replace(/[,.]/g, '')) - parseFloat(e[columnNumber].replace(/[,.]/g, ''))
 			} else if (columnClass == "date") {
 				da = new Date(e[columnNumber]);
 				db = new Date(t[columnNumber]);
@@ -373,7 +349,7 @@ function SortSelect() {
 			}
 		}
 	});
-	for (var r = 0, i; i = table.rows[r + 1]; r++) {
+	for (var r = 0, i; i = table.rows[r]; r++) {
 		var o = new Array;
 		o = e[r];
 		for (var t = 0, n; n = i.cells[t]; t++) {
@@ -425,25 +401,46 @@ function UpdateFavourites(e, t) {
 
 function AddAmount(t,Target) {
 	if (t.checked) {
-		document.getElementById(Target).value=parseInt(document.getElementById(Target).value)+parseInt(t.value);
+		document.getElementById(Target).value=parseFloat(document.getElementById(Target).value)+parseFloat(t.value);
 	} else {
-		document.getElementById(Target).value=parseInt(document.getElementById(Target).value)-parseInt(t.value);
+		document.getElementById(Target).value=parseFloat(document.getElementById(Target).value)-parseFloat(t.value);
 	}
 }
 
+function Scheduler() {
+	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	} else {// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			document.getElementById('HiddenOutput').innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET",'RunScheduledJobs.php',true);
+	xmlhttp.send();
+	return false;
+}
+function Redirect(e) {
+	alert(e.getAttribute("href"));
+}
+
 function initial() {
+	Scheduler();
 	if (document.getElementsByTagName) {
 		var e = document.getElementsByTagName("a");
 		for (i = 0; i < e.length; i++) {
 			var t = e[i];
 			if (t.getAttribute("href") && t.getAttribute("rel") == "external") t.target = "_blank"
+//			e[i].onclick = function () {Redirect(this); return false};
 		}
 	}
 	var n = document.getElementsByTagName("input");
 	for (i = 0; i < n.length; i++) {
 		if (n[i].className == "date") {
 			n[i].onclick = clickDate;
-			n[i].onchange = changeDate
+			n[i].onchange = changeDate;
 		}
 		if (n[i].className == "number") n[i].onkeypress = rTN;
 		if (n[i].className == "integer") n[i].onkeypress = rTI;
@@ -452,7 +449,7 @@ function initial() {
 	}
 	var n = document.getElementsByTagName("th");
 	for (i = 0; i < n.length; i++) {
-		if (n[i].className == "SortableColumn") {
+		if (n[i].className == "SortedColumn") {
 			n[i].onclick = SortSelect
 		}
 	}

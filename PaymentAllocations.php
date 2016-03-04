@@ -25,10 +25,10 @@ if (!isset($_GET['InvID'])) {
 $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
 
-echo '<div class="page_help_text noPrint">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . _('Back to supplier inquiry') . '</a>
+echo '<div class="page_help_text">' . _('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . urlencode($SuppID) . '">' . _('Back to supplier inquiry') . '</a>
 	</div>
 	<br />';
 
@@ -48,7 +48,7 @@ $SQL = "SELECT supptrans.supplierno,
 								AND supptrans.id = suppallocs.transid_allocto)";
 
 
-$Result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0) {
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'), 'warn');
 	echo '<br /><a href ="javascript:history.back()">' . _('Go back') . '</a>';
@@ -65,19 +65,19 @@ echo '<table cellpadding="2" width="80%" class="selection">
 		</tr>';
 
 $k = 0; //row colour counter
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
 	} else {
 		echo '<tr class="OddTableRows">';
-		$k++;
+		++$k;
 	}
 
-	echo '<td>' . $myrow['supplierno'] . '</td>
-			<td>' . $myrow['suppreference'] . '</td>
-			<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-			<td class="number">' . locale_number_format($myrow['alloc'], $myrow['currdecimalplaces']) . '</td>
+	echo '<td>' . $MyRow['supplierno'] . '</td>
+			<td>' . $MyRow['suppreference'] . '</td>
+			<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
+			<td class="number">' . locale_number_format($MyRow['alloc'], $MyRow['currdecimalplaces']) . '</td>
 		</tr>';
 
 }

@@ -6,7 +6,7 @@ CreateTable('areas',
   `parentarea` char(3) NOT NULL DEFAULT '',
   `areadescription` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`areacode`)
-)", $db);
+)");
 
 
 ?>

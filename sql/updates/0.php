@@ -10,24 +10,21 @@ CreateTable('accountgroups',
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
   CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
-)",
-$db);
+)");
 
 CreateTable('accountsection',
 "CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL default '0',
   `sectionname` text NOT NULL,
   PRIMARY KEY (`sectionid`)
-)",
-$db);
+)");
 
 CreateTable('areas',
 "CREATE TABLE `areas` (
   `areacode` char(2) NOT NULL default '',
   `areadescription` varchar(25) NOT NULL default '',
   PRIMARY KEY (`areacode`)
-)",
-$db);
+)");
 
 CreateTable('bankaccounts',
 "CREATE TABLE `bankaccounts` (
@@ -39,8 +36,7 @@ CreateTable('bankaccounts',
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`),
   CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`)
-)",
-$db);
+)");
 
 CreateTable('banktrans',
 "CREATE TABLE `banktrans` (
@@ -63,8 +59,7 @@ CreateTable('banktrans',
   KEY `CurrCode` (`currcode`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-)",
-$db);
+)");
 
 CreateTable('bom',
 "CREATE TABLE `bom` (
@@ -87,8 +82,7 @@ CreateTable('bom',
   CONSTRAINT `bom_ibfk_2` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `bom_ibfk_3` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
   CONSTRAINT `bom_ibfk_4` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`)
-)",
-$db);
+)");
 
 CreateTable('buckets',
 "CREATE TABLE `buckets` (
@@ -99,8 +93,7 @@ CreateTable('buckets',
   KEY `WorkCentre` (`workcentre`),
   KEY `AvailDate` (`availdate`),
   CONSTRAINT `buckets_ibfk_1` FOREIGN KEY (`workcentre`) REFERENCES `workcentres` (`Code`)
-)",
-$db);
+)");
 
 CreateTable('chartdetails',
 "CREATE TABLE `chartdetails` (
@@ -114,8 +107,7 @@ CreateTable('chartdetails',
   KEY `Period` (`period`),
   CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`),
   CONSTRAINT `chartdetails_ibfk_2` FOREIGN KEY (`period`) REFERENCES `periods` (`PeriodNo`)
-)",
-$db);
+)");
 
 CreateTable('chartmaster',
 "CREATE TABLE `chartmaster` (
@@ -127,8 +119,7 @@ CreateTable('chartmaster',
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`),
   CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
-)",
-$db);
+)");
 
 CreateTable('cogsglpostings',
 "CREATE TABLE `cogsglpostings` (
@@ -143,8 +134,7 @@ CreateTable('cogsglpostings',
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-)",
-$db);
+)");
 
 CreateTable('companies',
 "CREATE TABLE `companies` (
@@ -173,16 +163,14 @@ CreateTable('companies',
   `gllink_stock` tinyint(1) default '1',
   `freightact` int(11) NOT NULL default '0',
   PRIMARY KEY (`coycode`)
-)",
-$db);
+)");
 
 CreateTable('config',
 "CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL default '',
   `confvalue` text NOT NULL,
   PRIMARY KEY (`confname`)
-)",
-$db);
+)");
 
 CreateTable('contractbom',
 "CREATE TABLE `contractbom` (
@@ -200,8 +188,7 @@ CreateTable('contractbom',
   CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
   CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`),
   CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`)
-)",
-$db);
+)");
 
 CreateTable('contractreqts',
 "CREATE TABLE `contractreqts` (
@@ -213,8 +200,7 @@ CreateTable('contractreqts',
   PRIMARY KEY (`contractreqid`),
   KEY `Contract` (`contract`),
   CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`ContractRef`)
-)",
-$db);
+)");
 
 CreateTable('contracts',
 "CREATE TABLE `contracts` (
@@ -247,8 +233,7 @@ CreateTable('contracts',
   CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`DebtorNo`, `BranchCode`),
   CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`CategoryID`),
   CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
-)",
-$db);
+)");
 
 CreateTable('currencies',
 "CREATE TABLE `currencies` (
@@ -259,8 +244,7 @@ CreateTable('currencies',
   `rate` double(16,4) NOT NULL default '1.0000',
   PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-)",
-$db);
+)");
 
 CreateTable('custallocns',
 "CREATE TABLE `custallocns` (
@@ -275,8 +259,7 @@ CreateTable('custallocns',
   KEY `TransID_AllocTo` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`ID`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`ID`)
-)",
-$db);
+)");
 
 createTable('custbranch',
 "CREATE TABLE `custbranch` (
@@ -321,8 +304,7 @@ createTable('custbranch',
   CONSTRAINT `custbranch_ibfk_4` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`LocCode`),
   CONSTRAINT `custbranch_ibfk_5` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`),
   CONSTRAINT `custbranch_ibfk_6` FOREIGN KEY (`defaultshipvia`) REFERENCES `shippers` (`Shipper_ID`)
-)",
-$db);
+)");
 
 CreateTable('debtorsmaster',
 "CREATE TABLE `debtorsmaster` (
@@ -364,8 +346,7 @@ CreateTable('debtorsmaster',
   CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`TermsIndicator`),
   CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
-)",
-$db);
+)");
 
 CreateTable('debtortrans',
 "CREATE TABLE `debtortrans` (
@@ -405,8 +386,7 @@ CreateTable('debtortrans',
   CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`PeriodNo`)
-)",
-$db);
+)");
 
 CreateTable('discountmatrix',
 "CREATE TABLE `discountmatrix` (
@@ -419,8 +399,7 @@ CreateTable('discountmatrix',
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`),
   CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
-)",
-$db);
+)");
 
 CreateTable('edi_orders_seg_groups',
 "CREATE TABLE `edi_orders_seg_groups` (
@@ -428,8 +407,7 @@ CreateTable('edi_orders_seg_groups',
   `maxoccur` int(4) NOT NULL default '0',
   `parentseggroup` tinyint(4) NOT NULL default '0',
   PRIMARY KEY (`seggroupno`)
-)",
-$db);
+)");
 
 CreateTable('edi_orders_segs',
 "CREATE TABLE `edi_orders_segs` (
@@ -440,8 +418,7 @@ CreateTable('edi_orders_segs',
   PRIMARY KEY (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-)",
-$db);
+)");
 
 CreateTable('ediitemmapping',
 "CREATE TABLE `ediitemmapping` (
@@ -454,8 +431,7 @@ CreateTable('ediitemmapping',
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-)",
-$db);
+)");
 
 CreateTable('edimessageformat',
 "CREATE TABLE `edimessageformat` (
@@ -468,8 +444,7 @@ CreateTable('edimessageformat',
   PRIMARY KEY (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-)",
-$db);
+)");
 
 CreateTable('freightcosts',
 "CREATE TABLE `freightcosts` (
@@ -490,8 +465,7 @@ CreateTable('freightcosts',
   KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`),
   CONSTRAINT `freightcosts_ibfk_1` FOREIGN KEY (`locationfrom`) REFERENCES `locations` (`LocCode`),
   CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`Shipper_ID`)
-)",
-$db);
+)");
 
 CreateTable('gltrans',
 "CREATE TABLE `gltrans` (
@@ -518,8 +492,7 @@ CreateTable('gltrans',
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`PeriodNo`)
-)",
-$db);
+)");
 
 CreateTable('grns',
 "CREATE TABLE `grns` (
@@ -539,8 +512,7 @@ CreateTable('grns',
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`PODetailItem`)
-)",
-$db);
+)");
 
 CreateTable('holdreasons',
 "CREATE TABLE `holdreasons` (
@@ -550,8 +522,7 @@ CreateTable('holdreasons',
   PRIMARY KEY (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-)",
-$db);
+)");
 
 CreateTable('lastcostrollup',
 "CREATE TABLE `lastcostrollup` (
@@ -566,8 +537,7 @@ CreateTable('lastcostrollup',
   `newmatcost` decimal(20,4) NOT NULL default '0.0000',
   `newlabcost` decimal(20,4) NOT NULL default '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL default '0.0000'
-)",
-$db);
+)");
 
 CreateTable('locations',
 "CREATE TABLE `locations` (
@@ -582,8 +552,7 @@ CreateTable('locations',
   `contact` varchar(30) NOT NULL default '',
   `taxauthority` tinyint(4) NOT NULL default '1',
   PRIMARY KEY (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('locstock',
 "CREATE TABLE `locstock` (
@@ -595,8 +564,7 @@ CreateTable('locstock',
   KEY `StockID` (`stockid`),
   CONSTRAINT `locstock_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `locstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
-)",
-$db);
+)");
 
 CreateTable('loctransfers',
 "CREATE TABLE `loctransfers` (
@@ -615,8 +583,7 @@ CreateTable('loctransfers',
   CONSTRAINT `loctransfers_ibfk_1` FOREIGN KEY (`shiploc`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
-)",
-$db);
+)");
 
 CreateTable('orderdeliverydifferenceslog',
 "CREATE TABLE `orderdeliverydifferenceslog` (
@@ -635,8 +602,7 @@ CreateTable('orderdeliverydifferenceslog',
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`)
-)",
-$db);
+)");
 
 createTable('paymentmethods',
 "CREATE TABLE `paymentmethods` (
@@ -645,8 +611,7 @@ createTable('paymentmethods',
   `paymenttype` int(11) NOT NULL default '1',
   `receipttype` int(11) NOT NULL default '1',
   PRIMARY KEY (`paymentid`)
-)",
-$db);
+)");
 
 CreateTable('paymentterms',
 "CREATE TABLE `paymentterms` (
@@ -657,8 +622,7 @@ CreateTable('paymentterms',
   PRIMARY KEY (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-)",
-$db);
+)");
 
 CreateTable('periods',
 "CREATE TABLE `periods` (
@@ -666,8 +630,7 @@ CreateTable('periods',
   `lastdate_in_period` date NOT NULL default '0000-00-00',
   PRIMARY KEY (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-)",
-$db);
+)");
 
 CreateTable('prices',
 "CREATE TABLE `prices` (
@@ -685,8 +648,7 @@ CreateTable('prices',
   CONSTRAINT `prices_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `prices_ibfk_2` FOREIGN KEY (`currabrev`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `prices_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
-)",
-$db);
+)");
 
 CreateTable('purchdata',
 "CREATE TABLE `purchdata` (
@@ -704,8 +666,7 @@ CreateTable('purchdata',
   KEY `Preferred` (`preferred`),
   CONSTRAINT `purchdata_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `purchdata_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`)
-)",
-$db);
+)");
 
 CreateTable('purchorderdetails',
 "CREATE TABLE `purchorderdetails` (
@@ -733,8 +694,7 @@ CreateTable('purchorderdetails',
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`OrderNo`)
-)",
-$db);
+)");
 
 CreateTable('purchorders',
 "CREATE TABLE `purchorders` (
@@ -759,8 +719,7 @@ CreateTable('purchorders',
   KEY `AllowPrintPO` (`allowprint`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('recurringsalesorders',
 "CREATE TABLE `recurringsalesorders` (
@@ -793,8 +752,7 @@ CreateTable('recurringsalesorders',
   KEY `locationindex` (`fromstkloc`),
   KEY `branchcode` (`branchcode`,`debtorno`),
   CONSTRAINT `recurringsalesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
-)",
-$db);
+)");
 
 CreateTable('recurrsalesorderdetails',
 "CREATE TABLE `recurrsalesorderdetails` (
@@ -809,8 +767,7 @@ CreateTable('recurrsalesorderdetails',
   KEY `stkcode` (`stkcode`),
   CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
   CONSTRAINT `recurrsalesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
-)",
-$db);
+)");
 
 CreateTable('reportcolumns',
 "CREATE TABLE `reportcolumns` (
@@ -830,8 +787,7 @@ CreateTable('reportcolumns',
   `constant` double NOT NULL default '0',
   PRIMARY KEY (`reportid`,`colno`),
   CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`ReportID`)
-)",
-$db);
+)");
 
 CreateTable('reportheaders',
 "CREATE TABLE `reportheaders` (
@@ -855,8 +811,7 @@ CreateTable('reportheaders',
   `lower4` varchar(10) NOT NULL default '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-)",
-$db);
+)");
 
 CreateTable('salesanalysis',
 "CREATE TABLE `salesanalysis` (
@@ -885,8 +840,7 @@ CreateTable('salesanalysis',
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-)",
-$db);
+)");
 
 CreateTable('salescat',
 "CREATE TABLE `salescat` (
@@ -894,8 +848,7 @@ CreateTable('salescat',
   `parentcatid` tinyint(4) default NULL,
   `salescatname` varchar(30) default NULL,
   PRIMARY KEY (`salescatid`)
-)",
-$db);
+)");
 
 CreateTable('salescatprod',
 "CREATE TABLE `salescatprod` (
@@ -906,8 +859,7 @@ CreateTable('salescatprod',
   KEY `stockid` (`stockid`),
   CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
-)",
-$db);
+)");
 
 CreateTable('salesglpostings',
 "CREATE TABLE `salesglpostings` (
@@ -922,8 +874,7 @@ CreateTable('salesglpostings',
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-)",
-$db);
+)");
 
 Createtable('salesman',
 "CREATE TABLE `salesman` (
@@ -935,8 +886,7 @@ Createtable('salesman',
   `breakpoint` decimal(20,4) NOT NULL default '0.0000',
   `commissionrate2` double(16,4) NOT NULL default '0.0000',
   PRIMARY KEY (`salesmancode`)
-)",
-$db);
+)");
 
 CreateTable('salesorderdetails',
 "CREATE TABLE `salesorderdetails` (
@@ -956,8 +906,7 @@ CreateTable('salesorderdetails',
   KEY `Completed` (`completed`),
   CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`),
   CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`StockID`)
-)",
-$db);
+)");
 
 CreateTable('salesorders',
 "CREATE TABLE `salesorders` (
@@ -995,8 +944,7 @@ CreateTable('salesorders',
   CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`Shipper_ID`),
   CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('salestypes',
 "CREATE TABLE `salestypes` (
@@ -1004,8 +952,7 @@ CreateTable('salestypes',
   `sales_type` char(20) NOT NULL default '',
   PRIMARY KEY (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-)",
-$db);
+)");
 
 CreateTable('scripts',
 "CREATE TABLE `scripts` (
@@ -1014,8 +961,7 @@ CreateTable('scripts',
   `pagedescription` text NOT NULL,
   PRIMARY KEY (`pageid`),
   KEY `FileName` (`filename`)
-)",
-$db);
+)");
 
 CreateTable('securitygroups',
 "CREATE TABLE `securitygroups` (
@@ -1026,24 +972,21 @@ CreateTable('securitygroups',
   KEY `tokenid` (`tokenid`),
   CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
   CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
-)",
-$db);
+)");
 
 CreateTable('securityroles',
 "CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL auto_increment,
   `secrolename` text NOT NULL,
   PRIMARY KEY (`secroleid`)
-)",
-$db);
+)");
 
 CreateTable('securitytokens',
 "CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL default '0',
   `tokenname` text NOT NULL,
   PRIMARY KEY (`tokenid`)
-)",
-$db);
+)");
 
 CreateTable('shipmentcharges',
 "CREATE TABLE `shipmentcharges` (
@@ -1060,8 +1003,7 @@ CreateTable('shipmentcharges',
   KEY `TransType_2` (`transtype`),
   CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`ShiptRef`),
   CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`TypeID`)
-)",
-$db);
+)");
 
 CreateTable('shipments',
 "CREATE TABLE `shipments` (
@@ -1078,8 +1020,7 @@ CreateTable('shipments',
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`),
   CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
-)",
-$db);
+)");
 
 CreateTable('shippers',
 "CREATE TABLE `shippers` (
@@ -1087,8 +1028,7 @@ CreateTable('shippers',
   `shippername` char(40) NOT NULL default '',
   `mincharge` double(16,4) NOT NULL default '0.0000',
   PRIMARY KEY (`shipper_id`)
-)",
-$db);
+)");
 
 CreateTable('stockcategory',
 "CREATE TABLE `stockcategory` (
@@ -1103,8 +1043,7 @@ CreateTable('stockcategory',
   PRIMARY KEY (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-)",
-$db);
+)");
 
 CreateTable('stockcheckfreeze',
 "CREATE TABLE `stockcheckfreeze` (
@@ -1115,8 +1054,7 @@ CreateTable('stockcheckfreeze',
   KEY `LocCode` (`loccode`),
   CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('stockcounts',
 "CREATE TABLE `stockcounts` (
@@ -1130,8 +1068,7 @@ CreateTable('stockcounts',
   KEY `LocCode` (`loccode`),
   CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('stockmaster',
 "CREATE TABLE `stockmaster` (
@@ -1167,8 +1104,7 @@ CreateTable('stockmaster',
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
   CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
-)",
-$db);
+)");
 
 CreateTable('stockmoves',
 "CREATE TABLE `stockmoves` (
@@ -1206,8 +1142,7 @@ CreateTable('stockmoves',
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-)",
-$db);
+)");
 
 CreateTable('stockserialitems',
 "CREATE TABLE `stockserialitems` (
@@ -1220,8 +1155,7 @@ CreateTable('stockserialitems',
   KEY `LocCode` (`loccode`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('stockserialmoves',
 "CREATE TABLE `stockserialmoves` (
@@ -1235,8 +1169,7 @@ CreateTable('stockserialmoves',
   KEY `StockID_SN` (`stockid`,`serialno`),
   CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
   CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
-)",
-$db);
+)");
 
 CreateTable('suppallocs',
 "CREATE TABLE `suppallocs` (
@@ -1251,8 +1184,7 @@ CreateTable('suppallocs',
   KEY `DateAlloc` (`datealloc`),
   CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`ID`),
   CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`ID`)
-)",
-$db);
+)");
 
 CreateTable('suppliercontacts',
 "CREATE TABLE `suppliercontacts` (
@@ -1268,8 +1200,7 @@ CreateTable('suppliercontacts',
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`),
   CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
-)",
-$db);
+)");
 
 CreateTable('suppliers',
 "CREATE TABLE `suppliers` (
@@ -1298,8 +1229,7 @@ CreateTable('suppliers',
   CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
   CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`)
-)",
-$db);
+)");
 
 CreateTable('supptrans',
 "CREATE TABLE `supptrans` (
@@ -1331,8 +1261,7 @@ CreateTable('supptrans',
   KEY `Type` (`type`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-)",
-$db);
+)");
 
 CreateTable('systypes',
 "CREATE TABLE `systypes` (
@@ -1341,8 +1270,7 @@ CreateTable('systypes',
   `typeno` int(11) NOT NULL default '1',
   PRIMARY KEY (`typeid`),
   KEY `TypeNo` (`typeno`)
-)",
-$db);
+)");
 
 CreateTable('taxauthlevels',
 "CREATE TABLE `taxauthlevels` (
@@ -1355,8 +1283,7 @@ CreateTable('taxauthlevels',
   KEY `DispatchTaxAuthority` (`dispatchtaxauthority`),
   CONSTRAINT `taxauthlevels_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`),
   CONSTRAINT `taxauthlevels_ibfk_2` FOREIGN KEY (`dispatchtaxauthority`) REFERENCES `taxauthorities` (`TaxID`)
-)",
-$db);
+)");
 
 CreateTable('taxauthorities',
 "CREATE TABLE `taxauthorities` (
@@ -1372,16 +1299,14 @@ CreateTable('taxauthorities',
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
   CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`)
-)",
-$db);
+)");
 
 CreateTable('unitsofmeasure',
 "CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL auto_increment,
   `unitname` varchar(15) NOT NULL default '',
   PRIMARY KEY (`unitid`)
-)",
-$db);
+)");
 
 CreateTable('workcentres',
 "CREATE TABLE `workcentres` (
@@ -1396,8 +1321,7 @@ CreateTable('workcentres',
   KEY `Description` (`description`),
   KEY `Location` (`location`),
   CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('worksorders',
 "CREATE TABLE `worksorders` (
@@ -1421,8 +1345,7 @@ CreateTable('worksorders',
   KEY `WORef` (`woref`,`loccode`),
   CONSTRAINT `workorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `workorders_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-)",
-$db);
+)");
 
 CreateTable('www_users',
 "CREATE TABLE `www_users` (
@@ -1448,11 +1371,10 @@ CreateTable('www_users',
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
   CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
-NewConfigValue('DBUpdateNumber', 0, $db);
+NewConfigValue('DBUpdateNumber', 0);
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

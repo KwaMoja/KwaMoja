@@ -52,10 +52,10 @@ class Contract {
 		$this->Status = 0;
 	}
 
-	function Add_To_ContractBOM($StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces) {
+	function Add_To_ContractBOM($StockId, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces) {
 
-		if (isset($StockID) and $Quantity != 0) {
-			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter, $StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces);
+		if (isset($StockId) and $Quantity != 0) {
+			$this->ContractBOM[$this->BOMComponentCounter] = new ContractComponent($this->BOMComponentCounter, $StockId, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces);
 			$this->BOMComponentCounter++;
 			return 1;
 		}
@@ -63,10 +63,9 @@ class Contract {
 	}
 
 	function Remove_ContractComponent($ContractComponent_ID) {
-		global $db;
-		$result = DB_query("DELETE FROM contractbom
+		$Result = DB_query("DELETE FROM contractbom
 											WHERE contractref='" . $this->ContractRef . "'
-											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'", $db);
+											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'");
 		unset($this->ContractBOM[$ContractComponent_ID]);
 	}
 
@@ -84,8 +83,7 @@ class Contract {
 	}
 
 	function Remove_ContractRequirement($ContractRequirementID) {
-		global $db;
-		$result = DB_query("DELETE FROM contractreqts WHERE contractreqid='" . $this->ContractReqts[$ContractRequirementID]->ContractReqID . "'", $db);
+		$Result = DB_query("DELETE FROM contractreqts WHERE contractreqid='" . $this->ContractReqts[$ContractRequirementID]->ContractReqID . "'");
 		unset($this->ContractReqts[$ContractRequirementID]);
 	}
 
@@ -94,7 +92,7 @@ class Contract {
 
 class ContractComponent {
 	var $ComponentID;
-	var $StockID;
+	var $StockId;
 	var $ItemDescription;
 	var $WorkCentre;
 	var $Quantity;
@@ -102,11 +100,11 @@ class ContractComponent {
 	var $UOM;
 	var $DecimalPlaces;
 
-	function ContractComponent($ComponentID, $StockID, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces = 0) {
+	function ContractComponent($ComponentID, $StockId, $ItemDescription, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces = 0) {
 
 		/* Constructor function to add a new Contract Component object with passed params */
 		$this->ComponentID = $ComponentID;
-		$this->StockID = $StockID;
+		$this->StockID = $StockId;
 		$this->ItemDescription = $ItemDescription;
 		$this->WorkCentre = $WorkCentre;
 		$this->Quantity = $Quantity;

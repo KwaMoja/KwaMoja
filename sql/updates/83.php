@@ -1,16 +1,16 @@
 <?php
 
-DropConstraint('stockcatproperties', 'stockcatproperties_ibfk_2', $db);
-DropConstraint('stockcatproperties', 'stockcatproperties_ibfk_3', $db);
+DropConstraint('stockcatproperties', 'stockcatproperties_ibfk_2');
+DropConstraint('stockcatproperties', 'stockcatproperties_ibfk_3');
 
-RemoveScript('FixedAssetList.php', $db);
-RemoveScript('MenuAccess.php', $db);
-RemoveScript('OrderEntryDiscountPricing.php', $db);
-RemoveScript('PrintSalesOrder.php', $db);
-RemoveScript('ReportBug.php', $db);
-RemoveScript('ReportletContainer.php', $db);
-RemoveScript('SystemCheck.php', $db);
+RemoveScript('FixedAssetList.php');
+RemoveScript('MenuAccess.php');
+RemoveScript('OrderEntryDiscountPricing.php');
+RemoveScript('PrintSalesOrder.php');
+RemoveScript('ReportBug.php');
+RemoveScript('ReportletContainer.php');
+RemoveScript('SystemCheck.php');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

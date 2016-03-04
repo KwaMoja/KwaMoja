@@ -14,7 +14,7 @@
  */
 
 $_GET['ReportID'] = 2;
-$AllowAnyone = true;
+
 include('includes/session.inc');
 /*The company database to use */
 $DatabaseName = $_SESSION['DatabaseName'];
@@ -32,29 +32,29 @@ include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/PDFSalesAnalysis.inc');
 
 include('includes/htmlMimeMail.php');
-$mail = new htmlMimeMail();
+$Mail = new htmlMimeMail();
 
 if ($Counter > 0) {
-	$pdf->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
-	$pdf->__destruct();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
-	$mail->setText(_('Please find herewith sales report'));
-	$mail->SetSubject(_('Sales Analysis Report'));
-	$mail->addAttachment($attachment, 'SalesAnalysis_' . date('Y-m-d') . '.pdf', 'application/pdf');
+	$PDF->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
+	$PDF->__destruct();
+	$attachment = $Mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
+	$Mail->setText(_('Please find herewith sales report'));
+	$Mail->SetSubject(_('Sales Analysis Report'));
+	$Mail->addAttachment($attachment, 'SalesAnalysis_' . date('Y-m-d') . '.pdf', 'application/pdf');
 	if ($_SESSION['SmtpSetting'] == 0) {
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send($Recipients);
+		$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$Result = $Mail->send($Recipients);
 	} else {
-		$result = SendmailBySmtp($mail, $Recipients);
+		$Result = SendmailBySmtp($Mail, $Recipients);
 	}
 
 } else {
-	$mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
+	$Mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
 	if ($_SESSION['SmtpSetting'] == 0) {
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send($Recipients);
+		$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$Result = $Mail->send($Recipients);
 	} else {
-		$result = SendmailBySmtp($mail, $Recipients);
+		$Result = SendmailBySmtp($Mail, $Recipients);
 	}
 
 }

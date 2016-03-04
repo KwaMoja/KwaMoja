@@ -33,7 +33,7 @@ $MessageType = 'INVOIC';
 
 include('includes/SQL_CommonFunctions.inc');
 
-$EDITrans = GetNextTransNo(99, $db);
+$EDITrans = GetNextTransNo(99);
 
 /* Get the message lines for the heading
 replace variable names with data
@@ -41,14 +41,14 @@ write the output to a file one line at a time
 
 Need code of supplier or customer and the type of message INVOIC or ORDERS*/
 
-$sql = "SELECT section,
+$SQL = "SELECT section,
 		linetext
 	FROM edimessageformat
 	WHERE partnercode='" . $PartnerCode . "'
 	AND messagetype='" . $MessageType . "'
 	ORDER BY sequenceno";
 
-$MessageLinesResult = DB_query($sql, $db);
+$MessageLinesResult = DB_query($SQL);
 
 $fp = fopen($EDI_Pending . '/EDI_' . $MessageType . '_' . $EDITrans, 'w');
 

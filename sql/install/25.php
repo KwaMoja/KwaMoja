@@ -9,7 +9,7 @@ CreateTable('custnotes',
   `date` date NOT NULL DEFAULT '0000-00-00',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-)", $db);
+)");
 
 
 ?>

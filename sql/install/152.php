@@ -8,7 +8,7 @@ CreateTable('woserialnos',
   `quantity` double NOT NULL DEFAULT '1',
   `qualitytext` text NOT NULL,
   PRIMARY KEY (`wo`,`stockid`,`serialno`)
-)", $db);
+)");
 
 
 ?>

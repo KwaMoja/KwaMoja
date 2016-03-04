@@ -9,7 +9,7 @@ CreateTable('mrpparameters',
   `eoqflag` varchar(5) DEFAULT NULL,
   `usemrpdemands` varchar(5) DEFAULT NULL,
   `leeway` smallint(6) DEFAULT NULL
-)", $db);
+)");
 
 
 ?>

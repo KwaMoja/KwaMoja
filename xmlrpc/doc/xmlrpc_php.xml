@@ -659,8 +659,8 @@ $Id: xmlrpc_php.xml,v 1.27 2008/09/19 18:35:33 ggiunta Exp $
           </listitem>
 
           <listitem>
-            <para>Added a new client method: <code>setKey($key,
-            $keypass)</code> to be used in HTTPS connections</para>
+            <para>Added a new client method: <code>setKey($Key,
+            $Keypass)</code> to be used in HTTPS connections</para>
           </listitem>
 
           <listitem>
@@ -1338,9 +1338,9 @@ $myStruct = new xmlrpcval(
       array(
         "street" =&gt; new xmlrpcval("Fifht Ave", "string"),
         "city" =&gt; new xmlrpcval("NY", "string")
-      ), 
+      ),
       "struct")
-  ), 
+  ),
   "struct");
 </programlisting>
 
@@ -1581,15 +1581,15 @@ for ($i = 0; $i &lt; $val-&gt;arraySize(); $i++)
 
           <para>Returns the next (key, value) pair from the struct, when
           <parameter>$val</parameter> is a struct.
-          <parameter>$value</parameter> is an xmlrpcval itself. See also <xref
+          <parameter>$Value</parameter> is an xmlrpcval itself. See also <xref
           linkend="structreset" />.</para>
 
           <para><programlisting language="php">
 // iterating over all values of a struct object
 $val-&gt;structreset();
-while (list($key, $v) = $val-&gt;structEach())
+while (list($Key, $v) = $val-&gt;structEach())
 {
-  echo "Element $key of the struct is of type ".$v-&gt;kindOf();
+  echo "Element $Key of the struct is of type ".$v-&gt;kindOf();
 }
 </programlisting></para>
         </sect3>
@@ -1660,7 +1660,7 @@ while (list($key, $v) = $val-&gt;structEach())
         name</emphasis> server:</para>
 
         <programlisting language="php">
-$msg = new xmlrpcmsg("examples.getStateName", array(new xmlrpcval(23, "int")));
+$Msg = new xmlrpcmsg("examples.getStateName", array(new xmlrpcval(23, "int")));
 </programlisting>
 
         <para>This example requests the name of state number 23. For more
@@ -2108,7 +2108,7 @@ $client = new xmlrpc_client("/RPC2", "betty.userland.com", 80);
 
               <paramdef><type>string</type><parameter>$name</parameter></paramdef>
 
-              <paramdef><type>string</type><parameter>$value</parameter></paramdef>
+              <paramdef><type>string</type><parameter>$Value</parameter></paramdef>
 
               <paramdef><type>string</type><parameter>$path</parameter></paramdef>
 
@@ -2122,7 +2122,7 @@ $client = new xmlrpc_client("/RPC2", "betty.userland.com", 80);
           server along with every further request (useful e.g. for keeping
           session info outside of the xml-rpc payload).</para>
 
-          <para><parameter>$value</parameter> is optional, and defaults to
+          <para><parameter>$Value</parameter> is optional, and defaults to
           null.</para>
 
           <para><parameter>$path, $domain and $port</parameter> are optional,
@@ -2180,7 +2180,7 @@ $client = new xmlrpc_client("/RPC2", "betty.userland.com", 80);
             <funcprototype>
               <funcdef><type>void</type><function>setDebug</function></funcdef>
 
-              <paramdef><type>int</type><parameter>$debugLvl</parameter></paramdef>
+              <paramdef><type>int</type><parameter>$DebugLvl</parameter></paramdef>
             </funcprototype>
           </funcsynopsis>
 
@@ -2208,9 +2208,9 @@ $client = new xmlrpc_client("/RPC2", "betty.userland.com", 80);
             <funcprototype>
               <funcdef><type>void</type><function>setKey</function></funcdef>
 
-              <paramdef><type>int</type><parameter>$key</parameter></paramdef>
+              <paramdef><type>int</type><parameter>$Key</parameter></paramdef>
 
-              <paramdef><type>int</type><parameter>$keypass</parameter></paramdef>
+              <paramdef><type>int</type><parameter>$Keypass</parameter></paramdef>
             </funcprototype>
           </funcsynopsis>
 
@@ -2568,7 +2568,7 @@ if ($resp-&gt;faultCode()) echo 'KO. Error: '.$resp-&gt;faultString(); else echo
 
         <para>The synopsis of a method handler function is:</para>
 
-        <para><synopsis>xmlrpcresp $resp = function (xmlrpcmsg $msg)</synopsis></para>
+        <para><synopsis>xmlrpcresp $resp = function (xmlrpcmsg $Msg)</synopsis></para>
 
         <para>No text should be echoed 'to screen' by the handler function, or
         it will break the xml response sent back to the client. This applies
@@ -3781,11 +3781,11 @@ $srv = new xmlrpc_server($methods);
           <funcprototype>
             <funcdef><type>void</type><function>xmlrpc_debugmsg</function></funcdef>
 
-            <paramdef><type>string</type><parameter>$debugstring</parameter></paramdef>
+            <paramdef><type>string</type><parameter>$Debugstring</parameter></paramdef>
           </funcprototype>
         </funcsynopsis>
 
-        <para>Sends the contents of <parameter>$debugstring</parameter> in XML
+        <para>Sends the contents of <parameter>$Debugstring</parameter> in XML
         comments in the server return payload. If a PHP client has debugging
         turned on, the user will be able to see server debug
         information.</para>
@@ -4026,7 +4026,7 @@ if ($v-&gt;kindOf() != "array") {
       <para>1- use the serialize() method on the response object.</para>
 
       <programlisting language="php">
-$resp = $client-&gt;send($msg);
+$resp = $client-&gt;send($Msg);
 if (!$resp-&gt;faultCode())
   $data_to_be_saved = $resp-&gt;serialize();
 </programlisting>
@@ -4046,7 +4046,7 @@ if (!$resp-&gt;faultCode())
       <programlisting language="php">
 $client = new xmlrpc_client($url);
 $client-&gt;return_type = 'xml';
-$resp = $client-&gt;send($msg);
+$resp = $client-&gt;send($Msg);
 if (!$resp-&gt;faultCode())
   $data_to_be_saved = $resp-&gt;value();
 </programlisting>

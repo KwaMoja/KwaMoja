@@ -12,7 +12,7 @@ CreateTable('salescatprod',
   KEY `manufacturers_id` (`manufacturers_id`),
   CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
-)", $db);
+)");
 
 
 ?>

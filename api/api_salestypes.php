@@ -11,12 +11,12 @@ function GetSalesTypeList($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT typeabbrev FROM salestypes";
-	$result = DB_query($sql, $db);
+	$SQL = "SELECT typeabbrev FROM salestypes";
+	$Result = api_DB_query($SQL);
 	$i = 0;
-	while ($myrow = DB_fetch_array($result)) {
-		$SalesTypeList[$i] = $myrow[0];
-		$i++;
+	while ($MyRow = DB_fetch_array($Result)) {
+		$SalesTypeList[$i] = $MyRow[0];
+		++$i;
 	}
 	$Errors[0] = 0;
 	$Errors[1] = $SalesTypeList;
@@ -35,12 +35,12 @@ function GetSalesTypeDetails($salestype, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors, $db);
+	$Errors = VerifySalesType($salestype, sizeof($Errors), $Errors);
 	if (sizeof($Errors) == 0) {
-		$sql = "SELECT * FROM salestypes WHERE typeabbrev='" . $salestype . "'";
-		$result = DB_query($sql, $db);
+		$SQL = "SELECT * FROM salestypes WHERE typeabbrev='" . $salestype . "'";
+		$Result = api_DB_query($SQL);
 		$Errors[0] = 0;
-		$Errors[1] = DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($Result);
 		return $Errors;
 	} else {
 		return $Errors;
@@ -61,15 +61,15 @@ function InsertSalesType($SalesTypeDetails, $user, $password) {
 
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($SalesTypeDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($SalesTypeDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
-	$sql = "INSERT INTO salestypes ('" . mb_substr($FieldNames, 0, -2) . "')
+	$SQL = "INSERT INTO salestypes ('" . mb_substr($FieldNames, 0, -2) . "')
 				VALUES ('" . mb_substr($FieldValues, 0, -2) . "') ";
 	if (sizeof($Errors) == 0) {
-		$result = DB_Query($sql, $db);
-		if (DB_error_no($db) != 0) {
+		$Result = DB_Query($SQL);
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

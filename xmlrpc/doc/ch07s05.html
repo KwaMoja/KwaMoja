@@ -11,7 +11,7 @@
       relevant php function, which is responsible for returning a
       <code class="classname">xmlrpcresp</code> object, that will be serialized back
       to the caller.</p><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id936390"></a>Method handler functions</h3></div></div></div><p>Both php functions and class methods can be registered as xmlrpc
-        method handlers.</p><p>The synopsis of a method handler function is:</p><pre class="synopsis">xmlrpcresp $resp = function (xmlrpcmsg $msg)</pre><p>No text should be echoed 'to screen' by the handler function, or
+        method handlers.</p><p>The synopsis of a method handler function is:</p><pre class="synopsis">xmlrpcresp $resp = function (xmlrpcmsg $Msg)</pre><p>No text should be echoed 'to screen' by the handler function, or
         it will break the xml response sent back to the client. This applies
         also to error and warning messages that PHP prints to screen unless
         the appropriate parameters have been set in the php.in file. Another

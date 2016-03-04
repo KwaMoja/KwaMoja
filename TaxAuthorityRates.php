@@ -8,11 +8,13 @@ if (isset($_GET['TaxAuthority'])) {
 }
 
 include('includes/session.inc');
-$Title = _('Tax Rates');
+$Title = _('Tax Rates Maintenance');
+$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
+$BookMark = 'TaxAuthorityRates';// Anchor's id in the manual's html document.
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Supplier Types') . '" alt="" />' . $Title . '
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . $Title . '" alt="" />' . $Title . '
 	</p>';
 
 if (!isset($TaxAuthority)) {
@@ -27,15 +29,15 @@ if (isset($_POST['UpdateRates'])) {
 										taxauthrates.taxrate,
 										taxauthrates.dispatchtaxprovince
 								FROM taxauthrates
-								WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'", $db);
+								WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'");
 
-	while ($myrow = DB_fetch_array($TaxRatesResult)) {
+	while ($MyRow = DB_fetch_array($TaxRatesResult)) {
 
-		$sql = "UPDATE taxauthrates SET taxrate=" . (filter_number_format($_POST[$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid']]) / 100) . "
-						WHERE taxcatid = '" . $myrow['taxcatid'] . "'
-						AND dispatchtaxprovince = '" . $myrow['dispatchtaxprovince'] . "'
+		$SQL = "UPDATE taxauthrates SET taxrate=" . (filter_number_format($_POST[$MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid']]) / 100) . "
+						WHERE taxcatid = '" . $MyRow['taxcatid'] . "'
+						AND dispatchtaxprovince = '" . $MyRow['dispatchtaxprovince'] . "'
 						AND taxauthority = '" . $TaxAuthority . "'";
-		DB_query($sql, $db);
+		DB_query($SQL);
 	}
 	prnMsg(_('All rates updated successfully'), 'info');
 }
@@ -47,10 +49,10 @@ if (isset($_POST['UpdateRates'])) {
  */
 
 $TaxAuthDetail = DB_query("SELECT description
-							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'", $db);
-$myrow = DB_fetch_row($TaxAuthDetail);
+							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'");
+$MyRow = DB_fetch_row($TaxAuthDetail);
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="TaxAuthority" value="' . $TaxAuthority . '" />';
@@ -68,7 +70,7 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 							ON taxauthrates.taxcatid=taxcategories.taxcatid
 							WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'
 							ORDER BY taxauthrates.dispatchtaxprovince,
-							taxauthrates.taxcatid", $db);
+							taxauthrates.taxcatid");
 
 if (isset($_SESSION['FirstStart'])) {
 	echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first create a tax authority.') .
@@ -78,21 +80,23 @@ if (isset($_SESSION['FirstStart'])) {
 
 if (DB_num_rows($TaxRatesResult) > 0) {
 
-	echo '<table class="selection">';
-	echo '<tr>
-			<th colspan="3"><h3>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</h3></th>
-		</tr>
-		<tr>
-			<th class="SortableColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-			<th class="SortableColumn">' . _('Tax Category') . '</th>
-			<th>' . _('Tax Rate') . ' %</th>
-		</tr>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th colspan="3"><h3>' . _('Update') . ' ' . $MyRow[0] . ' ' . _('Rates') . '</h3></th>
+				</tr>
+				<tr>
+					<th class="SortedColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+					<th class="SortedColumn">' . _('Tax Category') . '</th>
+					<th>' . _('Tax Rate') . ' %</th>
+				</tr>
+			</thead>';
 	$k = 0; //row counter to determine background colour
 	$OldProvince = '';
+	echo '<tbody>';
+	while ($MyRow = DB_fetch_array($TaxRatesResult)) {
 
-	while ($myrow = DB_fetch_array($TaxRatesResult)) {
-
-		if ($OldProvince != $myrow['dispatchtaxprovince'] and $OldProvince != '') {
+		if ($OldProvince != $MyRow['dispatchtaxprovince'] and $OldProvince != '') {
 			echo '<tr style="background-color:#555555"><td colspan="3"></td></tr>';
 		}
 
@@ -106,13 +110,14 @@ if (DB_num_rows($TaxRatesResult) > 0) {
 
 		printf('<td>%s</td>
 				<td>%s</td>
-				<td><input type="text" class="number" name="%s" required="required" minlength="1" maxlength="5" size="5" value="%s" /></td>
-				</tr>', $myrow['taxprovincename'], $myrow['taxcatname'], $myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'], locale_number_format($myrow['taxrate'] * 100, 2));
+				<td><input type="text" class="number" name="%s" required="required" maxlength="5" size="5" value="%s" /></td>
+				</tr>', $MyRow['taxprovincename'], _($MyRow['taxcatname']), $MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'], locale_number_format($MyRow['taxrate'] * 100, 2));
 
-		$OldProvince = $myrow['dispatchtaxprovince'];
+		$OldProvince = $MyRow['dispatchtaxprovince'];
 
 	}
 	//end of while loop
+	echo '</tbody>';
 	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="UpdateRates" value="' . _('Update Rates') . '" />
@@ -123,11 +128,8 @@ if (DB_num_rows($TaxRatesResult) > 0) {
 
 echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities') . '</a>
-		<br />
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Groupings') . '</a>
-		<br />
 		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Categories') . '</a>
-		<br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Provinces') . '</a>
 	</div>';
 

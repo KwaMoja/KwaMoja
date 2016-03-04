@@ -39,17 +39,17 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
+		$SQL = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
 						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
-		$msg = _('The work centre record has been updated');
+		$Msg = _('The work centre record has been updated');
 	} elseif ($InputError != 1) {
 
 		/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
 
-		$sql = "INSERT INTO workcentres (code,
+		$SQL = "INSERT INTO workcentres (code,
 										location,
 										description,
 										overheadrecoveryact,
@@ -60,13 +60,13 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['OverheadRecoveryAct'] . "',
 						'" . $_POST['OverheadPerHour'] . "'
 						)";
-		$msg = _('The new work centre has been added to the database');
+		$Msg = _('The new work centre has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 
 	if ($InputError != 1) {
-		$result = DB_query($sql, $db, _('The update/addition of the work centre failed because'));
-		prnMsg($msg, 'success');
+		$Result = DB_query($SQL, _('The update/addition of the work centre failed because'));
+		prnMsg($Msg, 'success');
 		unset($_POST['Location']);
 		unset($_POST['Description']);
 		unset($_POST['Code']);
@@ -80,23 +80,24 @@ if (isset($_POST['submit'])) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
 
-	$sql = "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
-		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('BOM items referring to this work centre code'), 'warn');
+	$SQL = "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
+		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('BOM items referring to this work centre code'), 'warn');
 	} else {
-		$sql = "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0] > 0) {
-			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'), 'warn');
+		$SQL = "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0] > 0) {
+			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('Contract BOM items referring to this work centre code'), 'warn');
 		} else {
-			$sql = "DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
-			$result = DB_query($sql, $db);
+			$SQL = "DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
+			$Result = DB_query($SQL);
 			prnMsg(_('The selected work centre record has been deleted'), 'succes');
 		} // end of Contract BOM test
 	} // end of BOM test
+	unset($SelectedWC);
 }
 
 if (!isset($SelectedWC)) {
@@ -105,43 +106,39 @@ if (!isset($SelectedWC)) {
 	then none of the above are true and the list of work centres will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	echo '<p class="page_title_text noPrint" >
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+	echo '<p class="page_title_text" >
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	if ($_SESSION['RestrictLocations'] == 0) {
-		$sql = "SELECT workcentres.code,
-						workcentres.description,
-						locations.locationname,
-						workcentres.overheadrecoveryact,
-						workcentres.overheadperhour
-					FROM workcentres
-					INNER JOIN locations
-						ON workcentres.location = locations.loccode";
-	} else {
-		$sql = "SELECT workcentres.code,
-						workcentres.description,
-						locations.locationname,
-						workcentres.overheadrecoveryact,
-						workcentres.overheadperhour
-					FROM workcentres
-					INNER JOIN locations
-						ON workcentres.location = locations.loccode
-					INNER JOIN  www_users
-						ON locations.loccode=www_users.defaultlocation
-					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-	}
-	$result = DB_query($sql, $db);
+	$SQL = "SELECT workcentres.code,
+					workcentres.description,
+					locations.locationname,
+					workcentres.overheadrecoveryact,
+					chartmaster.accountname,
+					workcentres.overheadperhour
+				FROM workcentres
+				INNER JOIN locations
+					ON workcentres.location = locations.loccode
+				INNER JOIN chartmaster
+					ON workcentres.overheadrecoveryact=chartmaster.accountcode
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+				WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'";
+	$Result = DB_query($SQL);
 	echo '<table class="selection">
-			<tr>
-				<th class="SortableColumn">' . _('WC Code') . '</th>
-				<th class="SortableColumn">' . _('Description') . '</th>
-				<th class="SortableColumn">' . _('Location') . '</th>
-				<th>' . _('Overhead GL Account') . '</th>
-				<th>' . _('Overhead Per Hour') . '</th>
-			</tr>';
-
-	while ($myrow = DB_fetch_array($result)) {
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('WC Code') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('Location') . '</th>
+					<th>' . _('Overhead GL Account') . '</th>
+					<th>' . _('Overhead Per Hour') . '</th>
+				</tr>
+			</thead>';
+	echo '<tbody>';
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		printf('<tr>
 					<td>%s</td>
@@ -151,9 +148,9 @@ if (!isset($SelectedWC)) {
 					<td class="number">%s</td>
 					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this work centre?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>', $myrow['code'], $myrow['description'], $myrow['locationname'], $myrow['overheadrecoveryact'], $myrow['overheadperhour'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['code'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['code']);
+				</tr>', $MyRow['code'], $MyRow['description'], $MyRow['locationname'], $MyRow['overheadrecoveryact'] . ' - ' . $MyRow['accountname'], $MyRow['overheadperhour'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow['code'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow['code']);
 	}
-
+	echo '</tbody>';
 	//END WHILE LIST LOOP
 	echo '</table>';
 }
@@ -161,33 +158,36 @@ if (!isset($SelectedWC)) {
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
 }
 
-echo '<br />
-	<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
 	//editing an existing work centre
 
-	$sql = "SELECT code,
+	$SQL = "SELECT code,
 					location,
 					description,
 					overheadrecoveryact,
 					overheadperhour
 			FROM workcentres
+			INNER JOIN locationusers
+				ON locationusers.loccode=workcentres.location
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1
 			WHERE code='" . $SelectedWC . "'";
 
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['Code'] = $myrow['code'];
-	$_POST['Location'] = $myrow['location'];
-	$_POST['Description'] = $myrow['description'];
-	$_POST['OverheadRecoveryAct'] = $myrow['overheadrecoveryact'];
-	$_POST['OverheadPerHour'] = $myrow['overheadperhour'];
+	$_POST['Code'] = $MyRow['code'];
+	$_POST['Location'] = $MyRow['location'];
+	$_POST['Description'] = $MyRow['description'];
+	$_POST['OverheadRecoveryAct'] = $MyRow['overheadrecoveryact'];
+	$_POST['OverheadPerHour'] = $MyRow['overheadperhour'];
 
 	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
 		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
@@ -204,73 +204,69 @@ if (isset($SelectedWC)) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" size="6" autofocus="autofocus" required="required" minlength="1" maxlength="5" value="' . $_POST['Code'] . '" /></td>
+				<td><input type="text" class="AlphaNumeric" name="Code" size="6" autofocus="autofocus" required="required" maxlength="5" value="' . $_POST['Code'] . '" /></td>
 			</tr>';
 }
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations";
-} else {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-}
-$result = DB_query($sql, $db);
+$SQL = "SELECT locationname,
+				locations.loccode
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1";
+$Result = DB_query($SQL);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 echo '<tr>
 		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="text" name="Description" size="21" required="required" minlength="1" maxlength="20" value="' . $_POST['Description'] . '" /></td>
+		<td><input type="text" name="Description" size="21" required="required" maxlength="20" value="' . $_POST['Description'] . '" /></td>
 	</tr>
 	<tr><td>' . _('Location') . ':</td>
-		<td><select required="required" minlength="1" name="Location">';
+		<td><select required="required" name="Location">';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['Location']) and $MyRow['loccode'] == $_POST['Location']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	echo $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 
 } //end while loop
 
-DB_free_result($result);
+DB_free_result($Result);
 
 
 echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Overhead Recovery GL Account') . ':</td>
-		<td><select required="required" minlength="1" name="OverheadRecoveryAct">';
+		<td><select required="required" name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,
 				accountname
-		FROM chartmaster INNER JOIN accountgroups
-			ON chartmaster.group_=accountgroups.groupname
-		WHERE accountgroups.pandl!=0
+		FROM chartmaster
+		INNER JOIN accountgroups
+			ON chartmaster.groupcode=accountgroups.groupcode
+			AND chartmaster.language=accountgroups.language
+		WHERE accountgroups.pandl=1
+			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
 		ORDER BY accountcode";
 
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode'] == $_POST['OverheadRecoveryAct']) {
-		echo '<option selected="selected" value="';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['OverheadRecoveryAct']) and $MyRow['accountcode'] == $_POST['OverheadRecoveryAct']) {
+		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountcode'] . ' - ' . $MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountcode'] . ' - ' . $MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
-	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-
 } //end while loop
-DB_free_result($result);
+DB_free_result($Result);
 
 if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour'] = 0;
@@ -279,14 +275,13 @@ if (!isset($_POST['OverheadPerHour'])) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Overhead Per Hour') . ':</td>
-		<td><input type="text" class="number" name="OverheadPerHour" size="6" required="required" minlength="1" maxlength="6" value="' . $_POST['OverheadPerHour'] . '" />';
+		<td><input type="text" class="number" name="OverheadPerHour" size="6" required="required" maxlength="6" value="' . $_POST['OverheadPerHour'] . '" />';
 
 echo '</td>
 	</tr>
 	</table>';
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 

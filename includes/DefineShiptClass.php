@@ -26,26 +26,26 @@ class Shipment {
 		$this->Closed = 0;
 	}
 
-	function Add_To_Shipment($PODetailItem, $OrderNo, $StockID, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces, &$db) {
+	function Add_To_Shipment($PODetailItem, $OrderNo, $StockId, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces) {
 
-		$this->LineItems[$PODetailItem] = new LineDetails($PODetailItem, $OrderNo, $StockID, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces);
+		$this->LineItems[$PODetailItem] = new LineDetails($PODetailItem, $OrderNo, $StockId, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces);
 
-		$sql = "UPDATE purchorderdetails SET shiptref = '" . $this->ShiptRef . "'
+		$SQL = "UPDATE purchorderdetails SET shiptref = '" . $this->ShiptRef . "'
 			WHERE podetailitem = '" . $PODetailItem . "'";
 		$ErrMsg = _('There was an error updating the purchase order detail record to make it part of shipment') . ' ' . $this->ShiptRef . ' ' . _('the error reported was');
-		$result = DB_query($sql, $db, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		return 1;
 	}
 
 
-	function Remove_From_Shipment($PODetailItem, &$db) {
+	function Remove_From_Shipment($PODetailItem) {
 
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced == 0) {
 
 			unset($this->LineItems[$PODetailItem]);
-			$sql = "UPDATE purchorderdetails SET shiptref = 0 WHERE podetailitem='" . $PODetailItem . "'";
-			$Result = DB_query($sql, $db);
+			$SQL = "UPDATE purchorderdetails SET shiptref = 0 WHERE podetailitem='" . $PODetailItem . "'";
+			$Result = DB_query($SQL);
 		} else {
 			prnMsg(_('This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed'), 'warn');
 		}
@@ -58,7 +58,7 @@ class LineDetails {
 
 	var $PODetailItem;
 	var $OrderNo;
-	var $StockID;
+	var $StockId;
 	var $ItemDescription;
 	var $QtyInvoiced;
 	var $UnitPrice;
@@ -70,12 +70,12 @@ class LineDetails {
 	var $DecimalPlaces;
 
 
-	function LineDetails($PODetailItem, $OrderNo, $StockID, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces = 2) {
+	function LineDetails($PODetailItem, $OrderNo, $StockId, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces = 2) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->PODetailItem = $PODetailItem;
 		$this->OrderNo = $OrderNo;
-		$this->StockID = $StockID;
+		$this->StockID = $StockId;
 		$this->ItemDescription = $ItemDescr;
 		$this->QtyInvoiced = $QtyInvoiced;
 		$this->DelDate = $DelDate;

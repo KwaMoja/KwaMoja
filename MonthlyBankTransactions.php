@@ -4,11 +4,10 @@ include('includes/session.inc');
 $Title = _('Monthly Bank Transactions Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" > <img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" > <img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">';
@@ -21,15 +20,16 @@ if (!isset($_POST['Show'])) {
 					ON bankaccounts.accountcode=chartmaster.accountcode
 				INNER JOIN bankaccountusers
 					ON bankaccounts.accountcode=bankaccountusers.accountcode
-				WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] ."'";
+				WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
+					AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'";
 
 	$ErrMsg = _('The bank accounts could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-	$AccountsResults = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	echo '<tr>
 			<td>' . _('Bank Account') . ':</td>
-			<td><select minlength="0" name="BankAccount">';
+			<td><select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -38,44 +38,42 @@ if (!isset($_POST['Show'])) {
 		include('includes/footer.inc');
 		exit;
 	} else {
-		while ($myrow = DB_fetch_array($AccountsResults)) {
+		while ($MyRow = DB_fetch_array($AccountsResults)) {
 			/*list the bank account names */
-			if (!isset($_POST['BankAccount']) and $myrow['currcode'] == $_SESSION['CompanyRecord']['currencydefault']) {
-				$_POST['BankAccount'] = $myrow['accountcode'];
+			if (!isset($_POST['BankAccount']) and $MyRow['currcode'] == $_SESSION['CompanyRecord']['currencydefault']) {
+				$_POST['BankAccount'] = $MyRow['accountcode'];
 			}
-			if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $myrow['accountcode']) {
-				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) {
+				echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . ' - ' . $MyRow['currcode'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'] . '</option>';
+				echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . ' - ' . $MyRow['currcode'] . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
 	}
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
-	$sql = "SELECT periodno,
+	$SQL = "SELECT periodno,
 					lastdate_in_period
 				FROM periods
 				WHERE lastdate_in_period < '" . $NextYear . "'
 				ORDER BY periodno DESC";
-	$Periods = DB_query($sql, $db);
+	$Periods = DB_query($SQL);
 
 	echo '<tr>
-				<td>' . _('Select Period:') . '</td>
-				<td><select minlength="0" name="FromPeriod">';
-	while ($myrow = DB_fetch_array($Periods, $db)) {
-		if (isset($_POST['FromPeriod']) and $_POST['FromPeriod'] == $myrow['periodno']) {
-			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				<td>' . _('Select Period') . ':</td>
+				<td><select name="FromPeriod">';
+	while ($MyRow = DB_fetch_array($Periods)) {
+		if (isset($_POST['FromPeriod']) and $_POST['FromPeriod'] == $MyRow['periodno']) {
+			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
 
 	echo '</select></td>
 		</table>
-		<br />
 		<div class="centre">
 			<input type="submit" name="Show" value="' . _('Show transactions') . '" />
-		</div>
 		</div>
 		</form>';
 } else {
@@ -85,7 +83,7 @@ if (!isset($_POST['Show'])) {
 						FROM chartdetails
 						WHERE accountcode='" . $_POST['BankAccount'] . "'
 							AND period='" . $_POST['FromPeriod'] . "'";
-	$BalancesResult = DB_query($BalancesSQL, $db);
+	$BalancesResult = DB_query($BalancesSQL);
 	$BalancesRow = DB_fetch_array($BalancesResult);
 	$OpeningBalance = $BalancesRow['bfwd'];
 	$ClosingBalance = $BalancesRow['actual'];
@@ -97,10 +95,10 @@ if (!isset($_POST['Show'])) {
 			INNER JOIN currencies
 				ON bankaccounts.currcode = currencies.currabrev
 			WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'";
-	$BankResult = DB_query($SQL, $db, _('Could not retrieve the bank account details'));
+	$BankResult = DB_query($SQL, _('Could not retrieve the bank account details'));
 
 
-	$sql = "SELECT 	banktrans.currcode,
+	$SQL = "SELECT 	banktrans.currcode,
 					banktrans.amount,
 					banktrans.amountcleared,
 					banktrans.functionalexrate,
@@ -124,14 +122,14 @@ if (!isset($_POST['Show'])) {
 					AND periodno>='" . $_POST['FromPeriod'] . "'
 				ORDER BY banktrans.type,
 						banktrans.transdate";
-	$result = DB_query($sql, $db);
-	if (DB_num_rows($result) == 0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {
-		$sql = "SELECT lastdate_in_period
+		$SQL = "SELECT lastdate_in_period
 					FROM periods
 					WHERE periodno = '" . $_POST['FromPeriod'] . "'";
-		$Periods = DB_query($sql, $db);
+		$Periods = DB_query($SQL);
 		$PeriodRow = DB_fetch_array($Periods);
 		$EndDate = ConvertSQLDate($PeriodRow['lastdate_in_period']);
 
@@ -140,7 +138,7 @@ if (!isset($_POST['Show'])) {
 				<tr>
 					<th colspan="9">
 						<h3>' . _('Account Transactions For') . ' ' . $BankDetailRow['bankaccountname'] . ' ' . _('and Month Ending') . ' ' . $EndDate . '
-							<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+							<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="" onclick="window.print();" />
 						</h3>
 					</th>
 				</tr>
@@ -163,20 +161,20 @@ if (!isset($_POST['Show'])) {
 		$PaymentsTotal = 0;
 		$LastType = 12;
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			if ($myrow['typeid'] == 12 or $myrow['typeid'] == 2) {
-				$ReceiptsTotal += $myrow['amount'];
+			if ($MyRow['typeid'] == 12 or $MyRow['typeid'] == 2) {
+				$ReceiptsTotal += $MyRow['amount'];
 			} else {
-				$PaymentsTotal += $myrow['amount'];
+				$PaymentsTotal += $MyRow['amount'];
 			}
 
-			if ($myrow['amount'] == $myrow['amountcleared']) {
+			if ($MyRow['amount'] == $MyRow['amountcleared']) {
 				$Matched = _('Yes');
 			} else {
 				$Matched = _('No');
 			}
-			if (($LastType == 12 or $LastType == 2) and ($myrow['typeid'] == 22 or $myrow['typeid'] == 1)) {
+			if (($LastType == 12 or $LastType == 2) and ($MyRow['typeid'] == 22 or $MyRow['typeid'] == 1)) {
 				echo '<tr>
 					<td colspan="3"></td>
 					<td>' . _('Total Receipts') . '</td>
@@ -185,14 +183,14 @@ if (!isset($_POST['Show'])) {
 			}
 
 			echo '<tr>
-					<td>' . ConvertSQLDate($myrow['transdate']) . '</td>
-					<td>' . $myrow['typename'] . '</td>
-					<td>' . $myrow['banktranstype'] . '</td>
-					<td>' . $myrow['ref'] . '</td>
-					<td class="number">' . locale_number_format($myrow['amount'], $BankDetailRow['decimalplaces']) . '</td>
+					<td>' . ConvertSQLDate($MyRow['transdate']) . '</td>
+					<td>' . $MyRow['typename'] . '</td>
+					<td>' . $MyRow['banktranstype'] . '</td>
+					<td>' . $MyRow['ref'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'], $BankDetailRow['decimalplaces']) . '</td>
 					<td class="number">' . $Matched . '</td>
 				</tr>';
-			$LastType = $myrow['typeid'];
+			$LastType = $MyRow['typeid'];
 		}
 		echo '<tr>
 				<td colspan="3"></td>
@@ -208,11 +206,9 @@ if (!isset($_POST['Show'])) {
 		echo '</table>';
 	} //end if no bank trans in the range to show
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
-	echo '</div>';
+	echo '<div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
 include('includes/footer.inc');

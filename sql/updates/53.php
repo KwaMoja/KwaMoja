@@ -1,8 +1,8 @@
 <?php
 
-NewConfigValue('ShopShowInfoLinks', '1', $db);
-NewConfigValue('ShopTitle', 'Shop Home', $db);
+NewConfigValue('ShopShowInfoLinks', '1');
+NewConfigValue('ShopTitle', 'Shop Home');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

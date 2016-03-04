@@ -1,11 +1,11 @@
 <?php
 
 /* Check that the account section doesn't already exist'*/
-function VerifyAccountSection($AccountSection, $i, $Errors, $db) {
+function VerifyAccountSection($AccountSection, $i, $Errors) {
 	$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='" . $AccountSection . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] > 0) {
 		$Errors[$i] = GLAccountSectionAlreadyExists;
@@ -28,24 +28,24 @@ function InsertGLAccountSection($AccountSectionDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($AccountSectionDetails as $key => $value) {
-		$AccountSectionDetails[$key] = DB_escape_string($value);
+	foreach ($AccountSectionDetails as $Key => $Value) {
+		$AccountSectionDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 	if (isset($AccountSectionDetails['accountname'])) {
 		$Errors = VerifySectionName($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 	}
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($AccountSectionDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($AccountSectionDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
-		$sql = "INSERT INTO accountsection ('" . mb_substr($FieldNames, 0, -2) . "')
+		$SQL = "INSERT INTO accountsection ('" . mb_substr($FieldNames, 0, -2) . "')
 					VALUES ('" . mb_substr($FieldValues, 0, -2) . "')";
-		$result = DB_Query($sql, $db);
-		if (DB_error_no($db) != 0) {
+		$Result = DB_Query($SQL);
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

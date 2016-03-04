@@ -809,7 +809,7 @@
 		var $method='http';
 		var $errno;
 		var $errstr;
-		var $debug=0;
+		var $Debug=0;
 		var $username='';
 		var $password='';
 		var $authtype=1;
@@ -817,8 +817,8 @@
 		var $certpass='';
 		var $cacert='';
 		var $cacertdir='';
-		var $key='';
-		var $keypass='';
+		var $Key='';
+		var $Keypass='';
 		var $verifypeer=true;
 		var $verifyhost=1;
 		var $no_multicall=false;
@@ -944,7 +944,7 @@
 
 		/**
 		* Enables/disables the echoing to screen of the xmlrpc responses received
-		* @param integer $debug values 0, 1 and 2 are supported (2 = echo sent msg too, before received response)
+		* @param integer $Debug values 0, 1 and 2 are supported (2 = echo sent msg too, before received response)
 		* @access public
 		*/
 		function setDebug($in)
@@ -1001,14 +1001,14 @@
 		* Set attributes for SSL communication: private SSL key
 		* NB: does not work in older php/curl installs
 		* Thanks to Daniel Convissor
-		* @param string $key The name of a file containing a private SSL key
-		* @param string $keypass The secret password needed to use the private SSL key
+		* @param string $Key The name of a file containing a private SSL key
+		* @param string $Keypass The secret password needed to use the private SSL key
 		* @access public
 		*/
-		function setKey($key, $keypass)
+		function setKey($Key, $Keypass)
 		{
-			$this->key = $key;
-			$this->keypass = $keypass;
+			$this->key = $Key;
+			$this->keypass = $Keypass;
 		}
 
 		/**
@@ -1082,7 +1082,7 @@
 		* NB: setting any param but name and value will turn the cookie into a 'version 1' cookie:
 		* do not do it unless you know what you are doing
 		* @param string $name
-		* @param string $value
+		* @param string $Value
 		* @param string $path
 		* @param string $domain
 		* @param int $port
@@ -1090,9 +1090,9 @@
 		*
 		* @todo check correctness of urlencoding cookie value (copied from php way of doing it...)
 		*/
-		function setCookie($name, $value='', $path='', $domain='', $port=null)
+		function setCookie($name, $Value='', $path='', $domain='', $port=null)
 		{
-			$this->cookies[$name]['value'] = urlencode($value);
+			$this->cookies[$name]['value'] = urlencode($Value);
 			if ($path || $domain || $port)
 			{
 				$this->cookies[$name]['path'] = $path;
@@ -1127,13 +1127,13 @@
 
 		/**
 		* Send an xmlrpc request
-		* @param mixed $msg The message object, or an array of messages for using multicall, or the complete xml representation of a request
+		* @param mixed $Msg The message object, or an array of messages for using multicall, or the complete xml representation of a request
 		* @param integer $timeout Connection timeout, in seconds, If unspecified, a platform specific timeout will apply
 		* @param string $method if left unspecified, the http protocol chosen during creation of the object will be used
 		* @return xmlrpcresp
 		* @access public
 		*/
-		function& send($msg, $timeout=0, $method='')
+		function& send($Msg, $timeout=0, $method='')
 		{
 			// if user deos not specify http protocol, use native method of this client
 			// (i.e. method set during call to constructor)
@@ -1142,26 +1142,26 @@
 				$method = $this->method;
 			}
 
-			if(is_array($msg))
+			if(is_array($Msg))
 			{
-				// $msg is an array of xmlrpcmsg's
-				$r = $this->multicall($msg, $timeout, $method);
+				// $Msg is an array of xmlrpcmsg's
+				$r = $this->multicall($Msg, $timeout, $method);
 				return $r;
 			}
-			elseif(is_string($msg))
+			elseif(is_string($Msg))
 			{
 				$n = new xmlrpcmsg('');
-				$n->payload = $msg;
-				$msg = $n;
+				$n->payload = $Msg;
+				$Msg = $n;
 			}
 
 			// where msg is an xmlrpcmsg
-			$msg->debug=$this->debug;
+			$Msg->debug=$this->debug;
 
 			if($method == 'https')
 			{
 				$r =& $this->sendPayloadHTTPS(
-					$msg,
+					$Msg,
 					$this->server,
 					$this->port,
 					$timeout,
@@ -1185,7 +1185,7 @@
 			elseif($method == 'http11')
 			{
 				$r =& $this->sendPayloadCURL(
-					$msg,
+					$Msg,
 					$this->server,
 					$this->port,
 					$timeout,
@@ -1208,7 +1208,7 @@
 			else
 			{
 				$r =& $this->sendPayloadHTTP10(
-					$msg,
+					$Msg,
 					$this->server,
 					$this->port,
 					$timeout,
@@ -1229,7 +1229,7 @@
 		/**
 		* @access private
 		*/
-		function &sendPayloadHTTP10($msg, $server, $port, $timeout=0,
+		function &sendPayloadHTTP10($Msg, $server, $port, $timeout=0,
 			$username='', $password='', $authtype=1, $proxyhost='',
 			$proxyport=0, $proxyusername='', $proxypassword='', $proxyauthtype=1)
 		{
@@ -1239,12 +1239,12 @@
 			}
 
 			// Only create the payload if it was not created previously
-			if(empty($msg->payload))
+			if(empty($Msg->payload))
 			{
-				$msg->createPayload($this->request_charset_encoding);
+				$Msg->createPayload($this->request_charset_encoding);
 			}
 
-			$payload = $msg->payload;
+			$payload = $Msg->payload;
 			// Deflate request body and set appropriate request headers
 			if(function_exists('gzdeflate') && ($this->request_compression == 'gzip' || $this->request_compression == 'deflate'))
 			{
@@ -1351,7 +1351,7 @@
 				$encoding_hdr .
 				'Accept-Charset: ' . implode(',', $this->accepted_charset_encodings) . "\r\n" .
 				$cookieheader .
-				'Content-Type: ' . $msg->content_type . "\r\nContent-Length: " .
+				'Content-Type: ' . $Msg->content_type . "\r\nContent-Length: " .
 				mb_strlen($payload) . "\r\n\r\n" .
 				$payload;
 
@@ -1406,7 +1406,7 @@
 				$ipd.=fread($fp, 32768);
 			} while(!feof($fp));
 			fclose($fp);
-			$r =& $msg->parseResponse($ipd, false, $this->return_type);
+			$r =& $Msg->parseResponse($ipd, false, $this->return_type);
 			return $r;
 
 		}
@@ -1414,14 +1414,14 @@
 		/**
 		* @access private
 		*/
-		function &sendPayloadHTTPS($msg, $server, $port, $timeout=0, $username='',
+		function &sendPayloadHTTPS($Msg, $server, $port, $timeout=0, $username='',
 			$password='', $authtype=1, $cert='',$certpass='', $cacert='', $cacertdir='',
 			$proxyhost='', $proxyport=0, $proxyusername='', $proxypassword='', $proxyauthtype=1,
-			$keepalive=false, $key='', $keypass='')
+			$keepalive=false, $Key='', $Keypass='')
 		{
-			$r =& $this->sendPayloadCURL($msg, $server, $port, $timeout, $username,
+			$r =& $this->sendPayloadCURL($Msg, $server, $port, $timeout, $username,
 				$password, $authtype, $cert, $certpass, $cacert, $cacertdir, $proxyhost, $proxyport,
-				$proxyusername, $proxypassword, $proxyauthtype, 'https', $keepalive, $key, $keypass);
+				$proxyusername, $proxypassword, $proxyauthtype, 'https', $keepalive, $Key, $Keypass);
 			return $r;
 		}
 
@@ -1431,10 +1431,10 @@
 		* NB: CURL versions before 7.11.10 cannot use proxy to talk to https servers!
 		* @access private
 		*/
-		function &sendPayloadCURL($msg, $server, $port, $timeout=0, $username='',
+		function &sendPayloadCURL($Msg, $server, $port, $timeout=0, $username='',
 			$password='', $authtype=1, $cert='', $certpass='', $cacert='', $cacertdir='',
 			$proxyhost='', $proxyport=0, $proxyusername='', $proxypassword='', $proxyauthtype=1, $method='https',
-			$keepalive=false, $key='', $keypass='')
+			$keepalive=false, $Key='', $Keypass='')
 		{
 			if(!function_exists('curl_init'))
 			{
@@ -1466,13 +1466,13 @@
 			}
 
 			// Only create the payload if it was not created previously
-			if(empty($msg->payload))
+			if(empty($Msg->payload))
 			{
-				$msg->createPayload($this->request_charset_encoding);
+				$Msg->createPayload($this->request_charset_encoding);
 			}
 
 			// Deflate request body and set appropriate request headers
-			$payload = $msg->payload;
+			$payload = $Msg->payload;
 			if(function_exists('gzdeflate') && ($this->request_compression == 'gzip' || $this->request_compression == 'deflate'))
 			{
 				if($this->request_compression == 'gzip')
@@ -1551,7 +1551,7 @@
 					curl_setopt($curl, CURLOPT_ENCODING, '');
 			}
 			// extra headers
-			$headers = array('Content-Type: ' . $msg->content_type , 'Accept-Charset: ' . implode(',', $this->accepted_charset_encodings));
+			$headers = array('Content-Type: ' . $Msg->content_type , 'Accept-Charset: ' . implode(',', $this->accepted_charset_encodings));
 			// if no keepalive is wanted, let the server know it in advance
 			if(!$keepalive)
 			{
@@ -1607,14 +1607,14 @@
 					curl_setopt($curl, CURLOPT_CAPATH, $cacertdir);
 				}
 				// set key file (shall we catch errors in case CURLOPT_SSLKEY undefined ?)
-				if($key)
+				if($Key)
 				{
-					curl_setopt($curl, CURLOPT_SSLKEY, $key);
+					curl_setopt($curl, CURLOPT_SSLKEY, $Key);
 				}
 				// set key password (shall we catch errors in case CURLOPT_SSLKEY undefined ?)
-				if($keypass)
+				if($Keypass)
 				{
-					curl_setopt($curl, CURLOPT_SSLKEYPASSWD, $keypass);
+					curl_setopt($curl, CURLOPT_SSLKEYPASSWD, $Keypass);
 				}
 				// whether to verify cert's common name (CN); 0 for no, 1 to verify that it exists, and 2 to verify that it matches the hostname used
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $this->verifyhost);
@@ -1661,7 +1661,7 @@
 				curl_setopt($curl, $opt, $val);
 			}
 
-			$result = curl_exec($curl);
+			$Result = curl_exec($curl);
 
 			if ($this->debug > 1)
 			{
@@ -1671,7 +1671,7 @@
 				print "---END---\n</PRE>";
 			}
 
-			if(!$result) /// @todo we should use a better check here - what if we get back '' or '0'?
+			if(!$Result) /// @todo we should use a better check here - what if we get back '' or '0'?
 			{
 				$this->errstr='no response';
 				$resp=new xmlrpcresp(0, $GLOBALS['xmlrpcerr']['curl_fail'], $GLOBALS['xmlrpcstr']['curl_fail']. ': '. curl_error($curl));
@@ -1687,7 +1687,7 @@
 				{
 					curl_close($curl);
 				}
-				$resp =& $msg->parseResponse($result, true, $this->return_type);
+				$resp =& $Msg->parseResponse($Result, true, $this->return_type);
 			}
 			return $resp;
 		}
@@ -1707,14 +1707,14 @@
 		* NB: trying to shoehorn extra functionality into existing syntax has resulted
 		* in pretty much convoluted code...
 		*
-		* @param array $msgs an array of xmlrpcmsg objects
+		* @param array $Msgs an array of xmlrpcmsg objects
 		* @param integer $timeout connection timeout (in seconds)
 		* @param string $method the http protocol variant to be used
 		* @param boolean fallback When true, upon receiveing an error during multicall, multiple single calls will be attempted
 		* @return array
 		* @access public
 		*/
-		function multicall($msgs, $timeout=0, $method='', $fallback=true)
+		function multicall($Msgs, $timeout=0, $method='', $fallback=true)
 		{
 			if ($method == '')
 			{
@@ -1722,11 +1722,11 @@
 			}
 			if(!$this->no_multicall)
 			{
-				$results = $this->_try_multicall($msgs, $timeout, $method);
-				if(is_array($results))
+				$Results = $this->_try_multicall($Msgs, $timeout, $method);
+				if(is_array($Results))
 				{
 					// System.multicall succeeded
-					return $results;
+					return $Results;
 				}
 				else
 				{
@@ -1739,13 +1739,13 @@
 					}
 					else
 					{
-						if (is_a($results, 'xmlrpcresp'))
+						if (is_a($Results, 'xmlrpcresp'))
 						{
-							$result = $results;
+							$Result = $Results;
 						}
 						else
 						{
-							$result = new xmlrpcresp(0, $GLOBALS['xmlrpcerr']['multicall_error'], $GLOBALS['xmlrpcstr']['multicall_error']);
+							$Result = new xmlrpcresp(0, $GLOBALS['xmlrpcerr']['multicall_error'], $GLOBALS['xmlrpcstr']['multicall_error']);
 						}
 					}
 				}
@@ -1757,14 +1757,14 @@
 				$fallback = true;
 			}
 
-			$results = array();
+			$Results = array();
 			if ($fallback)
 			{
 				// system.multicall is (probably) unsupported by server:
 				// emulate multicall via multiple requests
-				foreach($msgs as $msg)
+				foreach($Msgs as $Msg)
 				{
-					$results[] =& $this->send($msg, $timeout, $method);
+					$Results[] =& $this->send($Msg, $timeout, $method);
 				}
 			}
 			else
@@ -1772,32 +1772,32 @@
 				// user does NOT want to fallback on many single calls:
 				// since we should always return an array of responses,
 				// return an array with the same error repeated n times
-				foreach($msgs as $msg)
+				foreach($Msgs as $Msg)
 				{
-					$results[] = $result;
+					$Results[] = $Result;
 				}
 			}
-			return $results;
+			return $Results;
 		}
 
 		/**
-		* Attempt to boxcar $msgs via system.multicall.
+		* Attempt to boxcar $Msgs via system.multicall.
 		* Returns either an array of xmlrpcreponses, an xmlrpc error response
 		* or false (when received response does not respect valid multicall syntax)
 		* @access private
 		*/
-		function _try_multicall($msgs, $timeout, $method)
+		function _try_multicall($Msgs, $timeout, $method)
 		{
 			// Construct multicall message
 			$calls = array();
-			foreach($msgs as $msg)
+			foreach($Msgs as $Msg)
 			{
-				$call['methodName'] = new xmlrpcval($msg->method(),'string');
-				$numParams = $msg->getNumParams();
+				$call['methodName'] = new xmlrpcval($Msg->method(),'string');
+				$numParams = $Msg->getNumParams();
 				$params = array();
 				for($i = 0; $i < $numParams; $i++)
 				{
-					$params[$i] = $msg->getParam($i);
+					$params[$i] = $Msg->getParam($i);
 				}
 				$call['params'] = new xmlrpcval($params, 'array');
 				$calls[] = new xmlrpcval($call, 'struct');
@@ -1806,16 +1806,16 @@
 			$multicall->addParam(new xmlrpcval($calls, 'array'));
 
 			// Attempt RPC call
-			$result =& $this->send($multicall, $timeout, $method);
+			$Result =& $this->send($multicall, $timeout, $method);
 
-			if($result->faultCode() != 0)
+			if($Result->faultCode() != 0)
 			{
 				// call to system.multicall failed
-				return $result;
+				return $Result;
 			}
 
 			// Unpack responses.
-			$rets = $result->value();
+			$rets = $Result->value();
 
 			if ($this->return_type == 'xml')
 			{
@@ -1824,13 +1824,13 @@
 			else if ($this->return_type == 'phpvals')
 			{
 				///@todo test this code branch...
-				$rets = $result->value();
+				$rets = $Result->value();
 				if(!is_array($rets))
 				{
 					return false;		// bad return type from system.multicall
 				}
 				$numRets = count($rets);
-				if($numRets != count($msgs))
+				if($numRets != count($Msgs))
 				{
 					return false;		// wrong number of return values.
 				}
@@ -1874,13 +1874,13 @@
 			}
 			else // return type == 'xmlrpcvals'
 			{
-				$rets = $result->value();
+				$rets = $Result->value();
 				if($rets->kindOf() != 'array')
 				{
 					return false;		// bad return type from system.multicall
 				}
 				$numRets = $rets->arraysize();
-				if($numRets != count($msgs))
+				if($numRets != count($Msgs))
 				{
 					return false;		// wrong number of return values.
 				}
@@ -2039,12 +2039,12 @@
 				$this->content_type = 'text/xml; charset=' . $charset_encoding;
 			else
 				$this->content_type = 'text/xml';
-			$result = "<methodResponse>\n";
+			$Result = "<methodResponse>\n";
 			if($this->errno)
 			{
 				// G. Giunta 2005/2/13: let non-ASCII response messages be tolerated by clients
 				// by xml-encoding non ascii chars
-				$result .= "<fault>\n" .
+				$Result .= "<fault>\n" .
 "<value>\n<struct><member><name>faultCode</name>\n<value><int>" . $this->errno .
 "</int></value>\n</member>\n<member>\n<name>faultString</name>\n<value><string>" .
 xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $charset_encoding) . "</string></value>\n</member>\n" .
@@ -2056,7 +2056,7 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 				{
 					if (is_string($this->val) && $this->valtyp == 'xml')
 					{
-						$result .= "<params>\n<param>\n" .
+						$Result .= "<params>\n<param>\n" .
 							$this->val .
 							"</param>\n</params>";
 					}
@@ -2068,14 +2068,14 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 				}
 				else
 				{
-					$result .= "<params>\n<param>\n" .
+					$Result .= "<params>\n<param>\n" .
 						$this->val->serialize($charset_encoding) .
 						"</param>\n</params>";
 				}
 			}
-			$result .= "\n</methodResponse>";
-			$this->payload = $result;
-			return $result;
+			$Result .= "\n</methodResponse>";
+			$this->payload = $Result;
+			return $Result;
 		}
 	}
 
@@ -2084,7 +2084,7 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 		var $payload;
 		var $methodname;
 		var $params=array();
-		var $debug=0;
+		var $Debug=0;
 		var $content_type = 'text/xml';
 
 		/**
@@ -2404,13 +2404,13 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 				if($this->debug && count($GLOBALS['_xh']['headers']))
 				{
 					print '<PRE>';
-					foreach($GLOBALS['_xh']['headers'] as $header => $value)
+					foreach($GLOBALS['_xh']['headers'] as $header => $Value)
 					{
-						print htmlentities("HEADER: $header: $value\n");
+						print htmlentities("HEADER: $header: $Value\n");
 					}
-					foreach($GLOBALS['_xh']['cookies'] as $header => $value)
+					foreach($GLOBALS['_xh']['cookies'] as $header => $Value)
 					{
-						print htmlentities("COOKIE: $header={$value['value']}\n");
+						print htmlentities("COOKIE: $header={$Value['value']}\n");
 					}
 					print "</PRE>\n";
 				}
@@ -2884,14 +2884,14 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 		// DEPRECATED!
 		function dump($ar)
 		{
-			foreach($ar as $key => $val)
+			foreach($ar as $Key => $val)
 			{
-				echo "$key => $val<br />";
-				if($key == 'array')
+				echo "$Key => $val<br />";
+				if($Key == 'array')
 				{
-					while(list($key2, $val2) = each($val))
+					while(list($Key2, $val2) = each($val))
 					{
-						echo "-- $key2 => $val2<br />";
+						echo "-- $Key2 => $val2<br />";
 					}
 				}
 			}
@@ -2999,9 +2999,9 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 					{
 						$rs.="<struct>\n";
 					}
-					foreach($val as $key2 => $val2)
+					foreach($val as $Key2 => $val2)
 					{
-						$rs.='<member><name>'.xmlrpc_encode_entitites($key2, $GLOBALS['xmlrpc_internalencoding'], $charset_encoding)."</name>\n";
+						$rs.='<member><name>'.xmlrpc_encode_entitites($Key2, $GLOBALS['xmlrpc_internalencoding'], $charset_encoding)."</name>\n";
 						//$rs.=$this->serializeval($val2);
 						$rs.=$val2->serialize($charset_encoding);
 						$rs.="</member>\n";
@@ -3320,9 +3320,9 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 					}
 					if (is_int($out))
 					{
-						$result = new Datetime();
-						$result->setTimestamp($out);
-						return $result;
+						$Result = new Datetime();
+						$Result->setTimestamp($out);
+						return $Result;
 					}
 					elseif (is_a($out, 'Datetime'))
 					{
@@ -3348,18 +3348,18 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 					&& class_exists($xmlrpc_val->_php_class))
 				{
 					$obj = @new $xmlrpc_val->_php_class;
-					while(list($key,$value)=$xmlrpc_val->structeach())
+					while(list($Key,$Value)=$xmlrpc_val->structeach())
 					{
-						$obj->$key = php_xmlrpc_decode($value, $options);
+						$obj->$Key = php_xmlrpc_decode($Value, $options);
 					}
 					return $obj;
 				}
 				else
 				{
 					$arr = array();
-					while(list($key,$value)=$xmlrpc_val->structeach())
+					while(list($Key,$Value)=$xmlrpc_val->structeach())
 					{
-						$arr[$key] = php_xmlrpc_decode($value, $options);
+						$arr[$Key] = php_xmlrpc_decode($Value, $options);
 					}
 					return $arr;
 				}
@@ -3435,14 +3435,14 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 				$j = 0;
 				$arr = array();
 				$ko = false;
-				foreach($php_val as $key => $val)
+				foreach($php_val as $Key => $val)
 				{
-					$arr[$key] = php_xmlrpc_encode($val, $options);
-					if(!$ko && $key !== $j)
+					$arr[$Key] = php_xmlrpc_encode($val, $options);
+					if(!$ko && $Key !== $j)
 					{
 						$ko = true;
 					}
-					$j++;
+					++$j;
 				}
 				if($ko)
 				{

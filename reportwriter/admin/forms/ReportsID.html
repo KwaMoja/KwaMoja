@@ -1,9 +1,9 @@
-<h2 align="center"><?php echo $FormParams['heading']; ?></h2>
+<h2 align="center" style="padding-top:1%;"><?php echo $FormParams['heading']; ?></h2>
 <form name="reportidform" method="post" class="noPrint" action="ReportCreator.php?action=step3">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
-  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
-  <input name="ReplaceReportID" type="hidden" value="<?php echo $ReplaceReportID; ?>">
+  <input name="Type" type="hidden" value="<?php if (isset($Type)) {echo $Type;} ?>">
+  <input name="ReplaceReportID" type="hidden" value="<?php if (isset($ReplaceReportID)) {echo $ReplaceReportID;} ?>">
   <table align="center"  border="1" cellspacing="1" cellpadding="1">
    <tr>
      <td><?php if (isset($Type) and $Type=='frm') echo FRM_RPTENTER; else echo RPT_RPTENTER; ?></td>
@@ -18,7 +18,7 @@
 	   <tr>
 		 <td colspan="2"><input type="radio" name="NewType" value="rpt"><?php echo RPT_REPORT; ?> ====&gt; <?php echo RPT_RPTGRP; ?></td>
 		 <td><select name="GroupName">
-		   <?php foreach($ReportGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
+		   <?php foreach($ReportGroups as $Key=>$Value) echo '<option value="'.$Key.'">'.$Value.'</option>'; ?>
 		 </select></td>
 	   </tr>
 	   <tr bgcolor="#CCCCCC">
@@ -27,7 +27,7 @@
 	   <tr>
 		 <td colspan="2"><input type="radio" name="NewType" value="frm"><?php echo RPT_FORM; ?> ====&gt; <?php echo FRM_RPTGRP; ?></td>
 		 <td><select name="FormGroup">
-		   <?php foreach($FormGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
+		   <?php foreach($FormGroups as $Key=>$Value) echo '<option value="'.$Key.'">'.$Value.'</option>'; ?>
 		 </select></td>
 	   </tr>
 	   <tr bgcolor="#CCCCCC">

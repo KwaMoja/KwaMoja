@@ -5,13 +5,13 @@ include('includes/DefineContractClass.php');
 include('includes/session.inc');
 $Title = _('Contract Other Requirements');
 
-$identifier = $_GET['identifier'];
+$Identifier = $_GET['identifier'];
 
 /* If a contract header doesn't exist, then go to
  * Contracts.php to create one
  */
 
-if (!isset($_SESSION['Contract' . $identifier])) {
+if (!isset($_SESSION['Contract' . $Identifier])) {
 	header('Location:' . $RootPath . '/Contracts.php');
 	exit;
 }
@@ -21,16 +21,16 @@ include('includes/header.inc');
 
 
 if (isset($_POST['UpdateLines']) or isset($_POST['BackToHeader'])) {
-	if ($_SESSION['Contract' . $identifier]->Status != 2) { //dont do anything if the customer has committed to the contract
-		foreach ($_SESSION['Contract' . $identifier]->ContractReqts as $ContractComponentID => $ContractRequirementItem) {
+	if ($_SESSION['Contract' . $Identifier]->Status != 2) { //dont do anything if the customer has committed to the contract
+		foreach ($_SESSION['Contract' . $Identifier]->ContractReqts as $ContractComponentID => $ContractRequirementItem) {
 
 			if (filter_number_format($_POST['Qty' . $ContractComponentID]) == 0) {
 				//this is the same as deleting the line - so delete it
-				$_SESSION['Contract' . $identifier]->Remove_ContractRequirement($ContractComponentID);
+				$_SESSION['Contract' . $Identifier]->Remove_ContractRequirement($ContractComponentID);
 			} else {
-				$_SESSION['Contract' . $identifier]->ContractReqts[$ContractComponentID]->Quantity = filter_number_format($_POST['Qty' . $ContractComponentID]);
-				$_SESSION['Contract' . $identifier]->ContractReqts[$ContractComponentID]->CostPerUnit = filter_number_format($_POST['CostPerUnit' . $ContractComponentID]);
-				$_SESSION['Contract' . $identifier]->ContractReqts[$ContractComponentID]->Requirement = $_POST['Requirement' . $ContractComponentID];
+				$_SESSION['Contract' . $Identifier]->ContractReqts[$ContractComponentID]->Quantity = filter_number_format($_POST['Qty' . $ContractComponentID]);
+				$_SESSION['Contract' . $Identifier]->ContractReqts[$ContractComponentID]->CostPerUnit = filter_number_format($_POST['CostPerUnit' . $ContractComponentID]);
+				$_SESSION['Contract' . $Identifier]->ContractReqts[$ContractComponentID]->Requirement = $_POST['Requirement' . $ContractComponentID];
 			}
 		} // end loop around the items on the contract requirements array
 	} // end if the contract is not currently committed to by the customer
@@ -38,17 +38,17 @@ if (isset($_POST['UpdateLines']) or isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])) {
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier=' . $identifier . '" />';
+	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier=' . $Identifier . '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
+	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier=' . urlencode($Identifier) . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	include('includes/footer.inc');
 	exit;
 }
 
 
 if (isset($_GET['Delete'])) {
-	if ($_SESSION['Contract' . $identifier]->Status != 2) {
-		$_SESSION['Contract' . $identifier]->Remove_ContractRequirement($_GET['Delete']);
+	if ($_SESSION['Contract' . $Identifier]->Status != 2) {
+		$_SESSION['Contract' . $Identifier]->Remove_ContractRequirement($_GET['Delete']);
 	} else {
 		prnMsg(_('The other contract requirements cannot be altered because the customer has already placed the order'), 'warn');
 	}
@@ -64,7 +64,7 @@ if (isset($_POST['EnterNewRequirement'])) {
 		$InputError = true;
 	}
 	if (!$InputError) {
-		$_SESSION['Contract' . $identifier]->Add_To_ContractRequirements($_POST['RequirementDescription'], filter_number_format($_POST['Quantity']), filter_number_format($_POST['CostPerUnit']));
+		$_SESSION['Contract' . $Identifier]->Add_To_ContractRequirements($_POST['RequirementDescription'], filter_number_format($_POST['Quantity']), filter_number_format($_POST['CostPerUnit']));
 		unset($_POST['RequirementDescription']);
 		unset($_POST['Quantity']);
 		unset($_POST['CostPerUnit']);
@@ -73,18 +73,17 @@ if (isset($_POST['EnterNewRequirement'])) {
 
 /* This is where the other requirement as entered/modified should be displayed reflecting any deletions or insertions*/
 
-echo '<form onSubmit="return VerifyForm(this);" name="ContractReqtsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form name="ContractReqtsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract' . $identifier]->CustomerName . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/contract.png" title="' . _('Contract Other Requirements') . '" alt="" />  ' . _('Contract Other Requirements') . ' - ' . $_SESSION['Contract' . $Identifier]->CustomerName . '</p>';
 
-if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
+if (count($_SESSION['Contract' . $Identifier]->ContractReqts) > 0) {
 
 	echo '<table class="selection">';
 
-	if (isset($_SESSION['Contract' . $identifier]->ContractRef)) {
+	if (isset($_SESSION['Contract' . $Identifier]->ContractRef)) {
 		echo '<tr>
-				<th colspan="5">' . _('Contract Reference:') . ' ' . $_SESSION['Contract' . $identifier]->ContractRef . '</th>
+				<th colspan="5">' . _('Contract Reference') . ': ' . $_SESSION['Contract' . $Identifier]->ContractRef . '</th>
 			</tr>';
 	}
 
@@ -95,10 +94,10 @@ if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
 			<th>' . _('Sub-total') . '</th>
 		</tr>';
 
-	$_SESSION['Contract' . $identifier]->total = 0;
+	$_SESSION['Contract' . $Identifier]->total = 0;
 	$k = 0; //row colour counter
 	$TotalCost = 0;
-	foreach ($_SESSION['Contract' . $identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
+	foreach ($_SESSION['Contract' . $Identifier]->ContractReqts as $ContractReqtID => $ContractComponent) {
 
 		$LineTotal = $ContractComponent->Quantity * $ContractComponent->CostPerUnit;
 		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['CompanyRecord']['decimalplaces']);
@@ -112,10 +111,10 @@ if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
 		}
 
 		echo '<td><textarea name="Requirement' . $ContractReqtID . '" required="required" autofocus="autofocus" cols="30" rows="3">' . $ContractComponent->Requirement . '</textarea></td>
-			  <td><input type="text" class="number" maxlength="11" required="required" minlength="1" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity, 'Variable') . '" /></td>
-			  <td><input type="text" class="number" maxlength="11" required="required" minlength="1" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
+			  <td><input type="text" class="number" maxlength="11" required="required" name="Qty' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity, 'Variable') . '" /></td>
+			  <td><input type="text" class="number" maxlength="11" required="required" name="CostPerUnit' . $ContractReqtID . '" size="11" value="' . locale_number_format($ContractComponent->CostPerUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '" /></td>
 			  <td class="number">' . $DisplayLineTotal . '</td>
-			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $ContractReqtID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this contract requirement?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			  <td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&amp;Delete=' . $ContractReqtID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this contract requirement?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			  </tr>';
 		$TotalCost += $LineTotal;
 	}
@@ -126,7 +125,6 @@ if (count($_SESSION['Contract' . $identifier]->ContractReqts) > 0) {
 			<td class="number"><b>' . $DisplayTotal . '</b></td>
 		</tr>
 		</table>
-		<br />
 		<div class="centre">
 			<input type="submit" name="UpdateLines" value="' . _('Update Other Requirements Lines') . '" />
 			<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" />
@@ -152,19 +150,17 @@ echo '<table class="selection">
 		</tr>
 		<tr>
 			<td>' . _('Quantity Required') . ':</td>
-			<td><input type="text" class="number" name="Quantity" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
+			<td><input type="text" class="number" name="Quantity" size="10" required="required" maxlength="10" value="' . $_POST['Quantity'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Cost Per Unit') . ':</td>
-			<td><input type="text" class="number" name="CostPerUnit" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
+			<td><input type="text" class="number" name="CostPerUnit" size="10" required="required" maxlength="10" value="' . $_POST['CostPerUnit'] . '" /></td>
 		</tr>
 
 		</table>
 
-		<br />
 		<div class="centre">
 			<input type="submit" name="EnterNewRequirement" value="' . _('Enter New Contract Requirement') . '" />
-		</div>
 		</div>
 		</form>';
 

@@ -18,7 +18,7 @@ CreateTable('reportcolumns',
   `constant` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportid`,`colno`),
   CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`)
-)", $db);
+)");
 
 
 ?>

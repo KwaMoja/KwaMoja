@@ -12,7 +12,7 @@ CreateTable('pcashdetails',
   `notes` text NOT NULL,
   `receipt` text COMMENT 'filename or path to scanned receipt or code of receipt to find physical receipt if tax guys or auditors show up',
   PRIMARY KEY (`counterindex`)
-)", $db);
+)");
 
 
 ?>

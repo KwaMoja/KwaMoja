@@ -19,7 +19,7 @@ CreateTable('sellthroughsupport',
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`),
   KEY `categoryid` (`categoryid`)
-)", $db);
+)");
 
 
 ?>

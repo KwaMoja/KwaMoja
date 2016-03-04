@@ -8,7 +8,7 @@ include('includes/session.inc');
 $DebtorSQL = "SELECT name
 				FROM debtorsmaster
 					WHERE debtorno='" . $_SESSION['DebtorNo'] . "'";
-$DebtorResult = DB_query($DebtorSQL, $db);
+$DebtorResult = DB_query($DebtorSQL);
 $DebtorInfo = DB_fetch_array($DebtorResult);
 
 $Title = _('Raise an invoice for') . ' ' . $DebtorInfo['name'];

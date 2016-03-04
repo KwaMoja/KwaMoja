@@ -31,15 +31,15 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 	} else {
 
 		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
-		echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 		echo '<div class="centre">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		/* check for directory existence */
 		if (!file_exists('./companies/' . $_POST['NewCompany']) AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] != '')) {
 
-			$result = $_FILES['LogoFile']['error'];
+			$Result = $_FILES['LogoFile']['error'];
 			$UploadTheLogo = 'Yes'; //Assume all is well to start off with
-			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
+			$FileName = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
 
 			//But check for the worst
 			if (mb_strtoupper(mb_substr(trim($_FILES['LogoFile']['name']), mb_strlen($_FILES['LogoFile']['name']) - 3)) != 'JPG') {
@@ -51,10 +51,10 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 			} elseif ($_FILES['LogoFile']['type'] == "text/plain") { //File Type Check
 				prnMsg(_('Only graphics files can be uploaded'), 'warn');
 				$UploadTheLogo = 'No';
-			} elseif (file_exists($filename)) {
+			} elseif (file_exists($FileName)) {
 				prnMsg(_('Attempting to overwrite an existing item image'), 'warn');
-				$result = unlink($filename);
-				if (!$result) {
+				$Result = unlink($FileName);
+				if (!$Result) {
 					prnMsg(_('The existing image could not be removed'), 'error');
 					$UploadTheLogo = 'No';
 				}
@@ -63,32 +63,8 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 			if ($_POST['CreateDB'] == TRUE) {
 				/* Need to read in the sql script and process the queries to initate a new DB */
 
-				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'], $db);
-
-				if ($DBType == 'postgres') {
-
-					$PgConnStr = 'dbname=' . $_POST['NewCompany'];
-					if (isset($host) and ($host != "")) {
-						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
-					}
-
-					if (isset($DBUser) and ($DBUser != "")) {
-						// if we have a user we need to use password if supplied
-						$PgConnStr .= " user=" . $DBUser;
-						if (isset($DBPassword) and ($DBPassword != "")) {
-							$PgConnStr .= " password=" . $DBPassword;
-						}
-					}
-					$db = pg_connect($PgConnStr);
-					$SQLScriptFile = file('./sql/pg/kwamoja-new.psql');
-
-				} elseif ($DBType == 'mysql') { //its a mysql db < 4.1
-					mysql_select_db($_POST['NewCompany'], $db);
-					$SQLScriptFile = file('./sql/mysql/kwamoja-new.sql');
-				} elseif ($DBType == 'mysqli') { //its a mysql db using the >4.1 library functions
-					mysqli_select_db($db, $_POST['NewCompany']);
-					$SQLScriptFile = file('./sql/mysql/kwamoja-new.sql');
-				}
+				$Result = DB_query('CREATE DATABASE ' . $_POST['NewCompany']);
+				DB_select_database($_POST['NewCompany']);
 
 				$ScriptFileEntries = sizeof($SQLScriptFile);
 				$ErrMsg = _('The script to create the new company database failed because');
@@ -113,7 +89,7 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 						}
 						if (mb_strpos($SQLScriptFile[$i], ';') > 0 and !$InAFunction) {
 							$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1);
-							$result = DB_query($SQL, $db, $ErrMsg);
+							$Result = DB_query($SQL, $ErrMsg);
 							$SQL = '';
 						}
 
@@ -134,11 +110,14 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/GoodsReceived.xml', './companies/' . $_POST['NewCompany'] . '/FormDesigns/GoodsReceived.xml');
 			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml', './companies/' . $_POST['NewCompany'] . '/FormDesigns/PickingList.xml');
 			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PurchaseOrder.xml', './companies/' . $_POST['NewCompany'] . '/FormDesigns/PurchaseOrder.xml');
+			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/FGLabel.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/FGLabel.xml');
+			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/WOPaperwork.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/WOPaperwork.xml');
+			copy('./companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/QALabel.xml', './companies/' . $_POST['NewDatabase'] . '/FormDesigns/QALabel.xml');
 
 			/*OK Now upload the logo */
 			if ($UploadTheLogo == 'Yes') {
-				$result = move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);
-				$message = ($result) ? _('File url') . '<a href="' . $filename . '">' . $filename . '</a>' : _('Something is wrong with uploading a file');
+				$Result = move_uploaded_file($_FILES['LogoFile']['tmp_name'], $FileName);
+				$message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : _('Something is wrong with uploading a file');
 			}
 
 		} else {
@@ -169,20 +148,20 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 		unset($_SESSION['CreditItems']);
 
 		$SQL = "UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		$SQL = "UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		$SQL = "UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/part_pics' WHERE confname='part_pics_dir'";
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		$SQL = "UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/reports' WHERE confname='reports_dir'";
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		$SQL = "UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 
 		$ForceConfigReload = true;
 		include('includes/GetConfig.php');
 
-		prnMsg(_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "kwamoja" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg(_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "') . $DefaultDatabase . _('" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
 		echo '<p><a href="' . $RootPath . '/CompanyPreferences.php">' . _('Set Up New Company Details') . '</a>';
 		echo '<p><a href="' . $RootPath . '/SystemParameters.php">' . _('Set Up Configuration Details') . '</a>';
@@ -193,33 +172,30 @@ if (isset($_POST['submit']) and isset($_POST['NewCompany'])) {
 		include('includes/footer.inc');
 		exit;
 	}
-
 }
-
 
 echo '<div class="centre">';
 echo '<br />';
 prnMsg(_('This utility will create a new company') . '<br /><br />' . _('If the company name already exists then you cannot recreate it'), 'info', _('PLEASE NOTE'));
 echo '<br /></div>';
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" enctype="multipart/form-data">';
-echo '<div class="centre">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" enctype="multipart/form-data">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table><tr>';
-echo '<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
-	<td><input type="text" size="33" minlength="0" maxlength="32" name="NewCompany" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Logo Image File (.jpg)') . ':</td><td><input type="file" required="required" id="LogoFile" name="LogoFile" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Create Database?') . '</td>
-		<td><input type="checkbox" name="CreateDB" /></td>
-	</tr>
+echo '<table>
+		<tr>
+			<td>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</td>
+			<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Logo Image File (.jpg)') . ':</td><td><input type="file" required="required" id="LogoFile" name="LogoFile" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Create Database?') . '</td>
+			<td><input type="checkbox" name="CreateDB" /></td>
+		</tr>
 	</table>';
 
-echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />';
-echo '</div>';
+echo '<input type="submit" name="submit" value="' . _('Proceed') . '" />';
 echo '</form>';
 
 include('includes/footer.inc');

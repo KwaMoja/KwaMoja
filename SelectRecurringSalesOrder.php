@@ -2,48 +2,42 @@
 
 include('includes/session.inc');
 $Title = _('Search Recurring Sales Orders');
-/* KwaMoja manual links before header.inc */
+/* Manual links before header.inc */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/header.inc');
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<table class="selection">
 		<tr>
-			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
-			<td>' . '<select required="required" minlength="1" name="StockLocation">';
+			<td>' . _('Select recurring order templates for delivery from') . ':</td>
+			<td>' . '<select required="required" name="StockLocation">';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations";
-} else {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-}
+$SQL = "SELECT locations.loccode,
+				locationname
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1";
 
-$resultStkLocs = DB_query($sql, $db);
+$ResultStkLocs = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($resultStkLocs)) {
+while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation'])) {
-		if ($myrow['loccode'] == $_POST['StockLocation']) {
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		if ($MyRow['loccode'] == $_POST['StockLocation']) {
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
-	} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 
@@ -88,12 +82,11 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 				recurringsalesorders.frequency";
 
 	$ErrMsg = _('No recurring orders were returned by the SQL because');
-	$SalesOrdersResult = DB_query($SQL, $db, $ErrMsg);
+	$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<br />
-		<table cellpadding="2" width="90%" class="selection">
+	echo '<table cellpadding="2" width="90%" class="selection">
 			<tr>
 				<th>' . _('Modify') . '</th>
 				<th>' . _('Customer') . '</th>
@@ -106,7 +99,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 			</tr>';
 
 	$k = 0; //row colour counter
-	while ($myrow = DB_fetch_array($SalesOrdersResult)) {
+	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
 
 		if ($k == 1) {
@@ -114,13 +107,13 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k++;
+			++$k;
 		}
 
-		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $myrow['recurrorderno'];
-		$FormatedLastRecurrence = ConvertSQLDate($myrow['lastrecurrence']);
-		$FormatedStopDate = ConvertSQLDate($myrow['stopdate']);
-		$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['currdecimalplaces']);
+		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $MyRow['recurrorderno'];
+		$FormatedLastRecurrence = ConvertSQLDate($MyRow['lastrecurrence']);
+		$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
+		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
 
 		printf('<td><a href="%s">%s</a></td>
 				<td>%s</td>
@@ -130,7 +123,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
-				</tr>', $ModifyPage, $myrow['recurrorderno'], $myrow['name'], $myrow['brname'], $myrow['customerref'], $FormatedLastRecurrence, $FormatedStopDate, $myrow['frequency'], $FormatedOrderValue);
+				</tr>', $ModifyPage, $MyRow['recurrorderno'], $MyRow['name'], $MyRow['brname'], $MyRow['customerref'], $FormatedLastRecurrence, $FormatedStopDate, $MyRow['frequency'], $FormatedOrderValue);
 
 		//end of page full new headings if
 	}
@@ -138,8 +131,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	echo '</table>';
 }
-echo '</div>
-	  </form>';
+echo '</form>';
 
 include('includes/footer.inc');
 ?>

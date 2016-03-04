@@ -47,15 +47,15 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<table style="max-width:100%;width:99%;" cellspacing="0" cellpadding="1" border="0">
 		<tr>
 			<th colspan="5" style="margin:0px;padding:0px;background: transparent;">
 				<div class="CanvasTitle">' . _('Latest purchase orders') . '
-					<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+					<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 				</div>
 			</th>
 		</tr>';
@@ -88,7 +88,7 @@ $SQL = 'SELECT purchorders.orderno,
 					suppliers.currcode,
 					currencies.decimalplaces
 			ORDER BY orddate DESC LIMIT 5';
-$SalesOrdersResult2 = DB_query($SQL, $db);
+$SalesOrdersResult2 = DB_query($SQL);
 $Total = 0;
 
 echo '<tbody>

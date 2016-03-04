@@ -8,8 +8,7 @@ CreateTable('warehouse',
 	PRIMARY KEY (`warehouseid`, `loccode`),
 	KEY (warehouseid),
 	CONSTRAINT `warehouse_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)",
-$db);
+)");
 
 CreateTable('whlocations',
 "CREATE TABLE `whlocations` (
@@ -29,9 +28,8 @@ CreateTable('whlocations',
 	`issue` TINYINT(4) NOT NULL DEFAULT '1',
 	PRIMARY KEY (`whlocationid`),
 	CONSTRAINT `whlocations_ibfk_1` FOREIGN KEY (`warehouseid`) REFERENCES `warehouse` (`warehouseid`)
-)",
-$db);
+)");
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

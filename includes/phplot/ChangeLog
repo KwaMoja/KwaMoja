@@ -551,7 +551,7 @@ The project home page is http://sourceforge.net/projects/phplot/
 
      Compatibility: If you were using an invalid data type for a plot type
      whose function did not check, will now get an error.
-     
+
    * Removed some dubious code from DrawLines() and DrawSquared() and
      rewrote comments there. The code initialized lastx[0] and lasty[0],
      but lasty was mapped using the X (rather than Y) function.  This was
@@ -562,7 +562,7 @@ The project home page is http://sourceforge.net/projects/phplot/
    * Truecolor.txt: removed
    * Makefile, README.txt: Removed reference to Truecolor.txt. Full
      documentation for truecolor images is now in the Reference Manual.
-     
+
 2010-06-02
    * Fix bug 3010116 "Bad rendering of title in multi-plot image
      when using TTF":
@@ -942,8 +942,8 @@ The project home page is http://sourceforge.net/projects/phplot/
 
     * Added 'custom' label type. The caller supplies a callback (typically a
       function name) and optional pass-through argument as the 2nd and 3rd
-      arguments to Set[XY]LabelType.  The function is called as $f($value, $arg)
-      to return the formatted $value.
+      arguments to Set[XY]LabelType.  The function is called as $f($Value, $arg)
+      to return the formatted $Value.
              $plot->SetXLabelType('custom', 'myfunction', $arg_value);
 
     * In addition to Set[XY]TimeFormat, the format string for type 'time' can
@@ -1059,7 +1059,7 @@ The project home page is http://sourceforge.net/projects/phplot/
           y_label_left_offset, y_label_right_offset, y_label_axis_offset,
           x_title_top_offset, x_title_bot_offset,
           y_title_left_offset, y_title_left_offset : Label offsets
-      
+
     * New internal functions:
       CalcPlotAreaPixels : Deferred calculations taken out of SetPlotAreaPixels
         and SetMarginsPixels.
@@ -1334,7 +1334,7 @@ The project home page is http://sourceforge.net/projects/phplot/
 
         Removed third, unused, default NULL argument from SetLegendPixels and
         SetLegendWorld.
- 
+
         Changes to DrawLegend to convert x, y coords to pixel coordinates
         if they came from SetLegendWorld. Also account for new usage of
         the class variables: Test for unset to mean use default.
@@ -1355,7 +1355,7 @@ The project home page is http://sourceforge.net/projects/phplot/
       If number formatting is enabled with 'data' format type, PHPlot previously
       used dot for decimal point and comma for thousands separator, and there
       was no way to change it.
-      
+
       This fix adds a new function:
                SetNumberFormat($decimal_point, $thousands_separator)
       to set the separators.  In addition, if that function is not used,
@@ -1411,7 +1411,7 @@ The project home page is http://sourceforge.net/projects/phplot/
     * Fix for bug 1594457: DrawError text wrap and background fix
       Do error image white background correctly, and word-wrap the text.
 
-    * Fix for bug 1594458: Suppress lines or points in 'linepoints' 
+    * Fix for bug 1594458: Suppress lines or points in 'linepoints'
       Don't draw X data labels twice for 'linepoints'.
       Allow SetPointShapes value 'none' to suppress points, and allow
       SetLineStyles value 'none' to suppress lines. This allows a 'linepoints'

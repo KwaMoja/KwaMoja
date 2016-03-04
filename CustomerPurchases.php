@@ -1,14 +1,17 @@
 <?php
 
 include('includes/session.inc');
-$Title = _('Customer Purchases');
+$Title = _('Customer Purchases');// Screen identificator.
+$ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
+/* This help needs to be writing...
+$BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.inc');
 
 if (isset($_GET['DebtorNo'])) {
-	$DebtorNo = $_GET['DebtorNo'];
+	$DebtorNo = stripslashes($_GET['DebtorNo']);
 } //isset($_GET['DebtorNo'])
 else if (isset($_POST['DebtorNo'])) {
-	$DebtorNo = $_POST['DebtorNo'];
+	$DebtorNo = stripslashes($_POST['DebtorNo']);
 } //isset($_POST['DebtorNo'])
 else {
 	prnMsg(_('This script must be called with a customer code.'), 'info');
@@ -24,76 +27,50 @@ $SQL = "SELECT debtorsmaster.name,
 		WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
 $ErrMsg = _('The customer details could not be retrieved by the SQL because');
-$CustomerResult = DB_query($SQL, $db, $ErrMsg);
+$CustomerResult = DB_query($SQL, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
+echo '<div class="toplink"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div>';
+
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Customer') . '" alt="" /> ' . _('Items Purchased by Customer') . ' : ' . $CustomerRecord['name'] . '
 	</p>';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$SQL = "SELECT stockmoves.stockid,
-					stockmaster.description,
-					systypes.typename,
-					transno,
-					locations.locationname,
-					trandate,
-					branchcode,
-					price,
-					reference,
-					qty,
-					narrative
-				FROM stockmoves
-				INNER JOIN stockmaster
-					ON stockmaster.stockid=stockmoves.stockid
-				INNER JOIN systypes
-					ON stockmoves.type=systypes.typeid
-				INNER JOIN locations
-					ON stockmoves.loccode=locations.loccode
-				WHERE debtorno='" . $DebtorNo . "'";
+$SQLWhere = '';
+$SQL = "SELECT stockmoves.stockid,
+				stockmaster.description,
+				systypes.typename,
+				transno,
+				locations.locationname,
+				trandate,
+				branchcode,
+				price,
+				reference,
+				qty,
+				narrative
+			FROM stockmoves
+			INNER JOIN stockmaster
+				ON stockmaster.stockid=stockmoves.stockid
+			INNER JOIN systypes
+				ON stockmoves.type=systypes.typeid
+			INNER JOIN locations
+				ON stockmoves.loccode=locations.loccode
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE debtorno='" . $DebtorNo . "'";
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$SQL .= " INNER JOIN custbranch
 					ON stockmoves.branchcode=custbranch.branchcode";
-		$SQLWhere .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+		$SQLWhere = " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$SQL .= $SQLWhere . " ORDER BY trandate DESC";
-} else {
-	$SQL = "SELECT stockmoves.stockid,
-					stockmaster.description,
-					systypes.typename,
-					transno,
-					locations.locationname,
-					trandate,
-					stockmoves.branchcode,
-					price,
-					reference,
-					qty,
-					narrative
-				FROM stockmoves
-				INNER JOIN stockmaster
-					ON stockmaster.stockid=stockmoves.stockid
-				INNER JOIN systypes
-					ON stockmoves.type=systypes.typeid
-				INNER JOIN locations
-					ON stockmoves.loccode=locations.loccode
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE debtorno='" . $DebtorNo . "'
-					AND www_users.userid='" . $_SESSION['UserID'] . "'";
-	if ($_SESSION['SalesmanLogin'] != '') {
-		$SQL .= " INNER JOIN custbranch
-					ON stockmoves.branchcode=custbranch.branchcode";
-		$SQLWhere .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
-	}
-	$SQL .= $SQLWhere . " ORDER BY trandate DESC";
-}
 $ErrMsg = _('The stock movement details could not be retrieved by the SQL because');
-$StockMovesResult = DB_query($SQL, $db, $ErrMsg);
+$StockMovesResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($StockMovesResult) == 0) {
-	echo '<br />';
 	prnMsg(_('There are no items for this customer'), 'notice');
-	echo '<br />';
 } //DB_num_rows($StockMovesResult) == 0
 else {
 	echo '<table class="selection">
@@ -117,14 +94,14 @@ else {
 				<td>' . ConvertSQLDate($StockMovesRow['trandate']) . '</td>
 				<td>' . $StockMovesRow['stockid'] . '</td>
 				<td>' . $StockMovesRow['description'] . '</td>
-				<td>' . $StockMovesRow['typename'] . '</td>
-				<td>' . $StockMovesRow['transno'] . '</td>
+				<td>' . _($StockMovesRow['typename']) . '</td>
+				<td class="number">' . $StockMovesRow['transno'] . '</td>
 				<td>' . $StockMovesRow['locationname'] . '</td>
 				<td>' . $StockMovesRow['branchcode'] . '</td>
 				<td class="number">' . locale_number_format($StockMovesRow['price'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format(-$StockMovesRow['qty'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td>' . $StockMovesRow['reference'] . '</td>
+				<td class="number">' . $StockMovesRow['reference'] . '</td>
 				<td>' . $StockMovesRow['narrative'] . '</td>
 			</tr>';
 
@@ -132,8 +109,6 @@ else {
 
 	echo '</table>';
 }
-
-echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.inc');
 ?>

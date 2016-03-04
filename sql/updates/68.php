@@ -1,8 +1,8 @@
 <?php
 
-AddColumn('url', 'suppliers', 'VARCHAR( 70 )', 'NOT NULL', '', 'email', $db);
-ChangeConfigValue('VersionNumber', '13.10.0', $db);
+AddColumn('url', 'suppliers', 'VARCHAR( 70 )', 'NOT NULL', '', 'email');
+ChangeConfigValue('VersionNumber', '13.10.0');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

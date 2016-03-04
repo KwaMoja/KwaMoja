@@ -28,9 +28,11 @@ $ModuleList = array(
 	_('Setup')
 );
 
-echo '<a href="' . $RootPath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
+echo '<div class="toplink">
+		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Back to Suppliers') . '</a>
+	</div>';
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -61,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError != 1) {
 
-		$sql = "INSERT INTO www_users (userid,
+		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										supplierid,
 										password,
@@ -91,21 +93,21 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['UserLanguage'] . "')";
 		$ErrMsg = _('The user could not be added because');
 		$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('A new supplier login has been created'), 'success');
 		include('includes/footer.inc');
 		exit;
 	}
 }
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" autofocus="autofocus" name="UserID" size="22" required="required" minlength="1" maxlength="20" /></td>
+			<td><input type="text" autofocus="autofocus" name="UserID" size="22" required="required" maxlength="20" /></td>
 		</tr>';
 
 
@@ -123,19 +125,19 @@ if (!isset($_POST['Email'])) {
 }
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" required="required" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" required="required" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" minlength="0" maxlength="35" /></td>
+		<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Telephone No') . ':</td>
-		<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
+		<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Email Address') . ':</td>
-		<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" minlength="0" maxlength="55" /></td>
+		<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" maxlength="55" /></td>
 	</tr>';
 
 
@@ -148,17 +150,17 @@ echo '<tr>
 //- Only one entry in securitygroups AND the tokenid of this entry == 9
 
 //First get all available security role ID's'
-$RolesResult = DB_query("SELECT secroleid FROM securityroles", $db);
+$RolesResult = DB_query("SELECT secroleid FROM securityroles");
 $FoundTheSupplierRole = false;
-while ($myroles = DB_fetch_array($RolesResult)) {
+while ($MyRoles = DB_fetch_array($RolesResult)) {
 	//Now look to find the tokens for the role - we just wnat the role that has just one token i.e. token 9
 	$TokensResult = DB_query("SELECT tokenid
 								FROM securitygroups
-								WHERE secroleid = '" . $myroles['secroleid'] . "'", $db);
+								WHERE secroleid = '" . $MyRoles['secroleid'] . "'");
 
-	while ($mytoken = DB_fetch_row($TokensResult)) {
-		if ($mytoken[0] == 9) {
-			echo '<input type="hidden" name="Access" value ="' . $myroles['secroleid'] . '" />';
+	while ($MyToken = DB_fetch_row($TokensResult)) {
+		if ($MyToken[0] == 9) {
+			echo '<input type="hidden" name="Access" value ="' . $MyRoles['secroleid'] . '" />';
 			$FoundTheSupplierRole = true;
 			break;
 		}
@@ -176,34 +178,29 @@ if (!$FoundTheSupplierRole) {
 
 echo '<tr>
 		<td>' . _('Default Location') . ':</td>
-		<td><select required="required" minlength="1" name="DefaultLocation">';
+		<td><select required="required" name="DefaultLocation">';
 
-if ($_SESSION['RestrictLocations'] == 0) {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations";
-} else {
-	$sql = "SELECT locationname,
-					loccode
-				FROM locations
-				INNER JOIN www_users
-					ON locations.loccode=www_users.defaultlocation
-				WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-}
-$result = DB_query($sql, $db);
+$SQL = "SELECT locations.loccode,
+				locationname
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1";
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
-	if (isset($_POST['DefaultLocation']) AND $myrow['loccode'] == $_POST['DefaultLocation']) {
+	if (isset($_POST['DefaultLocation']) and $MyRow['loccode'] == $_POST['DefaultLocation']) {
 
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 
 echo '<tr><td>' . _('Reports Page Size') . ':</td>
-	<td><select minlength="0" name="PageSize">';
+	<td><select name="PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -250,7 +247,7 @@ echo '</select></td></tr>';
 
 echo '<tr>
 	<td>' . _('Theme') . ':</td>
-	<td><select minlength="0" name="Theme">';
+	<td><select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -261,7 +258,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())) {
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme'] == $ThemeName)) {
+		} elseif (!isset($_POST['Theme']) and ($_SESSION['Theme'] == $ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
@@ -273,12 +270,12 @@ echo '</select></td></tr>';
 
 echo '<tr>
 	<td>' . _('Language') . ':</td>
-	<td><select minlength="0" name="UserLanguage">';
+	<td><select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
-	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
+	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $_SESSION['DefaultLanguage']) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	} else {
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
@@ -290,7 +287,6 @@ echo '</select></td>
 	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
 	</div>
 	</form>';
 

@@ -26,26 +26,26 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	$sql = "SELECT count(geocodeid)
+	$SQL = "SELECT count(geocodeid)
 			FROM geocode_param WHERE geocodeid='" . $_POST['GeoCodeID'] . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
-	if ($myrow[0] != 0 and !isset($SelectedParam)) {
+	if ($MyRow[0] != 0 and !isset($SelectedParam)) {
 		$InputError = 1;
 		prnMsg(_('That geocode ID already exists in the database'), 'error');
 		$Errors[$i] = 'GeoCodeID';
-		$i++;
+		++$i;
 	}
 
-	$msg = '';
+	$Msg = '';
 
 	if (isset($SelectedParam) and $InputError != 1) {
 
 		/*SelectedParam could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
 		if (isset($_POST['GeoCode_Key']) and isset($_POST['GeoCode_Key'])) {
-			$sql = "UPDATE geocode_param SET
+			$SQL = "UPDATE geocode_param SET
 					geocode_key='" . $_POST['GeoCode_Key'] . "',
 					center_long='" . $_POST['Center_Long'] . "',
 					center_lat='" . $_POST['Center_Lat'] . "',
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 					map_host='" . $_POST['Map_Host'] . "'
 					WHERE geocodeid = '" . $SelectedParam . "'";
 		}
-		$msg = _('The geocode status record has been updated');
+		$Msg = _('The geocode status record has been updated');
 
 	} else if ($InputError != 1) {
 
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['GeoCode_Key']) and $_POST['GeoCode_Key'] > 0) {
 
-			$sql = "INSERT INTO geocode_param (geocodeid,
+			$SQL = "INSERT INTO geocode_param (geocodeid,
 												geocode_key,
 												center_long,
 												center_lat,
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['Map_Width'] . "',
 							'" . $_POST['Map_Host'] . "')";
 		} else {
-			$sql = "INSERT INTO geocode_param (geocodeid,
+			$SQL = "INSERT INTO geocode_param (geocodeid,
 												geocode_key,
 												center_long,
 												center_lat,
@@ -93,19 +93,19 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['Map_Host'] . "')";
 		}
 
-		$msg = _('A new geocode status record has been inserted');
+		$Msg = _('A new geocode status record has been inserted');
 		unset($SelectedParam);
 		unset($_POST['GeoCode_Key']);
 	}
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql, $db);
-	if ($msg != '') {
-		prnMsg($msg, 'success');
+	$Result = DB_query($SQL);
+	if ($Msg != '') {
+		prnMsg($Msg, 'success');
 	}
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
-	$sql = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
-	$result = DB_query($sql, $db);
+	$SQL = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
+	$Result = DB_query($SQL);
 	prnMsg(_('Geocode deleted'), 'success');
 	//end if status code used in customer or supplier accounts
 	unset($_GET['delete']);
@@ -120,7 +120,7 @@ if (!isset($SelectedParam)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT geocodeid,
+	$SQL = "SELECT geocodeid,
 					geocode_key,
 					center_long,
 					center_lat,
@@ -128,10 +128,10 @@ if (!isset($SelectedParam)) {
 					map_width,
 					map_host
 			FROM geocode_param";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . _('Setup configuration for Geocoding of Customers and Suppliers') . '</p>';
-	echo '<div class="page_help_text noPrint">' . _('Get a google API key at ') . '<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . _('Setup configuration for Geocoding of Customers and Suppliers') . '</p>';
+	echo '<div class="page_help_text">' . _('Get a google API key at ') . '<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
 	echo '<div class="centre"><p>' . _('Find the lat/long for your map center point at ') . '<a href="http://www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></p>';
 	prnMsg(_('Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px)'), 'info');
 	echo '</div><br />';
@@ -148,7 +148,7 @@ if (!isset($SelectedParam)) {
 		</tr>';
 
 	$k = 0; //row colour counter
-	while ($myrow = DB_fetch_row($result)) {
+	while ($MyRow = DB_fetch_row($Result)) {
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -167,7 +167,7 @@ if (!isset($SelectedParam)) {
 			<td>%s</td>
 			<td><a href=\'%s?SelectedParam=%s\'>' . _('Edit') . '</a></td>
 			<td><a href=\'%s?SelectedParam=%s&delete=%s\'>' . _('Delete') . '</a></td>
-			</tr>', $myrow[0], $myrow[1], $myrow[2], $myrow[3], $myrow[4], $myrow[5], $myrow[6], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow[0], $myrow[0]);
+			</tr>', $MyRow[0], $MyRow[1], $MyRow[2], $MyRow[3], $MyRow[4], $MyRow[5], $MyRow[6], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $MyRow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $MyRow[0], $MyRow[0]);
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -180,14 +180,13 @@ if (isset($SelectedParam)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedParam) and ($InputError != 1)) {
 		//editing an existing status code
 
-		$sql = "SELECT geocodeid,
+		$SQL = "SELECT geocodeid,
 					geocode_key,
 					center_long,
 					center_lat,
@@ -197,22 +196,23 @@ if (!isset($_GET['delete'])) {
 				FROM geocode_param
 				WHERE geocodeid='" . $SelectedParam . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['GeoCodeID'] = $myrow['geocodeid'];
-		$_POST['GeoCode_Key'] = $myrow['geocode_key'];
-		$_POST['Center_Long'] = $myrow['center_long'];
-		$_POST['Center_Lat'] = $myrow['center_lat'];
-		$_POST['Map_Height'] = $myrow['map_height'];
-		$_POST['Map_Width'] = $myrow['map_width'];
-		$_POST['Map_Host'] = $myrow['map_host'];
+		$_POST['GeoCodeID'] = $MyRow['geocodeid'];
+		$_POST['GeoCode_Key'] = $MyRow['geocode_key'];
+		$_POST['Center_Long'] = $MyRow['center_long'];
+		$_POST['Center_Lat'] = $MyRow['center_lat'];
+		$_POST['Map_Height'] = $MyRow['map_height'];
+		$_POST['Map_Width'] = $MyRow['map_width'];
+		$_POST['Map_Host'] = $MyRow['map_host'];
 
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
-		echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . _('Setup configuration for Geocoding of Customers and Suppliers') . '</p>';
-		echo '<br /><table>
-				<tr><td>' . _('Geocode Code') . ':</td>
+		echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . _('Setup configuration for Geocoding of Customers and Suppliers') . '</p>';
+		echo '<table>
+				<tr>
+					<td>' . _('Geocode Code') . ':</td>
 					<td>' . $_POST['GeoCodeID'] . '</td></tr>';
 
 	} else { //end of if $SelectedParam only do the else when a new record is being entered
@@ -227,33 +227,34 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Geocode Key') . ':</td>
-			<td><input tabindex="2" type="text" name="GeoCode_Key" value="' . $_POST['GeoCode_Key'] . '" size="28" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="2" type="text" name="GeoCode_Key" value="' . $_POST['GeoCode_Key'] . '" size="28" maxlength="300" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Geocode Center Long') . '</td>
-			<td><input tabindex="3" type="text" name="Center_Long" value="' . $_POST['Center_Long'] . '" size="28" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="3" type="text" name="Center_Long" value="' . $_POST['Center_Long'] . '" size="28" maxlength="300" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Geocode Center Lat') . '</td>
-			<td><input tabindex="4" type="text" name="Center_Lat" value="' . $_POST['Center_Lat'] . '" size="28" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="4" type="text" name="Center_Lat" value="' . $_POST['Center_Lat'] . '" size="28" maxlength="300" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Geocode Map Height') . '</td>
-			<td><input tabindex="5" type="text" name="Map_Height" value="' . $_POST['Map_Height'] . '" size="28" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="5" type="text" name="Map_Height" value="' . $_POST['Map_Height'] . '" size="28" maxlength="300" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Geocode Map Width') . '</td>
-			<td><input tabindex="6" type="text" name="Map_Width" value="' . $_POST['Map_Width'] . '" size="28" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="6" type="text" name="Map_Width" value="' . $_POST['Map_Width'] . '" size="28" maxlength="300" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Geocode Host') . '</td>
-			<td><input tabindex="7" type="text" name="Map_Host" value="' . $_POST['Map_Host'] . '" size="20" minlength="0" maxlength="300" /></td>
+			<td><input tabindex="7" type="text" name="Map_Host" value="' . $_POST['Map_Host'] . '" size="20" maxlength="300" /></td>
 		</tr>
 	</table>
-	<div class="centre"><input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" /></div><br />
+	<div class="centre">
+		<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
 	</form>';
-	echo '<div class="page_help_text noPrint">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';
+	echo '<div class="page_help_text">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';
 	echo '<p>' . _('Suppliers and Customer Branches are geocoded when being entered/updated. You can rerun the geocode process from this screen at any time.') . '</p></div><br />';
 
 	echo '<div class="centre"><a href="' . $RootPath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a><br />';

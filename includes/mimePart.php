@@ -129,42 +129,42 @@ class Mail_mimePart {
 			define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);
 		}
 
-		foreach ($params as $key => $value) {
-			switch ($key) {
+		foreach ($params as $Key => $Value) {
+			switch ($Key) {
 				case 'content_type':
-					$headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+					$headers['Content-Type'] = $Value . (isset($charset) ? '; charset="' . $charset . '"' : '');
 					break;
 
 				case 'encoding':
-					$this->_encoding = $value;
-					$headers['Content-Transfer-Encoding'] = $value;
+					$this->_encoding = $Value;
+					$headers['Content-Transfer-Encoding'] = $Value;
 					break;
 
 				case 'cid':
-					$headers['Content-ID'] = '<' . $value . '>';
+					$headers['Content-ID'] = '<' . $Value . '>';
 					break;
 
 				case 'disposition':
-					$headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
+					$headers['Content-Disposition'] = $Value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
 					break;
 
 				case 'dfilename':
 					if (isset($headers['Content-Disposition'])) {
-						$headers['Content-Disposition'] .= '; filename="' . $value . '"';
+						$headers['Content-Disposition'] .= '; filename="' . $Value . '"';
 					} else {
-						$dfilename = $value;
+						$dfilename = $Value;
 					}
 					break;
 
 				case 'description':
-					$headers['Content-Description'] = $value;
+					$headers['Content-Description'] = $Value;
 					break;
 
 				case 'charset':
 					if (isset($headers['Content-Type'])) {
-						$headers['Content-Type'] .= '; charset="' . $value . '"';
+						$headers['Content-Type'] .= '; charset="' . $Value . '"';
 					} else {
-						$charset = $value;
+						$charset = $Value;
 					}
 					break;
 			}
@@ -209,8 +209,8 @@ class Mail_mimePart {
 			for ($i = 0; $i < count($this->_subparts); $i++) {
 				$headers = array();
 				$tmp = $this->_subparts[$i]->encode();
-				foreach ($tmp['headers'] as $key => $value) {
-					$headers[] = $key . ': ' . $value;
+				foreach ($tmp['headers'] as $Key => $Value) {
+					$headers[] = $Key . ': ' . $Value;
 				}
 				$subparts[] = implode(MAIL_MIMEPART_CRLF, $headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
 			}

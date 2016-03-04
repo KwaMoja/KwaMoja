@@ -14,8 +14,7 @@ CreateTable('tenders',
   `closed` int(2) NOT NULL DEFAULT '0',
   `requiredbydate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`tenderid`)
-)",
-$db);
+)");
 
 CreateTable('tenderitems',
 "CREATE TABLE `tenderitems` (
@@ -24,8 +23,7 @@ CreateTable('tenderitems',
   `quantity` varchar(40) NOT NULL DEFAULT '',
   `units` varchar(20) NOT NULL DEFAULT 'each',
   PRIMARY KEY (`tenderid`,`stockid`)
-)",
-$db);
+)");
 
 CreateTable('tendersuppliers',
 "CREATE TABLE `tendersuppliers` (
@@ -34,16 +32,15 @@ CreateTable('tendersuppliers',
   `email` varchar(40) NOT NULL DEFAULT '',
   `responded` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tenderid`,`supplierid`)
-)",
-$db);
+)");
 
-NewScript('SupplierTenderCreate.php', '4', $db);
-AddColumn('cancreatetender', 'www_users', 'TINYINT(1)', 'NOT NULL', '0', 'fullaccess', $db);
+NewScript('SupplierTenderCreate.php', '4');
+AddColumn('cancreatetender', 'www_users', 'TINYINT(1)', 'NOT NULL', '0', 'fullaccess');
 
-NewConfigValue('StandardCostDecimalPlaces','2', $db);
+NewConfigValue('StandardCostDecimalPlaces','2');
 
-ChangeConfigValue('VersionNumber', '4.07', $db);
+ChangeConfigValue('VersionNumber', '4.07');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

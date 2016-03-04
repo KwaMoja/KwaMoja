@@ -19,27 +19,27 @@ class StockRequest {
 		$this->LineItems = array();
 	}
 
-	function AddLine($StockID, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber = -1) {
+	function AddLine($StockId, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber = -1) {
 
 		if ($LineNumber == -1) {
 			$LineNumber = $this->LineCounter;
 		}
-		$this->LineItems[$LineNumber] = new LineDetails($StockID, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber);
+		$this->LineItems[$LineNumber] = new LineDetails($StockId, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber);
 		$this->LineCounter = $LineNumber + 1;
 	}
 }
 
 class LineDetails {
-	var $StockID;
+	var $StockId;
 	var $ItemDescription;
 	var $Quantity;
 	var $UOM;
 	var $LineNumber;
 
-	function LineDetails($StockID, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber) {
+	function LineDetails($StockId, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber) {
 
 		$this->LineNumber = $LineNumber;
-		$this->StockID = $StockID;
+		$this->StockID = $StockId;
 		$this->ItemDescription = $ItemDescription;
 		$this->Quantity = $Quantity;
 		$this->DecimalPlaces = $DecimalPlaces;

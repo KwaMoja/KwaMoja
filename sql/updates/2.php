@@ -5,45 +5,42 @@ CreateTable('taxcategories',
   taxcatid tinyint( 4 ) AUTO_INCREMENT NOT NULL ,
   taxcatname varchar( 30 ) NOT NULL ,
   PRIMARY KEY ( taxcatid )
-)",
-$db);
+)");
 
-DropConstraint('taxauthlevels', 'taxauthlevels_ibfk_2', $db);
+DropConstraint('taxauthlevels', 'taxauthlevels_ibfk_2');
 
-ChangeColumnName('dispatchtaxauthority', 'taxauthlevels', 'TINYINT( 4 )', 'NOT NULL', '1', 'dispatchtaxprovince', $db);
-ChangeColumnName('level', 'taxauthlevels', 'TINYINT( 4 )', 'NOT NULL', '0', 'taxcatid', $db);
+ChangeColumnName('dispatchtaxauthority', 'taxauthlevels', 'TINYINT( 4 )', 'NOT NULL', '1', 'dispatchtaxprovince');
+ChangeColumnName('level', 'taxauthlevels', 'TINYINT( 4 )', 'NOT NULL', '0', 'taxcatid');
 
-DropIndex('taxauthlevels', 'dispatchtaxauthority', $db);
-AddIndex(array('dispatchtaxprovince'), 'taxauthlevels', 'dispatchtaxprovince', $db);
-AddIndex(array('taxcatid'), 'taxauthlevels', 'taxcatid', $db);
+DropIndex('taxauthlevels', 'dispatchtaxauthority');
+AddIndex(array('dispatchtaxprovince'), 'taxauthlevels', 'dispatchtaxprovince');
+AddIndex(array('taxcatid'), 'taxauthlevels', 'taxcatid');
 
-InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('1', 'Taxable supply'), array('taxcatid', 'taxcatname'), array('1', 'Taxable supply'), $db);
-InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('2', 'Luxury Items'), array('taxcatid', 'taxcatname'), array('2', 'Luxury Items'), $db);
-InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('0', 'Exempt'), array('taxcatid', 'taxcatname'), array('0', 'Exempt'), $db);
+InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('1', 'Taxable supply'), array('taxcatid', 'taxcatname'), array('1', 'Taxable supply'));
+InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('2', 'Luxury Items'), array('taxcatid', 'taxcatname'), array('2', 'Luxury Items'));
+InsertRecord('taxcategories', array('taxcatid', 'taxcatname'), array('0', 'Exempt'), array('taxcatid', 'taxcatname'), array('0', 'Exempt'));
 
-AddConstraint('taxauthlevels', 'taxcatid_ibfk_1', 'taxcatid', 'taxcategories', 'taxcatid', $db);
+AddConstraint('taxauthlevels', 'taxcatid_ibfk_1', 'taxcatid', 'taxcategories', 'taxcatid');
 
 CreateTable('taxprovinces',
 "CREATE TABLE taxprovinces(
   taxprovinceid tinyint( 4 ) AUTO_INCREMENT NOT NULL ,
   taxprovincename varchar( 30 ) NOT NULL ,
   PRIMARY KEY ( taxprovinceid )
-)",
-$db);
+)");
 
-ChangeColumnName('taxauthority', 'locations', 'TINYINT(4)', 'NOT NULL', '1', 'taxprovinceid', $db);
+ChangeColumnName('taxauthority', 'locations', 'TINYINT(4)', 'NOT NULL', '1', 'taxprovinceid');
 
-AddIndex(array('taxprovinceid'), 'locations', 'taxprovinceid', $db);
-//InsertRecord('taxprovinces', array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), $db);
-AddConstraint('locations', 'locations_ibfk_1', 'taxprovinceid', 'taxprovinces', 'taxprovinceid', $db);
+AddIndex(array('taxprovinceid'), 'locations', 'taxprovinceid');
+//InsertRecord('taxprovinces', array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'), array('taxprovinceid', 'taxprovincename'), array(NULL, 'Default Tax province'));
+AddConstraint('locations', 'locations_ibfk_1', 'taxprovinceid', 'taxprovinces', 'taxprovinceid');
 
 CreateTable('taxgroups',
 "CREATE TABLE taxgroups (
   taxgroupid tinyint(4) auto_increment NOT NULL,
   taxgroupdescription varchar(30) NOT NULL,
   PRIMARY KEY(taxgroupid)
-)",
-$db);
+)");
 
 CreateTable('taxgrouptaxes',
 "CREATE TABLE taxgrouptaxes (
@@ -52,13 +49,12 @@ CreateTable('taxgrouptaxes',
   calculationorder tinyint(4) NOT NULL,
   taxontax tinyint(4) DEFAULT 0 NOT NULL,
   PRIMARY KEY(taxgroupid, taxauthid )
-)",
-$db);
+)");
 
-AddIndex(array('taxgroupid'), 'taxgrouptaxes', 'taxgroupid', $db);
-AddIndex(array('taxauthid'), 'taxgrouptaxes', 'taxauthid', $db);
-AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_1', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
-AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_2', 'taxauthid', 'taxauthorities', 'taxid', $db);
+AddIndex(array('taxgroupid'), 'taxgrouptaxes', 'taxgroupid');
+AddIndex(array('taxauthid'), 'taxgrouptaxes', 'taxauthid');
+AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_1', 'taxgroupid', 'taxgroups', 'taxgroupid');
+AddConstraint('taxgrouptaxes', 'taxgrouptaxes_ibfk_2', 'taxauthid', 'taxauthorities', 'taxid');
 
 CreateTable('stockmovestaxes',
 "CREATE TABLE stockmovestaxes (
@@ -70,11 +66,10 @@ CreateTable('stockmovestaxes',
 	PRIMARY KEY (stkmoveno,taxauthid),
 	KEY (taxauthid),
 	KEY (taxcalculationorder)
-)",
-$db);
+)");
 
-AddConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_1', 'taxauthid', 'taxauthorities', 'taxid', $db);
-DropColumn('taxrate', 'stockmoves', $db);
+AddConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_1', 'taxauthid', 'taxauthorities', 'taxid');
+DropColumn('taxrate', 'stockmoves');
 
 CreateTable('debtortranstaxes',
 "CREATE TABLE debtortranstaxes (
@@ -83,32 +78,31 @@ CreateTable('debtortranstaxes',
 	`taxamount` DOUBLE NOT NULL,
 	PRIMARY KEY(debtortransid, taxauthid),
 	KEY (taxauthid)
-)",
-$db);
-AddConstraint('debtortranstaxes', 'debtortranstaxes_ibfk_1', 'taxauthid', 'taxauthorities', 'taxid', $db);
-AddConstraint('debtortranstaxes', 'debtortranstaxes_ibfk_2', 'debtortransid', 'debtortrans', 'id', $db);
+)");
+AddConstraint('debtortranstaxes', 'debtortranstaxes_ibfk_1', 'taxauthid', 'taxauthorities', 'taxid');
+AddConstraint('debtortranstaxes', 'debtortranstaxes_ibfk_2', 'debtortransid', 'debtortrans', 'id');
 
-DropConstraint('custbranch', 'custbranch_ibfk_5', $db);
-ChangeColumnName('taxauthority', 'custbranch', 'TINYINT(4)', 'NOT NULL', '1', 'taxgroupid', $db);
-DropIndex('custbranch', 'area_2', $db);
-DropIndex('custbranch', 'taxauthority', $db);
-AddIndex(array('taxgroupid'), 'custbranch', 'taxgroupid', $db);
-//InsertRecord('taxgroups', array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), $db);
-AddConstraint('custbranch', 'custbranch_ibfk_7', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
+DropConstraint('custbranch', 'custbranch_ibfk_5');
+ChangeColumnName('taxauthority', 'custbranch', 'TINYINT(4)', 'NOT NULL', '1', 'taxgroupid');
+DropIndex('custbranch', 'area_2');
+DropIndex('custbranch', 'taxauthority');
+AddIndex(array('taxgroupid'), 'custbranch', 'taxgroupid');
+//InsertRecord('taxgroups', array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'), array('taxgroupid', 'taxgroupdescription'), array(NULL,'Default tax group'));
+AddConstraint('custbranch', 'custbranch_ibfk_7', 'taxgroupid', 'taxgroups', 'taxgroupid');
 
-RenameTable('taxauthlevels', 'taxauthrates', $db);
-AddConstraint('taxauthrates', 'taxauthrates_ibfk_1', 'dispatchtaxprovince', 'taxprovinces', 'taxprovinceid', $db);
+RenameTable('taxauthlevels', 'taxauthrates');
+AddConstraint('taxauthrates', 'taxauthrates_ibfk_1', 'dispatchtaxprovince', 'taxprovinces', 'taxprovinceid');
 
-ChangeColumnName('taxlevel', 'stockmaster', 'TINYINT(4)', 'NOT NULL', '1', 'taxcatid', $db);
-AddIndex( array('taxcatid'), 'stockmaster', 'stockmaster_ibix_1', $db);
-AddConstraint('stockmaster', 'stockmaster_ibfk_2', 'taxcatid', 'taxcategories', 'taxcatid', $db);
+ChangeColumnName('taxlevel', 'stockmaster', 'TINYINT(4)', 'NOT NULL', '1', 'taxcatid');
+AddIndex( array('taxcatid'), 'stockmaster', 'stockmaster_ibix_1');
+AddConstraint('stockmaster', 'stockmaster_ibfk_2', 'taxcatid', 'taxcategories', 'taxcatid');
 
-DropPrimaryKey('salesorderdetails', array('orderno','stkcode'), $db);
-AddColumn('orderlineno', 'salesorderdetails', 'INT(11)', 'NOT NULL', '0', 'orderno', $db);
-AddPrimaryKey('salesorderdetails', array('orderno','orderlineno'), $db);
+DropPrimaryKey('salesorderdetails', array('orderno','stkcode'));
+AddColumn('orderlineno', 'salesorderdetails', 'INT(11)', 'NOT NULL', '0', 'orderno');
+AddPrimaryKey('salesorderdetails', array('orderno','orderlineno'));
 
-NewConfigValue('FreightTaxCategory','1', $db);
-NewConfigValue('SO_AllowSameItemMultipleTimes','1', $db);
+NewConfigValue('FreightTaxCategory','1');
+NewConfigValue('SO_AllowSameItemMultipleTimes','1');
 
 CreateTable('supptranstaxes',
 "CREATE TABLE `supptranstaxes` (
@@ -119,18 +113,17 @@ CreateTable('supptranstaxes',
   KEY `taxauthid` (`taxauthid`),
   CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
   CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
-)",
-$db);
+)");
 
-DropConstraint('suppliers', 'suppliers_ibfk_3', $db);
-ChangeColumnName('taxauthority', 'suppliers', 'TINYINT', 'NOT NULL', '1', 'taxgroupid', $db);
-DropIndex('suppliers', 'taxauthority', $db);
-AddIndex(array('taxgroupid'),'suppliers', 'taxgroupid', $db);
-AddConstraint('suppliers', 'suppliers_ibfk_3', 'taxgroupid', 'taxgroups', 'taxgroupid', $db);
+DropConstraint('suppliers', 'suppliers_ibfk_3');
+ChangeColumnName('taxauthority', 'suppliers', 'TINYINT', 'NOT NULL', '1', 'taxgroupid');
+DropIndex('suppliers', 'taxauthority');
+AddIndex(array('taxgroupid'),'suppliers', 'taxgroupid');
+AddConstraint('suppliers', 'suppliers_ibfk_3', 'taxgroupid', 'taxgroups', 'taxgroupid');
 
-AddColumn('managed', 'locations', 'TINYINT', 'NOT NULL', '0', 'taxprovinceid', $db);
+AddColumn('managed', 'locations', 'TINYINT', 'NOT NULL', '0', 'taxprovinceid');
 
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

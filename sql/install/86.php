@@ -9,7 +9,7 @@ CreateTable('pricematrix',
   PRIMARY KEY (`salestype`,`stockid`,`quantitybreak`),
   KEY `DiscountCategory` (`stockid`),
   KEY `SalesType` (`salestype`)
-)", $db);
+)");
 
 
 ?>

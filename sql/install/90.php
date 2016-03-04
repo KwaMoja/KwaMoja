@@ -30,7 +30,7 @@ CreateTable('purchorderdetails',
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`orderno`)
-)", $db);
+)");
 
 
 ?>

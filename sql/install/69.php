@@ -6,7 +6,7 @@ CreateTable('mrpdemandtypes',
   `description` char(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`mrpdemandtype`),
   KEY `mrpdemandtype` (`mrpdemandtype`)
-)", $db);
+)");
 
 
 ?>

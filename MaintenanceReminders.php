@@ -1,12 +1,9 @@
 <?php
 
-//this script can be set to run from cron
-
-$AllowAnyone = true;
 include('includes/session.inc');
 include('includes/htmlMimeMail.php');
 
-$sql = "SELECT 	description,
+$SQL = "SELECT 	description,
 				taskdescription,
 				ADDDATE(lastcompleted,frequencydays) AS duedate,
 				userresponsible,
@@ -19,30 +16,30 @@ $sql = "SELECT 	description,
 		WHERE ADDDATE(lastcompleted,frequencydays-10)> CURDATE()
 		ORDER BY userresponsible";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 $LastUserResponsible = '';
-while ($myrow = DB_fetch_array($result)) {
-	if (!isset(${'Mail' . $myrow['userresponsible']}) and IsEmailAddress($myrow['email'])) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (!isset(${'Mail' . $MyRow['userresponsible']}) and IsEmailAddress($MyRow['email'])) {
 		if ($LastUserResponsible != '') {
-			${'Mail' . $myrow['userresponsible']}->setText($MailText);
-			$SendResult = ${'Mail' . $myrow['userresponsible']}->send(array(
+			${'Mail' . $MyRow['userresponsible']}->setText($MailText);
+			$SendResult = ${'Mail' . $MyRow['userresponsible']}->send(array(
 				$LastUserEmail
 			));
-			$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
+			$MailText = _('You have the following maintenance task(s) falling due or over-due') . ":\n";
 		}
-		$LastUserResponsible = $myrow['userresponsible'];
-		$LastUserEmail = $myrow['email'];
-		${'Mail' . $myrow['userresponsible']} = new htmlMimeMail();
-		${'Mail' . $myrow['userresponsible']}->setSubject('Maintenance Tasks Reminder');
-		${'Mail' . $myrow['userresponsible']}->setFrom('Do_not_reply <>');
+		$LastUserResponsible = $MyRow['userresponsible'];
+		$LastUserEmail = $MyRow['email'];
+		${'Mail' . $MyRow['userresponsible']} = new htmlMimeMail();
+		${'Mail' . $MyRow['userresponsible']}->setSubject('Maintenance Tasks Reminder');
+		${'Mail' . $MyRow['userresponsible']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .= "Asset: " . $myrow['description'] . "\nTask: " . $myrow['taskdescription'] . "\nDue: " . ConvertSQLDate($myrow['duedate']);
-	if (Date1GreaterThanDate2(ConvertSQLDate($myrow['duedate']), Date($_SESSION['DefaultDateFormat']))) {
+	$MailText .= "Asset: " . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: " . ConvertSQLDate($MyRow['duedate']);
+	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']), Date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= _('NB: THIS JOB IS OVERDUE');
 	}
 	$MailText . "\n\n";
 }
-if (DB_num_rows($result) > 0) {
+if (DB_num_rows($Result) > 0) {
 	${'Mail' . $LastUserResponsible}->setText($MailText);
 	$SendResult = ${'Mail' . $LastUserResponsible}->send(array(
 		${'Mail' . $LastUserResponsible}
@@ -50,7 +47,7 @@ if (DB_num_rows($result) > 0) {
 }
 
 /* Now do manager emails for overdue jobs */
-$sql = "SELECT 	description,
+$SQL = "SELECT 	description,
 				taskdescription,
 				ADDDATE(lastcompleted,frequencydays) AS duedate,
 				realname,
@@ -63,27 +60,27 @@ $sql = "SELECT 	description,
 		WHERE ADDDATE(lastcompleted,frequencydays)> CURDATE()
 		ORDER BY manager";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 $LastManager = '';
-while ($myrow = DB_fetch_array($result)) {
-	if (!isset(${'Mail' . $myrow['userresponsible']})) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (!isset(${'Mail' . $MyRow['userresponsible']})) {
 		if ($LastUserResponsible != '') {
-			${'Mail' . $myrow['userresponsible']}->setText($MailText);
-			$SendResult = ${'Mail' . $myrow['manager']}->send(array(
+			${'Mail' . $MyRow['userresponsible']}->setText($MailText);
+			$SendResult = ${'Mail' . $MyRow['manager']}->send(array(
 				$LastManagerEmail
 			));
-			$MailText = _('Your staff have failed to complete the following tasks by the due date:') . "\n";
+			$MailText = _('Your staff have failed to complete the following tasks by the due date') . ":\n";
 		}
-		$LastManager = $myrow['manager'];
-		$LastManagerEmail = $myrow['email'];
-		${'Mail' . $myrow['manager']} = new htmlMimeMail();
-		${'Mail' . $myrow['manager']}->setSubject('Overdue Maintenance Tasks Reminder');
-		${'Mail' . $myrow['manager']}->setFrom('Do_not_reply <>');
+		$LastManager = $MyRow['manager'];
+		$LastManagerEmail = $MyRow['email'];
+		${'Mail' . $MyRow['manager']} = new htmlMimeMail();
+		${'Mail' . $MyRow['manager']}->setSubject('Overdue Maintenance Tasks Reminder');
+		${'Mail' . $MyRow['manager']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .= _('Asset:') . ' ' . $myrow['description'] . "\n" . _('Task:') . ' ' . $myrow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($myrow['duedate']);
+	$MailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task') . ': ' . $MyRow['taskdescription'] . "\n" . _('Due') . ': ' . ConvertSQLDate($MyRow['duedate']);
 	$MailText . "\n\n";
 }
-if (DB_num_rows($result) > 0) {
+if (DB_num_rows($Result) > 0) {
 	${'Mail' . $LastManager}->setText($MailText);
 	$SendResult = ${'Mail' . $LastManager}->send(array(
 		$LastManagerEmail

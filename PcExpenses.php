@@ -2,12 +2,12 @@
 
 include('includes/session.inc');
 $Title = _('Maintenance Of Petty Cash Of Expenses');
-/* KwaMoja manual links before header.inc */
+/* Manual links before header.inc */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedExpense'])) {
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
@@ -46,38 +46,38 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Expense type  code cannot be an empty string or spaces'), 'error');
 		echo '<br />';
 		$Errors[$i] = 'CodeExpense';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['CodeExpense']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The Expense code must be twenty characters or less long'), 'error');
 		echo '<br />';
 		$Errors[$i] = 'CodeExpense';
-		$i++;
+		++$i;
 	} elseif (ContainsIllegalCharacters($_POST['CodeExpense'])) {
 		$InputError = 1;
 		prnMsg(_('The Expense code cannot contain any of the following characters " \' - &amp;'), 'error');
 		echo '<br />';
 		$Errors[$i] = 'CodeExpense';
-		$i++;
+		++$i;
 	} elseif (ContainsIllegalCharacters($_POST['Description'])) {
 		$InputError = 1;
 		prnMsg(_('The Expense description cannot contain any of the following characters " \' - &amp;'), 'error');
 		echo '<br />';
 		$Errors[$i] = 'Description';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['Description']) > 50) {
 		$InputError = 1;
 		prnMsg(_('The tab code must be Fifty characters or less long'), 'error');
 		echo '<br />';
 		echo '<br />';
 		$Errors[$i] = 'Description';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['Description']) == 0) {
 		$InputError = 1;
 		echo prnMsg(_('The tab code description must be entered'), 'error');
 		echo '<br />';
 		$Errors[$i] = 'Description';
-		$i++;
+		++$i;
 	} elseif ($_POST['GLAccount'] == '') {
 		$InputError = 1;
 		echo prnMsg(_('A general ledger code must be selected for this expense'), 'error');
@@ -86,13 +86,13 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedExpense) and $InputError != 1) {
 
-		$sql = "UPDATE pcexpenses
+		$SQL = "UPDATE pcexpenses
 				SET description = '" . $_POST['Description'] . "',
 					glaccount = '" . $_POST['GLAccount'] . "',
 					tag = '" . $_POST['Tag'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
 
-		$msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' . _('has been updated');
+		$Msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
 
 		// First check the type is not being duplicated
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 				 FROM pcexpenses
 				 WHERE codeexpense = '" . $_POST['CodeExpense'] . "'";
 
-		$checkresult = DB_query($checkSql, $db);
+		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
 
 		if ($checkrow[0] > 0) {
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO pcexpenses
+			$SQL = "INSERT INTO pcexpenses
 						(codeexpense,
 			 			 description,
 			 			 glaccount,
@@ -121,19 +121,19 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['GLAccount'] . "',
 						'" . $_POST['Tag'] . "')";
 
-			$msg = _('Expense ') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
+			$Msg = _('Expense ') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
 			$checkSql = "SELECT count(codeexpense)
 						FROM pcexpenses";
-			$result = DB_query($checkSql, $db);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($checkSql);
+			$row = DB_fetch_row($Result);
 
 		}
 	}
 
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql, $db);
-		prnMsg($msg, 'success');
+		$Result = DB_query($SQL);
+		prnMsg($Msg, 'success');
 		echo '<br />';
 		unset($SelectedExpense);
 		unset($_POST['CodeExpense']);
@@ -146,23 +146,23 @@ if (isset($_POST['submit'])) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'PcTabExpenses'
 
-	$sql = "SELECT COUNT(*)
+	$SQL = "SELECT COUNT(*)
 		   FROM pctabexpenses
 		   WHERE codeexpense='" . $SelectedExpense . "'";
 
 	$ErrMsg = _('The number of type of tabs using this expense code could not be retrieved');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
-		prnMsg(_('Cannot delete this petty cash expense because it is used in some tab types') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('tab types using this expense code'), 'error');
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
+		prnMsg(_('Cannot delete this petty cash expense because it is used in some tab types') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('tab types using this expense code'), 'error');
 
 	} else {
 
-		$sql = "DELETE FROM pcexpenses
+		$SQL = "DELETE FROM pcexpenses
 				  WHERE codeexpense='" . $SelectedExpense . "'";
 		$ErrMsg = _('The expense type record could not be deleted because');
-		$result = DB_query($sql, $db, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('Expense type') . ' ' . $SelectedExpense . ' ' . _('has been deleted'), 'success');
 		echo '<br />';
 		unset($SelectedExpense);
@@ -177,9 +177,9 @@ if (!isset($SelectedExpense)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT *
+	$SQL = "SELECT *
 			FROM pcexpenses";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -192,7 +192,7 @@ if (!isset($SelectedExpense)) {
 
 	$k = 0; //row colour counter
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($MyRow = DB_fetch_row($Result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -201,18 +201,19 @@ if (!isset($SelectedExpense)) {
 			$k = 1;
 		}
 
-		$sqldesc = "SELECT accountname
+		$SQLdesc = "SELECT accountname
 					FROM chartmaster
-					WHERE accountcode='" . $myrow[2] . "'";
+					WHERE accountcode='" . $MyRow[2] . "'
+						AND language='" . $_SESSION['ChartLanguage'] . "'";
 
-		$ResultDes = DB_query($sqldesc, $db);
+		$ResultDes = DB_query($SQLdesc);
 		$Description = DB_fetch_array($ResultDes);
 
 		$SqlDescTag = "SELECT tagdescription
 					FROM tags
-					WHERE tagref='" . $myrow[3] . "'";
+					WHERE tagref='" . $MyRow[3] . "'";
 
-		$ResultDesTag = DB_query($SqlDescTag, $db);
+		$ResultDesTag = DB_query($SqlDescTag);
 		$DescriptionTag = DB_fetch_array($ResultDesTag);
 
 		printf('<td>%s</td>
@@ -222,7 +223,7 @@ if (!isset($SelectedExpense)) {
 				<td>%s</td>
 				<td><a href="%sSelectedExpense=%s">' . _('Edit') . '</a></td>
 				<td><a href="%sSelectedExpense=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>', $myrow[0], $myrow[1], $myrow[2], $Description['accountname'], $DescriptionTag['tagdescription'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow[0]);
+				</tr>', $MyRow[0], $MyRow[1], $MyRow[2], $Description['accountname'], $DescriptionTag['tagdescription'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow[0], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $MyRow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -235,28 +236,26 @@ if (isset($SelectedExpense)) {
 }
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />'; //Main table
 
 	// The user wish to EDIT an existing type
 	if (isset($SelectedExpense) and $SelectedExpense != '') {
 
-		$sql = "SELECT codeexpense,
+		$SQL = "SELECT codeexpense,
 				   description,
 				   glaccount,
 				   tag
 				FROM pcexpenses
 				WHERE codeexpense='" . $SelectedExpense . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['CodeExpense'] = $myrow['codeexpense'];
-		$_POST['Description'] = $myrow['description'];
-		$_POST['GLAccount'] = $myrow['glaccount'];
-		$_POST['Tag'] = $myrow['tag'];
+		$_POST['CodeExpense'] = $MyRow['codeexpense'];
+		$_POST['Description'] = $MyRow['description'];
+		$_POST['GLAccount'] = $MyRow['glaccount'];
+		$_POST['Tag'] = $MyRow['tag'];
 
 		echo '<input type="hidden" name="SelectedExpense" value="' . $SelectedExpense . '" />';
 		echo '<input type="hidden" name="CodeExpense" value="' . $_POST['CodeExpense'] . '" />';
@@ -274,7 +273,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Code Of Expense') . ':</td>
-					<td><input type="text" name="CodeExpense" autofocus="autofocus" required="required" minlength="1" maxlength="20" /></td>
+					<td><input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" /></td>
 				</tr>';
 
 	}
@@ -284,27 +283,28 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<tr>
 			<td>' . _('Description') . ':</td>
-			<td><input type="text" name="Description" size="50" required="required" minlength="1" maxlength="50" value="' . $_POST['Description'] . '" /></td>
+			<td><input type="text" name="Description" size="50" required="required" maxlength="50" value="' . $_POST['Description'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Account Code') . ':</td>
-			<td><select required="required" minlength="1" name="GLAccount">';
+			<td><select required="required" name="GLAccount">';
 
-	DB_free_result($result);
+	DB_free_result($Result);
 	$SQL = "SELECT accountcode,
 				accountname
 			FROM chartmaster
+			WHERE language='" . $_SESSION['ChartLanguage'] . "'
 			ORDER BY accountcode";
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['GLAccount']) and $myrow['accountcode'] == $_POST['GLAccount']) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['GLAccount']) and $MyRow['accountcode'] == $_POST['GLAccount']) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 
 	} //end while loop
 
@@ -313,36 +313,34 @@ if (!isset($_GET['delete'])) {
 	//Select the tag
 	echo '<tr>
 			<td>' . _('Tag') . ':</td>
-			<td><select minlength="0" name="Tag">';
+			<td><select name="Tag">';
 
 	$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
 			ORDER BY tagref";
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 	echo '<option value="0">0 - ' . _('None') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['Tag']) and $_POST['Tag'] == $myrow['tagref']) {
-			echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
+			echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+			echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
 	// End select tag
 
 	echo '</table>'; // close main table
-	DB_free_result($result);
+	DB_free_result($Result);
 
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 } // end if user wish to delete
 

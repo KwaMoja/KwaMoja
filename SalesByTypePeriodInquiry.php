@@ -4,8 +4,8 @@ include('includes/session.inc');
 $Title = _('Sales Report');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
-echo '<div class="page_help_text noPrint">' . _('Select the parameters for the report') . '</div><br />';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
+echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DisplayData'])) {
 	/* then assume to display daily - maybe wrong to do this but hey better than reporting an error?*/
@@ -16,7 +16,7 @@ if (!isset($_POST['DateRange'])) {
 	$_POST['DateRange'] = 'ThisMonth';
 }
 
-echo '<form onSubmit="return VerifyForm(this);" id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2" class="selection">
@@ -66,11 +66,11 @@ if ($_POST['DateRange'] == 'Custom') {
 	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" minlength="0" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 }
 echo '</table>
@@ -132,11 +132,11 @@ if ($_POST['DateRange'] == 'Custom' and !isset($_POST['FromDate']) and !isset($_
 if (isset($_POST['ShowSales'])) {
 	$InputError = 0; //assume no input errors now test for errors
 	if ($_POST['DateRange'] == 'Custom') {
-		if (!Is_Date($_POST['FromDate'])) {
+		if (!is_date($_POST['FromDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
-		if (!Is_Date($_POST['ToDate'])) {
+		if (!is_date($_POST['ToDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
@@ -183,7 +183,7 @@ if (isset($_POST['ShowSales'])) {
 	}
 	switch ($_POST['DisplayData']) {
 		case 'Daily':
-			$sql = "SELECT debtortrans.trandate,
+			$SQL = "SELECT debtortrans.trandate,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
 							price*(1-discountpercent)* -qty
@@ -210,17 +210,17 @@ if (isset($_POST['ShowSales'])) {
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY debtortrans.trandate,
+			$SQL .= " GROUP BY debtortrans.trandate,
 							tpe
 					ORDER BY debtortrans.trandate,
 							tpe";
 
 			break;
 		case 'Weekly':
-			$sql = "SELECT WEEKOFYEAR(debtortrans.trandate) as week_no,
+			$SQL = "SELECT WEEKOFYEAR(debtortrans.trandate) as week_no,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
@@ -248,10 +248,10 @@ if (isset($_POST['ShowSales'])) {
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY week_no,
+			$SQL .= " GROUP BY week_no,
 							transyear,
 							tpe
 					ORDER BY transyear,
@@ -260,7 +260,7 @@ if (isset($_POST['ShowSales'])) {
 
 			break;
 		case 'Monthly':
-			$sql = "SELECT MONTH(debtortrans.trandate) as month_no,
+			$SQL = "SELECT MONTH(debtortrans.trandate) as month_no,
 							MONTHNAME(debtortrans.trandate) as month_name,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
@@ -289,10 +289,10 @@ if (isset($_POST['ShowSales'])) {
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY month_no,
+			$SQL .= " GROUP BY month_no,
 							month_name,
 							transyear,
 							debtortrans.tpe
@@ -302,7 +302,7 @@ if (isset($_POST['ShowSales'])) {
 
 			break;
 		case 'Quarterly':
-			$sql = "SELECT QUARTER(debtortrans.trandate) as quarter_no,
+			$SQL = "SELECT QUARTER(debtortrans.trandate) as quarter_no,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
@@ -330,10 +330,10 @@ if (isset($_POST['ShowSales'])) {
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY quarter_no,
+			$SQL .= " GROUP BY quarter_no,
 							transyear,
 							tpe
 					ORDER BY transyear,
@@ -343,15 +343,15 @@ if (isset($_POST['ShowSales'])) {
 			break;
 	}
 
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-	$SalesResult = DB_query($sql, $db, $ErrMsg);
+	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">
 			<tr>
 				<th colspan="9">
 					<h3>' . _('Show') . ' ' . $_POST['DisplayData'] . ' ' . _('sales for') . ' ' . $_POST['DateRange'] . '
-						<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" class="PrintIcon noPrint" title="' . _('Print') . '" alt="" onclick="window.print();" />
+						<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="" onclick="window.print();" />
 					</h3>
 				</th>
 			</tr>';

@@ -765,7 +765,7 @@ class qrCode extends barcode {
 						$dataCounter++;
 					}
 
-					$i++;
+					++$i;
 				}
 
 				$totalDataBits += $addToTotalData;
@@ -842,7 +842,7 @@ class qrCode extends barcode {
 			} else {
 				$dataCodewords[$codewordCounter]=17;
 			}
-			$i++;
+			++$i;
 			$codewordCounter++;
 		}
 
@@ -1022,19 +1022,19 @@ class qrCode extends barcode {
 
 		for($i=0;$i<15;$i++) {
 			// bit value
-			$value = ($formatInformation & (1<<$i)) ? 1 : 0;
+			$Value = ($formatInformation & (1<<$i)) ? 1 : 0;
 
 			// vertical format informations
 			$y = ($i<=7) ? (($i>5) ? $i+1 : $i) : $this->matrixSize-15+$i;
-			$matrix[$y][8] = $value;
+			$matrix[$y][8] = $Value;
 
 			// horizontal format informations
 			if($i<=7) {
-				$matrix[8][$this->matrixSize-$i-1] = $value;
+				$matrix[8][$this->matrixSize-$i-1] = $Value;
 			} else if($i==8) {
-				$matrix[8][7] = $value;
+				$matrix[8][7] = $Value;
 			} else {
-				$matrix[8][15-$i-1] = $value;
+				$matrix[8][15-$i-1] = $Value;
 			}
 		}
 

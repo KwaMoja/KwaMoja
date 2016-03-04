@@ -15,7 +15,7 @@ CreateTable('supplierdiscounts',
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-)", $db);
+)");
 
 
 ?>

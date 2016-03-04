@@ -1,7 +1,7 @@
 <?php
 
-NewConfigValue('ShopPaypalCommissionAccount', '7220', $db);
+NewConfigValue('ShopPaypalCommissionAccount', '7220');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

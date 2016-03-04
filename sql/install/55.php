@@ -12,7 +12,7 @@ CreateTable('labelfields',
   PRIMARY KEY (`labelfieldid`),
   KEY `labelid` (`labelid`),
   KEY `vpos` (`vpos`)
-)", $db);
+)");
 
 
 ?>

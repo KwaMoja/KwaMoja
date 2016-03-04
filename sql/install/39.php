@@ -11,7 +11,7 @@ CreateTable('edimessageformat',
   PRIMARY KEY (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-)", $db);
+)");
 
 
 ?>

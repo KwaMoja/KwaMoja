@@ -1,10 +1,10 @@
 <?php
 
-ChangeColumnType('area', 'custbranch', 'CHAR(3)', 'NOT NULL', '', $db);
-AddColumn('specialinstructions', 'custbranch', 'TEXT', 'NOT NULL', '', 'brpostaddr6', $db);
-AddColumn('parentgroupname', 'accountgroups', 'VARCHAR(30)', 'NOT NULL', '', 'sequenceintb', $db);
+ChangeColumnType('area', 'custbranch', 'CHAR(3)', 'NOT NULL', '');
+AddColumn('specialinstructions', 'custbranch', 'TEXT', 'NOT NULL', '', 'brpostaddr6');
+AddColumn('parentgroupname', 'accountgroups', 'VARCHAR(30)', 'NOT NULL', '', 'sequenceintb');
 
-DropTable('worksorders', 'accumvalueissued', $db);
+DropTable('worksorders', 'accumvalueissued');
 
 CreateTable('workorders',
 "CREATE TABLE `workorders` (
@@ -18,10 +18,9 @@ CreateTable('workorders',
   KEY LocCode (`loccode`),
   KEY StartDate (`startdate`),
   KEY RequiredBy (`requiredby`)
-)",
-$db);
+)");
 
-AddConstraint('workorders', 'workorders_ibfk_1', 'loccode', 'locations', 'loccode', $db);
+AddConstraint('workorders', 'workorders_ibfk_1', 'loccode', 'locations', 'loccode');
 
 CreateTable('woitems',
 "CREATE TABLE `woitems` (
@@ -33,11 +32,10 @@ CreateTable('woitems',
   nextlotsnref varchar(20) DEFAULT '',
   PRIMARY KEY  (`wo`, `stockid`),
   KEY `stockid` (`stockid`)
-)",
-$db);
+)");
 
-AddConstraint('woitems', 'woitems_ibfk_1', 'stockid', 'stockmaster', 'stockid', $db);
-AddConstraint('woitems', 'woitems_ibfk_2', 'wo', 'workorders', 'wo', $db);
+AddConstraint('woitems', 'woitems_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+AddConstraint('woitems', 'woitems_ibfk_2', 'wo', 'workorders', 'wo');
 
 CreateTable('worequirements',
 "CREATE TABLE `worequirements` (
@@ -48,22 +46,21 @@ CreateTable('worequirements',
   stdcost double NOT NULL DEFAULT 0,
   autoissue tinyint NOT NULL DEFAULT 0,
    PRIMARY KEY  (`wo`, `parentstockid`,`stockid`)
-)",
-$db);
+)");
 
-AddConstraint('worequirements', 'worequirements_ibfk_1', 'wo', 'workorders', 'wo', $db);
-AddConstraint('worequirements', 'worequirements_ibfk_2', 'stockid', 'stockmaster', 'stockid', $db);
-AddConstraint('worequirements', 'worequirements_ibfk_3', 'parentstockid', 'woitems', 'stockid', $db);
+AddConstraint('worequirements', 'worequirements_ibfk_1', 'wo', 'workorders', 'wo');
+AddConstraint('worequirements', 'worequirements_ibfk_2', 'stockid', 'stockmaster', 'stockid');
+AddConstraint('worequirements', 'worequirements_ibfk_3', 'parentstockid', 'woitems', 'stockid');
 
-AddColumn('autoissue', 'bom', 'TINYINT', 'NOT NULL', '0', 'quantity', $db);
+AddColumn('autoissue', 'bom', 'TINYINT', 'NOT NULL', '0', 'quantity');
 
-NewConfigValue('AutoIssue', '1', $db);
+NewConfigValue('AutoIssue', '1');
 
-DropIndex('stockmoves', 'StockID', $db);
-AddIndex(array('reference'), 'stockmoves', 'stockmoves', $db);
-DropPrimaryKey('recurrsalesorderdetails', array('recurrorderno','stkcode'), $db);
+DropIndex('stockmoves', 'StockID');
+AddIndex(array('reference'), 'stockmoves', 'stockmoves');
+DropPrimaryKey('recurrsalesorderdetails', array('recurrorderno','stkcode'));
 
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

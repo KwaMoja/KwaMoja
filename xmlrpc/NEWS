@@ -158,7 +158,7 @@ The debugger has been upgraded to reflect the new client capabilities.
 
 In greater detail:
 
-* fixed bug: method xmlrpcval::structmemexists($value) would not work
+* fixed bug: method xmlrpcval::structmemexists($Value) would not work
 * fixed bug: wrap_xmlrpc_method would fail if invoked with a client object that
   has return_type=phpvals
 * fixed bug: in case of call to client::multicall without fallback and server error
@@ -221,7 +221,7 @@ HTTPS support:
  * fixed two bugs that prevented xmlrpc calls to take place over https
  * fixed two bugs that prevented proper recognition of xml character set
    when it was declared inside the xml prologue
- * added xmlrpc_client::setKey($key, $keypass) method, to allow using client
+ * added xmlrpc_client::setKey($Key, $Keypass) method, to allow using client
    side certificates for https connections
  * fixed bug that prevented proper serialization of string xmlrpcvals when
    $xmlrpc_internalencoding was set to UTF-8

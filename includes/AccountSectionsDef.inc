@@ -1,8 +1,8 @@
 <?php
 
 $Sections = array();
-$sql = 'SELECT sectionid, sectionname FROM accountsection ORDER by sectionid';
-$SectionResult = DB_query($sql, $db);
+$SQL = 'SELECT sectionid, sectionname FROM accountsection ORDER by sectionid';
+$SectionResult = DB_query($SQL);
 while ($secrow = DB_fetch_array($SectionResult)) {
 	$Sections[$secrow['sectionid']] = $secrow['sectionname'];
 }

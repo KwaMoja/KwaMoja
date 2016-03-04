@@ -9,8 +9,8 @@ CreateTable('favourites', "CREATE TABLE `favourites` (
 	`caption` varchar(50) NOT NULL DEFAULT '',
 	`href` varchar(200) NOT NULL DEFAULT '#',
 	PRIMARY KEY  (`userid`, `caption`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8", $db);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

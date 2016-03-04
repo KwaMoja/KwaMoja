@@ -6,7 +6,7 @@ CreateTable('fixedassetlocations',
   `locationdescription` char(20) NOT NULL DEFAULT '',
   `parentlocationid` char(6) DEFAULT '',
   PRIMARY KEY (`locationid`)
-)", $db);
+)");
 
 
 ?>

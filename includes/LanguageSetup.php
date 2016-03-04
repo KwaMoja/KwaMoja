@@ -12,13 +12,14 @@ mb_internal_encoding('UTF-8');
  * character country code does the trick  except for en !!
  */
 
+$_SESSION['DefaultLanguage'] = $DefaultLanguage;
 
 if (isset($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
 	$Language = $_POST['Language'];
 } elseif (!isset($_SESSION['Language'])) {
-	$_SESSION['Language'] = $DefaultLanguage;
-	$Language = $DefaultLanguage;
+	$_SESSION['Language'] = $_SESSION['DefaultLanguage'];
+	$Language = $_SESSION['DefaultLanguage'];
 } else {
 	$Language = $_SESSION['Language'];
 }
@@ -36,7 +37,7 @@ if (!function_exists('gettext')) {
 	if (isset($_SESSION['Language'])) {
 		$Locale = $_SESSION['Language'];
 	} else {
-		$Locale = $DefaultLanguage;
+		$Locale = $_SESSION['DefaultLanguage'];
 	}
 
 	if (isset($PathPrefix)) {

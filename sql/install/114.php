@@ -16,7 +16,7 @@ CreateTable('shipments',
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`),
   CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`)
-)", $db);
+)");
 
 
 ?>

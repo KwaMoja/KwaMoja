@@ -9,7 +9,7 @@ CreateTable('chartmaster',
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`),
   CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
-)", $db);
+)");
 
 
 ?>

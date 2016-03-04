@@ -13,7 +13,7 @@ CreateTable('abcgroups',
   PRIMARY KEY (`groupid`),
   KEY `abctgroups_ibfk_1` (`methodid`),
   CONSTRAINT `abctgroups_ibfk_1` FOREIGN KEY (`methodid`) REFERENCES `abcmethods` (`methodid`)
-)", $db);
+)");
 
 
 ?>

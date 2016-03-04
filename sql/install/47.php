@@ -15,7 +15,7 @@ CreateTable('fixedassettrans',
   KEY `assetid` (`assetid`,`transtype`,`transno`),
   KEY `inputdate` (`inputdate`),
   KEY `transdate` (`transdate`)
-)", $db);
+)");
 
 
 ?>

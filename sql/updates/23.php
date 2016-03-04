@@ -15,8 +15,7 @@ CreateTable('supplierdiscounts',
   KEY `effectivefrom` (`effectivefrom`),
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`)
-)",
-$db);
+)");
 
 CreateTable('sellthroughsupport',
 "CREATE TABLE IF NOT EXISTS `sellthroughsupport` (
@@ -37,18 +36,17 @@ CreateTable('sellthroughsupport',
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`),
   KEY `categoryid` (`categoryid`)
-)",
-$db);
+)");
 
-NewScript('SellThroughSupport.php',  '9', $db);
-NewScript('PDFSellThroughSupportClaim.php',  '9', $db);
-NewScript('ReportBug.php',  '15', $db);
-NewScript('UploadPriceList.php',  '15', $db);
+NewScript('SellThroughSupport.php',  '9');
+NewScript('PDFSellThroughSupportClaim.php',  '9');
+NewScript('ReportBug.php',  '15');
+NewScript('UploadPriceList.php',  '15');
 
-AddColumn('bin', 'locstock', 'VARCHAR(10)', 'NOT NULL', '', 'reorderlevel', $db);
+AddColumn('bin', 'locstock', 'VARCHAR(10)', 'NOT NULL', '', 'reorderlevel');
 
-ChangeConfigValue('VersionNumber', '4.10.1', $db);
+ChangeConfigValue('VersionNumber', '4.10.1');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

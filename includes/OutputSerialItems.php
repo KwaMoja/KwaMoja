@@ -17,12 +17,12 @@ global $tableheader;
 /* Link to clear the list and start from scratch */
 $EditLink = '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?EditControlled=true&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo . '">' . _('Edit') . '</a> | ';
 $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DELETEALL=YES&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo . '">' . _('Remove All') . '</a><br /></div>';
-$sql = "SELECT perishable
+$SQL = "SELECT perishable
 		FROM stockmaster
-		WHERE stockid='" . $StockID . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
-$Perishable = $myrow['perishable'];
+		WHERE stockid='" . $StockId . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+$Perishable = $MyRow['perishable'];
 if ($LineItem->Serialised == 1) {
 	$tableheader .= '<tr>
 						<th>' . _('Serial No') . '</th>
@@ -124,7 +124,7 @@ echo $tableheader;
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" name="Ga6uF5Wa" method="post" class="noPrint">
 	  <input type="hidden" name="LineNo" value="' . $LineNo . '" />
-	  <input type="hidden" name="StockID" value="' . $StockID . '" />
+	  <input type="hidden" name="StockID" value="' . $StockId . '" />
 	  <input type="hidden" name="EntryType" value="KEYED" />';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['EditControlled'])) {
@@ -169,19 +169,19 @@ if (isset($_SESSION['Transfer']->StockLocationFrom)) {
 	$Location = $_SESSION['Items']->Location;
 }
 
-$sql = "SELECT serialno,
+$SQL = "SELECT serialno,
 			quantity,
 			expirationdate
 		FROM stockserialitems
-		WHERE stockid='" . $StockID . "'
+		WHERE stockid='" . $StockId . "'
 		AND loccode='" . $Location . "'";
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
 $RowNumber = 0;
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
 	echo '<tr>
-			<td valign="top">' . $myrow['serialno'] . '<input type="hidden" name="SerialNo' . ($RowNumber) . '" size="21" value="' . $myrow['serialno'] . '" maxlength="20" /></td>';
+			<td valign="top">' . $MyRow['serialno'] . '<input type="hidden" name="SerialNo' . ($RowNumber) . '" size="21" value="' . $MyRow['serialno'] . '" maxlength="20" /></td>';
 
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantities manually */
@@ -189,15 +189,15 @@ while ($myrow = DB_fetch_array($result)) {
 	if ($LineItem->Serialised == 1) {
 		echo '<input type="hidden" name="Qty' . ($StartAddingAt + $RowNumber) . '" value="1" /></tr>';
 	} else if ($LineItem->Serialised == 0 and $Perishable == 1) {
-		if (isset($LineItem->SerialItems[$myrow['serialno']])) {
-			echo '<td class="number">' . locale_number_format($myrow['quantity'] - $LineItem->SerialItems[$myrow['serialno']]->BundleQty, $LineItem->DecimalPlaces) . '</td>';
+		if (isset($LineItem->SerialItems[$MyRow['serialno']])) {
+			echo '<td class="number">' . locale_number_format($MyRow['quantity'] - $LineItem->SerialItems[$MyRow['serialno']]->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number">' . locale_number_format($myrow['quantity'], $LineItem->DecimalPlaces) . '</td>';
+			echo '<td class="number">' . locale_number_format($MyRow['quantity'], $LineItem->DecimalPlaces) . '</td>';
 		}
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt + $RowNumber) . '" size="11" value="0" maxlength="10" /></td>';
-		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt + $RowNumber) . '" size="11" value="' . ConvertSQLDate($myrow['expirationdate']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']) . '</td></tr>';
+		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt + $RowNumber) . '" size="11" value="' . ConvertSQLDate($MyRow['expirationdate']) . '" alt="' . $_SESSION['DefaultDateFormat'] . '"  maxlength="10" />' . ConvertSQLDate($MyRow['expirationdate']) . '</td></tr>';
 	} else {
-		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt + $RowNumber) . '" size=11  value="' . locale_number_format($myrow['quantity'], $LineItem->DecimalPlaces) . '"  maxlength="10" /></td></tr>';
+		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt + $RowNumber) . '" size=11  value="' . locale_number_format($MyRow['quantity'], $LineItem->DecimalPlaces) . '"  maxlength="10" /></td></tr>';
 	}
 	$RowNumber++;
 }

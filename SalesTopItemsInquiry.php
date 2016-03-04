@@ -4,16 +4,15 @@ include('includes/session.inc');
 $Title = _('Top Sales Inquiry');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
-echo '<div class="page_help_text noPrint">' . _('Select the parameters for the report') . '</div><br />';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
+echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DateRange'])) {
 	/* then assume report is for This Month - maybe wrong to do this but hey better than reporting an error?*/
 	$_POST['DateRange'] = 'ThisMonth';
 }
 
-echo '<form onSubmit="return VerifyForm(this);" id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table cellpadding="2">
@@ -64,11 +63,11 @@ if ($_POST['DateRange'] == 'Custom') {
 	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" minlength="0" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" minlength="0" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 }
 echo '</table></td>
@@ -103,27 +102,24 @@ echo ' /></td>
 		</tr>
 		<tr>
 		<td>' . _('Number to Display') . ':</td>
-		<td><input type="text" class="number" name="NoToDisplay" size="4" required="required" minlength="1" maxlength="4" value="' . $_POST['NoToDisplay'] . '"  /></td>
+		<td><input type="text" class="number" name="NoToDisplay" size="4" required="required" maxlength="4" value="' . $_POST['NoToDisplay'] . '"  /></td>
 		</tr>
 	</table>
 	</td></tr>
 	</table>';
 
 
-echo '<br /><div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
-echo '</div>';
-echo '<br />';
-echo '</div>
-	  </form>';
+echo '<div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
+echo '</form>';
 
 if (isset($_POST['ShowSales'])) {
 	$InputError = 0; //assume no input errors now test for errors
 	if ($_POST['DateRange'] == 'Custom') {
-		if (!Is_Date($_POST['FromDate'])) {
+		if (!is_date($_POST['FromDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
-		if (!Is_Date($_POST['ToDate'])) {
+		if (!is_date($_POST['ToDate'])) {
 			$InputError = 1;
 			prnMsg(_('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
@@ -168,7 +164,7 @@ if (isset($_POST['ShowSales'])) {
 			$FromDate = FormatDateForSQL($_POST['FromDate']);
 			$ToDate = FormatDateForSQL($_POST['ToDate']);
 	}
-	$sql = "SELECT stockmaster.stockid,
+	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockcategory.categorydescription,
 					SUM(CASE WHEN stockmoves.type=10
@@ -199,18 +195,18 @@ if (isset($_POST['ShowSales'])) {
 					stockcategory.categorydescription ";
 
 	if ($_POST['OrderBy'] == 'NetSales') {
-		$sql .= " ORDER BY netsalesvalue DESC ";
+		$SQL .= " ORDER BY netsalesvalue DESC ";
 	} else {
-		$sql .= " ORDER BY salesquantity DESC ";
+		$SQL .= " ORDER BY salesquantity DESC ";
 	}
 	if (is_numeric($_POST['NoToDisplay'])) {
 		if ($_POST['NoToDisplay'] > 0) {
-			$sql .= " LIMIT " . $_POST['NoToDisplay'];
+			$SQL .= " LIMIT " . $_POST['NoToDisplay'];
 		}
 	}
 
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg($db);
-	$SalesResult = DB_query($sql, $db, $ErrMsg);
+	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">';
@@ -248,7 +244,7 @@ if (isset($_POST['ShowSales'])) {
 				<td class="number">' . locale_number_format($SalesRow['netsalesvalue'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($SalesRow['salesquantity'], 'Variable') . '</td>
 				</tr>';
-		$i++;
+		++$i;
 
 		$CumulativeTotalSales += $SalesRow['salesvalue'];
 		$CumulativeTotalRefunds += $SalesRow['returnvalue'];

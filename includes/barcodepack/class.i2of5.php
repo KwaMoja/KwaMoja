@@ -122,7 +122,7 @@ class i2of5 extends linearBarcode {
 				}
 			}
 
-			$i++;	// jump to next char
+			++$i;	// jump to next char
 		}
 
 		// Insert STOP character

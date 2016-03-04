@@ -1,9 +1,9 @@
 <?php
 
-NewScript('PluginUpload.php', '15', $db);
-NewScript('PluginInstall.php', '15', $db);
-NewScript('PluginUnInstall.php', '15', $db);
+NewScript('PluginUpload.php', '15');
+NewScript('PluginInstall.php', '15');
+NewScript('PluginUnInstall.php', '15');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

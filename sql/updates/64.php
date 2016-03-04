@@ -1,10 +1,10 @@
 <?php
 
-DeleteConfigValue('ShopShowLeftCategoryMenu', $db);
-DeleteConfigValue('ShopShowInfoLinks', $db);
-DeleteConfigValue('ShopShowTopCategoryMenu', $db);
-DeleteConfigValue('ShopShowLogoAndShopName', $db);
+DeleteConfigValue('ShopShowLeftCategoryMenu');
+DeleteConfigValue('ShopShowInfoLinks');
+DeleteConfigValue('ShopShowTopCategoryMenu');
+DeleteConfigValue('ShopShowLogoAndShopName');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

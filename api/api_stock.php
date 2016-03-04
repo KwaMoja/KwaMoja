@@ -1,11 +1,11 @@
 <?php
 
 /* Check that the stock code*/
-function VerifyStockCode($StockCode, $i, $Errors, $db) {
+function VerifyStockCode($StockCode, $i, $Errors) {
 	$Searchsql = "SELECT count(stockid)
 					  FROM stockmaster
 					  WHERE stockid='" . $StockCode . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] > 0) {
 		$Errors[$i] = StockCodeAlreadyExists;
@@ -14,11 +14,11 @@ function VerifyStockCode($StockCode, $i, $Errors, $db) {
 }
 
 /* Check that the stock code exists*/
-function VerifyStockCodeExists($StockCode, $i, $Errors, $db) {
+function VerifyStockCodeExists($StockCode, $i, $Errors) {
 	$Searchsql = "SELECT count(stockid)
 					  FROM stockmaster
 					  WHERE stockid='" . $StockCode . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = StockCodeDoesntExist;
@@ -27,11 +27,11 @@ function VerifyStockCodeExists($StockCode, $i, $Errors, $db) {
 }
 
 /* Verify the category exists */
-function VerifyStockCategoryExists($StockCategory, $i, $Errors, $db) {
+function VerifyStockCategoryExists($StockCategory, $i, $Errors) {
 	$Searchsql = "SELECT count(categoryid)
 					  FROM stockcategory
 					  WHERE categoryid='" . $StockCategory . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = StockCategoryDoesntExist;
@@ -74,11 +74,11 @@ function VerifyMBFlag($mbflag, $i, $Errors) {
 /* Check that the last current cost date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target KwaMoja company */
-function VerifyLastCurCostDate($CurCostDate, $i, $Errors, $db) {
-	$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_array($result);
-	$DateFormat = $myrow[0];
+function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
+	$SQL = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+	$Result = api_DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$DateFormat = $MyRow[0];
 	if (mb_strstr('/', $PeriodEnd)) {
 		$Date_Array = explode('/', $PeriodEnd);
 	} elseif (mb_strstr('.', $PeriodEnd)) {
@@ -212,11 +212,11 @@ function VerifyDiscountCategory($discountcategory, $i, $Errors) {
 }
 
 /* Check that the tax category exists*/
-function VerifyTaxCatExists($TaxCat, $i, $Errors, $db) {
+function VerifyTaxCatExists($TaxCat, $i, $Errors) {
 	$Searchsql = "SELECT count(taxcatid)
 					  FROM taxcategories
 					  WHERE taxcatid='" . $TaxCat . "'";
-	$SearchResult = DB_query($Searchsql, $db);
+	$SearchResult = api_DB_query($Searchsql);
 	$answer = DB_fetch_array($SearchResult);
 	if ($answer[0] == 0) {
 		$Errors[$i] = TaxCategoriesDoesntExist;
@@ -256,11 +256,11 @@ function VerifyDecimalPlaces($DecimalPlaces, $i, $Errors) {
 	return $Errors;
 }
 
-function GetCategoryGLCode($CategoryID, $field, $db) {
-	$sql = 'SELECT ' . $field . " FROM stockcategory WHERE categoryid='" . $CategoryID . "'";
-	$result = DB_Query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	return $myrow[0];
+function GetCategoryGLCode($CategoryID, $field) {
+	$SQL = 'SELECT ' . $field . " FROM stockcategory WHERE categoryid='" . $CategoryID . "'";
+	$Result = DB_Query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	return $MyRow[0];
 }
 
 /* Insert a new stock item in the KwaMoja database. This function takes an
@@ -285,14 +285,14 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($StockItemDetails as $key => $value) {
-		$StockItemDetails[$key] = DB_escape_string($value);
+	foreach ($StockItemDetails as $Key => $Value) {
+		$StockItemDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 	$Errors = VerifyStockDescription($StockItemDetails['decription'], sizeof($Errors), $Errors);
 	$Errors = VerifyStockLongDescription($StockItemDetails['longdescription'], sizeof($Errors), $Errors);
 	if (isset($StockItemDetails['categoryid'])) {
-		$Errors = VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['units'])) {
 		$Errors = VerifyUnits($StockItemDetails['units'], sizeof($Errors), $Errors);
@@ -301,7 +301,7 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 		$Errors = VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['lastcurcostdate'])) {
-		$Errors = VerifyLastCurCostDate($StockItemDetails['lastcurcostdate'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyLastCurCostDate($StockItemDetails['lastcurcostdate'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['actualcost'])) {
 		$Errors = VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
@@ -343,7 +343,7 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 		$Errors = VerifyDiscountCategory($StockItemDetails['discountcategory'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['taxcatid'])) {
-		$Errors = VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['serialised'])) {
 		$Errors = VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
@@ -359,19 +359,19 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 	}
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($StockItemDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($StockItemDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
 		$stocksql = 'INSERT INTO stockmaster (' . mb_substr($FieldNames, 0, -2) . ') ' . 'VALUES (' . mb_substr($FieldValues, 0, -2) . ') ';
 		$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
-		DB_Txn_Begin($db);
-		$stockresult = DB_Query($stocksql, $db);
-		$locresult = DB_Query($locsql, $db);
-		DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		DB_Txn_Begin();
+		$stockresult = DB_Query($stocksql);
+		$locresult = DB_Query($locsql);
+		DB_Txn_Commit();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -397,10 +397,10 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($StockItemDetails as $key => $value) {
-		$StockItemDetails[$key] = DB_escape_string($value);
+	foreach ($StockItemDetails as $Key => $Value) {
+		$StockItemDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyStockCodeExists($StockItemDetails['stockid'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 	if (in_array(StockCodeDoesntExist, $Errors)) {
 		return $Errors;
 	}
@@ -411,7 +411,7 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 		$Errors = VerifyStockLongDescription($StockItemDetails['longdescription'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['categoryid'])) {
-		$Errors = VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['units'])) {
 		$Errors = VerifyUnits($StockItemDetails['units'], sizeof($Errors), $Errors);
@@ -420,7 +420,7 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 		$Errors = VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['lastcurcostdate'])) {
-		$Errors = VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['actualcost'])) {
 		$Errors = VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
@@ -462,7 +462,7 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 		$Errors = VerifyDiscountCategory($StockItemDetails['discountcategory'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['taxcatid'])) {
-		$Errors = VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors, $db);
+		$Errors = VerifyTaxCatExists($StockItemDetails['taxcatid'], sizeof($Errors), $Errors);
 	}
 	if (isset($StockItemDetails['serialised'])) {
 		$Errors = VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
@@ -476,15 +476,15 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 	if (isset($StockItemDetails['decimalplaces'])) {
 		$Errors = VerifyDecimalPlaces($StockItemDetails['decimalplaces'], sizeof($Errors), $Errors);
 	}
-	$sql = 'UPDATE stockmaster SET ';
-	foreach ($StockItemDetails as $key => $value) {
-		$sql .= $key . '="' . $value . '", ';
+	$SQL = 'UPDATE stockmaster SET ';
+	foreach ($StockItemDetails as $Key => $Value) {
+		$SQL .= $Key . '="' . $Value . '", ';
 	}
-	$sql = mb_substr($sql, 0, -2) . " WHERE stockid='" . $StockItemDetails['stockid'] . "'";
+	$SQL = mb_substr($SQL, 0, -2) . " WHERE stockid='" . $StockItemDetails['stockid'] . "'";
 	if (sizeof($Errors) == 0) {
-		$result = DB_Query($sql, $db);
-		echo DB_error_no($db);
-		if (DB_error_no($db) != 0) {
+		$Result = DB_Query($SQL);
+		echo DB_error_no();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -497,22 +497,22 @@ function ModifyStockItem($StockItemDetails, $user, $password) {
 the database record for that item. If the stock item number doesn't exist
 then it returns an $Errors array.
 */
-function GetStockItem($StockID, $user, $password) {
+function GetStockItem($StockId, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT * FROM stockmaster WHERE stockid='" . $StockID . "'";
-	$result = DB_Query($sql, $db);
+	$SQL = "SELECT * FROM stockmaster WHERE stockid='" . $StockId . "'";
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		$Errors[0] = 0;
-		$Errors[1] = DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($Result);
 		return $Errors;
 	} else {
 		return $Errors;
@@ -529,15 +529,15 @@ function SearchStockItems($Field, $Criteria, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT stockid
+	$SQL = "SELECT stockid
 			  FROM stockmaster
 			  WHERE " . $Field . " LIKE '%" . $Criteria . "%'";
-	$result = DB_Query($sql, $db);
+	$Result = DB_Query($SQL);
 	$i = 0;
 	$StockItemList = array();
-	while ($myrow = DB_fetch_array($result)) {
-		$StockItemList[$i] = $myrow[0];
-		$i++;
+	while ($MyRow = DB_fetch_array($Result)) {
+		$StockItemList[$i] = $MyRow[0];
+		++$i;
 	}
 	if (sizeof($Errors) == 0) {
 		$Errors[0] = 0;
@@ -548,27 +548,27 @@ function SearchStockItems($Field, $Criteria, $user, $password) {
 	}
 }
 
-function GetStockBalance($StockID, $user, $password) {
+function GetStockBalance($StockId, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT quantity,
+	$SQL = "SELECT quantity,
 					 loccode
-			   FROM locstock WHERE stockid='" . $StockID . "'";
-	$result = DB_query($sql, $db);
+			   FROM locstock WHERE stockid='" . $StockId . "'";
+	$Result = api_DB_query($SQL);
 	if (sizeof($Errors) == 0) {
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			$answer[$i]['quantity'] = $myrow['quantity'];
-			$answer[$i]['loccode'] = $myrow['loccode'];
-			$i++;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$answer[$i]['quantity'] = $MyRow['quantity'];
+			$answer[$i]['loccode'] = $MyRow['loccode'];
+			++$i;
 		}
 		$Errors[0] = 0;
 		$Errors[1] = $answer;
@@ -578,25 +578,25 @@ function GetStockBalance($StockID, $user, $password) {
 	}
 }
 
-function GetStockReorderLevel($StockID, $user, $password) {
+function GetStockReorderLevel($StockId, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT reorderlevel, loccode FROM locstock WHERE stockid='" . $StockID . "'";
-	$result = DB_Query($sql, $db);
+	$SQL = "SELECT reorderlevel, loccode FROM locstock WHERE stockid='" . $StockId . "'";
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			$answer[$i]['reorderlevel'] = $myrow['reorderlevel'];
-			$answer[$i]['loccode'] = $myrow['loccode'];
-			$i++;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$answer[$i]['reorderlevel'] = $MyRow['reorderlevel'];
+			$answer[$i]['loccode'] = $MyRow['loccode'];
+			++$i;
 		}
 		$Errors[0] = 0;
 		$Errors[1] = $answer;
@@ -606,21 +606,21 @@ function GetStockReorderLevel($StockID, $user, $password) {
 	}
 }
 
-function SetStockReorderLevel($StockID, $Location, $ReorderLevel, $user, $password) {
+function SetStockReorderLevel($StockId, $Location, $ReorderLevel, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "UPDATE locstock SET reorderlevel='" . $ReorderLevel . "'
-					 WHERE stockid='" . $StockID . "'
+	$SQL = "UPDATE locstock SET reorderlevel='" . $ReorderLevel . "'
+					 WHERE stockid='" . $StockId . "'
 					 AND loccode='" . $Location . "'";
-	$result = DB_Query($sql, $db);
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		return 0;
 	} else {
@@ -628,170 +628,171 @@ function SetStockReorderLevel($StockID, $Location, $ReorderLevel, $user, $passwo
 	}
 }
 
-function GetAllocatedStock($StockID, $user, $password) {
+function GetAllocatedStock($StockId, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT sum(quantity)
+	$SQL = "SELECT sum(quantity)
 			 FROM salesorderdetails
-			 WHERE stkcode='" . $StockID . "'
+			 WHERE stkcode='" . $StockId . "'
 			 AND completed=0";
-	$result = DB_Query($sql, $db);
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		$Errors[0] = 0;
-		$Errors[1] = DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($Result);
 		return $Errors;
 	} else {
 		return $Errors;
 	}
 }
 
-function GetOrderedStock($StockID, $user, $password) {
+function GetOrderedStock($StockId, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT sum(quantityord-quantityrecd)
+	$SQL = "SELECT sum(quantityord-quantityrecd)
 			  FROM purchorderdetails
-			  WHERE itemcode='" . $StockID . "'
+			  WHERE itemcode='" . $StockId . "'
 			  AND completed=0";
-	$result = DB_Query($sql, $db);
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		$Errors[0] = 0;
-		$Errors[1] = DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($Result);
 		return $Errors;
 	} else {
 		return $Errors;
 	}
 }
 
-function SetStockPrice($StockID, $Currency, $SalesType, $Price, $user, $password) {
+function SetStockPrice($StockId, $Currency, $SalesType, $Price, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-	$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
-	$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
+	$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors);
+	$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT COUNT(*) FROM prices
-				 WHERE stockid='" . $StockID . "'
+	$SQL = "SELECT COUNT(*) FROM prices
+				 WHERE stockid='" . $StockId . "'
 				 and typeabbrev='" . $SalesType . "'
 				 and currabrev='" . $Currency . "'";
-	$result = DB_Query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] == 0) {
-		$sql = "INSERT INTO prices VALUES('" . $StockID . "',
+	$Result = DB_Query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] == 0) {
+		$SQL = "INSERT INTO prices VALUES('" . $StockId . "',
 											'" . $SalesType . "',
 											'" . $Currency . "',
 											'',
 											'" . $Price . "',
 											'')";
 	} else {
-		$sql = 'UPDATE prices SET price=' . $Price . " WHERE  stockid='" . $StockID . "'
+		$SQL = 'UPDATE prices SET price=' . $Price . " WHERE  stockid='" . $StockId . "'
 					AND typeabbrev='" . $SalesType . "'
 					AND currabrev='" . $Currency . "'";
 	}
-	$result = DB_Query($sql, $db);
+	$Result = DB_Query($SQL);
 	$Errors[0] = 0;
 	return $Errors;
 }
 
-function GetStockPrice($StockID, $Currency, $SalesType, $user, $password) {
+function GetStockPrice($StockId, $Currency, $SalesType, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-	$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
-	$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
+	$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors);
+	$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT COUNT(*) FROM prices
-				 WHERE stockid='" . $StockID . "'
+	$SQL = "SELECT COUNT(*) FROM prices
+				 WHERE stockid='" . $StockId . "'
 				 AND typeabbrev='" . $SalesType . "'
 				 AND currabrev='" . $Currency . "'
-				 AND startdate<='" . Date('Y-m-d') . "'
-				 AND (enddate>'" . Date('Y-m-d') . "' OR enddate='0000-00-00')";
-	$result = DB_Query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] == 0) {
+				 AND startdate<=CURRENT_DATE
+				 AND (enddate>CURRENT_DATE OR enddate='0000-00-00')";
+	$Result = DB_Query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] == 0) {
 		$Errors[0] = NoPricesSetup;
 		return $Errors;
 	} else {
-		$sql = "SELECT price FROM prices
-							WHERE stockid='" . $StockID . "'
+		$SQL = "SELECT price FROM prices
+							WHERE stockid='" . $StockId . "'
 							 AND typeabbrev='" . $SalesType . "'
 							 AND currabrev='" . $Currency . "'
-							 AND startdate<='" . Date('Y-m-d') . "'
-							 AND (enddate>'" . Date('Y-m-d') . "' OR enddate='0000-00-00')";
+							 AND startdate<=CURRENT_DATE
+							 AND (enddate>CURRENT_DATE OR enddate='0000-00-00')";
 	}
-	$result = DB_Query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_Query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	$Errors[0] = 0;
-	$Errors[1] = $myrow;
+	$Errors[1] = $MyRow;
 	return $Errors;
 }
 
-function GetStockTaxRate($StockID, $TaxAuth, $user, $password) {
+function GetStockTaxRate($StockId, $TaxAuth, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT taxrate FROM taxauthrates LEFT JOIN stockmaster
+	$SQL = "SELECT taxrate FROM taxauthrates LEFT JOIN stockmaster
 				ON taxauthrates.taxcatid=stockmaster.taxcatid
-				WHERE stockid='" . $StockID . "'
+				WHERE stockid='" . $StockId . "'
 				AND taxauthority='" . $TaxAuth . "'";
-	$result = DB_Query($sql, $db);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_Query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	$Errors[0] = 0;
-	$Errors[1] = $myrow;
+	$Errors[1] = $MyRow;
 	return $Errors;
 }
 
-function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $password) {
+function StockAdjustment($StockId, $Location, $Quantity, $TranDate, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-	$balances = GetStockBalance($StockID, $user, $password);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
+	$balances = GetStockBalance($StockId, $user, $password);
 	$balance = 0;
-	for ($i = 0; $i < sizeof($balances); $i++) {
+	$SizeOfBalances = sizeOf($balances);
+	for ($i = 0; $i < $SizeOfBalances; $i++) {
 		$balance = $balance + $balances[$i]['quantity'];
 	}
 	$newqoh = $Quantity + $balance;
-	$itemdetails = GetStockItem($StockID, $user, $password);
-	$adjglact = GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact', $db);
-	$stockact = GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact', $db);
+	$itemdetails = GetStockItem($StockId, $user, $password);
+	$adjglact = GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact');
+	$stockact = GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
 
 	$stockmovesql = "INSERT INTO stockmoves (stockid,
 											   type,
@@ -802,18 +803,18 @@ function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $pass
 											   reference,
 											   qty,
 											   newqoh)
-							   VALUES ('" . $StockID . "',
+							   VALUES ('" . $StockId . "',
 									   '17',
-									   '" . GetNextTransactionNo(17, $db) . "',
+									   '" . GetNextTransactionNo(17) . "',
 									   '" . $Location . "',
 									   '" . $TranDate . "',
-									   '" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db) . "',
+									   '" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors) . "',
 									   'api adjustment',
 									   '" . $Quantity . "',
 									   '" . $newqoh . "')";
 	$locstocksql = 'UPDATE locstock SET quantity = quantity + ' . $Quantity . "
 							 WHERE loccode='" . $Location . "'
-							 AND stockid='" . $StockID . "'";
+							 AND stockid='" . $StockId . "'";
 	$glupdatesql1 = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -822,12 +823,12 @@ function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $pass
 											amount,
 											narrative)
 									VALUES ('17',
-										   '" . GetNextTransactionNo(17, $db) . "',
+										   '" . GetNextTransactionNo(17) . "',
 										   '" . $TranDate . "',
-										   '" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db) . "',
+										   '" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors) . "',
 										   '" . $adjglact . "',
 										   '" . $itemdetails['materialcost'] * -$Quantity . "',
-										   '" . $StockID . ' x ' . $Quantity . ' @ ' . $itemdetails['materialcost'] . "')";
+										   '" . $StockId . ' x ' . $Quantity . ' @ ' . $itemdetails['materialcost'] . "')";
 	$glupdatesql2 = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -836,22 +837,22 @@ function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $pass
 											amount,
 											narrative)
 						VALUES ('17',
-						'" . GetNextTransactionNo(17, $db) . "',
+						'" . GetNextTransactionNo(17) . "',
 						'" . $TranDate . "',
-						'" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db) . "',
+						'" . GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors) . "',
 						'" . $stockact . "',
 						'" . $itemdetails['materialcost'] * $Quantity . "',
-						'" . $StockID . ' x ' . $Quantity . ' @ ' . $itemdetails['materialcost'] . "')";
-	$systypessql = "UPDATE systypes set typeno='" . GetNextTransactionNo(17, $db) . "' where typeid='17'";
+						'" . $StockId . ' x ' . $Quantity . ' @ ' . $itemdetails['materialcost'] . "')";
+	$systypessql = "UPDATE systypes set typeno='" . GetNextTransactionNo(17) . "' where typeid='17'";
 
-	DB_Txn_Begin($db);
-	DB_query($stockmovesql, $db);
-	DB_query($locstocksql, $db);
-	DB_query($glupdatesql1, $db);
-	DB_query($glupdatesql2, $db);
-	DB_query($systypessql, $db);
-	DB_Txn_Commit($db);
-	if (DB_error_no($db) != 0) {
+	DB_Txn_Begin();
+	api_DB_query($stockmovesql);
+	api_DB_query($locstocksql);
+	api_DB_query($glupdatesql1);
+	api_DB_query($glupdatesql2);
+	api_DB_query($systypessql);
+	DB_Txn_Commit();
+	if (DB_error_no() != 0) {
 		$Errors[0] = DatabaseUpdateFailed;
 		return $Errors;
 	} else {
@@ -859,19 +860,19 @@ function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $pass
 	}
 }
 
-function GetBatches($StockID, $Location, $user, $password) {
+function GetBatches($StockId, $Location, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db) == 'integer') {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-	$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($StockId, sizeof($Errors), $Errors);
+	$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors);
 	if (sizeof($Errors) != 0) {
 		return $Errors;
 	}
-	$sql = "SELECT stockserialitems.stockid,
+	$SQL = "SELECT stockserialitems.stockid,
 				loccode,
 				stockserialitems.serialno as batchno,
 				quantity,
@@ -883,13 +884,13 @@ function GetBatches($StockID, $Location, $user, $password) {
 										ON stockmoves.stkmoveno=stockserialmoves.stockmoveno
 										WHERE stockmoves.type=25) as t
 				ON stockserialitems.stockid=t.stockid and stockserialitems.serialno=t.serialno
-			WHERE stockid='" . $StockID . "' AND loccode='" . $Location . "'";
-	$result = DB_Query($sql, $db);
+			WHERE stockid='" . $StockId . "' AND loccode='" . $Location . "'";
+	$Result = DB_Query($SQL);
 	if (sizeof($Errors) == 0) {
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
-			$answer[$i] = $myrow;
-			$i++;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$answer[$i] = $MyRow;
+			++$i;
 		}
 		return $answer;
 	} else {

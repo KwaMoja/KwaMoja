@@ -7,7 +7,7 @@ CreateTable('holdreasons',
   `dissallowinvoices` tinyint(4) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-)", $db);
+)");
 
 
 ?>

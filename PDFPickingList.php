@@ -19,40 +19,32 @@ if ($_SESSION['RequirePickingNote'] == 0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
 	$Title = _('Select Picking Lists');
 	include('includes/header.inc');
-	if ($_SESSION['RestrictLocations'] == 0) {
-		$sql = "SELECT locationname,
-							loccode
-						FROM locations";
-	} else {
-		$sql = "SELECT locationname,
-							loccode
-						FROM locations
-						INNER JOIN www_users
-							ON locations.loccode=www_users.defaultlocation
-						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-	}
-	$result = DB_query($sql, $db);
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" name="form">';
-	echo '<div>';
+	$SQL = "SELECT locations.loccode,
+					locationname
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1";
+	$Result = DB_query($SQL);
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" name="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 		<tr>
 			<td>' . _('Create picking lists for all deliveries to be made on') . ' : ' . '</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransDate" autofocus="autofocus" required="required" minlength="1" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat'], mktime(date('m'), date('Y'), date('d') + 1)) . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransDate" autofocus="autofocus" required="required" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat'], mktime(date('m'), date('Y'), date('d') + 1)) . '" /></td>
 		</tr>';
 	echo '<tr><td>' . _('From Warehouse') . ' : ' . '</td>
-			<td><select required="required" minlength="1" name="loccode">';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			<td><select required="required" name="loccode">';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>
 		</table>';
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '" />
-		</div>
 		</div>
 		</form>';
 	include('includes/footer.inc');
@@ -64,7 +56,7 @@ $ErrMsg = _('There was a problem retrieving the order header details from the da
 
 if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 	/* If there is no transaction date set, then it must be for a single order */
-	$sql = "SELECT salesorders.debtorno,
+	$SQL = "SELECT salesorders.debtorno,
 				salesorders.orderno,
 				salesorders.customerref,
 				salesorders.comments,
@@ -99,7 +91,7 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 } else if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 	/* We are printing picking lists for all orders on a day */
-	$sql = "SELECT salesorders.debtorno,
+	$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
 					salesorders.customerref,
 					salesorders.comments,
@@ -136,14 +128,14 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 }
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	/*if there are no rows, there's a problem. */
-	if (DB_num_rows($result) == 0) {
+	if (DB_num_rows($Result) == 0) {
 		$Title = _('Print Picking List Error');
 		include('includes/header.inc');
 		echo '<br />';
@@ -161,9 +153,9 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 
 	/*retrieve the order details from the database and place them in an array */
 	$i = 0;
-	while ($myrow = DB_fetch_array($result)) {
-		$OrdersToPick[$i] = $myrow;
-		$i++;
+	while ($MyRow = DB_fetch_array($Result)) {
+		$OrdersToPick[$i] = $MyRow;
+		++$i;
 	}
 } else {
 	$OrdersToPick[0]['debtorno'] = str_pad('', 10, 'x');
@@ -204,18 +196,19 @@ if ($OrdersToPick[0]['orderno'] == 'Preview') {
 
 $PaperSize = $FormDesign->PaperSize;
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Picking List'));
-$pdf->addInfo('Subject', _('Laser Picking List'));
+$PDF->addInfo('Title', _('Picking List'));
+$PDF->addInfo('Subject', _('Laser Picking List'));
 $FontSize = 12;
 $ListCount = 0;
 $Copy = '';
 
 $line_height = $FormDesign->LineHeight;
 
-for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
+$SizeOfOrdersToPick = sizeOf($OrdersToPick);
+for ($i = 0; $i < $SizeOfOrdersToPick; $i++) {
 	/*Cycle through each of the orders to pick */
 	if ($i > 0) {
-		$pdf->newPage();
+		$PDF->newPage();
 	}
 
 	/* Now ... Has the order got any line items still outstanding to be picked */
@@ -226,14 +219,14 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 		$ErrMsg = _('There was a problem retrieving the order line details for Order Number') . ' ' . $OrdersToPick[$i]['orderno'] . ' ' . _('from the database');
 
 		/* Are there any picking lists for this order already */
-		$sql = "SELECT COUNT(orderno)
+		$SQL = "SELECT COUNT(orderno)
 				FROM pickinglists
 				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'";
-		$CountResult = DB_query($sql, $db);
+		$CountResult = DB_query($SQL);
 		$Count = DB_fetch_row($CountResult);
 		if ($Count[0] == 0) {
 			/* There are no previous picking lists for this order */
-			$sql = "SELECT salesorderdetails.stkcode,
+			$SQL = "SELECT salesorderdetails.stkcode,
 							stockmaster.description,
 							salesorderdetails.orderlineno,
 							salesorderdetails.quantity,
@@ -249,7 +242,7 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 			/* There are previous picking lists for this order so
 			 * need to take those quantities into account
 			 */
-			$sql = "SELECT salesorderdetails.stkcode,
+			$SQL = "SELECT salesorderdetails.stkcode,
 							stockmaster.description,
 							salesorderdetails.orderlineno,
 							salesorderdetails.quantity,
@@ -269,7 +262,7 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 						WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] . "'
 						AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
-		$LineResult = DB_query($sql, $db, $ErrMsg);
+		$LineResult = DB_query($SQL, $ErrMsg);
 	}
 
 	if ((isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') or (isset($LineResult) and DB_num_rows($LineResult) > 0)) {
@@ -277,15 +270,15 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 		include('includes/PDFPickingListHeader.inc');
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 			$LinesToShow = DB_num_rows($LineResult);
-			$PickingListNo = GetNextTransNo(19, $db);
-			$sql = "INSERT INTO pickinglists
+			$PickingListNo = GetNextTransNo(19);
+			$SQL = "INSERT INTO pickinglists
 				VALUES (
 				'" . $PickingListNo . "',
 				'" . $OrdersToPick[$i]['orderno'] . "',
 				'" . FormatDateForSQL($_POST['TransDate']) . "',
 				'CURRENT_DATE',
 				'0000-00-00')";
-			$headerresult = DB_query($sql, $db);
+			$headerresult = DB_query($SQL);
 		} else {
 			$LinesToShow = 1;
 		}
@@ -294,43 +287,43 @@ for ($i = 0; $i < sizeof($OrdersToPick); $i++) {
 
 		while ($Lines < $LinesToShow) {
 			if (isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') {
-				$myrow2['stkcode'] = str_pad('', 10, 'x');
-				$myrow2['decimalplaces'] = 2;
+				$MyRow2['stkcode'] = str_pad('', 10, 'x');
+				$MyRow2['decimalplaces'] = 2;
 				$DisplayQty = 'XXXX.XX';
 				$DisplayPrevDel = 'XXXX.XX';
 				$DisplayQtySupplied = 'XXXX.XX';
-				$myrow2['description'] = str_pad('', 18, 'x');
-				$myrow2['narrative'] = str_pad('', 18, 'x');
-				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
+				$MyRow2['description'] = str_pad('', 18, 'x');
+				$MyRow2['narrative'] = str_pad('', 18, 'x');
+				$itemdesc = $MyRow2['description'] . ' - ' . $MyRow2['narrative'];
 			} else {
-				$myrow2 = DB_fetch_array($LineResult);
+				$MyRow2 = DB_fetch_array($LineResult);
 				if ($Count[0] == 0) {
-					$myrow2['qtyexpected'] = 0;
-					$myrow2['qtypicked'] = 0;
+					$MyRow2['qtyexpected'] = 0;
+					$MyRow2['qtypicked'] = 0;
 				}
-				$DisplayQty = locale_number_format($myrow2['quantity'], $myrow2['decimalplaces']);
-				$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'], $myrow2['decimalplaces']);
-				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'] - $myrow2['qtyexpected'] - $myrow2['qtypicked'], $myrow2['decimalplaces']);
-				$itemdesc = $myrow2['description'] . ' - ' . $myrow2['narrative'];
-				$sql = "INSERT INTO pickinglistdetails
+				$DisplayQty = locale_number_format($MyRow2['quantity'], $MyRow2['decimalplaces']);
+				$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
+				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'] - $MyRow2['qtyexpected'] - $MyRow2['qtypicked'], $MyRow2['decimalplaces']);
+				$itemdesc = $MyRow2['description'] . ' - ' . $MyRow2['narrative'];
+				$SQL = "INSERT INTO pickinglistdetails
 					VALUES(
 					'" . $PickingListNo . "',
 					'" . $Lines . "',
-					'" . $myrow2['orderlineno'] . "',
+					'" . $MyRow2['orderlineno'] . "',
 					'" . $DisplayQtySupplied . "',
 					0)";
-				$Result = DB_query($sql, $db);
+				$Result = DB_query($SQL);
 			}
 			$ListCount++;
 
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column1->x, $Page_Height - $YPos, $FormDesign->Headings->Column1->Length, $FormDesign->Headings->Column1->FontSize, $myrow2['stkcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $itemdesc);
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $DisplayQty, 'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $DisplayQtySupplied, 'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayPrevDel, 'right');
+			$LeftOvers = $PDF->addTextWrap($FormDesign->Headings->Column1->x, $Page_Height - $YPos, $FormDesign->Headings->Column1->Length, $FormDesign->Headings->Column1->FontSize, $MyRow2['stkcode'], 'left');
+			$LeftOvers = $PDF->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $itemdesc);
+			$LeftOvers = $PDF->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $DisplayQty, 'right');
+			$LeftOvers = $PDF->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $DisplayQtySupplied, 'right');
+			$LeftOvers = $PDF->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayPrevDel, 'right');
 
 			if ($Page_Height - $YPos - $line_height <= 50) {
-				/* We reached the end of the page so finsih off the page and start a newy */
+				/* We reached the end of the page so finsih off the page and start a new */
 				$PageNumber++;
 				include('includes/PDFPickingListHeader.inc');
 			} //end if need a new page headed up
@@ -352,7 +345,7 @@ if ($ListCount == 0) {
 	include('includes/footer.inc');
 	exit;
 } else {
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 }
 ?>

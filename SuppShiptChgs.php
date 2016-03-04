@@ -41,8 +41,8 @@ if (isset($_POST['AddShiptChgToInvoice'])) {
 			$_POST['ShiptRef'] = $_POST['ShiptSelection'];
 		}
 	} else {
-		$result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='" . $_POST['ShiptRef'] . "'", $db);
-		if (DB_num_rows($result) == 0) {
+		$Result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='" . $_POST['ShiptRef'] . "'");
+		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('The shipment entered manually is not a valid shipment reference. If you do not know the shipment reference, select it from the list'), 'error');
 			$InputError = True;
 		}
@@ -67,9 +67,9 @@ if (isset($_GET['Delete'])) {
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<p class="page_title_text noPrint" >' . _('Shipment charges on Invoice') . ' ';
+	echo '<p class="page_title_text" >' . _('Shipment charges on Invoice') . ' ';
 } else {
-	echo '<p class="page_title_text noPrint" >' . _('Shipment credits on Credit Note') . ' ';
+	echo '<p class="page_title_text" >' . _('Shipment credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p>';
@@ -100,7 +100,7 @@ echo '<tr>
 </table><br />';
 
 /*Set up a form to allow input of new Shipment charges */
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ShiptRef'])) {
@@ -109,15 +109,15 @@ if (!isset($_POST['ShiptRef'])) {
 echo '<table class="selection">';
 echo '<tr>
 		<td>' . _('Shipment Reference') . ':</td>
-		<td><input type="text" name="ShiptRef" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['ShiptRef'] . '" /></td>
+		<td><input type="text" name="ShiptRef" size="12" required="required" maxlength="11" value="' . $_POST['ShiptRef'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('Shipment Selection') . ':
 			<br /> ' . _('If you know the code enter it above') . '
 			<br />' . _('otherwise select the shipment from the list') . '</td>
-		<td><select required="required" minlength="1" name="ShiptSelection">';
+		<td><select required="required" name="ShiptSelection">';
 
-$sql = "SELECT shiptref,
+$SQL = "SELECT shiptref,
 				vessel,
 				eta,
 				suppname
@@ -125,15 +125,15 @@ $sql = "SELECT shiptref,
 				ON shipments.supplierid=suppliers.supplierid
 			WHERE closed='0'";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['ShiptSelection']) and $myrow['shiptref'] == $_POST['ShiptSelection']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['ShiptSelection']) and $MyRow['shiptref'] == $_POST['ShiptSelection']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['shiptref'] . '">' . $myrow['shiptref'] . ' - ' . $myrow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['eta']) . ' ' . _('from') . ' ' . $myrow['suppname'] . '</option>';
+	echo $MyRow['shiptref'] . '">' . $MyRow['shiptref'] . ' - ' . $MyRow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($MyRow['eta']) . ' ' . _('from') . ' ' . $MyRow['suppname'] . '</option>';
 }
 
 echo '</select></td>
@@ -144,7 +144,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="number" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="number" class="number" name="Amount" size="12" required="required" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>
 	</table>';
 

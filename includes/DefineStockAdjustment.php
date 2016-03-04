@@ -2,7 +2,7 @@
 
 class StockAdjustment {
 
-	var $StockID;
+	var $StockId;
 	var $StockLocation;
 	var $Controlled;
 	var $Serialised;

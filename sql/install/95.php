@@ -13,7 +13,7 @@ CreateTable('reportfields',
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-)", $db);
+)");
 
 
 ?>

@@ -49,17 +49,10 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
-echo '<table style="max-width:100%;width:99%;" border="0" cellspacing="0" cellpadding="1">
-      <tr>
-        <th colspan="4" style="margin:0px;padding:0px;background: transparent;">
-			<div class="CanvasTitle">' . _('Latest stock status') . '<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
-			</div>
-		</th>
-      </tr>';
 $SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.longdescription,
@@ -81,16 +74,27 @@ $SQL = "SELECT stockmaster.stockid,
 						stockmaster.discontinued,
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.discontinued, stockmaster.stockid LIMIT 5";
-$searchresult = DB_query($SQL, $db);
+$searchresult = DB_query($SQL);
 
-echo '<tbody>
-		<tr>
-			<th class="SortableColumn">' . _('Code') . '</th>
-			<th class="SortableColumn">' . _('Description') . '</th>
-			<th>' . _('Total Quantity on Hand') . '</th>
-			<th>' . _('Units') . '</th>
-		</tr>';
+echo '<table style="max-width:100%;width:99%;" border="0" cellspacing="0" cellpadding="1">
+		<thead>
+			<tr>
+				<th colspan="4" style="margin:0px;padding:0px;background: transparent;">
+					<div class="CanvasTitle">' . _('Latest stock status') . '
+						<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th>' . _('Total Quantity on Hand') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>
+		</thead>';
 $k = 0;
+
+echo '<tbody>';
 while ($row = DB_fetch_array($searchresult)) {
 
 	if ($k == 1) {

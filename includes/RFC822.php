@@ -82,9 +82,9 @@ class Mail_RFC822 {
 	/**
 	 * A variable so that we can tell whether or not we're inside a
 	 * Mail_RFC822 object.
-	 * @var boolean $mailRFC822
+	 * @var boolean $MailRFC822
 	 */
-	var $mailRFC822 = true;
+	var $MailRFC822 = true;
 
 	/**
 	 * A limit after which processing stops
@@ -552,16 +552,16 @@ class Mail_RFC822 {
 	 *		   / phrase route-addr ; name and route-addr
 	 *
 	 * @access public
-	 * @param string &$mailbox The string to check.
+	 * @param string &$Mailbox The string to check.
 	 * @return boolean Success or failure.
 	 */
-	function validateMailbox(&$mailbox) {
+	function validateMailbox(&$Mailbox) {
 		// A couple of defaults.
 		$phrase = '';
 		$comment = '';
 
 		// Catch any RFC822 comments and store them separately
-		$_mailbox = $mailbox;
+		$_mailbox = $Mailbox;
 		while (mb_strlen(trim($_mailbox)) > 0) {
 			$parts = explode('(', $_mailbox);
 			$before_comment = $this->_splitCheck($parts, '(');
@@ -580,17 +580,17 @@ class Mail_RFC822 {
 		}
 
 		for ($i = 0; $i < count(@$comments); $i++) {
-			$mailbox = str_replace('(' . $comments[$i] . ')', '', $mailbox);
+			$Mailbox = str_replace('(' . $comments[$i] . ')', '', $Mailbox);
 		}
-		$mailbox = trim($mailbox);
+		$Mailbox = trim($Mailbox);
 
 		// Check for name + route-addr
-		if (mb_substr($mailbox, -1) == '>' and mb_substr($mailbox, 0, 1) != '<') {
-			$parts = explode('<', $mailbox);
+		if (mb_substr($Mailbox, -1) == '>' and mb_substr($Mailbox, 0, 1) != '<') {
+			$parts = explode('<', $Mailbox);
 			$name = $this->_splitCheck($parts, '<');
 
 			$phrase = trim($name);
-			$route_addr = trim(mb_substr($mailbox, mb_strlen($name . '<'), -1));
+			$route_addr = trim(mb_substr($Mailbox, mb_strlen($name . '<'), -1));
 
 			if ($this->_validatePhrase($phrase) === false or ($route_addr = $this->_validateRouteAddr($route_addr)) === false)
 				return false;
@@ -598,10 +598,10 @@ class Mail_RFC822 {
 			// Only got addr-spec
 		} else {
 			// First snip angle brackets if present.
-			if (mb_substr($mailbox, 0, 1) == '<' and mb_substr($mailbox, -1) == '>')
-				$addr_spec = mb_substr($mailbox, 1, -1);
+			if (mb_substr($Mailbox, 0, 1) == '<' and mb_substr($Mailbox, -1) == '>')
+				$addr_spec = mb_substr($Mailbox, 1, -1);
 			else
-				$addr_spec = $mailbox;
+				$addr_spec = $Mailbox;
 
 			if (($addr_spec = $this->_validateAddrSpec($addr_spec)) === false)
 				return false;
@@ -623,7 +623,7 @@ class Mail_RFC822 {
 			$mbox->host = $addr_spec['domain'];
 		}
 
-		$mailbox = $mbox;
+		$Mailbox = $mbox;
 		return true;
 	}
 

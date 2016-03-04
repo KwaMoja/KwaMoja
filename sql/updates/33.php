@@ -1,7 +1,7 @@
 <?php
 
-InsertRecord('mailgroups', array('id', 'groupname'), array(1,'ChkListingRecipients'), array('id', 'groupname'), array(1,'ChkListingRecipients'), $db);
+InsertRecord('mailgroups', array('id', 'groupname'), array(1,'ChkListingRecipients'), array('id', 'groupname'), array(1,'ChkListingRecipients'));
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

@@ -12,7 +12,7 @@ CreateTable('fixedassettasks',
   PRIMARY KEY (`taskid`),
   KEY `assetid` (`assetid`),
   KEY `userresponsible` (`userresponsible`)
-)", $db);
+)");
 
 
 ?>

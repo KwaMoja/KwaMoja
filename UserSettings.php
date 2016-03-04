@@ -4,7 +4,7 @@ include('includes/session.inc');
 $Title = _('User Settings');
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/user.png" title="' . _('User Settings') . '" alt="" />' . ' ' . _('User Settings') . '</p>';
+echo '<p class="page_title_text" ><img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('User Settings'), '" alt="" />', ' ', _('User Settings'), '</p>';
 
 $PDFLanguages = array(
 	_('Latin Western Languages - Times'),
@@ -56,7 +56,7 @@ if (isset($_POST['Modify'])) {
 	if ($InputError != 1) {
 		// no errors
 		if ($UpdatePassword != 'Y') {
-			$sql = "UPDATE www_users
+			$SQL = "UPDATE www_users
 				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
@@ -68,11 +68,11 @@ if (isset($_POST['Modify'])) {
 			$ErrMsg = _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'), 'success');
 		} else {
-			$sql = "UPDATE www_users
+			$SQL = "UPDATE www_users
 				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
@@ -85,7 +85,7 @@ if (isset($_POST['Modify'])) {
 			$ErrMsg = _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('The user settings have been updated'), 'success');
 		}
@@ -93,17 +93,19 @@ if (isset($_POST['Modify'])) {
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
 		$_SESSION['Theme'] = trim($_POST['Theme']);
 		/*already set by session.inc but for completeness */
-		$Theme = $_SESSION['Theme'];
+		$_SESSION['Theme'] = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
+		include('includes/MainMenuLinksArray.php');
 		include('includes/LanguageSetup.php');
 
 	}
+	$_SESSION['ChartLanguage'] = GetChartLanguage();
+	$_SESSION['InventoryLanguage'] = GetInventoryLanguage();
 }
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (!isset($_POST['DisplayRecordsMax']) or $_POST['DisplayRecordsMax'] == '') {
 
@@ -113,24 +115,25 @@ if (!isset($_POST['DisplayRecordsMax']) or $_POST['DisplayRecordsMax'] == '') {
 
 echo '<table class="selection">
 		<tr>
-			<td>' . _('User ID') . ':</td>
-			<td>' . $_SESSION['UserID'] . '</td>
+			<td>', _('User ID'), ':</td>
+			<td>', $_SESSION['UserID'], '</td>
 		</tr>';
 
 echo '<tr>
-		<td>' . _('User Name') . ':</td>
-		<td>' . $_SESSION['UsersRealName'] . '
-		<input type="hidden" name="RealName" value="' . $_SESSION['UsersRealName'] . '" /></td></tr>';
+		<td>', _('User Name'), ':</td>
+		<td>', $_SESSION['UsersRealName'], '
+		<input type="hidden" name="RealName" value="', $_SESSION['UsersRealName'], '" /></td>
+	</tr>';
 
 echo '<tr>
-	<td>' . _('Maximum Number of Records to Display') . ':</td>
-	<td><input type="text" class="number" name="DisplayRecordsMax" size="3" required="required" minlength="1" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+		<td>', _('Maximum Number of Records to Display'), ':</td>
+		<td><input type="text" class="number" name="DisplayRecordsMax" size="3" required="required" maxlength="3" value="', $_POST['DisplayRecordsMax'], '"  /></td>
 	</tr>';
 
 
 echo '<tr>
-	<td>' . _('Language') . ':</td>
-	<td><select minlength="0" name="Language">';
+		<td>', _('Language'), ':</td>
+		<td><select name="Language">';
 
 if (!isset($_POST['Language'])) {
 	$_POST['Language'] = $_SESSION['Language'];
@@ -139,28 +142,28 @@ if (!isset($_POST['Language'])) {
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['Language']) and $_POST['Language'] == $LanguageEntry) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
-	} elseif (!isset($_POST['Language']) and $LanguageEntry == $DefaultLanguage) {
+	} elseif (!isset($_POST['Language']) and $LanguageEntry == $_SESSION['DefaultLanguage']) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	} else {
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+			</td>
+		</tr>';
 
 echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select minlength="0" name="Theme">';
+		<td>', _('Theme'), ':</td>
+		<td><select name="Theme">';
 
-$Themes = scandir('css/');
-
+$Themes = glob('css/*', GLOB_ONLYDIR);
 foreach ($Themes as $ThemeName) {
-
-	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn') {
-
+	$ThemeName = basename($ThemeName);
+	if ($ThemeName != 'mobile') {
 		if ($_SESSION['Theme'] == $ThemeName) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option selected="selected" value="', $ThemeName, '">', $ThemeName, '</option>';
 		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option value="', $ThemeName, '">', $ThemeName, '</option>';
 		}
 	}
 }
@@ -171,29 +174,23 @@ if (!isset($_POST['PasswordCheck'])) {
 if (!isset($_POST['Password'])) {
 	$_POST['Password'] = '';
 }
-echo '</select></td></tr>
+echo '</select>
+			</td>
+		</tr>
 	<tr>
-		<td>' . _('New Password') . ':</td>
-		<td><input type="password" name="Password" size="20" value="' . $_POST['Password'] . '" /></td>
+		<td>', _('New Password'), ':</td>
+		<td><input type="password" autocomplete="OFF" name="Password" size="20" value="', $_POST['Password'], '" /></td>
 	</tr>
 	<tr>
-		<td>' . _('Confirm Password') . ':</td>
-		<td><input type="password" name="PasswordCheck" size="20"  value="' . $_POST['PasswordCheck'] . '" /></td>
+		<td>', _('Confirm Password'), ':</td>
+		<td><input type="password" name="PasswordCheck" size="20"  value="', $_POST['PasswordCheck'], '" /></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><i>' . _('if you leave the password boxes empty your password will not change') . '</i></td>
+		<td colspan="2" align="center"><i>', _('if you leave the password boxes empty your password will not change'), '</i></td>
 	</tr>
 	<tr>
-		<td>' . _('Email') . ':</td>';
-
-$sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
-if (!isset($_POST['email'])) {
-	$_POST['email'] = $myrow['email'];
-}
-
-echo '<td><input type="email" name="email" size="40" value="' . $_POST['email'] . '" /></td>
+		<td>', _('Email'), ':</td>
+		<td><input type="email" name="email" size="40" value="', $_SESSION['UserEmail'], '" /></td>
 	</tr>';
 
 if (!isset($_POST['PDFLanguage'])) {
@@ -203,40 +200,43 @@ if (!isset($_POST['PDFLanguage'])) {
 /* Screen Font Size */
 
 echo '<tr>
-		<td>' . _('Screen Font Size') . ':</td>
-		<td><select minlength="0" name="FontSize">';
-if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize'] == 0) {
-	echo '<option selected="selected" value="0">' . _('Small') . '</option>';
-	echo '<option value="1">' . _('Medium') . '</option>';
-	echo '<option value="2">' . _('Large') . '</option>';
-} else if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize'] == 1) {
-	echo '<option value="0">' . _('Small') . '</option>';
-	echo '<option selected="selected" value="1">' . _('Medium') . '</option>';
-	echo '<option value="2">' . _('Large') . '</option>';
+		<td>', _('Screen Font Size'), ':</td>
+		<td><select name="FontSize">';
+if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize'] == '8pt') {
+	echo '<option selected="selected" value="0">', _('Small'), '</option>';
+	echo '<option value="1">', _('Medium'), '</option>';
+	echo '<option value="2">', _('Large'), '</option>';
+} else if (isset($_SESSION['ScreenFontSize']) and $_SESSION['ScreenFontSize'] == '10pt') {
+	echo '<option value="0">', _('Small'), '</option>';
+	echo '<option selected="selected" value="1">', _('Medium'), '</option>';
+	echo '<option value="2">', _('Large'), '</option>';
 } else {
-	echo '<option value="0">' . _('Small') . '</option>';
-	echo '<option value="1">' . _('Medium') . '</option>';
-	echo '<option selected="selected" value="2">' . _('Large') . '</option>';
+	echo '<option value="0">', _('Small'), '</option>';
+	echo '<option value="1">', _('Medium'), '</option>';
+	echo '<option selected="selected" value="2">', _('Large'), '</option>';
 }
-echo '</select></td>
+echo '</select>
+		</td>
 	</tr>';
 
 echo '<tr>
-		<td>' . _('PDF Language Support') . ': </td>
-		<td><select minlength="0" name="PDFLanguage">';
+		<td>', _('PDF Language Support'), ': </td>
+		<td><select name="PDFLanguage">';
 
 for ($i = 0; $i < count($PDFLanguages); $i++) {
 	if ($_POST['PDFLanguage'] == $i) {
-		echo '<option selected="selected" value="' . $i . '">' . $PDFLanguages[$i] . '</option>';
+		echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
 	} else {
-		echo '<option value="' . $i . '">' . $PDFLanguages[$i] . '</option>';
+		echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
-	<div class="centre"><input type="submit" name="Modify" value="' . _('Modify') . '" /></div>
+echo '</select>
+			</td>
+		</tr>
+	</table>';
+
+echo '<div class="centre">
+		<input type="submit" name="Modify" value="', _('Modify'), '" />
 	</div>
 	</form>';
 

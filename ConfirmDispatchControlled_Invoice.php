@@ -11,9 +11,9 @@ include('includes/header.inc');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
-	$identifier = date('U');
+	$Identifier = date('U');
 } else {
-	$identifier = $_GET['identifier'];
+	$Identifier = $_GET['identifier'];
 }
 
 if (isset($_GET['LineNo'])) {
@@ -31,7 +31,7 @@ if (isset($_GET['LineNo'])) {
 	exit;
 }
 
-if (!isset($_SESSION['Items' . $identifier]) or !isset($_SESSION['ProcessingOrder'])) {
+if (!isset($_SESSION['Items' . $Identifier]) or !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with a sales order number to invoice */
 	echo '<div class="centre">
 			<a href="' . $RootPath . '/SelectSalesOrder.php">' . _('Select a sales order to invoice') . '</a>
@@ -44,7 +44,7 @@ if (!isset($_SESSION['Items' . $identifier]) or !isset($_SESSION['ProcessingOrde
 
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem =& $_SESSION['Items' . $identifier]->LineItems[$LineNo];
+$LineItem =& $_SESSION['Items' . $Identifier]->LineItems[$LineNo];
 
 
 //Make sure this item is really controlled
@@ -61,16 +61,21 @@ Get the page going....
 ********************************************/
 echo '<div class="centre">';
 
-echo '<br /><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier=' . $identifier . '">' . _('Back to Confirmation of Dispatch') . '/' . _('Invoice') . '</a>';
+echo '<br /><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier=' . urlencode($Identifier) . '">' . _('Back to Confirmation of Dispatch') . '/' . _('Invoice') . '</a>';
 
-echo '<br /><b>' . _('Dispatch of up to') . ' ' . locale_number_format($LineItem->Quantity - $LineItem->QtyInv, $LineItem->DecimalPlaces) . ' ' . _('Controlled items') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['Items' . $identifier]->OrderNo . ' ' . _('to') . ' ' . $_SESSION['Items' . $identifier]->CustomerName . '</b></div>';
+echo '<br /><b>' . _('Dispatch of up to') . ' ' . locale_number_format($LineItem->Quantity - $LineItem->QtyInv, $LineItem->DecimalPlaces) . ' ' . _('Controlled items') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('on order') . ' ' . $_SESSION['Items' . $Identifier]->OrderNo . ' ' . _('to') . ' ' . $_SESSION['Items' . $Identifier]->CustomerName . '</b></div>';
 
 /** vars needed by InputSerialItem : **/
-$StockID = $LineItem->StockID;
+$StockId = $LineItem->StockID;
 $RecvQty = $LineItem->Quantity - $LineItem->QtyInv;
 $ItemMustExist = true;
 /*Can only invoice valid batches/serial numbered items that exist */
-$LocationOut = $_SESSION['Items' . $identifier]->Location;
+$LocationOut = $_SESSION['Items' . $Identifier]->Location;
+if ($_SESSION['RequirePickingNote'] == 1) {
+	$OrderstoPick = $_SESSION['Items' . $Identifier]->OrderNo;
+} else {
+	unset($OrderstoPick);
+}
 $InOutModifier = 1;
 $ShowExisting = true;
 
@@ -78,7 +83,7 @@ include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-$_SESSION['Items' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
+$_SESSION['Items' . $Identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
 include('includes/footer.inc');
 exit;

@@ -18,16 +18,16 @@ if (!isset($_SESSION['CustomerID'])) {
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
-$sql = "SELECT name
+$SQL = "SELECT name
 		FROM debtorsmaster
 		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
-$CustomerName = $myrow['name'];
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+$CustomerName = $MyRow['name'];
 
-echo '<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . _(' has been selected') . '</p>
+echo '<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . _(' has been selected') . '</p>
 	<br />';
 
 
@@ -61,26 +61,26 @@ if (isset($_POST['submit'])) {
 
 	if ((mb_strlen($_POST['BranchCode']) > 0) and ($InputError != 1)) {
 		// check that the entered branch is valid for the customer code
-		$sql = "SELECT defaultlocation
+		$SQL = "SELECT defaultlocation
 				FROM custbranch
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				AND branchcode='" . $_POST['BranchCode'] . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-		if (DB_num_rows($result) == 0) {
+		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'), 'error');
 			$InputError = 1;
 		} else {
-			$myrow = DB_fetch_row($result);
-			$InventoryLocation = $myrow[0];
+			$MyRow = DB_fetch_row($Result);
+			$InventoryLocation = $MyRow[0];
 		}
 
 		if ($InputError != 1) {
 
-			$sql = "INSERT INTO www_users (userid,
+			$SQL = "INSERT INTO www_users (userid,
 										realname,
 										customerid,
 										branchcode,
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 
 			$ErrMsg = _('The user could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 			prnMsg(_('A new customer login has been created'), 'success');
 			include('includes/footer.inc');
 			exit;
@@ -120,14 +120,13 @@ if (isset($_POST['submit'])) {
 
 }
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<table class="selection">
 		<tr>
 			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" size="22" required="required" minlength="1" maxlength="20" /></td>
+			<td><input type="text" name="UserID" size="22" required="required" maxlength="20" /></td>
 		</tr>';
 
 if (!isset($_POST['Password'])) {
@@ -145,44 +144,44 @@ if (!isset($_POST['Email'])) {
 
 echo '<tr>
 		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" size="22" required="required" minlength="1" maxlength="20" value="' . $_POST['Password'] . '" /></td>
+		<td><input type="password" name="Password" size="22" required="required" maxlength="20" value="' . $_POST['Password'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Full Name') . ':</td>
-			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" required="required" minlength="1" maxlength="35" /></td>
+			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" size="36" required="required" maxlength="35" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" minlength="0" maxlength="30" /></td>
+			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Email Address') . ':</td>
-			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" required="required" minlength="1" maxlength="55" /></td>
+			<td><input type="email" name="Email" value="' . $_POST['Email'] . '" size="32" required="required" maxlength="55" /></td>
 		</tr>
 		<tr>
 		<td><input type="hidden" name="Access" value="1" />
 			' . _('Branch Code') . ':</td>
-			<td><select minlength="0" name="BranchCode">';
+			<td><select name="BranchCode">';
 
-$sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-$result = DB_query($sql, $db);
+$SQL = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
 	//Set the first available branch as default value when nothing is selected
 	if (!isset($_POST['BranchCode'])) {
-		$_POST['BranchCode'] = $myrow['branchcode'];
+		$_POST['BranchCode'] = $MyRow['branchcode'];
 	}
 
-	if (isset($_POST['BranchCode']) and $myrow['branchcode'] == $_POST['BranchCode']) {
-		echo '<option selected="selected" value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
+	if (isset($_POST['BranchCode']) and $MyRow['branchcode'] == $_POST['BranchCode']) {
+		echo '<option selected="selected" value="' . $MyRow['branchcode'] . '">' . $MyRow['branchcode'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
+		echo '<option value="' . $MyRow['branchcode'] . '">' . $MyRow['branchcode'] . '</option>';
 	}
 }
 echo '</select></td></tr>';
 echo '<tr><td>' . _('Reports Page Size') . ':</td>
-	<td><select minlength="0" name="PageSize">';
+	<td><select name="PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize'] == 'A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -229,7 +228,7 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Theme') . ':</td>
-		<td><select minlength="0" name="Theme">';
+		<td><select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -239,7 +238,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())) {
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else if (!isset($_POST['Theme']) and ($_SESSION['DefaultTheme'] == $ThemeName)) {
+		} elseif (!isset($_POST['Theme']) and ($_SESSION['Theme'] == $ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
@@ -251,12 +250,12 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Language') . ':</td>
-		<td><select minlength="0" name="UserLanguage">';
+		<td><select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
-	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
+	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $_SESSION['DefaultLanguage']) {
 		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	} else {
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
@@ -265,10 +264,8 @@ foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 echo '</select></td>
 	</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
 	</div>
 	</form>';
 

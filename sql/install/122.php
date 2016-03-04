@@ -42,7 +42,7 @@ CreateTable('stockmaster',
   KEY `stockmaster_ibix_1` (`taxcatid`),
   CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
   CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
-)", $db);
+)");
 
 
 ?>

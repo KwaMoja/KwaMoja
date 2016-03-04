@@ -6,7 +6,7 @@ CreateTable('shippers',
   `shippername` char(40) NOT NULL DEFAULT '',
   `mincharge` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`shipper_id`)
-)", $db);
+)");
 
 
 ?>

@@ -17,7 +17,7 @@ CreateTable('fixedassets',
   `depnrate` double NOT NULL,
   `disposaldate` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`assetid`)
-)", $db);
+)");
 
 
 ?>

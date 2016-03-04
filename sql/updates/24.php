@@ -1,7 +1,7 @@
 <?php
 
-AddColumn('packages', 'debtortrans', 'INT', 'NOT NULL', 1, 'consignment', $db);
+AddColumn('packages', 'debtortrans', 'INT', 'NOT NULL', 1, 'consignment');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

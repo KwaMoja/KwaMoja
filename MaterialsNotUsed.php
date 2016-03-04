@@ -11,25 +11,27 @@ include('includes/header.inc');
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				(stockcosts.materialcost + stockcosts.labourcost + stockcosts.overheadcost) AS stdcost,
 				(SELECT SUM(quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid) AS qoh
-		FROM stockmaster,
-			stockcategory
-		WHERE stockmaster.categoryid = stockcategory.categoryid
-			AND stockcategory.stocktype = 'M'
+		FROM stockmaster
+		LEFT JOIN stockcosts
+			ON stockcosts.stockid=stockmater.stockid
+			AND stockcosts.succeeded=0
+		INNER JOIN stockcategory
+			ON stockmaster.categoryid = stockcategory.categoryid
+		WHERE stockcategory.stocktype = 'M'
 			AND stockmaster.discontinued = 0
 			AND NOT EXISTS(
 				SELECT *
 				FROM bom
 				WHERE bom.component = stockmaster.stockid )
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 echo '<p class="page_title_text" align="center"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
-if (DB_num_rows($result) != 0) {
+if (DB_num_rows($Result) != 0) {
 	$TotalValue = 0;
-	echo '<div>';
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('#') . '</th>
@@ -40,7 +42,7 @@ if (DB_num_rows($result) != 0) {
 				<th>' . _('Value') . '</th>
 			</tr>';
 	$k = 0; //row colour counter
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -48,8 +50,8 @@ if (DB_num_rows($result) != 0) {
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
-		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-		$LineValue = $myrow['qoh'] * $myrow['stdcost'];
+		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['stockid']) . '">' . $MyRow['stockid'] . '</a>';
+		$LineValue = $MyRow['qoh'] * $MyRow['stdcost'];
 		$TotalValue = $TotalValue + $LineValue;
 
 		printf('<td class="number">%s</td>
@@ -58,8 +60,8 @@ if (DB_num_rows($result) != 0) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>', $i, $CodeLink, $myrow['description'], locale_number_format($myrow['qoh'], $myrow['decimalplaces']), locale_number_format($myrow['stdcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($LineValue, $_SESSION['CompanyRecord']['decimalplaces']));
-		$i++;
+				</tr>', $i, $CodeLink, $MyRow['description'], locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']), locale_number_format($MyRow['stdcost'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($LineValue, $_SESSION['CompanyRecord']['decimalplaces']));
+		++$i;
 	}
 
 	printf('<td colspan="4">%s</td>
@@ -67,9 +69,7 @@ if (DB_num_rows($result) != 0) {
 			<td class="number">%s</td>
 			</tr>', '', _('Total') . ':', locale_number_format($TotalValue, $_SESSION['CompanyRecord']['decimalplaces']));
 
-	echo '</table>
-			</div>
-			</form>';
+	echo '</table>';
 } else {
 	prnMsg(_('There are no raw materials to show in this inquiry'), 'info');
 }

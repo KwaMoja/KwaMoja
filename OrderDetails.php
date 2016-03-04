@@ -47,17 +47,17 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 
 $ErrMsg = _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
-$GetOrdHdrResult = DB_query($OrderHeaderSQL, $db, $ErrMsg, $DbgMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult) == 1) {
-	echo '<p class="page_title_text noPrint" >
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
+	echo '<p class="page_title_text" >
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	$myrow = DB_fetch_array($GetOrdHdrResult);
-	$CurrDecimalPlaces = $myrow['decimalplaces'];
+	$MyRow = DB_fetch_array($GetOrdHdrResult);
+	$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
-	if ((isset($SupplierLogin) and $SupplierLogin == 0) and $myrow['debtorno'] != $_SESSION['CustomerID']) {
+	if ((isset($SupplierLogin) and $SupplierLogin == 0) and $MyRow['debtorno'] != $_SESSION['CustomerID']) {
 		prnMsg(_('Your customer login will only allow you to view your own purchase orders'), 'error');
 		include('includes/footer.inc');
 		exit;
@@ -69,59 +69,59 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Code') . ':</th>
-				<td class="OddTableRows"><a href="' . $RootPath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a></td>
+				<td class="OddTableRows"><a href="' . $RootPath . '/SelectCustomer.php?Select=' . urlencode($MyRow['debtorno']) . '">' . $MyRow['debtorno'] . '</a></td>
 				<th style="text-align: left">' . _('Customer Name') . ':</th>
-				<th>' . $myrow['name'] . '</th>
+				<th>' . $MyRow['name'] . '</th>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Customer Reference') . ':</th>
-				<td class="OddTableRows">' . $myrow['customerref'] . '</td>
+				<td class="OddTableRows">' . $MyRow['customerref'] . '</td>
 				<th style="text-align: left">' . _('Deliver To') . ':</th>
-				<th>' . $myrow['deliverto'] . '</th>
+				<th>' . $MyRow['deliverto'] . '</th>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Ordered On') . ':</th>
-				<td class="OddTableRows">' . ConvertSQLDate($myrow['orddate']) . '</td>
+				<td class="OddTableRows">' . ConvertSQLDate($MyRow['orddate']) . '</td>
 				<th style="text-align: left">' . _('Delivery Address 1') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd1'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd1'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Requested Delivery') . ':</th>
-				<td class="OddTableRows">' . ConvertSQLDate($myrow['deliverydate']) . '</td>
+				<td class="OddTableRows">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 				<th style="text-align: left">' . _('Delivery Address 2') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd2'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd2'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Order Currency') . ':</th>
-				<td class="OddTableRows">' . $myrow['currcode'] . '</td>
+				<td class="OddTableRows">' . $MyRow['currcode'] . '</td>
 				<th style="text-align: left">' . _('Delivery Address 3') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd3'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd3'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Deliver From Location') . ':</th>
-				<td class="OddTableRows">' . $myrow['fromstkloc'] . '</td>
+				<td class="OddTableRows">' . $MyRow['fromstkloc'] . '</td>
 				<th style="text-align: left">' . _('Delivery Address 4') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd4'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd4'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Telephone') . ':</th>
-				<td class="OddTableRows">' . $myrow['contactphone'] . '</td>
+				<td class="OddTableRows">' . $MyRow['contactphone'] . '</td>
 				<th style="text-align: left">' . _('Delivery Address 5') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd5'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd5'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Email') . ':</th>
-				<td class="OddTableRows"><a href="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</a></td>
+				<td class="OddTableRows"><a href="mailto:' . $MyRow['contactemail'] . '">' . $MyRow['contactemail'] . '</a></td>
 				<th style="text-align: left">' . _('Delivery Address 6') . ':</th>
-				<td class="OddTableRows">' . $myrow['deladd6'] . '</td>
+				<td class="OddTableRows">' . $MyRow['deladd6'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Freight Cost') . ':</th>
-				<td class="OddTableRows">' . $myrow['freightcost'] . '</td>
+				<td class="OddTableRows">' . $MyRow['freightcost'] . '</td>
 			</tr>
 			<tr>
 				<th style="text-align: left">' . _('Comments') . ': </th>
-				<td colspan="3">' . $myrow['comments'] . '</td>
+				<td colspan="3">' . $MyRow['comments'] . '</td>
 			</tr>
 			</table>';
 }
@@ -142,7 +142,9 @@ $LineItemsSQL = "SELECT stkcode,
 						quantity,
 						discountpercent,
 						actualdispatchdate,
-						qtyinvoiced
+						qtyinvoiced,
+						itemdue,
+						poline
 					FROM salesorderdetails
 					INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
@@ -150,7 +152,7 @@ $LineItemsSQL = "SELECT stkcode,
 
 $ErrMsg = _('The line items of the order cannot be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the line items, that failed was');
-$LineItemsResult = DB_query($LineItemsSQL, $db, $ErrMsg, $DbgMsg);
+$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($LineItemsResult) > 0) {
 
@@ -164,6 +166,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				<th colspan="9"><h3>' . _('Order Line Details For Order No') . ' ' . $_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
+				<th>' . _('PO Line') . '</th>
 				<th>' . _('Item Code') . '</th>
 				<th>' . _('Item Description') . '</th>
 				<th>' . _('Quantity') . '</th>
@@ -172,10 +175,10 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				<th>' . _('Discount') . '</th>
 				<th>' . _('Total') . '</th>
 				<th>' . _('Qty Del') . '</th>
-				<th>' . _('Last Del') . '</th>
+				<th>' . _('Last Del') . '/' . _('Due Date') . '</th>
 			</tr>';
 	$k = 0;
-	while ($myrow = DB_fetch_array($LineItemsResult)) {
+	while ($MyRow = DB_fetch_array($LineItemsResult)) {
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
@@ -185,26 +188,27 @@ if (DB_num_rows($LineItemsResult) > 0) {
 			$k = 1;
 		}
 
-		if ($myrow['qtyinvoiced'] > 0) {
-			$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
+		if ($MyRow['qtyinvoiced'] > 0) {
+			$DisplayActualDeliveryDate = ConvertSQLDate($MyRow['actualdispatchdate']);
 		} else {
-			$DisplayActualDeliveryDate = _('N/A');
+	  		$DisplayActualDeliveryDate = '<span style="color:red;">' . ConvertSQLDate($MyRow['itemdue']) . '</span>';
 		}
 
-		echo '<td>' . $myrow['stkcode'] . '</td>
-				<td>' . $myrow['description'] . '</td>
-				<td class="number">' . $myrow['quantity'] . '</td>
-				<td>' . $myrow['units'] . '</td>
-				<td class="number">' . locale_number_format($myrow['unitprice'], $CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format(($myrow['discountpercent'] * 100), 2) . '%' . '</td>
-				<td class="number">' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']), $CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($myrow['qtyinvoiced'], $myrow['decimalplaces']) . '</td>
+		echo '<td>' . $MyRow['poline'] . '</td>
+				<td>' . $MyRow['stkcode'] . '</td>
+				<td>' . $MyRow['description'] . '</td>
+				<td class="number">' . $MyRow['quantity'] . '</td>
+				<td>' . $MyRow['units'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['unitprice'], $CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($MyRow['discountpercent'] * 100), 2) . '%' . '</td>
+				<td class="number">' . locale_number_format($MyRow['quantity'] * $MyRow['unitprice'] * (1 - $MyRow['discountpercent']), $CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($MyRow['qtyinvoiced'], $MyRow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
 			</tr>';
 
-		$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));
-		$OrderTotalVolume += ($myrow['quantity'] * $myrow['volume']);
-		$OrderTotalWeight += ($myrow['quantity'] * $myrow['grossweight']);
+		$OrderTotal += ($MyRow['quantity'] * $MyRow['unitprice'] * (1 - $MyRow['discountpercent']));
+		$OrderTotalVolume += ($MyRow['quantity'] * $MyRow['volume']);
+		$OrderTotalWeight += ($MyRow['quantity'] * $MyRow['grossweight']);
 
 	}
 	$DisplayTotal = locale_number_format($OrderTotal, $CurrDecimalPlaces);

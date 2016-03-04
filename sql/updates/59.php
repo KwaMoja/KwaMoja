@@ -1,7 +1,7 @@
 <?php
 
-NewConfigValue('ShopManagerEmail', '', $db);
+NewConfigValue('ShopManagerEmail', '');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

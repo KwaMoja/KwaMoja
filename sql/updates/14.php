@@ -1,11 +1,11 @@
 <?php
 
-ChangeColumnType('pagesecurity', 'scripts', 'INT(11)', 'NOT NULL', '1', $db);
+ChangeColumnType('pagesecurity', 'scripts', 'INT(11)', 'NOT NULL', '1');
 
-AddColumn('assigner', 'pctabs', 'VARCHAR(20)', 'NOT NULL', '', 'tablimit', $db);
+AddColumn('assigner', 'pctabs', 'VARCHAR(20)', 'NOT NULL', '', 'tablimit');
 
-ChangeConfigValue('VersionNumber', '4.04.1', $db);
+ChangeConfigValue('VersionNumber', '4.04.1');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

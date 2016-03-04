@@ -21,12 +21,12 @@ $PaperSize = $FormDesign->PaperSize;
 $PageNumber = 1;
 $line_height = $FormDesign->LineHeight;
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('General Ledger Journal'));
+$PDF->addInfo('Title', _('General Ledger Journal'));
 
 if ($JournalNo == 'Preview') {
 	$LineCount = 2; // UldisN
 } else {
-	$sql = "SELECT gltrans.typeno,
+	$SQL = "SELECT gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
 				chartmaster.accountname,
@@ -41,12 +41,13 @@ if ($JournalNo == 'Preview') {
 			LEFT JOIN tags
 				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='0'
+				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
 				AND gltrans.typeno='" . $JournalNo . "'";
-	$result = DB_query($sql, $db);
-	$LineCount = DB_num_rows($result); // UldisN
-	$myrow = DB_fetch_array($result);
-	$JournalDate = $myrow['trandate'];
-	DB_data_seek($result, 0);
+	$Result = DB_query($SQL);
+	$LineCount = DB_num_rows($Result); // UldisN
+	$MyRow = DB_fetch_array($Result);
+	$JournalDate = $MyRow['trandate'];
+	DB_data_seek($Result, 0);
 	include('includes/PDFGLJournalHeader.inc');
 }
 $counter = 1;
@@ -61,24 +62,24 @@ while ($counter <= $LineCount) {
 		$Tag = str_pad('', 25, 'x');
 		$JobRef = str_pad('', 25, 'x');
 	} else {
-		$myrow = DB_fetch_array($result);
-		if ($myrow['tag'] == 0) {
-			$myrow['tagdescription'] = 'None';
+		$MyRow = DB_fetch_array($Result);
+		if ($MyRow['tag'] == 0) {
+			$MyRow['tagdescription'] = 'None';
 		}
-		$AccountCode = $myrow['account'];
-		$Description = $myrow['accountname'];
-		$Date = $myrow['trandate'];
-		$Narrative = $myrow['narrative'];
-		$Amount = $myrow['amount'];
-		$Tag = $myrow['tag'] . ' - ' . $myrow['tagdescription'];
-		$JobRef = $myrow['jobref'];
+		$AccountCode = $MyRow['account'];
+		$Description = $MyRow['accountname'];
+		$Date = $MyRow['trandate'];
+		$Narrative = $MyRow['narrative'];
+		$Amount = $MyRow['amount'];
+		$Tag = $MyRow['tag'] . ' - ' . $MyRow['tagdescription'];
+		$JobRef = $MyRow['jobref'];
 	}
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $Page_Height - $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $AccountCode);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $Page_Height - $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $Description);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x, $Page_Height - $YPos, $FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $Narrative);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x, $Page_Height - $YPos, $FormDesign->Data->Column4->Length, $FormDesign->Data->Column4->FontSize, locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x, $Page_Height - $YPos, $FormDesign->Data->Column5->Length, $FormDesign->Data->Column5->FontSize, $Tag);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x, $Page_Height - $YPos, $FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $JobRef, 'left');
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column1->x, $Page_Height - $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $AccountCode);
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column2->x, $Page_Height - $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $Description);
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column3->x, $Page_Height - $YPos, $FormDesign->Data->Column3->Length, $FormDesign->Data->Column3->FontSize, $Narrative);
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column4->x, $Page_Height - $YPos, $FormDesign->Data->Column4->Length, $FormDesign->Data->Column4->FontSize, locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column5->x, $Page_Height - $YPos, $FormDesign->Data->Column5->Length, $FormDesign->Data->Column5->FontSize, $Tag);
+	$LeftOvers = $PDF->addTextWrap($FormDesign->Data->Column6->x, $Page_Height - $YPos, $FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $JobRef, 'left');
 	$YPos += $line_height;
 	$counter++;
 	if ($YPos >= $FormDesign->LineAboveFooter->starty) {
@@ -97,7 +98,7 @@ if ($LineCount == 0) { //UldisN
 	include('includes/footer.inc');
 	exit;
 } else {
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d') . '.pdf'); //UldisN
-	$pdf->__destruct(); //UldisN
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d') . '.pdf'); //UldisN
+	$PDF->__destruct(); //UldisN
 }
 ?>

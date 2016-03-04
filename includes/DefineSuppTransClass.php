@@ -33,7 +33,7 @@ class SuppTrans {
 	var $OvAmount;
 	var $OvGST;
 	var $GLCodesCounter = 0;
-	var $ShiptsCounter = 0;
+	var $ShiptCounter = 0;
 	var $ContractsCounter = 0;
 	var $AssetCounter = 0;
 	var $TaxGroup;
@@ -41,6 +41,7 @@ class SuppTrans {
 	var $TaxGroupDescription;
 	var $Taxes;
 	var $Hold;
+	var $SupplierRef = '';
 
 	function SuppTrans() {
 		/*Constructor function initialises a new Supplier Transaction object */
@@ -53,8 +54,6 @@ class SuppTrans {
 	}
 
 	function GetTaxes() {
-
-		global $db;
 
 		/*Gets the Taxes and rates applicable to the tax group of the supplier
 		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
@@ -75,28 +74,28 @@ class SuppTrans {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL, $db, $ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 
-		while ($myrow = DB_fetch_array($GetTaxRatesResult)) {
+		while ($MyRow = DB_fetch_array($GetTaxRatesResult)) {
 
-			$this->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'], $myrow['taxauthid'], $myrow['description'], $myrow['taxrate'], $myrow['taxontax'], $myrow['purchtaxglaccount']);
+			$this->Taxes[$MyRow['calculationorder']] = new Tax($MyRow['calculationorder'], $MyRow['taxauthid'], $MyRow['description'], $MyRow['taxrate'], $MyRow['taxontax'], $MyRow['purchtaxglaccount']);
 		}
 	} //end method GetTaxes()
 
 
-	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID = 0, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo) {
+	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID = 0, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef) {
 
 		if ($This_QuantityInv != 0 and isset($This_QuantityInv)) {
-			$this->GRNs[$GRNNo] = new GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold, $DecimalPlaces, $GRNBatchNo);
+			$this->GRNs[$GRNNo] = new GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold, $DecimalPlaces, $GRNBatchNo, $SupplierRef);
 			return 1;
 		}
 		return 0;
 	}
 
-	function Modify_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold) {
+	function Modify_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold, $SupplierRef) {
 
 		if ($This_QuantityInv != 0 and isset($This_QuantityInv)) {
-			$this->GRNs[$GRNNo]->Modify($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold);
+			$this->GRNs[$GRNNo]->Modify($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold, $SupplierRef);
 			return 1;
 		}
 		return 0;
@@ -105,7 +104,7 @@ class SuppTrans {
 	function Copy_GRN_To_Trans($GRNSrc) {
 		if ($GRNSrc->This_QuantityInv != 0 and isset($GRNSrc->This_QuantityInv)) {
 
-			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, $GRNSrc->PODetailItem, $GRNSrc->ItemCode, $GRNSrc->ItemDescription, $GRNSrc->QtyRecd, $GRNSrc->Prev_QuantityInv, $GRNSrc->This_QuantityInv, $GRNSrc->OrderPrice, $GRNSrc->ChgPrice, $GRNSrc->Complete, $GRNSrc->StdCostUnit, $GRNSrc->ShiptRef, $GRNSrc->JobRef, $GRNSrc->GLCode, $GRNSrc->PONo, $GRNSrc->AssetID, $GRNSrc->Hold, $GRNSrc->DecimalPlaces, $GRNSrc->GRNBatchNo);
+			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, $GRNSrc->PODetailItem, $GRNSrc->ItemCode, $GRNSrc->ItemDescription, $GRNSrc->QtyRecd, $GRNSrc->Prev_QuantityInv, $GRNSrc->This_QuantityInv, $GRNSrc->OrderPrice, $GRNSrc->ChgPrice, $GRNSrc->Complete, $GRNSrc->StdCostUnit, $GRNSrc->ShiptRef, $GRNSrc->JobRef, $GRNSrc->GLCode, $GRNSrc->PONo, $GRNSrc->AssetID, $GRNSrc->Hold, $GRNSrc->DecimalPlaces, $GRNSrc->GRNBatchNo, $GRNSrc->SupplierRef);
 			return 1;
 		}
 		return 0;
@@ -228,8 +227,9 @@ class GRNs {
 	var $AssetID;
 	var $DecimalPlaces;
 	var $GRNBatchNo;
+	var $SupplierRef;
 
-	function GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo) {
+	function GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef = '') {
 
 
 
@@ -253,9 +253,10 @@ class GRNs {
 		$this->Hold = $Hold;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->GRNBatchNo = $GRNBatchNo;
+		$this->SupplierRef = $SupplierRef;
 	}
 
-	function Modify($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold) {
+	function Modify($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode, $Hold, $SupplierRef) {
 
 		/* Modify function to edit a GRNs object with passed params */
 		$this->PODetailItem = $PODetailItem;
@@ -272,6 +273,7 @@ class GRNs {
 		$this->JobRef = $JobRef;
 		$this->Hold = $Hold;
 		$this->GLCode = $GLCode;
+		$this->SupplierRef = $SupplierRef;
 	}
 }
 
@@ -287,7 +289,6 @@ class GLCodes {
 
 	function GLCodes($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag = 0, $TagName = '') {
 
-		global $db;
 		/* Constructor function to add a new GLCodes object with passed params */
 		$this->Counter = $Counter;
 		$this->GLCode = $GLCode;
@@ -296,7 +297,7 @@ class GLCodes {
 		$this->Narrative = $Narrative;
 		$this->Tag = $Tag;
 
-		$TagResult = DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'", $db);
+		$TagResult = DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'");
 		$TagMyrow = DB_fetch_array($TagResult);
 		if ($Tag == 0) {
 			$this->TagName = _('None');
@@ -328,17 +329,16 @@ class Asset {
 	var $Amount;
 
 	function Asset($Counter, $AssetID, $Amount) {
-		global $db;
 		$this->Counter = $Counter;
 		$this->AssetID = $AssetID;
 		$this->Amount = $Amount;
 
-		$result = DB_query("SELECT fixedassets.description,
+		$Result = DB_query("SELECT fixedassets.description,
 									fixedassetcategories.costact
 							FROM fixedassets INNER JOIN fixedassetcategories
 							ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
-							WHERE assetid='" . $AssetID . "'", $db);
-		$AssetRow = DB_fetch_array($result);
+							WHERE assetid='" . $AssetID . "'");
+		$AssetRow = DB_fetch_array($Result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];
 	}

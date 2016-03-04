@@ -33,16 +33,15 @@ if (isset($_GET['New'])) {
 }
 
 if (!isset($_SESSION['SuppTrans']->SupplierName)) {
-	$sql = "SELECT suppname FROM suppliers WHERE supplierid='" . $_GET['SupplierID'] . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	$SupplierName = $myrow[0];
+	$SQL = "SELECT suppname FROM suppliers WHERE supplierid='" . $_GET['SupplierID'] . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	$SupplierName = $MyRow[0];
 } else {
 	$SupplierName = $_SESSION['SuppTrans']->SupplierName;
 }
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' ' . _('Enter Supplier Credit Note:') . ' ' . $SupplierName;
-echo '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Supplier Credit Note') . '" alt="" />' . ' ' . _('Enter Supplier Credit Note') . ': ' . $SupplierName . '</p>';
 if (isset($_GET['SupplierID']) and $_GET['SupplierID'] != '') {
 
 	/*It must be a new credit note entry - clear any existing credit note details from the SuppTrans object and initiate a newy*/
@@ -64,7 +63,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID'] != '') {
 
 	/*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 
-	$sql = "SELECT suppliers.suppname,
+	$SQL = "SELECT suppliers.suppname,
 					suppliers.supplierid,
 					paymentterms.terms,
 					paymentterms.daysbeforedue,
@@ -85,29 +84,29 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID'] != '') {
 	$ErrMsg = _('The supplier record selected') . ': ' . $_GET['SupplierID'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 
-	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	$myrow = DB_fetch_array($result);
+	$MyRow = DB_fetch_array($Result);
 
-	$_SESSION['SuppTrans']->SupplierName = $myrow['suppname'];
-	$_SESSION['SuppTrans']->TermsDescription = $myrow['terms'];
-	$_SESSION['SuppTrans']->CurrCode = $myrow['currcode'];
-	$_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
-	$_SESSION['SuppTrans']->TaxGroup = $myrow['taxgroupid'];
-	$_SESSION['SuppTrans']->TaxGroupDescription = $myrow['taxgroupdescription'];
-	$_SESSION['SuppTrans']->SupplierID = $myrow['supplierid'];
-	$_SESSION['SuppTrans']->CurrDecimalPlaces = $myrow['currdecimalplaces'];
+	$_SESSION['SuppTrans']->SupplierName = $MyRow['suppname'];
+	$_SESSION['SuppTrans']->TermsDescription = $MyRow['terms'];
+	$_SESSION['SuppTrans']->CurrCode = $MyRow['currcode'];
+	$_SESSION['SuppTrans']->ExRate = $MyRow['exrate'];
+	$_SESSION['SuppTrans']->TaxGroup = $MyRow['taxgroupid'];
+	$_SESSION['SuppTrans']->TaxGroupDescription = $MyRow['taxgroupdescription'];
+	$_SESSION['SuppTrans']->SupplierID = $MyRow['supplierid'];
+	$_SESSION['SuppTrans']->CurrDecimalPlaces = $MyRow['currdecimalplaces'];
 
-	if ($myrow['daysbeforedue'] == 0) {
-		$_SESSION['SuppTrans']->Terms = '1' . $myrow['dayinfollowingmonth'];
+	if ($MyRow['daysbeforedue'] == 0) {
+		$_SESSION['SuppTrans']->Terms = '1' . $MyRow['dayinfollowingmonth'];
 	} else {
-		$_SESSION['SuppTrans']->Terms = '0' . $myrow['daysbeforedue'];
+		$_SESSION['SuppTrans']->Terms = '0' . $MyRow['daysbeforedue'];
 	}
 	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
 
 	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid
 										FROM locations
-										WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
+										WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'");
 
 	if (DB_num_rows($LocalTaxProvinceResult) == 0) {
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'), 'error');
@@ -265,28 +264,25 @@ echo '<table class="selection">
 		</tr>
 	</table>';
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" id="form1">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br />
-		<table class="selection">';
-echo '<tr>
-		<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
-		<td><input type="text" size="20" required="required" minlength="1" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
+echo '<table class="selection">
+		<tr>
+			<td style="color:red">' . _('Supplier Credit Note Reference') . ':</td>
+			<td><input type="text" size="20" required="required" maxlength="20" name="SuppReference" value="' . $_SESSION['SuppTrans']->SuppReference . '" /></td>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)) {
 	$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y')));
 }
 echo '<td style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" required="required" minlength="1" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
+		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="11" required="required" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td style="color:red">' . _('Exchange Rate') . ':</td>
-		<td><input type="text" class="number" size="11" required="required" minlength="1" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate, 'Variable') . '" /></td>
+		<td><input type="text" class="number" size="11" required="required" maxlength="10" name="ExRate" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate, 'Variable') . '" /></td>
 	</tr>
 	</table>';
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<input type="submit" name="GRNS" value="' . _('Purchase Orders') . '"/>
 		<input type="submit" name="Shipts" value="' . _('Shipments') . '" />
 		<input type="submit" name="Contracts" value="' . _('Contracts') . '" /> ';
@@ -294,8 +290,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 	echo '<input type="submit" name="GL" value="' . _('General Ledger') . '" /> ';
 }
 echo '<input type="submit" name="FixedAssets" value="' . _('Fixed Assets') . '" />
-	</div>
-	<br />';
+	</div>';
 
 if (count($_SESSION['SuppTrans']->GRNs) > 0) {
 	/*if there are some GRNs selected for crediting then */
@@ -509,14 +504,14 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 			<tr>
 				<td style="color:red">' . _('Credit Amount in Supplier Currency') . ':</td>
 				<td colspan="2" class="number">
-					<input type="text" size="12" class="number" required="required" minlength="1" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+					<input type="text" size="12" class="number" required="required" maxlength="10" name="OvAmount" value="' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
 				</td>
 			</tr>';
 }
 
 echo '<tr>
 		<td colspan="2"><input type="submit" name="ToggleTaxMethod" value="' . _('Update Tax Calculation') . '" /></td>
-		<td><select required="required" minlength="1" name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
+		<td><select required="required" name="OverRideTax" onchange="ReloadForm(form1.ToggleTaxMethod)">';
 
 if (isset($_POST['OverRideTax']) and $_POST['OverRideTax'] == 'Man') {
 	echo '<option value="Auto">' . _('Automatic') . '</option>
@@ -545,7 +540,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 	if (!isset($_POST['OverRideTax']) OR $_POST['OverRideTax'] == 'Auto') {
 
-		echo ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" required="required" minlength="1" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100, 2) . '" />%';
+		echo ' <input type="text" class="number" name="TaxRate' . $Tax->TaxCalculationOrder . '" required="required" maxlength="4" size="4" value="' . locale_number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100, 2) . '" />%';
 
 		/*Now recaluclate the tax depending on the method */
 		if ($Tax->TaxOnTax == 1) {
@@ -571,7 +566,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 
 
 		echo '</td>
-				<td><input type="text" class="number" size="12" required="required" minlength="1" maxlength="12" name="TaxAmount' . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
+				<td><input type="text" class="number" size="12" required="required" maxlength="12" name="TaxAmount' . $Tax->TaxCalculationOrder . '"  value="' . locale_number_format(round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces), $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />';
 
 	}
 
@@ -644,7 +639,7 @@ if (isset($_POST['PostCreditNote'])) {
 	} elseif (mb_strlen($_SESSION['SuppTrans']->SuppReference) < 1) {
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the there is no suppliers credit note number or reference entered') . '. ' . _('The supplier credit note number must be entered'), 'error');
-	} elseif (!Is_Date($_SESSION['SuppTrans']->TranDate)) {
+	} elseif (!is_date($_SESSION['SuppTrans']->TranDate)) {
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0) {
@@ -662,12 +657,12 @@ if (isset($_POST['PostCreditNote'])) {
 
 		/*Start an SQL transaction */
 
-		DB_Txn_Begin($db);
+		DB_Txn_Begin();
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the credit note date*/
 
-		$CreditNoteNo = GetNextTransNo(21, $db);
-		$PeriodNo = GetPeriod($_SESSION['SuppTrans']->TranDate, $db);
+		$CreditNoteNo = GetNextTransNo(21);
+		$PeriodNo = GetPeriod($_SESSION['SuppTrans']->TranDate);
 		$SQLCreditNoteDate = FormatDateForSQL($_SESSION['SuppTrans']->TranDate);
 
 
@@ -723,7 +718,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 				$LocalTotal += ($EnteredGLCode->Amount / $_SESSION['SuppTrans']->ExRate);
 			}
@@ -751,7 +746,7 @@ if (isset($_POST['PostCreditNote'])) {
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') . ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 				$LocalTotal += $ShiptChg->Amount / $_SESSION['SuppTrans']->ExRate;
 
@@ -775,7 +770,7 @@ if (isset($_POST['PostCreditNote'])) {
 										'" . -$AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the asset addition could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 				$LocalTotal += $AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate;
 			}
@@ -785,11 +780,11 @@ if (isset($_POST['PostCreditNote'])) {
 				/*contract postings need to get the WIP from the contract item's stock category record
 				 *  debit postings to this WIP account
 				 * the WIP account is tidied up when the contract is closed*/
-				$result = DB_query("SELECT wipact FROM stockcategory
+				$Result = DB_query("SELECT wipact FROM stockcategory
 									INNER JOIN stockmaster
 									ON stockcategory.categoryid=stockmaster.categoryid
-									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'", $db);
-				$WIPRow = DB_fetch_row($result);
+									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'");
+				$WIPRow = DB_fetch_row($Result);
 				$WIPAccount = $WIPRow[0];
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -811,7 +806,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 				$LocalTotal += ($Contract->Amount / $_SESSION['SuppTrans']->ExRate);
 
@@ -844,7 +839,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 						$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 					}
 
@@ -859,7 +854,7 @@ if (isset($_POST['PostCreditNote'])) {
 							/*so it is a stock item */
 
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
-							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode, $db);
+							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode);
 
 							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */
 
@@ -874,10 +869,10 @@ if (isset($_POST['PostCreditNote'])) {
 								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
 								*/
 
-								$sql = "SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+								$SQL = "SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
 								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								$QtyRow = DB_fetch_row($Result);
 								$TotalQuantityOnHand = $QtyRow[0];
 
@@ -914,7 +909,7 @@ if (isset($_POST['PostCreditNote'])) {
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 
-									$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								}
 								/*Now post any remaining price variance to stock rather than price variances */
 
@@ -936,7 +931,7 @@ if (isset($_POST['PostCreditNote'])) {
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 								/*Now to update the stock cost with the new weighted average */
 
@@ -948,20 +943,48 @@ if (isset($_POST['PostCreditNote'])) {
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost could not be updated because');
 								$DbgMsg = _('The following SQL to update the cost was used');
 
+								/* Get the old cost information */
+								$SQL = "SELECT stockcosts.materialcost,
+												stockcosts.labourcost,
+												stockcosts.overheadcosts
+											FROM stockcosts
+											WHERE stockid='" . $EnteredGRN->ItemCode . "'
+												AND succeeded=0";
+								$Result = DB_query($SQL);
+								$MyRow = DB_fetch_array($Result);
+								$OldMaterialCost = $MyRow['materialcost'];
+								$OldLabourCost = $MyRow['labourcost'];
+								$OldOverheadCost = $MyRow['overheadcost'];
+
 								if ($TotalQuantityOnHand > 0) {
 
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
-									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+									$SQL = "UPDATE stockcosts SET succeeded=1
+																WHERE stockid='" . $EnteredGRN->ItemCode . "'
+																	AND succeeded=0;";
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
-									materialcost=materialcost+" . $CostIncrement . "
-									WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-
-									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+									$SQL = "INSERT INTO stockcosts VALUES('" . $EnteredGRN->ItemCode . "',
+																	'" . ($OldMaterialCost - $CostIncrement) . "',
+																	'" . $OldLabourCost . "',
+																	'" . $OldOverheadCost . "',
+																	CURRENT_TIME,
+																	0)";
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								} else {
-									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=" . ($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+									$SQL = "UPDATE stockcosts SET succeeded=1
+																WHERE stockid='" . $EnteredGRN->ItemCode . "'
+																	AND succeeded=0;";
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
+
+									$SQL = "INSERT INTO stockcosts VALUES('" . $EnteredGRN->ItemCode . "',
+																	'" . ($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) . "',
+																	'" . $OldLabourCost . "',
+																	'" . $OldOverheadCost . "',
+																	CURRENT_TIME,
+																	0)";
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
 
@@ -985,7 +1008,7 @@ if (isset($_POST['PostCreditNote'])) {
 								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 							}
 						} else {
 
@@ -998,11 +1021,11 @@ if (isset($_POST['PostCreditNote'])) {
 							if ($EnteredGRN->AssetID != 0) { //then it is an asset
 
 								/*Need to get the asset details  for posting */
-								$result = DB_query("SELECT costact
+								$Result = DB_query("SELECT costact
 													FROM fixedassets INNER JOIN fixedassetcategories
 													ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
-													WHERE assetid='" . $EnteredGRN->AssetID . "'", $db);
-								$AssetRow = DB_fetch_array($result);
+													WHERE assetid='" . $EnteredGRN->AssetID . "'");
+								$AssetRow = DB_fetch_array($Result);
 								$GLCode = $AssetRow['costact'];
 							} //the item was an asset
 
@@ -1023,7 +1046,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
-							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 						}
 					}
 				} else {
@@ -1049,7 +1072,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 				}
 
 				$LocalTotal += ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv / $_SESSION['SuppTrans']->ExRate);
@@ -1058,7 +1081,7 @@ if (isset($_POST['PostCreditNote'])) {
 			/* end of GRN postings */
 
 
-			if ($debug == 1 and abs(($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.004) {
+			if ($Debug == 1 and abs(($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.004) {
 
 				prnMsg(_('The total posted to the credit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate), 'error');
 			}
@@ -1084,7 +1107,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 				}
 				/* if the tax is not 0 */
 			}
@@ -1108,7 +1131,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 		}
 		/*Thats the end of the GL postings */
@@ -1141,9 +1164,9 @@ if (isset($_POST['PostCreditNote'])) {
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier credit note transaction could not be added to the database because');
 		$DbgMsg = _('The following SQL to insert the supplier credit note was used');
-		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
-		$SuppTransID = DB_Last_Insert_ID($db, 'supptrans', 'id');
+		$SuppTransID = DB_Last_Insert_ID('supptrans', 'id');
 
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['SuppTrans']->Taxes as $TaxTotals) {
@@ -1156,8 +1179,8 @@ if (isset($_POST['PostCreditNote'])) {
 											'" . -$TaxTotals->TaxOvAmount . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier transaction taxes records could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used:');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used') . ':';
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		}
 
 		/* Now update the GRN and PurchOrderDetails records for amounts invoiced
@@ -1170,13 +1193,13 @@ if (isset($_POST['PostCreditNote'])) {
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity credited of the purchase order line could not be updated because');
 			$DbgMsg = _('The following SQL to update the purchase order details was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 			$SQL = "UPDATE grns SET quantityinv = quantityinv - " . $EnteredGRN->This_QuantityInv . " WHERE grnno = '" . $EnteredGRN->GRNNo . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity credited off the goods received record could not be updated because');
 			$DbgMsg = _('The following SQL to update the GRN quantity credited was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
 			/*Update the shipment's accum value for the total local cost of shipment items being credited
 			the total value credited against shipments is apportioned between all the items on the shipment
@@ -1199,7 +1222,7 @@ if (isset($_POST['PostCreditNote'])) {
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') . ' ' . $EnteredGRN->ShiptRef . ' ' . _('could not be added because');
 				$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
 
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 			}
 			if ($EnteredGRN->AssetID != 0) { //then it is an asset
 				$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
@@ -1218,19 +1241,19 @@ if (isset($_POST['PostCreditNote'])) {
 											'" . $CreditNoteNo . "',
 											'" . $SQLCreditNoteDate . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'cost',
 											'" . -($PurchPriceVar) . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 					/*Now update the asset cost in fixedassets table */
 					$SQL = "UPDATE fixedassets SET cost = cost - " . $PurchPriceVar . "
 							WHERE assetid = '" . $EnteredGRN->AssetID . "'";
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost was not able to be updated because:');
-					$DbgMsg = _('The following SQL was used to attempt the update of the fixed asset cost:');
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost was not able to be updated because') . ':';
+					$DbgMsg = _('The following SQL was used to attempt the update of the fixed asset cost') . ':';
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				} //end if there is a cost difference on invoice compared to purchase order for the fixed asset
 			} //the line is a fixed asset
 		}
@@ -1253,7 +1276,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') . ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
 			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 		}
 
 		/*Add contract charges records as necessary */
@@ -1281,7 +1304,7 @@ if (isset($_POST['PostCreditNote'])) {
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The contract charge record for contract') . ' ' . $Contract->ContractRef . ' ' . _('could not be added because');
 			$DbgMsg = _('The following SQL to insert the contract charge record was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 		} //end of loop around contracts on credit note
 
 
@@ -1307,25 +1330,27 @@ if (isset($_POST['PostCreditNote'])) {
 											'" . $CreditNoteNo . "',
 											'" . $SQLCreditNoteDate . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'cost',
 											'" . (-$AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate) . "')";
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the fixed asset transaction record was used');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 			/*Now update the asset cost in fixedassets table */
 			$SQL = "UPDATE fixedassets SET cost = cost - " . ($AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate) . "
 					WHERE assetid = '" . $AssetAddition->AssetID . "'";
-			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost  was not able to be updated because:');
-			$DbgMsg = _('The following SQL was used to attempt the update of the asset cost:');
-			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset cost  was not able to be updated because') . ':';
+			$DbgMsg = _('The following SQL was used to attempt the update of the asset cost') . ':';
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} //end of non-gl fixed asset stuff
 
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 
 		prnMsg(_('Supplier credit note number') . ' ' . $CreditNoteNo . ' ' . _('has been processed'), 'success');
-		echo '<br /><div class="centre"><a href="' . $RootPath . '/SupplierCredit.php?&SupplierID=' . $_SESSION['SuppTrans']->SupplierID . '">' . _('Enter another Credit Note for this Supplier') . '</a></div>';
+		echo '<div class="centre">
+				<a href="' . $RootPath . '/SupplierCredit.php?&SupplierID=' . urlencode($_SESSION['SuppTrans']->SupplierID) . '">' . _('Enter another Credit Note for this Supplier') . '</a>
+			</div>';
 		unset($_SESSION['SuppTrans']->GRNs);
 		unset($_SESSION['SuppTrans']->Shipts);
 		unset($_SESSION['SuppTrans']->GLCodes);
@@ -1337,7 +1362,6 @@ if (isset($_POST['PostCreditNote'])) {
 }
 /*end of process credit note */
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

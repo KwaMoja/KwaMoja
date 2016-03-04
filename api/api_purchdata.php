@@ -1,7 +1,7 @@
 <?php
 
-function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors, $db) {
-	if (VerifyStockCodeExists($StockID, $i, $Errors, $db) != 0 and VerifySupplierNoExists($SupplierID, $i, $Errors, $db) != 0) {
+function VerifyPurchDataLineExists($SupplierID, $StockId, $i, $Errors) {
+	if (VerifyStockCodeExists($StockId, $i, $Errors) != 0 and VerifySupplierNoExists($SupplierID, $i, $Errors) != 0) {
 		$Errors[$i] = StockSupplierLineDoesntExist;
 	}
 }
@@ -51,11 +51,11 @@ function InsertPurchData($PurchDataDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($PurchDataDetails as $key => $value) {
-		$PurchDataDetails[$key] = DB_escape_string($value);
+	foreach ($PurchDataDetails as $Key => $Value) {
+		$PurchDataDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+	$Errors = VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors);
 	if (isset($StockItemDetails['price'])) {
 		$Errors = VerifyUnitPrice($PurchDataDetails['price'], sizeof($Errors), $Errors);
 	}
@@ -76,17 +76,17 @@ function InsertPurchData($PurchDataDetails, $user, $password) {
 	}
 	$FieldNames = '';
 	$FieldValues = '';
-	foreach ($PurchDataDetails as $key => $value) {
-		$FieldNames .= $key . ', ';
-		$FieldValues .= '"' . $value . '", ';
+	foreach ($PurchDataDetails as $Key => $Value) {
+		$FieldNames .= $Key . ', ';
+		$FieldValues .= '"' . $Value . '", ';
 	}
 	if (sizeof($Errors) == 0) {
-		$sql = "INSERT INTO purchdata (" . mb_substr($FieldNames, 0, -2) . ")
+		$SQL = "INSERT INTO purchdata (" . mb_substr($FieldNames, 0, -2) . ")
 					VALUES ('" . mb_substr($FieldValues, 0, -2) . "') ";
-		DB_Txn_Begin($db);
-		$result = DB_Query($sql, $db);
-		DB_Txn_Commit($db);
-		if (DB_error_no($db) != 0) {
+		DB_Txn_Begin();
+		$Result = DB_Query($SQL);
+		DB_Txn_Commit();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
@@ -102,12 +102,12 @@ function ModifyPurchData($PurchDataDetails, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	foreach ($PurchDataDetails as $key => $value) {
-		$PurchDataDetails[$key] = DB_escape_string($value);
+	foreach ($PurchDataDetails as $Key => $Value) {
+		$PurchDataDetails[$Key] = DB_escape_string($Value);
 	}
-	$Errors = VerifyPurchDataLineExists($PurchDataDetails['supplierno'], $PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors, $db);
-	$Errors = VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors, $db);
+	$Errors = VerifyPurchDataLineExists($PurchDataDetails['supplierno'], $PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+	$Errors = VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
+	$Errors = VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors);
 	if (isset($StockItemDetails['price'])) {
 		$Errors = VerifyUnitPrice($PurchDataDetails['price'], sizeof($Errors), $Errors);
 	}
@@ -126,16 +126,16 @@ function ModifyPurchData($PurchDataDetails, $user, $password) {
 	if (isset($StockItemDetails['preferred'])) {
 		$Errors = VerifyPreferredFlag($PurchDataDetails['preferred'], sizeof($Errors), $Errors);
 	}
-	$sql = "UPDATE purchdata SET ";
-	foreach ($PurchDataDetails as $key => $value) {
-		$sql .= $key . "='" . $value . "', ";
+	$SQL = "UPDATE purchdata SET ";
+	foreach ($PurchDataDetails as $Key => $Value) {
+		$SQL .= $Key . "='" . $Value . "', ";
 	}
-	$sql = mb_substr($sql, 0, -2) . " WHERE stockid='" . $PurchDataDetails['stockid'] . "'
+	$SQL = mb_substr($SQL, 0, -2) . " WHERE stockid='" . $PurchDataDetails['stockid'] . "'
 								AND supplierno='" . $PurchDataDetails['supplierno'] . "'";
 	if (sizeof($Errors) == 0) {
-		$result = DB_Query($sql, $db);
-		echo DB_error_no($db);
-		if (DB_error_no($db) != 0) {
+		$Result = DB_Query($SQL);
+		echo DB_error_no();
+		if (DB_error_no() != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;

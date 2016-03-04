@@ -11,7 +11,7 @@ CreateTable('ediitemmapping',
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-)", $db);
+)");
 
 
 ?>

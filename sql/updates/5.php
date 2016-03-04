@@ -63,8 +63,7 @@ CreateTable('reports',
   `table6criteria` VARCHAR(75),
   PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
-)",
-$db);
+)");
 
 CreateTable('reportfields',
 "CREATE TABLE `reportfields` (
@@ -79,50 +78,48 @@ CreateTable('reportfields',
   `params` text,
   PRIMARY KEY  (`id`),
   KEY `reportid` (`reportid`)
-)",
-$db);
+)");
 
 CreateTable('reportlinks',
 "CREATE TABLE IF NOT EXISTS `reportlinks` (
   `table1` varchar(25) NOT NULL default '',
   `table2` varchar(25) NOT NULL default '',
   `equation` varchar(75) NOT NULL default ''
-)",
-$db);
+)");
 
 /* Need to find a way of making this rdbms agnostic
  * but for the time being do it as mysql only
  */
 
 if ($DBType=='mysql' or $DBType=='mysqli') {
-	$sql = "INSERT INTO reportlinks SELECT table_name, referenced_table_name, concat(table_name, '.', column_name, '=' , referenced_table_name, '.', referenced_column_name) FROM information_schema.key_column_usage WHERE referenced_table_name is not null and table_schema = '" . $_SESSION['DatabaseName'] . "'";
-	executeSQL($sql, $db);
+	$SQL = "INSERT INTO reportlinks SELECT table_name, referenced_table_name, concat(table_name, '.', column_name, '=' , referenced_table_name, '.', referenced_column_name) FROM information_schema.key_column_usage WHERE referenced_table_name is not null and table_schema = '" . $_SESSION['DatabaseName'] . "'";
+	executeSQL($SQL);
 }
 
-NewConfigValue('WikiApp','Disabled', $db);
-NewConfigValue('WikiPath','wiki', $db);
-NewConfigValue('ProhibitJournalsToControlAccounts','0', $db);
-NewConfigValue('InvoicePortraitFormat', '0', $db);
-NewConfigValue('ProhibitPostingsBefore', '2006-01-01', $db);
-NewConfigValue('WeightedAverageCosting', '1', $db);
-NewConfigValue('AllowOrderLineItemNarrative', '1', $db);
-NewConfigValue('vtiger_integration', '0', $db);
-NewConfigValue('DB_Maintenance', '-1', $db);
-NewConfigValue('HTTPS_Only', '0', $db);
+NewConfigValue('WikiApp','Disabled');
+NewConfigValue('WikiPath','wiki');
+NewConfigValue('ProhibitJournalsToControlAccounts','0');
+NewConfigValue('InvoicePortraitFormat', '0');
+NewConfigValue('ProhibitPostingsBefore', '2006-01-01');
+NewConfigValue('WeightedAverageCosting', '1');
+NewConfigValue('AllowOrderLineItemNarrative', '1');
+NewConfigValue('vtiger_integration', '0');
+NewConfigValue('DB_Maintenance', '-1');
+NewConfigValue('HTTPS_Only', '0');
 
-AddIndex(array('serialno'), 'stockserialitems', 'serialno', $db);
-AddIndex(array('serialno'), 'stockserialmoves', 'serialno', $db);
+AddIndex(array('serialno'), 'stockserialitems', 'serialno');
+AddIndex(array('serialno'), 'stockserialmoves', 'serialno');
 
-InsertRecord('taxcategories', array('taxcatname'), array('Freight'), array('taxcatname'), array('Freight'), $db);
+InsertRecord('taxcategories', array('taxcatname'), array('Freight'), array('taxcatname'), array('Freight'));
 
-DropIndex('custbranch', 'BranchCode', $db);
+DropIndex('custbranch', 'BranchCode');
 
-AddColumn('stdcostunit', 'grns', 'double', 'NOT NULL', '0', 'supplierid',$db);
-DropConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1', $db);
-DropPrimaryKey('stockcheckfreeze', array('stockid'), $db);
-AddPrimaryKey('stockcheckfreeze', array('stockid', 'loccode'), $db);
-AddConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1', 'stockid', 'stockmaster', 'stockid', $db);
+AddColumn('stdcostunit', 'grns', 'double', 'NOT NULL', '0', 'supplierid');
+DropConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1');
+DropPrimaryKey('stockcheckfreeze', array('stockid'));
+AddPrimaryKey('stockcheckfreeze', array('stockid', 'loccode'));
+AddConstraint('stockcheckfreeze', 'stockcheckfreeze_ibfk_1', 'stockid', 'stockmaster', 'stockid');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

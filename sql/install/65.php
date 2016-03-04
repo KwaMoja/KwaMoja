@@ -11,6 +11,6 @@ CreateTable('menuitems',
   PRIMARY KEY (`secroleid`,`modulelink`,`menusection`,`caption`),
   CONSTRAINT `menuitems_ibfk_1` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
   CONSTRAINT `menuitems_ibfk_2` FOREIGN KEY (`secroleid`, `modulelink`) REFERENCES `modules` (`secroleid`, `modulelink`)
-)", $db);
+)");
 
 ?>

@@ -1,26 +1,26 @@
 <?php
 
-DropConstraint('internalstockcatrole', 'internalstockcatrole_ibfk_3', $db);
-DropConstraint('internalstockcatrole', 'internalstockcatrole_ibfk_4', $db);
-DropConstraint('internalstockcatrole', 'secroleid', $db);
+DropConstraint('internalstockcatrole', 'internalstockcatrole_ibfk_3');
+DropConstraint('internalstockcatrole', 'internalstockcatrole_ibfk_4');
+DropConstraint('internalstockcatrole', 'secroleid');
 
-DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_3', $db);
-DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_4', $db);
-DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_5', $db);
-DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_6', $db);
+DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_3');
+DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_4');
+DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_5');
+DropConstraint('stockitemproperties', 'stockitemproperties_ibfk_6');
 
-DropConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_3', $db);
-DropConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_4', $db);
+DropConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_3');
+DropConstraint('stockmovestaxes', 'stockmovestaxes_ibfk_4');
 
-DropConstraint('stockrequest', 'stockrequest_ibfk_3', $db);
-DropConstraint('stockrequest', 'stockrequest_ibfk_4', $db);
+DropConstraint('stockrequest', 'stockrequest_ibfk_3');
+DropConstraint('stockrequest', 'stockrequest_ibfk_4');
 
-DropConstraint('stockrequestitems', 'dispatchid', $db);
-DropConstraint('stockrequestitems', 'stockrequestitems_ibfk_3', $db);
-DropConstraint('stockrequestitems', 'stockrequestitems_ibfk_4', $db);
+DropConstraint('stockrequestitems', 'dispatchid');
+DropConstraint('stockrequestitems', 'stockrequestitems_ibfk_3');
+DropConstraint('stockrequestitems', 'stockrequestitems_ibfk_4');
 
-DropConstraint('workorders', 'worksorders_ibfk_1', $db);
+DropConstraint('workorders', 'worksorders_ibfk_1');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

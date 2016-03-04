@@ -1,7 +1,7 @@
 <?php
 
-ChangeColumnType('salescatname', 'salescat', 'VARCHAR(50)', 'NOT NULL', '', $db);
+ChangeColumnType('salescatname', 'salescat', 'VARCHAR(50)', 'NOT NULL', '');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

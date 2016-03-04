@@ -1,9 +1,9 @@
 <?php
 
-DropPrimaryKey('stockrequestitems', array('dispatchitemsid'), $db);
+DropPrimaryKey('stockrequestitems', array('dispatchitemsid'));
 
-AddPrimaryKey('stockrequestitems', array('dispatchitemsid', 'dispatchid'), $db);
+AddPrimaryKey('stockrequestitems', array('dispatchitemsid', 'dispatchid'));
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

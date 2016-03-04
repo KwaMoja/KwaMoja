@@ -84,6 +84,25 @@
 	<li>Narrative - applicable to the whole payment. Narrative applicable to individual general ledger entries can be entered separately.</li>
 </ul>
 <p>Payments can take two forms - either it is a general ledger payment or it is a payment to a supplier. General ledger payments require an analysis of how the payment should be posted to the general ledger. General ledger accounts can be specified either as the account code directly (if the account code is known) or by selecting from the select box. Any narrative applicable to the general ledger amount can be entered too - and the amount to be posted to the selected/entered account. The total payment is taken as being the sum of all the entries made. If the total of all entries made is negative then this is entered as a negative payment - these are accepted to allow for correction of data entry errors. Payments are always entered in the curreny of the payment - the conversions are handled by the system for general ledger postings etc.</p>
+
+<div class="floatright">
+	<a class="minitext" href="#top">��� Top</a>
+</div>
+<!-- Help End: Payments -->
+
+
+<!-- Help BEGIN: Import Bank Transactions -->
+<h2><a id="ImportBankTrans">Import Bank Transactions</a></h2>
+
+<p>This script imports bank transactions. It works with bank accounts that have an import format already defined.</p>
+
+<p>The file format used by your bank for statement exports is defined by system administrators in <i><u>Main Menu</u></i> &gt; <i><u>General Ledger</u></i> &gt; <i>Maintenance</i> &gt; <i><u> Bank Accounts</u></i>.</p>
+
+<div class="floatright">
+	<a class="minitext" href="#top">��� Top</a>
+</div>
+<!-- Help END: Import Bank Transactions -->
+
 <!-- Help End: Payments -->
 <h2><a id="GLReceipts">General Ledger Receipts</a></h2>
 <p>The system allows for the receipt of money into any of the bank accounts that have been set up and for the income to be credited to any GL account. Receipts can be entered in any currency, and KwaMoja will track the exchange rates correctly</p>
@@ -220,13 +239,6 @@ CR GRN suspense at standard cost x number received - this account is specified a
 		<p>The inquiry can be selected by choosing "Bank Transactions Inquiry" from the Inquiries/Reports menu in the General Ledger module.</p>
 	</li>
 	<li>
-		<h3><a id="ProfitAndLoss">Profit and Loss Account</a></h3>
-		<p>Profit and loss statement (P&L), also called an Income Statement, or Statement of Operations can be accessed by choosing the "Profit and Loss Statement" option from the Reports/Inquiries menu in the General Ledger module. This is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").</p>
-		<p>The purpose of the income statement is to show whether the company made or lost money during the period being reported. The P&L represents a period of time.</p>
-		<p>This contrasts with the Balance Sheet, which represents a single moment in time. KwaMoja is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
-		<p>The report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode, or in details mode. If the screen option is chosen, the report can be printed by clicking on the printer icon in the top right of the table.</p>
-	</li>
-	<li>
 		<h3><a id="BalanceSheet">Balance Sheet</a></h3>
 		<p>Balance Sheet (or statement of financial position) is a summary of balances. Assets, liabilities and ownership equity and is listed as of a specific date, such as the end of its financial year. It be accessed by choosing the "Balance Sheet" option from the Reports/Inquiries menu in the General Ledger module.</p>
 		<p>Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.</p>
@@ -234,6 +246,56 @@ CR GRN suspense at standard cost x number received - this account is specified a
 		<p>KwaMoja is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.</p>
 		<p>The report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode, or in details mode. If the screen option is chosen, the report can be printed by clicking on the printer icon in the top right of the table.</p>
 	</li>
+	<li>
+		<h3><a id="ProfitAndLoss">Profit and Loss Statement</a></h3>
+		<p>Profit and Loss statement (P&amp;L), also called an Income Statement, or Statement of Operations can be accessed by choosing the "Profit and Loss Statement" option from the Reports/Inquiries menu in the General Ledger module. This is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out, also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for, also known as the "bottom line").</p>
+		<p>The purpose of the income statement is to show whether the company made or lost money during the period being reported. The P&amp;L is reported for a user selectable range of periods.</p>
+		<p>The Profit and Loss report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+	</li>
+<!-- ----------------------------------------------------------------------- -->
+	<li>
+		<h3><a id="GLChangesInEquity">Statement of Changes in Equity</a></h3>
+		<p>The statement of changes in equity, often referred to as statement of retained earnings, details the change in owners&apos; equity over an accounting period by presenting the movement in reserves comprising the shareholders&apos; equity.</p>
+		<p>The purpose of the statement of changes in equity is to show the changes in a company&apos;s retained earnings during the period being reported.</p>
+		<p>The changes in equity report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+	</li>
+	<li>
+		<h3><a id="GLCashFlows">Statement of Cash Flows</a></h3>
+		<p>Because the statement of comprehensive income is prepared under the accrual basis of accounting, the revenues reported may not have been collected. Similarly, the expenses reported on the income statement might not have been paid.</p>
+		<p>The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.</p>
+		<p>The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.</p>
+		<p>The cash flows report can be run as a pdf file for later printing, emailing, or archiving, or it can be shown on screen. It can be run in summary mode - just showing the totals for each account group, or in detailed mode listing each general ledger account balance for all profit and loss accounts grouped by account group.</p>
+		<p>Also, the cash flows report can be generated using either direct method or indirect method. The main difference between them is the cash flows from operating activities, the first section of the statement of cash flows; there is no difference in the investing and financing activities sections.</p>
+			<h4><a id="GLCashFlowsDirect">Statement of Cash Flows using Direct Method</a></h4>
+			<p>The cash flows from operating activities will show lines such as cash from customers and cash paid to suppliers. "<i>Major classes of gross cash receipts and gross cash payments are disclosed</i>" (Reference: IAS 7, paragraph 18).</p>
+			<h4><a id="GLCashFlowsIndirect">Statement of Cash Flows using Indirect Method</a></h4>
+			<p>The cash flows from operating activities will include net income followed by the adjustments needed to convert the total net income to the cash amount from operating activities. "<i>Profit or loss is adjusted for the effects of transactions of a non-cash nature, any deferrals or accruals of past or future operating cash receipts or payments, and items of income or expense associated with investing or financing cash flows</i>" (Reference: IAS 7, paragraph 18).</p>
+			<p>Activities are reported on a net basis.</p>
+	</li>
+	<li>
+		<h3><a id="AnalysisHorizontal">Horizontal analysis</a></h3>
+		<p>The horizontal analysis, also known as trend analysis, is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.</p>
+		<p>The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (absolute variation) and percentage (relative variation).</p>
+		<p>The absolute variation is calculated as <i>selected_period</i> - <i>previous_period</i>.
+		<p>The relative variation is calculated as (<i>selected_period</i> - <i>previous_period</i>) / <i>previous_period</i> * 100.
+		<h4><a id="AnalysisHorizontalPosition">Horizontal Analysis of Statement of Financial Position</a></h4>
+		<p>The debit amounts (assets) of the selected and previous statement of financial position are shown as positive numbers; the credit amounts (liabilities and equity) are shown as negative numbers.</p>
+		<p>The sources of funds are shown as positive numbers in the absolute variation column; the applications of funds are shown as negative numbers in the absolute variation column.</p>
+		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+		<h4><a id="AnalysisHorizontalIncome">Horizontal Analysis of Statement of Comprehensive Income</a></h4>
+		<p>The debit amounts (revenues) of the selected and previous statement of comprehensive income are shown as positive numbers; the credit amounts (costs and expenses) are shown as negative numbers.</p>
+		<p>The changes that increases the net profit are shown as positive numbers in the absolute variation column; the changes that decreases the net profit are shown as negative numbers in the absolute variation column.</p>
+		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+		<h4><a id="AnalysisHorizontalChangesInEquity">Horizontal Analysis of Statement of Changes in Equity</a></h4>
+		<p>.</p>
+		<p>The changes that increases the retained earnings are shown as positive numbers in the absolute variation column; the changes that decreases the retained earnings are shown as negative numbers in the absolute variation column.</p>
+		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+		<h4><a id="AnalysisHorizontalCashFlows">Horizontal Analysis of Statement of Cash Flows</a></h4>
+		<p>The source amounts (where the money has come from) of the selected and previous statement of cash flows are shown as positive amounts; the application amounts (where the money has gone) are shown as negative amounts.</p>
+		<p>The changes that increases the cash and cash equivalents are shown as positive numbers in the absolute variation column; the changes that decreases the cash and cash equivalents are shown as negative numbers in the absolute variation column.</p>
+		<p>The increasing items are shown as positive numbers in the relative variation column; the decreasing items are shown as negative numbers in the relative variation column.</p>
+	</li>
+<!-- ----------------------------------------------------------------------- -->
 	<li>
 		<h3><a id="TagReports">Tag Reports</a></h3>
 		<p>An Income an Expenditure report can be produced, filtered by individual tags. So for instance following the example above, if you wished to view the costs associated with a particular vehicle you can run this report to find the information.</p>
@@ -249,3 +311,31 @@ CR GRN suspense at standard cost x number received - this account is specified a
 		<p>The report will be run as a pdf file for printing, emailing, archiving etc.</P>
 	</li>
 </ul>
+
+<div class="floatright"><a class="minitext" href="#top">âŹ Top</a></div>
+<h2>Maintenance</h2>
+
+<h3><a id="GLAccountUsers">GL Accounts Authorised Users</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view or make changes to the contents of the GL accounts.</p>
+<p>With this script, you can change a specific GL account access permissions for users:</p>
+<ul>
+	<li>You can add or remove the read permission for each user that grants or denies his ability to view that GL account.</li>
+	<li>You can add or remove the write permission for each user that grants or denies the ability to update that GL account.</li>
+</ul>
+
+<h3><a id="UserGLAccounts">User Authorised GL Accounts</a></h3>
+<p>This software has methods to assign permissions or access rights to specific users and groups of users. The system controls the ability of the users to view or make changes to the contents of the GL accounts.</p>
+<p>With this script, you can change a specific user access permissions to GL accounts:</p>
+<ul>
+	<li>You can add or remove the read permission for each GL account that grants or denies the ability of that user to view it.</li>
+	<li>You can add or remove the write permission for each GL account that grants or denies the ability of that user to update it.</li>
+</ul>
+
+<!--h3><a id="BankAccounts.php">Bank Accounts</a></h3>
+<p>.</p-->
+
+<!--h3><a id="BankAccountUsers.php">Bank Account Authorized Users</a></h3>
+<p>.</p-->
+
+<!--h3><a id="UserBankAccounts.php">User Authorized Bank Accounts</a></h3>
+<p>.</p-->

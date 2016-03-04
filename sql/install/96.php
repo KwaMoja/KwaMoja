@@ -22,7 +22,7 @@ CreateTable('reportheaders',
   `lower4` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-)", $db);
+)");
 
 
 ?>

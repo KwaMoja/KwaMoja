@@ -3,6 +3,7 @@
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 } //!isset($PathPrefix)
+include($PathPrefix . 'Branding.php');
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
@@ -13,7 +14,15 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	exit;
 } //!file_exists($PathPrefix . 'config.php')
 include($PathPrefix . 'config.php');
-$DBVersion = HighestFileName($PathPrefix);
+
+if (isset($host)) {
+	/* It seems to be a webERP installation being upgraded
+	 * so make sure variables are correctly named */
+	$Host = $host;
+	$DBPort = $mysqlport;
+	$DefaultCompany = $DefaultDatabase;
+}
+
 if (isset($dbuser)) {
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
@@ -28,16 +37,16 @@ if (!isset($SysAdminEmail)) {
 	$SysAdminEmail = '';
 }
 
-ini_set('session.gc_maxlifetime', $SessionLifeTime);
-
 if (!ini_get('safe_mode')) {
 	set_time_limit($MaximumExecutionTime);
 	ini_set('max_execution_time', $MaximumExecutionTime);
 } //!ini_get('safe_mode')
+
 session_write_close(); //in case a previous session is not closed
 session_start();
 
 include($PathPrefix . 'includes/ConnectDB.inc');
+
 include($PathPrefix . 'includes/DateFunctions.inc');
 
 // Uncomment to turn off attempts counter
@@ -58,39 +67,39 @@ if (isset($_SESSION['DatabaseName'])) {
 				$_POST['name'] = stripslashes($_POST['name']);
 			} //get_magic_quotes_gpc()
 			$_POST[$PostVariableName] = DB_escape_string($PostVariableValue);
-		} //gettype($value) != 'array'
+		} //gettype($Value) != 'array'
 		else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if (get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
 				}
 				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
-			} //$value as $key1 => $value1
+			} //$Value as $Key1 => $Value1
 		}
-	} //$_POST as $key => $value
+	} //$_POST as $Key => $Value
 
 	/* iterate through all elements of the $_GET array and DB_escape_string them
 	to limit possibility for SQL injection attacks and cross scripting attacks
 	*/
 	foreach ($_GET as $GetKey => $GetValue) {
-		if (gettype($GetValue) != 'array') {
+		if (gettype($GetValue) != 'array' and basename($_SERVER['SCRIPT_NAME']) != 'index.php') {
 			$_GET[$GetKey] = DB_escape_string(urldecode($GetValue));
-		} //gettype($value) != 'array'
-	} //$_GET as $key => $value
+		} //gettype($Value) != 'array'
+	} //$_GET as $Key => $Value
 } //isset($_SESSION['DatabaseName'])
 else { //set SESSION['FormID'] before the a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
 /* only do security checks if AllowAnyone is not true */
-if (!isset($AllowAnyone)) {
+if (!isset($AllowAnyone) or !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	/* only do security checks if AllowAnyone is not true */
 
 	include $PathPrefix . 'includes/UserLogin.php';
 	/* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
-		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail, $db);
+		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
 	} //isset($_POST['UserNameEntryField']) and isset($_POST['Password'])
 	elseif (empty($_SESSION['DatabaseName'])) {
 		$rc = UL_SHOWLOGIN;
@@ -99,8 +108,6 @@ if (!isset($AllowAnyone)) {
 		$rc = UL_OK;
 	}
 
-	/*  Need to set the theme to make login screen nice */
-	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'gel';
 	switch ($rc) {
 		case UL_OK;
 			include($PathPrefix . 'includes/LanguageSetup.php');
@@ -130,64 +137,66 @@ if (!isset($AllowAnyone)) {
 			die(include($PathPrefix . 'includes/Login.php'));
 
 	} //$rc
-} //!isset($AllowAnyone)
-else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
+} else if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	header('Location: index.php');
 }
 
-/*User is logged in so get configuration parameters  - save in session*/
-include($PathPrefix . 'includes/GetConfig.php');
-
-/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
-if (($DBVersion > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
-	header('Location: Z_UpgradeDatabase.php');
+if (isset($_SESSION['LastActivity']) and (time() - $_SESSION['LastActivity']) > $SessionLifeTime) {
+	if (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php') {
+		header('Location: Logout.php');
+	}
+} else {
+	$_SESSION['LastActivity'] = time();
 }
 
-/*Check to see if currency rates need to be updated */
-if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
-	if ($_SESSION['UpdateCurrencyRatesDaily'] != 0) {
-		if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']), 'd') > 0) {
-			if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
-				$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+if (!isset($_SESSION['CompanyDefaultsLoaded'])) {
+	include($PathPrefix . 'includes/GetConfig.php');
+	if (!isset($_SESSION['DBUpdateNumber'])) {
+		$_SESSION['DBUpdateNumber'] = 0;
+	}
+	/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+	$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+	if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+		header('Location: Z_UpgradeDatabase.php');
+	} else {
+		unset($_SESSION['DBVersion']);
+	}
 
-				/*Loop around the defined currencies and get the rate from ECB */
-				if ($CurrencyRates != false) {
-					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies", $db);
+	/*Check to see if currency rates need to be updated */
+	if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
+		if ($_SESSION['UpdateCurrencyRatesDaily'] != 0) {
+			if (DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']), 'd') > 0) {
+				if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
+					$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+
+					/*Loop around the defined currencies and get the rate from ECB */
+					if ($CurrencyRates != false) {
+						$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
+						while ($CurrencyRow = DB_fetch_row($CurrenciesResult)) {
+							if ($CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']) {
+								$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0], $CurrencyRates) . "'
+																WHERE currabrev='" . $CurrencyRow[0] . "'");
+							} //$CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']
+						} //$CurrencyRow = DB_fetch_row($CurrenciesResult)
+					} //$CurrencyRates != false
+				} else {
+					$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
 					while ($CurrencyRow = DB_fetch_row($CurrenciesResult)) {
 						if ($CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']) {
-							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0], $CurrencyRates) . "'
-																WHERE currabrev='" . $CurrencyRow[0] . "'", $db);
+							$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
+															WHERE currabrev='" . $CurrencyRow[0] . "'");
 						} //$CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']
 					} //$CurrencyRow = DB_fetch_row($CurrenciesResult)
-				} //$CurrencyRates != false
-			} //$_SESSION['ExchangeRateFeed'] == 'ECB'
-			else {
-				$CurrenciesResult = DB_query("SELECT currabrev FROM currencies", $db);
-				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)) {
-					if ($CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']) {
-						$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
-															WHERE currabrev='" . $CurrencyRow[0] . "'", $db);
-					} //$CurrencyRow[0] != $_SESSION['CompanyRecord']['currencydefault']
-				} //$CurrencyRow = DB_fetch_row($CurrenciesResult)
-			}
-			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'", $db);
-		} //DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']), 'd') > 0
-	} //$_SESSION['UpdateCurrencyRatesDaily'] != 0
-} //isset($_SESSION['UpdateCurrencyRatesDaily'])
-
+				}
+				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+				$UpdateConfigResult = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='UpdateCurrencyRatesDaily'");
+			} //DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']), 'd') > 0
+		} //$_SESSION['UpdateCurrencyRatesDaily'] != 0
+	} //isset($_SESSION['UpdateCurrencyRatesDaily'])
+}
 
 if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
-	$Theme = $_POST['Theme'];
-} //isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])
-elseif (!isset($_SESSION['Theme'])) {
-	$Theme = $_SESSION['DefaultTheme'];
-	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-
-} //!isset($_SESSION['Theme'])
-else {
-	$Theme = $_SESSION['Theme'];
 }
 
 /* Set the logo if not yet set.
@@ -202,37 +211,15 @@ if (empty($_SESSION['LogoFile'])) {
 	 */
 
 	function findLogoFile($CompanyDir, $PathPrefix) {
-		$dir = $PathPrefix . 'companies/' . $CompanyDir . '/';
-		$DirHandle = dir($dir);
-		while ($DirEntry = $DirHandle->read()) {
-			if ($DirEntry != '.' and $DirEntry != '..') {
-				$InCompanyDir[] = $DirEntry; //make an array of all files under company directory
-			} //$DirEntry != '.' and $DirEntry != '..'
-		} //loop through list of files in the company directory
-		if ($InCompanyDir !== FALSE) {
-			foreach ($InCompanyDir as $logofilename) {
-				if (strncasecmp($logofilename, 'logo.png', 8) === 0 and is_readable($dir . $logofilename) and is_file($dir . $logofilename)) {
-					$logo = $logofilename;
-					break;
-				} //strncasecmp($logofilename, 'logo.png', 8) === 0 and is_readable($dir . $logofilename) and is_file($dir . $logofilename)
-			} //$InCompanyDir as $logofilename
-			if (!isset($logo)) {
-				foreach ($InCompanyDir as $logofilename) {
-					if (strncasecmp($logofilename, 'logo.jpg', 8) === 0 and is_readable($dir . $logofilename) and is_file($dir . $logofilename)) {
-						$logo = $logofilename;
-						break;
-					} //strncasecmp($logofilename, 'logo.jpg', 8) === 0 and is_readable($dir . $logofilename) and is_file($dir . $logofilename)
-				} //$InCompanyDir as $logofilename
-			} //!isset($logo)
-			if (empty($logo)) {
-				return null;
-			} //empty($logo)
-			else {
-				return 'companies/' . $CompanyDir . '/' . $logo;
-			}
-		} //end listing of files under company directory is not empty
+		$LogoFile = null;
+		$dir = $PathPrefix . 'companies/' . $CompanyDir;
+		if (file_exists($dir . '/logo.png')) {
+			$LogoFile = 'companies/' . $CompanyDir . '/logo.png';
+		} elseif (file_exists($dir . '/logo.jpg')) {
+			$LogoFile = 'companies/' . $CompanyDir . '/logo.jpg';
+		}
+		return $LogoFile;
 	}
-
 	/* Find a logo in companies/<company of this session> */
 	if (!empty($_SESSION['DatabaseName'])) {
 		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
@@ -297,15 +284,21 @@ else if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION
 } //in_array(1, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity == 0 and count($_SESSION['AllowedPageSecurityTokens']) == 2
 
 function CryptPass($Password) {
-	global $CryptFunction;
-	if ($CryptFunction == 'sha1') {
-		return sha1($Password);
-	} //$CryptFunction == 'sha1'
-	elseif ($CryptFunction == 'md5') {
-		return md5($Password);
-	} //$CryptFunction == 'md5'
-	else {
-		return $Password;
+	if (PHP_VERSION_ID < 50500) {
+		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+		$Salt = str_replace('+', '.', $Salt);
+		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
+	} else {
+		$Hash = password_hash($Password, PASSWORD_DEFAULT);
+	}
+	return $Hash;
+}
+
+function VerifyPass($Password, $Hash) {
+	if(PHP_VERSION_ID < 50500) {
+		return (crypt($Password, $Hash) == $Hash);
+	} else {
+		return password_verify($Password, $Hash);
 	}
 }
 

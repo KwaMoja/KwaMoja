@@ -10,7 +10,7 @@ CreateTable('mrprequirements',
   `directdemand` smallint(6) DEFAULT NULL,
   `whererequired` char(20) DEFAULT NULL,
   KEY `part` (`part`)
-)", $db);
+)");
 
 
 ?>

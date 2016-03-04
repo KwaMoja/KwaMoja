@@ -9,7 +9,7 @@ CreateTable('debtortranstaxes',
   KEY `taxauthid` (`taxauthid`),
   CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
   CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
-)", $db);
+)");
 
 
 ?>

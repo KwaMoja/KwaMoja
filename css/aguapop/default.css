@@ -1,8 +1,8 @@
 @font-face {
-font-family:Ubuntu;
-font-style:normal;
-font-weight:400;
-src:local(Ubuntu), url(http://themes.googleusercontent.com/static/fonts/ubuntu/v4/_xyN3apAT_yRRDeqB3sPRg.woff) format(woff);
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Ubuntu'), url(http://example.com/fonts/ubuntu.woff) format('woff');
 }
 
 body {
@@ -11,12 +11,13 @@ font-weight:400;
 background:silver;
 margin:0;
 padding:0;
+color:#201919;
 }
 
 div.toplink {
 padding-top:1%;
 padding-left:1%;
-margin-bottom:-0.5%;
+margin-bottom:-1%;
 text-align:left
 }
 
@@ -145,10 +146,22 @@ background-color:#B0C4DE;
 a {
 color:blue;
 text-decoration:none;
+display:block;
+}
+
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
 }
 
 a:hover {
-color:red;
+color:#0C0C5E;
 text-decoration:underline;
 }
 
@@ -214,6 +227,14 @@ width:auto;
 max-width:90%;
 }
 
+tr.visible {
+display:table-row;
+}
+
+tr.invisible {
+display:none;
+}
+
 th {
 background-color:#87CEEB;
 color:#000;
@@ -226,7 +247,7 @@ background-color:#87CEEB;
 color:#FFF;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -329,6 +350,7 @@ text-align:center;
 padding-left:24px;
 min-height:26px;
 margin:0 auto;
+margin-bottom:4px;
 }
 
 .dpTbl {

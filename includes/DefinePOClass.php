@@ -12,6 +12,7 @@ class PurchOrder {
 	var $CurrDecimalPlaces;
 	var $ExRate;
 	var $Initiator;
+	var $Authoriser;
 	var $DeliveryDate;
 	var $RequisitionNo;
 	var $DelAdd1;
@@ -28,6 +29,7 @@ class PurchOrder {
 	var $SuppDelAdd5;
 	var $SuppDelAdd6;
 	var $SupplierContact;
+	var $SupplierRef;
 	var $SuppTel;
 	var $Comments;
 	var $Location;
@@ -60,11 +62,11 @@ class PurchOrder {
 		$this->LinesOnOrder = 0;
 	}
 
-	function add_to_order($LineNo, $StockID, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $Completed, $JobRef, $QtyInv = 0, $QtyRecd = 0, $GLActName = '', $DecimalPlaces = 2, $SuppliersUnit, $ConversionFactor = 1, $LeadTime = 1, $Suppliers_PartNo = '', $AssetID = 0) {
+	function add_to_order($LineNo, $StockId, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $Completed, $JobRef, $QtyInv = 0, $QtyRecd = 0, $GLActName = '', $DecimalPlaces = 2, $SuppliersUnit, $ConversionFactor = 1, $LeadTime = 1, $Suppliers_PartNo = '', $AssetID = 0) {
 
 		if ($Qty != 0 and isset($Qty)) {
 
-			$this->LineItems[$LineNo] = new LineDetails($LineNo, $StockID, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $Completed, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces, $SuppliersUnit, $ConversionFactor, $LeadTime, $Suppliers_PartNo, $AssetID);
+			$this->LineItems[$LineNo] = new LineDetails($LineNo, $StockId, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $Completed, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces, $SuppliersUnit, $ConversionFactor, $LeadTime, $Suppliers_PartNo, $AssetID);
 			$this->LinesOnOrder++;
 			return 1;
 		}
@@ -159,7 +161,7 @@ class LineDetails {
 	/* PurchOrderDetails */
 	var $LineNo;
 	var $PODetailRec;
-	var $StockID;
+	var $StockId;
 	var $ItemDescription;
 	var $DecimalPlaces;
 	var $GLCode;
@@ -183,6 +185,7 @@ class LineDetails {
 	var $Controlled;
 	var $Serialised;
 	var $SerialItems;
+	var $GRNReference;
 	/*An array holding the batch/serial numbers and quantities in each batch*/
 	var $AssetID;
 
@@ -222,6 +225,7 @@ class LineDetails {
 		/*if Controlled then need to populate this later */
 		$this->SerialItemsValid = false;
 		$this->AssetID = $AssetID;
+		$this->GRNReference = '';
 
 	}
 }

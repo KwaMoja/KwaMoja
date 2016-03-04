@@ -44,31 +44,38 @@ if (isset($_SESSION['HTTPS_Only']) and $_SESSION['HTTPS_Only'] == 1) {
 // value must be set in the script before header.inc is included. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
-
 function CryptPass($Password) {
-	global $CryptFunction;
-	if ($CryptFunction == 'sha1') {
-		return sha1($Password);
-	} elseif ($CryptFunction == 'md5') {
-		return md5($Password);
+	if (PHP_VERSION_ID < 50500) {
+		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+		$Salt = str_replace('+', '.', $Salt);
+		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
 	} else {
-		return $Password;
+		$Hash = password_hash($Password, PASSWORD_DEFAULT);
+	}
+	return $Hash;
+}
+
+function VerifyPass($Password, $Hash) {
+	if(PHP_VERSION_ID < 50500) {
+		return (crypt($Password, $Hash) == $Hash);
+	} else {
+		return password_verify($Password, $Hash);
 	}
 }
 
 // API wrapper for DB issues - no HTML output, AND remember any error message
-function api_DB_query($sql, $db, $EMsg = '', $DMsg = '', $Transaction = '', $TrapErrors = false) {
+function api_DB_query($SQL, $db, $EMsg = '', $DMsg = '', $Transaction = '', $TrapErrors = false) {
 	//  Basically we have disabled the error reporting from the standard
 	//  query function,  and will remember any error message in the session
 	//  data.
 
-	$result = DB_query($sql, $db, $EMsg, $DMsg, $Transaction, $TrapErrors);
-	if (DB_error_no($db) != 0) {
-		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg($db) . "\n";
+	$Result = api_DB_query($SQL, $db, $EMsg, $DMsg, $Transaction, $TrapErrors);
+	if (DB_error_no() != 0) {
+		$_SESSION['db_err_msg'] = "SQL: " . $SQL . "\nDB error message: " . DB_error_msg($db) . "\n";
 	} else {
 		$_SESSION['db_err_msg'] = '';
 	}
 
-	return $result;
+	return $Result;
 }
 ?>

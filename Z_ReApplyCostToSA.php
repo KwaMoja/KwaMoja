@@ -4,63 +4,67 @@ include('includes/session.inc');
 $Title = _('Apply Current Cost to Sales Analysis');
 include('includes/header.inc');
 
-$Period = 42;
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '<br /></p>';
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT MonthName(lastdate_in_period) AS mnth,
 				YEAR(lastdate_in_period) AS yr,
 				periodno
 			FROM periods";
-echo '<br /><div class="centre">' . _('Select the Period to update the costs for') . ':<select minlength="0" name="PeriodNo">';
-$result = DB_query($SQL, $db);
+echo '<div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
+$Result = DB_query($SQL);
 
 echo '<option selected="selected" value="0">' . _('No Period Selected') . '</option>';
 
-while ($PeriodInfo = DB_fetch_array($result)) {
+while ($PeriodInfo = DB_fetch_array($Result)) {
 
-	echo '<option value="' . $PeriodInfo['periodno'] . '">' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'] . '</option>';
+	echo '<option value="' . $PeriodInfo['periodno'] . '">' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['yr'] . '</option>';
 
 }
 
 echo '</select>';
 
-echo '<br /><input type="submit" name="UpdateSalesAnalysis" value="' . _('Update Sales Analysis Costs') . '" /></div>';
-echo '</div></form>';
+echo '<input type="submit" name="UpdateSalesAnalysis" value="' . _('Update Sales Analysis Costs') . '" /></div>';
+echo '</form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) and $_POST['PeriodNo'] != 0) {
-	$sql = "SELECT stockmaster.stockid,
-					materialcost+overheadcost+labourcost AS standardcost,
+	$SQL = "SELECT stockmaster.stockid,
+					stockcosts.materialcost+stockcosts.overheadcost+stockcosts.labourcost AS standardcost,
 					stockmaster.mbflag
 				FROM salesanalysis
 				INNER JOIN stockmaster
 					ON salesanalysis.stockid=stockmaster.stockid
+				LEFT JOIN stockcosts
+					ON salesanalysis.stockid=stockcosts.stockid
 				WHERE periodno='" . $_POST['PeriodNo'] . "'
 					AND stockmaster.mbflag<>'D'
+					AND stockcosts.succeeded=0
 				GROUP BY stockmaster.stockid,
-						stockmaster.materialcost,
-						stockmaster.overheadcost,
-						stockmaster.labourcost,
+						stockcosts.materialcost,
+						stockcosts.overheadcost,
+						stockcosts.labourcost,
 						stockmaster.mbflag";
 
 
 	$ErrMsg = _('Could not retrieve the sales analysis records to be updated because');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	while ($ItemsToUpdate = DB_fetch_array($result)) {
+	while ($ItemsToUpdate = DB_fetch_array($Result)) {
 
 		if ($ItemsToUpdate['mbflag'] == 'A') {
-			$SQL = "SELECT SUM(materialcost + labourcost + overheadcost) AS standardcost
-					FROM stockmaster INNER JOIN BOM
-						ON stockmaster.stockid = bom.component
+			$SQL = "SELECT SUM(stockcosts.materialcost + stockcosts.labourcost + stockcosts.overheadcost) AS standardcost
+					FROM stockcosts
+					INNER JOIN BOM
+						ON stockcosts.stockid = bom.component
 					WHERE bom.parent = '" . $ItemsToUpdate['stockid'] . "'
-					AND bom.effectiveto > '" . Date('Y-m-d') . "'
-					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+						AND bom.effectiveto > CURRENT_DATE
+						AND bom.effectiveafter < CURRENT_DATE
+						AND stockcosts.succeeded=0";
 
 			$ErrMsg = _('Could not recalculate the current cost of the assembly item') . $ItemsToUpdate['stockid'] . ' ' . _('because');
-			$AssemblyCostResult = DB_query($SQL, $db, $ErrMsg);
+			$AssemblyCostResult = DB_query($SQL, $ErrMsg);
 			$AssemblyCost = DB_fetch_row($AssemblyCostResult);
 			$Cost = $AssemblyCost[0];
 		} else {
@@ -72,7 +76,7 @@ if (isset($_POST['UpdateSalesAnalysis']) and $_POST['PeriodNo'] != 0) {
 				AND periodno ='" . $_POST['PeriodNo'] . "'";
 
 		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('because');
-		$UpdResult = DB_query($SQL, $db, $ErrMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 
 
 		prnMsg(_('Updated sales analysis for period') . ' ' . $_POST['PeriodNo'] . ' ' . _('and stock item') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('using a cost of') . ' ' . $Cost, 'success');

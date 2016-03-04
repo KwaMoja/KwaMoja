@@ -11,7 +11,7 @@ if (isset($Errors)) {
 $Errors = array();
 $i = 1;
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -22,26 +22,26 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The quantity break must be entered as a positive number'), 'error');
 		$InputError = 1;
 		$Errors[$i] = 'QuantityBreak';
-		$i++;
+		++$i;
 	}
 
 	if (filter_number_format($_POST['QuantityBreak']) <= 0) {
 		prnMsg(_('The quantity of all items on an order in the discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('at which the discount will apply is 0 or less than 0') . '. ' . _('Positive numbers are expected for this entry'), 'warn');
 		$InputError = 1;
 		$Errors[$i] = 'QuantityBreak';
-		$i++;
+		++$i;
 	}
 	if (!is_numeric(filter_number_format($_POST['DiscountRate']))) {
 		prnMsg(_('The discount rate must be entered as a positive number'), 'warn');
 		$InputError = 1;
 		$Errors[$i] = 'DiscountRate';
-		$i++;
+		++$i;
 	}
 	if (filter_number_format($_POST['DiscountRate']) <= 0 OR filter_number_format($_POST['DiscountRate']) > 100) {
 		prnMsg(_('The discount rate applicable for this record is either less than 0% or greater than 100%') . '. ' . _('Numbers between 1 and 100 are expected'), 'warn');
 		$InputError = 1;
 		$Errors[$i] = 'DiscountRate';
-		$i++;
+		++$i;
 	}
 
 	/* actions to take once the user has clicked the submit button
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError != 1) {
 
-		$sql = "INSERT INTO discountmatrix (salestype,
+		$SQL = "INSERT INTO discountmatrix (salestype,
 							discountcategory,
 							quantitybreak,
 							discountrate)
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 						'" . filter_number_format($_POST['QuantityBreak']) . "',
 						'" . (filter_number_format($_POST['DiscountRate']) / 100) . "')";
 
-		$result = DB_query($sql, $db);
+		$Result = DB_query($SQL);
 		prnMsg(_('The discount matrix record has been added'), 'success');
 		echo '<br />';
 		unset($_POST['DiscountCategory']);
@@ -69,56 +69,55 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['Delete']) and $_GET['Delete'] == 'yes') {
 	/*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql = "DELETE FROM discountmatrix
+	$SQL = "DELETE FROM discountmatrix
 		WHERE discountcategory='" . $_GET['DiscountCategory'] . "'
 		AND salestype='" . $_GET['SalesType'] . "'
 		AND quantitybreak='" . $_GET['QuantityBreak'] . "'";
 
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 	prnMsg(_('The discount matrix record has been deleted'), 'success');
 	echo '<br />';
 }
 
-echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 echo '<table class="selection">';
 
-$sql = "SELECT typeabbrev,
+$SQL = "SELECT typeabbrev,
 		sales_type
 		FROM salestypes";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
 echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
 
-echo '<select minlength="0" tabindex="1" name="SalesType">';
+echo '<select tabindex="1" name="SalesType">';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['SalesType']) and $myrow['typeabbrev'] == $_POST['SalesType']) {
-		echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['SalesType']) and $MyRow['typeabbrev'] == $_POST['SalesType']) {
+		echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	}
 }
 
 echo '</select></td></tr>';
 
 
-$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
-$result = DB_query($sql, $db);
-if (DB_num_rows($result) > 0) {
+$SQL = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) > 0) {
 	echo '<tr>
 			<td>' . _('Discount Category Code') . ': </td>
-			<td><select minlength="0" name="DiscountCategory">';
+			<td><select name="DiscountCategory">';
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['discountcategory'] == $_POST['DiscCat']) {
-			echo '<option selected="selected" value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['discountcategory'] == $_POST['DiscCat']) {
+			echo '<option selected="selected" value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+			echo '<option value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -128,20 +127,18 @@ if (DB_num_rows($result) > 0) {
 
 echo '<tr>
 		<td>' . _('Quantity Break') . '</td>
-		<td><input class="number" tabindex="3" type="text" name="QuantityBreak" size="10" required="required" minlength="1" maxlength="10" /></td>
+		<td><input class="number" tabindex="3" type="text" name="QuantityBreak" size="10" required="required" maxlength="10" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Discount Rate') . ' (%):</td>
-		<td><input class="number" tabindex="4" type="text" name="DiscountRate" size="5" required="required" minlength="1" maxlength="5" /></td>
+		<td><input class="number" tabindex="4" type="text" name="DiscountRate" size="5" required="required" maxlength="5" /></td>
 	</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
-	<br />';
+	</div>';
 
-$sql = "SELECT sales_type,
+$SQL = "SELECT sales_type,
 			salestype,
 			discountcategory,
 			quantitybreak,
@@ -152,7 +149,7 @@ $sql = "SELECT sales_type,
 			discountcategory,
 			quantitybreak";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
 echo '<table class="selection">';
 echo '<tr>
@@ -164,7 +161,7 @@ echo '<tr>
 
 $k = 0; //row colour counter
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -172,20 +169,19 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k = 1;
 	}
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;DiscountCategory=' . $myrow['discountcategory'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'];
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=yes&amp;SalesType=' . urlencode($MyRow['salestype']) . '&amp;DiscountCategory=' . urlencode($MyRow['discountcategory']) . '&amp;QuantityBreak=' . urlencode($MyRow['quantitybreak']);
 
 	printf('<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			<td><a href="%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['sales_type'], $myrow['discountcategory'], $myrow['quantitybreak'], $myrow['discountrate'] * 100, $DeleteURL);
+			</tr>', $MyRow['sales_type'], $MyRow['discountcategory'], $MyRow['quantitybreak'], $MyRow['discountrate'] * 100, $DeleteURL);
 
 }
 
 echo '</table>
-	  </div>
-	  </form>';
+	</form>';
 
 include('includes/footer.inc');
 ?>

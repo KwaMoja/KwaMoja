@@ -267,7 +267,7 @@ class code128 extends linearBarcode {
 				case 'C':
 					$characterValue = intval($this->text{$i}.$this->text{$i+1});
 					$biteCode['DATA'] .= $this->codeTable[$characterValue];
-					$i++;
+					++$i;
 					break;
 
 				default:

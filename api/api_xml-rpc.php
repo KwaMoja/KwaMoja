@@ -4752,11 +4752,13 @@ $s = new xmlrpc_server(array(
 function apiBuildDocHTML($description, $parameter, $return) {
 	$doc = '<tr><td><b><u>' . _('Description') . '</u></b></td><td colspan=2>' . $description . '</td></tr>
 			<tr><td valign="top"><b><u>' . _('Parameters') . '</u></b></td>';
-	for ($ii = 0; $ii < sizeof($parameter); $ii++) {
+	$SizeOfParameter = sizeOf($parameter);
+	for ($ii = 0; $ii < $SizeOfParameter; $ii++) {
 		$doc .= '<tr><td valign="top">' . $parameter[$ii]['name'] . '</td><td>' . $parameter[$ii]['description'] . '</td></tr>';
 	}
 	$doc .= '<tr><td valign="top"><b><u>' . _('Return Value');
-	for ($ii = 0; $ii < sizeof($return); $ii++) {
+	$SizeOfReturn = sizeOf($return);
+	for ($ii = 0; $ii < $SizeOfReturn; $ii++) {
 		$doc .= '<td valign="top">' . $return[$ii] . '</td></tr>';
 	}
 	$doc .= '</table>';

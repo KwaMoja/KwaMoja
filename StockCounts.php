@@ -6,10 +6,10 @@ $Title = _('Stock Check Sheets Entry');
 
 include('includes/header.inc');
 
-echo '<form name="EnterCountsForm" onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
+echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
@@ -35,52 +35,58 @@ if ($_GET['Action'] == 'Enter') {
 	if (isset($_POST['EnterCounts'])) {
 
 		$Added = 0;
-		for ($i = 1; $i <= 10; $i++) {
+		// Arbitrary number of 10 hard coded as default as originally used - should there be a setting?
+		if (isset($_POST['RowCount'])) {
+			$Counter = $_POST['RowCount'];
+		} else {
+			$Counter = 10;
+		}
+		for ($i = 1;$i <= $Counter;$i++) {
 			$InputError = False; //always assume the best to start with
 
 			$Quantity = 'Qty_' . $i;
 			$BarCode = 'BarCode_' . $i;
-			$StockID = 'StockID_' . $i;
+			$StockId = 'StockID_' . $i;
 			$Reference = 'Ref_' . $i;
 
 			if (strlen($_POST[$BarCode]) > 0) {
-				$sql = "SELECT stockmaster.stockid
+				$SQL = "SELECT stockmaster.stockid
 								FROM stockmaster
 								WHERE stockmaster.barcode='" . $_POST[$BarCode] . "'";
 
 				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-				$KitResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-				$myrow = DB_fetch_array($KitResult);
+				$KitResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+				$MyRow = DB_fetch_array($KitResult);
 
-				$_POST[$StockID] = strtoupper($myrow['stockid']);
+				$_POST[$StockId] = strtoupper($MyRow['stockid']);
 			}
 
-			if (mb_strlen($_POST[$StockID]) > 0) {
+			if (mb_strlen($_POST[$StockId]) > 0) {
 				if (!is_numeric($_POST[$Quantity])) {
-					prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'), 'warn');
+					prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockId] . '. ' . _('This line will have to be re-entered'), 'warn');
 					$InputError = True;
 				}
-				$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
-				$result = DB_query($SQL, $db);
-				if (DB_num_rows($result) == 0) {
-					prnMsg(_('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'), 'warn');
+				$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockId] . "'";
+				$Result = DB_query($SQL);
+				if (DB_num_rows($Result) == 0) {
+					prnMsg(_('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockId] . '. ' . _('This line will have to be re-entered'), 'warn');
 					$InputError = True;
 				}
 
 				if ($InputError == False) {
 					$Added++;
-					$sql = "INSERT INTO stockcounts (stockid,
+					$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
 									qtycounted,
 									reference)
-								VALUES ('" . $_POST[$StockID] . "',
+								VALUES ('" . $_POST[$StockId] . "',
 									'" . $_POST['Location'] . "',
 									'" . $_POST[$Quantity] . "',
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
-					$EnterResult = DB_query($sql, $db, $ErrMsg);
+					$EnterResult = DB_query($SQL, $ErrMsg);
 				}
 			}
 		} // end of loop
@@ -93,7 +99,7 @@ if ($_GET['Action'] == 'Enter') {
 							FROM stockcategory INNER JOIN stockmaster
 								ON stockcategory.categoryid=stockmaster.categoryid
 							INNER JOIN stockcheckfreeze
-								ON stockmaster.stockid=stockcheckfreeze.stockid", $db);
+								ON stockmaster.stockid=stockcheckfreeze.stockid");
 
 	if (DB_num_rows($CatsResult) == 0) {
 		prnMsg(_('The stock check sheets must be run first to create the stock check. Only once these are created can the stock counts be entered. Currently there is no stock check to enter counts for'), 'error');
@@ -102,36 +108,31 @@ if ($_GET['Action'] == 'Enter') {
 		echo '<table cellpadding="2" class="selection">
 				<tr>
 					<th colspan="3">' . _('Stock Check Counts at Location') . ':<select name="Location">';
-		if ($_SESSION['RestrictLocations'] == 0) {
-			$sql = "SELECT locationname,
-							loccode
-						FROM locations";
-		} else {
-			$sql = "SELECT locationname,
-							loccode
+		$SQL = "SELECT locationname,
+						locations.loccode
 						FROM locations
-						INNER JOIN www_users
-							ON locations.loccode=www_users.defaultlocation
-						WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-		}
-		$result = DB_query($sql, $db);
-		while ($myrow = DB_fetch_array($result)) {
+						INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode
+							AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+							AND locationusers.canupd=1";
+		$Result = DB_query($SQL);
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			if (isset($_POST['Location']) and $myrow['loccode'] == $_POST['Location']) {
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			if (isset($_POST['Location']) and $MyRow['loccode'] == $_POST['Location']) {
+				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 		}
 		echo '</select>&nbsp;<input type="submit" name="EnterByCat" value="' . _('Enter By Category') . '" /><select name="StkCat" onChange="ReloadForm(EnterCountsForm.EnterByCat)" >';
 
 		echo '<option value="">' . _('Not Yet Selected') . '</option>';
 
-		while ($myrow = DB_fetch_array($CatsResult)) {
-			if (isset($_POST['StkCat']) and $_POST['StkCat'] == $myrow['categoryid']) {
-				echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow = DB_fetch_array($CatsResult)) {
+			if (isset($_POST['StkCat']) and $_POST['StkCat'] == $MyRow['categoryid']) {
+				echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+				echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 			}
 		}
 		echo '</select>
@@ -140,7 +141,7 @@ if ($_GET['Action'] == 'Enter') {
 
 		if (isset($_POST['EnterByCat'])) {
 
-			$StkCatResult = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StkCat'] . "'", $db);
+			$StkCatResult = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StkCat'] . "'");
 			$StkCatRow = DB_fetch_row($StkCatResult);
 
 			echo '<tr>
@@ -157,17 +158,17 @@ if ($_GET['Action'] == 'Enter') {
 										FROM stockcheckfreeze INNER JOIN stockmaster
 										ON stockcheckfreeze.stockid=stockmaster.stockid
 										WHERE categoryid='" . $_POST['StkCat'] . "'
-										ORDER BY stockcheckfreeze.stockid", $db);
+										ORDER BY stockcheckfreeze.stockid");
 
-			$i = 1;
+			$RowCount = 1;
 			while ($StkRow = DB_fetch_array($StkItemsResult)) {
 				echo '<tr>
-						<td><input type="hidden" name="StockID_' . $i . '" value="' . $StkRow['stockid'] . '" />' . $StkRow['stockid'] . '</td>
+						<td><input type="hidden" name="StockID_' . $RowCount . '" value="' . $StkRow['stockid'] . '" />' . $StkRow['stockid'] . '</td>
 						<td>' . $StkRow['description'] . '</td>
-						<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-						<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="Qty_' . $RowCount . '" maxlength="10" size="10" /></td>
+						<td><input type="text" name="Ref_' . $RowCount . '" maxlength="20" size="20" /></td>
 					</tr>';
-				$i++;
+				$RowCount++;
 			}
 
 		} else {
@@ -179,22 +180,22 @@ if ($_GET['Action'] == 'Enter') {
 					<th>' . _('Reference') . '</th>
 				</tr>';
 
-			for ($i = 1; $i <= 10; $i++) {
+			for ($RowCount = 1; $RowCount <= 10; $RowCount++) {
 
 				echo '<tr>
-						<td><input type="text" name="BarCode_' . $i . '" maxlength="20" size="20" /></td>
-						<td><input type="text" name="StockID_' . $i . '" maxlength="20" size="20" /></td>
-						<td><input type="text" name="Qty_' . $i . '" maxlength="10" size="10" /></td>
-						<td><input type="text" name="Ref_' . $i . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="BarCode_' . $RowCount . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="StockID_' . $RowCount . '" maxlength="20" size="20" /></td>
+						<td><input type="text" name="Qty_' . $RowCount . '" maxlength="10" size="10" /></td>
+						<td><input type="text" name="Ref_' . $RowCount . '" maxlength="20" size="20" /></td>
 					</tr>';
 
 			}
 		}
 
 		echo '</table>
-				<br />
 				<div class="centre">
 					<input type="submit" name="EnterCounts" value="' . _('Enter Above Counts') . '" />
+					<input type="hidden" name="RowCount" value="' .$RowCount . '" />
 				</div>';
 	} // there is a stock check to enter counts for
 
@@ -204,17 +205,23 @@ if ($_GET['Action'] == 'Enter') {
 	if (isset($_POST['DEL']) and is_array($_POST['DEL'])) {
 		foreach ($_POST['DEL'] as $id => $val) {
 			if ($val == 'on') {
-				$sql = "DELETE FROM stockcounts WHERE id='" . $id . "'";
+				$SQL = "DELETE FROM stockcounts WHERE id='" . $id . "'";
 				$ErrMsg = _('Failed to delete StockCount ID #') . ' ' . $i;
-				$EnterResult = DB_query($sql, $db, $ErrMsg);
+				$EnterResult = DB_query($SQL, $ErrMsg);
 				prnMsg(_('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}
 	}
 
 	//START OF action=VIEW
-	$SQL = "SELECT * FROM stockcounts";
-	$result = DB_query($SQL, $db);
+	$SQL = "SELECT stockcounts.*,
+					canupd
+				FROM stockcounts
+				INNER JOIN locationusers
+					ON locationusers.loccode=stockcounts.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1";
+	$Result = DB_query($SQL);
 	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">
 			<tr>
@@ -224,17 +231,24 @@ if ($_GET['Action'] == 'Enter') {
 				<th>' . _('Reference') . '</th>
 				<th>' . _('Delete?') . '</th>
 			</tr>';
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr>
-				<td>' . $myrow['stockid'] . '</td>
-				<td>' . $myrow['loccode'] . '</td>
-				<td>' . $myrow['qtycounted'] . '</td>
-				<td>' . $myrow['reference'] . '</td>
+				<td>' . $MyRow['stockid'] . '</td>
+				<td>' . $MyRow['loccode'] . '</td>
+				<td>' . $MyRow['qtycounted'] . '</td>
+				<td>' . $MyRow['reference'] . '</td>
 				<td>';
-		echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" minlength="0" maxlength="20" size="20" /></td></tr>';
+		if ($MyRow['canupd'] == 1) {
+			echo '<input type="checkbox" name="DEL[' . $MyRow['id'] . ']" maxlength="20" size="20" />';
+		}
+		echo '</td>
+			</tr>';
 
 	}
-	echo '</table><br /><div class="centre"><input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" /></div>';
+	echo '</table>
+			<div class="centre">
+				<input type="submit" name="SubmitChanges" value="' . _('Save Changes') . '" />
+			</div>';
 
 	//END OF action=VIEW
 }

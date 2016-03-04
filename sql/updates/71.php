@@ -1,7 +1,7 @@
 <?php
 
-NewConfigValue('ShopFreightModule', 'Default', $db);
+NewConfigValue('ShopFreightModule', 'Default');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

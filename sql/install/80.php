@@ -8,7 +8,7 @@ CreateTable('pctabexpenses',
   KEY `codeexpense` (`codeexpense`),
   CONSTRAINT `pctabexpenses_ibfk_1` FOREIGN KEY (`typetabcode`) REFERENCES `pctypetabs` (`typetabcode`),
   CONSTRAINT `pctabexpenses_ibfk_2` FOREIGN KEY (`codeexpense`) REFERENCES `pcexpenses` (`codeexpense`)
-)", $db);
+)");
 
 
 ?>

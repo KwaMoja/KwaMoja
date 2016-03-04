@@ -36,6 +36,8 @@ class Payment {
 	var $GLItemCounter;
 	var $BankTransRef;
 	/*Counter for the number of GL accounts being posted to by the Payment */
+	var $ChequeNumber; //if using pre-printed stationery
+	var $Paymenttype;
 
 	function Payment() {
 		/*Constructor function initialises a new Payment batch */
@@ -49,7 +51,11 @@ class Payment {
 		$this->Address4 = "";
 		$this->Address5 = "";
 		$this->Address6 = "";
-
+		$this->ChequeNumber = 0;
+		$this->BankTransRef = '';
+		$this->DatePaid = Date($_SESSION['DefaultDateFormat']);
+		$this->ExRate = 1;
+		$this->FunctionalExRate = 1;
 	}
 
 	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $Tag, $Cheque) {

@@ -10,7 +10,7 @@ CreateTable('contractreqts',
   PRIMARY KEY (`contractreqid`),
   KEY `ContractRef` (`contractref`),
   CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`)
-)", $db);
+)");
 
 
 ?>

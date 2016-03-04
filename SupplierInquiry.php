@@ -1,10 +1,12 @@
 <?php
 
-include('includes/SQL_CommonFunctions.inc');
-
 include('includes/session.inc');
 $Title = _('Supplier Inquiry');
+$ViewTopic = 'AccountsPayable';// Filename in ManualContents.php's TOC./* RChacon: Is there any content for Supplier Inquiry? */
+$BookMark = 'AccountsPayable';// Anchor's id in the manual's html document.
 include('includes/header.inc');
+
+include('includes/SQL_CommonFunctions.inc');
 
 // always figure out the SQL required from the inputs available
 
@@ -25,7 +27,7 @@ if (!isset($_GET['SupplierID']) and !isset($_SESSION['SupplierID'])) {
 if (isset($_GET['FromDate'])) {
 	$_POST['TransAfterDate'] = $_GET['FromDate'];
 }
-if (!isset($_POST['TransAfterDate']) or !Is_Date($_POST['TransAfterDate'])) {
+if (!isset($_POST['TransAfterDate']) or !is_date($_POST['TransAfterDate'])) {
 	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 12, Date('d'), Date('Y')));
 }
 
@@ -74,7 +76,7 @@ $SQL = "SELECT suppliers.suppname,
 $ErrMsg = _('The supplier details could not be retrieved by the SQL because');
 $DbgMsg = _('The SQL that failed was');
 
-$SupplierResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($SupplierResult) == 0) {
 
@@ -96,7 +98,7 @@ if (DB_num_rows($SupplierResult) == 0) {
 	$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
 	$DbgMsg = _('The SQL that failed was');
 
-	$SupplierResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 } else {
 	$NIL_BALANCE = False;
@@ -111,7 +113,7 @@ if ($NIL_BALANCE == True) {
 	$SupplierRecord['overdue2'] = 0;
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" /> ' .
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Supplier') . '" alt="" /> ' .
 		_('Supplier') . ': ' .
 			stripslashes($SupplierID) . ' - ' . $SupplierRecord['suppname'] . '<br />' .
 		_('All amounts stated in') . ': ' .
@@ -133,7 +135,7 @@ if (isset($_GET['HoldType']) and isset($_GET['HoldTrans'])) {
 
 	$ErrMsg = _('The Supplier Transactions could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
-	$UpdateResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+	$UpdateResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 }
 
@@ -155,17 +157,12 @@ echo '<tr>
 	  </tr>
 	</table>';
 
-echo '<br />
-	<div class="centre">
-		<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" required="required" minlength="1" maxlength="10" size="10" />
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo _('Show all transactions after') . ': ' . '<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" required="required" maxlength="10" size="10" />
 		<input type="submit" name="Refresh Inquiry" value="' . _('Refresh Inquiry') . '" />
-	</div>
-	</form>
-	<br />';
-echo '</div>';
+	</form>';
+
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
 $SQL = "SELECT supptrans.id,
@@ -191,7 +188,7 @@ $SQL = "SELECT supptrans.id,
 $ErrMsg = _('No transactions were returned by the SQL because');
 $DbgMsg = _('The SQL that failed was');
 
-$TransResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
+$TransResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
@@ -202,32 +199,43 @@ if (DB_num_rows($TransResult) == 0) {
 
 /*show a table of the transactions returned by the SQL */
 
-
 echo '<table width="90%" class="selection">
-		<tr>
-			<th class="SortableColumn">' . _('Trans') . ' #' . '</th>
-			<th class="SortableColumn">' . _('Type') . '</th>
-			<th class="SortableColumn">' . _('Supplier Ref') . '</th>
-			<th class="SortableColumn">' . _('Date') . '</th>
-			<th>' . _('Total') . '</th>
-			<th>' . _('Allocated') . '</th>
-			<th>' . _('Balance') . '</th>
-			<th>' . _('Comments') . '</th>
-			<th colspan="2"></th>
-		</tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Date') . '</th>
+				<th class="SortedColumn">' . _('Type') . '</th>
+				<th class="SortedColumn">' . _('Number') . '</th>
+				<th class="SortedColumn">' . _('Reference') . '</th>
+				<th class="SortedColumn">' . _('Comments') . '</th>
+				<th class="SortedColumn">' . _('Total') . '</th>
+				<th class="SortedColumn">' . _('Allocated') . '</th>
+				<th class="SortedColumn">' . _('Balance') . '</th>
+				<th class="noPrint">' . _('More Info') . '</th>
+				<th class="noPrint">' . _('More Info') . '</th>
+			</tr>
+		</thead>';
 
 $j = 1;
 $k = 0; //row colour counter
-while ($myrow = DB_fetch_array($TransResult)) {
 
-	if ($myrow['hold'] == 0 and $myrow['settled'] == 0) {
+$AuthSQL = "SELECT offhold
+				FROM purchorderauth
+				WHERE userid='" . $_SESSION['UserID'] . "'
+					AND currabrev='" . $SupplierRecord['currcode'] . "'";
+
+$AuthResult = DB_query($AuthSQL);
+$AuthRow = DB_fetch_array($AuthResult);
+echo '<tbody>';
+while ($MyRow = DB_fetch_array($TransResult)) {
+
+	if ($MyRow['hold'] == 0 and $MyRow['settled'] == 0) {
 		$HoldValue = _('Hold');
-	} elseif ($myrow['settled'] == 1) {
+	} elseif ($MyRow['settled'] == 1) {
 		$HoldValue = '';
 	} else {
 		$HoldValue = _('Release');
 	}
-	if ($myrow['hold'] == 1) {
+	if ($MyRow['hold'] == 1) {
 		echo '<tr bgcolor="#DD99BB">';
 	} elseif ($k == 1) {
 		echo '<tr class="EvenTableRows">';
@@ -237,85 +245,70 @@ while ($myrow = DB_fetch_array($TransResult)) {
 		$k = 1;
 	}
 
-	$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
+	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-	if ($myrow['type'] == 20) {
-		/*Show a link to allow GL postings to be viewed but no link to allocate */
+	// All table-row (tag tr) must have 10 table-datacells (tag td).
+
+	$BaseTD8 = '<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
+				<td>' . _($MyRow['typename']) . '</td>
+				<td class="number"><a href="' . $RootPath . '/SuppWhereAlloc.php?TransType=' . urlencode($MyRow['type']) . '&TransNo=' . urlencode($MyRow['transno']) . '">' . $MyRow['transno'] . '</a></td>
+				<td>' . $MyRow['suppreference'] . '</td>
+				<td>' . $MyRow['transtext'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['totalamount'],$SupplierRecord['currdecimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['totalamount']-$MyRow['allocated'],$SupplierRecord['currdecimalplaces']) . '</td>';
+
+	$PaymentTD1 = '<td class="noPrint"><a href="' . $RootPath . '/PaymentAllocations.php?SuppID=%s&amp;InvID=%s" title="' . _('Click to view payments') . '"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" width="16"/> ' . _('Payments') . '</a></td>';
+
+/* To do: $HoldValueTD1*/
+
+	$AllocationTD1 = '<td class="noPrint"><a href="' . $RootPath . '/SupplierAllocations.php?AllocTrans=%s" title="' . _('Click to allocate funds') . '"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/allocation.png" /> ' . _('Allocation') . '</a></td>';
+
+	$GLEntriesTD1 = '<td class="noPrint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s" target="_blank" title="' . _('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/gl.png" width="16" /> ' . _('GL Entries') . '</a></td>';
+
+	if ($MyRow['type'] == 20) { /*Show a link to allow GL postings to be viewed but no link to allocate */
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors'] == True) {
-			if ($myrow['totalamount'] - $myrow['allocated'] == 0) {
-
+			if ($MyRow['totalamount'] - $MyRow['allocated'] == 0) {
 				/*The trans is settled so don't show option to hold */
+				printf($BaseTD8 . $PaymentTD1 . $GLEntriesTD1 . '</tr>',
+					// $PaymentTD1 parameters:
+					$MyRow['supplierno'],
+					$MyRow['suppreference'],
+					// $GLEntriesTD1 parameters:
+					$MyRow['type'],
+					$MyRow['transno']);
 
-				echo '<td>' . $myrow['transno'] . '</td>
-					<td>' . $myrow['typename'] . '</td>
-					<td>' . $myrow['suppreference'] . '</td>
-					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td align="left">' . $myrow['transtext'] . '</td>
-					<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] . '">' . _('View GL Postings') . '</a></td>
-					<td><a href="' . $RootPath . '/PaymentAllocations.php?SuppID=' . $myrow['supplierno'] . '&amp;InvID=' . $myrow['suppreference'] . '">' . _('View Payments') . '</a></td>
-					</tr>';
 			} else {
-				echo '<td>' . $myrow['transno'] . '</td>
-					<td>' . $myrow['typename'] . '</td>
-					<td>' . $myrow['suppreference'] . '</td>
-					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']) . '</td>
-					<td align="left">' . $myrow['transtext'] . '</td>';
 
-				$AuthSQL = "SELECT offhold
-							FROM purchorderauth
-							WHERE userid='" . $_SESSION['UserID'] . "'
-							AND currabrev='" . $SupplierRecord['currcode'] . "'";
-
-				$AuthResult = DB_query($AuthSQL, $db);
-
-				$AuthRow = DB_fetch_array($AuthResult);
-
-				if ($AuthRow[0] == 0) {
-					echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] . '">' . $HoldValue . '</a></td>';
+				printf($BaseTD8);
+ 				if ($AuthRow[0] == 0) {
+					echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?HoldType=' . $MyRow['type'] . '&amp;HoldTrans=' . $MyRow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] . '">' . $HoldValue . '</a></td>';
 				} else {
 					if ($HoldValue == _('Release')) {
 						echo '<td>' . $HoldValue . '</a></td>';
 					} else {
-						echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?' . 'HoldType=' . $myrow['type'] . '&amp;HoldTrans=' . $myrow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] . '">' . $HoldValue . '</a></td>';
+						echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?' . 'HoldType=' . $MyRow['type'] . '&amp;HoldTrans=' . $MyRow['transno'] . '&amp;HoldStatus=' . $HoldValue . '&amp;FromDate=' . $_POST['TransAfterDate'] . '">' . $HoldValue . '</a></td>';
 					}
 				}
-				echo '<td><a target="_blank" href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['transno'] . '">' . _('View GL Postings') . '</a></td></tr>';
+				printf($GLEntriesTD1 . '</tr>',
+					// $GLEntriesTD1 parameters:
+					$MyRow['type'],
+					$MyRow['transno']);
 			}
 		} else {
 
-			if ($myrow['totalamount'] - $myrow['allocated'] == 0) {
-
+			if ($MyRow['totalamount'] - $MyRow['allocated'] == 0) {
 				/*The trans is settled so don't show option to hold */
-
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td align="left">%s</td>
-						</td></tr>', $myrow['transno'], $myrow['typename'], $myrow['suppreference'], ConvertSQLDate($myrow['trandate']), locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']), $myrow['transtext']);
+				echo $BaseTD8, '<td class="noPrint">&nbsp;</td><td class="noPrint">&nbsp;</td></tr>';
 
 			} else {
 
-				printf('<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td align=left>%s</td>
-						<td><a href="%s?HoldType=%s&amp;HoldTrans=%s&amp;HoldStatus=%s&amp;FromDate=%s">%s</a></td>
-						<td><a href="%s/PaymentAllocations.php?SuppID=%s&amp;InvID=%s">' . _('View Payments') . '</a></tr>', $myrow['transno'], $myrow['typename'], $myrow['suppreference'], ConvertSQLDate($myrow['trandate']), locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']), $myrow['transtext'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow['type'], $myrow['transno'], $HoldValue, $_POST['TransAfterDate'], $HoldValue, $RootPath, $myrow['supplierno'], $myrow['suppreference']);
+				echo $BaseTD8 . '
+					<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8') . '/PaymentAllocations.php?SuppID=' .
+						$MyRow['type'] . '&amp;InvID=' . $MyRow['transno'] . '">' . _('View Payments') . '</a></td>
+					<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8') . '?HoldType=' . urlencode($_POST['TransAfterDate']) . '&amp;HoldTrans=' . urlencode($HoldValue) . '&amp;HoldStatus=' .
+						$RootPath . '&amp;FromDate='. urlencode($MyRow['supplierno']) . '">' . $MyRow['suppreference'] . '</a></td></tr>';
 			}
 		}
 
@@ -323,37 +316,24 @@ while ($myrow = DB_fetch_array($TransResult)) {
 		/*its a credit note or a payment */
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors'] == True) {
-
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td align="left">%s</td>
-					<td><a href="%s/SupplierAllocations.php?AllocTrans=%s">' . _('View Allocations') . '</a></td>
-					<td><a target="_blank" href="%s/GLTransInquiry.php?TypeID=%s&amp;TransNo=%s">' . _('View GL Postings') . '</a></td>
-					</tr>', $myrow['transno'], $myrow['typename'], $myrow['suppreference'], ConvertSQLDate($myrow['trandate']), locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']), $myrow['transtext'], $RootPath, $myrow['id'], $RootPath, $myrow['type'], $myrow['transno']);
+			printf($BaseTD8 . $AllocationTD1 . $GLEntriesTD1 . '</tr>',
+				// $AllocationTD1 parameters:
+				$MyRow['id'],
+				// $GLEntriesTD1 parameters:
+				$MyRow['type'],
+				$MyRow['transno']);
 
 		} else {
 			/*Not linked to GL */
-
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td align="left">%s</td>
-					<td><a href="%s/SupplierAllocations.php?AllocTrans=%s">' . _('View Allocations') . '</a></td>
-					</tr>', $myrow['transno'], $myrow['typename'], $myrow['suppreference'], ConvertSQLDate($myrow['trandate']), locale_number_format($myrow['totalamount'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['allocated'], $SupplierRecord['currdecimalplaces']), locale_number_format($myrow['totalamount'] - $myrow['allocated'], $SupplierRecord['currdecimalplaces']), $myrow['transtext'], $RootPath, $myrow['id']);
+			printf($BaseTD8 . $AllocationTD1 . '<td class="noPrint">&nbsp;</td></tr>',
+				// $AllocationTD1 parameters:
+				$MyRow['id']);
 
 		}
 	} //end of page full new headings if
 } //end of while loop
 
+echo '</tbody>';
 echo '</table>';
 include('includes/footer.inc');
 ?>

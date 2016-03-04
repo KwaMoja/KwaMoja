@@ -1,7 +1,7 @@
 <?php
 
-NewScript('MonthlyBankTransactions.php', '8', $db);
+NewScript('MonthlyBankTransactions.php', '8');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

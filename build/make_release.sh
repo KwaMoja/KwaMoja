@@ -7,39 +7,39 @@ MYSQL_PWD=;
 
 cd $BASE_DIR;
 
-xgettext --no-wrap --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php
+xgettext --no-wrap --language=PHP -o locale/en_GB.utf8/LC_MESSAGES/messages.pot *php install/coa/*.php includes/*.php includes/*.inc reportwriter/*.php reportwriter/*.inc reportwriter/forms/*.html reportwriter/admin/*.php reportwriter/admin/*.inc reportwriter/admin/forms/*.html api/*.php
 
-msgmerge -U --backup=off locale/ar_EG.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/de_DE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/en_US.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/el_GR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/es_ES.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/et_EE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/fa_IR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/fr_CA.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/fr_FR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/hi_IN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/hr_HR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/hu_HU.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/id_ID.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/it_IT.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/ja_JP.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/lv_LV.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/nl_NL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/pl_PL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/pt_BR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/pt_PT.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/ru_RU.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/ro_RO.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/sq_AL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/sv_SE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/sw_KE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/tr_TR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/zh_CN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/zh_HK.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/zh_TW.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
-msgmerge -U --backup=off locale/vi_VN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/ar_EG.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/cs_CZ.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/de_DE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/en_US.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/el_GR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/es_ES.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/et_EE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/fa_IR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/fr_CA.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/fr_FR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/hi_IN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/hr_HR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/hu_HU.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/id_ID.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/it_IT.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/ja_JP.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/lv_LV.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/nl_NL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/pl_PL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/pt_BR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/pt_PT.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/ru_RU.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/ro_RO.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/sq_AL.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/sv_SE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/sw_KE.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/tr_TR.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/zh_CN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/zh_HK.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/zh_TW.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
+msgmerge -UN --backup=off locale/vi_VN.utf8/LC_MESSAGES/messages.po locale/en_GB.utf8/LC_MESSAGES/messages.pot
 
 
 msgfmt -o locale/ar_EG.utf8/LC_MESSAGES/messages.mo locale/ar_EG.utf8/LC_MESSAGES/messages.po
@@ -77,40 +77,7 @@ mysql -u$MYSQL_USER  -p$MYSQL_PWD < $BASE_DIR/build/TruncateAuditTrail.sql
 
 echo "SET FOREIGN_KEY_CHECKS = 0;" > $BASE_DIR/sql/mysql/kwamoja-new.sql
 
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD  --skip-opt --create-options --skip-set-charset --ignore-table=kwamoja.mrpsupplies  --ignore-table=kwamoja.mrpplanedorders --ignore-table=kwamoja.mrpparameters --ignore-table=kwamoja.levels --ignore-table=kwamoja.mrprequirements --ignore-table=kwamoja.buckets --no-data kwamoja >> $BASE_DIR/sql/mysql/kwamoja-new.sql
-
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --no-create-info kwamoja  \
-       accountgroups \
-       bankaccounts \
-       chartmaster \
-       companies \
-       cogsglpostings \
-       currencies \
-       holdreasons \
-       locations \
-       paymentterms \
-       reportlinks \
-       salesglpostings \
-       systypes \
-       taxauthorities \
-       taxgroups \
-       taxauthrates \
-       taxcategories \
-       taxprovinces \
-       www_users \
-       edi_orders_segs \
-       edi_orders_seg_groups \
-       config \
-       unitsofmeasure \
-       paymentmethods \
-       scripts \
-       securitygroups \
-       securitytokens \
-       securityroles \
-       accountsection \
-       > $BASE_DIR/sql/mysql/kwamoja-base.sql
-
-mysqldump -u$MYSQL_USER  -p$MYSQL_PWD --skip-opt --skip-set-charset --quick --ignore-table=kwamoja.mrpsupplies  --ignore-table=kwamoja.mrpplanedorders --ignore-table=kwamoja.mrpparameters --ignore-table=kwamoja.levels --ignore-table=kwamoja.mrprequirements --no-create-info kwamoja  > $BASE_DIR/sql/mysql/kwamoja-demo_data.sql
+mysqldump -nd -u root -p KwaMoja --skip-comments  --ignore-table=kwamoja.mrpsupplies  --ignore-table=kwamoja.mrpplanedorders --ignore-table=kwamoja.mrpparameters --ignore-table=kwamoja.levels --ignore-table=kwamoja.mrprequirements --ignore-table=kwamoja.buckets | grep -v '^\/\*![0-9]\{5\}.*\/;$' | grep 'DELIMITER' -v  > install/db/structure.sql
 
 rm  $BASE_DIR/sql/mysql/kwamoja-demo.sql
 echo "CREATE DATABASE IF NOT EXISTS kwamoja;" > $BASE_DIR/sql/mysql/kwamoja-demo.sql

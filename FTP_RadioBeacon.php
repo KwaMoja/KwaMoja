@@ -38,7 +38,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.deliverto";
 
 $ErrMsg = _('No orders were returned because');
-$SalesOrdersResult = DB_query($SQL, $db, $ErrMsg);
+$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
@@ -57,7 +57,7 @@ echo '<table cellpadding="2" width="100%">
 		</tr>';
 
 $k = 0; //row colour counter
-while ($myrow = DB_fetch_array($SalesOrdersResult)) {
+while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -66,14 +66,14 @@ while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 		$k = 1;
 	}
 
-	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?OrderNo=' . $myrow['orderno'];
-	$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
-	$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-	$FormatedOrderValue = locale_number_format($myrow['ordervalue'], 2);
-	$FormatedDateLastSent = ConvertSQLDate($myrow['datepackingslipprinted']);
-	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
+	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?OrderNo=' . $MyRow['orderno'];
+	$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
+	$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
+	$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], 2);
+	$FormatedDateLastSent = ConvertSQLDate($MyRow['datepackingslipprinted']);
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
 
-	if ($myrow['printedpackingslip'] == 1) {
+	if ($MyRow['printedpackingslip'] == 1) {
 		printf('<td><font size="2"><a href="%s">%s</a></font></td>
 				<td><font color=RED size="2">' . _('Already') . '<br />' . _('Sent') . '</font></td>
 				<td><font size="2">%s</font></td>
@@ -83,7 +83,7 @@ while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 				<td><font size="2">%s</font></td>
 				<td><font size="2">%s</font></td>
 				<td class="number"><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td></tr>', $ModifyPage, $myrow['orderno'], $myrow['name'], $myrow['brname'], $myrow['customerref'], $FormatedOrderDate, $FormatedDelDate, $myrow['deliverto'], $FormatedOrderValue, $FormatedDateLastSent);
+				<td><font size="2">%s</font></td></tr>', $ModifyPage, $MyRow['orderno'], $MyRow['name'], $MyRow['brname'], $MyRow['customerref'], $FormatedOrderDate, $FormatedDelDate, $MyRow['deliverto'], $FormatedOrderValue, $FormatedDateLastSent);
 	} else {
 		printf('<td><font size="2"><a href="%s">%s</a></font></td>
 				<td><font size="2"><a href="%s">' . _('Send') . '</a></font></td>
@@ -94,7 +94,7 @@ while ($myrow = DB_fetch_array($SalesOrdersResult)) {
 				<td><font size="2">%s</font></td>
 				<td><font size="2">%s</font></td>
 				<td class="number"><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td></tr>', $ModifyPage, $myrow['orderno'], $FTPDispatchNote, $myrow['name'], $myrow['brname'], $myrow['customerref'], $FormatedOrderDate, $FormatedDelDate, $myrow['deliverto'], $FormatedOrderValue, $FormatedDateLastSent);
+				<td><font size="2">%s</font></td></tr>', $ModifyPage, $MyRow['orderno'], $FTPDispatchNote, $MyRow['name'], $MyRow['brname'], $MyRow['customerref'], $FormatedOrderDate, $FormatedDelDate, $MyRow['deliverto'], $FormatedOrderValue, $FormatedDateLastSent);
 	}
 }
 //end of while loop
@@ -114,7 +114,7 @@ if (isset($_GET['OrderNo'])) {
 
 	/*Now get the order header info */
 
-	$sql = "SELECT salesorders.debtorno,
+	$SQL = "SELECT salesorders.debtorno,
 					customerref,
 					comments,
 					orddate,
@@ -145,22 +145,22 @@ if (isset($_GET['OrderNo'])) {
 
 
 	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database');
-	$result = DB_query($sql, $db, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($result) == 1) {
+	if (DB_num_rows($Result) == 1) {
 		/*There is ony one order header returned */
 
-		$myrow = DB_fetch_array($result);
-		if ($myrow['printedpackingslip'] == 1) {
-			prnMsg(_('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has previously been sent to Radio Beacon') . '. ' . _('It was sent on') . ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) . '<br />' . _('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . _('This check is there to ensure that duplication of dispatches to the customer are avoided'), 'warn');
-			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
-			echo '<p><a href="' . $RootPath / index . php . '">' . _('Back to the menu') . '</a>';
+		$MyRow = DB_fetch_array($Result);
+		if ($MyRow['printedpackingslip'] == 1) {
+			prnMsg(_('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has previously been sent to Radio Beacon') . '. ' . _('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . _('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . _('This check is there to ensure that duplication of dispatches to the customer are avoided'), 'warn');
+			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . urlencode($_GET['OrderNo']) . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
+			echo '<p><a href="' . $RootPath / 'index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.inc');
 			exit;
 		}
 
 		/*Now get the line items */
-		$sql = "SELECT stkcode,
+		$SQL = "SELECT stkcode,
 						description,
 						quantity,
 						units,
@@ -172,9 +172,9 @@ if (isset($_GET['OrderNo'])) {
 					AND salesorderdetails.orderno=" . $_GET['OrderNo'];
 
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database because');
-		$result = DB_query($sql, $db, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
-		if (DB_num_rows($result) > 0) {
+		if (DB_num_rows($Result) > 0) {
 			/*Yes there are line items to start the ball rolling creating the Header record - the PHRecord*/
 
 			/*First get the unique send id for the file name held in a separate file */
@@ -197,20 +197,20 @@ if (isset($_GET['OrderNo'])) {
 			fwrite($fp, $FileNumber);
 			fclose($fp);
 
-			$PHRecord = 'PH^^^' . $myrow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^' . $myrow['customerref'] . '^^^^^';
-			$PHRecord = $PHRecord . $myrow['deliverto'] . '^' . $myrow['deladd1'] . '^' . $myrow['deladd2'] . '^' . $myrow['deladd3'] . '^' . $myrow['deladd4'] . '^' . $myrow['deladd5'] . '^' . $myrow['deladd6'] . '^^^^';
-			$PHRecord = $PHRecord . $myrow['contactphone'] . '^' . $myrow['name'] . '^' . $myrow['address1'] . '^' . $myrow['address2'] . '^' . $myrow['address3'] . '^' . $myrow['address4'] . '^' . $myrow['address5'] . '^' . $myrow['address6'] . '^^^';
-			$PHRecord = $PHRecord . $myrow['deliverydate'] . '^^^^^^^' . $myrow['orddate'] . '^^^^^^DX^^^^^^^^^^^^^' . $_SESSION['CompanyRecord']['coyname'] . '^' . $_SESSION['CompanyRecord']['regoffice1'] . '^' . $_SESSION['CompanyRecord']['regoffice2'] . '^';
+			$PHRecord = 'PH^^^' . $MyRow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^' . $MyRow['customerref'] . '^^^^^';
+			$PHRecord = $PHRecord . $MyRow['deliverto'] . '^' . $MyRow['deladd1'] . '^' . $MyRow['deladd2'] . '^' . $MyRow['deladd3'] . '^' . $MyRow['deladd4'] . '^' . $MyRow['deladd5'] . '^' . $MyRow['deladd6'] . '^^^^';
+			$PHRecord = $PHRecord . $MyRow['contactphone'] . '^' . $MyRow['name'] . '^' . $MyRow['address1'] . '^' . $MyRow['address2'] . '^' . $MyRow['address3'] . '^' . $MyRow['address4'] . '^' . $MyRow['address5'] . '^' . $MyRow['address6'] . '^^^';
+			$PHRecord = $PHRecord . $MyRow['deliverydate'] . '^^^^^^^' . $MyRow['orddate'] . '^^^^^^DX^^^^^^^^^^^^^' . $_SESSION['CompanyRecord']['coyname'] . '^' . $_SESSION['CompanyRecord']['regoffice1'] . '^' . $_SESSION['CompanyRecord']['regoffice2'] . '^';
 			$PHRecord = $PHRecord . $_SESSION['CompanyRecord']['regoffice3'] . '^' . $_SESSION['CompanyRecord']['regoffice4'] . '^' . $_SESSION['CompanyRecord']['regoffice5'] . '^' . $_SESSION['CompanyRecord']['regoffice6'] . '^';
-			$PHRecord = $PHRecord . '^^^^^^^N^N^^H^^^^^^' . $myrow['deliverydate'] . '^^^^^^^' . $myrow['contactphone'] . '^' . $myrow['contactemail'] . '^^^^^^^^^^^^^^^^^^^^^^^^^^\n';
+			$PHRecord = $PHRecord . '^^^^^^^N^N^^H^^^^^^' . $MyRow['deliverydate'] . '^^^^^^^' . $MyRow['contactphone'] . '^' . $MyRow['contactemail'] . '^^^^^^^^^^^^^^^^^^^^^^^^^^\n';
 
 			$PDRec = array();
 			$LineCounter = 0;
 
-			while ($myrow2 = DB_fetch_array($result)) {
+			while ($MyRow2 = DB_fetch_array($Result)) {
 
-				$PickQty = $myrow2['quantity'] - $myrow2['qtyinvoiced'];
-				$PDRec[$LineCounter] = 'PD^^^' . $myrow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^^^^^^^' . $myrow2['stkcode'] . '^^' . $myrow2['description'] . '^1^^^' . $myrow2['quantity'] . '^' . $PickQty . '^^^^^^^^^^^^^^DX^^^^^^^^^^^^^^1000000000^' . $myrow['customerref'] . '^^^^^^^^^^^^^^^^^^^^^^';
+				$PickQty = $MyRow2['quantity'] - $MyRow2['qtyinvoiced'];
+				$PDRec[$LineCounter] = 'PD^^^' . $MyRow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^^^^^^^' . $MyRow2['stkcode'] . '^^' . $MyRow2['description'] . '^1^^^' . $MyRow2['quantity'] . '^' . $PickQty . '^^^^^^^^^^^^^^DX^^^^^^^^^^^^^^1000000000^' . $MyRow['customerref'] . '^^^^^^^^^^^^^^^^^^^^^^';
 				$LineCounter++;
 			}
 
@@ -252,8 +252,8 @@ if (isset($_GET['OrderNo'])) {
 			ftp_quit($conn_id);
 
 			/* Update the order printed flag to prevent double sendings */
-			$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" . $_GET['OrderNo'];
-			$result = DB_query($sql, $db);
+			$SQL = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted=CURRENT_DATE WHERE salesorders.orderno=" . $_GET['OrderNo'];
+			$Result = DB_query($SQL);
 
 			echo '<p>' . _('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;
 

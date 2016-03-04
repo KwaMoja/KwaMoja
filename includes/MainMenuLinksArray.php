@@ -1,31 +1,35 @@
 <?php
 
-$sql = "SELECT `modulelink`,
+unset($_SESSION['ModuleLink']);
+unset($_SESSION['ReportList']);
+unset($_SESSION['ModuleList']);
+unset($_SESSION['MenuItems']);
+
+$SQL = "SELECT SQL_CACHE `modulelink`,
 				`reportlink` ,
 				`modulename`
 			FROM modules
 			WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
 			ORDER BY `sequence`";
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	$ModuleLink[] = $myrow['modulelink'];
-	$ReportList[$myrow['modulelink']] = $myrow['reportlink'];
-	$ModuleList[] = _($myrow['modulename']);
+while ($MyRow = DB_fetch_array($Result)) {
+	$_SESSION['ModuleLink'][] = $MyRow['modulelink'];
+	$_SESSION['ReportList'][$MyRow['modulelink']] = $MyRow['reportlink'];
+	$_SESSION['ModuleList'][] = _($MyRow['modulename']);
 }
-
-$sql = "SELECT `modulelink`,
+$SQL = "SELECT SQL_CACHE `modulelink`,
 				`menusection` ,
 				`caption` ,
 				`url`
 			FROM menuitems
 			WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
 			ORDER BY `sequence`, `menusection`";
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	$MenuItems[$myrow['modulelink']][$myrow['menusection']]['Caption'][] = _($myrow['caption']);
-	$MenuItems[$myrow['modulelink']][$myrow['menusection']]['URL'][] = $myrow['url'];
+while ($MyRow = DB_fetch_array($Result)) {
+	$_SESSION['MenuItems'][$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = _($MyRow['caption']);
+	$_SESSION['MenuItems'][$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
 }
 
 include('includes/PluginMenuLinksArray.php');

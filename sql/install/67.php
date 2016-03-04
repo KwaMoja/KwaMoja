@@ -7,7 +7,7 @@ CreateTable('mrpcalendar',
   `manufacturingflag` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`calendardate`),
   KEY `daynumber` (`daynumber`)
-)", $db);
+)");
 
 
 ?>

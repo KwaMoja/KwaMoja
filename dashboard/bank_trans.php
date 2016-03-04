@@ -47,20 +47,20 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<table border="0" cellspacing="0" cellpadding="1" style="max-width:100%;width:99%;">
 		<tr>
 			<th colspan="5" style="margin:0px;padding:0px;background: transparent;">
 				<div class="CanvasTitle">' . _('Latest bank transactions') . '
-					<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+					<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 				</div>
 			</th>
 		</tr>';
 
-$sql = "SELECT banktrans.currcode,
+$SQL = "SELECT banktrans.currcode,
 				banktrans.amount,
 				banktrans.functionalexrate,
 				banktrans.exrate,
@@ -78,7 +78,7 @@ $sql = "SELECT banktrans.currcode,
 				ON banktrans.currcode=currencies.currabrev
 			ORDER BY banktrans.transdate DESC LIMIT 5";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 $AccountCurrTotal = 0;
 $LocalCurrTotal = 0;
 
@@ -93,7 +93,7 @@ echo '<tbody>
 
 $k = 0;
 
-while ($row = DB_fetch_array($result)) {
+while ($row = DB_fetch_array($Result)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;

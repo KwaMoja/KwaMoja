@@ -5,39 +5,39 @@ $Title = _('Where Used Inquiry');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])) {
-	$StockID = trim(mb_strtoupper($_GET['StockID']));
+	$StockId = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])) {
-	$StockID = trim(mb_strtoupper($_POST['StockID']));
+	$StockId = trim(mb_strtoupper($_POST['StockID']));
 }
 
 echo '<div class="toplink"><a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a></div>
-	<p class="page_title_text noPrint" >
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+	<p class="page_title_text" >
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
-if (isset($StockID)) {
-	$result = DB_query("SELECT description,
+if (isset($StockId)) {
+	$Result = DB_query("SELECT description,
 								units,
 								mbflag
 						FROM stockmaster
-						WHERE stockid='" . $StockID . "'", $db);
-	$myrow = DB_fetch_row($result);
-	if (DB_num_rows($result) == 0) {
-		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'), 'error');
+						WHERE stockid='" . $StockId . "'");
+	$MyRow = DB_fetch_row($Result);
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('The item code entered') . ' - ' . $StockId . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'), 'error');
 		include('includes/footer.inc');
 		exit;
 	}
 	echo '<br />
-		<div class="centre"><h3>' . $StockID . ' - ' . $myrow[0] . '  (' . _('in units of') . ' ' . $myrow[1] . ')</h3></div>';
+		<div class="centre"><h3>' . $StockId . ' - ' . $MyRow[0] . '  (' . _('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
 }
 
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 	<div class="centre">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" minlength="1" maxlength="20" value="' . $StockID . '" />';
+if (isset($StockId)) {
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" value="' . $StockId . '" />';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" minlength="1" maxlength="20" />';
+	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" />';
 }
 
 echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
@@ -45,25 +45,32 @@ echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') 
 echo '<br />
 	  </div>';
 
-if (isset($StockID)) {
+if (isset($StockId)) {
 
 	$SQL = "SELECT bom.*,
-				stockmaster.description
-			FROM bom INNER JOIN stockmaster
-			ON bom.parent = stockmaster.stockid
-			WHERE component='" . $StockID . "'
-			AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-			AND bom.effectiveto >='" . Date('Y-m-d') . "'";
+				stockmaster.description,
+				stockmaster.discontinued
+			FROM bom
+			INNER JOIN stockmaster
+				ON bom.parent = stockmaster.stockid
+			INNER JOIN locationusers
+				ON locationusers.loccode=bom.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE component='" . $StockId . "'
+				AND bom.effectiveafter <= CURRENT_DATE
+				AND bom.effectiveto > CURRENT_DATE";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');
-	$result = DB_query($SQL, $db, $ErrMsg);
-	if (DB_num_rows($result) == 0) {
-		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'), 'error');
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('The selected item') . ' ' . $StockId . ' ' . _('is not used as a component of any other parts'), 'error');
 	} else {
 
 		echo '<table width="97%" class="selection">
 				<tr>
 					<th>' . _('Used By') . '</th>
+					<th>' . _('Status') . '</th>
 					<th>' . _('Work Centre') . '</th>
 					<th>' . _('Location') . '</th>
 					<th>' . _('Quantity Required') . '</th>
@@ -71,7 +78,7 @@ if (isset($StockID)) {
 					<th>' . _('Effective To') . '</th>
 				</tr>';
 		$k = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
@@ -81,13 +88,19 @@ if (isset($StockID)) {
 				$k = 1;
 			}
 
-			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent'] . ' - ' . $myrow['description'] . '</a></td>
-				<td>' . $myrow['workcentreadded'] . '</td>
-				<td>' . $myrow['loccode'] . '</td>
-				<td class="number">' . locale_number_format($myrow['quantity'], 'Variable') . '</td>
-				<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
-				<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
-				</tr>';
+			if ($MyRow['discontinued'] == 1){
+				$Status = _('Obsolete');
+			}else{
+				$Status = _('Current');
+			}
+
+			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $MyRow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $MyRow['parent'] . ' - ' . $MyRow['description'] . '</a></td>
+				<td>' . $MyRow['workcentreadded'] . '</td>
+				<td>' . $MyRow['loccode'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['quantity'], 'Variable') . '</td>
+				<td>' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
+				<td>' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
+			</tr>';
 
 			//end of page full new headings if
 		}

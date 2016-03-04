@@ -136,9 +136,9 @@ document.onmousedown = mouseSelect;
 		<?php if ($Type=='frm') {
 			if ($FieldListings['defaults']['buttonvalue']==RPT_BTN_ADDNEW) {
 				echo '<select name="Params">';
-				foreach($FormEntries as $key=>$value) {
-					if ($FieldListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
-					echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+				foreach($FormEntries as $Key=>$Value) {
+					if ($FieldListings['defaults']['params']==$Key) $selected = ' selected'; else  $selected = '';
+					echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 				}
 				echo '</select>';
 			} else {
@@ -148,9 +148,9 @@ document.onmousedown = mouseSelect;
 			}
 		} else {
 			echo '<select name="Params">';
-			foreach($TotalLevels as $key=>$value) {
-				if ($FieldListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
-				echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+			foreach($TotalLevels as $Key=>$Value) {
+				if ($FieldListings['defaults']['params']==$Key) $selected = ' selected'; else  $selected = '';
+				echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 			}
 		} ?>
         </td>

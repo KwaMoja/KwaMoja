@@ -12,9 +12,9 @@ $SQL = "SELECT periodno ,
 		ORDER BY periodno";
 
 $ErrMsg = _('No periods were returned by the SQL because');
-$PeriodsResult = DB_query($SQL, $db, $ErrMsg);
+$PeriodsResult = DB_query($SQL, $ErrMsg);
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 /*show a table of the orders returned by the SQL */
 
@@ -31,18 +31,18 @@ for ($i = 0; $i < 3; $i++) {
 				<th>' . _('Date of Last Day') . '</th>
 			</tr>';
 	$k = 0;
-	while ($myrow = DB_fetch_array($PeriodsResult)) {
+	while ($MyRow = DB_fetch_array($PeriodsResult)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k++;
+			++$k;
 		}
-		echo '<td>' . $myrow['periodno'] . '</td>
-			  <td>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</td>
+		echo '<td>' . $MyRow['periodno'] . '</td>
+			  <td>' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</td>
 			</tr>';
-		$j++;
+		++$j;
 		if ($j == $PeriodsInTable) {
 			break;
 		}

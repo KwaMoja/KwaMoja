@@ -14,7 +14,7 @@ CreateTable('stockserialitems',
   KEY `serialno` (`serialno`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-)", $db);
+)");
 
 
 ?>

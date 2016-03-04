@@ -23,8 +23,8 @@ if (!isset($_GET['identifier'])) {
 	include('includes/footer.inc');
 	exit;
 } else {
-	$identifier = $_GET['identifier'];
-	$CreditLink .= '?identifier=' . $identifier;
+	$Identifier = $_GET['identifier'];
+	$CreditLink .= '?identifier=' . $Identifier;
 }
 
 if (isset($_GET['LineNo'])) {
@@ -39,7 +39,7 @@ if (isset($_GET['LineNo'])) {
 	exit;
 }
 
-if (!isset($_SESSION['CreditItems' . $identifier])) {
+if (!isset($_SESSION['CreditItems' . $Identifier])) {
 	/* This page can only be called with a credit note entry part entered */
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' . _('Select Credit Items') . '</a>
 		<br />
@@ -52,7 +52,7 @@ if (!isset($_SESSION['CreditItems' . $identifier])) {
 
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem =& $_SESSION['CreditItems' . $identifier]->LineItems[$LineNo];
+$LineItem =& $_SESSION['CreditItems' . $Identifier]->LineItems[$LineNo];
 
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1) {
@@ -74,13 +74,13 @@ echo '<div class="centre">';
 
 echo '<br /><a href="' . $RootPath . '/' . $CreditLink . '">' . _('Back to Credit Note Entry') . '</a>';
 
-echo '<br /><b>' . _('Credit of Controlled Item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('from') . ' ' . $_SESSION['CreditItems' . $identifier]->CustomerName . '</b></div>';
+echo '<br /><b>' . _('Credit of Controlled Item') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('from') . ' ' . $_SESSION['CreditItems' . $Identifier]->CustomerName . '</b></div>';
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['CreditItems' . $identifier]->Location;
+$LocationOut = $_SESSION['CreditItems' . $Identifier]->Location;
 /* $_SESSION['CreditingControlledItems_MustExist'] is in config.php - Phil and Jesse disagree on the default treatment compromise position make it user configurable */
 $ItemMustExist = $_SESSION['CreditingControlledItems_MustExist'];
-$StockID = $LineItem->StockID;
+$StockId = $LineItem->StockID;
 $InOutModifier = 1;
 $ShowExisting = false;
 $IsCredit = true;
@@ -91,10 +91,10 @@ echo '</tr>
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier) {
-	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
+if ($CreditLink == 'Credit_Invoice.php?identifier=' . $Identifier) {
+	$_SESSION['CreditItems' . $Identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 } else {
-	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;
+	$_SESSION['CreditItems' . $Identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;
 }
 
 include('includes/footer.inc');

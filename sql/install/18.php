@@ -14,7 +14,7 @@ CreateTable('contractcharges',
   KEY `contractcharges_ibfk_2` (`transtype`),
   CONSTRAINT `contractcharges_ibfk_1` FOREIGN KEY (`contractref`) REFERENCES `contracts` (`contractref`),
   CONSTRAINT `contractcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`typeid`)
-)", $db);
+)");
 
 
 ?>

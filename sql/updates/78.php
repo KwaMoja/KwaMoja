@@ -1,7 +1,7 @@
 <?php
 
-ChangeColumnSize('reference', 'stockmoves', 'VARCHAR(100)', 'NOT NULL', '', 100, $db);
+ChangeColumnSize('reference', 'stockmoves', 'VARCHAR(100)', 'NOT NULL', '', 100);
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

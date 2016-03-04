@@ -5,8 +5,8 @@ include('includes/session.inc');
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Customer Listing'));
-	$pdf->addInfo('Subject', _('Customer Listing'));
+	$PDF->addInfo('Title', _('Customer Listing'));
+	$PDF->addInfo('Subject', _('Customer Listing'));
 	$line_height = 12;
 	$PageNumber = 0;
 	$FontSize = 10;
@@ -101,7 +101,7 @@ if (isset($_POST['PrintPDF'])) {
 				if ($i > 0) {
 					$SQL .= " OR ";
 				}
-				$i++;
+				++$i;
 				$SQL .= "custbranch.salesman='" . $Salesperson . "'";
 			}
 
@@ -152,7 +152,7 @@ if (isset($_POST['PrintPDF'])) {
 				if ($i > 0) {
 					$SQL .= " OR ";
 				}
-				$i++;
+				++$i;
 				$SQL .= "custbranch.area='" . $Area . "'";
 			}
 
@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF'])) {
 				if ($i > 0) {
 					$SQL .= " OR ";
 				}
-				$i++;
+				++$i;
 				$SQL .= "custbranch.area='" . $Area . "'";
 			}
 
@@ -211,7 +211,7 @@ if (isset($_POST['PrintPDF'])) {
 				if ($i > 0) {
 					$SQL .= " OR ";
 				}
-				$i++;
+				++$i;
 				$SQL .= "custbranch.salesman='" . $Salesperson . "'";
 			}
 
@@ -226,14 +226,14 @@ if (isset($_POST['PrintPDF'])) {
 	/* end if not all sales areas was selected */
 
 
-	$CustomersResult = DB_query($SQL, $db);
+	$CustomersResult = DB_query($SQL);
 
-	if (DB_error_no($db) != 0) {
+	if (DB_error_no() != 0) {
 		$Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
-		prnMsg(_('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db));
+		prnMsg(_('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg());
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.inc');
@@ -255,7 +255,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Area = '';
 	$SalesPerson = '';
 
-	while ($Customers = DB_fetch_array($CustomersResult, $db)) {
+	while ($Customers = DB_fetch_array($CustomersResult)) {
 
 		if ($_POST['Activity'] != 'All') {
 
@@ -268,7 +268,7 @@ if (isset($_POST['PrintPDF'])) {
 					AND branchcode='" . $Customers['branchcode'] . "'
 					AND (type=10 or type=11)
 					AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']) . "'";
-			$ActivityResult = DB_query($SQL, $db, _('Could not retrieve the activity of the branch because'), _('The failed SQL was'));
+			$ActivityResult = DB_query($SQL, _('Could not retrieve the activity of the branch because'), _('The failed SQL was'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
 			$LocalCurrencyTurnover = $ActivityRow[0];
@@ -297,10 +297,10 @@ if (isset($_POST['PrintPDF'])) {
 				if ($YPos < ($Bottom_Margin + 80)) {
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
-				$pdf->setFont('', 'B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260 - $Left_Margin, $FontSize, _('Customers in') . ' ' . $Customers['areadescription']);
+				$PDF->setFont('', 'B');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 260 - $Left_Margin, $FontSize, _('Customers in') . ' ' . $Customers['areadescription']);
 				$Area = $Customers['area'];
-				$pdf->setFont('', '');
+				$PDF->setFont('', '');
 				$FontSize = 8;
 				$YPos -= $line_height;
 			}
@@ -311,9 +311,9 @@ if (isset($_POST['PrintPDF'])) {
 				if ($YPos < ($Bottom_Margin + 80)) {
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
-				$pdf->setFont('', 'B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 300 - $Left_Margin, $FontSize, $Customers['salesmanname']);
-				$pdf->setFont('', '');
+				$PDF->setFont('', 'B');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300 - $Left_Margin, $FontSize, $Customers['salesmanname']);
+				$PDF->setFont('', '');
 				$SalesPerson = $Customers['salesman'];
 				$FontSize = 8;
 				$YPos -= $line_height;
@@ -321,36 +321,36 @@ if (isset($_POST['PrintPDF'])) {
 
 			$YPos -= $line_height;
 
-			$LeftOvers = $pdf->addTextWrap(20, $YPos, 60, $FontSize, $Customers['debtorno']);
-			$LeftOvers = $pdf->addTextWrap(80, $YPos, 150, $FontSize, $Customers['name']);
-			$LeftOvers = $pdf->addTextWrap(80, $YPos - 10, 150, $FontSize, $Customers['address1']);
-			$LeftOvers = $pdf->addTextWrap(80, $YPos - 20, 150, $FontSize, $Customers['address2']);
-			$LeftOvers = $pdf->addTextWrap(80, $YPos - 30, 150, $FontSize, $Customers['address3']);
-			$LeftOvers = $pdf->addTextWrap(140, $YPos - 30, 150, $FontSize, $Customers['address4']);
-			$LeftOvers = $pdf->addTextWrap(180, $YPos - 30, 150, $FontSize, $Customers['address5']);
-			$LeftOvers = $pdf->addTextWrap(210, $YPos - 30, 150, $FontSize, $Customers['address6']);
+			$LeftOvers = $PDF->addTextWrap(20, $YPos, 60, $FontSize, $Customers['debtorno']);
+			$LeftOvers = $PDF->addTextWrap(80, $YPos, 150, $FontSize, $Customers['name']);
+			$LeftOvers = $PDF->addTextWrap(80, $YPos - 10, 150, $FontSize, $Customers['address1']);
+			$LeftOvers = $PDF->addTextWrap(80, $YPos - 20, 150, $FontSize, $Customers['address2']);
+			$LeftOvers = $PDF->addTextWrap(80, $YPos - 30, 150, $FontSize, $Customers['address3']);
+			$LeftOvers = $PDF->addTextWrap(140, $YPos - 30, 150, $FontSize, $Customers['address4']);
+			$LeftOvers = $PDF->addTextWrap(180, $YPos - 30, 150, $FontSize, $Customers['address5']);
+			$LeftOvers = $PDF->addTextWrap(210, $YPos - 30, 150, $FontSize, $Customers['address6']);
 
-			$LeftOvers = $pdf->addTextWrap(230, $YPos, 60, $FontSize, $Customers['branchcode']);
-			$LeftOvers = $pdf->addTextWrap(230, $YPos - 10, 60, $FontSize, _('Price List') . ': ' . $Customers['salestype']);
+			$LeftOvers = $PDF->addTextWrap(230, $YPos, 60, $FontSize, $Customers['branchcode']);
+			$LeftOvers = $PDF->addTextWrap(230, $YPos - 10, 60, $FontSize, _('Price List') . ': ' . $Customers['salestype']);
 
 			if ($_POST['Activity'] != 'All') {
-				$LeftOvers = $pdf->addTextWrap(230, $YPos - 20, 60, $FontSize, _('Turnover'), 'right');
-				$LeftOvers = $pdf->addTextWrap(230, $YPos - 30, 60, $FontSize, locale_number_format($LocalCurrencyTurnover, 0), 'right');
+				$LeftOvers = $PDF->addTextWrap(230, $YPos - 20, 60, $FontSize, _('Turnover'), 'right');
+				$LeftOvers = $PDF->addTextWrap(230, $YPos - 30, 60, $FontSize, locale_number_format($LocalCurrencyTurnover, 0), 'right');
 			}
 
-			$LeftOvers = $pdf->addTextWrap(290, $YPos, 150, $FontSize, $Customers['brname']);
-			$LeftOvers = $pdf->addTextWrap(290, $YPos - 10, 150, $FontSize, $Customers['contactname']);
-			$LeftOvers = $pdf->addTextWrap(290, $YPos - 20, 150, $FontSize, _('Ph') . ': ' . $Customers['phoneno']);
-			$LeftOvers = $pdf->addTextWrap(290, $YPos - 30, 150, $FontSize, _('Fax') . ': ' . $Customers['faxno']);
-			$LeftOvers = $pdf->addTextWrap(440, $YPos, 150, $FontSize, $Customers['braddress1']);
-			$LeftOvers = $pdf->addTextWrap(440, $YPos - 10, 150, $FontSize, $Customers['braddress2']);
-			$LeftOvers = $pdf->addTextWrap(440, $YPos - 20, 150, $FontSize, $Customers['braddress3']);
-			$LeftOvers = $pdf->addTextWrap(500, $YPos - 20, 150, $FontSize, $Customers['braddress4']);
-			$LeftOvers = $pdf->addTextWrap(540, $YPos - 20, 150, $FontSize, $Customers['braddress5']);
-			$LeftOvers = $pdf->addTextWrap(570, $YPos - 20, 150, $FontSize, $Customers['braddress6']);
-			$LeftOvers = $pdf->addTextWrap(440, $YPos - 30, 150, $FontSize, $Customers['email']);
+			$LeftOvers = $PDF->addTextWrap(290, $YPos, 150, $FontSize, $Customers['brname']);
+			$LeftOvers = $PDF->addTextWrap(290, $YPos - 10, 150, $FontSize, $Customers['contactname']);
+			$LeftOvers = $PDF->addTextWrap(290, $YPos - 20, 150, $FontSize, _('Ph') . ': ' . $Customers['phoneno']);
+			$LeftOvers = $PDF->addTextWrap(290, $YPos - 30, 150, $FontSize, _('Fax') . ': ' . $Customers['faxno']);
+			$LeftOvers = $PDF->addTextWrap(440, $YPos, 150, $FontSize, $Customers['braddress1']);
+			$LeftOvers = $PDF->addTextWrap(440, $YPos - 10, 150, $FontSize, $Customers['braddress2']);
+			$LeftOvers = $PDF->addTextWrap(440, $YPos - 20, 150, $FontSize, $Customers['braddress3']);
+			$LeftOvers = $PDF->addTextWrap(500, $YPos - 20, 150, $FontSize, $Customers['braddress4']);
+			$LeftOvers = $PDF->addTextWrap(540, $YPos - 20, 150, $FontSize, $Customers['braddress5']);
+			$LeftOvers = $PDF->addTextWrap(570, $YPos - 20, 150, $FontSize, $Customers['braddress6']);
+			$LeftOvers = $PDF->addTextWrap(440, $YPos - 30, 150, $FontSize, $Customers['email']);
 
-			$pdf->line($Page_Width - $Right_Margin, $YPos - 32, $Left_Margin, $YPos - 32);
+			$PDF->line($Page_Width - $Right_Margin, $YPos - 32, $Left_Margin, $YPos - 32);
 
 			$YPos -= 40;
 			if ($YPos < ($Bottom_Margin + 30)) {
@@ -361,77 +361,79 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	/*end while loop */
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d') . '.pdf'); //UldisN
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d') . '.pdf'); //UldisN
+	$PDF->__destruct();
 	exit;
 
 } else {
 
 	$Title = _('Customer Details Listing');
-	/* KwaMoja manual links before header.inc */
+	/* Manual links before header.inc */
 	$ViewTopic = 'ARReports';
 	$BookMark = 'CustomerListing';
 	include('includes/header.inc');
-	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
 
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection" summary="' . _('Input criteria for report') . '">';
 	echo '<tr>
 			<td>' . _('For Sales Areas') . ':</td>
-			<td><select required="required" minlength="1" name="Areas[]" multiple="multiple">';
+			<td><select required="required" name="Areas[]" multiple="multiple">';
 
-	$sql = "SELECT areacode, areadescription FROM areas";
-	$AreasResult = DB_query($sql, $db);
+	$SQL = "SELECT areacode, areadescription FROM areas";
+	$AreasResult = DB_query($SQL);
 
 	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
 
-	while ($myrow = DB_fetch_array($AreasResult)) {
-		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
+	while ($MyRow = DB_fetch_array($AreasResult)) {
+		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('For Sales folk') . ':</td>
-			<td><select required="required" minlength="1" name="SalesPeople[]" multiple="multiple">';
+			<td><select required="required" name="SalesPeople[]" multiple="multiple">';
 
-	$sql = "SELECT salesmancode, salesmanname FROM salesman";
+	$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 	if ($_SESSION['SalesmanLogin'] != '') {
-		$sql .= " WHERE salesmancode='" . $_SESSION['SalesmanLogin'] . "'";
+		$SQL .= " WHERE salesmancode='" . $_SESSION['SalesmanLogin'] . "'";
 	} else {
 		echo '<option selected="selected" value="All">' . _('All sales folk') . '</option>';
 	}
-	$SalesFolkResult = DB_query($sql, $db);
+	$SalesFolkResult = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($SalesFolkResult)) {
-		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+	while ($MyRow = DB_fetch_array($SalesFolkResult)) {
+		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+			</td>
+		</tr>';
 
-	echo '<tr><td>' . _('Level Of Activity') . ':</td>
-			<td><select required="required" minlength="1" name="Activity">
+	echo '<tr>
+			<td>' . _('Level Of Activity') . ':</td>
+			<td><select required="required" name="Activity">
 				<option selected="selected" value="All">' . _('All customers') . '</option>
 				<option value="GreaterThan">' . _('Sales Greater Than') . '</option>
 				<option value="LessThan">' . _('Sales Less Than') . '</option>
-				</select></td>
-			<td>';
+				</select>
+			</td>';
 
-	echo '<input type="text" class="number" name="ActivityAmount" size="8" minlength="0" maxlength="8" value="0" /></td>
-		</tr>';
+	echo '<td>
+			<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" />
+		</td>
+	</tr>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 6, 0, Date('y')));
 	echo '<tr>
 			<td>' . _('Activity Since') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="ActivitySince" size="10" minlength="0" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
+			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  name="ActivitySince" size="10" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
 		</tr>';
 
 	echo '</table>
-			<br />
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 	include('includes/footer.inc');
 

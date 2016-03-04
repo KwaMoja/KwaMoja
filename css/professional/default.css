@@ -107,6 +107,17 @@ color:blue;
 text-decoration:none;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 .centre {
 text-align:center;
 margin:0 auto;
@@ -169,7 +180,7 @@ color:#300;
 text-align:right;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -363,9 +374,6 @@ padding:3px;
 }
 
 #QuickMenuDiv li a:hover {
-border:thin inset #ddd;
-text-decoration:none;
-color:blue;
 padding:3px;
 }
 

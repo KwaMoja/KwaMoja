@@ -11,7 +11,7 @@ CreateTable('currencies',
   `webcart` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-)", $db);
+)");
 
 
 ?>

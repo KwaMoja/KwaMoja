@@ -7,7 +7,7 @@ CreateTable('dashboard_scripts',
   `pagesecurity` int(11) NOT NULL DEFAULT '1',
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
-)", $db);
+)");
 
 
 ?>

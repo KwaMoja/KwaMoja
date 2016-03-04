@@ -62,13 +62,13 @@ $Parameters['Username'] = xmlrpcval('admin');
 
 $Parameters['Password'] = xmlrpcval('kwamoja');
 
-$msg = new xmlrpcmsg("kwamoja.xmlrpc_GetStockBalance", $Parameters);
+$Msg = new xmlrpcmsg("kwamoja.xmlrpc_GetStockBalance", $Parameters);
 
 $client = new xmlrpc_client($ServerURL);
 
 $client-&gt;setDebug($DebugLevel);
 
-$response = $client-&gt;send($msg);
+$response = $client-&gt;send($Msg);
 
 $answer = php_xmlrpc_decode($response-&gt;value());
 

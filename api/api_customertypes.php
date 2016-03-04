@@ -11,12 +11,12 @@ function GetCustomerTypeList($user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = 'SELECT typeid FROM debtortype';
-	$result = DB_query($sql, $db);
+	$SQL = 'SELECT typeid FROM debtortype';
+	$Result = api_DB_query($SQL);
 	$i = 0;
-	while ($myrow = DB_fetch_array($result)) {
-		$TaxgroupList[$i] = $myrow[0];
-		$i++;
+	while ($MyRow = DB_fetch_array($Result)) {
+		$TaxgroupList[$i] = $MyRow[0];
+		++$i;
 	}
 	return $TaxgroupList;
 }
@@ -33,8 +33,8 @@ function GetCustomerTypeDetails($typeid, $user, $password) {
 		$Errors[0] = NoAuthorisation;
 		return $Errors;
 	}
-	$sql = "SELECT * FROM debtortype WHERE typeid='" . $typeid . "'";
-	$result = DB_query($sql, $db);
-	return DB_fetch_array($result);
+	$SQL = "SELECT * FROM debtortype WHERE typeid='" . $typeid . "'";
+	$Result = api_DB_query($SQL);
+	return DB_fetch_array($Result);
 }
 ?>

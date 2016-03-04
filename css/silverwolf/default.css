@@ -150,6 +150,17 @@ color:#5B5B68;
 text-decoration:none;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 img {
 border:none;
 vertical-align:middle;
@@ -204,7 +215,7 @@ text-align:right;
 vertical-align:middle;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -399,12 +410,10 @@ display:inline;
 }
 
 #QuickMenuDiv li a {
-border:thin outset lightgray;
 padding:9px;
 }
 
 #QuickMenuDiv li a:hover {
-border:thin inset lightgray;
 text-decoration:none;
 color:#000;
 padding:9px;
@@ -520,20 +529,20 @@ padding:3px;
 #FooterLogoDiv {
 float:left;
 background:#FFF;
-border-radius:8px 8px 8px 8px;
-margin-left:47%;
+border-radius:8px;
+margin-left:44%;
 padding:3px;
 }
 
 #FooterVersionDiv {
 clear:both;
-float:left;
-margin-left:47%;
+text-align:center;
 }
 
 #FooterTimeDiv {
+display:block;
 float:right;
-margin-top:-22px;
+line-height:2.8em; /* Center the text vertically. */
 }
 
 #dialog_buttons,td.number,input.number,input.integer {

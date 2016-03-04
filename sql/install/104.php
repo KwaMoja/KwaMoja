@@ -15,7 +15,7 @@ CreateTable('salesman',
   PRIMARY KEY (`salesmancode`),
   KEY `fk_salesman_1` (`salesarea`),
   CONSTRAINT `fk_salesman_1` FOREIGN KEY (`salesarea`) REFERENCES `areas` (`areacode`)
-)", $db);
+)");
 
 
 ?>

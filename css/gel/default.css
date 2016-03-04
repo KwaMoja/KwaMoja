@@ -97,6 +97,17 @@ text-decoration:none;
 color:blue;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 img {
 border:none;
 vertical-align:middle;
@@ -151,7 +162,7 @@ background-color:#ccc;
 color:#300;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 
@@ -534,8 +545,8 @@ padding:3px;
 #FooterLogoDiv {
 float:left;
 background:transparent;
-border-radius:8px 8px 8px 8px;
-margin-left:47%;
+border-radius:8px;
+margin-left:44%;
 padding:3px;
 }
 
@@ -546,8 +557,9 @@ margin-left:47%;
 }
 
 #FooterTimeDiv {
+display:block;
 float:right;
-margin-top:-22px;
+line-height:2.8em;
 }
 
 #dialog_buttons,td.number,input.number,input.integer {

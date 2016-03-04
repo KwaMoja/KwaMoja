@@ -2,6 +2,14 @@
 
 include('includes/session.inc');
 $Title = _('Sales People Maintenance');
+$ViewTopic = 'SalesPeople';
+$BookMark = 'SalesPeople';
+if (isset($_GET['SelectedSalesPerson'])) {
+	$BookMark = 'SalespeopleEdit';
+}// For Edit's screen.
+if (isset($_GET['delete'])) {
+	$BookMark = 'SalespeopleDelete';
+}// For Delete's ERROR Message Report.
 include('includes/header.inc');
 
 if (isset($_GET['SelectedSalesPerson'])) {
@@ -16,7 +24,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -29,26 +37,26 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (mb_strlen($_POST['SalesmanCode']) > 3) {
+	if (mb_strlen(stripslashes($_POST['SalesmanCode'])) > 3) {
 		$InputError = 1;
 		prnMsg(_('The salesperson code must be three characters or less long'), 'error');
 		$Errors[$i] = 'SalesmanCode';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['SalesmanCode']) == 0 or $_POST['SalesmanCode'] == '') {
 		$InputError = 1;
 		prnMsg(_('The salesperson code cannot be empty'), 'error');
 		$Errors[$i] = 'SalesmanCode';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['SalesmanName']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The salesperson name must be thirty characters or less long'), 'error');
 		$Errors[$i] = 'SalesmanName';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['SalesArea']) == 0) {
 		$InputError = 1;
 		prnMsg(_('You must select an area for this salesman'), 'error');
 		$Errors[$i] = 'SalesmanName';
-		$i++;
+		++$i;
 	} elseif (mb_strlen($_POST['SManTel']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'), 'error');
@@ -95,7 +103,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
+		$SQL = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
 									salesarea='" . $_POST['SalesArea'] . "',
 									commissionrate1='" . filter_number_format($_POST['CommissionRate1']) . "',
 									smantel='" . $_POST['SManTel'] . "',
@@ -104,14 +112,14 @@ if (isset($_POST['submit'])) {
 									commissionrate2='" . filter_number_format($_POST['CommissionRate2']) . "',
 									manager='" . $_POST['Manager'] . "',
 									current='" . $_POST['Current'] . "'
-								WHERE salesmancode = '" . $SelectedSalesPerson . "'";
+								WHERE salesmancode = '" . stripslashes($SelectedSalesPerson) . "'";
 
-		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
+		$Msg = _('Salesperson record for') . ' ' . stripslashes($_POST['SalesmanName']) . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
 
 		/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
 
-		$sql = "INSERT INTO salesman (salesmancode,
+		$SQL = "INSERT INTO salesman (salesmancode,
 						salesmanname,
 						salesarea,
 						manager,
@@ -133,7 +141,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['Current'] . "'
 					)";
 
-		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
+		$Msg = _('A new salesperson record has been added for') . ' ' . stripslashes($_POST['SalesmanName']);
 	}
 	if ($InputError != 1) {
 
@@ -142,15 +150,15 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The update of the manager field failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
 			$ManagerSQL = "UPDATE salesman SET manager=0 WHERE salesarea='" . $_POST['SalesArea'] . "'";
-			$result = DB_query($ManagerSQL, $db, $ErrMsg, $DbgMsg);
+			$Result = DB_query($ManagerSQL, $ErrMsg, $DbgMsg);
 		}
 
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the salesperson failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-		prnMsg($msg, 'success');
+		prnMsg($Msg, 'success');
 
 		unset($SelectedSalesPerson);
 		unset($_POST['SalesmanCode']);
@@ -169,32 +177,31 @@ if (isset($_POST['submit'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
-
-	$sql = "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='" . $SelectedSalesPerson . "'";
-	$result = DB_query($sql, $db);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
-		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'), 'error');
+	$SQL = "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='" . $SelectedSalesPerson . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
+		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('branches that refer to this salesperson'), 'error');
 
 	} else {
-		$sql = "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='" . $SelectedSalesPerson . "'";
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0] > 0) {
-			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them'), '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'), 'error');
+		$SQL = "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='" . $SelectedSalesPerson . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0] > 0) {
+			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them'), '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('sales analysis records that refer to this salesperson'), 'error');
 		} else {
-			$sql = "SELECT COUNT(*) FROM www_users WHERE salesman='" . $SelectedSalesPerson . "'";
-			$result = DB_query($sql, $db);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0] > 0) {
-				prnMsg(_('Cannot delete this salesperson because'), '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('user records that refer to this salesperson') . '.' . _('First delete any users that refer to this sales person'), 'error');
+			$SQL = "SELECT COUNT(*) FROM www_users WHERE salesman='" . $SelectedSalesPerson . "'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
+			if ($MyRow[0] > 0) {
+				prnMsg(_('Cannot delete this salesperson because'), '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('user records that refer to this salesperson') . '.' . _('First delete any users that refer to this sales person'), 'error');
 			} else {
 
-				$sql = "DELETE FROM salesman WHERE salesmancode='" . $SelectedSalesPerson . "'";
+				$SQL = "DELETE FROM salesman WHERE salesmancode='" . $SelectedSalesPerson . "'";
 				$ErrMsg = _('The salesperson could not be deleted because');
-				$result = DB_query($sql, $db, $ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
-				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'), 'success');
+				prnMsg(_('Salesperson') . ' ' . stripslashes($SelectedSalesPerson) . ' ' . _('has been deleted from the database'), 'success');
 				unset($SelectedSalesPerson);
 				unset($delete);
 			}
@@ -210,7 +217,7 @@ if (!isset($SelectedSalesPerson)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT salesmancode,
+	$SQL = "SELECT salesmancode,
 				salesmanname,
 				salesarea,
 				manager,
@@ -221,59 +228,61 @@ if (!isset($SelectedSalesPerson)) {
 				commissionrate2,
 				current
 			FROM salesman";
-	$result = DB_query($sql, $db);
+	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
-	echo '<tr>
-			<th class="SortableColumn">' . _('Code') . '</th>
-			<th class="SortableColumn">' . _('Name') . '</th>
-			<th class="SortableColumn">' . _('SalesArea') . '</th>
-			<th class="SortableColumn">' . _('Manager') . '</th>
-			<th>' . _('Telephone') . '</th>
-			<th>' . _('Facsimile') . '</th>
-			<th>' . _('Comm Rate 1') . '</th>
-			<th>' . _('Break') . '</th>
-			<th>' . _('Comm Rate 2') . '</th>
-			<th class="SortableColumn">' . _('Current') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('SalesArea') . '</th>
+					<th class="SortedColumn">' . _('Manager') . '</th>
+					<th>' . _('Telephone') . '</th>
+					<th>' . _('Facsimile') . '</th>
+					<th>' . _('Comm Rate 1') . '</th>
+					<th>' . _('Break') . '</th>
+					<th>' . _('Comm Rate 2') . '</th>
+					<th class="SortedColumn">' . _('Current') . '</th>
+				</tr>
+			</thead>';
 	$k = 0;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
 		} else {
 			echo '<tr class="OddTableRows">';
-			$k++;
+			++$k;
 		}
-		if ($myrow['current'] == 1) {
+		if ($MyRow['current'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
 		}
-		if ($myrow['manager'] == 1) {
+		if ($MyRow['manager'] == 1) {
 			$ManagerText = _('Yes');
 		} else {
 			$ManagerText = _('No');
 		}
 
-		$sql = "SELECT areadescription FROM areas WHERE areacode='" . $myrow['salesarea'] . "'";
-		$AreaResult = DB_query($sql, $db);
+		$SQL = "SELECT areadescription FROM areas WHERE areacode='" . $MyRow['salesarea'] . "'";
+		$AreaResult = DB_query($SQL);
 		$AreaRow = DB_fetch_array($AreaResult);
 
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedSalesPerson=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>', $myrow['salesmancode'], $myrow['salesmanname'], $AreaRow['areadescription'], $ManagerText, $myrow['smantel'], $myrow['smanfax'], locale_number_format($myrow['commissionrate1'], 2), locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']), locale_number_format($myrow['commissionrate2'], 2), $ActiveText, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?', $myrow['salesmancode']);
+		echo '<td>' . $MyRow['salesmancode'] . '</td>
+				<td>' . $MyRow['salesmanname'] . '</td>
+				<td>' . $AreaRow['areadescription'] . '</td>
+				<td>' . $ManagerText . '</td>
+				<td>' . $MyRow['smantel'] . '</td>
+				<td>' . $MyRow['smanfax'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['commissionrate1'], 2) . '</td>
+				<td class="number">' . locale_number_format($MyRow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['commissionrate2'], 2) . '</td>
+				<td>' . $ActiveText . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedSalesPerson=' . urlencode($MyRow['salesmancode']) . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedSalesPerson=' . urlencode($MyRow['salesmancode']) . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this sales person?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -285,14 +294,13 @@ if (isset($SelectedSalesPerson)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPerson)) {
 		//editing an existing Sales-person
 
-		$sql = "SELECT salesmancode,
+		$SQL = "SELECT salesmancode,
 					salesmanname,
 					salesarea,
 					manager,
@@ -305,19 +313,19 @@ if (!isset($_GET['delete'])) {
 				FROM salesman
 				WHERE salesmancode='" . $SelectedSalesPerson . "'";
 
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['SalesmanCode'] = $myrow['salesmancode'];
-		$_POST['SalesmanName'] = $myrow['salesmanname'];
-		$_POST['SalesArea'] = $myrow['salesarea'];
-		$_POST['Manager'] = $myrow['manager'];
-		$_POST['SManTel'] = $myrow['smantel'];
-		$_POST['SManFax'] = $myrow['smanfax'];
-		$_POST['CommissionRate1'] = locale_number_format($myrow['commissionrate1'], 'Variable');
-		$_POST['Breakpoint'] = locale_number_format($myrow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']);
-		$_POST['CommissionRate2'] = locale_number_format($myrow['commissionrate2'], 'Variable');
-		$_POST['Current'] = $myrow['current'];
+		$_POST['SalesmanCode'] = $MyRow['salesmancode'];
+		$_POST['SalesmanName'] = $MyRow['salesmanname'];
+		$_POST['SalesArea'] = $MyRow['salesarea'];
+		$_POST['Manager'] = $MyRow['manager'];
+		$_POST['SManTel'] = $MyRow['smantel'];
+		$_POST['SManFax'] = $MyRow['smanfax'];
+		$_POST['CommissionRate1'] = locale_number_format($MyRow['commissionrate1'], 'Variable');
+		$_POST['Breakpoint'] = locale_number_format($MyRow['breakpoint'], $_SESSION['CompanyRecord']['decimalplaces']);
+		$_POST['CommissionRate2'] = locale_number_format($MyRow['commissionrate2'], 'Variable');
+		$_POST['Current'] = $MyRow['current'];
 
 
 		echo '<input type="hidden" name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
@@ -333,7 +341,7 @@ if (!isset($_GET['delete'])) {
 		echo '<table class="selection">
 				<tr>
 					<td>' . _('Salesperson code') . ':</td>
-					<td><input type="text" name="SalesmanCode" size="3" autofocus="autofocus" required="required" minlength="1" maxlength="3" /></td>
+					<td><input type="text" name="SalesmanCode" size="3" autofocus="autofocus" required="required" maxlength="3" /></td>
 				</tr>';
 	}
 	if (!isset($_POST['SalesmanName'])) {
@@ -366,15 +374,15 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Salesperson Name') . ':</td>
-			<td><input type="text" name="SalesmanName"  size="30" required="required" minlength="1" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
+			<td><input type="text" name="SalesmanName"  size="30" required="required" maxlength="30" value="' . $_POST['SalesmanName'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Sales Area') . ':' . '</td>
-			<td><select required="required" minlength="1" tabindex="2" name="SalesArea">';
-	$sql = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
+			<td><select required="required" tabindex="2" name="SalesArea">';
+	$SQL = "SELECT areacode, areadescription FROM areas ORDER BY areadescription";
 	$ErrMsg = _('An error occurred in retrieving the areas from the database');
 	$DbgMsg = _('The SQL that was used to retrieve the area information and that failed in the process was');
-	$AreaResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	$AreaResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	echo '<option value=""></option>';
 	while ($AreaRow = DB_fetch_array($AreaResult)) {
 		if ($_POST['SalesArea'] == $AreaRow['areacode']) {
@@ -388,28 +396,28 @@ if (!isset($_GET['delete'])) {
 	echo '</td></tr>';
 	echo '<tr>
 			<td>' . _('Telephone No') . ':</td>
-			<td><input type="tel" name="SManTel" size="20" minlength="0" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
+			<td><input type="tel" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Facsimile No') . ':</td>
-			<td><input type="tel" name="SManFax" size="20" minlength="0" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
+			<td><input type="tel" name="SManFax" size="20" maxlength="20" value="' . $_POST['SManFax'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 1') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate1" size="5" required="required" minlength="1" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
+			<td><input type="text" class="number" name="CommissionRate1" size="5" required="required" maxlength="5" value="' . $_POST['CommissionRate1'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Breakpoint') . ':</td>
-			<td><input type="text" class="number" name="Breakpoint" size="6" minlength="0" maxlength="6" value="' . $_POST['Breakpoint'] . '" /></td>
+			<td><input type="text" class="number" name="Breakpoint" size="6" maxlength="6" value="' . $_POST['Breakpoint'] . '" /></td>
 		</tr>';
 	echo '<tr>
 			<td>' . _('Commission Rate 2') . ':</td>
-			<td><input type="text" class="number" name="CommissionRate2" size="5" required="required" minlength="1" maxlength="5" value="' . $_POST['CommissionRate2'] . '" /></td>
+			<td><input type="text" class="number" name="CommissionRate2" size="5" required="required" maxlength="5" value="' . $_POST['CommissionRate2'] . '" /></td>
 		</tr>';
 
 	echo '<tr>
 			<td>' . _('Area Manager?') . ':</td>
-			<td><select required="required" minlength="1" name="Manager">';
+			<td><select required="required" name="Manager">';
 	if ($_POST['Manager'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -425,7 +433,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<tr>
 			<td>' . _('Current?') . ':</td>
-			<td><select required="required" minlength="1" name="Current">';
+			<td><select required="required" name="Current">';
 	if ($_POST['Current'] == 1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -439,10 +447,8 @@ if (!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		</table>
-		<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
 		</div>
 		</form>';
 

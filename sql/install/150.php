@@ -13,7 +13,7 @@ CreateTable('workcentres',
   KEY `Description` (`description`),
   KEY `Location` (`location`),
   CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
-)", $db);
+)");
 
 
 ?>

@@ -47,9 +47,9 @@
     <tr>
       <td><?php echo RPT_DATEDEF; ?></td>
       <td colspan="2"><select name="DefDate">
-		<?php foreach($DateChoices as $key=>$value) {
-			if ($DateListings['params']==$key) $Selected = ' selected'; else $Selected = '';
-			echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
+		<?php foreach($DateChoices as $Key=>$Value) {
+			if ($DateListings['params']==$Key) $Selected = ' selected'; else $Selected = '';
+			echo '<option value="'.$Key.'"'.$Selected.'>'.$Value.'</option>';
 		} ?>
       </select></td>
     </tr>
@@ -253,10 +253,10 @@
 	  </td>
       <td>
 		<select name="Params">
-		<?php foreach($CritChoices as $key=>$value) {
-			$value=mb_substr($value,2);
-			if ($CritListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
-			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		<?php foreach($CritChoices as $Key=>$Value) {
+			$Value=mb_substr($Value,2);
+			if ($CritListings['defaults']['params']==$Key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$Key.'"'.$selected.'>'.$Value.'</option>';
 		} ?>
         </select></td>
       <td align = "center">

@@ -1,7 +1,7 @@
 <?php
 
-NewConfigValue('SmtpSetting','0', $db);
+NewConfigValue('SmtpSetting','0');
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

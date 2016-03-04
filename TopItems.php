@@ -3,39 +3,35 @@
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
 $Title = _('Top Items Searching');
 include('includes/header.inc');
 //check if input already
 if (!(isset($_POST['Search']))) {
 
-	echo '<p class="page_title_text noPrint" >
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
+	echo '<p class="page_title_text" >
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
 		</p>';
-	echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-	echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	//to view store location
 	echo '<tr>
 			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
-			<td><select minlength="0" name="Location">';
-	if ($_SESSION['RestrictLocations'] == 0) {
-		$sql = "SELECT locationname,
-						loccode
-					FROM locations";
-		echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
-	} else {
-		$sql = "SELECT locationname,
-						loccode
-					FROM locations
-					INNER JOIN www_users
-						ON locations.loccode=www_users.defaultlocation
-					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
-	}
-	$result = DB_query($sql, $db);
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['loccode'] . ' - ' . $myrow['locationname'] . '</option>';
+			<td><select name="Location">';
+	$SQL = "SELECT locationname,
+					locations.loccode
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+				ORDER BY locations.locationname";
+	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -43,15 +39,16 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Customer Type') . '</td>
 			<td>:</td>
-			<td><select required="required" minlength="1" name="Customers">';
+			<td><select required="required" name="Customers">';
 
-	$sql = "SELECT typename,
+	$SQL = "SELECT typename,
 					typeid
-				FROM debtortype";
-	$result = DB_query($sql, $db);
+				FROM debtortype
+			ORDER BY typename";
+	$Result = DB_query($SQL);
 	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -61,12 +58,12 @@ if (!(isset($_POST['Search']))) {
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL, $db);
+	$Result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:150px">' . _('In Stock Category') . ' </td>
 			<td>:</td>
-			<td><select minlength="0" name="StockCat">';
+			<td><select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
@@ -75,11 +72,11 @@ if (!(isset($_POST['Search']))) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -89,7 +86,7 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td style="width:150px">' . _('Select Order By ') . ' </td>
 			<td>:</td>
-			<td><select required="required" minlength="1" name="Sequence">
+			<td><select required="required" name="Sequence">
 				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
 				<option value="valuesales">' . _('Value of Sales') . '</option>
 				</select></td>
@@ -98,35 +95,33 @@ if (!(isset($_POST['Search']))) {
 	echo '<tr>
 			<td>' . _('Number Of Days') . ' </td>
 			<td>:</td>
-			<td><input class="integer" tabindex="3" type="text" name="NumberOfDays" size="8" required="required" minlength="1" maxlength="8" value="30" /></td>
+			<td><input class="integer" tabindex="3" type="text" name="NumberOfDays" size="8" required="required" maxlength="8" value="30" /></td>
 		 </tr>';
 	//Stock in days less than
 	echo '<tr>
 			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="integer" tabindex="4" type="text" name="MaxDaysOfStock" size="8" required="required" minlength="1" maxlength="8" value="999" /></td>
+			<td><input class="integer" tabindex="4" type="text" name="MaxDaysOfStock" size="8" required="required" maxlength="8" value="999" /></td>
 			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
 		 </tr>';
 	//view number of NumberOfTopItems items
 	echo '<tr>
 			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="integer" tabindex="4" type="text" name="NumberOfTopItems" size="8" required="required" minlength="1" maxlength="8" value="100" /></td>
+			<td><input class="integer" tabindex="4" type="text" name="NumberOfTopItems" size="8" required="required" maxlength="8" value="100" /></td>
 		 </tr>
 		 <tr>
 			<td></td>
 			<td></td>
 		</tr>
 	</table>
-	<br />
 	<div class="centre">
 		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
-	</div>
 	</div>
 	</form>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -filter_number_format($_POST['NumberOfDays'])));
 
-	$SQL = "SELECT 	salesorderdetails.stkcode,
+	$SQL = "SELECT salesorderdetails.stkcode,
 					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
 					SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice/currencies.rate ) AS valuesales,
 					stockmaster.description,
@@ -134,13 +129,22 @@ if (!(isset($_POST['Search']))) {
 					stockmaster.mbflag,
 					currencies.rate,
 					debtorsmaster.currcode,
+					fromstkloc,
 					stockmaster.decimalplaces
-			FROM 	salesorderdetails, salesorders, debtorsmaster,stockmaster, currencies
-			WHERE 	salesorderdetails.orderno = salesorders.orderno
-					AND salesorderdetails.stkcode = stockmaster.stockid
-					AND salesorders.debtorno = debtorsmaster.debtorno
-					AND debtorsmaster.currcode = currencies.currabrev
-					AND salesorderdetails.actualdispatchdate >= '" . $FromDate . "'";
+				FROM salesorderdetails
+				INNER JOIN salesorders
+					ON salesorderdetails.orderno = salesorders.orderno
+				INNER JOIN debtorsmaster
+					ON salesorders.debtorno = debtorsmaster.debtorno
+				INNER JOIN stockmaster
+					ON salesorderdetails.stkcode = stockmaster.stockid
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+				INNER JOIN locationusers
+					ON locationusers.loccode=salesorders.fromstkloc
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+				WHERE salesorderdetails.actualdispatchdate >= '" . $FromDate . "'";
 
 	if ($_POST['Location'] != 'All') {
 		$SQL = $SQL . "	AND salesorders.fromstkloc = '" . $_POST['Location'] . "'";
@@ -158,24 +162,25 @@ if (!(isset($_POST['Search']))) {
 					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
 
-	$result = DB_query($SQL, $db);
+	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text noPrint"  align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo '<form onSubmit="return VerifyForm(this);" action="PDFTopItems.php"  method="GET">';
-	echo '<div>';
+	echo '<p class="page_title_text"  align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
+	echo '<form action="PDFTopItems.php"  method="GET">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-			<th class="SortableColumn">' . _('#') . '</th>
-			<th class="SortableColumn">' . _('Code') . '</th>
-			<th class="SortableColumn">' . _('Description') . '</th>
-			<th class="SortableColumn">' . _('Total Invoiced') . '</th>
-			<th>' . _('Units') . '</th>
-			<th class="SortableColumn">' . _('Value Sales') . '</th>
-			<th>' . _('On Hand') . '</th>
-			<th>' . _('On Order') . '</th>
-			<th>' . _('Stock (Days)') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('#') . '</th>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('Total Invoiced') . '</th>
+					<th>' . _('Units') . '</th>
+					<th class="SortedColumn">' . _('Value Sales') . '</th>
+					<th>' . _('On Hand') . '</th>
+					<th>' . _('On Order') . '</th>
+					<th>' . _('Stock (Days)') . '</th>
+				</tr>
+			</thead>';
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
 			<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
@@ -183,10 +188,11 @@ if (!(isset($_POST['Search']))) {
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />';
 	$k = 0; //row colour counter
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	echo '<tbody>';
+	while ($MyRow = DB_fetch_array($Result)) {
 		$QOH = 0;
 		$QOO = 0;
-		switch ($myrow['mbflag']) {
+		switch ($MyRow['mbflag']) {
 			case 'A':
 			case 'D':
 			case 'K':
@@ -195,46 +201,28 @@ if (!(isset($_POST['Search']))) {
 				break;
 			case 'M':
 			case 'B':
-				$QOHResult = DB_query("SELECT sum(quantity)
+				$QohSql = "SELECT sum(quantity)
 								FROM locstock
-								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'", $db);
-				$QOHRow = DB_fetch_row($QOHResult);
-				$QOH = $QOHRow[0];
-				$QOOSQL = "SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
-							FROM purchorders INNER JOIN purchorderdetails
-							ON purchorders.orderno=purchorderdetails.orderno
-							WHERE purchorderdetails.itemcode='" . DB_escape_string($myrow['stkcode']) . "'
-							AND purchorderdetails.completed =0
-							AND purchorders.status<>'Cancelled'
-							AND purchorders.status<>'Pending'
-							AND purchorders.status<>'Rejected'";
-				$QOOResult = DB_query($QOOSQL, $db);
-				if (DB_num_rows($QOOResult) == 0) {
-					$QOO = 0;
-				} else {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO = $QOORow[0];
-				}
-				//Also the on work order quantities
-				$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
-						FROM woitems INNER JOIN workorders
-						ON woitems.wo=workorders.wo
-						WHERE workorders.closed=0
-						AND woitems.stockid='" . DB_escape_string($myrow['stkcode']) . "'";
-				$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
-				$QOOResult = DB_query($sql, $db, $ErrMsg);
-				if (DB_num_rows($QOOResult) == 1) {
-					$QOORow = DB_fetch_row($QOOResult);
-					$QOO += $QOORow[0];
-				}
+								INNER JOIN locationusers
+									ON locationusers.loccode=locstock.loccode
+									AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+									AND locationusers.canview=1
+								WHERE stockid = '" . DB_escape_string($MyRow['stkcode']) . "'";
+				$QohResult = DB_query($QohSql);
+				$QohRow = DB_fetch_row($QohResult);
+				$QOH = $QohRow[0];
+				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode']);
+				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
+				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stkcode']);
 				break;
 		}
 		if (is_numeric($QOH) and is_numeric($QOO)) {
-			$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = ($QOH + $QOO) / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		} elseif (is_numeric($QOH)) {
-			$DaysOfStock = $QOH / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOH / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		} elseif (is_numeric($QOO)) {
-			$DaysOfStock = $QOO / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOO / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		} else {
 			$DaysOfStock = 0;
 		}
@@ -246,12 +234,12 @@ if (!(isset($_POST['Search']))) {
 				echo '<tr class="OddTableRows">';
 				$k = 1;
 			}
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['stkcode']) . '">' . $MyRow['stkcode'] . '</a>';
 			if (is_numeric($QOH)) {
-				$QOH = locale_number_format($QOH, $myrow['decimalplaces']);
+				$QOH = locale_number_format($QOH, $MyRow['decimalplaces']);
 			}
 			if (is_numeric($QOO)) {
-				$QOO = locale_number_format($QOO, $myrow['decimalplaces']);
+				$QOO = locale_number_format($QOO, $MyRow['decimalplaces']);
 			}
 
 			printf('<td class="number">%s</td>
@@ -263,22 +251,21 @@ if (!(isset($_POST['Search']))) {
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
-					</tr>', $i, $CodeLink, $myrow['description'], locale_number_format($myrow['totalinvoiced'], $myrow['decimalplaces']), //total invoice here
-				$myrow['units'], //unit
-				locale_number_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), //value sales here
+					</tr>', $i, $CodeLink, $MyRow['description'], locale_number_format($MyRow['totalinvoiced'], $MyRow['decimalplaces']), //total invoice here
+				$MyRow['units'], //unit
+				locale_number_format($MyRow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), //value sales here
 				$QOH, //on hand
 				$QOO, //on order
 				locale_number_format($DaysOfStock, 0) //days of available stock
 				);
 		}
-		$i++;
+		++$i;
 	}
+	echo '</tbody>';
 	echo '</table>';
-	echo '<br />
-			<div class="centre">
+	echo '<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print To PDF') . '" />
 			</div>
-		</div>
 		</form>';
 }
 include('includes/footer.inc');

@@ -309,7 +309,7 @@
 							$paramDocs[$i]['name'] = trim($matches[2]);
 							$paramDocs[$i]['doc'] = $matches[3];
 						}
-						$i++;
+						++$i;
 					}
 					elseif(mb_strpos($doc, '@return') === 0)
 					{
@@ -335,7 +335,7 @@
 				$params[$i] = array();
 				$params[$i]['name'] = '$'.$paramobj->getName();
 				$params[$i]['isoptional'] = $paramobj->isOptional();
-				$i++;
+				++$i;
 			}
 
 
@@ -359,7 +359,7 @@
 					$innercode .= "if (\$paramcount > $i) {\n";
 					$parsvariations[] = $pars;
 				}
-				$innercode .= "\$p$i = \$msg->getParam($i);\n";
+				$innercode .= "\$p$i = \$Msg->getParam($i);\n";
 				if ($decode_php_objects)
 				{
 					$innercode .= "if (\$p{$i}->kindOf() == 'scalar') \$p$i = \$p{$i}->scalarval(); else \$p$i = php_{$prefix}_decode(\$p$i, array('decode_php_objs'));\n";
@@ -370,7 +370,7 @@
 				}
 
 				$pars[] = "\$p$i";
-				$i++;
+				++$i;
 				if($param['isoptional'])
 				{
 					$innercode .= "}\n";
@@ -399,12 +399,12 @@
 			{
 				// add to code the check for min params number
 				// NB: this check needs to be done BEFORE decoding param values
-				$innercode = "\$paramcount = \$msg->getNumParams();\n" .
+				$innercode = "\$paramcount = \$Msg->getNumParams();\n" .
 				"if (\$paramcount < $minpars) return new {$prefix}resp(0, {$GLOBALS['xmlrpcerr']['incorrect_params']}, '{$GLOBALS['xmlrpcstr']['incorrect_params']}');\n" . $innercode;
 			}
 			else
 			{
-				$innercode = "\$paramcount = \$msg->getNumParams();\n" . $innercode;
+				$innercode = "\$paramcount = \$Msg->getNumParams();\n" . $innercode;
 			}
 
 			$innercode .= "\$np = false;\n";
@@ -459,7 +459,7 @@
 			// shall we exclude functions returning by ref?
 			// if($func->returnsReference())
 			// 	return false;
-			$code = "function $xmlrpcfuncname(\$msg) {\n" . $innercode . "}\n}";
+			$code = "function $xmlrpcfuncname(\$Msg) {\n" . $innercode . "}\n}";
 			//print_r($code);
 			if ($buildit)
 			{
@@ -508,7 +508,7 @@
 			return false;
 		}
 
-        $result = array();
+        $Result = array();
 		$mlist = get_class_methods($classname);
 		foreach($mlist as $mname)
 		{
@@ -524,13 +524,13 @@
                         $methodwrap = wrap_php_function(array($classname, $mname), '', $extra_options);
                         if ( $methodwrap )
                         {
-                            $result[$methodwrap['function']] = $methodwrap['function'];
+                            $Result[$methodwrap['function']] = $methodwrap['function'];
                         }
                     }
     			}
 			}
 		}
-        return $result;
+        return $Result;
     }
 
 	/**
@@ -605,16 +605,16 @@
 			$decode_fault = false;
 			$fault_response = '';
 		}
-		$debug = isset($extra_options['debug']) ? ($extra_options['debug']) : 0;
+		$Debug = isset($extra_options['debug']) ? ($extra_options['debug']) : 0;
 
-		$msgclass = $prefix.'msg';
+		$Msgclass = $prefix.'msg';
 		$valclass = $prefix.'val';
 		$decodefunc = 'php_'.$prefix.'_decode';
 
-		$msg = new $msgclass('system.methodSignature');
-		$msg->addparam(new $valclass($methodname));
-		$client->setDebug($debug);
-		$response =& $client->send($msg, $timeout, $protocol);
+		$Msg = new $Msgclass('system.methodSignature');
+		$Msg->addparam(new $valclass($methodname));
+		$client->setDebug($Debug);
+		$response =& $client->send($Msg, $timeout, $protocol);
 		if($response->faultCode())
 		{
 			error_log('XML-RPC: could not retrieve method signature from remote server for method '.$methodname);
@@ -657,9 +657,9 @@
 				// in online mode, favour speed of operation
 				if(!$buildit)
 				{
-					$msg = new $msgclass('system.methodHelp');
-					$msg->addparam(new $valclass($methodname));
-					$response =& $client->send($msg, $timeout, $protocol);
+					$Msg = new $Msgclass('system.methodHelp');
+					$Msg->addparam(new $valclass($methodname));
+					$response =& $client->send($Msg, $timeout, $protocol);
 					if (!$response->faultCode())
 					{
 						$mdesc = $response->value();
@@ -670,7 +670,7 @@
 					}
 				}
 
-				$results = build_remote_method_wrapper_code($client, $methodname,
+				$Results = build_remote_method_wrapper_code($client, $methodname,
 					$xmlrpcfuncname, $msig, $mdesc, $timeout, $protocol, $simple_client_copy,
 					$prefix, $decode_php_objects, $encode_php_objects, $decode_fault,
 					$fault_response);
@@ -679,7 +679,7 @@
 				if ($buildit)
 				{
 					$allOK = 0;
-					eval($results['source'].'$allOK=1;');
+					eval($Results['source'].'$allOK=1;');
 					// alternative
 					//$xmlrpcfuncname = create_function('$m', $innercode);
 					if($allOK)
@@ -694,8 +694,8 @@
 				}
 				else
 				{
-					$results['function'] = $xmlrpcfuncname;
-					return $results;
+					$Results['function'] = $xmlrpcfuncname;
+					return $Results;
 				}
 			}
 		}
@@ -722,12 +722,12 @@
 		$buildit = isset($extra_options['return_source']) ? !($extra_options['return_source']) : true;
 		$prefix = isset($extra_options['prefix']) ? $extra_options['prefix'] : 'xmlrpc';
 
-		$msgclass = $prefix.'msg';
+		$Msgclass = $prefix.'msg';
 		//$valclass = $prefix.'val';
 		$decodefunc = 'php_'.$prefix.'_decode';
 
-		$msg = new $msgclass('system.listMethods');
-		$response =& $client->send($msg, $timeout, $protocol);
+		$Msg = new $Msgclass('system.listMethods');
+		$response =& $client->send($Msg, $timeout, $protocol);
 		if($response->faultCode())
 		{
 			error_log('XML-RPC: could not retrieve method list from remote server');
@@ -837,7 +837,7 @@
 		{
 			// client copy mode 0 or 1 == partial / full client copy in emitted code
 			$innercode = build_client_wrapper_code($client, $client_copy_mode, $prefix);
-			$innercode .= "\$client->setDebug(\$debug);\n";
+			$innercode .= "\$client->setDebug(\$Debug);\n";
 			$this_ = '';
 		}
 		else
@@ -846,7 +846,7 @@
 			$innercode = '';
 			$this_ = 'this->';
 		}
-		$innercode .= "\$msg = new {$prefix}msg('$methodname');\n";
+		$innercode .= "\$Msg = new {$prefix}msg('$methodname');\n";
 
 		if ($mdesc != '')
 		{
@@ -882,18 +882,18 @@
 					$innercode .= "\$p$i =& php_{$prefix}_encode(\$p$i);\n";
 				}
 			}
-			$innercode .= "\$msg->addparam(\$p$i);\n";
+			$innercode .= "\$Msg->addparam(\$p$i);\n";
 			$mdesc .= '* @param '.xmlrpc_2_php_type($ptype)." \$p$i\n";
 		}
 		if ($client_copy_mode < 2)
 		{
-			$plist[] = '$debug=0';
-			$mdesc .= "* @param int \$debug when 1 (or 2) will enable debugging of the underlying {$prefix} call (defaults to 0)\n";
+			$plist[] = '$Debug=0';
+			$mdesc .= "* @param int \$Debug when 1 (or 2) will enable debugging of the underlying {$prefix} call (defaults to 0)\n";
 		}
 		$plist = implode(', ', $plist);
 		$mdesc .= '* @return '.xmlrpc_2_php_type($msig[0])." (or an {$prefix}resp obj instance if call fails)\n*/\n";
 
-		$innercode .= "\$res =& \${$this_}client->send(\$msg, $timeout, '$protocol');\n";
+		$innercode .= "\$res =& \${$this_}client->send(\$Msg, $timeout, '$protocol');\n";
 		if ($decode_fault)
 		{
 			if (is_string($fault_response) && ((mb_strpos($fault_response, '%faultCode%') !== false) || (mb_strpos($fault_response, '%faultString%') !== false)))
@@ -949,7 +949,7 @@
 		}
 		// only make sure that client always returns the correct data type
 		$code .= "\$client->return_type = '{$prefix}vals';\n";
-		//$code .= "\$client->setDebug(\$debug);\n";
+		//$code .= "\$client->setDebug(\$Debug);\n";
 		return $code;
 	}
 ?>

@@ -9,13 +9,12 @@ CreateTable('pricematrix',
   PRIMARY KEY (`salestype`,`stockid`,`quantitybreak`),
   KEY `DiscountCategory` (`stockid`),
   KEY `SalesType` (`salestype`)
-)",
-$db);
+)");
 
-NewScript('PriceMatrix.php', 11, $db);
+NewScript('PriceMatrix.php', 11);
 
-NewMenuItem('system', 'Reports', _('Mantain prices by quantity break and sales types'), '/PriceMatrix.php', 15, $db);
+NewMenuItem('system', 'Reports', _('Mantain prices by quantity break and sales types'), '/PriceMatrix.php', 15);
 
-UpdateDBNo(basename(__FILE__, '.php'), $db);
+UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

@@ -14,14 +14,14 @@ if (isset($_GET['ProducePDF'])) {
 	include('includes/PDFSalesAnalysis.inc');
 
 	if ($Counter > 0) {
-		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+		$PDF->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
+		$PDF->__destruct();
 	} else {
-		$pdf->__destruct();
+		$PDF->__destruct();
 		$Title = _('User Defined Sales Analysis Problem');
 		include('includes/header.inc');
 		echo '<p>' . _('The report did not have any none zero lines of information to show and so it has not been created');
-		echo '<br /><a href="' . $RootPath . '/SalesAnalRepts.php?SelectedReport=' . $_GET['ReportID'] . '">' . _('Look at the design of this report') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/SalesAnalRepts.php?SelectedReport=' . urlencode($_GET['ReportID']) . '">' . _('Look at the design of this report') . '</a>';
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.inc');
 		exit;

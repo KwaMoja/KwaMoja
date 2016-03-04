@@ -49,16 +49,16 @@ echo '<style>
 				}
 			</style>';
 
-$sql = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
-$result = DB_query($sql, $db);
-$myrow = DB_fetch_array($result);
+$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename($_SERVER['PHP_SELF']) . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 echo '<div align="center">
 <table border="0" cellspacing="0" cellpadding="0"  style="max-width:100%;width:99%;">
       <tr>
         <th colspan="3" style="margin:0px;padding:0px;background: transparent;">
 			<div class="CanvasTitle">' . _('Work orders') . '
-				<a href="' . $RootPath . 'Dashboard.php?Remove=' . $myrow['id'] . '" target="_parent" id="CloseButton">X</a>
+				<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
 			</div>
 		</th>
       </tr>';
@@ -77,7 +77,7 @@ $SQL = "SELECT workorders.wo,
 			INNER JOIN stockmaster
 				ON woitems.stockid = stockmaster.stockid
 			ORDER BY workorders.wo LIMIT 5";
-$WorkOrdersResult = DB_query($SQL, $db);
+$WorkOrdersResult = DB_query($SQL);
 
 echo '<tbody>
 		<tr>
@@ -87,7 +87,7 @@ echo '<tbody>
 		</tr>';
 $k = 0;
 while ($row = DB_fetch_array($WorkOrdersResult)) {
-	$StockID = $row['stockid'];
+	$StockId = $row['stockid'];
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -100,7 +100,7 @@ while ($row = DB_fetch_array($WorkOrdersResult)) {
 	$qreq = locale_number_format($row['qtyreqd'], $row['decimalplaces']);
 	$qout = locale_number_format($row['qtyreqd'] - $row['qtyrecd'], $row['decimalplaces']);
 
-	echo '<td><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '" target="_blank">' . $row['stockid'] . ' -' . $row['description'] . '</td>
+	echo '<td><a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockId) . '" target="_blank">' . $row['stockid'] . ' -' . $row['description'] . '</td>
 			<td class="number">' . $qreq . '</td>
 			<td class="number">' . $qout . '</td>
 		</tbody>';

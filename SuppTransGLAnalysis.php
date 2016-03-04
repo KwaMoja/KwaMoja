@@ -35,24 +35,25 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter
 		$InputError = True;
 	}
 
-	$sql = "SELECT accountcode,
-			accountname
-		FROM chartmaster
-		WHERE accountcode='" . $_POST['GLCode'] . "'";
-	$result = DB_query($sql, $db);
-	if (DB_num_rows($result) == 0 and $_POST['GLCode'] != '') {
+	$SQL = "SELECT accountcode,
+					accountname
+				FROM chartmaster
+				WHERE accountcode='" . $_POST['GLCode'] . "'
+					AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0 and $_POST['GLCode'] != '') {
 		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<br />' . _('You can use the selection box to select the account you want'), 'error');
 		$InputError = True;
 	} else if ($_POST['GLCode'] != '') {
-		$myrow = DB_fetch_row($result);
-		$GLActName = $myrow[1];
+		$MyRow = DB_fetch_row($Result);
+		$GLActName = $MyRow[1];
 		if (!is_numeric(filter_number_format($_POST['Amount']))) {
 			prnMsg(_('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'), 'error');
 			$InputError = True;
 		} elseif ($_POST['JobRef'] != '') {
-			$sql = "SELECT contractref FROM contracts WHERE contractref='" . $_POST['JobRef'] . "'";
-			$result = DB_query($sql, $db);
-			if (DB_num_rows($result) == 0) {
+			$SQL = "SELECT contractref FROM contracts WHERE contractref='" . $_POST['JobRef'] . "'";
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) == 0) {
 				prnMsg(_('The contract reference entered is not a valid contract, this line cannot be added to the transaction'), 'error');
 				$InputError = True;
 			}
@@ -87,24 +88,26 @@ if (isset($_GET['Edit'])) {
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<p class="page_title_text noPrint" >
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text" >
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
-	echo '<p class="page_title_text noPrint" >
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text" >
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('General Ledger') . '" alt="" />' . ' ' . _('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
 echo '</p>
 	<table class="selection">
-		<tr>
-			<th class="SortableColumn">' . _('Account') . '</th>
-			<th class="SortableColumn">' . _('Name') . '</th>
-			<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-			<th>' . _('Narrative') . '</th>
-			<th>' . _('Tag') . '</th>
-		</tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Account') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th>' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Tag') . '</th>
+			</tr>
+		</thead>';
 $TotalGLValue = 0;
 $i = 0;
-
+echo '<tbody>';
 foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 
 	echo '<tr>
@@ -120,7 +123,7 @@ foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 	$TotalGLValue += $EnteredGLCode->Amount;
 
 }
-
+echo '</tbody>';
 echo '<tr>
 		<td colspan="2" class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalGLValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
@@ -140,8 +143,7 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
 }
 
 /*Set up a form to allow input of new GL entries */
-echo '<form onSubmit="return VerifyForm(this);" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint">';
-echo '<div>';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
@@ -152,20 +154,20 @@ if (!isset($_POST['GLCode'])) {
 
 echo '<tr>
 		<td>' . _('Select Tag') . ':</td>
-		<td><select minlength="0" name="Tag">';
+		<td><select name="Tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
 		FROM tags
 		ORDER BY tagref";
 
-$result = DB_query($SQL, $db);
+$Result = DB_query($SQL);
 echo '<option value="0"></option>';
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['Tag']) and $_POST['Tag'] == $myrow['tagref']) {
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
+		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'] . ' - ' . $myrow['tagdescription'] . '</option>';
+		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
 echo '</select></td>
@@ -173,26 +175,30 @@ echo '</select></td>
 
 echo '<tr>
 		<td>' . _('Account Code') . ':</td>
-		<td><input type="text" name="GLCode" size="12" required="required" minlength="1" maxlength="11" value="' . $_POST['GLCode'] . '" />
+		<td><input type="text" name="GLCode" size="12" required="required" maxlength="11" value="' . $_POST['GLCode'] . '" />
 		<input type="hidden" name="JobRef" value="" /></td>
 	</tr>';
 echo '<tr>
 	<td>' . _('Account Selection') . ':
 		<br />(' . _('If you know the code enter it above') . '
 		<br />' . _('otherwise select the account from the list') . ')</td>
-	<td><select minlength="0" name="AcctSelection" onchange="return assignComboToInput(this,' . 'GLCode' . ')">';
+	<td><select name="AcctSelection" onchange="return assignComboToInput(this,' . 'GLCode' . ')">';
 
-$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
+$SQL = "SELECT accountcode,
+				accountname
+			FROM chartmaster
+			WHERE language='" . $_SESSION['ChartLanguage'] . "'
+			ORDER BY accountcode";
 
-$result = DB_query($sql, $db);
+$Result = DB_query($SQL);
 echo '<option value=""></option>';
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['AcctSelection']) and $myrow['accountcode'] == $_POST['AcctSelection']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['AcctSelection']) and $MyRow['accountcode'] == $_POST['AcctSelection']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+	echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 }
 
 echo '</select>
@@ -203,7 +209,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<tr>
 		<td>' . _('Amount') . ':</td>
-		<td><input type="text" class="number" name="Amount" size="12" required="required" minlength="1" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
+		<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
 	</tr>';
 
 if (!isset($_POST['Narrative'])) {
@@ -220,7 +226,6 @@ echo '<div class="centre">
 		<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '" />
 	</div>';
 
-echo '</div>
-	  </form>';
+echo '</form>';
 include('includes/footer.inc');
 ?>

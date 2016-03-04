@@ -7,7 +7,7 @@ CreateTable('tendersuppliers',
   `email` varchar(40) NOT NULL DEFAULT '',
   `responded` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tenderid`,`supplierid`)
-)", $db);
+)");
 
 
 ?>

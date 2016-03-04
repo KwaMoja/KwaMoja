@@ -39,7 +39,7 @@ function reverse_escape($str) {
 function getMsg($Msg, $Type = 'info', $Prefix = '') {
 	$Colour = '';
 	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) {
-		$LogFile = fopen($_SESSION['LogPath'] . '/KwaMoja-test.log', 'a');
+		$LogFile = fopen($_SESSION['LogPath'] . '/KwaMoja.log', 'a');
 	}
 	switch ($Type) {
 		case 'error':
@@ -257,11 +257,11 @@ function wikiLink($WikiType, $WikiPageID) {
 		$WikiPath = '../' . $_SESSION['WikiPath'] . '/';
 	}
 	if ($_SESSION['WikiApp'] == _('WackoWiki')) {
-		echo '<a href=""' . $WikiPath . $WikiType . $WikiPageID . '"" target="_blank">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
+		echo '<a href=""' . $WikiPath . $WikiType . $WikiPageID . '"" target="_blank">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>';
 	} elseif ($_SESSION['WikiApp'] == _('MediaWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a>';
 	} elseif ($_SESSION['WikiApp'] == _('DokuWiki')) {
-		echo '<a href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowlege Base') . '</a><br />';
+		echo '<a href="' . $WikiPath . '/doku.php?id=' . urlencode($WikiType . ':' . $WikiPageID) . '" target="_blank">' . _('Wiki ' . $WikiType . ' Knowlege Base') . '</a>';
 	}
 }
 
@@ -274,54 +274,54 @@ function LogBackTrace($dest = 0) {
 	//  Leave out our frame and the topmost - huge for xmlrpc!
 	for ($ii = 1; $ii < count($stack) - 3; $ii++) {
 		$frame = $stack[$ii];
-		$msg = "FRAME " . $ii . ": ";
+		$Msg = "FRAME " . $ii . ": ";
 		if (isset($frame['file'])) {
-			$msg .= "; file=" . $frame['file'];
+			$Msg .= "; file=" . $frame['file'];
 		}
 		if (isset($frame['line'])) {
-			$msg .= "; line=" . $frame['line'];
+			$Msg .= "; line=" . $frame['line'];
 		}
 		if (isset($frame['function'])) {
-			$msg .= "; function=" . $frame['function'];
+			$Msg .= "; function=" . $frame['function'];
 		}
 		if (isset($frame['args'])) {
 			// Either function args, or included file name(s)
-			$msg .= ' (';
+			$Msg .= ' (';
 			foreach ($frame['args'] as $val) {
 
 				$typ = gettype($val);
 				switch ($typ) {
 					case 'array':
-						$msg .= '[ ';
+						$Msg .= '[ ';
 						foreach ($val as $v2) {
 							if (gettype($v2) == 'array') {
-								$msg .= '[ ';
+								$Msg .= '[ ';
 								foreach ($v2 as $v3)
-									$msg .= $v3;
-								$msg .= ' ]';
+									$Msg .= $v3;
+								$Msg .= ' ]';
 							} else {
-								$msg .= $v2 . ', ';
+								$Msg .= $v2 . ', ';
 							}
-							$msg .= ' ]';
+							$Msg .= ' ]';
 							break;
 						}
 					case 'string':
-						$msg .= $val . ', ';
+						$Msg .= $val . ', ';
 						break;
 
 					case 'integer':
-						$msg .= sprintf("%d, ", $val);
+						$Msg .= sprintf("%d, ", $val);
 						break;
 
 					default:
-						$msg .= '<' . gettype($val) . '>, ';
+						$Msg .= '<' . gettype($val) . '>, ';
 						break;
 
 				}
-				$msg .= ' )';
+				$Msg .= ' )';
 			}
 		}
-		error_log($msg, $dest);
+		error_log($Msg, $dest);
 	}
 
 	error_log('++++END STACK BACKTRACE++++', $dest);
@@ -343,7 +343,7 @@ function http_file_exists($url) {
 function locale_number_format($Number, $DecimalPlaces = 0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	if ($_SESSION['Language'] == 'hi_IN.utf8' or $_SESSION['Language'] == 'en_IN.utf8') {
+	if(substr($_SESSION['Language'], 3, 2) == 'IN') {
 		return indian_number_format(floatval($Number), $DecimalPlaces);
 	} else {
 		if (!is_numeric($DecimalPlaces) and $DecimalPlaces == 'Variable') {
@@ -401,7 +401,8 @@ function indian_number_format($Number, $DecimalPlaces) {
 		$RestUnits = (strlen($RestUnits) % 2 == 1) ? '0' . $RestUnits : $RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
 		$FirstPart = '';
 		$ExplodedUnits = str_split($RestUnits, 2);
-		for ($i = 0; $i < sizeof($ExplodedUnits); $i++) {
+		$SizeOfExplodedUnits = sizeOf($ExplodedUnits);
+		for ($i = 0; $i < $SizeOfExplodedUnits; $i++) {
 			$FirstPart .= intval($ExplodedUnits[$i]) . ','; // creates each of the 2's group and adds a comma to the end
 		}
 
@@ -411,7 +412,7 @@ function indian_number_format($Number, $DecimalPlaces) {
 	}
 }
 
-function SendMailBySmtp(&$mail, $To) {
+function SendMailBySmtp(&$Mail, $To) {
 	if (IsEmailAddress($_SESSION['SMTPSettings']['username'])) { //user has set the fully mail address as user name
 		$SendFrom = $_SESSION['SMTPSettings']['username'];
 	} else { //user only set it's name instead of fully mail address
@@ -423,37 +424,107 @@ function SendMailBySmtp(&$mail, $To) {
 		$Domain = substr($_SESSION['SMTPSettings']['host'], strpos($_SESSION['SMTPSettings']['host'], $SubStr) + 5);
 		$SendFrom = $_SESSION['SMTPSettings']['username'] . '@' . $Domain;
 	}
-	$mail->setFrom($SendFrom);
-	$result = $mail->send($To, 'smtp');
-	return $result;
+	$Mail->setFrom($SendFrom);
+	$Result = $Mail->send($To, 'smtp');
+	return $Result;
 }
 
 function GetMailList($Recipients) {
-	global $db;
 	$ToList = array();
-	$sql = "SELECT email,realname FROM mailgroupdetails INNER JOIN www_users ON www_users.userid=mailgroupdetails.userid WHERE mailgroupdetails.groupname='" . $Recipients . "'";
+	$SQL = "SELECT email,realname FROM mailgroupdetails INNER JOIN www_users ON www_users.userid=mailgroupdetails.userid WHERE mailgroupdetails.groupname='" . $Recipients . "'";
 	$ErrMsg = _('Failed to retrieve mail lists');
-	$result = DB_query($sql, $db, $ErrMsg);
-	if (DB_num_rows($result) != 0) {
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) != 0) {
 
 		//Create the string which meets the Recipients requirements
-		while ($myrow = DB_fetch_array($result)) {
-			$ToList[] = $myrow['realname'] . '<' . $myrow['email'] . '>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			$ToList[] = $MyRow['realname'] . '<' . $MyRow['email'] . '>';
 		}
 
 	}
 	return $ToList;
 }
 
-function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue, $db) {
+function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue) {
 	/* Used in Z_ scripts to change one field across the table.
 	 */
 	echo '<br />' . _('Changing') . ' ' . $TableName . ' ' . _('records');
-	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
 }
 
+function GetChartLanguage() {
+
+/* Need to pick the language that the account sections will
+ * be shown in
+ */
+
+	$Language = '';
+
+	$SQL = "SELECT language, COUNT(sectionid) AS total FROM accountsection GROUP BY language";
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$SectionLanguages[$MyRow['language']] = $MyRow['total'];
+	}
+
+	/* If the users locale exists then look no further */
+	if (isset($SectionLanguages[$_SESSION['Language']])) {
+		$Language = $_SESSION['Language'];
+	}
+
+	/* If the language exists but not the locale then use that */
+	if ($Language == '') {
+		foreach ($SectionLanguages as $Lang => $Count) {
+			if (substr($Lang, 0, 2) == substr($_SESSION['Language'], 0, 2)) {
+				$Language = $Lang;
+			}
+		}
+	}
+
+	/* Finally just pick a language */
+	if ($Language == '') {
+		$Language = $Lang;
+	}
+	return $Language;
+}
+
+function GetInventoryLanguage() {
+
+/* Need to pick the language that the account sections will
+ * be shown in
+ */
+
+	$Language = '';
+	$InventoryLanguages = array();
+	$Lang = $_SESSION['DefaultLanguage'];
+
+	$SQL = "SELECT language_id, COUNT(stockid) AS total FROM stockdescriptiontranslations GROUP BY language_id";
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$InventoryLanguages[$MyRow['language_id']] = $MyRow['total'];
+	}
+
+	/* If the users locale exists then look no further */
+	if (isset($InventoryLanguages[$_SESSION['Language']])) {
+		$Language = $_SESSION['Language'];
+	}
+
+	/* If the language exists but not the locale then use that */
+	if ($Language == '' and count($InventoryLanguages) > 0) {
+		foreach ($InventoryLanguages as $Lang => $Count) {
+			if (substr($Lang, 0, 2) == substr($_SESSION['Language'], 0, 2)) {
+				$Language = $Lang;
+			}
+		}
+	}
+
+	/* Finally just pick a language */
+	if ($Language == '') {
+		$Language = $Lang;
+	}
+	return $Language;
+}
 ?>

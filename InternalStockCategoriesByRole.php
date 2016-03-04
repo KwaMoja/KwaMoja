@@ -5,8 +5,6 @@ $Title = _('Internal Stock Categories Requests By Security Role Maintenance ');
 
 include('includes/header.inc');
 
-echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Payment Entry') . '" alt="" />' . ' ' . $Title . '</p>';
-
 if (isset($_POST['SelectedType'])) {
 	$SelectedType = mb_strtoupper($_POST['SelectedType']);
 } elseif (isset($_GET['SelectedType'])) {
@@ -60,7 +58,7 @@ if (isset($_POST['submit'])) {
 				 WHERE secroleid= '" . $_POST['SelectedRole'] . "'
 				 AND categoryid = '" . $_POST['SelectedCategory'] . "'";
 
-		$checkresult = DB_query($checkSql, $db);
+		$checkresult = DB_query($checkSql);
 		$checkrow = DB_fetch_row($checkresult);
 
 		if ($checkrow[0] > 0) {
@@ -68,159 +66,166 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('The Stock Category') . ' ' . $_POST['categoryid'] . ' ' . _('already allowed as internal for this security role'), 'error');
 		} else {
 			// Add new record on submit
-			$sql = "INSERT INTO internalstockcatrole (secroleid,
-												categoryid)
-										VALUES ('" . $_POST['SelectedRole'] . "',
-												'" . $_POST['SelectedCategory'] . "')";
+			$SQL = "INSERT INTO internalstockcatrole (secroleid,
+													categoryid
+												) VALUES (
+													'" . $_POST['SelectedRole'] . "',
+													'" . $_POST['SelectedCategory'] . "'
+												)";
 
-			$msg = _('Stock Category:') . ' ' . $_POST['SelectedCategory'] . ' ' . _('has been allowed to user role') . ' ' . $_POST['SelectedRole'] . ' ' . _('as internal');
+			$Msg = _('Stock Category') . ': ' . stripslashes($_POST['SelectedCategory']) . ' ' . _('has been allowed to user role') . ' ' . $_POST['SelectedRole'] . ' ' . _('as internal');
 			$checkSql = "SELECT count(secroleid)
 							FROM securityroles";
-			$result = DB_query($checkSql, $db);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($checkSql);
+			$row = DB_fetch_row($Result);
 		}
 	}
 
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql, $db);
-		prnMsg($msg, 'success');
+		$Result = DB_query($SQL);
+		prnMsg($Msg, 'success');
 		unset($_POST['SelectedCategory']);
 	}
 
 } elseif (isset($_GET['delete'])) {
-	$sql = "DELETE FROM internalstockcatrole
+	$SQL = "DELETE FROM internalstockcatrole
 		WHERE secroleid='" . $SelectedRole . "'
 		AND categoryid='" . $SelectedType . "'";
 
 	$ErrMsg = _('The Stock Category by Role record could not be deleted because');
-	$result = DB_query($sql, $db, $ErrMsg);
-	prnMsg(_('Internal Stock Category') . ' ' . $SelectedType . ' ' . _('for user role') . ' ' . $SelectedRole . ' ' . _('has been deleted'), 'success');
+	$Result = DB_query($SQL, $ErrMsg);
+	prnMsg(_('Internal Stock Category') . ' ' . stripslashes($SelectedType) . ' ' . _('for user role') . ' ' . $SelectedRole . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);
 }
 
 if (!isset($SelectedRole)) {
 
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">'; //Main table
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" title="', _('Select a user role'), '" alt="" />', ' ', _('Select a user role') . '
+		</p>';
 
-	echo '<tr><td>' . _('Select User Role') . ':</td><td><select required="required" minlength="1" name="SelectedRole">';
+	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<table class="selection">'; //Main table
 
 	$SQL = "SELECT secroleid,
 					secrolename
 			FROM securityroles";
+	$Result = DB_query($SQL);
 
-	$result = DB_query($SQL, $db);
-	echo '<option value="">' . _('Not Yet Selected') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($SelectedRole) and $myrow['secroleid'] == $SelectedRole) {
-			echo '<option selected="selected" value="';
+	echo '<tr>
+			<td>', _('Select User Role'), ':</td>
+			<td><select required="required" name="SelectedRole">';
+	echo '<option value="">', _('Not Yet Selected'), '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedRole) and $MyRow['secroleid'] == $SelectedRole) {
+			echo '<option selected="selected" value="', $MyRow['secroleid'], '">', $MyRow['secroleid'], ' - ', $MyRow['secrolename'], '</option>';
 		} else {
-			echo '<option value="';
+			echo '<option value="', $MyRow['secroleid'], '">', $MyRow['secroleid'], ' - ', $MyRow['secrolename'], '</option>';
 		}
-		echo $myrow['secroleid'] . '">' . $myrow['secroleid'] . ' - ' . $myrow['secrolename'] . '</option>';
-
 	} //end while loop
 
-	echo '</select></td></tr>';
+	echo '</select>
+			</td>
+		</tr>';
 
 	echo '</table>'; // close main table
-	DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<div class="centre">
+			<input type="submit" name="Process" value="', _('Accept'), '" />
+			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+		</div>';
 
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 }
 
 //end of ifs and buts!
 if (isset($_POST['process']) or isset($SelectedRole)) {
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Stock Categories available as internal for role') . ' ' . $SelectedRole . '</a></div>';
-	echo '<form onSubmit="return VerifyForm(this);" method="post" class="noPrint" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-	echo '<input type="hidden" name="SelectedRole" value="' . $SelectedRole . '" />';
-
-	$sql = "SELECT internalstockcatrole.categoryid,
-					stockcategory.categorydescription
-			FROM internalstockcatrole INNER JOIN stockcategory
-			ON internalstockcatrole.categoryid=stockcategory.categoryid
-			WHERE internalstockcatrole.secroleid='" . $SelectedRole . "'
-			ORDER BY internalstockcatrole.categoryid ASC";
-
-	$result = DB_query($sql, $db);
-
-	echo '<br />
-			<table class="selection">';
-	echo '<tr>
-			<th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' . $SelectedRole . '</h3></th>
-		</tr>
-		<tr>
-			<th>' . _('Category Code') . '</th>
-			<th>' . _('Description') . '</th>
-		</tr>';
-
-	$k = 0; //row colour counter
-
-	while ($myrow = DB_fetch_array($result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-
-		printf('<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-			</tr>', $myrow['categoryid'], $myrow['categorydescription'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow['categoryid'], htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), $myrow['categoryid']);
-	}
-	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '<div class="toplink"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another role'), '</a></div>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Select a stock category'), '" alt="" />', _('Select a stock category'), '
+		</p>';
 
 	if (!isset($_GET['delete'])) {
 
+		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+		echo '<table class="selection">'; //Main table
 
-		echo '<br /><table  class="selection">'; //Main table
-
-		echo '<tr><td>' . _('Select Stock Category Code') . ':</td><td><select minlength="0" name="SelectedCategory">';
+		echo '<tr>
+				<td>', _('Select Stock Category Code'), ':</td>
+				<td><select name="SelectedCategory">';
 
 		$SQL = "SELECT categoryid,
 						categorydescription
 				FROM stockcategory";
 
-		$result = DB_query($SQL, $db);
+		$Result = DB_query($SQL);
 		if (!isset($_POST['SelectedCategory'])) {
-			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+			echo '<option selected="selected" value="">', _('Not Yet Selected'), '</option>';
 		}
-		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['SelectedCategory']) and $myrow['categoryid'] == $_POST['SelectedCategory']) {
-				echo '<option selected="selected" value="';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['SelectedCategory']) and $MyRow['categoryid'] == $_POST['SelectedCategory']) {
+				echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categoryid'], ' - ', $MyRow['categorydescription'], '</option>';
 			} else {
-				echo '<option value="';
+				echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categoryid'], ' - ', $MyRow['categorydescription'], '</option>';
 			}
-			echo $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
-
 		} //end while loop
 
-		echo '</select></td></tr>';
+		echo '</select>
+				</td>
+			</tr>';
 
 		echo '</table>'; // close main table
-		DB_free_result($result);
 
-		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
-									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+		echo '<div class="centre">
+				<input type="submit" name="submit" value="', _('Accept'), '" />
+				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			</div>';
+		echo '<input type="hidden" name="SelectedRole" value="', $SelectedRole, '" />';
 
-		echo '</div>
-			  </form>';
+		echo '</form>';
 
+		$SQL = "SELECT internalstockcatrole.categoryid,
+					stockcategory.categorydescription
+				FROM internalstockcatrole
+				INNER JOIN stockcategory
+					ON internalstockcatrole.categoryid=stockcategory.categoryid
+				WHERE internalstockcatrole.secroleid='" . $SelectedRole . "'
+				ORDER BY internalstockcatrole.categoryid ASC";
+
+		$Result = DB_query($SQL);
+
+		echo '<table class="selection">
+				<tr>
+					<th colspan="3"><h3>', _('Internal Stock Categories Allowed to user role'), ' ', $SelectedRole, '</h3></th>
+				</tr>
+				<tr>
+					<th>', _('Category Code'), '</th>
+					<th>', _('Description'), '</th>
+				</tr>';
+
+		$k = 0; //row colour counter
+
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($k == 1) {
+				echo '<tr class="EvenTableRows">';
+				$k = 0;
+			} else {
+				echo '<tr class="OddTableRows">';
+				$k = 1;
+			}
+
+			echo '<td>', $MyRow['categoryid'], '</td>
+				<td>', $MyRow['categorydescription'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedType=', urlencode($MyRow['categoryid']), '&amp;delete=yes&amp;SelectedRole=', urlencode($SelectedRole), '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this internal stock category code?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+			</tr>';
+		}
+		//END WHILE LIST LOOP
+		echo '</table>';
 	} // end if user wish to delete
 }
 

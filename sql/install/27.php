@@ -6,7 +6,7 @@ CreateTable('dashboard_users',
   `userid` varchar(20) NOT NULL,
   `scripts` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-)", $db);
+)");
 
 
 ?>

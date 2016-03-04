@@ -100,6 +100,17 @@ color:blue;
 text-decoration:none;
 }
 
+a.FontSize {
+color:blue;
+text-decoration:none;
+display:inline;
+}
+
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+
 a:hover {
 color:red;
 text-decoration:underline;
@@ -160,7 +171,7 @@ background-color:maroon;
 color:#FFF;
 }
 
-th.SortableColumn {
+th.SortedColumn {
 cursor:s-resize;
 }
 

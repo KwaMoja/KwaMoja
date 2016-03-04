@@ -37,10 +37,10 @@
 		<?php $DateArray = explode(':',$Prefs['DateListings']['params']);
 			if (!isset($DateArray[1])) $DateArray[1]='';
 			if (!isset($DateArray[2])) $DateArray[2]='';
-			foreach($DateChoices as $key=>$value) {
-			if (mb_strpos($Prefs['DateListings']['displaydesc'],$key)!==false) {
-				if ($DateArray[0]==$key) $Selected = ' selected'; else $Selected = '';
-				echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
+			foreach($DateChoices as $Key=>$Value) {
+			if (mb_strpos($Prefs['DateListings']['displaydesc'],$Key)!==false) {
+				if ($DateArray[0]==$Key) $Selected = ' selected'; else $Selected = '';
+				echo '<option value="'.$Key.'"'.$Selected.'>'.$Value.'</option>';
 			}
 		} ?>
         </select></td>

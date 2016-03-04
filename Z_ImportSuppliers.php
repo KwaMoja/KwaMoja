@@ -83,7 +83,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	//start database transaction
-	DB_Txn_Begin($db);
+	DB_Txn_Begin();
 
 	//loop through file rows
 	$row = 1;
@@ -100,8 +100,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($filerow as &$value) {
-			$value = trim($value);
+		foreach ($filerow as &$Value) {
+			$Value = trim($Value);
 		}
 
 		$SupplierID = mb_strtoupper($filerow[0]);
@@ -138,55 +138,55 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(_('The supplier name must be entered and be forty characters or less long'), 'error');
 			$Errors[$i] = 'Name';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($SupplierID) == 0) {
 			$InputError = 1;
 			prnMsg(_('The Supplier Code cannot be empty'), 'error');
 			$Errors[$i] = 'ID';
-			$i++;
+			++$i;
 		}
 		if (ContainsIllegalCharacters($SupplierID)) {
 			$InputError = 1;
 			prnMsg(_('The supplier code cannot contain any of the illegal characters'), 'error');
 			$Errors[$i] = 'ID';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['Phone']) > 25) {
 			$InputError = 1;
 			prnMsg(_('The telephone number must be 25 characters or less long'), 'error');
 			$Errors[$i] = 'Telephone';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['Fax']) > 25) {
 			$InputError = 1;
 			prnMsg(_('The fax number must be 25 characters or less long'), 'error');
 			$Errors[$i] = 'Fax';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['Email']) > 55) {
 			$InputError = 1;
 			prnMsg(_('The email address must be 55 characters or less long'), 'error');
 			$Errors[$i] = 'Email';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['Email']) > 0 and !IsEmailAddress($_POST['Email'])) {
 			$InputError = 1;
 			prnMsg(_('The email address is not correctly formed'), 'error');
 			$Errors[$i] = 'Email';
-			$i++;
+			++$i;
 		}
 		if (mb_strlen($_POST['BankRef']) > 12) {
 			$InputError = 1;
 			prnMsg(_('The bank reference text must be less than 12 characters long'), 'error');
 			$Errors[$i] = 'BankRef';
-			$i++;
+			++$i;
 		}
-		if (!Is_Date($_POST['SupplierSince'])) {
+		if (!is_date($_POST['SupplierSince'])) {
 			$InputError = 1;
 			prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 			$Errors[$i] = 'SupplierSince';
-			$i++;
+			++$i;
 		}
 
 		if ($InputError != 1) {
@@ -194,10 +194,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
 			//first off validate inputs sensible
-			$sql = "SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='" . $SupplierID . "'";
-			$result = DB_query($sql, $db);
-			$myrow = DB_fetch_row($result);
-			$SuppExists = (DB_num_rows($result) > 0);
+			$SQL = "SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='" . $SupplierID . "'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
+			$SuppExists = ($MyRow[0] > 0);
 			if ($SuppExists and $_POST['UpdateIfExists'] != 1) {
 				$UpdatedNum++;
 			} elseif ($SuppExists) {
@@ -205,16 +205,16 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				$supptranssql = "SELECT supplierno
 								FROM supptrans
 								WHERE supplierno='" . $SupplierID . "'";
-				$suppresult = DB_query($supptranssql, $db);
+				$suppresult = DB_query($supptranssql);
 				$supptrans = DB_num_rows($suppresult);
 
 				$suppcurrssql = "SELECT currcode
 								FROM suppliers
 								WHERE supplierid='" . $SupplierID . "'";
-				$currresult = DB_query($suppcurrssql, $db);
+				$currresult = DB_query($suppcurrssql);
 				$suppcurr = DB_fetch_row($currresult);
 
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
+				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
@@ -226,8 +226,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							email = '" . $_POST['Email'] . "',
 							supptype = '" . $_POST['SupplierType'] . "',";
 				if ($supptrans == 0)
-					$sql .= "currcode='" . $_POST['CurrCode'] . "',";
-				$sql .= "suppliersince='" . $SQL_SupplierSince . "',
+					$SQL .= "currcode='" . $_POST['CurrCode'] . "',";
+				$SQL .= "suppliersince='" . $SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
 							bankref='" . $_POST['BankRef'] . "',
@@ -246,12 +246,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 				$ErrMsg = _('The supplier could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the supplier but failed was');
-				// echo $sql;
-				$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+				// echo $SQL;
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			} else { //its a new supplier
 				$InsertNum++;
-				$sql = "INSERT INTO suppliers (supplierid,
+				$SQL = "INSERT INTO suppliers (supplierid,
 											suppname,
 											address1,
 											address2,
@@ -303,10 +303,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 				$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
-				$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			}
-			if (DB_error_no($db) == 0) {
+			if (DB_error_no() == 0) {
 
 			} else { //location insert failed so set some useful error info
 				$InputError = 1;
@@ -324,14 +324,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(_('Failed on row ' . $row . '. Batch import has been rolled back.'), 'error');
-		DB_Txn_Rollback($db);
+		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
-		DB_Txn_Commit($db);
+		DB_Txn_Commit();
 		prnMsg(_('Batch Import of') . ' ' . $FileName . ' ' . _('has been completed. All transactions committed to the database.'), 'success');
 		if ($_POST['UpdateIfExists'] == 1) {
-			prnMsg(_('Updated:') . ' ' . $UpdatedNum . ' ' . _('Insert:') . $InsertNum);
+			prnMsg(_('Updated') . ': ' . $UpdatedNum . ' ' . _('Insert') . ':' . $InsertNum);
 		} else {
-			prnMsg(_('Exist:') . ' ' . $UpdatedNum . ' ' . _('Insert:') . $InsertNum);
+			prnMsg(_('Exist') . ': ' . $UpdatedNum . ' ' . _('Insert') . ':' . $InsertNum);
 		}
 
 	}
