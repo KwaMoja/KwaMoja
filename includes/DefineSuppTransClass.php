@@ -43,7 +43,7 @@ class SuppTrans {
 	var $Hold;
 	var $SupplierRef = '';
 
-	function SuppTrans() {
+	function __construct() {
 		/*Constructor function initialises a new Supplier Transaction object */
 		$this->GRNs = array();
 		$this->GLCodes = array();
@@ -229,7 +229,7 @@ class GRNs {
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef = '') {
+	function __construct($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef = '') {
 
 
 
@@ -287,7 +287,7 @@ class GLCodes {
 	var $Tag;
 	var $TagName;
 
-	function GLCodes($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag = 0, $TagName = '') {
+	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag = 0, $TagName = '') {
 
 		/* Constructor function to add a new GLCodes object with passed params */
 		$this->Counter = $Counter;
@@ -313,7 +313,7 @@ class Shipment {
 	var $ShiptRef;
 	var $Amount;
 
-	function Shipment($Counter, $ShiptRef, $Amount) {
+	function __construct($Counter, $ShiptRef, $Amount) {
 		$this->Counter = $Counter;
 		$this->ShiptRef = $ShiptRef;
 		$this->Amount = $Amount;
@@ -328,7 +328,7 @@ class Asset {
 	var $CostAct;
 	var $Amount;
 
-	function Asset($Counter, $AssetID, $Amount) {
+	function __construct($Counter, $AssetID, $Amount) {
 		$this->Counter = $Counter;
 		$this->AssetID = $AssetID;
 		$this->Amount = $Amount;
@@ -352,7 +352,7 @@ class Contract {
 	var $Narrative;
 	var $AniticipatedCost;
 
-	function Contract($Counter, $ContractRef, $Amount, $Narrative, $AnticipatedCost) {
+	function __construct($Counter, $ContractRef, $Amount, $Narrative, $AnticipatedCost) {
 		$this->Counter = $Counter;
 		$this->ContractRef = $ContractRef;
 		$this->Amount = $Amount;
@@ -372,7 +372,7 @@ class Tax {
 	var $TaxGLCode;
 	var $TaxOvAmount;
 
-	function Tax($TaxCalculationOrder, $TaxAuthID, $TaxAuthDescription, $TaxRate, $TaxOnTax, $TaxGLCode) {
+	function __construct($TaxCalculationOrder, $TaxAuthID, $TaxAuthDescription, $TaxRate, $TaxOnTax, $TaxGLCode) {
 
 		$this->TaxCalculationOrder = $TaxCalculationOrder;
 		$this->TaxAuthID = $TaxAuthID;

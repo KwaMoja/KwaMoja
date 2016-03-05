@@ -18,7 +18,7 @@ class Offer {
 	var $version;
 	var $OfferMailText;
 
-	function Offer($Supplier) {
+	function __construct($Supplier) {
 		/*Constructor function initialises a new purchase offer object */
 		$this->LineItems = array();
 		$this->total = 0;
@@ -181,7 +181,7 @@ class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails($LineNo, $StockItem, $Qty, $ItemDescr, $Price, $UOM, $DecimalPlaces, $ExpiryDate) {
+	function __construct($LineNo, $StockItem, $Qty, $ItemDescr, $Price, $UOM, $DecimalPlaces, $ExpiryDate) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;

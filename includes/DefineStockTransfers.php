@@ -15,7 +15,7 @@ class StockTransfer {
 	var $TransferItem;
 	/*Array of LineItems */
 
-	function StockTransfer($TrfID, $StockLocationFrom, $StockLocationFromName, $StockLocationFromAccount, $StockLocationTo, $StockLocationToName, $StockLocationToAccount, $TranDate) {
+	function __construct($TrfID, $StockLocationFrom, $StockLocationFromName, $StockLocationFromAccount, $StockLocationTo, $StockLocationToName, $StockLocationToAccount, $TranDate) {
 
 		$this->TrfID = $TrfID;
 		$this->StockLocationFrom = $StockLocationFrom;
@@ -44,7 +44,7 @@ class LineItem {
 	var $SerialItems;
 	/*array to hold controlled items*/
 	//Constructor
-	function LineItem($StockId, $ItemDescription, $Quantity, $PartUnit, $Controlled, $Serialised, $Perishable, $DecimalPlaces) {
+	function __construct($StockId, $ItemDescription, $Quantity, $PartUnit, $Controlled, $Serialised, $Perishable, $DecimalPlaces) {
 
 		$this->StockID = $StockId;
 		$this->ItemDescription = $ItemDescription;

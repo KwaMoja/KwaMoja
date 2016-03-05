@@ -31,7 +31,7 @@ class Receipt_Batch {
 	var $ItemCounter;
 	/*Counter for the number of customer receipts in the batch */
 
-	function Receipt_Batch() {
+	function __construct() {
 		/*Constructor function initialises a new receipt batch */
 		$this->Items = array();
 		$this->ItemCounter = 0;
@@ -71,7 +71,7 @@ class Receipt {
 	var $ID;
 	var $tag;
 
-	function Receipt($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $tag) {
+	function __construct($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $tag) {
 
 		/* Constructor function to add a new Receipt object with passed params */
 		$this->Amount = $Amt;

@@ -13,7 +13,7 @@ class StockRequest {
 	var $NewRequest=0;
 	var $LineCounter = 0;
 
-	function StockRequest() {
+	function __construct() {
 		/*Constructor function initialises a new shopping cart */
 		$this->DispatchDate = date($_SESSION['DefaultDateFormat']);
 		$this->LineItems = array();
@@ -36,7 +36,7 @@ class LineDetails {
 	var $UOM;
 	var $LineNumber;
 
-	function LineDetails($StockId, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber) {
+	function __construct($StockId, $ItemDescription, $Quantity, $UOM, $DecimalPlaces, $LineNumber) {
 
 		$this->LineNumber = $LineNumber;
 		$this->StockID = $StockId;

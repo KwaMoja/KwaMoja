@@ -55,7 +55,7 @@ class PurchOrder {
 	var $Contact;
 	var $Port;
 
-	function PurchOrder() {
+	function __construct() {
 		/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
 		$this->total = 0;
@@ -189,7 +189,7 @@ class LineDetails {
 	/*An array holding the batch/serial numbers and quantities in each batch*/
 	var $AssetID;
 
-	function LineDetails($LineNo, $StockItem, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef = 0, $Completed, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces, $SuppliersUnit, $ConversionFactor, $LeadTime, $Suppliers_PartNo, $AssetID) {
+	function __construct($LineNo, $StockItem, $Serialised, $Controlled, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef = 0, $Completed, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces, $SuppliersUnit, $ConversionFactor, $LeadTime, $Suppliers_PartNo, $AssetID) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;

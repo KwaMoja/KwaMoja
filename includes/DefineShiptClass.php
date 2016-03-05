@@ -19,7 +19,7 @@ class Shipment {
 	var $CurrDecimalPlaces;
 	var $ShipmentDate;
 
-	function Shipment() {
+	function __construct() {
 		/*Constructor function initialises a new Shipment object */
 		$this->LineItems = array();
 		$this->AccumValue = 0;
@@ -70,7 +70,7 @@ class LineDetails {
 	var $DecimalPlaces;
 
 
-	function LineDetails($PODetailItem, $OrderNo, $StockId, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces = 2) {
+	function __construct($PODetailItem, $OrderNo, $StockId, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, $DecimalPlaces = 2) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->PODetailItem = $PODetailItem;

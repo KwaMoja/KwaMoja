@@ -19,7 +19,7 @@ class Journal {
 	/*Array of bank account GLCodes that must be posted to by a bank payment or receipt
 	to ensure integrity for matching off vs bank stmts */
 
-	function Journal() {
+	function __construct() {
 		/*Constructor function initialises a new journal */
 		$this->GLEntries = array();
 		$this->GLItemCounter = 0;
@@ -59,7 +59,7 @@ class JournalGLAnalysis {
 	var $tag;
 	var $assetid;
 
-	function JournalGLAnalysis($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid) {
+	function __construct($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid) {
 
 		/* Constructor function to add a new JournalGLAnalysis object with passed params */
 		$this->Amount = $Amt;

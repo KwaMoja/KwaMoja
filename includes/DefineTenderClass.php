@@ -33,7 +33,7 @@ class Tender {
 	var $contact;
 	var $Suppliers;
 
-	function tender() {
+	function __construct() {
 		/*Constructor function initialises a new purchase tender object */
 		$this->LineItems = array();
 		$this->Suppliers = array();
@@ -226,7 +226,7 @@ class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function LineDetails($LineNo, $StockItem, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate) {
+	function __construct($LineNo, $StockItem, $Qty, $ItemDescr, $UOM, $DecimalPlaces, $ExpiryDate) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
@@ -247,7 +247,7 @@ class Supplier {
 	var $EmailAddress;
 	var $Responded;
 
-	function Supplier($SupplierCode, $SupplierName, $EmailAddress) {
+	function __construct($SupplierCode, $SupplierName, $EmailAddress) {
 		$this->SupplierCode = $SupplierCode;
 		$this->SupplierName = $SupplierName;
 		$this->EmailAddress = $EmailAddress;

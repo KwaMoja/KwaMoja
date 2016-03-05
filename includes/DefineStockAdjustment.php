@@ -16,7 +16,7 @@ class StockAdjustment {
 	/*array to hold controlled items*/
 
 	//Constructor
-	function StockAdjustment() {
+	function __construct() {
 		$this->StockID = '';
 		$this->StockLocation = '';
 		$this->Controlled = '';

@@ -22,7 +22,7 @@ class Allocation {
 	/*The difference on exchange before this allocation */
 	var $CurrDecimalPlaces;
 
-	function Allocation() {
+	function __construct() {
 		/*Constructor function initialises a new debtor allocation*/
 		$this->Allocs = array();
 	}
@@ -68,7 +68,7 @@ class Allocn {
 	THERE CAN BE ONLY ONE ... allocation record for each
 	receipt/inovice combination  */
 
-	function Allocn($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID) {
+	function __construct($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID) {
 
 		/* Constructor function to add a new Allocn object with passed params */
 		$this->ID = $ID;

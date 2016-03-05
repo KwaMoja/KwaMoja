@@ -64,7 +64,7 @@ class Cart {
 	var $BuyerName;
 	var $SpecialInstructions;
 
-	function Cart() {
+	function __construct() {
 		/*Constructor function initialises a new shopping cart */
 		$this->LineItems = array();
 		$this->total = 0;
@@ -363,7 +363,7 @@ class LineDetails {
 	var $NextSerialNo;
 	var $GPPercent;
 
-	function LineDetails($LineNumber, $StockItem, $Descr, $LongDescr, $Qty, $Prc, $DiscPercent, $UOM, $Volume, $Weight, $QOHatLoc, $MBflag, $ActDispatchDate, $QtyInvoiced, $DiscCat, $Controlled, $Serialised, $DecimalPlaces, $Narrative, $TaxCategory, $ItemDue, $POLine, $StandardCost, $EOQ, $NextSerialNo, $ExRate) {
+	function __construct($LineNumber, $StockItem, $Descr, $LongDescr, $Qty, $Prc, $DiscPercent, $UOM, $Volume, $Weight, $QOHatLoc, $MBflag, $ActDispatchDate, $QtyInvoiced, $DiscCat, $Controlled, $Serialised, $DecimalPlaces, $Narrative, $TaxCategory, $ItemDue, $POLine, $StandardCost, $EOQ, $NextSerialNo, $ExRate) {
 
 		/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
@@ -423,7 +423,7 @@ class Tax {
 	var $TaxOnTax;
 	var $TaxGLCode;
 
-	function Tax($TaxCalculationOrder, $TaxAuthID, $TaxAuthDescription, $TaxRate, $TaxOnTax, $TaxGLCode) {
+	function __construct($TaxCalculationOrder, $TaxAuthID, $TaxAuthDescription, $TaxRate, $TaxOnTax, $TaxGLCode) {
 
 		$this->TaxCalculationOrder = $TaxCalculationOrder;
 		$this->TaxAuthID = $TaxAuthID;

@@ -39,7 +39,7 @@ class Payment {
 	var $ChequeNumber; //if using pre-printed stationery
 	var $Paymenttype;
 
-	function Payment() {
+	function __construct() {
 		/*Constructor function initialises a new Payment batch */
 		$this->GLItems = array();
 		$this->GLItemCounter = 0;
@@ -87,7 +87,7 @@ class PaymentGLAnalysis {
 	var $Tag;
 	var $Cheque;
 
-	function PaymentGLAnalysis($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $Cheque) {
+	function __construct($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $Cheque) {
 
 		/* Constructor function to add a new PaymentGLAnalysis object with passed params */
 		$this->Amount = $Amt;

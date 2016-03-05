@@ -43,7 +43,7 @@ class Project {
 	var $ProjectReqts;
 	/*array of other items required for the contract */
 
-	function Project() {
+	function __construct() {
 		/*Constructor function initialises a new Payment batch */
 		$this->ProjectBOM = array();
 		$this->ProjectReqts = array();
@@ -101,7 +101,7 @@ class ProjectComponent {
 	var $UOM;
 	var $DecimalPlaces;
 
-	function ProjectComponent($ComponentID, $StockId, $ItemDescription, $RequiredBy, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces = 0) {
+	function __construct($ComponentID, $StockId, $ItemDescription, $RequiredBy, $WorkCentre, $Quantity, $ItemCost, $UOM, $DecimalPlaces = 0) {
 
 		/* Constructor function to add a new Project Component object with passed params */
 		$this->ComponentID = $ComponentID;
@@ -125,7 +125,7 @@ class ProjectRequirement {
 	var $Quantity;
 	var $CostPerUnit;
 
-	function ProjectRequirement($Requirement, $Quantity, $CostPerUnit, $ProjectReqID = 0) {
+	function __construct($Requirement, $Quantity, $CostPerUnit, $ProjectReqID = 0) {
 
 		/* Constructor function to add a new Project Component object with passed params */
 		$this->Requirement = $Requirement;
