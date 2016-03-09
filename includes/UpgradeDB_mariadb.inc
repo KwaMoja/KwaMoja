@@ -212,10 +212,14 @@ function AddColumn($Column, $Table, $Type, $Null, $Default, $After) {
 			if ($Type == 'text') {
 				$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`", False);
 			} else {
-				if ($Default == 'CURRENT_TIMESTAMP') {
-					$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT " . $Default . " AFTER `" . $After . "`", False);
+				if (isset($Default)) {
+					if ($Default == 'CURRENT_TIMESTAMP') {
+						$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT " . $Default . " AFTER `" . $After . "`", False);
+					} else {
+						$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`", False);
+					}
 				} else {
-					$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`", False);
+					$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`", False);
 				}
 			}
 			$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`";
@@ -618,8 +622,9 @@ function InsertRecord($Table, $CheckFields, $CheckValues, $Fields, $Values) {
 	if (DB_table_exists($Table)) {
 		$SQL = "SELECT * FROM " . $Table . " WHERE ";
 		$SizeOfCheckFields = sizeOf($CheckFields);
-		for ($i = 0; $i < $SizeOfCheckFields; $i++) {
-			$SQL = $SQL . $CheckFields[$i] . "='" . $CheckValues[$i] . "' AND ";
+		for($i = 0; $i < $SizeOfCheckFields; $i++) {
+			$SQL = $SQL . $CheckFields[$i] . "='" .
+					 mysqli_real_escape_string($db, $CheckValues[$i]) . "' AND ";
 		}
 		$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 5);
 		$Result = DB_query($SQL);
@@ -627,13 +632,13 @@ function InsertRecord($Table, $CheckFields, $CheckValues, $Fields, $Values) {
 	if (DB_num_rows($Result) == 0 or isset($SQLFile)) {
 		$SQL = "INSERT INTO " . $Table . " (";
 		$SizeOfFields = sizeOf($Fields);
-		for ($i = 0; $i < $SizeOfFields; $i++) {
+		for($i = 0; $i < $SizeOfFields; $i++) {
 			$SQL = $SQL . $Fields[$i] . ",";
 		}
 		$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1) . ") VALUES (";
 		$SizeOfValues = sizeOf($Values);
-		for ($i = 0; $i < $SizeOfValues; $i++) {
-			$SQL = $SQL . "'" . $Values[$i] . "',";
+		for($i = 0; $i < $SizeOfValues; $i++) {
+			$SQL = $SQL . "'" . mysqli_real_escape_string($db, $Values[$i]) . "',";
 		}
 		$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1) . ")";
 		$Response = executeSQL($SQL);

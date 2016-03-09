@@ -1692,15 +1692,15 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 							/* Get the old cost information */
 							$SQL = "SELECT stockcosts.materialcost,
 											stockcosts.labourcost,
-											stockcosts.overheadcosts
+											stockcosts.overheadcost
 										FROM stockcosts
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'
 											AND succeeded=0";
 							$Result = DB_query($SQL);
 							$MyRow = DB_fetch_array($Result);
-							$OldMaterialCost = $MyRow['materialcost'];
-							$OldLabourCost = $MyRow['labourcost'];
-							$OldOverheadCost = $MyRow['overheadcost'];
+							$OldMaterialCost = isset($MyRow['materialcost']) ? $MyRow['materialcost'] : 0.0;
+							$OldLabourCost = isset($MyRow['labourcost']) ? $MyRow['labourcost'] : 0.0;
+							$OldOverheadCost = isset($MyRow['overheadcost']) ? $MyRow['overheadcost'] : 0.0;
 
 							if ($TotalQuantityOnHand > 0) {
 								$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;

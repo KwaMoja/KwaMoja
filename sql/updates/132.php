@@ -9,13 +9,12 @@ ChangeColumnType('groupcode', 'accountgroups', 'CHAR(10)', 'NOT NULL', '');
 ChangeColumnType('groupcode', 'chartmaster', 'CHAR(10)', 'NOT NULL', '');
 ChangeColumnType('parentgroupcode', 'accountgroups', 'CHAR(10)', 'NOT NULL', '');
 
-DB_IgnoreForeignKeys();
 DropPrimaryKey('accountgroups', array('groupname'));
 AddPrimaryKey('accountgroups', array('groupcode'));
 
 DropIndex('chartmaster', 'Group_');
 AddIndex(array('groupcode'),'chartmaster', 'Group');
-DB_ReinstateForeignKeys();
+
 UpdateDBNo(basename(__FILE__, '.php'));
 
 ?>

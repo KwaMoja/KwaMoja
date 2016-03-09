@@ -622,14 +622,14 @@ if (isset($_POST['CommitBatch'])) {
 											account,
 											narrative,
 											amount)
-						VALUES ('" . $TransType . "',
-								'" . $TransNo . "',
-								'" . FormatDateForSQL($_SESSION['PaymentDetail' . $Identifier]->DatePaid) . "',
-								'" . $PeriodNo . "',
-								'" . $PaymentItem->Cheque . "',
-								'" . $_SESSION['PaymentDetail' . $Identifier]->Account . "',
-								'" . $_SESSION['PaymentDetail' . $Identifier]->Narrative . "',
-								'" . (-$_SESSION['PaymentDetail' . $Identifier]->Amount / $_SESSION['PaymentDetail' . $Identifier]->ExRate / $_SESSION['PaymentDetail' . $Identifier]->FunctionalExRate) . "')";
+									VALUES ('" . $TransType . "',
+											'" . $TransNo . "',
+											'" . FormatDateForSQL($_SESSION['PaymentDetail' . $Identifier]->DatePaid) . "',
+											'" . $PeriodNo . "',
+											" . isset($PaymentItem->Cheque) ? $PaymentItem->Cheque : 0 . ",
+											'" . $_SESSION['PaymentDetail' . $Identifier]->Account . "',
+											'" . $_SESSION['PaymentDetail' . $Identifier]->Narrative . "',
+											'" . ($_SESSION['PaymentDetail' . $Identifier]>Amount / $_SESSION['PaymentDetail' . $Identifier]->ExRate / $_SESSION['PaymentDetail' . $Identifier]->FunctionalExRate) . "')";
 
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the bank account credit using the SQL');

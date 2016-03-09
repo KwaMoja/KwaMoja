@@ -946,7 +946,7 @@ if (isset($_POST['PostCreditNote'])) {
 								/* Get the old cost information */
 								$SQL = "SELECT stockcosts.materialcost,
 												stockcosts.labourcost,
-												stockcosts.overheadcosts
+												stockcosts.overheadcost
 											FROM stockcosts
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'
 												AND succeeded=0";
