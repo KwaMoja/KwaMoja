@@ -85,7 +85,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	$DirHandle = dir('companies/');
 
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
-		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.') {
+		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
 				include('companies/' . $CompanyEntry . '/Companies.php');
 			} else {
