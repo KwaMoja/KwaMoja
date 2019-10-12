@@ -1,21 +1,25 @@
-
 table {
+width:auto;
+max-width:90%;
+padding-bottom:5px;
+margin:5px auto;
 table-layout: fixed;
 }
-
-th {
+table tr.visible {
+display:table-row;
+}
+table tr.invisible {
+display:none;
+}
+table th {
 background-color:#cccce5;
 color:#300;
 text-align:center;
 }
-
-th.number {
-background-color:#cccce5;
-color:#300;
-text-align:right;
+table th img {
+vertical-align:middle;
 }
-
-th.SortedColumn {
+table th.SortedColumn {
 cursor:s-resize;
 padding-right:16px;
 background-image:url(images/ascending.png);
@@ -23,55 +27,42 @@ background-repeat: no-repeat;
 background-position:right;
 background-size:12px;
 }
-
-td {
+table td {
 text-align:left;
 }
-
-td.select {
+table td.select {
 background-color:#eee;
 }
-
-.table1 {
-width:90%;
-background:#eee;
-border:1px solid #222;
-margin:0 auto;
-}
-
-.tableheader {
-background-color:#cccce5;
-color:#300;
-}
-
-tr.striped_row:nth-of-type(even) {
+table tr.striped_row:nth-of-type(even) {
 background-color:#CCC;
 }
-
-tr.striped_row:nth-of-type(odd) {
+table tr.striped_row:nth-of-type(odd) {
 background-color:#EEE;
 }
-
-tr.success_row {
+table tr.success_row {
 background-color:#b9ecb4;
 color:#006400;
 border:1px solid #006400;
 }
-
-tr.warn_row {
+table tr.warn_row {
 background-color:#f5dbfd;
 color:maroon;
 border:1px solid maroon;
 }
-
-tr.info_row {
+table tr.info_row {
 background-color:#c7ccf6;
 color:navy;
 border:1px solid navy;
 }
-
-tr.error_row {
+table tr.error_row {
 background-color:#fddbdb;
 color:red;
 border:1px solid red;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+float:right;
+cursor:pointer;
 }

@@ -4,7 +4,6 @@ font-style: normal;
 font-weight: 400;
 src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
 }
-
 body {
 font-family: Futura,Trebuchet MS,Arial,sans-serif; ;
 font-weight:400;
@@ -13,230 +12,28 @@ margin:0;
 padding:0;
 color:#8DCDEB;
 }
-
-button img {
-/* Describes how button image should be displayed. */
-height:32px;
-width:32px;
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: left;
+padding: 1%;
+border-radius: 4px;
 }
-
-div.toplink {
-padding-top:0.3%;
-padding-left:1%;
-margin-bottom:-1.5%;
-text-align:left
-}
-
-input,textarea,select {
-background-color:transparent;
-border-radius: 5px;
-border: 1px solid #8DCDEB;
-padding:2px;
-}
-
-div.container {
-width:100%;
-padding-top:1%;
-}
-
-div.box {
-box-sizing:border-box;
--moz-box-sizing:border-box;
--webkit-box-sizing:border-box;
-width:32%;
-float:left;
-margin-left:1%;
-border:1px solid;
-border-radius:5px;
-}
-
-div.box_header {
-width:98%;
-border:solid 1px;
-border-radius:7px;
-font-size:120%;
-font-weight:700;
-margin:1%;
-}
-
-label.box {
-clear:left;
-float:left;
-width:50%;
-text-align:left;
-padding-left:1%;
-}
-
-select.box {
-width:98%;
-background:transparent;
-border-radius:7px;
-margin:1%;
-}
-
-#mask {
-display:none;
-top:0;
-right:0;
-bottom:0;
-left:0;
-position:fixed;
-background-image:url(images/mask.png);
-z-index:2;
-}
-
-#dialog {
-min-width:10%;
-max-width:50%;
-display:inline-block;
-background:#383C4A;
-z-index:99;
-border:solid #000 1px;
-border-radius:7px;
-position:fixed;
-top:50%;
-left:50%;
-margin-top:-9em;
-margin-left:-15em;
-box-shadow:0 0 15px #000;
-padding:2px 2px 5px;
-}
-
-#dialog_header {
-background:#2F343F;
-width:auto;
-border-radius:4px;
-font-size:130%;
-text-align:left;
-padding-left:5px;
-color:#C2C6D0;
-margin:2px;
-}
-
-#dialog_main {
-background:transparent;
-width:auto;
-border-radius:4px;
-text-align:left;
-padding-left:5px;
-padding-right:5px;
-font-style:italic;
-font-size:130%;
-color:#C2C6D0;
-margin:3% 2px;
-}
-
-input.okButton {
-display:inline-block;
-background-color:#444A58;
-border:thin;
-color:#C2C6D0;
-border-radius:3px;
-cursor:pointer;
-font-style:normal;
-max-width:48%;
-min-width:20%;
-border-color:#CCC;
-margin:2px 15px 5px 0;
-padding:2px;
-}
-
-input.okButton:active {
-box-shadow:0 0 0;
-}
-
-input.okButton:hover {
-background-color:#595D66;
-}
-
 a {
 text-decoration:none;
 display:inline-block;
 color:inherit;
 }
-
-
+a:hover {
+text-decoration:underline;
+}
 a.ButtonLink {
 text-decoration:none;
 display:inline;
 }
-
-a:hover {
-text-decoration:underline;
-}
-
-img {
-border:none;
-vertical-align:middle;
-}
-
-.PrintIcon {
-float:right;
-cursor:pointer;
-}
-
-.page_title_text{
-font-weight:bold;
-text-align:center;
-margin:0 auto;
-padding:5px;
-}
-
-.page_title_text img {
-padding-right:7px;
-width:32px;
-}
-
-p.good {
-font-weight:700;
-color:green;
-}
-
-p.bad {
-font-weight:700;
-color:red;
-}
-
 .centre {
-text-align:center;
-padding:5px;
+margin:0 auto;
 }
-
-.number {
- text-align:right;
- /* Class selector to horizontal align a number (right) in an element. */
-}
-
-.text {
- text-align:left;
- /* Class selector to horizontal align text (left) in an element. */
-}
-
-input.image {
-background-color:transparent;
-border-width:0;
-}
-
-input:required,select:required,textarea:required {
-background-color:transparent;
-}
-
-input.image:hover {
-background-color:transparent;
-}
-
-:-moz-ui-invalid {
-background-color:transparent;
-}
-
-input.inputerror {
-background-color:transparent;
-}
-
-select.inputerror {
-background:transparent;
-}
-
 .dpTD {
 border:0;
 width:20px;
@@ -244,7 +41,6 @@ background-color:transparent;
 text-align:right;
 cursor:pointer;
 }
-
 .dpDayHighlight {
 border:0;
 width:20px;
@@ -253,7 +49,6 @@ color:white;
 text-align:right;
 cursor:pointer;
 }
-
 .dpTDHover {
 border:0;
 width:20px;
@@ -262,319 +57,15 @@ color:white;
 text-align:right;
 cursor:pointer;
 }
-
 .notavailable {
 font-weight:lighter;
 font-style:italic;
 }
-
-.label {
-font-weight:700;
-font-style:normal;
-font-size:110%;
-background-color:transparent;
-}
-
-.table_index {
-background-color:transparent;
-}
-
-#CanvasDiv {
-background:transparent;
-border-radius:20px;
-margin:10px;
-}
-
-#HeaderDiv {
-padding:5px 10px 0;
-}
-
-#HeaderDiv img {
-border-radius:10px;
-text-decoration:none;
-padding:0;
-}
-
-#HeaderDiv img:hover {
-border-radius:10px;
-padding:0;
-}
-
-#HeaderDiv a {
-border-radius:10px;
-text-decoration:none;
-padding:3px;
-}
-
-#HeaderDiv a:hover {
-border-radius:10px;
-padding:3px;
-}
-
-#AppInfoDiv {
-float:left;
-}
-
-#AppInfoCompanyDiv {
-display:table-cell;
-}
-
-#AppInfoUserDiv {
-display:table-cell;
-padding-left:5px;
-}
-
-#AppInfoModuleDiv {
-font-weight:700;
-font-size:120%;
-padding:3px;
-}
-
-#QuickMenuDiv {
-float:right;
-margin-top:0px;
-}
-
-#QuickMenuDiv ul {
-list-style:none;
-float:right;
-}
-
-#QuickMenuDiv ul li {
-float:left;
-display:inline;
-margin:0 3px;
-}
-
-#BodyDiv {
-clear:both;
-overflow:hidden;
-text-align:center;
-}
-
-#MainMenuDiv {
-float:left;
-background:transparent;
-white-space:nowrap;
-text-align:center;
-padding-left:3px;
-padding-top:3px;
-width:11%;
-}
-
-#MainMenuDiv li a,#MainMenuDiv li a:hover,#MainMenuDiv .main_menu_selected a {
-display:block;
-border-radius:10px;
-text-decoration:none;
-margin-bottom:5px;
-padding:3px;
-border:1px solid #404552;
-}
-
-#MainMenuDiv li a:hover {
-border:1px solid #1A1A1A;
-background:#494C56;
-color:white;
-}
-
-#MainMenuDiv .main_menu_selected a {
-border:1px solid #1A1A1A;
-background:#494C56;
-color:white;
-}
-
-#SubMenuDiv {
-display:table;
-float:right;
-overflow:hidden;
-margin-left:auto;
-margin-right:auto;
-width:86%;
-text-align:left;
-}
-
-#SubMenuDiv a:hover {
-text-decoration:underline;
-}
-
-.menu_group_headers {
-background:transparent;
-border:1px solid #8DCDEB;
-color:#FFF;
-font-weight:700;
-text-align:center;
-padding:3px;
-}
-
-.menu_group_item {
-text-align:left;
-padding:2px;
-}
-
-.menu_group_item:hover {
-background:transparent;
-text-align:left;
-}
-
-.menu_group_item p {
-color:red;
-text-align:left;
-margin:0 0 0 0px;
-}
-
-.menu_group_item a:hover {
-color:red;
-text-decoration:none;
-}
-
-#TransactionsDiv,#InquiriesDiv,#MaintenanceDiv {
-width:33%;
-background:transparent;
-border:0px solid #4682B4;
-display:table-cell;
-}
-
-#InquiriesDiv div {
-width:33%;
-background:transparent;
-font-weight:700;
-color:#000;
-padding:2px;
-}
-
-#FooterDiv {
-clear:both;
-color:#FFF;
-height:53px;
-padding:0;
-}
-
-#FooterWrapDiv {
-padding:5px;
-}
-
-#FooterLogoDiv {
-background:transparent;
-border:0 outset #4682B4;
-border-radius:8px 8px 8px 8px;
-float:left;
-margin-left:5px;
-padding:3px;
-}
-
-#FooterVersionDiv {
-float:left;
-margin-left:10px;
-margin-top:15px;
-}
-
-#FooterTimeDiv {
-float:right;
-margin-top:15px;
-margin-right:15px;
-}
-
-#dialog_buttons,td.number,input.number,input.integer {
-text-align:right;
-}
-
-input:hover,select:hover,textarea:hover {
-color:white;
-}
-
-input:focus,select:focus,textarea:focus {
-box-shadow: 0 0 3px #480FCE;
-}
-
-#MainMenuDiv ul,#SubMenuDiv ul {
-margin:0;
-padding:0;
-}
-
-#MainMenuDiv li,#SubMenuDiv li {
-list-style:none;
-}
-
-#SubMenuDiv a,.menu_group_item a {
-color:#8DCDEB;
-text-decoration:none;
-}
-
-#favourites {
-background:transparent;
-overflow: hidden;
-color:#B0C4DE;
-font-size: 150%;
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 7px;
-padding-right: 7px;
-border: solid 1px #fff;
-border-radius: 15px;
-margin: 2px;
-height:32px;
-}
-
-#favourites:hover {
-cursor:pointer;
-}
-
-#PlusMinus:hover {
-cursor:pointer;
-}
-
-.CanvasTitle {
-background:transparent;
-border-top-left-radius:15px;
-border-top-right-radius:15px;
-padding: 5px;
-color:#fff;
-text-shadow: 1px 1px #0E0C6D;
-}
-
-iframe {
-border-width: 0px;
-width:30%;
-margin-left:10px;
-margin-top:5px;
-margin-bottom:5px;
-}
-
-#CloseButton {
-cursor:pointer;
-float:right;
-padding: 1px;
-padding-right:5px;
-color: #fff;
-text-shadow: 1px 1px #0E0C6D;
-}
-
-#CloseButton:hover {
-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
-}
-DIV.page_hint_text {
-background:transparent;
-border:maroon 1px solid;
-border-radius:3px;
-padding-top:2px;
-padding-bottom:2px;
-z-index:1;
-width:80%;
-float:none;
-position:static;
-text-align:center;
-padding-left:24px;
-min-height:26px;
-margin:0 auto;
-margin-bottom:4px;
-}
-
 .gallery {
 margin: 5px;
 float: left;
 /* Class selector to let an element float to the left. */
 }
-
 [data-title]:hover:after {
 opacity: 1;
 transition: all 0.1s ease 0.5s;

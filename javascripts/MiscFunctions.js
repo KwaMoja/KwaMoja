@@ -1,7 +1,7 @@
 function makeAlert(e, t) {
 	theme = localStorage.Theme;
 	document.getElementById("mask").style["display"] = "inline";
-	html = '<div id="dialog_header"><img src="css/' + theme + '/images/help.png" />' + t + '</div><img style="float: left;vertical-align:middle" src="css/' + theme + '/images/alert.png" /><div id="dialog_main">' + e;
+	html = '<div id="dialog_header"><img class="dialog_image" src="css/' + theme + '/images/help.png" />' + t + '</div><img style="float: left;vertical-align:middle" src="css/' + theme + '/images/alert.png" /><div id="dialog_main">' + e;
 	html = html + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="OK" onClick="hideAlert()" /></div>';
 	document.getElementById("dialog").innerHTML = html;
 	document.getElementById("dialog").style.marginTop = -document.getElementById("dialog").offsetHeight + "px";
@@ -19,7 +19,7 @@ function MakeConfirm(e, t, n) {
 	url = n.href;
 	th = localStorage.Theme;
 	document.getElementById("mask").style["display"] = "inline";
-	h = '<div id="dialog_header"><img src="css/' + th + '/images/help.png" />' + t + '</div><div id="dialog_main">' + e;
+	h = '<div id="dialog_header"><img class="dialog_image" src="css/' + th + '/images/help.png" />' + t + '</div><div id="dialog_main">' + e;
 	h = h + '</div><div id="dialog_buttons"><input type="submit" class="okButton" value="Cancel" onClick="hideConfirm(\'\')" />';
 	h = h + '<a class="ButtonLink" href="' + url + '" ><input type="submit" class="okButton" value="OK" onClick="hideConfirm(\'OK\')" /></a></div></div>';
 	document.getElementById("dialog").innerHTML = h;

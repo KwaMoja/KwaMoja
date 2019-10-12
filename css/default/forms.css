@@ -4,8 +4,8 @@ width: 100%;
 text-align: center;
 color:#1A1A1A;
 }
-
 form fieldset {
+background:#BAD8F6;
 display: inline;
 border:solid 1px;
 margin:auto;
@@ -14,41 +14,37 @@ margin-bottom:4px;
 border-radius:7px;
 text-align:left;
 }
-
-form legend {
-background-color:transparent;
+form fieldset legend {
+background-color:#B06161;
+color:#FFFFFF;
 padding:3px;
-border: 1px solid;
-border-radius:3px;
+border: 0px solid;
+border-radius:9px;
 font-size:150%;
+font-weight:bold;
 margin-top:3px;
 }
-
-legend.search {
+form fieldset legend.search {
 background-image:url(images/magnifier.png);
 background-repeat: no-repeat;
 background-size:contain;
 padding-left:32px;
 }
-
-form field {
+form fieldset field {
 display:block;
 text-align:left;
 margin-bottom:3px;
 }
-
-form label {
+form fieldset field label {
 float:left;
 width:24.5em;
 text-align:left;
 }
-
-.fieldtext {
-margin-bottom:8px;;
+form fieldset field .fieldtext {
+margin-bottom:8px;
 }
-
-form input,textarea,select {
-background-color:transparent;
+form fieldset field input,textarea,select {
+background-color:#C0C3FF;
 border-radius: 5px;
 border: 1px solid #588BB6;
 padding:2px;
@@ -56,20 +52,51 @@ color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
 }
-
-
+form fieldset field input:hover,select:hover,textarea:hover {
+box-shadow: 0 0 3px #480FCE;
+}
+form fieldset field input:focus,select:focus,textarea:focus {
+box-shadow: 0 0 3px #480FCE;
+}
+form fieldset field input[type="email"] {
+display:inline;
+background-image:url(images/mail.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:24px;
+}
+form fieldset field input[type="search"] {
+display:inline;
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:24px;
+}
+form fieldset field input[type="tel"] {
+display:inline;
+background-image:url(images/tel.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:24px;
+}
 form input[type="submit"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 16px;
+padding-right: 16px;
 margin: 1px;
 border: 1px solid #588BB6;
 color:#1A1A1A;
-border-radius: 15px;
+border-radius: 5px;
 cursor: pointer;
 }
-
+form input[type="submit"]:hover{
+background:#7F7F7F;
+color:black;
+}
 form input[type="reset"]{
 padding-top: 2px;
 padding-bottom: 2px;

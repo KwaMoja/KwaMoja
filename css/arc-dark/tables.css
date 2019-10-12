@@ -5,38 +5,22 @@ padding-bottom:5px;
 margin:5px auto;
 table-layout: fixed;
 }
-
-table.search {
-border:1px solid;
-border-radius:5px;
-width:60%;
-display:none;
-margin-top:10px;
-margin-bottom:10px;
-padding:5px;
-}
-
-tr.visible {
+table tr.visible {
 display:table-row;
 }
-
-tr.invisible {
+table tr.invisible {
 display:none;
 }
-
-th {
+table th {
 background-color:transparent;
 padding:3px;
 border: 1px solid #8DCDEB;
 border-radius:3px;
 }
-
-th.number {
-text-align:right;
-background-color:transparent;
+table th img {
+vertical-align:middle;
 }
-
-th.SortedColumn {
+table th.SortedColumn {
 cursor:s-resize;
 padding-right:16px;
 background-image:url(images/ascending.png);
@@ -44,67 +28,51 @@ background-repeat: no-repeat;
 background-position:right center;
 background-size:12px;
 }
-
-td {
+table td {
 text-align:left;
 }
-
-td.select {
+table td.select {
 background-color:transparent;
 padding:3px;
 }
-
-.table1 {
-width:90%;
-background:transparent;
-border:1px solid #2F4F4F;
-margin:0 auto;
-}
-
-.tableheader {
-background-color:transparent;
-}
-
-tr.striped_row:nth-of-type(even) {
+table tr.striped_row:nth-of-type(even) {
 background-color:#383C4A;
 }
-
-tr.striped_row:nth-of-type(odd) {
+table tr.striped_row:nth-of-type(odd) {
 background-color:#2F343F;
 }
-
-tr.success_row {
+table tr.success_row {
 margin-top: 5px;
 background-color:#7FFFD4;
-width:98%;
 color:green;
 border:1px solid green;
 margin:5px auto;
 }
-
-tr.warn_row {
+table tr.warn_row {
 margin-top: 5px;
 background-color:#FFC0CB;
-width:98%;
 color:maroon;
 border:1px solid maroon;
 margin:5px auto;
 }
-
-tr.info_row {
+table tr.info_row {
 margin-top: 5px;
 background-color:#449EF6;
-width:98%;
 color:navy;
 border:1px solid navy;
 margin:5px auto;
 }
-
-tr.error_row {
+table tr.error_row {
 margin-top: 5px;
 background-color:#FFE4E1;
-width:98%;
 color:red;
 border:1px solid red;
 margin:5px auto;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+float:right;
+cursor:pointer;
 }

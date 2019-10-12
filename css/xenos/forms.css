@@ -4,55 +4,48 @@ width: 100%;
 text-align: center;
 color:#1A1A1A;
 }
-
 form fieldset {
 background:#FFFFFF;
 display: inline;
 border:solid 1px;
 margin:auto;
 padding-top:7px;
-margin-bottom:4px;
+margin-bottom:14px;
+margin-right:14px;
 border-radius:7px;
 box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
-width:51%;
 text-align:left;
+vertical-align:top;
 }
-
-form legend {
+form fieldset legend {
 background:#FFFFFF;
 padding:3px;
 border: 1px solid;
 border-radius:9px;
 font-size:150%;
 margin-top:3px;
-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
 }
-
-legend.search {
+form fieldset legend.search {
 background-image:url(images/magnifier.png);
 background-repeat: no-repeat;
 background-size:contain;
 padding-left:32px;
 }
-
-form field {
+form fieldset field {
 display:block;
 text-align:left;
 margin-bottom:3px;
 }
-
-form label {
+form fieldset field label {
 float:left;
 width:24.5em;
 text-align:left;
 }
-
-.fieldtext {
-margin-bottom:8px;;
+form fieldset field .fieldtext {
+margin-bottom:8px;
 }
-
-form input,textarea,select {
-background-color:transparent;
+form fieldset field input,textarea,select {
+background-color:#e2f5ff;
 border-radius: 5px;
 border: 1px solid #8DCDEB;
 padding:2px;
@@ -60,21 +53,52 @@ color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
 }
-
-
-form input[type="submit"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
-margin: 1px;
-border: 1px solid #8DCDEB;
-color:#8DCDEB;
-border-radius: 15px;
-cursor: pointer;
-color:#1A1A1A;
+form fieldset field input:hover,select:hover,textarea:hover {
+box-shadow: 0 0 3px #480FCE;
 }
-
+form fieldset field input:focus,select:focus,textarea:focus {
+box-shadow: 0 0 3px #480FCE;
+}
+form fieldset field input[type="email"] {
+display:inline;
+background-image:url(images/mail.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:28px;
+}
+form fieldset field input[type="search"] {
+display:inline;
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:28px;
+}
+form fieldset field input[type="tel"] {
+display:inline;
+background-image:url(images/tel.png);
+background-repeat: no-repeat;
+background-position:4px 0px;
+background-size:contain;
+padding-left:28px;
+}
+form input[type="submit"]{
+background:#34A7E8;
+font-weight:bold;
+padding-left: 16px;
+padding-right: 16px;
+padding-top:6px;
+padding-bottom:6px;
+margin: 1px;
+margin-top:10px;
+margin-bottom:10px;
+border: 1px solid #0C374B;
+color:#8DCDEB;
+border-radius: 6px;
+cursor: pointer;
+color:#FFFFFF;
+}
 form input[type="reset"]{
 padding-top: 2px;
 padding-bottom: 2px;

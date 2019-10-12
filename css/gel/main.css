@@ -7,7 +7,7 @@ border-radius: 7px;
 }
 .ModuleList {
 float:left;
-background:#0000FF;
+background-image: linear-gradient(#9B9BCE, #0202EE);
 white-space:nowrap;
 text-align:left;
 padding-left:10px;
@@ -15,11 +15,12 @@ padding-right:10px;
 padding-top:13px;
 padding-bottom:13px;
 width:11%;
-border:1px solid #8DCDEB;
+border:0px solid #8DCDEB;
 border-radius:17px;
 margin:7px;
 }
-.ModuleList li a,.ModuleList li a:hover,.ModuleList .main_menu_selected a {
+.ModuleList li a,.ModuleList li a:hover {
+background:#06063E;
 display:block;
 border-radius:10px;
 text-decoration:none;
@@ -29,15 +30,15 @@ border:1px solid #404552;
 padding-left:5px;
 color:white;
 }
-.ModuleList li a:hover {
+.ModuleList .ModuleSelected a {
 border:1px solid #1A1A1A;
-background:#494C56;
+background:#06063E;
 color:white;
 padding-left:5px;
 }
-.ModuleList .main_menu_selected a {
+.ModuleList .ModuleUnSelected a {
 border:1px solid #1A1A1A;
-background:#494C56;
+background:transparent;
 color:white;
 padding-left:5px;
 }
@@ -56,9 +57,16 @@ margin-top:5px;
 vertical-align:top;
 margin-right:5px;
 }
+.MenuList legend {
+background:#DCDCDC;
+padding:8px;
+border:solid 0px black;
+border-radius:12px;
+}
 .MenuList legend img {
 padding-right:7px;
 width:16px;
+vertical-align:middle;
 }
 .MenuItem {
 color:#8DCDEB;
@@ -66,15 +74,41 @@ text-decoration:none;
 text-align:left;
 padding:2px;
 }
-.MenuItem:hover {
+.MenuItem a{
+color:#0000FF;
+text-decoration:none;
+text-align:left;
+padding:2px;
+}
+.MenuItem a:hover {
 background:transparent;
 text-align:left;
 color:black;
 }
-.MenuItem:visited {
-background:transparent;
-text-align:left;
-color:black;
+.MenuList .CustomMenuList {
+background:#E1E1E1;
+text-align:center;
+color:#000;
+padding-top:2px;
+padding-bottom:2px;
+}
+.page_title_text {
+padding-top:2px;
+padding-bottom:2px;
+font-weight:700;
+color:#000;
+text-align:center;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:32px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+margin-top:10px;
+display:inline-block;
 }
 .clearfix {
   overflow: auto;

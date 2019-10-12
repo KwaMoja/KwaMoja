@@ -1,7 +1,7 @@
 table {
 background-color:white;
 margin:0 auto;
-width:100%;
+width:auto;
 /*border-collapse: collapse;*/
 border:thin outset #B3B3B3;
 -webkit-border-radius:  4px;
@@ -14,22 +14,18 @@ box-shadow:         1px 1px 2px #C3C3C3;
 filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
 table-layout: fixed;
 }
-
-th {
+table tr.visible {
+display:table-row;
+}
+table tr.invisible {
+display:none;
+}
+table th {
 font-weight:bold;
 color:#2C2C2C;
 text-align:center;
 border-bottom:thin solid #B3B3B3;
-}
-
-th.number {
-text-align:right;
-font-weight:normal;
-background-color:#800000;
-color:white;
-}
-
-th.SortedColumn {
+}table th.SortedColumn {
 cursor:s-resize;
 padding-right:16px;
 background-image:url(images/ascending.png);
@@ -37,70 +33,43 @@ background-repeat: no-repeat;
 background-position:right;
 background-size:12px;
 }
-
-td {
+table th img {
+vertical-align:middle;
+}
+table td {
 padding:2px 4px;
 text-align:left;
 color:#575757;
 }
-
-td.select {
+table td.select {
 background-color:#eee;
 }
-
-td.number {
-text-align:right;
-}
-
-td table {
-background: red;
-}
-
-/* Table type is used for UI tables type 1 */
-.table1 {
-width:90%;
-background: #eee;
-border: 0px 0px 2px 2px #222 solid;
-margin: 0 auto;
-}
-
-/* Table type is used for UI tables type 2 */
-.table2 {
-width:90%;
-background: #eee;
-border: 0px 0px 2px 2px #222 solid;
-margin: 0 auto;
-}
-
-.tableheader {
-font-weight: normal;
-background-color: #777C59;
-}
-
-tr.striped_row:nth-of-type(even) {
+table tr.striped_row:nth-of-type(even) {
 background-color:white;
 }
-
-tr.striped_row:nth-of-type(odd) {
+table tr.striped_row:nth-of-type(odd) {
 background-color:#CCCCCC;
 }
-
-tr.success_row {
+table tr.success_row {
 color:darkgreen;
 background-color:#90EE90;
 }
-
-tr.warn_row {
+table tr.warn_row {
 color:maroon;
 background-color:#B88D8D;
 }
-
-tr.info_row {
+table tr.info_row {
 color:navy;
 background-color:#1E90FF;
 }
-
-tr.error_row {
+table tr.error_row {
 color:red;
 background-color:#FFC0CB;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+float:right;
+cursor:pointer;
 }

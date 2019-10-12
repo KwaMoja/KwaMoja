@@ -7,37 +7,44 @@ border-radius: 7px;
 }
 .ModuleList {
 float:left;
-background:white;
+background:#686868;
 white-space:nowrap;
 text-align:left;
-padding-left:10px;
-padding-right:10px;
-padding-top:3px;
+padding:10px;
 width:11%;
-border:1px solid #8DCDEB;
+border:0px solid #8DCDEB;
 border-radius:7px;
 margin:7px;
 }
-.ModuleList li a,.ModuleList li a:hover,.ModuleList .main_menu_selected a {
+.ModuleList li a,.ModuleList li a:hover {
 display:block;
+background:#494C56;
+color:white;
 border-radius:10px;
 text-decoration:none;
-margin-bottom:5px;
-padding:3px;
-border:1px solid #404552;
+margin-bottom:1px;
+padding:7px;
+border:0px solid #404552;
 padding-left:5px;
+font-weight:bold;
 }
-.ModuleList li a:hover {
-border:1px solid #1A1A1A;
-background:#494C56;
+.ModuleList .ModuleSelected a {
+border:0px solid #1A1A1A;
+background:#2A2A2A;
 color:white;
+margin-bottom:1px;
+padding:7px;
 padding-left:5px;
+font-weight:bold;
 }
-.ModuleList .main_menu_selected a {
-border:1px solid #1A1A1A;
-background:#494C56;
+.ModuleList .ModuleUnSelected a {
+border:0px solid #1A1A1A;
+background:#686868;
 color:white;
+margin-bottom:1px;
+padding:7px;
 padding-left:5px;
+font-weight:bold;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;
@@ -54,16 +61,54 @@ margin-top:5px;
 vertical-align:top;
 margin-right:5px;
 }
+.MenuList legend {
+}
+.MenuList legend img {
+width:24px;
+padding-right:8px;
+vertical-align:middle;
+}
 .MenuItem {
-color:#8DCDEB;
-text-decoration:none;
-text-align:left;
 padding:2px;
 }
-.MenuItem:hover {
+.MenuItem a{
+color:#1793D1;
+text-decoration:none;
+text-align:left;
+}
+.MenuItem a:hover {
 background:transparent;
 text-align:left;
+text-decoration:underline;
+color:#1793D1;
+}
+.MenuList .CustomMenuList {
+background:#686868;
+border-bottom:thin solid #DADADA;
+text-align:center;
 color:white;
+}
+.page_title_text {
+padding-top:2px;
+padding-bottom:2px;
+font-size:18px;
+color:black;
+width:60%;
+text-align:center;
+margin:5px auto;
+border: 0px black solid;
+border-radius:16px;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:32px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+margin-top:10px;
+display:inline-block;
 }
 .clearfix {
   overflow: auto;

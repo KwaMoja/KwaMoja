@@ -1,9 +1,10 @@
 .MainBody {
 background:#F5F5F5;
-margin:5px;
+margin-bottom:5px;
 padding:10px;
 border: 1px solid #82BCF4;
-border-radius: 7px;
+border-bottom-left-radius: 7px;
+border-bottom-right-radius: 7px;
 }
 .ModuleList {
 float:left;
@@ -12,13 +13,16 @@ white-space:nowrap;
 text-align:left;
 padding-left:10px;
 padding-right:10px;
-padding-top:3px;
+padding-top:13px;
+padding-bottom:13px;
 width:11%;
-border:1px solid #8DCDEB;
+border:0px solid #4D4D4D;
 border-radius:7px;
 margin:7px;
 }
-.ModuleList li a,.ModuleList li a:hover,.ModuleList .main_menu_selected a {
+.ModuleList li a,.ModuleList li a:hover {
+background:#494C56;
+color:white;
 display:block;
 border-radius:10px;
 text-decoration:none;
@@ -27,16 +31,16 @@ padding:3px;
 border:1px solid #404552;
 padding-left:5px;
 }
-.ModuleList li a:hover {
+.ModuleList .ModuleSelected a {
 border:1px solid #1A1A1A;
 background:#494C56;
 color:white;
 padding-left:5px;
 }
-.ModuleList .main_menu_selected a {
+.ModuleList .ModuleUnSelected a {
 border:1px solid #1A1A1A;
-background:#494C56;
-color:white;
+background:transparent;
+color:#4D4D4D;
 padding-left:5px;
 }
 .ModuleList ul,.MenuList ul {
@@ -47,12 +51,25 @@ padding:0;
 list-style:none;
 }
 .MenuList {
+background:#DCDCDC;
 display: inline;
 width:30%;
 border-radius:10px;
 margin-top:5px;
 vertical-align:top;
 margin-right:5px;
+}
+.MenuList legend {
+background:#C0C0C0;
+color:#000000;
+padding:3px;
+padding-right:7px;
+border-radius:7px;
+}
+.MenuList legend img {
+width:24px;
+padding-right:5px;
+vertical-align:middle;
 }
 .MenuItem {
 color:#8DCDEB;
@@ -64,6 +81,32 @@ padding:2px;
 background:transparent;
 text-align:left;
 color:white;
+}
+.MenuList .CustomMenuList {
+background:silver;
+outline:thin outset silver;
+text-align:center;
+color:#000;
+margin-bottom:3px;
+}
+.page_title_text {
+background:#DCDCDC;
+font-size:120%;
+text-align:center;
+margin:5px auto;
+padding:5px;
+width:30%;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:32px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+margin-top:10px;
+display:inline-block;
 }
 .clearfix {
   overflow: auto;

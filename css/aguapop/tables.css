@@ -1,4 +1,3 @@
-
 table {
 width:auto;
 max-width:90%;
@@ -6,39 +5,21 @@ padding-bottom:5px;
 margin:5px auto;
 table-layout: fixed;
 }
-
-table.search {
-border:1px solid;
-border-radius:5px;
-width:60%;
-display:none;
-box-shadow:3px 3px 4px #86C3D7 inset, -3px -3px 4px #383878 inset, 0 0 10px navy;
-margin-top:10px;
-margin-bottom:10px;
-padding:5px;
-}
-
-tr.visible {
+table tr.visible {
 display:table-row;
 }
-
-tr.invisible {
+table tr.invisible {
 display:none;
 }
-
-th {
+table th {
 background-color:#87CEEB;
 color:#000;
 padding:3px;
 }
-
-th.number {
-text-align:right;
-background-color:#87CEEB;
-color:#FFF;
+table th img {
+vertical-align:middle;
 }
-
-th.SortedColumn {
+table th.SortedColumn {
 cursor:s-resize;
 padding-right:16px;
 background-image:url(images/ascending.png);
@@ -46,68 +27,51 @@ background-repeat: no-repeat;
 background-position:right;
 background-size:12px;
 }
-
-td {
+table td {
 text-align:left;
 }
-
-td.select {
+table td.select {
 background-color:#F5F5F5;
 padding:3px;
 }
-
-.table1 {
-width:90%;
-background:#F5F5F5;
-border:1px solid #2F4F4F;
-margin:0 auto;
-}
-
-.tableheader {
-background-color:#87CEEB;
-color:#FFF;
-}
-
-tr.striped_row:nth-of-type(even) {
+table tr.striped_row:nth-of-type(even) {
 background-color:#DCDCDC;
 }
-
-tr.striped_row:nth-of-type(odd) {
+table tr.striped_row:nth-of-type(odd) {
 background-color:#F5F5F5;
 }
-
-tr.success_row {
+table tr.success_row {
 margin-top: 5px;
 background-color:#7FFFD4;
-width:98%;
 color:green;
 border:1px solid green;
 margin:5px auto;
 }
-
-tr.warn_row {
+table tr.warn_row {
 margin-top: 5px;
 background-color:#FFC0CB;
-width:98%;
 color:maroon;
 border:1px solid maroon;
 margin:5px auto;
 }
-
-tr.info_row {
+table tr.info_row {
 margin-top: 5px;
 background-color:#87CEFA;
-width:98%;
 color:navy;
 border:1px solid navy;
 margin:5px auto;
 }
-
-tr.error_row {
+table tr.error_row {
 margin-top: 5px;
 background-color:#FFE4E1;
-width:98%;
 color:red;
 border:1px solid red;
 margin:5px auto;
+}
+table .number {
+text-align:right;
+}
+table th .PrintIcon {
+float:right;
+cursor:pointer;
 }

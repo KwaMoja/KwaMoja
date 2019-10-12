@@ -39,9 +39,9 @@ while ($i < count($_SESSION['ModuleLink'])) {
 			$_SESSION['Module'] = $_SESSION['ModuleLink'][$i];
 		}
 		if ($_SESSION['ModuleLink'][$i] == $_SESSION['Module']) {
-			echo '<li class="main_menu_selected">';
+			echo '<li class="ModuleSelected">';
 		} else {
-			echo '<li class="main_menu_unselected">';
+			echo '<li class="ModuleUnSelected">';
 
 		}
 		echo '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Application=', urlencode($_SESSION['ModuleLink'][$i]), '">', $_SESSION['ModuleList'][$i], '</a></li>';
@@ -175,7 +175,7 @@ function GetRptLinks($GroupID) {
 	}
 	$RptLinks = '';
 	for ($Def = 1;$Def >= 0;$Def--) {
-		$RptLinks.= '<li class="menu_group_headers">';
+		$RptLinks.= '<li class="CustomMenuList">';
 		$RptLinks.= '<b>' . $Title[$Def] . '</b>';
 		$RptLinks.= '</li>';
 		$NoEntries = true;

@@ -1,9 +1,17 @@
 .MainBody {
-background:#CCCCCC;
+background:#588BB6;
 margin:5px;
 padding:10px;
 border: 1px solid #82BCF4;
 border-radius: 7px;
+}
+.MainBody li a {
+color:#090939;
+text-decoration:none;
+}
+.MainBody li a:hover {
+color:#000000;
+text-decoration:underline;
 }
 .ModuleList {
 float:left;
@@ -12,34 +20,35 @@ white-space:nowrap;
 text-align:left;
 padding-left:10px;
 padding-right:10px;
-padding-top:3px;
+padding-top:13px;
+padding-bottom:13px;
 width:11%;
-border:1px solid #8DCDEB;
+border:1px solid #055305;
 border-radius:7px;
 margin:7px;
 color:black;
 }
-.ModuleList li a,.ModuleList li a:hover,.ModuleList .main_menu_selected a {
-background:#8EDE8D;
+.ModuleList li a,.ModuleList li a:hover {
+background:#008000;
 display:block;
 border-radius:10px;
 text-decoration:none;
 margin-bottom:5px;
 padding:3px;
-border:1px solid #404552;
+border:1px solid #083309;
 padding-left:5px;
+color:#8EDE8D;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #083309;
+background:#008000;
+color:#8EDE8D;
+padding-left:5px;
+}
+.ModuleList .ModuleUnSelected a{
+border:1px solid #083309;
+background:#8EDE8D;
 color:#008000;
-}
-.ModuleList li a:hover {
-border:1px solid #1A1A1A;
-background:#8EDE8D;
-color:black;
-padding-left:5px;
-}
-.ModuleList .main_menu_selected a {
-border:1px solid #1A1A1A;
-background:#8EDE8D;
-color:black;
 padding-left:5px;
 }
 .ModuleList ul,.MenuList ul {
@@ -50,6 +59,7 @@ padding:0;
 list-style:none;
 }
 .MenuList {
+background:white;
 display: inline;
 width:30%;
 border-radius:10px;
@@ -57,6 +67,18 @@ margin-top:5px;
 vertical-align:top;
 margin-right:5px;
 color:black;
+border:1px solid #588BB6;
+}
+.MenuList legend {
+background:white;
+border-radius:10px;
+border:1px solid #588BB6;
+padding:7px;
+}
+.MenuList legend img {
+padding-right:7px;
+width:24px;
+vertical-align:middle;
 }
 .MenuItem {
 color:#8DCDEB;
@@ -69,8 +91,29 @@ background:transparent;
 text-align:left;
 color:black;
 }
+.MenuList .CustomMenuList {
+text-align:center;
+color:#000;
+background:#eee;
+border-bottom:thin solid #000;
+}
+.page_title_text {
+font-weight:700;
+color:#000;
+text-align:center;
+padding:5px;
+clear: both;
+}
+.page_title_text img{
+width:24px;
+padding-right:9px;
+vertical-align:middle;
+}
+div.toplink {
+float:left;
+}
 .clearfix {
-  overflow: auto;
+overflow: auto;
 }
 .clearfix::after {
   content: "";

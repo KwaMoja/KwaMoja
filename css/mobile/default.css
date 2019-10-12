@@ -95,9 +95,6 @@ form input[type="submit"]{
 table {
 }
 
-table.search {
-}
-
 table.selection {
 }
 
@@ -110,9 +107,6 @@ tr.invisible {
 th {
 }
 
-th.number {
-}
-
 th.SortedColumn {
 }
 
@@ -123,11 +117,6 @@ td.select {
 }
 
 .centre {
-}
-
-.number {
- text-align:right;
- /* Class selector to horizontal align a number (right) in an element. */
 }
 
 .text {
@@ -178,9 +167,6 @@ div.info {
 }
 
 .table1 {
-}
-
-.tableheader {
 }
 
 .notavailable {
@@ -308,7 +294,7 @@ display: block;
 #FooterTimeDiv {
 }
 
-#dialog_buttons,td.number,input.number,input.integer {
+#dialog_buttons,input.integer {
 }
 
 input:hover,select:hover,textarea:hover {
@@ -324,13 +310,6 @@ input:focus,select:focus,textarea:focus {
 }
 
 #SubMenuDiv a,.menu_group_item a {
-}
-
-#favourites {
-display:none;
-}
-
-#favourites:hover {
 }
 
 #PlusMinus:hover {

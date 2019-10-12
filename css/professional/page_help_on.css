@@ -1,8 +1,9 @@
 DIV.page_help_text {
 background:#D3D3D3 url(images/help.png) top left no-repeat;
+background-size:contain;
 border:#a52a2a 1px solid;
-padding-top:2px;
-padding-bottom:2px;
+padding-top:12px;
+padding-bottom:12px;
 padding-left:10px;
 z-index:1;
 width:80%;
@@ -12,6 +13,7 @@ position:static;
 color:#000;
 text-align:center;
 margin:0 auto;
+margin-bottom:5px;
 }
 
 @media only screen and (max-device-width:767px) {
