@@ -24,7 +24,7 @@ echo '<html>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('KwaMoja'), ' - ', $Title, '</title>
 			<link rel="icon" href="', $RootPath, '/favicon.ico" />
-			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=5" rel="stylesheet" type="text/css" media="screen" />
+			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=6" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 

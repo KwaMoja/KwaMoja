@@ -938,7 +938,7 @@ if (isset($_POST['BankAccount']) and $_POST['BankAccount'] != '') {
 } //isset($_POST['BankAccount']) and $_POST['BankAccount'] != ''
 echo '<form action="', htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier), '" method="post">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-
+echo '<fieldset>';
 echo '<fieldset>
 		<legend>', _('Payment');
 
@@ -1486,6 +1486,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	/*	} else {
 		echo '<input type="hidden" name="Discount" value="0" />';
 	}*/
+	echo '</fieldset>';
 	echo '</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="CommitBatch" value="', _('Accept and Process Supplier Payment'), '" />
