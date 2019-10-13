@@ -496,8 +496,9 @@ function GetChartLanguage() {
 	/* Need to pick the language that the account sections will
 	 * be shown in
 	*/
-
+	$Lang = 'en_GB';
 	$Language = '';
+	$SectionLanguages = array();
 
 	$SQL = "SELECT language, COUNT(sectionid) AS total FROM accountsection GROUP BY language";
 	$Result = DB_query($SQL);

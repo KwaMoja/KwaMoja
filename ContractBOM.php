@@ -220,12 +220,12 @@ if (isset($_POST['NewItem'])) {
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form id="ContractBOMForm" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form id="ContractBOMForm" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (count($_SESSION['Contract' . $Identifier]->ContractBOM) > 0) {
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  ' . $_SESSION['Contract' . $Identifier]->CustomerName . '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/contract.png" title="', _('Contract Bill of Material'), '" alt="" />  ', $_SESSION['Contract' . $Identifier]->CustomerName, '
 		</p>';
 
 	echo '<table>';
@@ -255,26 +255,26 @@ if (count($_SESSION['Contract' . $Identifier]->ContractBOM) > 0) {
 		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['CompanyRecord']['decimalplaces']);
 
 		echo '<tr class="striped_row">
-				<td>' . $ContractComponent->StockID . '</td>
-				<td>' . $ContractComponent->ItemDescription . '</td>
-				<td><input type="text" class="number" name="Qty' . $ContractComponent->ComponentID . '" required="required" maxlength="11" size="11" value="' . locale_number_format($ContractComponent->Quantity, $ContractComponent->DecimalPlaces) . '" /></td>
-				<td>' . $ContractComponent->UOM . '</td>
-				<td class="number">' . locale_number_format($ContractComponent->ItemCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this item from the contract BOM?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				<td>', $ContractComponent->StockID, '</td>
+				<td>', $ContractComponent->ItemDescription, '</td>
+				<td><input type="text" class="number" name="Qty', $ContractComponent->ComponentID, '" required="required" maxlength="11" size="11" value="', locale_number_format($ContractComponent->Quantity, $ContractComponent->DecimalPlaces), '" /></td>
+				<td>', $ContractComponent->UOM, '</td>
+				<td class="number">', locale_number_format($ContractComponent->ItemCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', $DisplayLineTotal, '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '&amp;Delete=', urlencode($ContractComponent->ComponentID), '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this item from the contract BOM?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 			</tr>';
 		$TotalCost+= $LineTotal;
 	}
 
 	$DisplayTotal = locale_number_format($TotalCost, $_SESSION['CompanyRecord']['decimalplaces']);
 	echo '<tr>
-			<td colspan="5" class="number">' . _('Total Cost') . '</td>
-			<td class="number"><b>' . $DisplayTotal . '</b></td>
+			<td colspan="5" class="number">', _('Total Cost'), '</td>
+			<td class="number"><b>', $DisplayTotal, '</b></td>
 		</tr>
 		</table>';
 	echo '<div class="centre">
-			<input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />
-			<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" />
+			<input type="submit" name="UpdateLines" value="', _('Update Lines'), '" />
+			<input type="submit" name="BackToHeader" value="', _('Back To Contract Header'), '" />
 		</div>';
 
 }
@@ -291,20 +291,25 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$Result1 = DB_query($SQL, $ErrMsg, $DbgMsg);
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') . '</p>';
-	echo '<table>
-			<tr></tr>
-			<tr>
-				<td><select name="StockCat">';
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Print'), '" alt="" />', ' ', _('Search For Stock Items'), '
+		</p>';
 
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	echo '<fieldset>
+			<legend>', _('Search For Stock Items'), '</legend>
+			<field>
+				<label for="StockCat"">', _('Select Stock Category'), '</label>
+				<select name="StockCat">';
+
+	echo '<option selected="selected" value="All">', _('All'), '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
+	echo '</select>
+		</field>';
 
 	unset($_POST['Keywords']);
 	unset($_POST['StockCode']);
@@ -317,23 +322,21 @@ if (!isset($_GET['Edit'])) {
 		$_POST['StockCode'] = '';
 	}
 
-	echo '</select></td>
-			<td>' . _('Enter text extracts in the description') . ':</td>
-			<td><input type="text" name="Keywords" size="20" autofocus="autofocus" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-			<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><b>' . _('OR') . ' </b><a target="_blank" href="' . $RootPath . '/Stocks.php">' . _('Create a New Stock Item') . '</a></td>
-		</tr>
-		</table>
-		<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-		</div>';
+	echo '<field>
+			<label for="Keywords">', _('Enter text extracts in the description'), ':</label>
+			<input type="search" name="Keywords" size="20" autofocus="autofocus" maxlength="25" value="', $_POST['Keywords'], '" />
+		</field>
+		<h1>', _('OR'), '</h1>
+		<field>
+			<label for="StockCode">', _('Enter extract of the Stock Code'), ':</label>
+			<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
+		</field>
+		<h1>', _('OR'), '</h1>
+		<a target="_blank" href="', $RootPath, '/Stocks.php">', _('Create a New Stock Item'), '</a>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="Search" value="', _('Search Now'), '" />
+	</div>';
 
 }
 
@@ -342,15 +345,16 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Image') . '</th>
-					<th>' . _('Quantity') . '</th>
+					<th class="SortedColumn">', _('Code'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th>', _('Units'), '</th>
+					<th>', _('Image'), '</th>
+					<th>', _('Quantity'), '</th>
 				</tr>
 			</thead>';
 
 	echo '<tbody>';
+	$i = 0;
 	while ($MyRow = DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png', 'jpg', 'jpeg');
@@ -365,12 +369,12 @@ if (isset($SearchResult)) {
 		}
 
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['stockid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td>' . $MyRow['units'] . '</td>
-				<td>' . $ImageSource . '</td>
-				<td><input class="number" type="text" size="6" value="0" name="Qty' . $i . '" />
-				<input type="hidden" name="StockID' . $i . '" value="' . $MyRow['stockid'] . '" />
+				<td>', $MyRow['stockid'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $ImageSource, '</td>
+				<td><input class="number" type="text" size="6" value="0" name="Qty', $i, '" />
+				<input type="hidden" name="StockID', $i, '" value="', $MyRow['stockid'], '" />
 				</td>
 			</tr>';
 		++$i;
@@ -384,13 +388,13 @@ if (isset($SearchResult)) {
 	#end of while loop
 	echo '</tbody>
 		</table>
-		<input type="hidden" name="CountOfItems" value="' . $i . '" />';
+		<input type="hidden" name="CountOfItems" value="', $i, '" />';
 	if ($i == $_SESSION['DisplayRecordsMax']) {
 
 		prnMsg(_('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . _('can be displayed') . '. ' . _('Please restrict your search to only the parts required'), 'info');
 	}
 	echo '<div class="centre">
-			<input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') . '" />
+			<input type="submit" name="NewItem" value="', _('Add to Contract Bill Of Material'), '" />
 		</div>';
 } #end if SearchResults to show
 echo '</form>';
