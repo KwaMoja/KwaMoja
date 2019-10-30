@@ -524,7 +524,7 @@ if (!isset($StockId)) {
 				<legend class="search">', _('Search Criteria'), '</legend>
 				<field>
 					<label for="OrderNumber">', _('Order number'), ': </label>
-					<input type="text" class="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />
+					<input type="search" class="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />
 					<fieldhelp>', _('If you know the order number you are looking for, then enter it here, otherwise leave empty.'), '</fieldhelp>
 				</field>
 				<field>
@@ -598,7 +598,7 @@ if (!isset($StockId)) {
 
 		echo '<field>
 				<label for="CustomerRef">', _('Customer Ref'), '</label>
-				<input type="text" name="CustomerRef" value="', $_POST['CustomerRef'], '" size="12" />
+				<input type="search" name="CustomerRef" value="', $_POST['CustomerRef'], '" size="12" />
 				<fieldhelp>', _('Enter the customer reference for the order you are searching for, or leave blank.'), '</fieldhelp>
 			</field>';
 
@@ -669,7 +669,7 @@ if (!isset($StockId)) {
 
 	echo '<field>
 			<label for="Keywords">', _('Enter text extract(s) in the description'), ':</label>
-			<input type="text" name="Keywords" size="20" maxlength="25" value="', $_POST['Keywords'], '" />
+			<input type="search" name="Keywords" size="20" maxlength="25" value="', $_POST['Keywords'], '" />
 			<fieldhelp>', _('Enter all, or part of the description of the item you are searching for.'), '</fieldhelp>
 		</field>';
 
@@ -677,7 +677,7 @@ if (!isset($StockId)) {
 
 	echo '<field>
 			<label for="StockCode">', _('Enter extract of the Stock Code'), ':</label>
-			<input type="text" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
+			<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
 			<fieldhelp>', _('Enter all, or part of the code of the item you are searching for.'), '</fieldhelp>
 		</field>
 	</fieldset>';

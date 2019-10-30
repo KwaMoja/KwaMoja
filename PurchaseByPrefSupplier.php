@@ -290,10 +290,13 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])) {
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		}
 		/* end of the loop round the detail line items on the order */
-		echo '<p />';
+
 		prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' . _('has been created.') . ' ' . _('Total order value of') . ': ' . locale_number_format($OrderValue, $SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode'], 'success');
-		echo '<a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . urlencode($OrderNo) . '">' . _('Print Order') . '</a>
-				<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . urlencode($OrderNo) . '">' . _('Edit Order') . '</a>';
+
+		echo '<div class="centre">
+				<a href="', $RootPath, '/PO_PDFPurchOrder.php?OrderNo=', urlencode($OrderNo), '">', _('Print Order'), '</a>
+				<a href="', $RootPath, '/PO_Header.php?ModifyOrderNumber=', urlencode($OrderNo), '">', _('Edit Order'), '</a>
+			</div>';
 		include ('includes/footer.php');
 		exit;
 	} else {
@@ -301,31 +304,35 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])) {
 	}
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<form id="SupplierPurchasing" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table>
-	<tr>
-		<td>' . _('For Supplier') . ':</td>
-		<td><select name="Supplier">';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+	</p>';
+
+echo '<form id="SupplierPurchasing" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 $SQL = "SELECT supplierid, suppname FROM suppliers WHERE supptype<>7 ORDER BY suppname";
 $SuppResult = DB_query($SQL);
-
-echo '<option value="">' . _('Not Yet Selected') . '</option>';
-
+echo '<fieldset>
+		<legend>', _('Select Supplier'), '</legend>
+		<field>
+			<label for="Supplier">', _('For Supplier'), ':</label>
+			<select name="Supplier">
+				<option value="">', _('Not Yet Selected'), '</option>';
 while ($MyRow = DB_fetch_array($SuppResult)) {
 	if (isset($_POST['Supplier']) and $_POST['Supplier'] == $MyRow['supplierid']) {
-		echo '<option selected="selected" value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['supplierid'], '">', $MyRow['suppname'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname'] . '</option>';
+		echo '<option value="', $MyRow['supplierid'], '">', $MyRow['suppname'], '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '</table>
-	<div class="centre">
-		<input type="submit" name="ShowItems" value="' . _('Show Items') . '" />
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="ShowItems" value="', _('Show Items'), '" />
 	</div>';
 
 if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplier'] != '') {
@@ -374,18 +381,18 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 		echo '<table>
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Item Description') . '</th>
-						<th class="SortedColumn">' . _('Bin') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Demand') . '</th>
-						<th>' . _('Supp Ords') . '</th>
-						<th>' . _('Previous') . '<br />' . _('Month') . '</th>
-						<th>' . _('Last') . '<br />' . _('Month') . '</th>
-						<th>' . _('Week') . '<br />' . _('3') . '</th>
-						<th>' . _('Week') . '<br />' . _('2') . '</th>
-						<th>' . _('Last') . '<br />' . _('Week') . '</th>
-						<th>' . _('Order Qty') . '</th>
+						<th class="SortedColumn">', _('Item Code'), '</th>
+						<th class="SortedColumn">', _('Item Description'), '</th>
+						<th class="SortedColumn">', _('Bin'), '</th>
+						<th>', _('On Hand'), '</th>
+						<th>', _('Demand'), '</th>
+						<th>', _('Supp Ords'), '</th>
+						<th>', _('Previous'), '<br />', _('Month'), '</th>
+						<th>', _('Last'), '<br />', _('Month'), '</th>
+						<th>', _('Week'), '<br />', _('3'), '</th>
+						<th>', _('Week'), '<br />', _('2'), '</th>
+						<th>', _('Last'), '<br />', _('Week'), '</th>
+						<th>', _('Order Qty'), '</th>
 					</tr>
 				</thead>';
 
@@ -494,29 +501,29 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 			if (!isset($_POST['OrderQty' . $i])) {
 				$_POST['OrderQty' . $i] = 0;
 			}
-			echo '<tr>
-					<td>' . $ItemRow['stockid'] . '</td>
-					<td>' . $ItemRow['description'] . '</td>
-					<td>' . $ItemRow['bin'] . '</td>
-					<td class="number">' . locale_number_format(round($ItemRow['qoh'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($TotalDemand, $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($OnOrdRow['qtyonorder'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($SalesRow['previousmonth'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($SalesRow['lastmonth'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($SalesRow['wk3'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($SalesRow['wk2'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format(round($SalesRow['wk1'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']) . '</td>
-					<td><input type="hidden" name="StockID' . $i . '" value="' . $ItemRow['stockid'] . '" /><input type="text" class="number" name="OrderQty' . $i . '" value="' . $_POST['OrderQty' . $i] . '" title="' . _('Enter the quantity to purchase of this item') . '" size="6" maxlength="6" /></td>
+			echo '<tr class="striped_row">
+					<td>', $ItemRow['stockid'], '</td>
+					<td>', $ItemRow['description'], '</td>
+					<td>', $ItemRow['bin'], '</td>
+					<td class="number">', locale_number_format(round($ItemRow['qoh'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($TotalDemand, $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($OnOrdRow['qtyonorder'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($SalesRow['previousmonth'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($SalesRow['lastmonth'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($SalesRow['wk3'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($SalesRow['wk2'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(round($SalesRow['wk1'], $ItemRow['decimalplaces']), $ItemRow['decimalplaces']), '</td>
+					<td><input type="hidden" name="StockID', $i, '" value="', $ItemRow['stockid'], '" /><input type="text" class="number" name="OrderQty', $i, '" value="', $_POST['OrderQty' . $i], '" title="', _('Enter the quantity to purchase of this item'), '" size="6" maxlength="6" /></td>
 				</tr>';
 			++$i;
 		}
-		echo '</tbody>';
-		echo '<input type="hidden" name="Supplier" value="' . stripslashes($_POST['Supplier']) . '" />';
-		/*end preferred supplier items while loop */
-		echo '<tr>
-				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" /></td>
-			</tr>
+		echo '</tbody>
 			</table>';
+		echo '<input type="hidden" name="Supplier" value="', stripslashes($_POST['Supplier']), '" />';
+		/*end preferred supplier items while loop */
+		echo '<div class="centre">
+				<input type="submit" name="CreatePO" value="', _('Create Purchase Order'), '" />
+			</div>';
 
 	}
 }

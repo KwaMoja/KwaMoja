@@ -64,7 +64,7 @@ margin-right:5px;
 }
 .MenuList legend img {
 padding-right:7px;
-width:32px;
+width:48px;
 vertical-align:middle;
 }
 .MenuItem {
@@ -95,12 +95,12 @@ text-align:center;
 margin:0 auto;
 padding:5px;
 padding-top:10px;
-margin-bottom:10px;
+margin-bottom:1px;
 clear: both;
 }
 .page_title_text img {
 padding-right:7px;
-width:32px;
+width:48px;
 vertical-align:middle;
 }
 .toplink {

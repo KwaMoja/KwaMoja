@@ -401,7 +401,7 @@ if (isset($_POST['ShowSales'])) {
 				if ($LastPeriodHeading != ConvertSQLDate($SalesRow['trandate'])) {
 					$PeriodHeadingDone = false;
 					if ($LastPeriodHeading != 'First Run Through') { //print the footer for the period
-						echo '<tr class="striped_row">
+						echo '<tr class="total_row">
 								<td colspan="1" class="number">', _('Total'), '-', $LastPeriodHeading, '</td>
 								<td class="number">', $SalesRow['sales_type'], '</td>
 								<td class="number">', $PrdTotalOrders, '</td>
@@ -442,7 +442,7 @@ if (isset($_POST['ShowSales'])) {
 				if ($LastPeriodHeading != _('wk') . '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone = false;
 					if ($LastPeriodHeading != 'First Run Through') {
-						echo '<tr class="striped_row">
+						echo '<tr class="total_row">
 								<td colspan="2" class="number">', _('Total'), '-', $LastPeriodHeading, '</td>
 								<td class="number">', $PrdTotalOrders, '</td>
 								<td class="number">', locale_number_format($PrdTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -482,7 +482,7 @@ if (isset($_POST['ShowSales'])) {
 				if ($LastPeriodHeading != $SalesRow['month_name'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone = false;
 					if ($LastPeriodHeading != 'First Run Through') {
-						echo '<tr class="striped_row">
+						echo '<tr class="total_row">
 								<td colspan="2" class="number">', _('Total'), '-', $LastPeriodHeading, '</td>
 								<td class="number">', $PrdTotalOrders, '</td>
 								<td class="number">', locale_number_format($PrdTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -522,7 +522,7 @@ if (isset($_POST['ShowSales'])) {
 				if ($LastPeriodHeading != _('Qtr') . '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone = false;
 					if ($LastPeriodHeading != 'First Run Through') {
-						echo '<tr class="striped_row">
+						echo '<tr class="total_row">
 								<td colspan="2" class="number">', _('Total'), '-', $LastPeriodHeading, '</td>
 								<td class="number">', $PrdTotalOrders, '</td>
 								<td class="number">', locale_number_format($PrdTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -581,7 +581,7 @@ if (isset($_POST['ShowSales'])) {
 		$CumulativeTotalCost+= $SalesRow['cost'];
 		$CumulativeTotalGP+= ($SalesRow['salesvalue'] + $SalesRow['returnvalue'] - $SalesRow['cost']);
 	}
-	echo '<tr class="striped_row">
+	echo '<tr class="total_row">
 			<td colspan="2" class="number">', _('Total'), ' ', $LastPeriodHeading, '</td>
 			<td class="number">', $PrdTotalOrders, '</td>
 			<td class="number">', locale_number_format($PrdTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -601,7 +601,7 @@ if (isset($_POST['ShowSales'])) {
 			</tr>';
 		echo '<tr class="striped_row">';
 	}
-	echo '<tr class="striped_row">
+	echo '<tr class="total_row">
 			<td colspan="2" class="number">', _('GRAND Total'), '</td>
 			<td class="number">', $CumulativeTotalOrders, '</td>
 			<td class="number">', locale_number_format($CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>

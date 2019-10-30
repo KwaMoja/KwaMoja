@@ -17,34 +17,34 @@ if (!isset($_POST['Date'])) {
 	$BookMark = 'DailyTransactions';
 	include ('includes/header.php');
 
-	echo '<div class="centre">
-			<p class="page_title_text" >
-				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . _('Customer Transaction Listing') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', $Title, '" alt="', $Title, '" />', ' ', _('Customer Transaction Listing'), '
+		</p>';
 
 	if ($InputError == 1) {
 		prnMsg($Msg, 'error');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
-	echo '<table summary="' . _('Input criteria for report') . '">
-	 		<tr>
-				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" required="required" maxlength="10" size="10" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Transaction type') . '</td>
-				<td>
-					<select required="required" name="TransType">
-						<option value="10">' . _('Invoices') . '</option>
-						<option value="11">' . _('Credit Notes') . '</option>
-						<option value="12">' . _('Receipts') . '</option>
-					</select>
-				</td>
-			</tr>
-		</table>
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Input criteria for report'), '</legend>
+			<field>
+				<label for="Date">', _('Enter the date for which the transactions are to be listed'), ':</label>
+				<input type="text" name="Date" required="required" maxlength="10" size="10" class="date" value="', Date($_SESSION['DefaultDateFormat']), '" />
+			</field>
+			<field>
+				<label for="TransType">', _('Transaction type'), '</label>
+				<select required="required" name="TransType">
+					<option value="10">', _('Invoices'), '</option>
+					<option value="11">', _('Credit Notes'), '</option>
+					<option value="12">', _('Receipts'), '</option>
+				</select>
+			</field>
+		</fieldset>
 		<div class="centre">
-			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
+			<input type="submit" name="Go" value="', _('Create PDF'), '" />
 		</div>
 	</form>';
 
@@ -85,7 +85,6 @@ if (DB_error_no() != 0) {
 } elseif (DB_num_rows($Result) == 0) {
 	$Title = _('Payment Listing');
 	include ('includes/header.php');
-	echo '<br />';
 	prnMsg(_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] . '. ' . _('Please try again selecting a different date'), 'info');
 	include ('includes/footer.php');
 	exit;

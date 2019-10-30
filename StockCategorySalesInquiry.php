@@ -195,7 +195,7 @@ if (isset($_POST['ShowSales'])) {
 
 	} //loop around category sales for the period
 	//print out the previous category totals
-	echo '<tr>
+	echo '<tr class="total_row">
 			<td colspan="2" class="number">', _('Category Total'), '</td>
 			<td class="number">', locale_number_format($CategoryQty, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($CategorySales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -209,17 +209,17 @@ if (isset($_POST['ShowSales'])) {
 	}
 	echo '</tr>';
 
-	echo '<tr>
-			<th colspan="2" class="number">', _('GRAND Total'), '</th>
-			<th class="number">', locale_number_format($CumulativeTotalQty, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-			<th class="number">', locale_number_format($CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-			<th class="number">', locale_number_format($CumulativeTotalCOGS, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-			<th class="number">', locale_number_format($CumulativeTotalSales - $CumulativeTotalCOGS, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-			<th colspan="2"></td>';
+	echo '<tr class="total_row">
+			<td colspan="2" class="number">', _('GRAND Total'), '</td>
+			<td class="number">', locale_number_format($CumulativeTotalQty, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td class="number">', locale_number_format($CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td class="number">', locale_number_format($CumulativeTotalCOGS, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td class="number">', locale_number_format($CumulativeTotalSales - $CumulativeTotalCOGS, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td colspan="2"></td>';
 	if ($CumulativeTotalSales != 0) {
-		echo '<th class="number">', locale_number_format(($CumulativeTotalSales - $CumulativeTotalCOGS) * 100 / $CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '%</th>';
+		echo '<td class="number">', locale_number_format(($CumulativeTotalSales - $CumulativeTotalCOGS) * 100 / $CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '%</td>';
 	} else {
-		echo '<th>', _('N/A'), '</th>';
+		echo '<td>', _('N/A'), '</td>';
 	}
 	echo '</tr>
 		</table>';

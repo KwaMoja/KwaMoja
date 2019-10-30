@@ -11,8 +11,8 @@ if (!isset($_POST['CreateCSV'])) {
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . _('Customer Balances Movements') . '" alt="" />' . ' ' . _('Customer Balances Movements') . '
-	</p>';
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Customer Balances Movements'), '" alt="" />', ' ', _('Customer Balances Movements'), '
+		</p>';
 }
 if (!isset($_POST['RunReport'])) {
 
@@ -20,59 +20,62 @@ if (!isset($_POST['RunReport'])) {
 	$CustomersResult = DB_query("SELECT debtorno, name FROM debtorsmaster ORDER BY name");
 	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman ORDER BY salesmanname");
 
-	echo '<form id="Form1" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
+	echo '<form id="Form1" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	echo '<fieldset>
+			<legend>', _('Inquiry Criteria'), '</legend>';
 
-			<table cellpadding="2">
-				<tr>
-					<td>' . _('Customer') . '</td>
-					<td><select name="Customer">
-						<option selected="selected" value="">' . _('All') . '</option>';
+	echo '<field>
+			<label for="Customer">', _('Customer'), '</label>
+			<select name="Customer">
+				<option selected="selected" value="">', _('All'), '</option>';
 	while ($CustomerRow = DB_fetch_array($CustomersResult)) {
-		echo '<option value="' . $CustomerRow['debtorno'] . '">' . $CustomerRow['name'] . '</option>';
+		echo '<option value="', $CustomerRow['debtorno'], '">', $CustomerRow['name'], '</option>';
 	}
 	echo '</select>
-					</td>
-				</tr>
-				<tr>
-					<td>' . _('Sales Area') . '</td>
-					<td><select name="SalesArea">
-						<option selected="selected" value="">' . _('All') . '</option>';
-	while ($AreaRow = DB_fetch_array($SalesAreasResult)) {
-		echo '<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . '</option>';
-	}
-	echo '</select>
-			</td>
-		</tr>
-		<tr>
-			<td>' . _('Sales Person') . '</td>
-			<td>
-				<select name="SalesPerson">
-					<option selected="selected" value="">' . _('All') . '</option>';
-	while ($SalesPersonRow = DB_fetch_array($SalesFolkResult)) {
-		echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
-	}
-	echo '</select>
-					</td>
-				</tr>
-				<tr>
-					<td>' . _('Date From') . ':</td>
-					<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Date To') . ':</td>
-					<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Create CSV') . ':</td>
-					<td><input type="checkbox" name="CreateCSV" value=""></td>
-				</tr>
+		</field>';
 
-			</table>
-			<div class="centre">
-				<input type="submit" name="RunReport" value="' . _('Show Customer Balance Movements') . '" />
-			</div>
+	echo '<field>
+			<label for="SalesArea">', _('Sales Area'), '</label>
+			<select name="SalesArea">
+				<option selected="selected" value="">', _('All'), '</option>';
+	while ($AreaRow = DB_fetch_array($SalesAreasResult)) {
+		echo '<option value="', $AreaRow['areacode'], '">', $AreaRow['areadescription'], '</option>';
+	}
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="SalesPerson">', _('Sales Person'), '</label>
+			<select name="SalesPerson">
+				<option selected="selected" value="">', _('All'), '</option>';
+	while ($SalesPersonRow = DB_fetch_array($SalesFolkResult)) {
+		echo '<option value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
+	}
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="FromDate">', _('Date From'), ':</label>
+			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="', Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))), '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToDate">', _('Date To'), ':</label>
+			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="', Date($_SESSION['DefaultDateFormat']), '" />
+		</field>';
+
+	echo '<field>
+			<label for="CreateCSV">', _('Create CSV'), ':</label>
+			<input type="checkbox" name="CreateCSV" value="">
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="RunReport" value="', _('Show Customer Balance Movements'), '" />
+		</div>
 	</form>';
 	include ('includes/footer.php');
 	exit;
@@ -84,6 +87,8 @@ if ($_POST['Customer'] != '') {
 	$WhereClause = "custbranch.area='" . $_POST['SalesArea'] . "'";
 } elseif ($_POST['SalesPerson'] != '') {
 	$WhereClause = "custbranch.salesman='" . $_POST['SalesPerson'] . "'";
+} else {
+	$WhereClause = '';
 }
 
 $SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
@@ -111,11 +116,11 @@ if (!isset($_POST['CreateCSV'])) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Customer') . ' </th>
-					<th class="SortedColumn">' . _('Opening Balance') . '</th>
-					<th class="SortedColumn">' . _('Debits') . '</th>
-					<th class="SortedColumn">' . _('Credits') . '</th>
-					<th class="SortedColumn">' . _('Balance') . '</th>
+					<th class="SortedColumn">', _('Customer'), ' </th>
+					<th class="SortedColumn">', _('Opening Balance'), '</th>
+					<th class="SortedColumn">', _('Debits'), '</th>
+					<th class="SortedColumn">', _('Credits'), '</th>
+					<th class="SortedColumn">', _('Balance'), '</th>
 				</tr>
 			</thead>';
 } else {
@@ -166,12 +171,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 	if ($OpeningBal != 0 or $ClosingBal != 0 or $TransRow['localdebits'] != 0 or $TransRow['localcredits'] != 0) {
 
 		if (!isset($_POST['CreateCSV'])) {
-			echo '<tr>
-					<td>' . $MyRow['name'] . ' </td>
-					<td class="number">' . locale_number_format($OpeningBal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($TransRow['localdebits'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($TransRow['localcredits'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($ClosingBal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			echo '<tr class="striped_row">
+					<td>', $MyRow['name'], ' </td>
+					<td class="number">', locale_number_format($OpeningBal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($TransRow['localdebits'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($TransRow['localcredits'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($ClosingBal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				</tr>';
 		} else { //send the line to CSV file
 			$CSVFile.= '"' . str_replace(',', '', $MyRow['name']) . '","' . str_replace(',', '', $OpeningBal) . '","' . str_replace(',', '', $TransRow['localdebits']) . '","' . str_replace(',', '', $TransRow['localcredits']) . '","' . str_replace(',', '', $ClosingBal) . '"' . "\n";
@@ -185,32 +190,26 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$ClosingBalances+= $ClosingBal;
 }
 
-if (!isset($_POST['CreateCSV'])) {
-	echo '</tbody>';
-	echo '</table>';
-}
-
 if ($_POST['Customer'] == '') { //if there could be several customers being reported
 	if (!isset($_POST['CreateCSV'])) {
-		echo '<table>
-			<tr>
-				<th></th>
-				<th>' . _('Opening Balance') . '</th>
-				<th>' . _('Debits') . '</th>
-				<th>' . _('Credits') . '</th>
-				<th>' . _('Balance') . '</th>
-			</tr>
-			<tr>
+		echo '<tr class="total_row">
 				<td>' . _('TOTALS') . '</td>
 				<td class="number">' . locale_number_format($OpeningBalances, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Debits, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Credits, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($ClosingBalances, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			</tr>
-		</table>';
+			</tr>';
 	} else {
 		$CSVFile.= '"' . _('TOTALS') . '","' . str_replace(',', '', $OpeningBalances) . '","' . str_replace(',', '', $Debits) . '","' . str_replace(',', '', $Credits) . '","' . str_replace(',', '', $ClosingBalances) . '"' . "\n";
 	}
+}
+
+if (!isset($_POST['CreateCSV'])) {
+	echo '</tbody>';
+	echo '</table>';
+	echo '<div class="centre">
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Run inquiry again with different criteria'), '</a>
+		</div>';
 }
 
 if (isset($_POST['CreateCSV'])) {

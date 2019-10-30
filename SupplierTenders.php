@@ -73,9 +73,13 @@ if (isset($_POST['Process'])) {
 			$LineNo++;
 		}
 	}
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Confirm the Response For Tender') . ' ' . $_SESSION['offer' . $Identifier]->TenderID . '</p>';
-	echo '<form action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Confirm the Response For Tender'), ' ', $_SESSION['offer' . $Identifier]->TenderID, '
+		</p>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	echo '<table>';
 	echo '<input type="hidden" name="TenderType" value="3" />';
 	$LocationSQL = "SELECT tenderid,
@@ -149,28 +153,33 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	if (isset($_SESSION['offer' . $Identifier])) {
 		unset($_SESSION['offer' . $Identifier]);
 	}
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Create or View Offers from') . ' ' . $Supplier . '</p>';
-	echo '<table>';
-	echo '<tr>
-			<td>' . _('Select option for tendering') . '</td>
-			<td><select required="required" name="TenderType">
-				<option value="1">' . _('View or Amend outstanding offers from') . ' ' . $Supplier . '</option>
-				<option value="2">' . _('Create a new offer from') . ' ' . $Supplier . '</option>
-				<option value="3">' . _('View any open tenders without an offer from') . ' ' . $Supplier . '</option>
-				</select></td>
-		</tr>';
-	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
-	echo '<tr>
-			<td colspan="2">
-				<div class="centre">
-				<input type="submit" name="submit" value="' . _('Select') . '" />
-				</div>
-			</td>
-		</tr>
-		</table>
-		</form>';
+	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Create or View Offers from'), ' ', $Supplier, '
+		</p>';
+
+	echo '<fieldset>
+			<legend>', _('Supplier Tender Options'), '</legend>';
+
+	echo '<field>
+			<label for="TenderType">', _('Select option for tendering'), '</label>
+			<select required="required" name="TenderType">
+				<option value="1">', _('View or Amend outstanding offers from'), ' ', $Supplier, '</option>
+				<option value="2">', _('Create a new offer from'), ' ', $Supplier, '</option>
+				<option value="3">', _('View any open tenders without an offer from'), ' ', $Supplier, '</option>
+			</select>
+		</field>';
+
+	echo '<input type="hidden" name="SupplierID" value="', $_POST['SupplierID'], '" />';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Select'), '" />
+		</div>
+	</form>';
 }
 
 if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
@@ -282,36 +291,41 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 1 and !isset($_POST[
 }
 
 if (isset($_POST['TenderType']) and $_POST['TenderType'] != 3 and isset($_SESSION['offer' . $Identifier]) and $_SESSION['offer' . $Identifier]->LinesOnOffer > 0 or isset($_POST['Update'])) {
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Items to offer from') . ' ' . $Supplier . '</p>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Search'), '" alt="" />', ' ', _('Items to offer from'), ' ', $Supplier, '
+		</p>';
+
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Stock ID') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th>' . _('Quantity') . '</th>
-					<th>' . _('UOM') . '</th>
-					<th>' . _('Price') . ' (' . $Currency . ')</th>
-					<th>' . _('Line Total') . ' (' . $Currency . ')</th>
-					<th class="SortedColumn">' . _('Expiry Date') . '</th>
+					<th class="SortedColumn">', _('Stock ID'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th>', _('Quantity'), '</th>
+					<th>', _('UOM'), '</th>
+					<th>', _('Price'), ' (', $Currency, ')</th>
+					<th>', _('Line Total'), ' (', $Currency, ')</th>
+					<th class="SortedColumn">', _('Expiry Date'), '</th>
+					<th></th>
 				</tr>
 			</thead>';
-	$k = 0;
+
 	echo '<tbody>';
 	foreach ($_SESSION['offer' . $Identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted == False) {
 
 			echo '<input type="hidden" name="StockID' . $LineItems->LineNo . '" value="' . $LineItems->StockID . '" />';
 			echo '<tr class="striped_row">
-					<td>' . $LineItems->StockID . '</td>
-					<td>' . $LineItems->ItemDescription . '</td>
-					<td><input type="text" class="number" required="required" maxlebgth="11" name="Qty' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces) . '" /></td>
-					<td>' . $LineItems->Units . '</td>
-					<td><input type="text" class="number" required="required" maxlebgth="11" name="Price' . $LineItems->LineNo . '" value="' . locale_number_format($LineItems->Price, 2, '.', '') . '" /></td>
-					<td class="number">' . locale_number_format($LineItems->Price * $LineItems->Quantity, 2) . '</td>
-					<td><input type="text" size="11" required="required" maxlebgth="10" class="date" name="expirydate' . $LineItems->LineNo . '" value="' . $LineItems->ExpiryDate . '" /></td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
+					<td>', $LineItems->StockID, '</td>
+					<td>', $LineItems->ItemDescription, '</td>
+					<td><input type="text" class="number" required="required" maxlebgth="11" name="Qty', $LineItems->LineNo, '" value="', locale_number_format($LineItems->Quantity, $LineItems->DecimalPlaces), '" /></td>
+					<td>', $LineItems->Units, '</td>
+					<td><input type="text" class="number" required="required" maxlebgth="11" name="Price', $LineItems->LineNo, '" value="', locale_number_format($LineItems->Price, 2, '.', ''), '" /></td>
+					<td class="number">', locale_number_format($LineItems->Price * $LineItems->Quantity, 2), '</td>
+					<td><input type="text" size="11" required="required" maxlebgth="10" class="date" name="expirydate', $LineItems->LineNo, '" value="', $LineItems->ExpiryDate, '" /></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '&Delete=', urlencode($LineItems->LineNo), '&Type=', urlencode($_POST['TenderType']), '">', _('Remove'), '</a></td>
 				</tr>';
 		}
 	}
@@ -341,9 +355,12 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 2 and !isset($_POST[
 	if (!isset($_SESSION['offer' . $Identifier])) {
 		$_SESSION['offer' . $Identifier] = new Offer($_POST['SupplierID']);
 	}
-	echo '<form action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '?identifier=', $Identifier, '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', _('Search for Inventory Items'), '
+		</p>';
 
 	$SQL = "SELECT categoryid,
 				categorydescription
@@ -352,62 +369,76 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 2 and !isset($_POST[
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) == 0) {
-		echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a></p>';
+		echo '<font size="4" color="red">', _('Problem Report'), ':</font><br />', _('There are no stock categories currently defined please use the link below to set them up');
+		echo '<br /><a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
 		exit;
 	}
-	echo '<table><tr>';
-	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<fieldset>
+			<legend>', _('Search Criteria'), '</legend>';
+
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
+	echo '<field>
+			<label for="StockCat">', _('In Stock Category'), ':</label>
+			<select name="StockCat">';
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">', _('All'), '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">', _('All'), '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
-	echo '</select>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select>
+		</field>';
+
+	echo '<input type="hidden" name="TenderType" value="', $_POST['TenderType'], '" />';
+	echo '<input type="hidden" name="SupplierID" value="', $_POST['SupplierID'], '" />';
+
+	echo '<field>
+			<label for="Keywords">', _('Enter partial'), '<b> ', _('Description'), '</b>:</label>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+		echo '<input type="search" name="Keywords" value="', $_POST['Keywords'], '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="search" name="Keywords" size="20" maxlength="25" />';
 	}
-	echo '<input type="hidden" name="TenderType" value="' . $_POST['TenderType'] . '" />';
-	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
-	echo '</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td>';
+	echo '</field>';
+
+	echo '<h1>', _('OR'), '</h1>';
+
+	echo '<field>
+			<label for="StockCode">', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="search" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" />';
+		echo '<input type="search" autofocus="autofocus" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td>
-		</tr>
-		</table>
-		<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+	echo '</field>
+		</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Search" value="', _('Search Now'), '" />
 		</div>
-		</form>';
+	</form>';
 }
 
 /*The supplier has chosen option 3
 */
 if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST['Search']) or isset($_GET['Delete'])) {
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Tenders Waiting For Offers') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Tenders Waiting For Offers'), '
+		</p>';
+
+	echo '<form action="', basename(__FILE__), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<input type="hidden" name="TenderType" value="3" />';
+
 	$SQL = "SELECT DISTINCT tendersuppliers.tenderid,
 				suppliers.currcode
 			FROM tendersuppliers
@@ -422,12 +453,9 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 	$Result = DB_query($SQL);
 	echo '<table>';
 	echo '<tr>
-			<th colspan="13"><font size="3" color="#616161">' . _('Outstanding Tenders Waiting For Offer') . '</font></th>
+			<th colspan="13">', _('Outstanding Tenders Waiting For Offer'), '</th>
 		</tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
-		echo '<form action="' . basename(__FILE__) . '" method="post">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<input type="hidden" name="TenderType" value="3" />';
 		$LocationSQL = "SELECT tenderid,
 							locations.locationname,
 							address1,
@@ -444,18 +472,18 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 						AND tenderid='" . $MyRow[0] . "'";
 		$LocationResult = DB_query($LocationSQL);
 		$MyLocationRow = DB_fetch_row($LocationResult);
-		echo '<tr>
-				<td valign="top" style="background-color:#cccce5">' . _('Deliver To') . ':</td>
-				<td valign="top" style="background-color:#cccce5">';
+		echo '<tr class="striped_row">
+				<td valign="top">', _('Deliver To'), ':</td>
+				<td valign="top">';
 		for ($i = 1;$i < 8;$i++) {
 			if ($MyLocationRow[$i] != '') {
 				echo $MyLocationRow[$i] . '<br />';
 			}
 		}
-		echo '</td>';
-		echo '<th colspan="8" style="vertical-align:top"><font size="2" color="#616161">' . _('Tender Number') . ': ' . $MyRow[0] . '</font></th>';
-		echo '<input type="hidden" value="' . $MyRow[0] . '" name="Tender" />';
-		echo '<th><input type="submit" value="' . _('Process') . "\n" . _('Tender') . '" name="Process" /></th>
+		echo '</td>
+				<th colspan="8">', _('Tender Number'), ': ', $MyRow[0], '</th>
+				<input type="hidden" value="', $MyRow[0], '" name="Tender" />
+				<th><input type="submit" value="', _('Process Tender'), '" name="Process" /></th>
 			</tr>';
 		$ItemSQL = "SELECT tenderitems.tenderid,
 						tenderitems.stockid,
@@ -477,41 +505,41 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 					WHERE tenderitems.tenderid='" . $MyRow[0] . "'";
 		$ItemResult = DB_query($ItemSQL);
 		echo '<tr>
-				<th>' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . $Supplier . '<br />' . _('Item Code') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Required') . '</th>
-				<th>' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' . _('Units of Measure') . '</th>
-				<th>' . _('Required By') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Offered') . '</th>
-				<th>' . $Supplier . '<br />' . _('Units of Measure') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . $Supplier . '<br />' . _('Price') . '</th>
-				<th>' . _('Delivery By') . '</th>
+				<th>', stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', _('Item Code'), '</th>
+				<th>', _('Item Description'), '</th>
+				<th>', $Supplier, '<br />', _('Item Code'), '</th>
+				<th>', _('Quantity'), '<br />', _('Required'), '</th>
+				<th>', stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', _('Units of Measure'), '</th>
+				<th>', _('Required By'), '</th>
+				<th>', _('Quantity'), '<br />', _('Offered'), '</th>
+				<th>', $Supplier, '<br />', _('Units of Measure'), '</th>
+				<th>', _('Currency'), '</th>
+				<th>', $Supplier, '<br />', _('Price'), '</th>
+				<th>', _('Delivery By'), '</th>
 			</tr>';
 		$i = 0;
 		while ($MyItemRow = DB_fetch_array($ItemResult)) {
-			echo '<tr>
-					<td>' . $MyItemRow['stockid'] . '</td>
-					<td>' . $MyItemRow['description'] . '</td>
-					<input type="hidden" name="StockID' . $i . '" value="' . $MyItemRow['stockid'] . '" />
-					<input type="hidden" name="ItemDescription' . $i . '" value="' . $MyItemRow['description'] . '" />
-					<td>' . $MyItemRow['suppliers_partno'] . '</td>
-					<td class="number">' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '</td>
-					<td>' . $MyItemRow['units'] . '</td>
-					<td>' . ConvertSQLDate($MyItemRow['requiredbydate']) . '</td>';
+			echo '<tr class="striped_row">
+					<td>', $MyItemRow['stockid'], '</td>
+					<td>', $MyItemRow['description'], '</td>
+					<input type="hidden" name="StockID', $i, '" value="', $MyItemRow['stockid'], '" />
+					<input type="hidden" name="ItemDescription', $i, '" value="', $MyItemRow['description'], '" />
+					<td>', $MyItemRow['suppliers_partno'], '</td>
+					<td class="number">', locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']), '</td>
+					<td>', $MyItemRow['units'], '</td>
+					<td>', ConvertSQLDate($MyItemRow['requiredbydate']), '</td>';
 
 			if ($MyItemRow['suppliersuom'] == '') {
 				$MyItemRow['suppliersuom'] = $MyItemRow['units'];
 			}
-			echo '<td><input type="text" class="number" required="required" maxlength="10" size="10" name="Qty' . $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
-				<input type="hidden" name="UOM' . $i . '" value="' . $MyItemRow['units'] . '" />
-				<input type="hidden" name="DecimalPlaces' . $i . '" value="' . $MyItemRow['decimalplaces'] . '" />
-				<td>' . $MyItemRow['suppliersuom'] . '</td>
-				<td>' . $MyRow[1] . '</td>
-				<td><input type="text" class="number" required="required" maxlength="10" size="10" name="Price' . $i . '" value="0.00" /></td>
-				<td><input type="text" class="date" required="required" maxlength="10" name="RequiredByDate' . $i . '" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
-				</tr>';
+			echo '<td><input type="text" class="number" required="required" maxlength="10" size="10" name="Qty', $i, '" value="', locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']), '" /></td>
+				<input type="hidden" name="UOM', $i, '" value="', $MyItemRow['units'], '" />
+				<input type="hidden" name="DecimalPlaces', $i, '" value="', $MyItemRow['decimalplaces'], '" />
+				<td>', $MyItemRow['suppliersuom'], '</td>
+				<td>', $MyRow[1], '</td>
+				<td><input type="text" class="number" required="required" maxlength="10" size="10" name="Price', $i, '" value="0.00" /></td>
+				<td><input type="text" class="date" required="required" maxlength="10" name="RequiredByDate', $i, '" size="11" value="', ConvertSQLDate($MyItemRow['requiredbydate']), '" /></td>
+			</tr>';
 			++$i;
 		}
 		echo '</form>';
@@ -521,9 +549,12 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 
 if (isset($_POST['Search'])) {
 	/*ie seach for stock items */
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Select items to offer from') . ' ' . $Supplier . '</p>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Select items to offer from'), ' ', $Supplier, '
+		</p>';
 
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
 		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
@@ -635,12 +666,12 @@ if (isset($_POST['Search'])) {
 		echo '<table cellpadding="1">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Description') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Image') . '</th>
-						<th>' . _('Quantity') . '</th>
-						<th>' . _('Price') . ' (' . $Currency . ')</th>
+						<th class="SortedColumn">', _('Code'), '</th>
+						<th class="SortedColumn">', _('Description'), '</th>
+						<th>', _('Units'), '</th>
+						<th>', _('Image'), '</th>
+						<th>', _('Quantity'), '</th>
+						<th>', _('Price'), ' (', $Currency, ')</th>
 					</tr>
 				</thead>';
 
@@ -682,14 +713,14 @@ if (isset($_POST['Search'])) {
 				$UOM = $MyRow['units'];
 			}
 			echo '<tr class="striped_row">
-					<td>' . $MyRow['stockid'] . '</td>
-					<td>' . $MyRow['description'] . '</td>
-					<td>' . $UOM . '</td>
-					<td>' . $ImageSource . '</td>
-					<td><input class="number" type="text" size="6" value="0" name="Qty' . $i . '" /></td>
-					<td><input class="number" type="text" size="12" value="0" name="Price' . $i . '" /></td>
-					<input type="hidden" size="12" value="' . $MyRow['stockid'] . '" name="StockID' . $i . '" />
-					<input type="hidden" value="' . $UOM . '" name="uom' . $i . '" />
+					<td>', $MyRow['stockid'], '</td>
+					<td>', $MyRow['description'], '</td>
+					<td>', $UOM, '</td>
+					<td>', $ImageSource, '</td>
+					<td><input class="number" type="text" size="6" value="0" name="Qty', $i, '" /></td>
+					<td><input class="number" type="text" size="12" value="0" name="Price', $i, '" /></td>
+					<input type="hidden" size="12" value="', $MyRow['stockid'], '" name="StockID', $i, '" />
+					<input type="hidden" value="', $UOM, '" name="uom', $i, '" />
 				</tr>';
 			++$i;
 			$PartsDisplayed++;
@@ -709,11 +740,11 @@ if (isset($_POST['Search'])) {
 		}
 		echo '<a name="end"></a>
 				<div class="centre">
-					<input type="submit" name="NewItem" value="Add to Offer" />
+					<input type="submit" name="NewItem" value="', _('Add to Offer'), '" />
 				</div>';
 	} #end if SearchResults to show
-	echo '<input type="hidden" name="TenderType" value="' . $_POST['TenderType'] . '" />';
-	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
+	echo '<input type="hidden" name="TenderType" value="', $_POST['TenderType'], '" />';
+	echo '<input type="hidden" name="SupplierID" value="', $_POST['SupplierID'], '" />';
 
 	echo '</form>';
 

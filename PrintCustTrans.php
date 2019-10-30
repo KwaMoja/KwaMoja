@@ -22,7 +22,6 @@ if (isset($_GET['PrintPDF'])) {
 }
 
 if (!isset($_POST['ToTransNo']) or trim($_POST['ToTransNo']) == '' or filter_number_format($_POST['ToTransNo']) < $FromTransNo) {
-
 	$_POST['ToTransNo'] = $FromTransNo;
 }
 
@@ -602,10 +601,11 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 		echo '<p class="page_title_text">
 				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />', ' ', _('Print Invoices or Credit Notes (Landscape Mode)'), '
 			</p>';
-		echo '<table class="table1">
-				<tr>
-					<td>', _('Print Invoices or Credit Notes'), '</td>
-					<td><select name="InvOrCredit">';
+		echo '<fieldset>
+				<legend>', _('Report Criteria'), '</legend>
+				<field>
+					<label for="InvOrCredit">', _('Print Invoices or Credit Notes'), '</label>
+					<select name="InvOrCredit">';
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 			echo '<option selected="selected" value="Invoice">', _('Invoices'), '</option>';
 			echo '<option value="Credit">', _('Credit Notes'), '</option>';
@@ -614,12 +614,11 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 			echo '<option value="Invoice">', _('Invoices'), '</option>';
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>', _('Print EDI Transactions'), '</td>
-				<td><select name="PrintEDI">';
+		echo '<field>
+				<label for="PrintEDI">', _('Print EDI Transactions'), '</label>
+				<select name="PrintEDI">';
 		if (!isset($InvOrCredit) or $InvOrCredit == 'Invoice') {
 			echo '<option selected="selected" value="No">', _('Do not Print PDF EDI Transactions'), '</option>';
 			echo '<option value="Yes">', _('Print PDF EDI Transactions Too'), '</option>';
@@ -628,18 +627,17 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 			echo '<option selected="selected" value="Yes">', _('Print PDF EDI Transactions Too'), '</option>';
 		}
 		echo '</select>
-					</td>
-				</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>', _('Despatch Location'), ': </td>
-				<td><select name="LocCode">';
+		echo '<field>
+				<label for="LocCode">', _('Despatch Location'), ': </label>
+				<select name="LocCode">';
 
 		if ($_SESSION['RestrictLocations'] == 0) {
 			$SQL = "SELECT locationname,
 							loccode
 						FROM locations";
-			echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+			echo '<option selected="selected" value="All">', _('All Locations'), '</option>';
 		} else {
 			$SQL = "SELECT locationname,
 							loccode
@@ -658,18 +656,18 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 			}
 		} //end while loop
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>', _('Start invoice/credit note number to print'), '</td>
-				<td><input type="text" class="number" required="required" maxlength="6" size="7" name="FromTransNo" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('End invoice/credit note number to print'), '</td>
-				<td><input type="text" class="number" required="required" maxlength="6" size="7" name="ToTransNo" /></td>
-			</tr>
-		</table>';
+		echo '<field>
+				<label for="FromTransNo">', _('Start invoice/credit note number to print'), '</label>
+				<input type="text" class="number" required="required" maxlength="6" size="7" name="FromTransNo" />
+			</field>';
+
+		echo '<field>
+				<label for="ToTransNo">', _('End invoice/credit note number to print'), '</label>
+				<input type="text" class="number" required="required" maxlength="6" size="7" name="ToTransNo" />
+			</field>
+		</fieldset>';
 
 		echo '<div class="centre">
 				<input type="submit" name="Print" value="', _('Print'), '" />
@@ -690,7 +688,8 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 
-		echo '<br /><b>' . _('The last credit note created was number') . ' ' . $MyRow[0] . '</b><br />' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number') . '</div>';
+		echo '<br /><b>', _('The last credit note created was number'), ' ', $MyRow[0], '</b><br />', _('A sequential range can be printed using the same method as for invoices above'), '. ', _('A single credit note can be printed by only entering a start transaction number'), '
+		</div>';
 
 		echo '</form>';
 	} else { // A FromTransNo number IS set
@@ -810,11 +809,12 @@ if (isset($PrintPDF) or isset($_GET['PrintPDF']) and $PrintPDF and isset($FromTr
 
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 0 or DB_error_no() != 0) {
-				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
+				echo '<div class="centre">
+						', _('There was a problem retrieving the invoice or credit note details for note number'), ' ', $FromTransNo, ' ', _('from the database'), '. ', _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged'), '. ', _('To print a credit note only requires the customer, transaction, salesman and branch records be available'), '
+					</div>';
 				if ($Debug == 1) {
-					echo _('The SQL used to get this information that failed was') . '<br />' . $SQL;
+					echo _('The SQL used to get this information that failed was'), '<br />', $SQL;
 				}
-				break;
 				include ('includes/footer.php');
 				exit;
 			} elseif (DB_num_rows($Result) == 1) {

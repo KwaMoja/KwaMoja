@@ -93,11 +93,16 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
 
-	echo '<p>', _('Period from'), ': ', $_POST['PeriodFrom'], '<br />', _('Period to'), ': ', $_POST['PeriodTo'], '</p>';
+	echo '<p></p>';
 
 	if (isset($_POST['ShowDetails'])) { // Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		echo '<table>
 				<thead>
+					<tr>
+						<th colspan="9">', _('Period from'), ': ', $_POST['PeriodFrom'], '<br />', _('Period to'), ': ', $_POST['PeriodTo'], '
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+						</th>
+					</tr>
 					<tr>
 						<th>', _('Date'), '</th>
 						<th>', _('Purchase Invoice'), '</th>
@@ -108,9 +113,6 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 						<th>', _('GL Overall Amount'), '</th>
 						<th>', _('GL Overall Taxes'), '</th>
 						<th>', _('GL Overall Total'), '</th>
-						<th>
-							<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
-						</th>
 					</tr>
 				</thead>'; // Common table code.
 		$SupplierId = '';
@@ -140,13 +142,21 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['supplierno'] != $SupplierId) { // If different, prints supplier totals:
 				if ($SupplierId != '') { // If NOT the first line.
-					echo '<tr>', '<td colspan="3">&nbsp;</td>', '<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '<td class="number">', locale_number_format($SupplierOvAmount + $SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '<td class="number">', locale_number_format($SupplierGlAmount + $SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>', '</tr>';
+					echo '<tr class="total_row">
+							<td colspan="3">&nbsp;</td>
+							<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($SupplierOvAmount + $SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($SupplierGlAmount + $SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						</tr>';
 				}
 				echo '<tr>
 						<td colspan="9">&nbsp;</td>
 					</tr>';
-				echo '<tr>
-						<td class="text" colspan="9">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], ' - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td>
+				echo '<tr class="total_row">
+						<td colspan="9">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], ' - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td>
 					</tr>';
 				$TotalGlAmount+= $SupplierGlAmount;
 				$TotalGlTax+= $SupplierGlTax;
@@ -168,7 +178,7 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 		}
 
 		// Prints last supplier total:
-		echo '<tr>
+		echo '<tr class="total_row">
 				<td colspan="3">&nbsp;</td>
 				<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -190,6 +200,11 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 		echo '<table>
 				<thead>
 					<tr>
+						<th colspan="9">', _('Period from'), ': ', $_POST['PeriodFrom'], '<br />', _('Period to'), ': ', $_POST['PeriodTo'], '
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+						</th>
+					</tr>
+					<tr>
 						<th>', _('Supplier Code'), '</th>
 						<th>', _('Supplier Name'), '</th>
 						<th>', _('Supplier\'s Currency'), '</th>
@@ -199,9 +214,6 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 						<th>', _('GL Overall Amount'), '</th>
 						<th>', _('GL Overall Taxes'), '</th>
 						<th>', _('GL Overall Total'), '</th>
-						<th>
-							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
-						</th>
 					</tr>
 				</thead>';
 		$SQL = "SELECT
@@ -239,7 +251,7 @@ if (!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo']) or $_POST['Action
 			$TotalGlTax+= $MyRow['SupplierGlTax'];
 		}
 	}
-	echo '<tr>
+	echo '<tr class="total_row">
 			<td class="text" colspan="6">&nbsp;</td>
 			<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>

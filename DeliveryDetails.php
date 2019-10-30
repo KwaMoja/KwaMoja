@@ -250,7 +250,7 @@ if (isset($_POST['Update']) or isset($_POST['BackToLineDetails']) or isset($_POS
 	
 } //isset($_POST['Update']) or isset($_POST['BackToLineDetails']) or isset($_POST['MakeRecurringOrder'])
 if (isset($_POST['MakeRecurringOrder']) and !$InputErrors) {
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier=' . $Identifier . '&amp;NewRecurringOrder=Yes">';
+	echo '<meta http-equiv="Refresh" content="0; url=', $RootPath, '/RecurringSalesOrders.php?identifier=', urlencode($Identifier), '&amp;NewRecurringOrder=Yes">';
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('if this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier=' . urlencode($Identifier) . '&amp;NewRecurringOrder=Yes">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	include ('includes/footer.php');
 	exit;
@@ -258,7 +258,7 @@ if (isset($_POST['MakeRecurringOrder']) and !$InputErrors) {
 
 
 if (isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails'] == _('Modify Order Lines')) {
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier=' . $Identifier . '">';
+	echo '<meta http-equiv="Refresh" content="0; url=', $RootPath, '/SelectOrderItems.php?identifier=', urlencode($Identifier), '">';
 	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('if this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier=' . urlencode($Identifier) . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 	include ('includes/footer.php');
 	exit;
@@ -615,44 +615,32 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder' 
 		if ($_POST['Quotation'] == 0) {
 			/*then its not a quotation its a real order */
 
-			echo '<table>
-					<tr>
-						<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-						<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier=' . urlencode($Identifier) . '&amp;TransNo=' . urlencode($OrderNo) . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' . '</a></td>
-					</tr>';
-			echo '<tr>
-					<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-					<td>' . ' ' . '<a  target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier=' . urlencode($Identifier) . '&amp;TransNo=' . urlencode($OrderNo) . '">' . _('Print packing slip') . ' (' . _('Laser') . ')' . '</a></td>
-				</tr>';
-
-			echo '<tr>
-					<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier=' . urlencode($Identifier) . '&amp;OrderNumber=' . urlencode($OrderNo) . '">' . _('Confirm Dispatch and Produce Invoice') . '</a></td>
-				</tr>';
-
-			echo '</table>';
+			echo '<div class="centre">
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />
+					', ' ', '<a target="_blank" href="', $RootPath, '/PrintCustOrder.php?identifier=', urlencode($Identifier), '&amp;TransNo=', urlencode($OrderNo), '">', _('Print packing slip'), ' (', _('Preprinted stationery'), ')', '</a><br />
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />
+					', ' ', '<a  target="_blank" href="', $RootPath, '/PrintCustOrder_generic.php?identifier=', urlencode($Identifier), '&amp;TransNo=', urlencode($OrderNo), '">', _('Print packing slip'), ' (', _('Laser'), ')', '</a><br />
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Invoice'), '" alt="" />
+					', ' ', '<a href="', $RootPath, '/ConfirmDispatch_Invoice.php?identifier=', urlencode($Identifier), '&amp;OrderNumber=', urlencode($OrderNo), '">', _('Confirm Dispatch and Produce Invoice'), '</a>
+				</div>';
 
 		} else {
 			/*link to print the quotation */
-			echo '<table>
-					<tr>
-						<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier=' . $Identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' . _('Print Quotation (Landscape)') . '</a></td>
-					</tr>
-					</table>';
-			echo '<table>
-					<tr>
-						<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier=' . $Identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' . _('Print Quotation (Portrait)') . '</a></td>
-					</tr>
-					</table>';
+			echo '<div class="centre">
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Order'), '" alt="">
+					', ' ', '<a href="', $RootPath, '/PDFQuotation.php?identifier=', urlencode($Identifier), '&amp;QuotationNo=', urlencode($OrderNo), '" target="_blank">', _('Print Quotation (Landscape)'), '</a>
+				</div>';
+
+			echo '<div class="centre">
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Order'), '" alt="" />
+					', ' ', '<a href="', $RootPath, '/PDFQuotationPortrait.php?identifier=', urlencode($Identifier), '&amp;QuotationNo=', urlencode($OrderNo), '" target="_blank">', _('Print Quotation (Portrait)'), '</a>
+				</div>';
 		}
-		echo '<table>
-				<tr>
-					<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier=' . urlencode($Identifier) . '&amp;NewOrder=Yes">' . _('Add Another Sales Order') . '</a></td>
-				</tr>
-				</table>';
+
+		echo '<div class="centre">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/sales.png" title="', _('Order'), '" alt="" /></td>
+				', ' ', '<a href="', $RootPath, '/SelectOrderItems.php?identifier=', urlencode($Identifier), '&amp;NewOrder=Yes">', _('Add Another Sales Order'), '</a>
+			</div>';
 	} //count($_SESSION['AllowedPageSecurityTokens']) > 1
 	else {
 		/*its a customer logon so thank them */
@@ -824,41 +812,31 @@ elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOr
 		prnMsg(_('Quotation Number') . ' ' . $_SESSION['ExistingOrder' . $Identifier] . ' ' . _('has been updated'), 'success');
 
 		/*link to print the quotation */
-		echo '<br /><table>
-				<tr>
-					<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Order') . '" alt=""></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier=' . $Identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder' . $Identifier] . '" target="_blank">' . _('Print Quotation (Landscape)') . '</a></td>
-				</tr>
-				</table>';
-		echo '<br /><table>
-				<tr>
-					<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier=' . $Identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder' . $Identifier] . '" target="_blank">' . _('Print Quotation (Portrait)') . '</a></td>
-				</tr>
-				</table>';
+		echo '<div class="centre">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Order'), '" alt="">
+				', ' ', '<a href="', $RootPath, '/PDFQuotation.php?identifier=', urlencode($Identifier), '&amp;QuotationNo=', urlencode($_SESSION['ExistingOrder' . $Identifier]), '" target="_blank">', _('Print Quotation (Landscape)'), '</a>
+			</div>';
+
+		echo '<div class="centre">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Order'), '" alt="" />
+				', ' ', '<a href="', $RootPath, '/PDFQuotationPortrait.php?identifier=', urlencode($Identifier), '&amp;QuotationNo=', urlencode($_SESSION['ExistingOrder' . $Identifier]), '" target="_blank">', _('Print Quotation (Portrait)'), '</a>
+			</div>';
+
 	} //$Quotation
 	else {
 		prnMsg(_('Order Number') . ' ' . $_SESSION['ExistingOrder' . $Identifier] . ' ' . _('has been updated'), 'success');
 
-		echo '<br />
-			<table>
-			<tr>
-			<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-			<td><a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier=' . urlencode($Identifier) . '&amp;TransNo=' . urlencode($_SESSION['ExistingOrder' . $Identifier]) . '">' . _('Print packing slip - pre-printed stationery') . '</a></td>
-			</tr>';
-		echo '<tr>
-			<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" /></td>
-			<td><a  target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier=' . urlencode($Identifier) . '&amp;TransNo=' . urlencode($_SESSION['ExistingOrder' . $Identifier]) . '">' . _('Print packing slip') . ' (' . _('Laser') . ')' . '</a></td>
-		</tr>';
-		echo '<tr>
-			<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Invoice') . '" alt="" /></td>
-			<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier=' . urlencode($Identifier) . '&amp;OrderNumber=' . urlencode($_SESSION['ExistingOrder' . $Identifier]) . '">' . _('Confirm Order Delivery Quantities and Produce Invoice') . '</a></td>
-		</tr>';
-		echo '<tr>
-			<td><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
-			<td><a href="' . $RootPath . '/SelectSalesOrder.php?identifier=' . urlencode($Identifier) . '">' . _('Select A Different Order') . '</a></td>
-		</tr>
-		</table>';
+		echo '<div class="centre">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />
+				', ' ', '<a target="_blank" href="', $RootPath, '/PrintCustOrder.php?identifier=', urlencode($Identifier), '&amp;TransNo=', urlencode($_SESSION['ExistingOrder' . $Identifier]), '">', _('Print packing slip - pre-printed stationery'), '</a><br />
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />
+				', ' ', '<a target="_blank" href="', $RootPath, '/PrintCustOrder_generic.php?identifier=', urlencode($Identifier), '&amp;TransNo=', urlencode($_SESSION['ExistingOrder' . $Identifier]), '">', _('Print packing slip'), ' (', _('Laser'), ')', '</a><br />
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Invoice'), '" alt="" />
+				', ' ', '<a href="', $RootPath, '/ConfirmDispatch_Invoice.php?identifier=', urlencode($Identifier), '&amp;OrderNumber=', urlencode($_SESSION['ExistingOrder' . $Identifier]), '">', _('Confirm Order Delivery Quantities and Produce Invoice'), '</a><br />
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/sales.png" title="' . _('Order') . '" alt="" /></td>
+				', ' ', '<a href="', $RootPath, '/SelectSalesOrder.php?identifier=', urlencode($Identifier), '">', _('Select A Different Order'), '</a>
+			</div>';
+
 	} //end of print orders
 	include ('includes/footer.php');
 	exit;
@@ -868,13 +846,17 @@ elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOr
 if (isset($_SESSION['Items' . $Identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items' . $Identifier]->SpecialInstructions) > 0) {
 	prnMsg($_SESSION['Items' . $Identifier]->SpecialInstructions, 'info');
 } //isset($_SESSION['Items' . $Identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items' . $Identifier]->SpecialInstructions) > 0
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Delivery') . '" alt="" />' . ' ' . _('Delivery Details') . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Delivery'), '" alt="" />', ' ', _('Delivery Details'), '
+	</p>';
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Code') . ' :<b> ' . stripslashes($_SESSION['Items' . $Identifier]->DebtorNo) . '<br />';
-echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items' . $Identifier]->CustomerName . '</b></p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Customer'), '" alt="" />', ' ', _('Customer Code'), ' :<b> ', stripslashes($_SESSION['Items' . $Identifier]->DebtorNo), '<br />
+		</b>&nbsp;', _('Customer Name'), ' :<b> ', $_SESSION['Items' . $Identifier]->CustomerName, '</b>
+	</p>';
 
-echo '<form action="' . basename(__FILE__) . '?identifier=' . $Identifier . '" method="post"  enctype="multipart/form-data">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', basename(__FILE__), '?identifier=', urlencode($Identifier), '" method="post"  enctype="multipart/form-data">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 /*Display the order with or without discount depending on access level*/
 if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
@@ -882,22 +864,22 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 
 	if ($_SESSION['Items' . $Identifier]->Quotation == 1) {
 		echo '<tr>
-				<th colspan="7">' . _('Quotation Summary') . '</th>
+				<th colspan="7">', _('Quotation Summary'), '</th>
 			</tr>';
 	} //$_SESSION['Items' . $Identifier]->Quotation == 1
 	else {
 		echo '<tr>
-				<th colspan="7">' . _('Order Summary') . '</th>
+				<th colspan="7">', _('Order Summary'), '</th>
 			</tr>';
 	}
 	echo '<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Unit') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Discount') . ' %</th>
-				<th>' . _('Total') . '</th>
+				<th>', _('Item Code'), '</th>
+				<th>', _('Item Description'), '</th>
+				<th>', _('Quantity'), '</th>
+				<th>', _('Unit'), '</th>
+				<th>', _('Price'), '</th>
+				<th>', _('Discount'), ' %</th>
+				<th>', _('Total'), '</th>
 			</tr>';
 
 	$_SESSION['Items' . $Identifier]->total = 0;
@@ -912,13 +894,13 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100), 2);
 
 		echo '<tr class="striped_row">
-				<td>' . $StockItem->StockID . '</td>
-				<td title="' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
-				<td class="number">' . $DisplayQuantity . '</td>
-				<td>' . $StockItem->Units . '</td>
-				<td class="number">' . $DisplayPrice . '</td>
-				<td class="number">' . $DisplayDiscount . '</td>
-				<td class="number">' . $DisplayLineTotal . '</td>
+				<td>', $StockItem->StockID, '</td>
+				<td title="', $StockItem->LongDescription, '">', $StockItem->ItemDescription, '</td>
+				<td class="number">', $DisplayQuantity, '</td>
+				<td>', $StockItem->Units, '</td>
+				<td class="number">', $DisplayPrice, '</td>
+				<td class="number">', $DisplayDiscount, '</td>
+				<td class="number">', $DisplayLineTotal, '</td>
 			</tr>';
 
 		$_SESSION['Items' . $Identifier]->total = $_SESSION['Items' . $Identifier]->total + $LineTotal;
@@ -927,36 +909,34 @@ if (in_array(2, $_SESSION['AllowedPageSecurityTokens'])) {
 	} //$_SESSION['Items' . $Identifier]->LineItems as $StockItem
 	$DisplayTotal = number_format($_SESSION['Items' . $Identifier]->total, 2);
 	echo '<tr class="striped_row">
-			<td colspan="6" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+			<td colspan="6" class="number"><b>', _('TOTAL Excl Tax/Freight'), '</b></td>
 			<td class="number">' . $DisplayTotal . '</td>
 		</tr>
 		</table>';
 
 	$DisplayVolume = locale_number_format($_SESSION['Items' . $Identifier]->totalVolume, 5);
 	$DisplayWeight = locale_number_format($_SESSION['Items' . $Identifier]->totalWeight, 2);
-	echo '<br />
-		<table>
-		<tr class="striped_row">
-			<td>' . _('Total Weight') . ':</td>
-			<td class="number">' . $DisplayWeight . '</td>
-			<td>' . _('Total Volume') . ':</td>
-			<td class="number">' . $DisplayVolume . '</td>
-		</tr>
+	echo '<table>
+			<tr class="striped_row">
+				<td>', _('Total Weight'), ':</td>
+				<td class="number">', $DisplayWeight, '</td>
+				<td>', _('Total Volume'), ':</td>
+				<td class="number">', $DisplayVolume, '</td>
+			</tr>
 		</table>';
 
 } //in_array(2, $_SESSION['AllowedPageSecurityTokens'])
 else {
 	/*Display the order without discount */
 
-	echo '<div class="centre"><b>' . _('Order Summary') . '</b></div>
-	<table>
-	<tr>
-		<th>' . _('Item Description') . '</th>
-		<th>' . _('Quantity') . '</th>
-		<th>' . _('Unit') . '</th>
-		<th>' . _('Price') . '</th>
-		<th>' . _('Total') . '</th>
-	</tr>';
+	echo '<table>
+			<tr>
+				<th>', _('Item Description'), '</th>
+				<th>', _('Quantity'), '</th>
+				<th>', _('Unit'), '</th>
+				<th>', _('Price'), '</th>
+				<th>', _('Total'), '</th>
+			</tr>';
 
 	$_SESSION['Items' . $Identifier]->total = 0;
 	$_SESSION['Items' . $Identifier]->totalVolume = 0;
@@ -969,11 +949,11 @@ else {
 		$DisplayQuantity = locale_number_format($StockItem->Quantity, $StockItem->DecimalPlaces);
 
 		echo '<tr class="striped_row">
-				<td>' . $StockItem->ItemDescription . '</td>
-				<td class="number">' . $DisplayQuantity . '</td>
-				<td>' . $StockItem->Units . '</td>
-				<td class="number">' . $DisplayPrice . '</td>
-				<td class="number">' . $DisplayLineTotal . '</font></td>
+				<td>', $StockItem->ItemDescription, '</td>
+				<td class="number">', $DisplayQuantity, '</td>
+				<td>', $StockItem->Units, '</td>
+				<td class="number">', $DisplayPrice, '</td>
+				<td class="number">', $DisplayLineTotal, '</td>
 			</tr>';
 
 		$_SESSION['Items' . $Identifier]->total = $_SESSION['Items' . $Identifier]->total + $LineTotal;
@@ -982,29 +962,30 @@ else {
 
 	} //$_SESSION['Items' . $Identifier]->LineItems as $StockItem
 	$DisplayTotal = locale_number_format($_SESSION['Items' . $Identifier]->total, $_SESSION['Items' . $Identifier]->CurrDecimalPlaces);
-
+	echo '</table>';
 	$DisplayVolume = locale_number_format($_SESSION['Items' . $Identifier]->totalVolume, 5);
 	$DisplayWeight = locale_number_format($_SESSION['Items' . $Identifier]->totalWeight, 2);
 	echo '<table>
 			<tr>
-				<td>' . _('Total Weight') . ':</td>
-				<td>' . $DisplayWeight . '</td>
-				<td>' . _('Total Volume') . ':</td>
-				<td>' . $DisplayVolume . '</td>
+				<td>', _('Total Weight'), ':</td>
+				<td>', $DisplayWeight, '</td>
+				<td>', _('Total Volume'), ':</td>
+				<td>', $DisplayVolume, '</td>
 			</tr>
 		</table>';
-
 }
 
-echo '<table>
-	<tr>
-		<td>' . _('Deliver To') . ':</td>
-		<td><input type="text" size="42" autofocus="autofocus" required="required" maxlength="40" name="DeliverTo" value="' . stripslashes($_SESSION['Items' . $Identifier]->DeliverTo) . '" /></td>
-	</tr>';
+echo '<fieldset>
+		<legend>', _('Delivery Details'), '</legend>';
 
-echo '<tr>
-	<td>' . _('Deliver from the warehouse at') . ':</td>
-	<td><select required="required" name="Location">';
+echo '<field>
+		<label for="DeliverTo">', _('Deliver To'), ':</label>
+		<input type="text" size="42" autofocus="autofocus" required="required" maxlength="40" name="DeliverTo" value="', stripslashes($_SESSION['Items' . $Identifier]->DeliverTo), '" />
+	</field>';
+
+echo '<field>
+		<label for="Location">', _('Deliver from the warehouse at'), ':</label>
+		<select required="required" name="Location">';
 
 // BEGIN: **********************************************************************
 $SQL = "SELECT locations.loccode,
@@ -1025,8 +1006,7 @@ while ($MyRow = DB_fetch_array($StkLocsResult)) {
 	echo '<option', ($_SESSION['Items' . $Identifier]->Location == $MyRow['loccode'] ? ' selected="selected"' : ''), ' value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 }
 echo '</select>
-		</td>
-	</tr>';
+	</field>';
 // END: ************************************************************************
 // Set the default date to earliest possible date if not set already
 if (!isset($_SESSION['Items' . $Identifier]->DeliveryDate)) {
@@ -1039,141 +1019,146 @@ if (!isset($_SESSION['Items' . $Identifier]->ConfirmedDate)) {
 	$_SESSION['Items' . $Identifier]->ConfirmedDate = Date($_SESSION['DefaultDateFormat'], $EarliestDispatch);
 } //!isset($_SESSION['Items' . $Identifier]->ConfirmedDate)
 // The estimated Dispatch date or Delivery date for this order
-echo '<tr>
-		<td>' . _('Estimated Delivery Date') . ':</td>
-		<td><input class="date" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items' . $Identifier]->DeliveryDate . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="DeliveryDate">', _('Estimated Delivery Date'), ':</label>
+		<input class="date" type="text" size="15" maxlength="14" name="DeliveryDate" value="', $_SESSION['Items' . $Identifier]->DeliveryDate, '" />
+	</field>';
 // The date when a quote was issued to the customer
-echo '<tr>
-		<td>' . _('Quote Date') . ':</td>
-		<td><input class="date" type="text" size="15" maxlength="14" name="QuoteDate" value="' . $_SESSION['Items' . $Identifier]->QuoteDate . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="QuoteDate">', _('Quote Date'), ':</label>
+		<input class="date" type="text" size="15" maxlength="14" name="QuoteDate" value="', $_SESSION['Items' . $Identifier]->QuoteDate, '" />
+	</field>';
 // The date when the customer confirmed their order
-echo '<tr>
-		<td>' . _('Confirmed Order Date') . ':</td>
-		<td><input class="date" type="text" size="15" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items' . $Identifier]->ConfirmedDate . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Delivery Address 1') . ':</td>
-		<td><input type="text" size="42" required="required" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items' . $Identifier]->DelAdd1 . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Delivery Address 2') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items' . $Identifier]->DelAdd2 . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Delivery Address 3') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items' . $Identifier]->DelAdd3 . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Delivery Address 4') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items' . $Identifier]->DelAdd4 . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Delivery Address 5') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items' . $Identifier]->DelAdd5 . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Country') . ':</td>
-		<td><select name="BrAdd6">';
+echo '<field>
+		<label for="ConfirmedDate">', _('Confirmed Order Date'), ':</label>
+		<input class="date" type="text" size="15" maxlength="14" name="ConfirmedDate" value="', $_SESSION['Items' . $Identifier]->ConfirmedDate, '" />
+	</field>
+	<field>
+		<label for="BrAdd1">', _('Delivery Address 1'), ':</label>
+		<input type="text" size="42" required="required" maxlength="40" name="BrAdd1" value="', $_SESSION['Items' . $Identifier]->DelAdd1, '" />
+	</field>
+	<field>
+		<label for="BrAdd2">', _('Delivery Address 2'), ':</label>
+		<input type="text" size="42" maxlength="40" name="BrAdd2" value="', $_SESSION['Items' . $Identifier]->DelAdd2, '" />
+	</field>
+	<field>
+		<label for="BrAdd3">', _('Delivery Address 3'), ':</label>
+		<input type="text" size="42" maxlength="40" name="BrAdd3" value="', $_SESSION['Items' . $Identifier]->DelAdd3, '" />
+	</field>
+	<field>
+		<label for="BrAdd4">', _('Delivery Address 4'), ':</label>
+		<input type="text" size="42" maxlength="40" name="BrAdd4" value="', $_SESSION['Items' . $Identifier]->DelAdd4, '" />
+	</field>
+	<field>
+		<label for="BrAdd5">', _('Delivery Address 5'), ':</label>
+		<input type="text" size="42" maxlength="40" name="BrAdd5" value="', $_SESSION['Items' . $Identifier]->DelAdd5, '" />
+	</field>';
+echo '<field>
+		<label for="BrAdd6">', _('Country'), ':</label>
+		<select name="BrAdd6">';
 foreach ($CountriesArray as $CountryEntry => $CountryName) {
 	if (isset($_POST['BrAdd6']) and (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))) {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option selected="selected" value="', $CountryName, '">', $CountryName, '</option>';
 	} elseif (!isset($_POST['BrAdd6']) and $CountryName == $_SESSION['Items' . $Identifier]->DelAdd6) {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option selected="selected" value="', $CountryName, '">', $CountryName, '</option>';
 	} else {
-		echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option value="', $CountryName, '">', $CountryName, '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Contact Phone Number') . ':</td>
-		<td><input type="text" size="25" maxlength="25" name="PhoneNo" value="' . $_SESSION['Items' . $Identifier]->PhoneNo . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Contact Email') . ':</td><td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items' . $Identifier]->Email . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Customer Reference') . ':</td>
-		<td><input type="text" size="25" maxlength="50" name="CustRef" value="' . $_SESSION['Items' . $Identifier]->CustRef . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Comments') . ':</td>
-		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items' . $Identifier]->Comments . '</textarea></td>
-	</tr>';
+echo '</select>
+	</field>';
+echo '<field>
+		<label for="PhoneNo">', _('Contact Phone Number'), ':</label>
+		<input type="tel" size="25" maxlength="25" name="PhoneNo" value="', $_SESSION['Items' . $Identifier]->PhoneNo, '" />
+	</field>
+	<field>
+		<label for="Email">', _('Contact Email'), ':</label>
+		<input type="email" size="40" maxlength="38" name="Email" value="', $_SESSION['Items' . $Identifier]->Email, '" />
+	</field>
+	<field>
+		<label for="CustRef">', _('Customer Reference'), ':</label>
+		<input type="text" size="25" maxlength="50" name="CustRef" value="', $_SESSION['Items' . $Identifier]->CustRef, '" />
+	</field>
+	<field>
+		<label for="Comments">', _('Comments'), ':</label>
+		<textarea name="Comments" cols="31" rows="5">', $_SESSION['Items' . $Identifier]->Comments, '</textarea>
+	</field>';
 
 if (isset($SupplierLogin) and $SupplierLogin == 0) {
-	echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items' . $Identifier]->SalesPerson . '" />
-				<input type="hidden" name="DeliverBlind" value="1" />
-				<input type="hidden" name="FreightCost" value="0" />
-				<input type="hidden" name="ShipVia" value="' . $_SESSION['Items' . $Identifier]->ShipVia . '" />
-				<input type="hidden" name="Quotation" value="0" />';
+	echo '<input type="hidden" name="SalesPerson" value="', $_SESSION['Items' . $Identifier]->SalesPerson, '" />
+			<input type="hidden" name="DeliverBlind" value="1" />
+			<input type="hidden" name="FreightCost" value="0" />
+			<input type="hidden" name="ShipVia" value="', $_SESSION['Items' . $Identifier]->ShipVia, '" />
+			<input type="hidden" name="Quotation" value="0" />';
 } //isset($SupplierLogin) and $SupplierLogin == 0
 else {
-	echo '<tr>
-				<td>' . _('Sales person') . ':</td>
-				<td><select name="SalesPerson">';
+	echo '<field>
+			<label for="SalesPerson">', _('Sales person'), ':</label>
+			<select name="SalesPerson">';
 	$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 	if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin'] != NULL) {
 		$_SESSION['Items' . $Identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 	} //!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin'] != NULL
 	while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
 		if ($SalesPersonRow['salesmancode'] == $_SESSION['Items' . $Identifier]->SalesPerson) {
-			echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			echo '<option selected="selected" value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 		} //$SalesPersonRow['salesmancode'] == $_SESSION['Items' . $Identifier]->SalesPerson
 		else {
-			echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			echo '<option value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 		}
 	} //$SalesPersonRow = DB_fetch_array($SalesPeopleResult)
-	echo '</select></td>
-			</tr>';
+	echo '</select>
+		</field>';
 
 	/* This field will control whether or not to display the company logo and
 	 address on the packlist */
 
-	echo '<tr>
-				<td>' . _('Packlist Type') . ':</td>
-				<td><select name="DeliverBlind">';
+	echo '<field>
+			<label for="DeliverBlind">', _('Packlist Type'), ':</label>
+			<select name="DeliverBlind">';
 
 	if ($_SESSION['Items' . $Identifier]->DeliverBlind == 2) {
-		echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
-		echo '<option selected="selected" value="2">' . _('Hide Company Details/Logo') . '</option>';
+		echo '<option value="1">', _('Show Company Details/Logo'), '</option>';
+		echo '<option selected="selected" value="2">', _('Hide Company Details/Logo'), '</option>';
 	} //$_SESSION['Items' . $Identifier]->DeliverBlind == 2
 	else {
-		echo '<option selected="selected" value="1">' . _('Show Company Details/Logo') . '</option>';
-		echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
+		echo '<option selected="selected" value="1">', _('Show Company Details/Logo'), '</option>';
+		echo '<option value="2">', _('Hide Company Details/Logo'), '</option>';
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
+
 if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip'] == 1) {
-	echo '<tr>
-							   <td>' . _('Reprint packing slip') . ':</td>
-							   <td><select name="ReprintPackingSlip">';
-	echo '<option value="0">' . _('Yes') . '</option>';
-	echo '<option selected="selected" value="1">' . _('No') . '</option>';
-	echo '</select> ' . _('Last printed') . ': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
+	echo '<field>
+			<label for="ReprintPackingSlip">', _('Reprint packing slip'), ':</label>
+			<select name="ReprintPackingSlip">
+				<option value="0">', _('Yes'), '</option>
+				<option selected="selected" value="1">', _('No'), '</option>
+			</select>
+			', _('Last printed'), ': ', ConvertSQLDate($_SESSION['DatePackingSlipPrinted']), '
+		</field>';
 } //isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip'] == 1
 else {
-	echo '<tr><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></tr>';
+	echo '<input type="hidden" name="ReprintPackingSlip" value="0" />';
 }
 
-echo '<tr>
-		<td>' . _('Charge Freight Cost ex tax') . ':</td>
-		<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items' . $Identifier]->FreightCost . '" /></td>';
+echo '<field>
+		<label for="FreightCost">', _('Charge Freight Cost ex tax'), ':</label>
+		<input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="', $_SESSION['Items' . $Identifier]->FreightCost, '" />';
 
 if ($_SESSION['DoFreightCalc'] == true) {
-	echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
+	echo '<input type="submit" name="Update" value="', _('Recalc Freight Cost'), '" />';
 } //$_SESSION['DoFreightCalc'] == true
-echo '</tr>';
+echo '</field>';
 
 if ((!isset($_POST['ShipVia']) or $_POST['ShipVia'] == '') and isset($_SESSION['Items' . $Identifier]->ShipVia)) {
 	$_POST['ShipVia'] = $_SESSION['Items' . $Identifier]->ShipVia;
 } //(!isset($_POST['ShipVia']) OR $_POST['ShipVia'] == '') AND isset($_SESSION['Items' . $Identifier]->ShipVia)
-echo '<tr>
-		<td>' . _('Freight/Shipper Method') . ':</td>
-		<td><select name="ShipVia">';
+echo '<field>
+		<label for="ShipVia">', _('Freight/Shipper Method'), ':</label>
+		<select name="ShipVia">';
 $ErrMsg = _('The shipper details could not be retrieved');
 $DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
@@ -1181,42 +1166,45 @@ $SQL = "SELECT shipper_id, shippername FROM shippers";
 $ShipperResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 while ($MyRow = DB_fetch_array($ShipperResults)) {
 	if ($MyRow['shipper_id'] == $_POST['ShipVia']) {
-		echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['shipper_id'], '">', $MyRow['shippername'], '</option>';
 	} //$MyRow['shipper_id'] == $_POST['ShipVia']
 	else {
-		echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		echo '<option value="', $MyRow['shipper_id'], '">', $MyRow['shippername'], '</option>';
 	}
 } //$MyRow = DB_fetch_array($ShipperResults)
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Quotation Only') . ':</td>
-		<td><select name="Quotation">';
+echo '<field>
+		<label for="Quotation">', _('Quotation Only'), ':</label>
+		<select name="Quotation">';
 if ($_SESSION['Items' . $Identifier]->Quotation == 1) {
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
-	echo '<option value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+	echo '<option value="0">', _('No'), '</option>';
 } //$_SESSION['Items' . $Identifier]->Quotation == 1
 else {
-	echo '<option value="1">' . _('Yes') . '</option>';
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
+	echo '<option selected="selected" value="0">', _('No'), '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Order Attachment') . '</td>
-		<td><input type="file" name="Attachment" id="Attachment" /></td>
-	</tr>';
+echo '<field>
+		<label for="Attachment">', _('Order Attachment'), '</label>
+		<input type="file" name="Attachment" id="Attachment" />
+	</field>';
 
-echo '</table>';
+echo '</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '" /><br />';
+echo '<div class="centre">
+		<input type="submit" name="BackToLineDetails" value="', _('Modify Order Lines'), '" /><br />';
 
 if ($_SESSION['ExistingOrder' . $Identifier] == 0) {
-	echo '<br /><br /><input type="submit" name="ProcessOrder" value="' . _('Place Order') . '" />';
-	echo '<br /><br /><input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '" />';
+	echo '<input type="submit" name="ProcessOrder" value="', _('Place Order'), '" /><br />';
+	echo '<input type="submit" name="MakeRecurringOrder" value="', _('Create Recurring Order'), '" /><br />';
 } //$_SESSION['ExistingOrder' . $Identifier] == 0
 else {
-	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '" />';
+	echo '<input type="submit" name="ProcessOrder" value="', _('Commit Order Changes'), '" />';
 }
 
 echo '</form>';

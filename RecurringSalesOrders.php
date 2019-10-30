@@ -161,7 +161,9 @@ if (isset($_POST['DeleteRecurringOrder'])) {
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'], 'success');
 
-	echo '<p><a href="' . $RootPath . '/SelectRecurringSalesOrder.php">' . _('Select A Recurring Sales Order Template') . '</a>';
+	echo 'div class="centre">
+			<a href="', $RootPath, '/SelectRecurringSalesOrder.php">', _('Select A Recurring Sales Order Template'), '</a>
+		</div>';
 
 	unset($_SESSION['Items' . $Identifier]->LineItems);
 	unset($_SESSION['Items' . $Identifier]);
@@ -286,9 +288,10 @@ if (isset($_POST['Process'])) {
 			prnmsg(_('The recurring order template has been updated'), 'success');
 		}
 
-		echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Enter New Sales Order') . '</a>';
-
-		echo '<p><a href="' . $RootPath . '/SelectRecurringSalesOrder.php">' . _('Select A Recurring Sales Order Template') . '</a>';
+		echo '<div class="centre">
+				<a href="', $RootPath, '/SelectOrderItems.php?NewOrder=Yes">', _('Enter New Sales Order'), '</a><br />
+				<a href="', $RootPath, '/SelectRecurringSalesOrder.php">', _('Select A Recurring Sales Order Template'), '</a>
+			</div>';
 
 		unset($_SESSION['Items' . $Identifier]->LineItems);
 		unset($_SESSION['Items' . $Identifier]);
@@ -298,22 +301,25 @@ if (isset($_POST['Process'])) {
 	}
 }
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Search') . '" alt="" /><b>' . ' ' . _('Recurring Order for Customer') . ' : ' . $_SESSION['Items' . $Identifier]->CustomerName . '</b></p>';
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Search'), '" alt="" /> ', _('Recurring Order for Customer'), ' : ', $_SESSION['Items' . $Identifier]->CustomerName, '
+	</p>';
+
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 echo '<table cellpadding="2">';
 echo '<tr>
-		<th colspan="7"><b>' . _('Order Line Details') . '</b></th>
+		<th colspan="7">', _('Order Line Details'), '</th>
 	</tr>
 	<tr>
-		<th>' . _('Item Code') . '</th>
-		<th>' . _('Item Description') . '</th>
-		<th>' . _('Quantity') . '</th>
-		<th>' . _('Unit') . '</th>
-		<th>' . _('Price') . '</th>
-		<th>' . _('Discount') . ' %</th>
-		<th>' . _('Total') . '</th>
+		<th>', _('Item Code'), '</th>
+		<th>', _('Item Description'), '</th>
+		<th>', _('Quantity'), '</th>
+		<th>', _('Unit'), '</th>
+		<th>', _('Price'), '</th>
+		<th>', _('Discount'), ' %</th>
+		<th>', _('Total'), '</th>
 	</tr>';
 
 $_SESSION['Items' . $Identifier]->total = 0;
@@ -329,14 +335,14 @@ foreach ($_SESSION['Items' . $Identifier]->LineItems as $StockItem) {
 	$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100), 2);
 
 	echo '<tr class="striped_row">
-			<td>' . $StockItem->StockID . '</td>
-			<td title="' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
-			<td class="number">' . $DisplayQuantity . '</td>
-			<td>' . $StockItem->Units . '</td>
-			<td class="number">' . $DisplayPrice . '</td>
-			<td class="number">' . $DisplayDiscount . '</td>
-			<td class="number">' . $DisplayLineTotal . '</td>
-			</tr>';
+			<td>', $StockItem->StockID, '</td>
+			<td data-title="', $StockItem->LongDescription, '">', $StockItem->ItemDescription, '</td>
+			<td class="number">', $DisplayQuantity, '</td>
+			<td>', $StockItem->Units, '</td>
+			<td class="number">', $DisplayPrice, '</td>
+			<td class="number">', $DisplayDiscount, '</td>
+			<td class="number">', $DisplayLineTotal, '</td>
+		</tr>';
 
 	$_SESSION['Items' . $Identifier]->total+= $LineTotal;
 	$_SESSION['Items' . $Identifier]->totalVolume+= ($StockItem->Quantity * $StockItem->Volume);
@@ -345,151 +351,166 @@ foreach ($_SESSION['Items' . $Identifier]->LineItems as $StockItem) {
 
 $DisplayTotal = locale_number_format($_SESSION['Items' . $Identifier]->total, $_SESSION['Items' . $Identifier]->CurrDecimalPlaces);
 echo '<tr>
-		<td colspan="6" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-		<td class="number">' . $DisplayTotal . '</td>
+		<td colspan="6" class="number"><b>', _('TOTAL Excl Tax/Freight'), '</b></td>
+		<td class="number">', $DisplayTotal, '</td>
 	</tr>
-	</table>';
+</table>';
 
-echo '<br /><table>';
-echo '<tr>
-		<th colspan="7"><h3>' . _('Order Header Details') . '</h3></th>
-	</tr>';
+echo '<fieldset>
+		<legend>', _('Order Header Details'), '</legend>';
 
-echo '<tr>
-		<td>' . _('Deliver To') . ':</td>
-		<td>' . $_SESSION['Items' . $Identifier]->DeliverTo . '</td>
-	</tr>';
+echo '<field>
+		<label>', _('Deliver To'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->DeliverTo, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Deliver from the warehouse at') . ':</td>
-		<td>' . $_SESSION['Items' . $Identifier]->Location . '</td>
-	</tr>';
+echo '<field>
+		<label>', _('Deliver from the warehouse at'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->Location, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Street') . ':</td>
-		<td>' . $_SESSION['Items' . $Identifier]->DelAdd1 . '</td>
-	</tr>';
+echo '<field>
+		<label>', _('Street'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->DelAdd1, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-	<td>' . _('Suburb') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->DelAdd2 . '</td></tr>';
+echo '<field>
+		<label>', _('Suburb'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->DelAdd2, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-	<td>' . _('City') . '/' . _('Region') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->DelAdd3 . '</td></tr>';
+echo '<field>
+		<label>', _('City'), '/', _('Region'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->DelAdd3, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-	<td>' . _('Post Code') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->DelAdd4 . '</td></tr>';
+echo '<field>
+		<label>', _('Post Code'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->DelAdd4, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-	<td>' . _('Contact Phone Number') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->PhoneNo . '</td></tr>';
+echo '<field>
+		<label>', _('Contact Phone Number'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->PhoneNo, '&nbsp;</div>
+	</field>';
 
-echo '<tr><td>' . _('Contact Email') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->Email . '</td></tr>';
+echo '<field>
+		<label>', _('Contact Email'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->Email, '&nbsp;</div>
+	</field>';
 
-echo '<tr><td>' . _('Customer Reference') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->CustRef . '</td></tr>';
+echo '<field>
+		<label>', _('Customer Reference'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->CustRef, '&nbsp;</div>
+	</field>';
 
-echo '<tr>
-	<td>' . _('Comments') . ':</td>
-	<td>' . $_SESSION['Items' . $Identifier]->Comments . '</td></tr>';
+echo '<field>
+		<label>', _('Comments'), ':</label>
+		<div class="fieldtext">', $_SESSION['Items' . $Identifier]->Comments, '&nbsp;</div>
+	</field>';
 
 if (!isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if ($NewRecurringOrder == 'Yes') {
-	echo '<tr>
-	<td>' . _('Start Date') . ':</td>
-	<td><input type="text" class="date" name="StartDate" size="11" required="required" maxlength="10" value="' . $_POST['StartDate'] . '" /></td></tr>';
+	echo '<field>
+			<label>', _('Start Date'), ':</label>
+			<input type="text" class="date" name="StartDate" size="11" required="required" maxlength="10" value="', $_POST['StartDate'], '" />
+		</field>';
 } else {
-	echo '<tr>
-	<td>' . _('Last Recurrence') . ':</td>
-	<td>' . $_POST['StartDate'];
-	echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" /></td></tr>';
+	echo '<field>
+			<label>', _('Last Recurrence'), ':</label>
+			<div class="fieldtext">', $_POST['StartDate'], '&nbsp;</div>
+		</field>';
+	echo '<input type="hidden" name="StartDate" value="', $_POST['StartDate'], '" />';
 }
 
 if (!isset($_POST['StopDate'])) {
 	$_POST['StopDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') + 1, Date('y') + 1));
 }
 
-echo '<tr>
-	<td>' . _('Finish Date') . ':</td>
-	<td><input type="text" class="date" name="StopDate" size="11" required="required" maxlength="10" value="' . $_POST['StopDate'] . '" /></td></tr>';
+echo '<field>
+		<label>', _('Finish Date'), ':</label>
+		<input type="text" class="date" name="StopDate" size="11" required="required" maxlength="10" value="', $_POST['StopDate'], '" />
+	</field>';
 
-echo '<tr>
-	<td>' . _('Frequency of Recurrence') . ':</td>
-	<td><select required="required" name="Frequency">';
+echo '<field>
+		<label>', _('Frequency of Recurrence'), ':</label>
+		<select required="required" name="Frequency">';
 
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 52) {
-	echo '<option selected="selected" value="52">' . _('Weekly') . '</option>';
+	echo '<option selected="selected" value="52">', _('Weekly'), '</option>';
 } else {
-	echo '<option value="52">' . _('Weekly') . '</option>';
+	echo '<option value="52">', _('Weekly'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 26) {
-	echo '<option selected="selected" value="26">' . _('Fortnightly') . '</option>';
+	echo '<option selected="selected" value="26">', _('Fortnightly'), '</option>';
 } else {
-	echo '<option value="26">' . _('Fortnightly') . '</option>';
+	echo '<option value="26">', _('Fortnightly'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 12) {
-	echo '<option selected="selected" value="12">' . _('Monthly') . '</option>';
+	echo '<option selected="selected" value="12">', _('Monthly'), '</option>';
 } else {
-	echo '<option value="12">' . _('Monthly') . '</option>';
+	echo '<option value="12">', _('Monthly'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 6) {
-	echo '<option selected="selected" value="6">' . _('Bi-monthly') . '</option>';
+	echo '<option selected="selected" value="6">', _('Bi-monthly'), '</option>';
 } else {
-	echo '<option value="6">' . _('Bi-monthly') . '</option>';
+	echo '<option value="6">', _('Bi-monthly'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 4) {
-	echo '<option selected="selected" value="4">' . _('Quarterly') . '</option>';
+	echo '<option selected="selected" value="4">', _('Quarterly'), '</option>';
 } else {
-	echo '<option value="4">' . _('Quarterly') . '</option>';
+	echo '<option value="4">', _('Quarterly'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 2) {
-	echo '<option selected="selected" value="2">' . _('Bi-Annually') . '</option>';
+	echo '<option selected="selected" value="2">', _('Bi-Annually'), '</option>';
 } else {
-	echo '<option value="2">' . _('Bi-Annually') . '</option>';
+	echo '<option value="2">', _('Bi-Annually'), '</option>';
 }
 if (isset($_POST['Frequency']) and $_POST['Frequency'] == 1) {
-	echo '<option selected="selected" value="1">' . _('Annually') . '</option>';
+	echo '<option selected="selected" value="1">', _('Annually'), '</option>';
 } else {
-	echo '<option value="1">' . _('Annually') . '</option>';
+	echo '<option value="1">', _('Annually'), '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 if ($_SESSION['Items' . $Identifier]->AllDummyLineItems() == true) {
 
-	echo '<tr><td>' . _('Invoice Automatically') . ':</td>
-		<td><select required="required" name="AutoInvoice">';
+	echo '<field>
+			<label for="AutoInvoice">', _('Invoice Automatically'), ':</label>
+			<select required="required" name="AutoInvoice">';
 	if ($_POST['AutoInvoice'] == 0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="0">', _('No'), '</option>';
+		echo '<option value="1">', _('Yes'), '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option value="0">', _('No'), '</option>';
+		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 	}
-	echo '</select></td></tr></table>';
+	echo '</select>
+		</field>
+	</fieldset>';
 } else {
-	echo '</table>';
+	echo '</fieldset>';
 	echo '<input type="hidden" name="AutoInvoice" value="0" />';
 }
 
-echo '<br /><div class="centre">';
+echo '<div class="centre">';
 if ($NewRecurringOrder == 'Yes') {
 	echo '<input type="hidden" name="NewRecurringOrder" value="Yes" />';
-	echo '<input type="submit" name="Process" value="' . _('Create Recurring Order') . '" />';
+	echo '<input type="submit" name="Process" value="', _('Create Recurring Order'), '" />';
 } else {
 	echo '<input type="hidden" name="NewRecurringOrder" value="No" />';
-	echo '<input type="hidden" name="ExistingRecurrOrderNo" value="' . $_POST['ExistingRecurrOrderNo'] . '" />';
+	echo '<input type="hidden" name="ExistingRecurrOrderNo" value="', $_POST['ExistingRecurrOrderNo'], '" />';
 
-	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';
-	echo '<hr />';
-	echo '<input type="submit" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
+	echo '<input type="submit" name="Process" value="', _('Update Recurring Order Details'), '" /><br />';
+	echo '<input type="submit" name="DeleteRecurringOrder" value="', _('Delete Recurring Order'), ' ', $_POST['ExistingRecurrOrderNo'], '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this recurring order template?'), '\');" />';
 }
 
-echo '</form>';
+echo '</div>
+	</form>';
+
 include ('includes/footer.php');
 ?>

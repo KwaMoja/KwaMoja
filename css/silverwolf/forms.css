@@ -85,6 +85,14 @@ background-position:4px center;
 background-size:14px 14px;
 padding-left:24px;
 }
+form fieldset field input.date {
+display:inline;
+background-image:url(images/date.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:14px 14px;
+padding-left:24px;
+}
 form input[type="submit"]{
 background:#E3E1E1;
 padding: 6px;
@@ -106,4 +114,7 @@ color:#8DCDEB;
 border-radius: 15px;
 cursor: pointer;
 color:#1A1A1A;
+}
+form .number {
+text-align:right;
 }

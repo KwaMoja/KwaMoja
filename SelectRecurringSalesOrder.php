@@ -7,14 +7,18 @@ $BookMark = 'RecurringSalesOrders';
 
 include ('includes/header.php');
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<table>
-		<tr>
-			<td>' . _('Select recurring order templates for delivery from') . ':</td>
-			<td>' . '<select required="required" name="StockLocation">';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Inventory Items'), '" alt="" />', ' ', $Title, '
+	</p>';
+
+echo '<fieldset>
+		<legend>', _('Search Criteria'), '</legend>
+		<field>
+			<label for="StockLocation">', _('Select recurring order templates for delivery from'), ':</label>
+			<select required="required" name="StockLocation">';
 
 $SQL = "SELECT locations.loccode,
 				locationname
@@ -29,22 +33,25 @@ $ResultStkLocs = DB_query($SQL);
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation'])) {
 		if ($MyRow['loccode'] == $_POST['StockLocation']) {
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
-		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
 }
 
-echo '</select></td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>
+</fieldset>';
 
-echo '<br /><div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '" /></div>';
+echo '<div class="centre">
+		<input type="submit" name="SearchRecurringOrders" value="', _('Search Recurring Orders'), '" />
+	</div>';
+echo '</form>';
 
 if (isset($_POST['SearchRecurringOrders'])) {
 
@@ -85,43 +92,46 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding="2" width="90%">
-			<tr>
-				<th>' . _('Modify') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Cust Order') . ' #</th>
-				<th>' . _('Last Recurrence') . '</th>
-				<th>' . _('End Date') . '</th>
-				<th>' . _('Times p.a.') . '</th>
-				<th>' . _('Order Total') . '</th>
-			</tr>';
+	if (DB_num_rows($SalesOrdersResult) == 0) {
+		prnMsg(_('There are no recurring order templates for this location'), 'warn');
+	} else {
+		echo '<table cellpadding="2" width="90%">
+				<tr>
+					<th>', _('Modify'), '</th>
+					<th>', _('Customer'), '</th>
+					<th>', _('Branch'), '</th>
+					<th>', _('Cust Order'), ' #</th>
+					<th>', _('Last Recurrence'), '</th>
+					<th>', _('End Date'), '</th>
+					<th>', _('Times p.a.'), '</th>
+					<th>', _('Order Total'), '</th>
+				</tr>';
 
-	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
+		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $MyRow['recurrorderno'];
-		$FormatedLastRecurrence = ConvertSQLDate($MyRow['lastrecurrence']);
-		$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
-		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
+			$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . urlencode($MyRow['recurrorderno']);
+			$FormatedLastRecurrence = ConvertSQLDate($MyRow['lastrecurrence']);
+			$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
+			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
 
-		printf('<tr class="striped_row">
-					<td><a href="%s">%s</a></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-				</tr>', $ModifyPage, $MyRow['recurrorderno'], $MyRow['name'], $MyRow['brname'], $MyRow['customerref'], $FormatedLastRecurrence, $FormatedStopDate, $MyRow['frequency'], $FormatedOrderValue);
+			echo '<tr class="striped_row">
+					<td><a href="', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
+					<td>', $MyRow['name'], '</td>
+					<td>', $MyRow['brname'], '</td>
+					<td>', $MyRow['customerref'], '</td>
+					<td>', $FormatedLastRecurrence, '</td>
+					<td>', $FormatedStopDate, '</td>
+					<td>', $MyRow['frequency'], '</td>
+					<td class="number">', $FormatedOrderValue, '</td>
+				</tr>';
 
-		//end of page full new headings if
-		
+			//end of page full new headings if
+			
+		}
+		//end of while loop
+		echo '</table>';
 	}
-	//end of while loop
-	echo '</table>';
 }
-echo '</form>';
 
 include ('includes/footer.php');
 ?>

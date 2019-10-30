@@ -32,6 +32,7 @@ display:inline;
 }
 .centre {
 margin:0 auto;
+text-align:center;
 }
 .dpTbl {
 border:thin solid #000;

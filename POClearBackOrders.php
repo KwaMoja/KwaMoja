@@ -16,10 +16,12 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 	prnMsg(_('All back order quantities have been cleared'), 'success');
 
 }
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 $SQL = "SELECT min(supplierid) AS fromcriteria,
 				max(supplierid) AS tocriteria
@@ -28,20 +30,21 @@ $SQL = "SELECT min(supplierid) AS fromcriteria,
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 
-echo '<table>
-		<tr>
-			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromSupplierNo" size="20" required="required" maxlength="20" value="' . $MyRow['fromcriteria'] . '" /></td>
-		</tr>
-		<tr>
-			<td> ' . _('To Supplier Code') . ':</td>
-			<td><input type="text" name="ToSupplierNo" size="20" required="required" maxlength="20" value="' . $MyRow['tocriteria'] . '" /></td>
-		</tr>
-	</table>
+echo '<fieldset>
+		<legend>', _('Select Supplier Range'), '</legend>
+		<field>
+			<label for="FromSupplierNo">', _('From Supplier Code'), ':</label>
+			<input type="text" name="FromSupplierNo" size="20" required="required" maxlength="20" value="', $MyRow['fromcriteria'], '" />
+		</field>
+		<field>
+			<label for="ToSupplierNo"> ', _('To Supplier Code'), ':</label>
+			<input type="text" name="ToSupplierNo" size="20" required="required" maxlength="20" value="', $MyRow['tocriteria'], '" />
+		</field>
+	</fieldset>
 	<div class="centre">
-		<button type="submit" name="ClearSupplierBackOrders">' . _('Clear Supplier Back Orders') . '</button>
+		<input type="submit" name="ClearSupplierBackOrders" value="', _('Clear Supplier Back Orders'), '" />
 	</div>
-	</form>';
+</form>';
 
 include ('includes/footer.php');
 ?>

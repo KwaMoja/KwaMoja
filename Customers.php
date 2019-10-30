@@ -15,7 +15,7 @@ include ('includes/SQL_CommonFunctions.php');
 include ('includes/CountriesArray.php');
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer Maintenance') . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Customer'), '" alt="" />', ' ', _('Customer Maintenance'), '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -142,7 +142,6 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('The customer could not be updated because');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(_('Customer updated'), 'success');
-			echo '<br />';
 		} else { //it is a new customer
 			/* set the DebtorNo if $AutoDebtorNo in config.php has been set to
 			 something greater 0 */
@@ -202,8 +201,8 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('This customer could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
 			$BranchCode = mb_substr($_POST['DebtorNo'], 0, 4);
-			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/CustomerBranches.php?DebtorNo=' . urlencode($_POST['DebtorNo']) . '">';
-			echo '<div class="centre">' . _('You should automatically be forwarded to the entry of a new Customer Branch page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . urlencode($_POST['DebtorNo']) . '"></a></div>';
+			echo '<meta http-equiv="Refresh" content="0; url=', $RootPath, '/CustomerBranches.php?DebtorNo=', urlencode($_POST['DebtorNo']), '">';
+			echo '<div class="centre">', _('You should automatically be forwarded to the entry of a new Customer Branch page'), '. ', _('If this does not happen'), ' (', _('if the browser does not support META Refresh'), ') ', '<a href="', $RootPath, '/CustomerBranches.php?DebtorNo=', urlencode($_POST['DebtorNo']), '"></a></div>';
 			include ('includes/footer.php');
 			exit;
 		}
@@ -220,7 +219,7 @@ if (isset($_POST['submit'])) {
 	if ($MyRow[0] > 0) {
 		$CancelDelete = 1;
 		prnMsg(_('This customer cannot be deleted because there are transactions that refer to it'), 'warn');
-		echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('transactions against this customer');
+		echo '<br /> ', _('There are'), ' ', $MyRow[0], ' ', _('transactions against this customer');
 	} else {
 		$SQL = "SELECT COUNT(*) FROM salesorders WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$Result = DB_query($SQL);
@@ -330,8 +329,8 @@ if (isset($_POST['AddContact']) and (isset($_POST['AddContact']) != '')) {
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/AddCustomerContacts.php?DebtorNo=' . $DebtorNo . '">';
 }
 
-echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 /*If the page was called without $_POST['DebtorNo'] passed to page then assume a new customer is to be entered show a form with a Debtor Code field other wise the form showing the fields with the existing entries against the customer will show for editing with only a hidden DebtorNo field*/
 
@@ -362,10 +361,6 @@ if ($SetupErrors > 0) {
 $DataError = 0;
 
 //Main Table
-echo '<table cellspacing="4" style="width: 75%">
-			<tr>
-				<td valign="top">';
-
 if (!isset($DebtorNo)) {
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	 then provide an input box for the DebtorNo to manually assigned */
@@ -394,14 +389,17 @@ if (!isset($DebtorNo)) {
 	$_POST['typeid'] = '';
 	$_POST['LanguageID'] = '';
 	//Sub table
-	echo '<table width="100%">';
+	echo '<fieldset>
+			<legend>', _('Insert new Customer'), '</legend>';
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	 then provide an input box for the DebtorNo to manually assigned */
+
 	if ($_SESSION['AutoDebtorNo'] == 0) {
-		echo '<tr>
-				<td>' . _('Customer Code') . ':</td>
-				<td><input type="text" name="DebtorNo" value="" size="12" required="required" maxlength="10" /></td>
-			</tr>';
+		echo '<fieldset>
+				<field>
+					<label for="DebtorNo">', _('Customer Code'), ':</label>
+					<td><input type="text" name="DebtorNo" value="" size="12" required="required" maxlength="10" /></td>
+				</field>';
 	}
 } else {
 	$SQL = "SELECT debtorno,
@@ -455,226 +453,216 @@ if (!isset($DebtorNo)) {
 	$_POST['typeid'] = $MyRow['typeid'];
 	$_POST['LanguageID'] = $MyRow['language_id'];
 	echo '<input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />';
-	echo '<table width="100%">';
+	echo '<fieldset>
+			<legend>', _('Edit Customer Details'), '</legend>';
+
+	echo '<fieldset>';
 	if ($_SESSION['AutoDebtorNo'] == 0) {
-		echo '<tr>
-					<td>' . _('Customer Code') . ':</td>
-					<td>' . stripslashes($DebtorNo) . '</td>
-				</tr>';
+		echo '<field>
+				<label>', _('Customer Code'), ':</label>
+				<div class="fieldtext">', stripslashes($DebtorNo), '</div>
+			</field>';
 	} //$_SESSION['AutoDebtorNo'] == 0
 	
 }
 
-echo '<tr>
-		<td>' . _('Customer Name') . ':</td>
-		<td><input type="text" name="CustName" value="' . $_POST['CustName'] . '" size="42" required="required" maxlength="40" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Address Line 1 (Street)') . ':</td>
-		<td><input type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Address Line 2 (Street)') . ':</td>
-		<td><input type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Address Line 3 (Suburb/City)') . ':</td>
-		<td><input type="text" name="Address3" size="42" maxlength="40" value="' . $_POST['Address3'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Address Line 4 (State/Province)') . ':</td>
-		<td><input type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Address Line 5 (Postal Code)') . ':</td>
-		<td><input type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Country') . ':</td>
-		<td><select name="Address6">';
+echo '<field>
+		<label for="CustName">', _('Customer Name'), ':</label>
+		<input type="text" name="CustName" value="', $_POST['CustName'], '" size="42" required="required" maxlength="40" />
+	</field>
+	<field>
+		<label for="Address1">', _('Address Line 1 (Street)'), ':</label>
+		<input type="text" name="Address1" size="42" maxlength="40" value="', $_POST['Address1'], '" />
+	</field>
+	<field>
+		<label for="Address2">', _('Address Line 2 (Street)'), ':</label>
+		<input type="text" name="Address2" size="42" maxlength="40" value="', $_POST['Address2'], '" />
+	</field>
+	<field>
+		<label for="Address3">', _('Address Line 3 (Suburb/City)'), ':</label>
+		<input type="text" name="Address3" size="42" maxlength="40" value="', $_POST['Address3'], '" />
+	</field>
+	<field>
+		<label for="Address4">', _('Address Line 4 (State/Province)'), ':</label>
+		<input type="text" name="Address4" size="42" maxlength="40" value="', $_POST['Address4'], '" />
+	</field>
+	<field>
+		<label for="Address5">', _('Address Line 5 (Postal Code)'), ':</label>
+		<input type="text" name="Address5" size="42" maxlength="40" value="', $_POST['Address5'], '" />
+	</field>
+	<field>
+		<label for="Address6">', _('Country'), ':</label>
+		<select name="Address6">';
 foreach ($CountriesArray as $CountryEntry => $CountryName) {
 	if (isset($_POST['Address6']) and (strtoupper($_POST['Address6']) == strtoupper($CountryName))) {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option selected="selected" value="', $CountryName, '">', $CountryName, '</option>';
 	} //isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)
 	elseif (!isset($_POST['Address6']) and $CountryName == "") {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option selected="selected" value="', $CountryName, '">', $CountryName, '</option>';
 	} //!isset($_POST['Address6']) and $CountryName == ""
 	else {
-		echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
+		echo '<option value="', $CountryName, '">', $CountryName, '</option>';
 	}
 }
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
 $Result = DB_query("SELECT typeabbrev, sales_type FROM salestypes");
-echo '<tr>
-		<td>' . _('Sales Type') . '/' . _('Price List') . ':</td>
-		<td><select name="SalesType">';
+echo '<field>
+		<label for="SalesType">', _('Sales Type'), '/', _('Price List'), ':</label>
+		<select name="SalesType">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['SalesType'] == $MyRow['typeabbrev']) {
-		echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	}
 } //end while loop
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
 $Result = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
-echo '<tr>
-		<td>' . _('Customer Type') . ':</td>
-		<td><select name="typeid">';
+echo '<field>
+		<label for="typeid">', _('Customer Type'), ':</label>
+		<select name="typeid">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['typeid'] == $MyRow['typeid']) {
-		echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		echo '<option value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 	}
 } //end while loop
 DB_data_seek($Result, 0);
 
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
-echo '<tr>
-		<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-		<td>
-			<input type="text" required="required" class="date" name="ClientSince" value="', $_POST['ClientSince'], '" maxlength="10" size="12" />
-		</td>
-	</tr>';
+echo '<field>
+		<label for="ClientSince">', _('Customer Since'), ' (', $_SESSION['DefaultDateFormat'], '):</label>
+		<input type="text" required="required" class="date" name="ClientSince" value="', $_POST['ClientSince'], '" maxlength="10" size="12" />
+	</field>';
 
 //End first sub table
-echo '</table></td>';
+echo '</fieldset>';
 
 //second sub table
-echo '<td><table>';
+echo '<fieldset>';
 
-echo '<tr>
-		<td>' . _('Discount Percent') . ':</td>
-		<td><input type="text" name="Discount" class="number" size="5" maxlength="5" value="' . $_POST['Discount'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Discount Code') . ':</td>
-		<td><input type="text" name="DiscountCode" size="3" maxlength="2" value="' . $_POST['DiscountCode'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Payment Discount Percent') . ':</td>
-		<td><input type="text" class="number" name="PymtDiscount" size="5" maxlength="4" value="' . $_POST['PymtDiscount'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Credit Limit') . ':</td>
-		<td><input type="text" class="number" name="CreditLimit" size="16" maxlength="14" value="' . $_POST['CreditLimit'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Tax Reference') . ':</td>
-		<td><input type="text" name="TaxRef" size="22" maxlength="20"  value="' . $_POST['TaxRef'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Discount">', _('Discount Percent'), ':</label>
+		<input type="text" name="Discount" class="number" size="5" maxlength="5" value="', $_POST['Discount'], '" />
+	</field>
+	<field>
+		<label for="DiscountCode">', _('Discount Code'), ':</label>
+		<input type="text" name="DiscountCode" size="3" maxlength="2" value="', $_POST['DiscountCode'], '" />
+	</field>
+	<field>
+		<label for="PymtDiscount">', _('Payment Discount Percent'), ':</label>
+		<input type="text" class="number" name="PymtDiscount" size="5" maxlength="4" value="', $_POST['PymtDiscount'], '" />
+	</field>
+	<field>
+		<label for="CreditLimit">', _('Credit Limit'), ':</label>
+		<input type="text" class="number" name="CreditLimit" size="16" maxlength="14" value="', $_POST['CreditLimit'], '" />
+	</field>
+	<field>
+		<label for="TaxRef">', _('Tax Reference'), ':</label>
+		<input type="text" name="TaxRef" size="22" maxlength="20"  value="', $_POST['TaxRef'], '" />
+	</field>';
 
 $Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
-echo '<tr>
-		<td>' . _('Payment Terms') . ':</td>
-		<td><select name="PaymentTerms">';
+echo '<field>
+		<label for="PaymentTerms">', _('Payment Terms'), ':</label>
+		<select name="PaymentTerms">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['PaymentTerms'] == $MyRow['termsindicator']) {
-		echo '<option selected="selected" value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['termsindicator'], '">', $MyRow['terms'], '</option>';
 	} //$_POST['PaymentTerms'] == $MyRow['termsindicator']
 	else {
-		echo '<option value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
+		echo '<option value="', $MyRow['termsindicator'], '">', $MyRow['terms'], '</option>';
 	}
 } //end while loop
 DB_data_seek($Result, 0);
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
 $Result = DB_query("SELECT reasoncode, reasondescription FROM holdreasons");
-echo '<tr>
-		<td>' . _('Credit Status') . ':</td>
-		<td><select name="HoldReason">';
+echo '<field>
+		<label for="HoldReason">', _('Credit Status'), ':</label>
+		<select name="HoldReason">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['HoldReason'] == $MyRow['reasoncode']) {
-		echo '<option selected="selected" value="' . $MyRow['reasoncode'] . '">' . $MyRow['reasondescription'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['reasoncode'], '">', $MyRow['reasondescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['reasoncode'] . '">' . $MyRow['reasondescription'] . '</option>';
+		echo '<option value="', $MyRow['reasoncode'], '">', $MyRow['reasondescription'], '</option>';
 	}
 } //end while loop
 DB_data_seek($Result, 0);
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
 $Result = DB_query("SELECT currency, currabrev FROM currencies");
-echo '<tr>
-		<td>' . _('Customer Currency') . ':</td>
-		<td><select name="CurrCode">';
+echo '<field>
+		<label for="CurrCode">', _('Customer Currency'), ':</label>
+		<select name="CurrCode">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['CurrCode'] == $MyRow['currabrev']) {
-		echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	} //$_POST['CurrCode'] == $MyRow['currabrev']
 	else {
-		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	}
 } //end while loop
 DB_data_seek($Result, 0);
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
 if (!isset($_POST['LanguageID']) or $_POST['LanguageID'] == '') {
 	$_POST['LanguageID'] = $_SESSION['Language'];
 }
 
-echo '<tr>
-		<td>' . _('Language') . ':</td>
-		<td><select name="LanguageID" required="required">';
+echo '<field>
+		<label for="LanguageID">', _('Language'), ':</label>
+		<select name="LanguageID" required="required">';
 foreach ($LanguagesArray as $LanguageCode => $LanguageName) {
 	if ($_POST['LanguageID'] == $LanguageCode) {
-		echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
+		echo '<option selected="selected" value="', $LanguageCode, '">', $LanguageName['LanguageName'], '</option>';
 	} else {
-		echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName'] . '</option>';
+		echo '<option value="', $LanguageCode, '">', $LanguageName['LanguageName'], '</option>';
 	}
 }
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
-echo '<tr>
-		<td>' . _('Require Customer PO Line on SO') . ':</td>
+echo '<field>
+		<label for="CustomerPOLine">', _('Require Customer PO Line on SO'), ':</label>
 		<td><select name="CustomerPOLine">';
 if ($_POST['CustomerPOLine'] == 0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
-	echo '<option value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="0">', _('No'), '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
 } //$_POST['CustomerPOLine'] == 0
 else {
-	echo '<option value="0">' . _('No') . '</option>';
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option value="0">', _('No'), '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
-echo '<tr>
-		<td>' . _('Invoice Addressing') . ':</td>
-		<td><select name="AddrInvBranch">';
+echo '<field>
+		<label for="AddrInvBranch">', _('Invoice Addressing'), ':</label>
+		<select name="AddrInvBranch">';
 if (isset($_POST['InvAddrBranch']) and $_POST['InvAddrBranch'] == 0) {
-	echo '<option selected="selected" value="0">' . _('Address to HO') . '</option>';
-	echo '<option value="1">' . _('Address to Branch') . '</option>';
+	echo '<option selected="selected" value="0">', _('Address to HO'), '</option>';
+	echo '<option value="1">', _('Address to Branch'), '</option>';
 } else {
-	echo '<option value="0">' . _('Address to HO') . '</option>';
-	echo '<option selected="selected" value="1">' . _('Address to Branch') . '</option>';
+	echo '<option value="0">', _('Address to HO'), '</option>';
+	echo '<option selected="selected" value="1">', _('Address to Branch'), '</option>';
 }
 
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
-echo '</table>
-		</td>
-	</tr>
-</table>';
+echo '</fieldset>
+</fieldset>';
 
 if (isset($_GET['delete'])) { //User hit delete link on customer contacts
 	/*Process this first before showing remaining contacts */

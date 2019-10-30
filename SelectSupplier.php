@@ -11,7 +11,9 @@ $BookMark = 'SelectSupplier';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
 if (!isset($_SESSION['SupplierID'])) {
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Search'), '" alt="" />', ' ', _('Suppliers'), '
+		</p>';
 }
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID'] = $_GET['SupplierID'];
@@ -122,7 +124,9 @@ if (isset($_SESSION['SupplierID'])) {
 		$MyRow = DB_fetch_row($SupplierNameResult);
 		$SupplierName = $MyRow[0];
 	}
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . stripslashes($_SESSION['SupplierID']) . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Supplier'), '" alt="" />', ' ', _('Supplier'), ' : <b>', stripslashes($_SESSION['SupplierID']), ' - ', $SupplierName, '</b> ', _('has been selected'), '.
+		</p>';
 	// Extended Info only if selected in Configuration
 	if ($_SESSION['Extended_SupplierInfo'] == 1) {
 		if ($_SESSION['SupplierID'] != '') {
@@ -144,13 +148,7 @@ if (isset($_SESSION['SupplierID'])) {
 			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
 			$Total1Result = DB_query($SQL);
 			$Row = DB_fetch_array($Total1Result);
-			echo '<table style="width:75%" cellpadding="4">';
-			echo '<tr>
-					<th style="width:40%">' . _('Contact Name') . '</th>
-					<th style="width:20%">' . _('Position') . '</th>
-					<th style="width:20%">' . _('Telephone Number') . '</th>
-					<th style="width:20%">' . _('Email Address') . '</th>
-				</tr>';
+			echo '<table>';
 			$ContactSQL = "SELECT contact,
 									position,
 									tel,
@@ -158,112 +156,171 @@ if (isset($_SESSION['SupplierID'])) {
 								FROM suppliercontacts
 								WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 			$ContactResult = DB_query($ContactSQL);
-			while ($ContactRow = DB_fetch_array($ContactResult)) {
+
+			if (DB_num_rows($ContactResult) > 0) {
 				echo '<tr>
-						<td style="width:40%" class="select">' . $ContactRow['contact'] . '</td>
-						<td style="width:20%" class="select">' . $ContactRow['position'] . '</td>
-						<td style="width:20%" class="select">' . $ContactRow['tel'] . '</td>
-						<td style="width:20%" class="select">' . $ContactRow['email'] . '</td>
+						<th>', _('Contact Name'), '</th>
+						<th>', _('Position'), '</th>
+						<th>', _('Telephone Number'), '</th>
+						<th">', _('Email Address'), '</th>
 					</tr>';
+				while ($ContactRow = DB_fetch_array($ContactResult)) {
+					echo '<tr class="striped_row">
+							<td>', $ContactRow['contact'], '</td>
+							<td>', $ContactRow['position'], '</td>
+							<td>', $ContactRow['tel'], '</td>
+							<td>', $ContactRow['email'], '</td>
+						</tr>';
+				}
 			}
+
 			echo '<tr>
-					<th colspan="4">' . _('Supplier Data') . '</th>
+					<th colspan="4">', _('Supplier Data'), '</th>
 				</tr>
-				<tr>
-					<td style="width:30%" valign="top" class="select">';
+				<tr class="striped_row">';
 			/* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($MyRow['lastpaiddate'] == 0) {
-				echo _('No payments yet to this supplier.') . '</td>
+				echo '<td>', _('No payments yet to this supplier.'), '</td>
 					<td valign="top" class="select"></td>';
 			} else {
-				echo _('Last Paid') . ':</td>
-					<td style="width:20%" valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>';
+				echo '<td>', _('Last Paid'), ':</td>
+					<td><b>', ConvertSQLDate($MyRow['lastpaiddate']), '</b></td>';
 			}
-			echo '<td style="width:30%" valign="top" class="select">' . _('Last Paid Amount') . ':</td>
-					<td style="width:20%" valign="top" class="number select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
-			echo '<tr>
-					<td style="width:30%" valign="top" class="select">' . _('Supplier since') . ':</td>
-					<td style="width:20%" valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
-					<td style="width:30%" valign="top" class="select">' . _('Total Spend with this Supplier') . ':</td>
-					<td style="width:20%" valign="top" class="number select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
+			echo '<td>', _('Last Paid Amount'), ':</td>
+					<td class="number">  <b>', locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']), '</b></td></tr>';
+			echo '<tr class="striped_row">
+					<td>', _('Supplier since'), ':</td>
+					<td> <b>', ConvertSQLDate($MyRow['suppliersince']), '</b></td>
+					<td>', _('Total Spend with this Supplier'), ':</td>
+					<td class="number"><b>', locale_number_format($Row['total'], $MyRow['currdecimalplaces']), '</b></td>
 				</tr>';
-			echo '<tr>
-					<td style="width:30%" valign="top" class="select">' . _('Email Address') . ':</td>
-					<td style="width:20%" valign="top" class="select"> <b>' . $MyRow['email'] . '</b></td>
-					<td style="width:30%" valign="top" class="select">' . _('Telephone Number') . ':</td>
-					<td style="width:20%" valign="top" class="number select"> <b>' . $MyRow['telephone'] . '</b></td>
+			echo '<tr class="striped_row">
+					<td>', _('Email Address'), ':</td>
+					<td> <b>', $MyRow['email'], '</b></td>
+					<td>', _('Telephone Number'), ':</td>
+					<td class="number"> <b>', $MyRow['telephone'], '</b></td>
 				</tr>';
 			echo '</table>';
 		}
 	}
-	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
-	echo '<table width="90%" cellpadding="4">
-			<tr>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Supplier Inquiries'), '" />', _('Supplier Inquiries'), '</th>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Supplier Transactions'), '" />', _('Supplier Transactions'), '</th>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Supplier Maintenance'), '" />', _('Supplier Maintenance'), '</th>
-			</tr>';
-	echo '<tr>
-			<td valign="top" class="select">';
-	/* Inquiry Options */
-	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Account Inquiry') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . urlencode($_SESSION['SupplierID']) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('Supplier Delivery Note AND GRN inquiry') . '</a><br />';
+	echo '<div class="page_help_text">', _('Select a menu option to operate using this supplier.'), '</div>';
+	echo '<fieldset style="text-align:center">';
+	// Customer inquiries options:
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" data-title="', _('Inquiries and Reports'), '" />', _('Supplier Inquiries'), '</legend>
+			<ul>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Account Inquiry') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . urlencode($_SESSION['SupplierID']) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('Supplier Delivery Note AND GRN inquiry') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="', $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Outstanding Purchase Orders') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('View All Orders') . '</a>
+				</li>
+				<li class="MenuItem">
+					', wikiLink('Supplier', urlencode(stripslashes($_SESSION['SupplierID']))), '
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('Open shipments') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Modify/Close Shipments') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Price List') . '</a>
+				</li>
+			</ul>
+		</fieldset>';
 
-	echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Outstanding Purchase Orders') . '</a><br />';
-	echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('View All Orders') . '</a><br />';
-	wikiLink('Supplier', urlencode(stripslashes($_SESSION['SupplierID'])));
-	echo '<a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('Open shipments') . '</a><br />';
-	echo '<a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Modify/Close Shipments') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Price List') . '</a><br />';
-	echo '</td><td valign="top" class="select">';
-	/* Supplier Transactions */
-	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Purchase Order') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SupplierInvoice.php?New=True&SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter an Invoice') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Credit Note') . '</a><br />';
-	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Payment/Receipt') . '</a><br />';
-	echo '<a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a><br />';
-	echo '</td><td valign="top" class="select">';
-	/* Supplier Maintenance */
-	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add Supplier') . '</a><br />
-		<a href="' . $RootPath . '/Suppliers.php?Copy=Yes&SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Copy Supplier') . '</a><br />
-		<a href="' . $RootPath . '/Suppliers.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Modify Supplier') . '</a><br />
-		<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Contacts') . '</a><br />
-		<a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Sell Through Support') . '</a><br />
-		<a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . _('Shipments') . '</a><br />
-		<a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login') . '</a><br />
-		</td>
-		</tr>
-		</table>';
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" data-title="', _('Supplier Transactions'), '" />', _('Supplier Transactions'), '</legend>
+			<ul>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Purchase Order') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SupplierInvoice.php?New=True&SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter an Invoice') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Credit Note') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Payments.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Enter a Payment/Receipt') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>
+				</li>
+			</ul>
+		</fieldset>';
+
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" data-title="', _('Supplier Maintenance'), '" />', _('Supplier Maintenance'), '</legend>
+			<ul>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Suppliers.php">' . _('Add Supplier') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Suppliers.php?Copy=Yes&SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Copy Supplier') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Suppliers.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Modify Supplier') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Contacts') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . urlencode(stripslashes($_SESSION['SupplierID'])) . '">' . _('Sell Through Support') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . _('Shipments') . '</a>
+				</li>
+				<li class="MenuItem">
+					<a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login') . '</a>
+				</li>
+			</ul>
+		</fieldset>';
+
+	echo '</fieldset>';
 
 }
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
-	<table cellpadding="3">
-	<tr>
-		<td>' . _('Enter a partial Name') . ':</td>
-		<td>';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+echo '<p class="page_title_text">
+		<img src="', $RootPath . '/css/' . $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', _('Search for Suppliers'), '
+	</p>';
+
+echo '<fieldset>
+		<field>
+			<label for="Keywords">', _('Enter a partial Name'), ':</label>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" name="Keywords" autofocus="autofocus" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+	echo '<input type="search" name="Keywords" autofocus="autofocus" value="', $_POST['Keywords'], '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" />';
+	echo '<input type="search" name="Keywords" autofocus="autofocus" size="20" maxlength="25" />';
 }
-echo '</td>
-		<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Enter a partial Code') . ':</td>
-		<td>';
+echo '</field>';
+
+echo '<h1>' . _('OR') . '</h1>';
+
+echo '<field>
+		<label for="SupplierCode">', _('Enter a partial Code'), ':</label>';
 if (isset($_POST['SupplierCode'])) {
-	echo '<input type="text" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
+	echo '<input type="search" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="SupplierCode" size="15" maxlength="18" />';
+	echo '<input type="search" name="SupplierCode" size="15" maxlength="18" />';
 }
-echo '</td></tr>
-		</table>
-		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+echo '</field>
+	</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="Search" value="', _('Search Now'), '" />
+	</div>';
+
 //if (isset($Result) and !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($Result);
@@ -279,24 +336,23 @@ if (isset($_POST['Search'])) {
 		}
 	}
 	if ($ListPageMax > 1) {
-		echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
+		echo '<p>&nbsp;&nbsp;', $_POST['PageOffset'], ' ', _('of'), ' ', $ListPageMax, ' ', _('pages'), '. ', _('Go to Page'), ': </p>';
 		echo '<select name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
-				echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+				echo '<option value="', $ListPage, '" selected="selected">', $ListPage, '</option>';
 			} else {
-				echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
+				echo '<option value="', $ListPage, '">', $ListPage, '</option>';
 			}
 			$ListPage++;
 		}
 		echo '</select>
-			<input type="submit" name="Go" value="' . _('Go') . '" />
-			<input type="submit" name="Previous" value="' . _('Previous') . '" />
-			<input type="submit" name="Next" value="' . _('Next') . '" />';
-		echo '<br />';
+			<input type="submit" name="Go" value="', _('Go'), '" />
+			<input type="submit" name="Previous" value="', _('Previous'), '" />
+			<input type="submit" name="Next" value="', _('Next'), '" />';
 	}
-	echo '<input type="hidden" name="Search" value="' . _('Search Now') . '" />';
+	echo '<input type="hidden" name="Search" value="', _('Search Now'), '" />';
 	$k = 0; //row counter to determine background colour
 	$RowIndex = 0;
 	if (DB_num_rows($Result) <> 0) {
@@ -304,32 +360,32 @@ if (isset($_POST['Search'])) {
 		echo '<table cellpadding="2">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
-						<th>' . _('Address 4') . '</th>
-						<th>' . _('Telephone') . '</th>
-						<th>' . _('Email') . '</th>
-						<th>' . _('URL') . '</th>
+						<th class="SortedColumn">', _('Code'), '</th>
+						<th class="SortedColumn">', _('Supplier Name'), '</th>
+						<th>', _('Currency'), '</th>
+						<th>', _('Address 1'), '</th>
+						<th>', _('Address 2'), '</th>
+						<th>', _('Address 3'), '</th>
+						<th>', _('Address 4'), '</th>
+						<th>', _('Telephone'), '</th>
+						<th>', _('Email'), '</th>
+						<th>', _('URL'), '</th>
 					</tr>
 				</thead>';
 
 		echo '<tbody>';
 		while (($MyRow = DB_fetch_array($Result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			echo '<tr class="striped_row">
-					<td><input type="submit" name="Select" value="' . $MyRow['supplierid'] . '" /></td>
-					<td>' . $MyRow['suppname'] . '</td>
-					<td>' . $MyRow['currcode'] . '</td>
-					<td>' . $MyRow['address1'] . '</td>
-					<td>' . $MyRow['address2'] . '</td>
-					<td>' . $MyRow['address3'] . '</td>
-					<td>' . $MyRow['address4'] . '</td>
-					<td>' . $MyRow['telephone'] . '</td>
-					<td><a href="mailto://' . $MyRow['email'] . '">' . $MyRow['email'] . '</a></td>
-					<td><a href="' . $MyRow['url'] . '"target="_blank">' . $MyRow['url'] . '</a></td>
+					<td><input type="submit" name="Select" value="', $MyRow['supplierid'], '" /></td>
+					<td>', $MyRow['suppname'], '</td>
+					<td>', $MyRow['currcode'], '</td>
+					<td>', $MyRow['address1'], '</td>
+					<td>', $MyRow['address2'], '</td>
+					<td>', $MyRow['address3'], '</td>
+					<td>', $MyRow['address4'], '</td>
+					<td>', $MyRow['telephone'], '</td>
+					<td><a href="mailto://', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td><a href="', $MyRow['url'], '"target="_blank">', $MyRow['url'], '</a></td>
 				</tr>';
 			$RowIndex = $RowIndex + 1;
 			//end of page full new headings if
@@ -344,29 +400,28 @@ if (isset($_POST['Search'])) {
 }
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {
-	echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
+	echo '<p>&nbsp;&nbsp;', $_POST['PageOffset'], ' ', _('of'), ' ', $ListPageMax, ' ', _('pages'), '. ', _('Go to Page'), ': </p>';
 	echo '<select name="PageOffset">';
 	$ListPage = 1;
 	while ($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {
-			echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+			echo '<option value="', $ListPage, '" selected="selected">', $ListPage, '</option>';
 		} else {
-			echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
+			echo '<option value="', $ListPage, '">', $ListPage, '</option>';
 		}
 		$ListPage++;
 	}
 	echo '</select>
-		<input type="submit" name="Go" value="' . _('Go') . '" />
-		<input type="submit" name="Previous" value="' . _('Previous') . '" />
-		<input type="submit" name="Next" value="' . _('Next') . '" />';
-	echo '<br />';
+		<input type="submit" name="Go" value="', _('Go'), '" />
+		<input type="submit" name="Previous" value="', _('Previous'), '" />
+		<input type="submit" name="Next" value="', _('Next'), '" />';
 }
 echo '</form>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 		if ($Latitude == 0) {
-			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
+			echo '<div class="centre">', _('Mapping is enabled, but no Mapping data to display for this Supplier.'), '</div>';
 		} else {
 			echo '<table>
 					<thead>

@@ -19,7 +19,9 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 }
 
-echo '<div class="centre"><p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Factor Companies') . '" alt="" />' . ' ' . $Title . '</p></div>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Factor Companies'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
  form hopefully with input in the correct fields, which we check for firsrt. */
@@ -133,7 +135,6 @@ if (isset($_POST['Delete'])) {
 		$SQL = "DELETE FROM factorcompanies WHERE id='" . $FactorID . "'";
 		$Result = DB_query($SQL);
 		prnMsg(_('Factoring company record record for') . ' ' . $_POST['FactorName'] . ' ' . _('has been deleted'), 'success');
-		echo '<br />';
 		unset($_SESSION['FactorID']);
 	} //end if Delete factor
 	unset($FactorID);
@@ -189,71 +190,89 @@ if (isset($FactorID) and isset($_POST['Amend'])) {
 
 if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<input type="hidden" name="FactorID" value="' . $FactorID . '" />
-		<input type="hidden" name="New" value="Yes" />
-		<table>
-		<tr>
-			<td>' . _('Factor company Name') . ':</td>
-			<td><input type="text" name="FactorName" size="42" required="required" maxlength="40" value="' . $_POST['FactorName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 1') . ':</td>
-			<td><input type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] . '" /></td>
-		</tr>
-		<tr><td>' . _('Address Line 2') . ':</td>
-			<td><input type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 3') . ':</td>
-			<td><input type="text" name="Address3" size="42" maxlength="40" value="' . $_POST['Address3'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 4') . ':</td>
-			<td><input type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 5') . ':</td>
-			<td><input type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 6') . ':</td>
-			<td><input type="text" name="Address6" size="42" maxlength="40" value="' . $_POST['Address6'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Contact Name') . ':</td>
-			<td><input type="text" name="ContactName" size="20" maxlength="25" value="' . $_POST['ContactName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Telephone') . ':</td>
-			<td><input type="tel" name="Telephone" size="20" maxlength="25" value="' . $_POST['Telephone'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Fax') . ':</td>
-			<td><input type="tel" name="Fax" size="20" maxlength="25" value="' . $_POST['Fax'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Email') . ':</td>
-			<td><input type="email" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" /></td>
-		</tr>
-		</table>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<input type="hidden" name="FactorID" value="', $FactorID, '" />';
+	echo '<input type="hidden" name="New" value="Yes" />';
+
+	if (isset($_POST['Create'])) {
+		echo '<fieldset>
+			<legend>', _('Create new factor company'), '</legend>';
+	} else {
+		echo '<fieldset>
+			<legend>', _('Amend factor company'), '</legend>';
+	}
+
+	echo '<field>
+			<label for="FactorName">', _('Factor company Name'), ':</label>
+			<input type="text" name="FactorName" size="42" required="required" maxlength="40" value="', $_POST['FactorName'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address1">', _('Address Line 1'), ':</label>
+			<input type="text" name="Address1" size="42" maxlength="40" value="', $_POST['Address1'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address2">', _('Address Line 2'), ':</label>
+			<input type="text" name="Address2" size="42" maxlength="40" value="', $_POST['Address2'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address3">', _('Address Line 3'), ':</label>
+			<input type="text" name="Address3" size="42" maxlength="40" value="', $_POST['Address3'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address4">', _('Address Line 4'), ':</label>
+			<input type="text" name="Address4" size="42" maxlength="40" value="', $_POST['Address4'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address5">', _('Address Line 5'), ':</label>
+			<input type="text" name="Address5" size="42" maxlength="40" value="', $_POST['Address5'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Address6">', _('Address Line 6'), ':</label>
+			<input type="text" name="Address6" size="42" maxlength="40" value="', $_POST['Address6'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="ContactName">', _('Contact Name'), ':</label>
+			<input type="text" name="ContactName" size="20" maxlength="25" value="', $_POST['ContactName'], '" />
+		</field>';
+
+	echo '<field>
+			<label>', _('Telephone'), ':</label>
+			<input type="tel" name="Telephone" size="20" maxlength="25" value="', $_POST['Telephone'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Telephone">', _('Fax'), ':</label>
+			<input type="tel" name="Fax" size="20" maxlength="25" value="', $_POST['Fax'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="email">', _('Email'), ':</label>
+			<input type="email" name="Email" size="55" maxlength="55" value="', $_POST['Email'], '" />
+		</field>
+	</fieldset>';
 }
 
 if (isset($_POST['Create'])) {
-	echo '<br />
-		<div class="centre">
-			<input type="submit" name="Submit" value="' . _('Insert New Factor') . '" />
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value="', _('Insert New Factor'), '" />
 		</div>
-		</form>';
+	</form>';
+
 } else if (isset($_POST['Amend'])) {
-	echo '<br />
-		<div class="centre">
-			<input type="submit" name="Update" value="' . _('Update Factor') . '" />';
 	prnMsg(_('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed'), 'warn');
-	echo '<input type="submit" name="Delete" value="' . _('Delete Factor') . '" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this factoring company?') . '\');" />
+	echo '<div class="centre">
+			<input type="submit" name="Update" value="', _('Update Factor'), '" />
+			<input type="submit" name="Delete" value="', _('Delete Factor'), '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this factoring company?'), '\');" />
 		</div>
-		</form>';
+	</form>';
 }
 
 /* If it didn't come with a $FactorID it must be a completely fresh start, so choose a new $factorID or give the
@@ -261,24 +280,25 @@ if (isset($_POST['Create'])) {
 
 if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<input type="hidden" name="New" value="No" />';
 	echo '<table>
 			<tr>
-				<th>' . _('ID') . '</th>
-				<th>' . _('Company Name') . '</th>
-				<th>' . _('Address 1') . '</th>
-				<th>' . _('Address 2') . '</th>
-				<th>' . _('Address 3') . '</th>
-				<th>' . _('Address 4') . '</th>
-				<th>' . _('Address 5') . '</th>
-				<th>' . _('Address 6') . '</th>
-				<th>' . _('Contact') . '</th>
-				<th>' . _('Telephone') . '</th>
-				<th>' . _('Fax Number') . '</th>
-				<th>' . _('Email') . '</th>
+				<th>', _('ID'), '</th>
+				<th>', _('Company Name'), '</th>
+				<th>', _('Address 1'), '</th>
+				<th>', _('Address 2'), '</th>
+				<th>', _('Address 3'), '</th>
+				<th>', _('Address 4'), '</th>
+				<th>', _('Address 5'), '</th>
+				<th>', _('Address 6'), '</th>
+				<th>', _('Contact'), '</th>
+				<th>', _('Telephone'), '</th>
+				<th>', _('Fax Number'), '</th>
+				<th>', _('Email'), '</th>
+				<th></th>
 			</tr>';
 	$SQL = "SELECT id,
 					coyname,
@@ -294,29 +314,30 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 					email
 			FROM factorcompanies";
 	$Result = DB_query($SQL);
-	$j = 1;
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['id'] . '</td>
-				<td>' . $MyRow['coyname'] . '</td>
-				<td>' . $MyRow['address1'] . '</td>
-				<td>' . $MyRow['address2'] . '</td>
-				<td>' . $MyRow['address3'] . '</td>
-				<td>' . $MyRow['address4'] . '</td>
-				<td>' . $MyRow['address5'] . '</td>
-				<td>' . $MyRow['address6'] . '</td>
-				<td>' . $MyRow['contact'] . '</td>
-				<td>' . $MyRow['telephone'] . '</td>
-				<td>' . $MyRow['fax'] . '</td>
-				<td>' . $MyRow['email'] . '</td>
-				<td><a href="' . $RootPath . '/Factors.php?FactorID=' . urlencode($MyRow['id']) . '">' . _('Edit') . '</a></td>
+				<td>', $MyRow['id'], '</td>
+				<td>', $MyRow['coyname'], '</td>
+				<td>', $MyRow['address1'], '</td>
+				<td>', $MyRow['address2'], '</td>
+				<td>', $MyRow['address3'], '</td>
+				<td>', $MyRow['address4'], '</td>
+				<td>', $MyRow['address5'], '</td>
+				<td>', $MyRow['address6'], '</td>
+				<td>', $MyRow['contact'], '</td>
+				<td>', $MyRow['telephone'], '</td>
+				<td>', $MyRow['fax'], '</td>
+				<td>', $MyRow['email'], '</td>
+				<td><a href="', $RootPath, '/Factors.php?FactorID=', urlencode($MyRow['id']), '">', _('Edit'), '</a></td>
 			</tr>';
 	} //end while loop
-	echo '</table>
-		<div class="centre">
-			<input type="submit" name="Create" value="' . _('Create New Factor') . '" />
+	echo '</table>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Create" value="', _('Create New Factor'), '" />
 		</div>
-		</form>';
+	</form>';
 }
 
 include ('includes/footer.php');

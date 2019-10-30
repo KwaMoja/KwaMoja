@@ -3,7 +3,7 @@ background:#4682B4;
 padding:10px;
 margin:5px;
 margin-bottom:0px;
-padding-bottom:0px;
+padding-bottom:7px;
 border-top-left-radius:30px;
 border-top-right-radius:30px;
 }
@@ -37,6 +37,9 @@ display:inline;
 float:right;
 padding-left:10px;
 padding-right:30px;
+}
+header #ExitIcon img {
+width:32px;
 }
 header .FontSize {
 font-weight:bold;

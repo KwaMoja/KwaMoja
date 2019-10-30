@@ -59,10 +59,16 @@ font-style:italic;
 font-weight:700;
 border:3px solid red;
 }
+table tr.total_row {
+background:#0000FF;
+color:#FFFFFF;
+font-weight:bold;
+}
 table .number {
 text-align:right;
 }
 table th .PrintIcon {
+width:32px;
 float:right;
 cursor:pointer;
 }

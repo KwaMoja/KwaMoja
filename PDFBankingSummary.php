@@ -13,7 +13,9 @@ if (!isset($_POST['BatchNo'])) {
 	$BookMark = 'BankingSummary';
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', $Title, '" alt="', $Title, '" />', ' ', $Title, '
+		</p>';
 
 	$SQL = "SELECT DISTINCT
 			transno,
@@ -23,23 +25,25 @@ if (!isset($_POST['BatchNo'])) {
 		ORDER BY transno DESC";
 	$Result = DB_query($SQL);
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table summary="' . _('Details of the batch to be re-printed') . '">
-					<tr>
-						<td>' . _('Select the batch number of receipts to be printed') . ':</td>
-						<td><select autofocus="autofocus" required="required" name="BatchNo">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Details of the batch to be re-printed'), '</legend>
+			<field>
+				<label for="BatchNo">', _('Select the batch number of receipts to be printed'), ':</label>
+				<select autofocus="autofocus" required="required" name="BatchNo">';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['transno'] . '">' . _('Batch') . ' ' . $MyRow['transno'] . ' - ' . ConvertSqlDate($MyRow['transdate']) . '</option>';
+		echo '<option value="', $MyRow['transno'], '">', _('Batch'), ' ', $MyRow['transno'], ' - ', ConvertSqlDate($MyRow['transdate']), '</option>';
 	}
-	echo '</select></td>
-			</tr>
-			</table>';
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
-			</div>
-		</form>';
+	echo '</select>
+		</field>
+	</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="EnterBatchNo" value="', _('Create PDF'), '" />
+		</div>
+	</form>';
 
 	include ('includes/footer.php');
 	exit;

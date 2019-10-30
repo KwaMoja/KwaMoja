@@ -195,19 +195,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = _('View supplier price');
 		include ('includes/header.php');
-		echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
-		echo '<p class="page_title_text">', _('Supplier Price List for'), ' : ', $CurrentOrAllPrices, '<br/>', _('Supplier'), ' : ', $SupplierName, ' <br/>', _('Category'), ' : ', $Categoryname, '</p>';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Purchase'), '" alt="" />', ' ', _('Supplier Price List'), '
+			</p>';
+
+		echo '<p class="page_title_text">
+				', _('Supplier Price List for'), ' : ', $CurrentOrAllPrices, '<br/>', _('Supplier'), ' : ', $SupplierName, ' <br/>', _('Category'), ' : ', $Categoryname, '
+			</p>';
 
 		echo '<table>
-				<tr>
-					<th class="SortedColumn">', _('Code'), '</th>
-					<th class="SortedColumn">', _('Description'), '</th>
-					<th>', _('Conv Factor'), '</th>
-					<th>', _('Price') . '</th>
-					<th class="SortedColumn">', _('Date From'), '</th>
-					<th class="SortedColumn">', _('Supp Code'), '</th>
-				</tr>';
-		$k = 0;
+				<thead>
+					<tr>
+						<th class="SortedColumn">', _('Code'), '</th>
+						<th class="SortedColumn">', _('Description'), '</th>
+						<th>', _('Conv Factor'), '</th>
+						<th>', _('Price') . '</th>
+						<th class="SortedColumn">', _('Date From'), '</th>
+						<th class="SortedColumn">', _('Supp Code'), '</th>
+					</tr>
+				</thead>';
+		echo '<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			echo '<tr class="striped_row">
 					<td>', $MyRow['stockid'], '</td>
@@ -219,7 +226,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				</tr>';
 
 		}
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 		include ('includes/footer.php');
 	}
 
@@ -228,59 +236,61 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Title = _('Supplier Price List');
 	include ('includes/header.php');
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
-	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Purchase'), '" alt="" />', ' ', _('Supplier Price List'), '
+		</p>';
+	echo '<div class="page_help_text">', _('View the Price List from supplier'), '</div>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	$SQL = "SELECT supplierid,suppname FROM `suppliers`";
 	$Result = DB_query($SQL);
-	echo '<table>
-			<tr>
-				<td>' . _('Supplier') . ':</td>
-				<td><select required="required" name="supplier"> ';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="supplier">', _('Supplier'), ':</label>
+				<select required="required" name="supplier"> ';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['supplierid']) and ($MyRow['supplierid'] == $_POST['supplierid'])) {
-			echo '<option selected="selected" value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'] . ' - ' . $MyRow['suppname'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['supplierid'], '">', $MyRow['supplierid'], ' - ', $MyRow['suppname'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'] . ' - ' . $MyRow['suppname'] . '</option>';
+			echo '<option value="', $MyRow['supplierid'], '">', $MyRow['supplierid'], ' - ', $MyRow['suppname'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>' . _('Category') . ':</td>
-			<td><select required="required" name="category"> ';
-	echo '<option value="all">' . _('ALL') . '</option>';
+	echo '<field>
+			<label for="category">', _('Category'), ':</label>
+			<select required="required" name="category"> ';
+	echo '<option value="all">', _('ALL'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['categoryid']) and ($MyRow['categoryid'] == $_POST['categoryid'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] - $MyRow['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categoryid'] - $MyRow['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categoryid'], ' - ', $MyRow['categorydescription'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Price List') . ':</td>
-			<td><select required="required" name="price">
-				<option value="all">' . _('All Prices') . '</option>
-				<option value="current">' . _('Only Current Price') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo '<field>
+			<label for="price">', _('Price List'), ':</label>
+			<select required="required" name="price">
+				<option value="all">', _('All Prices'), '</option>
+				<option value="current">', _('Only Current Price'), '</option>
+			</select>
+		</field>';
 
-	echo '</table>
-			<br/>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" value="' . _('View On Screen') . '" />
-			</div>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+			<input type="submit" name="View" value="', _('View On Screen'), '" />
+		</div>';
 
 	echo '</form>';
 	include ('includes/footer.php');

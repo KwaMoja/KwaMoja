@@ -70,10 +70,16 @@ border:1px solid red;
 margin:0 auto 10px;
 padding:10px;
 }
+table tr.total_row {
+background:#F3DAA2;
+color:#1A1A1A;
+font-weight:bold;
+}
 table .number {
 text-align:right;
 }
 table th .PrintIcon {
+width:32px;
 float:right;
 cursor:pointer;
 }

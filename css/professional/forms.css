@@ -11,8 +11,10 @@ border:solid 1px;
 margin:auto;
 padding-top:7px;
 margin-bottom:4px;
+margin-right:4px;
 border-radius:7px;
 text-align:left;
+vertical-align:top;
 }
 form fieldset legend {
 background-color:#EEEEEE;
@@ -80,6 +82,14 @@ background-position:4px center;
 background-size:14px 14px;
 padding-left:24px;
 }
+form fieldset field input.date {
+display:inline;
+background-image:url(images/date.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:14px 14px;
+padding-left:24px;
+}
 form input[type="submit"]{
 background:#EEEEEE;
 padding-top: 5px;
@@ -102,4 +112,7 @@ border: 1px solid #8DCDEB;
 color:#1A1A1A;
 border-radius: 15px;
 cursor: pointer;
+}
+form .number {
+text-align:right;
 }

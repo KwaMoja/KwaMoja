@@ -18,11 +18,12 @@ echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 echo '<p class="page_title_text noPrint" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Customer Where Allocated'), '" alt="', _('Customer Where Allocated'), '" />', $Title, '
 	</p>';
-echo '<table class="selection noPrint" summary="', _('Select criteria for the where used inquiry'), '">
-		<tr>
-			<td>', _('Type'), ':</td>
-			<td>
-				<select name="TransType"> ';
+
+echo '<fieldset>
+		<legend>', _('Select criteria for the where used inquiry'), '</legend>
+		<field>
+			<label for="TransType">', _('Type'), ':</label>
+			<select name="TransType"> ';
 
 if (!isset($_POST['TransType'])) {
 	$_POST['TransType'] = '10';
@@ -43,22 +44,23 @@ if ($_POST['TransType'] == 10) {
 }
 
 echo '</select>
-		</td>';
+	</field>';
 
 if (!isset($_POST['TransNo'])) {
 	$_POST['TransNo'] = '';
 }
-echo '<td>', _('Transaction Number'), ':</td>
-		<td><input class="number" type="text" name="TransNo" required="required" maxlength="10" size="10" value="', $_POST['TransNo'], '" /></td>
-	</tr>
-</table>';
+echo '<field>
+		<label for="TransNo">', _('Transaction Number'), ':</label>
+		<input class="number" type="text" name="TransNo" required="required" maxlength="10" size="10" value="', $_POST['TransNo'], '" />
+	</field>
+</fieldset>';
+
 echo '<div class="centre noPrint">
 		<input type="submit" name="ShowResults" value="', _('Show How Allocated'), '" />
 	</div>
 </form>';
 
 if (isset($_POST['ShowResults']) and $_POST['TransNo'] == '') {
-	echo '<br />';
 	prnMsg(_('The transaction number to be queried must be entered first'), 'warn');
 }
 
@@ -138,7 +140,6 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 				}
 			} else {
 				$Printer = true;
-				echo '<div id="Report">';
 				echo '<table summary="', _('Allocations made against invoice number'), ' ', $_POST['TransNo'], '">';
 
 				echo '<tr>
@@ -183,17 +184,16 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 					$AllocsTotal+= $MyRow['amt'];
 				}
 				//end of while loop
-				echo '<tr>
+				echo '<tr class="total_row">
 						<td colspan="6" class="number">', _('Total allocated'), '</td>
 						<td class="number">', locale_number_format($AllocsTotal, $CurrDecimalPlaces), '</td>
 					</tr>
-				</table>
-			</div>';
+				</table>';
 			} // end if there are allocations against the transaction
 			
 		} //end of while loop;
 		if ($Rows > 1) {
-			echo '<div class="centre"><b>' . _('Transaction Total') . '</b> ' . locale_number_format($GrandTotal, $CurrDecimalPlaces) . '</div>';
+			echo '<div class="centre">', _('Transaction Total'), locale_number_format($GrandTotal, $CurrDecimalPlaces), '</div>';
 		}
 		if ($_POST['TransType'] == 12) {
 			//retrieve transaction to see if there are any transaction fee,
@@ -214,9 +214,8 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 							' . _('Amount') . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '<br/> ' . _('To local currency') . ' ' . locale_number_format($MyRow['amount'] * $Rate, $CurrDecimalPlaces) . ' ' . _('at rate') . ' ' . $Rate . '</div>';
 					$GrandTotal+= $MyRow['amount'] * $Rate;
 				}
-				echo '<div class="centre">
-					<strong>' . _('Grand Total') . '</strong>' . ' ' . locale_number_format($GrandTotal, $CurrDecimalPlaces) . '
-				</div>';
+				echo '<div class="centre">', _('Grand Total'), ' ', locale_number_format($GrandTotal, $CurrDecimalPlaces), '
+					</div>';
 			}
 		}
 	} else {

@@ -46,7 +46,7 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 		$Title = _('Print Remittance Advices Error');
 		include ('includes/header.php');
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'), 'warn');
-		echo '<br /><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Back') . '</a>';
+		echo '<br /><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Back'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -89,9 +89,9 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 			$Title = _('Remittance Advice Problem Report');
 			include ('includes/header.php');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 			if ($Debug == 1) {
-				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
+				echo '<br />', _('The SQL that failed was'), ' ', $SQL;
 			}
 			include ('includes/footer.php');
 			exit;
@@ -140,12 +140,13 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 	$Title = _('Remittance Advices');
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', $Title, '" alt="" />', ' ', $Title, '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', $Title, '" alt="" />', ' ', $Title, '
+		</p>';
 	/* show form to allow input	*/
 
 	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table>';
 
 	$SQL = "SELECT min(supplierid) AS fromcriteria,
 					max(supplierid) AS tocriteria
@@ -154,14 +155,18 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	echo '<tr>
-			<td>', _('From Supplier Code'), ':</td>
-			<td><input type="text" required="required" maxlength="6" size="7" name="FromCriteria" value="', $MyRow['fromcriteria'], '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>', _('To Supplier Code'), ':</td>
-			<td><input type="text" required="required" maxlength="6" size="7" name="ToCriteria" value="', $MyRow['tocriteria'], '" /></td>
-		</tr>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="FromCriteria">', _('From Supplier Code'), ':</label>
+			<input type="text" required="required" maxlength="6" size="7" name="FromCriteria" value="', $MyRow['fromcriteria'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToCriteria">', _('To Supplier Code'), ':</label>
+			<input type="text" required="required" maxlength="6" size="7" name="ToCriteria" value="', $MyRow['tocriteria'], '" />
+		</field>';
 
 	if (!isset($_POST['PaymentDate'])) {
 		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
@@ -169,11 +174,12 @@ if ((isset($_POST['PrintPDF'])) and isset($_POST['FromCriteria']) and mb_strlen(
 		$DefaultDate = $_POST['PaymentDate'];
 	}
 
-	echo '<tr>
-			<td>', _('Date Of Payment'), ':</td>
-			<td><input type="text" class="date" name="PaymentDate" required="required" maxlength="11" size="12" value="', $DefaultDate, '" /></td>
-		</tr>';
-	echo '</table>';
+	echo '<field>
+			<label for="PaymentDate">', _('Date Of Payment'), ':</label>
+			<input type="text" class="date" name="PaymentDate" required="required" maxlength="11" size="12" value="', $DefaultDate, '" />
+		</field>';
+
+	echo '</fieldset>';
 
 	echo '<div class="centre">
 			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />

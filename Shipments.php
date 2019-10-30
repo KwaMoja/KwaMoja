@@ -11,14 +11,21 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment'] == 'Yes') {
 	unset($_SESSION['Shipment']);
 }
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 if (!isset($_SESSION['SupplierID']) and !isset($_SESSION['Shipment']) and !isset($_GET['SelectedShipment'])) {
 	prnMsg(_('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
 	echo '<table>
-				<tr><td class="menu_group_item">
-				<li><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
-				</td></tr></table></div>';
+			<tr>
+				<td class="menu_group_item">
+					<li>
+						<a href="', $RootPath, '/SelectSupplier.php">', _('Select the Supplier'), '</a>
+					</li>
+				</td>
+			</tr>
+		</table>';
 	include ('includes/footer.php');
 	exit;
 }
@@ -76,19 +83,19 @@ if (isset($_GET['SelectedShipment'])) {
 		/*now populate the shipment details records */
 
 		$LineItemsSQL = "SELECT purchorderdetails.podetailitem,
-					  				purchorders.orderno,
-									purchorderdetails.itemcode,
-									purchorderdetails.itemdescription,
-									purchorderdetails.deliverydate,
-									purchorderdetails.glcode,
-									purchorderdetails.qtyinvoiced,
-									purchorderdetails.unitprice,
-									stockmaster.units,
-									purchorderdetails.quantityord,
-									purchorderdetails.quantityrecd,
-									purchorderdetails.stdcostunit,
-									stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost as stdcost,
-									purchorders.intostocklocation
+								purchorders.orderno,
+								purchorderdetails.itemcode,
+								purchorderdetails.itemdescription,
+								purchorderdetails.deliverydate,
+								purchorderdetails.glcode,
+								purchorderdetails.qtyinvoiced,
+								purchorderdetails.unitprice,
+								stockmaster.units,
+								purchorderdetails.quantityord,
+								purchorderdetails.quantityrecd,
+								purchorderdetails.stdcostunit,
+								stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost as stdcost,
+								purchorders.intostocklocation
 							FROM purchorderdetails
 							INNER JOIN stockmaster
 								ON purchorderdetails.itemcode=stockmaster.stockid
@@ -234,7 +241,6 @@ if (isset($_POST['Update']) or (isset($_GET['Add']) and $_SESSION['Shipment']->C
 			}
 		}
 		prnMsg(_('Updated the shipment record and delivery dates of order lines as necessary'), 'success');
-		echo '<br />';
 	} //error traps all passed ok
 	
 } //user hit Update
@@ -278,26 +284,31 @@ if (isset($_GET['Delete']) and $_SESSION['Shipment']->Closed == 0) { //shipment 
 	$_SESSION['Shipment']->Remove_From_Shipment($_GET['Delete']);
 }
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<table>
-		<tr>
-			<td>' . _('Shipment') . ': </td>
-			<td>' . $_SESSION['Shipment']->ShiptRef . '</td>
-		</tr>
-		<tr>
-			<td>' . _('From') . ': </td>
-			<td>' . $_SESSION['Shipment']->SupplierName . '</td>';
+echo '<fieldset>
+		<legend>', _('Shipment Details'), '</legend>';
 
-echo '<tr>
-		<td>' . _('Vessel Name /Transport Agent') . ': </td>
-		<td><input type="text" name="Vessel" required="required" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Voyage Ref / Consignment Note') . ': </td>
-		<td><input type="text" name="VoyageRef" required="required" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="ShiptRef">', _('Shipment'), ': </label>
+		<div class="fieldtext">', $_SESSION['Shipment']->ShiptRef, '</div>
+	</field>';
+
+echo '<field>
+		<label for="SupplierName">', _('From'), ':</label>
+		<div class="fieldtext">', $_SESSION['Shipment']->SupplierName, '</div>
+	</field>';
+
+echo '<field>
+		<label for="Vessel">', _('Vessel Name /Transport Agent'), ':</label>
+		<input type="text" name="Vessel" required="required" maxlength="50" size="50" value="', $_SESSION['Shipment']->Vessel, '" />
+	</field>';
+
+echo '<field>
+		<label for="VoyageRef">', _('Voyage Ref / Consignment Note'), ':</label>
+		<input type="text" name="VoyageRef" required="required" maxlength="20" size="20" value="', $_SESSION['Shipment']->VoyageRef, '" />
+	</field>';
 
 if (isset($_SESSION['Shipment']->ShipmentDate)) {
 	$ShipmentDate = ConvertSQLDate($_SESSION['Shipment']->ShipmentDate);
@@ -311,21 +322,15 @@ if (isset($_SESSION['Shipment']->ETA)) {
 	$ETA = DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', 1);
 }
 
-echo '<tr>
-		<td>' . _('Shipment Date') . ': </td>
-		<td>
-			<input type="text" name="ShipmentDate" class="date" required="required" maxlength="10" size="10" value="' . $ShipmentDate . '" />
-		</td>
-	</tr>
-	<tr>
-		<td>' . _('Expected Arrival Date (ETA)') . ': </td>
-		<td>
-			<input type="text" name="ETA" class="date" required="required" maxlength="10" size="10" value="' . $ETA . '" />
-		</td>
-	</tr>';
+echo '<field>
+		<label for="ShipmentDate">', _('Shipment Date'), ':</label>
+		<input type="text" name="ShipmentDate" class="date" required="required" maxlength="10" size="10" value="', $ShipmentDate, '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Into') . ' ';
+echo '<field>
+		<label for="ETA">', _('Expected Arrival Date (ETA)'), ':</label>
+		<input type="text" name="ETA" class="date" required="required" maxlength="10" size="10" value="', $ETA, '" />
+	</field>';
 
 if (count($_SESSION['Shipment']->LineItems) > 0) {
 
@@ -349,10 +354,6 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 
 if (!isset($_SESSION['Shipment']->StockLocation)) {
 
-	echo _('Stock Location') . ': </td>
-			<td>
-				<select required="required" name="StockLocation">';
-
 	if ($_SESSION['RestrictLocations'] == 0) {
 		$SQL = "SELECT locationname,
 						loccode
@@ -365,56 +366,60 @@ if (!isset($_SESSION['Shipment']->StockLocation)) {
 						ON locations.loccode=www_users.defaultlocation
 					WHERE www_users.userid='" . $_SESSION['UserID'] . "'";
 	}
-
 	$ResultStkLocs = DB_query($SQL);
 
+	echo '<field>
+			<label for="StockLocation">', _('Into Stock Location'), ': </label>
+			<select required="required" name="StockLocation">';
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 
 		if (isset($_POST['StockLocation'])) {
 			if ($MyRow['loccode'] == $_POST['StockLocation']) {
-				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 			} else {
-				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 			}
 		} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	}
-
+	echo '</select>';
 	if (!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 	}
-
-	echo '</select>';
 
 } else {
 	$SQL = "SELECT locationname FROM locations WHERE loccode='" . $_SESSION['Shipment']->StockLocation . "'";
 	$ResultStkLocs = DB_query($SQL);
 	$MyRow = DB_fetch_array($ResultStkLocs);
 	echo '<input type="hidden" name="StockLocation" value="' . $_SESSION['Shipment']->StockLocation . '" />';
-	echo $MyRow['locationname'];
+	echo '<field>
+			<label for="StockLocation">', _('Into Stock Location'), ': </label>
+			<div class="fieldtext">', $MyRow['locationname'], '</div>';
 }
 
-echo '</td></tr></table>';
+echo '</field>
+	</fieldset>';
 
 if (count($_SESSION['Shipment']->LineItems) > 0) {
 	/* Always display all shipment lines */
 
 	echo '<table>
 			<tr>
-				<th colspan="9"><h3>' . _('Order Lines On This Shipment') . '</h3></th>
+				<th colspan="9"><h3>', _('Order Lines On This Shipment'), '</h3></th>
 			</tr>
 			<tr>
-				<th>' . _('Order') . '</th>
-				<th>' . _('Item') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-				<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
-				<th>' . $_SESSION['Shipment']->CurrCode . ' ' . _('Price') . '</th>
-				<th>' . _('Current') . '<br />' . _('Std Cost') . '</th>
+				<th>', _('Order'), '</th>
+				<th>', _('Item'), '</th>
+				<th>', _('Quantity'), '<br />', _('Ordered'), '</th>
+				<th>', _('Units'), '</th>
+				<th>', _('Quantity'), '<br />', _('Received'), '</th>
+				<th>', _('Quantity'), '<br />', _('Invoiced'), '</th>
+				<th>', $_SESSION['Shipment']->CurrCode, ' ', _('Price'), '</th>
+				<th>', _('Current'), '<br />', _('Std Cost'), '</th>
+				<th></th>
 			</tr>';
 
 	/*show the line items on the shipment with the quantity being received for modification */
@@ -422,20 +427,20 @@ if (count($_SESSION['Shipment']->LineItems) > 0) {
 	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
 
 		echo '<tr class="striped_row">
-				<td>' . $LnItm->OrderNo . '</td>
-				<td>' . $LnItm->StockID . ' - ' . stripslashes($LnItm->ItemDescription) . '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd, $LnItm->DecimalPlaces) . '</td>
-				<td>' . $LnItm->UOM . '</td>
-				<td class="number">' . locale_number_format($LnItm->QuantityRecd, $LnItm->DecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($LnItm->QtyInvoiced, $LnItm->DecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($LnItm->StdCostUnit, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '"  onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this item?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				<td>', $LnItm->OrderNo, '</td>
+				<td>', $LnItm->StockID, ' - ', stripslashes($LnItm->ItemDescription), '</td><td class="number">', locale_number_format($LnItm->QuantityOrd, $LnItm->DecimalPlaces), '</td>
+				<td>', $LnItm->UOM, '</td>
+				<td class="number">', locale_number_format($LnItm->QuantityRecd, $LnItm->DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($LnItm->QtyInvoiced, $LnItm->DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces), '</td>
+				<td class="number">', locale_number_format($LnItm->StdCostUnit, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Delete=', urlencode($LnItm->PODetailItem), '"  onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this item?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 			</tr>';
 	} //for each line on the shipment
 	echo '</table>';
 } //there are lines on the shipment
 echo '<div class="centre">
-		<input type="submit" name="Update" value="' . _('Update Shipment Details') . '" />
+		<input type="submit" name="Update" value="', _('Update Shipment Details'), '" />
 	</div>';
 
 if (!isset($_POST['StockLocation'])) {
@@ -467,31 +472,32 @@ $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
 
-	echo '<table cellpadding="2">';
-	echo '<tr>
-			<th colspan="7"><h3>' . _('Possible Order Lines To Add To This Shipment') . '</h3></th>
-		</tr>
-		<tr>
-			<th>' . _('Order') . '</th>
-			<th>' . _('Item') . '</th>
-			<th>' . _('Quantity') . '<br />' . _('Ordered') . '</th>
-			<th>' . _('Units') . '</th>
-			<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-			<th>' . _('Delivery') . '<br />' . _('Date') . '</th>
-		</tr>';
+	echo '<table cellpadding="2">
+			<tr>
+				<th colspan="7"><h3>', _('Possible Order Lines To Add To This Shipment'), '</h3></th>
+			</tr>
+			<tr>
+				<th>', _('Order'), '</th>
+				<th>', _('Item'), '</th>
+				<th>', _('Quantity'), '<br />', _('Ordered'), '</th>
+				<th>', _('Units'), '</th>
+				<th>', _('Quantity'), '<br />', _('Received'), '</th>
+				<th>', _('Delivery'), '<br />', _('Date'), '</th>
+				<th></th>
+			</tr>';
 
 	/*show the PO items that could be added to the shipment */
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['orderno'] . '</td>
-				<td>' . $MyRow['itemcode'] . ' - ' . stripslashes($MyRow['itemdescription']) . '</td>
-				<td class="number">' . locale_number_format($MyRow['quantityord'], $MyRow['decimalplaces']) . '</td>
-				<td>' . $MyRow['units'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['quantityrecd'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?' . 'Add=' . $MyRow['podetailitem'] . '">' . _('Add') . '</a></td>
+				<td>', $MyRow['orderno'], '</td>
+				<td>', $MyRow['itemcode'], ' - ', stripslashes($MyRow['itemdescription']), '</td>
+				<td class="number">', locale_number_format($MyRow['quantityord'], $MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+				<td class="number">', locale_number_format($MyRow['quantityrecd'], $MyRow['decimalplaces']), '</td>
+				<td class="number">', ConvertSQLDate($MyRow['deliverydate']), '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?', 'Add=', $MyRow['podetailitem'], '">', _('Add'), '</a></td>
 			</tr>';
 
 	}

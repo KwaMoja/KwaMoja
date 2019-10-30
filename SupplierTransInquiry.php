@@ -4,16 +4,11 @@ $Title = _('Supplier Transactions Inquiry');
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<table>
-		<tr>
-			<td>' . _('Type') . ':</td>
-			<td><select name="TransType">';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 $SQL = "SELECT typeid,
 				typename
@@ -22,20 +17,25 @@ $SQL = "SELECT typeid,
 		AND typeid <= 23";
 
 $ResultTypes = DB_query($SQL);
-
-echo '<option value="All">' . _('All') . '</option>';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="TransType">', _('Type'), ':</label>
+			<select name="TransType">
+				<option value="All">', _('All'), '</option>';
 while ($MyRow = DB_fetch_array($ResultTypes)) {
 	if (isset($_POST['TransType'])) {
 		if ($MyRow['typeid'] == $_POST['TransType']) {
-			echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+			echo '<option value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 		}
 	} else {
-		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		echo '<option value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m'), 1, Date('Y')));
@@ -46,18 +46,27 @@ if (!isset($_POST['ToDate'])) {
 if (!isset($_POST['SupplierNo'])) {
 	$_POST['SupplierNo'] = '';
 }
-echo '<td>' . _('From') . ':</td>
-		<td><input type="text" class="date" name="FromDate" required="required" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		<td>' . _('To') . ':</td>
-		<td><input type="text" class="date" name="ToDate" required="required" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		<td>' . _('Supplier No') . ':</td>
-		<td><input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" /></td>
-	</tr>
-	</table>
-	<div class="centre">
-		<input type="submit" name="ShowResults" value="' . _('Show transactions') . '" />
+echo '<field>
+		<label for="FromDate">', _('From'), ':</label>
+		<input type="text" class="date" name="FromDate" required="required" maxlength="10" size="11" value="', $_POST['FromDate'], '" />
+	</field>';
+
+echo '<field>
+		<label for="ToDate">', _('To'), ':</label>
+		<input type="text" class="date" name="ToDate" required="required" maxlength="10" size="11" value="', $_POST['ToDate'], '" />
+	</field>';
+
+echo '<field>
+		<label for="SupplierNo">', _('Supplier No'), ':</label>
+		<input type="text" name="SupplierNo" size="11" maxlength="10" value="', $_POST['SupplierNo'], '" />
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="ShowResults" value="', _('Show transactions'), '" />
 	</div>
-	</form>';
+</form>';
 
 if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
@@ -99,32 +108,32 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 
 	echo '<table>
 			<tr>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Number') . '</th>
-				<th>' . _('Supp Ref') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Supplier') . '</th>
-				<th>' . _('Comments') . '</th>
-				<th>' . _('Due Date') . '</th>
-				<th>' . _('Ex Rate') . '</th>
-				<th>' . _('Amount') . '</th>
-				<th>' . _('Currency') . '</th>
+				<th>', _('Type'), '</th>
+				<th>', _('Number'), '</th>
+				<th>', _('Supp Ref'), '</th>
+				<th>', _('Date'), '</th>
+				<th>', _('Supplier'), '</th>
+				<th>', _('Comments'), '</th>
+				<th>', _('Due Date'), '</th>
+				<th>', _('Ex Rate'), '</th>
+				<th>', _('Amount'), '</th>
+				<th>', _('Currency'), '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($TransResult)) {
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', $MyRow['typename'], $MyRow['transno'], $MyRow['suppreference'], ConvertSQLDate($MyRow['trandate']), $MyRow['supplierno'] . ' - ' . $MyRow['suppname'], $MyRow['transtext'], ConvertSQLDate($MyRow['duedate']), locale_number_format($MyRow['rate'], 'Variable'), locale_number_format($MyRow['totalamt'], $MyRow['currdecimalplaces']), $MyRow['currcode']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['typename'], '</td>
+				<td>', $MyRow['transno'], '</td>
+				<td>', $MyRow['suppreference'], '</td>
+				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+				<td>', $MyRow['supplierno'] . ' - ' . $MyRow['suppname'], '</td>
+				<td>', $MyRow['transtext'], '</td>
+				<td>', ConvertSQLDate($MyRow['duedate']), '</td>
+				<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
+				<td class="number">', locale_number_format($MyRow['totalamt'], $MyRow['currdecimalplaces']), '</td>
+				<td>', $MyRow['currcode'], '</td>
+			</tr>';
 
 		$GLTransResult = DB_query("SELECT account,
 										accountname,
@@ -139,36 +148,38 @@ if (isset($_POST['ShowResults']) and $_POST['TransType'] != '') {
 
 		if (DB_num_rows($GLTransResult) == 0) {
 			echo '<tr>
-					<td colspan="10">' . _('There are no GL transactions created for the above AP transaction') . '</td>
+					<td colspan="10">', _('There are no GL transactions created for the above AP transaction'), '</td>
 				</tr>';
 		} else {
 			echo '<tr>
 					<td colspan="2"></td>
 					<td colspan="8">
-						<table width="100%">';
+						<table>';
 			echo '<tr>
-					<th colspan="2"><b>' . _('GL Account') . '</b></th>
-					<th><b>' . _('Local Amount') . '</b></th>
-					<th><b>' . _('Narrative') . '</b></th>
+					<th colspan="2"><b>', _('GL Account'), '</b></th>
+					<th><b>', _('Local Amount'), '</b></th>
+					<th><b>', _('Narrative'), '</b></th>
 				</tr>';
 			$CheckGLTransBalance = 0;
 			while ($GLTransRow = DB_fetch_array($GLTransResult)) {
 
-				printf('<tr>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>', $GLTransRow['account'], $GLTransRow['accountname'], locale_number_format($GLTransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']), $GLTransRow['narrative']);
+				echo '<tr class="striped_row">
+						<td>', $GLTransRow['account'], '</td>
+						<td>', $GLTransRow['accountname'], '</td>
+						<td class="number">', locale_number_format($GLTransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td>', $GLTransRow['narrative'], '</td>
+					</tr>';
 
 				$CheckGLTransBalance+= $GLTransRow['amount'];
 			}
 			if (round($CheckGLTransBalance, 5) != 0) {
-				echo '<tr>
-						<td colspan="4" style="background-color:red"><b>' . _('The GL transactions for this AP transaction are out of balance by') . ' ' . $CheckGLTransBalance . '</b></td>
+				echo '<tr class="error_row">
+						<td colspan="4""><b>', _('The GL transactions for this AP transaction are out of balance by'), ' ', $CheckGLTransBalance, '</b></td>
 					</tr>';
 			}
-			echo '</table></td></tr>';
+			echo '</table>
+				</td>
+			</tr>';
 		}
 
 		//end of page full new headings if

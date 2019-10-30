@@ -19,8 +19,8 @@ if (empty($_GET['identifier'])) {
 	$Identifier = $_GET['identifier'];
 }
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier) . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', basename(__FILE__), '?identifier=', urlencode($Identifier), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial'] == 'yes') {
 	unset($_SESSION['SPL' . $Identifier]);
@@ -28,15 +28,14 @@ if (isset($_GET['NewSpecial']) and $_GET['NewSpecial'] == 'yes') {
 
 if (!isset($_SESSION['SupplierID'])) {
 	prnMsg(_('To set up a special') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'info');
-	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
+	echo '<a href="', $RootPath, '/SelectSupplier.php">', _('Select the supplier now'), '</a>';
 	include ('includes/footer.php');
 	exit;
 }
 
 if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID'] == '') {
 	prnMsg(_('To set up a special') . ', ' . _('the customer must first be selected from the Select Customer page'), 'info');
-	echo '<br />
-		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
+	echo '<a href="', $RootPath, '/SelectCustomer.php">', _('Select the customer now'), '</a>';
 	include ('includes/footer.php');
 	exit;
 }
@@ -115,15 +114,19 @@ if (isset($_POST['SelectBranch'])) {
 	$_SESSION['SPL' . $Identifier]->BranchName = $MyRow['brname'];
 	$_SESSION['SPL' . $Identifier]->SalesPerson = $MyRow['salesman'];
 }
-echo '<div class="centre">';
+
 if (!isset($_SESSION['SPL' . $Identifier]->BranchCode)) {
-	echo '<br />
-		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL' . $Identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL' . $Identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL' . $Identifier]->CustomerName . ' (' . $_SESSION['SPL' . $Identifier]->CustCurrCode . ')', ENT_QUOTES, 'UTF-8', false);
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Shop Configuration'), '" alt="" />
+			', _('Purchase from'), ' ', $_SESSION['SPL' . $Identifier]->SupplierName, ' ', _('in'), ' ', $_SESSION['SPL' . $Identifier]->SuppCurrCode, ' ', _('for'), ' ', $_SESSION['SPL' . $Identifier]->CustomerName, ' (', $_SESSION['SPL' . $Identifier]->CustCurrCode, ')
+		</p>';
 } else {
-	echo '<br />
-		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL' . $Identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL' . $Identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL' . $Identifier]->CustomerName . ' (' . $_SESSION['SPL' . $Identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL' . $Identifier]->BranchName . ' ' . _('branch'), ENT_QUOTES, 'UTF-8', false);
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Shop Configuration'), '" alt="" />
+			', _('Purchase from'), ' ', $_SESSION['SPL' . $Identifier]->SupplierName, ' ', _('in'), ' ', $_SESSION['SPL' . $Identifier]->SuppCurrCode, ' ', _('for'), ' ', $_SESSION['SPL' . $Identifier]->CustomerName, ' (', $_SESSION['SPL' . $Identifier]->CustCurrCode, ') - ', _('delivered to'), ' ', $_SESSION['SPL' . $Identifier]->BranchName, ' ', _('branch'), '
+		</p>';
 }
-echo '</h2></div>';
+
 /*if the branch details and delivery details have not been entered then select them from the list */
 if (!isset($_SESSION['SPL' . $Identifier]->BranchCode)) {
 
@@ -135,25 +138,22 @@ if (!isset($_SESSION['SPL' . $Identifier]->BranchCode)) {
 
 	if (DB_num_rows($BranchResult) > 0) {
 
-		echo '<div class="centre">';
-		echo '<br />
-				<br />' . _('Select the customer branch to deliver the special to from the list below');
+		echo '<div class="centre">
+				', _('Select the customer branch to deliver the special to from the list below'), '</div>';
 
-		echo '</div>
-			<br />
-			<table>
+		echo '<table>
 				<tr>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Branch Name') . '</th>
+					<th>', _('Code'), '</th>
+					<th>', _('Branch Name'), '</th>
 				</tr>';
 
 		$k = 0; //row counter to determine background colour
 		while ($MyRow = DB_fetch_array($BranchResult)) {
 
-			printf('<tr class="striped_row">
-						<td><input type="submit" name="SelectBranch" value="%s" /></td>
-						<td>%s</td>
-					</tr>', $MyRow['branchcode'], htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false));
+			echo '<tr class="striped_row">
+						<td><input type="submit" name="SelectBranch" value="', $MyRow['branchcode'], '" /></td>
+						<td>', htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false), '</td>
+					</tr>';
 
 		}
 		//end of while loop
@@ -459,8 +459,8 @@ if (isset($_POST['Commit'])) {
 		}
 		/* end of the loop round the detail line items on the order */
 
-		echo '<br /><br />' . _('Purchase Order') . ' ' . $_SESSION['SPL' . $Identifier]->PurchOrderNo . ' ' . _('on') . ' ' . $_SESSION['SPL' . $Identifier]->SupplierName . ' ' . _('has been created');
-		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . urlencode($_SESSION['SPL' . $Identifier]->PurchOrderNo) . '">' . _('Print Purchase Order') . '</a>';
+		echo _('Purchase Order'), ' ', $_SESSION['SPL' . $Identifier]->PurchOrderNo, ' ', _('on'), ' ', $_SESSION['SPL' . $Identifier]->SupplierName, ' ', _('has been created'), '<br />';
+		echo '<a href="', $RootPath, '/PO_PDFPurchOrder.php?OrderNo=', urlencode($_SESSION['SPL' . $Identifier]->PurchOrderNo), '">', _('Print Purchase Order'), '</a><br />';
 
 		/*Now insert the sales order too */
 
@@ -560,15 +560,15 @@ if (isset($_POST['Commit'])) {
 		if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 			/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
-			echo '<a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($SalesOrderNo) . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</a>';
-			echo '<a href="' . $RootPath . '/PrintCustOrder_generic.php?TransNo=' . urlencode($SalesOrderNo) . '">' . _('Print packing slip') . ' (' . _('Laser') . ')</a>';
+			echo '<a href="', $RootPath, '/PrintCustOrder.php?TransNo=', urlencode($SalesOrderNo), '">', _('Print packing slip'), ' (', _('Preprinted stationery'), ')</a><br />';
+			echo '<a href="', $RootPath, '/PrintCustOrder_generic.php?TransNo=', urlencode($SalesOrderNo), '">', _('Print packing slip'), ' (', _('Laser'), ')</a><br />';
 
 		}
 
 		$Result = DB_Txn_Commit();
 		unset($_SESSION['SPL' . $Identifier]);
 		/*Clear the PO data to allow a newy to be input*/
-		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
+		echo '<a href="', $RootPath, '/SpecialOrder.php">', _('Enter A New Special Order'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -578,7 +578,11 @@ if (isset($_POST['Commit'])) {
 
 /*Show the header information for modification */
 
-echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select name="StkLocation">';
+echo '<fieldset>
+		<legend>', _('Special order header'), '</legend>
+		<field>
+			<label for="StkLocation">', _('Receive Purchase Into and Sell From'), ':</label>
+			<select name="StkLocation">';
 
 $SQL = "SELECT locations.loccode,
 				locationname
@@ -596,42 +600,56 @@ if (!isset($_SESSION['SPL' . $Identifier]->StkLocation) or $_SESSION['SPL' . $Id
 
 while ($LocnRow = DB_fetch_array($LocnResult)) {
 	if ($_SESSION['SPL' . $Identifier]->StkLocation == $LocnRow['loccode']) {
-		echo '<option selected="selected" value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
+		echo '<option selected="selected" value="', $LocnRow['loccode'], '">', $LocnRow['locationname'], '</option>';
 	} else {
-		echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
+		echo '<option value="', $LocnRow['loccode'], '">', $LocnRow['locationname'], '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
-echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL' . $Identifier]->Initiator . '" /></td>
-	<td>' . _('Special Ref') . ': <input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL' . $Identifier]->QuotationRef . '" /></td>
-	<td>' . _('Customer Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL' . $Identifier]->CustRef . '" /></td>
-	</tr>
-	<tr>
-		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL' . $Identifier]->Comments . '</textarea></td>
-	</tr>
-</table>
-<hr />';
+echo '<field>
+		<label for="Initiator">', _('Initiated By'), ':</label>
+		<input type="text" name="Initiator" size="11" maxlength="10" value="', $_SESSION['SPL' . $Identifier]->Initiator, '" />
+	</field>';
+
+echo '<field>
+		<label for="QuotationRef">', _('Special Ref'), ':</label>
+		<input type="text" name="QuotationRef" size="16" maxlength="15" value="', $_SESSION['SPL' . $Identifier]->QuotationRef, '" />
+	</field>';
+
+echo '<field>
+		<label for="CustRef">', _('Customer Ref'), ':</label>
+		<input type="text" name="CustRef" size="11" maxlength="10" value="', $_SESSION['SPL' . $Identifier]->CustRef, '" />
+	</field>';
+
+echo '<field>
+		<label for="Comments">', _('Comments'), ':</label>
+		<textarea name="Comments" cols="70" rows="2">', $_SESSION['SPL' . $Identifier]->Comments, '</textarea>
+	</field>
+</fieldset>';
 /* Rule off the header */
 
 /*Now show the order so far */
 
 if (count($_SESSION['SPL' . $Identifier]->LineItems) > 0) {
 
-	echo '<div class="centre"><b>' . _('Special Order Summary') . '</b></div>';
-	echo '<table cellpadding="2" border="1">';
-
-	echo '<tr>
-			<th>' . _('Item Description') . '</th>
-			<th>' . _('Delivery') . '</th>
-			<th>' . _('Quantity') . '</th>
-			<th>' . _('Purchase Cost') . '<br />' . $_SESSION['SPL' . $Identifier]->SuppCurrCode . '</th>
-			<th>' . _('Sell Price') . '<br />' . $_SESSION['SPL' . $Identifier]->CustCurrCode . '</th>
-			<th>' . _('Total Cost') . '<br />' . $_SESSION['SPL' . $Identifier]->SuppCurrCode . '</th>
-			<th>' . _('Total Price') . '<br />' . $_SESSION['SPL' . $Identifier]->CustCurrCode . '</th>
-			<th>' . _('Total Cost') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-			<th>' . _('Total Price') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-		</tr>';
+	echo '<table>
+			<tr>
+				<th colspan="10"><b>', _('Special Order Summary'), '</b></th>
+			</tr>
+			<tr>
+				<th>', _('Item Description'), '</th>
+				<th>', _('Delivery'), '</th>
+				<th>', _('Quantity'), '</th>
+				<th>', _('Purchase Cost'), '<br />', $_SESSION['SPL' . $Identifier]->SuppCurrCode, '</th>
+				<th>', _('Sell Price'), '<br />', $_SESSION['SPL' . $Identifier]->CustCurrCode, '</th>
+				<th>', _('Total Cost'), '<br />', $_SESSION['SPL' . $Identifier]->SuppCurrCode, '</th>
+				<th>', _('Total Price'), '<br />', $_SESSION['SPL' . $Identifier]->CustCurrCode, '</th>
+				<th>', _('Total Cost'), '<br />', $_SESSION['CompanyRecord']['currencydefault'], '</th>
+				<th>', _('Total Price'), '<br />', $_SESSION['CompanyRecord']['currencydefault'], '</th>
+				<th></th>
+			</tr>';
 
 	$_SESSION['SPL' . $Identifier]->total = 0;
 
@@ -648,16 +666,16 @@ if (count($_SESSION['SPL' . $Identifier]->LineItems) > 0) {
 		$DisplayQuantity = locale_number_format($SPLLine->Quantity, 'Variable');
 
 		echo '<tr class="striped_row">
-				<td>' . $SPLLine->ItemDescription . '</td>
-				<td>' . $SPLLine->ReqDelDate . '</td>
-				<td class="number">' . $DisplayQuantity . '</td>
-				<td class="number">' . $DisplayCost . '</td>
-				<td class="number">' . $DisplayPrice . '</td>
-				<td class="number">' . $DisplayLineCostTotal . '</td>
-				<td class="number">' . $DisplayLineTotal . '</td>
-				<td class="number">' . $DisplayLineCostTotalCurr . '</td>
-				<td class="number">' . $DisplayLineTotalCurr . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?identifier=' . $Identifier . '&Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td>
+				<td>', $SPLLine->ItemDescription, '</td>
+				<td>', $SPLLine->ReqDelDate, '</td>
+				<td class="number">', $DisplayQuantity, '</td>
+				<td class="number">', $DisplayCost, '</td>
+				<td class="number">', $DisplayPrice, '</td>
+				<td class="number">', $DisplayLineCostTotal, '</td>
+				<td class="number">', $DisplayLineTotal, '</td>
+				<td class="number">', $DisplayLineCostTotalCurr, '</td>
+				<td class="number">', $DisplayLineTotalCurr, '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '&Delete=', urlencode($SPLLine->LineNo), '">', _('Delete'), '</a></td>
 			</tr>';
 
 		$_SESSION['SPL' . $Identifier]->total+= ($LineTotal / $_SESSION['SPL' . $Identifier]->CustCurrExRate);
@@ -665,30 +683,32 @@ if (count($_SESSION['SPL' . $Identifier]->LineItems) > 0) {
 
 	$DisplayTotal = locale_number_format($_SESSION['SPL' . $Identifier]->total, $_SESSION['SPL' . $Identifier]->CustCurrDecimalPlaces);
 	echo '<tr>
-		<td colspan="8" class="number">' . _('Total excluding tax') . '</td>
-		<td class="number"><b>' . $DisplayTotal . '</b></td>
-	</tr>
+			<td colspan="8" class="number">', _('Total excluding tax'), '</td>
+			<td class="number"><b>', $DisplayTotal, '</b></td>
+		</tr>
 	</table>';
 
 }
 
 /*Set up the form to enter new special items into */
 
-echo '<input type="hidden" name="LineNo" value="' . ($_SESSION['SPL' . $Identifier]->LinesOnOrder + 1) . '" />';
+echo '<input type="hidden" name="LineNo" value="', ($_SESSION['SPL' . $Identifier]->LinesOnOrder + 1), '" />';
 
 if (!isset($_POST['ItemDescription'])) {
 	$_POST['ItemDescription'] = '';
 }
 
-echo '<table>';
-echo '<tr>
-		<td>' . _('Ordered item Description') . ':</td>
-		<td><input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
-	</tr>';
+echo '<fieldset>
+		<legend>', _('Special Order Details'), '</legend>';
 
-echo '<tr>
-		<td>' . _('Category') . ':</td>
-		<td><select required="required" name="StkCat">';
+echo '<field>
+		<label for="ItemDescription">', _('Ordered item Description'), ':</label>
+		<input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" />
+	</field>';
+
+echo '<field>
+		<label for="StkCat">', _('Category'), ':</label>
+		<select required="required" name="StkCat">';
 
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -697,59 +717,54 @@ $Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['StkCat']) and $MyRow['categoryid'] == $_POST['StkCat']) {
-		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 /*default the order quantity to 1 unit */
 $_POST['Qty'] = 1;
 
-echo '<tr>
-		<td>' . _('Order Quantity') . ':</td>
-		<td><input type="text" class="number" size="7" required="required" maxlength="6" name="Qty" value="' . locale_number_format($_POST['Qty'], 'Variable') . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Qty">', _('Order Quantity'), ':</label>
+		<input type="text" class="number" size="7" required="required" maxlength="6" name="Qty" value="', locale_number_format($_POST['Qty'], 'Variable'), '" />
+	</field>';
 
 if (!isset($_POST['Cost'])) {
 	$_POST['Cost'] = 0;
 }
-echo '<tr>
-		<td>' . _('Unit Cost') . ':</td>
-		<td><input type="text" class="number" size="15" required="required" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'], $_SESSION['SPL' . $Identifier]->SuppCurrDecimalPlaces) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Cost">', _('Unit Cost'), ':</label>
+		<input type="text" class="number" size="15" required="required" maxlength="14" name="Cost" value="', locale_number_format($_POST['Cost'], $_SESSION['SPL' . $Identifier]->SuppCurrDecimalPlaces), '" />
+	</field>';
 
 if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
-echo '<tr>
-		<td>' . _('Unit Price') . ':</td>
-		<td><input type="text" class="number" size="15" required="required" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'], $_SESSION['SPL' . $Identifier]->CustCurrDecimalPlaces) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Price">', _('Unit Price'), ':</label>
+		<input type="text" class="number" size="15" required="required" maxlength="14" name="Price" value="', locale_number_format($_POST['Price'], $_SESSION['SPL' . $Identifier]->CustCurrDecimalPlaces), '" />
+	</field>';
 
 /*Default the required delivery date to tomorrow as a starting point */
 $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d') + 1, Date('y')));
+echo '<field>
+		<label for="ReqDelDate">', _('Required Delivery Date'), ':</label>
+		<input type="text" class="date" size="12" maxlength="11" name="ReqDelDate" value="', $_POST['ReqDelDate'], '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Required Delivery Date') . ':</td>
-		<td><input type="text" class="date" size="12" maxlength="11" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
-	</tr>';
-
-echo '</table>';
+echo '</fieldset>';
 /* end of main table */
 
 echo '<div class="centre">
-		<input type="submit" name="EnterLine" value="' . _('Add Item to Order') . '" />
-		<br />
-		<br />
-		<input type="submit" name="Cancel" value="' . _('Start Again') . '" />
-		<br />
-		<br />
-		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
+		<input type="submit" name="EnterLine" value="', _('Add Item to Order'), '" /><br />
+		<input type="submit" name="Cancel" value="', _('Start Again'), '" /><br />
+		<input type="submit" name="Commit" value="', _('Process This Order'), '" />
 	</div>
-	</form>';
+</form>';
 
 include ('includes/footer.php');
 ?>

@@ -28,6 +28,9 @@ float:right;
 padding-left:10px;
 padding-right:30px;
 }
+header #ExitIcon img {
+width:32px;
+}
 header .FontSize {
 font-weight:bold;
 display:inline;

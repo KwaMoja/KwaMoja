@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_GET['Database'])) {
 	$_SESSION['DatabaseName'] = $_GET['Database'];
 	$DatabaseName = $_GET['Database'];
@@ -13,16 +12,16 @@ if (isset($argc)) {
 		$_POST['CompanyNameField'] = $argv[1];
 	}
 }
-include('includes/session.php');
+include ('includes/session.php');
 
 $Title = _('Recurring Orders Process');
 /* Manual links before header.php */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/GetSalesTransGLCodes.php');
-include('includes/htmlMimeMail.php');
+include ('includes/header.php');
+include ('includes/SQL_CommonFunctions.php');
+include ('includes/GetSalesTransGLCodes.php');
+include ('includes/htmlMimeMail.php');
 
 $SQL = "SELECT recurringsalesorders.recurrorderno,
 				recurringsalesorders.debtorno,
@@ -67,7 +66,7 @@ $SQL = "SELECT recurringsalesorders.recurrorderno,
 				ON recurringsalesorders.fromstkloc=locations.loccode
 			INNER JOIN locationusers
 				ON locationusers.loccode=recurringsalesorders.fromstkloc
-				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.userid='" . $_SESSION['UserID'] . "'
 				AND locationusers.canupd=1
 			WHERE (TO_DAYS(CURRENT_DATE) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency)
 				AND DATE_ADD(recurringsalesorders.lastrecurrence, " . INTERVAL('365/recurringsalesorders.frequency', 'DAY') . ") <= recurringsalesorders.stopdate";
@@ -76,7 +75,7 @@ $RecurrOrdersDueResult = DB_query($SQL, _('There was a problem retrieving the re
 
 if (DB_num_rows($RecurrOrdersDueResult) == 0) {
 	prnMsg(_('There are no recurring order templates that are due to have another recurring order created'), 'warn');
-	include('includes/footer.php');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -85,7 +84,8 @@ prnMsg(_('The number of recurring orders to process is') . ' : ' . DB_num_rows($
 while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 	$EmailText = '';
-	echo '<br />' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
+	echo '<div class="centre">
+			', _('Recurring order'), ' ', $RecurrOrderRow['recurrorderno'], ' ', _('for'), ' ', $RecurrOrderRow['debtorno'], ' - ', $RecurrOrderRow['branchcode'], ' ', _('is being processed'), '</div>';
 
 	$Result = DB_Txn_Begin();
 
@@ -95,7 +95,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']), 'd', (365 / $RecurrOrderRow['frequency'])));
 
-	echo '<br />' . _('Date calculated for the next recurrence was') . ': ' . $DelDate;
+	echo '<div class="centre">
+			', _('Date calculated for the next recurrence was'), ': ', $DelDate, '</div>';
 	$OrderNo = GetNextTransNo(30);
 
 	$HeaderSQL = "INSERT INTO salesorders (
@@ -190,7 +191,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 		}
 		/* line items from recurring sales order details */
 	} //end if there are line items on the recurring order
-
 	$SQL = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
 			WHERE recurrorderno='" . $RecurrOrderRow['recurrorderno'] . "'";
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error') . ':';
@@ -202,7 +202,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 	if ($RecurrOrderRow['autoinvoice'] == 1) {
 		/*Only dummy item orders can have autoinvoice =1
-		so no need to worry about assemblies/kitsets/controlled items*/
+		 so no need to worry about assemblies/kitsets/controlled items*/
 
 		/* Now Get the area where the sale is to from the branches table */
 
@@ -254,7 +254,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 			$LineNetAmount = $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * (1 - floatval($RecurrOrderLineRow['discountpercent']));
 
 			/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
-			and the taxprovince of the dispatch location */
+			 and the taxprovince of the dispatch location */
 
 			$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
@@ -288,30 +288,23 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 				if ($MyRow['taxontax'] == 1) {
 					$TaxAuthAmount = ($LineNetAmount + $LineTaxAmount) * $MyRow['taxrate'];
-					$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += ($LineNetAmount + $LineTaxAmount) * $MyRow['taxrate'];
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount']+= ($LineNetAmount + $LineTaxAmount) * $MyRow['taxrate'];
 				} else {
 					$TaxAuthAmount = $LineNetAmount * $MyRow['taxrate'];
-					$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += $LineNetAmount * $MyRow['taxrate'];
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount']+= $LineNetAmount * $MyRow['taxrate'];
 				}
 
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
-				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
-				$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array(
-					'TaxCalculationOrder' => $MyRow['calculationorder'],
-					'TaxAuthID' => $MyRow['taxauthid'],
-					'TaxAuthDescription' => $MyRow['description'],
-					'TaxRate' => $MyRow['taxrate'],
-					'TaxOnTax' => $MyRow['taxontax'],
-					'TaxAuthAmount' => $TaxAuthAmount
-				);
-				$LineTaxAmount += $TaxAuthAmount;
+				 so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
+				$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array('TaxCalculationOrder' => $MyRow['calculationorder'], 'TaxAuthID' => $MyRow['taxauthid'], 'TaxAuthDescription' => $MyRow['description'], 'TaxRate' => $MyRow['taxrate'], 'TaxOnTax' => $MyRow['taxontax'], 'TaxAuthAmount' => $TaxAuthAmount);
+				$LineTaxAmount+= $TaxAuthAmount;
 
 			}
 
 			$LineNetAmount = $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * (1 - floatval($RecurrOrderLineRow['discountpercent']));
 
-			$TotalFXNetInvoice += $LineNetAmount;
-			$TotalFXTax += $LineTaxAmount;
+			$TotalFXNetInvoice+= $LineNetAmount;
+			$TotalFXTax+= $LineTaxAmount;
 
 			/*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
 			$SQL = "UPDATE salesorderdetails
@@ -560,7 +553,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 			/*Now post the tax to the GL at local currency equivalent */
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and $TaxAuthAmount != 0) {
 
-
 				/*Loop through the tax authorities array to post each total to the taxauth glcode */
 				foreach ($TaxTotals as $Tax) {
 					$SQL = "INSERT INTO gltrans (
@@ -692,7 +684,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans', 'id');
 
-
 		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
 							taxamount)
@@ -708,7 +699,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 
 		prnMsg(_('Invoice number') . ' ' . $InvoiceNo . ' ' . _('processed'), 'success');
 
-		$EmailText .= "\n" . _('This recurring order was set to produce the invoice automatically on invoice number') . ' ' . $InvoiceNo;
+		$EmailText.= "\n" . _('This recurring order was set to produce the invoice automatically on invoice number') . ' ' . $InvoiceNo;
 	}
 	/*end if the recurring order is set to auto invoice */
 
@@ -719,13 +710,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 		if ($_SESSION['SmtpSetting'] == 0) {
 			$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 
-			$Result = $Mail->send(array(
-				$RecurrOrderRow['email']
-			));
+			$Result = $Mail->send(array($RecurrOrderRow['email']));
 		} else {
-			$Result = SendmailBySmtp($Mail, array(
-				$RecurrOrderRow['email']
-			));
+			$Result = SendmailBySmtp($Mail, array($RecurrOrderRow['email']));
 
 		}
 		unset($Mail);
@@ -736,5 +723,5 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)) {
 }
 /*end while there are recurring orders due to have a new order created */
 
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>

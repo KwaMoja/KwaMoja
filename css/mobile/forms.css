@@ -8,7 +8,9 @@ display: inline;
 border:0px;
 width:60%;
 margin:auto;
+margin-right:4px;
 text-align:left;
+vertical-align:top;
 }
 form fieldset legend {
 }
@@ -74,6 +76,14 @@ background-position:4px center;
 background-size:14px 14px;
 padding-left:24px;
 }
+form fieldset field input.date {
+display:inline;
+background-image:url(images/date.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:14px 14px;
+padding-left:24px;
+}
 form input[type="submit"]{
 padding-top: 2px;
 padding-bottom: 2px;
@@ -95,4 +105,7 @@ border: 1px solid #8DCDEB;
 color:#8DCDEB;
 border-radius: 15px;
 cursor: pointer;
+}
+form .number {
+text-align:right;
 }

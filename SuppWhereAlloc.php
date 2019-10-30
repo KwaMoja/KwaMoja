@@ -12,8 +12,8 @@ if (isset($_GET['TransNo']) and isset($_GET['TransType'])) {
 	$_POST['ShowResults'] = true;
 }
 
-echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">
-	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 echo '<p class="page_title_text noPrint">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Supplier Where Allocated'), '" alt="" />', $Title, '
@@ -22,10 +22,12 @@ echo '<p class="page_title_text noPrint">
 if (!isset($_POST['TransType'])) {
 	$_POST['TransType'] = '20';
 }
-echo '<table class="selection noPrint">
-		<tr>
-			<td>', _('Type'), ':</td>
-			<td><select name="TransType"> ';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>';
+
+echo '<field>
+		<label for="TransType">', _('Type'), ':</label>
+		<select name="TransType"> ';
 if ($_POST['TransType'] == 20) {
 	echo '<option selected="selected" value="20">', _('Purchase Invoice'), '</option>
 			<option value="22">', _('Payment'), '</option>
@@ -39,23 +41,24 @@ if ($_POST['TransType'] == 20) {
 			<option value="20">', _('Purchase Invoice'), '</option>
 			<option value="22">', _('Payment'), '</option>';
 }
-
 echo '</select>
-		</td>';
+	</field>';
 
 if (!isset($_POST['TransNo'])) {
 	$_POST['TransNo'] = '';
 }
-echo '<td>', _('Transaction Number'), ':</td>
-		<td><input type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="', $_POST['TransNo'], '" /></td>
-	</tr>
-	</table>
-	<div class="centre noPrint">
+echo '<field>
+		<label for="TransNo">', _('Transaction Number'), ':</label>
+		<input type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="', $_POST['TransNo'], '" />
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre noPrint">
 		<input type="submit" name="ShowResults" value="', _('Show How Allocated'), '" />
 	</div>';
 
 if (isset($_POST['ShowResults']) and $_POST['TransNo'] == '') {
-	echo '<br />';
 	prnMsg(_('The transaction number to be queried must be entered first'), 'warn');
 }
 
@@ -116,14 +119,13 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 				prnMsg(_('There are no allocations made against this transaction'), 'info');
 			}
 		} else {
-			echo '<div id="Report">
-				<table>';
+			echo '<table>';
 
 			echo '<tr>
 					<th colspan="7">
 					<div class="centre">
 						<b>', _('Allocations made against'), ' ', $TitleInfo, ' ', _('number'), ' ', $_POST['TransNo'], '<br />', _('Transaction Total'), ': ', locale_number_format($MyRow['totamt'], $CurrDecimalPlaces), ' ', $CurrCode, '</b>
-						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" data-title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
 					</div>
 					</th>
 				</tr>';
@@ -163,12 +165,11 @@ if (isset($_POST['ShowResults']) and $_POST['TransNo'] != '') {
 				$AllocsTotal+= $MyRow['amt'];
 			}
 			//end of while loop
-			echo '<tr>
+			echo '<tr class="total_row">
 					<td colspan="6" class="number">', _('Total allocated'), '</td>
 					<td class="number">', locale_number_format($AllocsTotal, $CurrDecimalPlaces), '</td>
 				</tr>
-			</table>
-		</div>';
+			</table>';
 		} // end if there are allocations against the transaction
 		
 	} else {

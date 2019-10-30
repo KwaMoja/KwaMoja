@@ -66,10 +66,16 @@ table tr.error_row {
 color:red;
 background-color:#FFC0CB;
 }
+table tr.total_row {
+background:#F1F1F1;
+color:#1A1A1A;
+font-weight:bold;
+}
 table .number {
 text-align:right;
 }
 table th .PrintIcon {
 float:right;
 cursor:pointer;
+width:32px;
 }

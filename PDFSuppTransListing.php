@@ -14,35 +14,39 @@ if (!isset($_POST['Date'])) {
 	$Title = _('Supplier Transaction Listing');
 	include ('includes/header.php');
 
-	echo '<div class="centre"><p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Supplier Transaction Listing') . '</p></div>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', $Title, '" alt="" />', ' ', _('Supplier Transaction Listing'), '
+		</p>';
 
 	if ($InputError == 1) {
 		prnMsg($Msg, 'error');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" required="required" maxlength="10" size="10" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<tr>
-			<td>' . _('Transaction type') . '</td>
-			<td>
-				<select required="required" name="TransType">
-					<option value="20">' . _('Invoices') . '</option>
-					<option value="21">' . _('Credit Notes') . '</option>
-					<option value="22">' . _('Payments') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="Date">', _('Enter the date for which the transactions are to be listed'), ':</label>
+				<input type="text" name="Date" required="required" maxlength="10" size="10" class="date" value="', Date($_SESSION['DefaultDateFormat']), '" />
+			</field>';
 
-	echo '</table>
-			<div class="centre">
-				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>';
+	echo '<field>
+			<label for="TransType">', _('Transaction type'), '</label>
+			<select required="required" name="TransType">
+				<option value="20">', _('Invoices'), '</option>
+				<option value="21">', _('Credit Notes'), '</option>
+				<option value="22">', _('Payments'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Go" value="', _('Create PDF'), '" />
+		</div>';
+
 	echo '</form>';
 
 	include ('includes/footer.php');

@@ -35,27 +35,31 @@ if (!isset($_POST['supplierid'])) {
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
-		echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />
-		 ' . ' ' . _('Select Supplier') . '</p>';
-		echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table>
-			<tr>
-				<td>' . _('Select Supplier') . '</td>
-				<td><select name=supplierid>';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Select Supplier'), '" alt="" />', ' ', _('Select Supplier'), '
+			</p>';
+
+		echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<legend>', _('Selection Criteria'), '</legend>';
+
+		echo '<field>
+				<label for="supplierid">', _('Select Supplier'), '</label>
+				<select name=supplierid>';
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname'] . '</option>';
+			echo '<option value="', $MyRow['supplierid'], '">', $MyRow['suppname'], '</option>';
 		}
-		echo '</select></td>
-			</tr>
-			<tr><td colspan="12">
-				<div class="centre">
-					<input type="submit" name="select" value="' . _('Enter Information') . '" />
-				</div>
-				</td>
-			</tr>
-			</table>
-			</form>';
+		echo '</select>
+			</field>';
+
+		echo '</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="select" value="', _('Enter Information'), '" />
+			</div>
+		</form>';
 	}
 }
 
@@ -96,36 +100,35 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 
 	echo '<table>
 			<tr>
-				<th>' . _('Offer ID') . '</th>
-				<th>' . _('Supplier') . '</th>
-				<th>' . _('Stock Item') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Units') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Total') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . _('Offer Expires') . '</th>
-				<th>' . _('Accept') . '</th>
-				<th>' . _('Reject') . '</th>
-				<th>' . _('Defer') . '</th>
+				<th>', _('Offer ID'), '</th>
+				<th>', _('Supplier'), '</th>
+				<th>', _('Stock Item'), '</th>
+				<th>', _('Quantity'), '</th>
+				<th>', _('Units'), '</th>
+				<th>', _('Price'), '</th>
+				<th>', _('Total'), '</th>
+				<th>', _('Currency'), '</th>
+				<th>', _('Offer Expires'), '</th>
+				<th>', _('Accept'), '</th>
+				<th>', _('Reject'), '</th>
+				<th>', _('Defer'), '</th>
 			</tr>';
-	$k = 0;
-	echo 'The result has rows ' . DB_num_rows($Result) . '<br/>';
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['offerid'] . '</td>
-				<td>' . $MyRow['suppname'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
-				<td>' . $MyRow['uom'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($MyRow['price'] * $MyRow['quantity'], $MyRow['currdecimalplaces']) . '</td>
-				<td>' . $MyRow['currcode'] . '</td>
-				<td>' . $MyRow['expirydate'] . '</td>
-				<td><input type="radio" name="action' . $MyRow['offerid'] . '" value="1" /></td>
-				<td><input type="radio" name="action' . $MyRow['offerid'] . '" value="2" /></td>
-				<td><input type="radio" checked name="action' . $MyRow['offerid'] . '" value="3" /></td>
-				<td><input type="hidden" name="supplierid" value="' . $MyRow['supplierid'] . '" /></td>
+				<td>', $MyRow['offerid'], '</td>
+				<td>', $MyRow['suppname'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['uom'], '</td>
+				<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['price'] * $MyRow['quantity'], $MyRow['currdecimalplaces']), '</td>
+				<td>', $MyRow['currcode'], '</td>
+				<td>', $MyRow['expirydate'], '</td>
+				<td><input type="radio" name="action', $MyRow['offerid'], '" value="1" /></td>
+				<td><input type="radio" name="action', $MyRow['offerid'], '" value="2" /></td>
+				<td><input type="radio" checked name="action', $MyRow['offerid'], '" value="3" /></td>
+				<td><input type="hidden" name="supplierid" value="', $MyRow['supplierid'], '" /></td>
 			</tr>';
 	}
 	echo '<tr>

@@ -24,7 +24,7 @@ echo '<html>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('KwaMoja'), ' - ', $Title, '</title>
 			<link rel="icon" href="', $RootPath, '/favicon.ico" />
-			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=6" rel="stylesheet" type="text/css" media="screen" />
+			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=8" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 
@@ -144,13 +144,13 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 			if (!isset($_SESSION['Favourites'][$ScriptName]) or $_SESSION['Favourites'][$ScriptName] == '') {
 				echo '<div id="ActionIcon">
 						<a data-title="', _('Add this script to your list of commonly used'), '">
-							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', '" alt="', _('Add to commonly used'), '" />
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', _('Add to commonly used'), '" />
 						</a>
 					</div>';
 			} else {
 				echo '<div id="ActionIcon">
 						<a data-title="', _('Remove this script from your list of commonly used'), '">
-							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', '" alt="', _('Remove from commonly used'), '" />
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', _('Remove from commonly used'), '" />
 						</a>
 					</div>';
 			}

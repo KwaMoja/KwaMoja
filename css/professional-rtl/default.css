@@ -52,6 +52,7 @@ display:inline;
 }
 .centre {
 margin:0 auto;
+text-align:center;
 }
 .dpTbl {
 border: solid navy 1px;

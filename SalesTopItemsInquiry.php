@@ -251,12 +251,12 @@ if (isset($_POST['ShowSales'])) {
 		echo '<tr class="striped_row">
 				<td colspan="8"><hr /></td>
 			</tr>';
-		echo '<tr class="striped_row">';
+		echo '<tr class="totaal_row">';
 	} else {
 		echo '<tr class="striped_row">
 				<td colspan="8"><hr /></td>
 			</tr>';
-		echo '<tr class="striped_row">';
+		echo '<tr class="total_row">';
 	}
 	echo '<td class="number" colspan="3">', _('GRAND Total'), '</td>
 		<td class="number">', locale_number_format($CumulativeTotalSales, $_SESSION['CompanyRecord']['decimalplaces']), '</td>

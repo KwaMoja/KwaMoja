@@ -9,16 +9,16 @@ include ('includes/header.php');
 if (!(isset($_POST['Search']))) {
 
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Top Sales Order Search'), '" alt="" />', ' ', _('Top Sales Order Search'), '
 		</p>';
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	//to view store location
-	echo '<tr>
-			<td style="width:150px">' . _('Select Location') . '  </td>
-			<td>:</td>
-			<td><select name="Location">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
 	$SQL = "SELECT locationname,
 					locations.loccode
 				FROM locations
@@ -27,30 +27,31 @@ if (!(isset($_POST['Search']))) {
 					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				ORDER BY locations.locationname";
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	echo '<field>
+			<label for="Location">', _('Select Location'), '</label>
+			<select name="Location">
+				<option selected="selected" value="All">', _('All Locations'), '</option>';
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	//to view list of customer
-	echo '<tr>
-			<td style="width:150px">' . _('Select Customer Type') . '</td>
-			<td>:</td>
-			<td><select required="required" name="Customers">';
-
 	$SQL = "SELECT typename,
 					typeid
 				FROM debtortype
 			ORDER BY typename";
 	$Result = DB_query($SQL);
-	echo '<option value="All">' . _('All') . '</option>';
+	echo '<field>
+			<label for="Customers">', _('Select Customer Type'), '</label>
+			<select required="required" name="Customers">
+				<option value="All">', _('All'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		echo '<option value="', $MyRow['typeid'], '">', $MyRow['typename'], '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	// stock category selection
 	$SQL = "SELECT categoryid,
@@ -59,62 +60,56 @@ if (!(isset($_POST['Search']))) {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 
-	echo '<tr>
-			<td style="width:150px">' . _('In Stock Category') . ' </td>
-			<td>:</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">', _('In Stock Category'), ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">', _('All'), '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">', _('All'), '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	//view order by list to display
-	echo '<tr>
-			<td style="width:150px">' . _('Select Order By ') . ' </td>
-			<td>:</td>
-			<td><select required="required" name="Sequence">
-				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
-				<option value="valuesales">' . _('Value of Sales') . '</option>
-				</select></td>
-		</tr>';
+	echo '<field>
+			<label for="Sequence">', _('Select Order By '), ':</label>
+			<select required="required" name="Sequence">
+				<option value="totalinvoiced">', _('Total Pieces'), '</option>
+				<option value="valuesales">', _('Value of Sales'), '</option>
+			</select>
+		</field>';
 	//View number of days
-	echo '<tr>
-			<td>' . _('Number Of Days') . ' </td>
-			<td>:</td>
-			<td><input class="integer" type="text" name="NumberOfDays" size="8" required="required" maxlength="8" value="30" /></td>
-		 </tr>';
+	echo '<field>
+			<label for="NumberOfDays">', _('Number Of Days'), ':</label>
+			<input class="number" type="text" name="NumberOfDays" size="8" required="required" maxlength="8" value="30" />
+		 </field>';
 	//Stock in days less than
-	echo '<tr>
-			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="integer" type="text" name="MaxDaysOfStock" size="8" required="required" maxlength="8" value="999" /></td>
-			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
-		 </tr>';
+	echo '<field>
+			<label for="MaxDaysOfStock">', _('With less than'), ' </label>
+			<input class="number" type="text" name="MaxDaysOfStock" size="8" required="required" maxlength="8" value="999" />
+			', ' ', _('Days of Stock (QOH + QOO) Available'), '
+		 </field>';
 	//view number of NumberOfTopItems items
-	echo '<tr>
-			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="integer" type="text" name="NumberOfTopItems" size="8" required="required" maxlength="8" value="100" /></td>
-		 </tr>
-		 <tr>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-	<div class="centre">
-		<input type="submit" name="Search" value="' . _('Search') . '" />
-	</div>
+	echo '<field>
+			<label for="NumberOfTopItems">', _('Number Of Top Items'), ':</label>
+			<input class="number" type="text" name="NumberOfTopItems" size="8" required="required" maxlength="8" value="100" />
+		 </field>
+	</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Search" value="', _('Search'), '" />
+		</div>
 	</form>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location
@@ -163,28 +158,28 @@ if (!(isset($_POST['Search']))) {
 
 	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text"  align="center"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo '<form action="PDFTopItems.php"  method="GET">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/sales.png" title="', _('Top Sales Order Search'), '" alt="" />', _('Top Sales Items List') . '
+		</p>';
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('#') . '</th>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th class="SortedColumn">' . _('Total Invoiced') . '</th>
-					<th>' . _('Units') . '</th>
-					<th class="SortedColumn">' . _('Value Sales') . '</th>
-					<th>' . _('On Hand') . '</th>
-					<th>' . _('On Order') . '</th>
-					<th>' . _('Stock (Days)') . '</th>
+					<th class="SortedColumn">', _('#'), '</th>
+					<th class="SortedColumn">', _('Code'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th class="SortedColumn">', _('Total Invoiced'), '</th>
+					<th>', _('Units'), '</th>
+					<th class="SortedColumn">', _('Value Sales'), '</th>
+					<th>', _('On Hand'), '</th>
+					<th>', _('On Order'), '</th>
+					<th>', _('Stock (Days)'), '</th>
 				</tr>
 			</thead>';
-	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
-			<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
-			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
-			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
-			<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />';
+	echo '<input type="hidden" value="', $_POST['Location'], '" name="Location" />
+			<input type="hidden" value="', $_POST['Sequence'], '" name="Sequence" />
+			<input type="hidden" value="', filter_number_format($_POST['NumberOfDays']), '" name="NumberOfDays" />
+			<input type="hidden" value="', $_POST['Customers'], '" name="Customers" />
+			<input type="hidden" value="', filter_number_format($_POST['NumberOfTopItems']), '" name="NumberOfTopItems" />';
 
 	$i = 1;
 	echo '<tbody>';
@@ -234,32 +229,26 @@ if (!(isset($_POST['Search']))) {
 				$QOO = locale_number_format($QOO, $MyRow['decimalplaces']);
 			}
 
-			printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-					</tr>', $i, $CodeLink, $MyRow['description'], locale_number_format($MyRow['totalinvoiced'], $MyRow['decimalplaces']), //total invoice here
-			$MyRow['units'], //unit
-			locale_number_format($MyRow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-			$QOH, //on hand
-			$QOO, //on order
-			locale_number_format($DaysOfStock, 0) //days of available stock
-			);
+			echo '<tr class="striped_row">
+					<td class="number">', $i, '</td>
+					<td>', $CodeLink, '</td>
+					<td>', $MyRow['description'], '</td>
+					<td class="number">', locale_number_format($MyRow['totalinvoiced'], $MyRow['decimalplaces']), '</td>
+					<td>', $MyRow['units'], '</td>
+					<td class="number">', locale_number_format($MyRow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', $QOH, '</td>
+					<td class="number">', $QOO, '</td>
+					<td class="number">', locale_number_format($DaysOfStock, 0), '</td>
+				</tr>';
 		}
 		++$i;
 	}
-	echo '</tbody>';
-	echo '</table>';
+	echo '</tbody>
+		</table>';
+
 	echo '<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print To PDF') . '" />
-			</div>
-		</form>';
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria'), '</a>
+		</div>';
 }
 include ('includes/footer.php');
 ?>

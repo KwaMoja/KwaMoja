@@ -45,6 +45,9 @@ margin-top:-10px;
 header #ExitIcon:hover {
 background:#4D4D4D;
 }
+header #ExitIcon img {
+width:32px;
+}
 header .FontSize {
 font-weight:bold;
 display:inline;

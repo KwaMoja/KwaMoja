@@ -781,38 +781,42 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 			} //END WHILE LIST LOOP
 			// Print totals
 			if ($_POST['DateType'] == 'Order') {
-				echo '<tr>
-						<th>', _('Totals'), '</th>
-						<th>', _('Lines - '), $linectr, '</th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th class="number">', locale_number_format($TotalQty, 2), '</th>
-						<th class="number">', locale_number_format($TotalExtCost, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-						<th class="number">', locale_number_format($TotalExtPrice, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-						<th class="number">', locale_number_format($TotalInvQty, 2), '</th>
-						<th></th>
-						<th></th>
-						<th></th>
+				echo '<tr class="total_row">
+						<td>', _('Totals'), '</td>
+						<td>', _('Lines - '), $linectr, '</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="number">', locale_number_format($TotalQty, 2), '</td>
+						<td class="number">', locale_number_format($TotalExtCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($TotalExtPrice, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($TotalInvQty, 2), '</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>';
 			} //$_POST['DateType'] == 'Order'
 			else {
 				// Print totals for Invoiced Date Type - Don't print invoice quantity
-				echo '<tr>
-						<th>', _('Totals'), '</th>
-						<th>', _('Lines - ') . $linectr, '</th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th class="number">', locale_number_format($TotalQty, 2), '</th>
-						<th class="number">', locale_number_format($TotalExtCost, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-						<th class="number">', locale_number_format($TotalExtPrice, $_SESSION['CompanyRecord']['decimalplaces']), '</th>
-						<th></th>
-						<th></th>
-						<th></th>
+				echo '<tr class="total_row">
+						<td>', _('Totals'), '</td>
+						<td>', _('Lines - ') . $linectr, '</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="number">', locale_number_format($TotalQty, 2), '</td>
+						<td class="number">', locale_number_format($TotalExtCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($TotalExtPrice, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>';
 			}
 		} //$_POST['ReportType'] == 'Detail'
@@ -913,7 +917,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 				$TotalInvQty+= $MyRow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
-			echo '<tr>
+			echo '<tr class="total_row">
 					<td>', _('Totals'), '</td>
 					<td>', _('Lines - ') . $linectr, '</td>
 					<td class="number">', locale_number_format($TotalQty, 2), '</td>

@@ -34,7 +34,6 @@ $ShipmentHeaderSQL = "SELECT shipments.supplierid,
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
 $GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 if (DB_num_rows($GetShiptHdrResult) == 0) {
-	echo '<br />';
 	prnMsg(_('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('could not be located in the database'), 'error');
 	include ('includes/footer.php');
 	exit;
@@ -45,18 +44,18 @@ echo '<table>
 		<tr>
 			<th colspan="4"><h3>', _('Shipment Details'), '</h3></th>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td><b>', _('Shipment'), ': </b></td>
 			<td><b>', $_GET['SelectedShipment'], '</b></td>
 			<td><b>', _('From'), ' ', $HeaderData['suppname'], '</b></td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>', _('Vessel'), ': </td>
 			<td>', $HeaderData['vessel'], '</td>
 			<td>', _('Voyage Ref'), ': </td>
 			<td>', $HeaderData['voyageref'], '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>', _('Expected Arrival Date (ETA)'), ': </td>
 			<td>', ConvertSQLDate($HeaderData['eta']), '</td>
 		</tr>
@@ -72,7 +71,6 @@ $SQL = "SELECT SUM(value)
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('general costs cannot be retrieved from the database');
 $GetShiptCostsResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($GetShiptCostsResult) == 0) {
-	echo '<br />';
 	prnMsg(_('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.php');
 	exit;
@@ -92,7 +90,6 @@ $SQL = "SELECT SUM(value)
 $ErrMsg = _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('Item costs cannot be retrieved from the database');
 $GetShiptCostsResult = DB_query($SQL);
 if (DB_error_no() != 0 or DB_num_rows($GetShiptCostsResult) == 0) {
-	echo '<br />';
 	prnMsg(_('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.php');
 	exit;
@@ -495,20 +492,22 @@ if (DB_num_rows($LineItemsResult) > 0) {
 			</tr>';
 	}
 }
-echo '<tr>
+echo '<tr class="total_row">
 		<td colspan="3" class="number"><b>', _('Total Shipment Charges'), '</b></td>
 		<td class="number">', locale_number_format($TotalInvoiceValueOfShipment, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 		<td class="number">', locale_number_format($TotalCostsToApportion, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td colspan="4"></td>"
 	</tr>';
 
-echo '<tr>
-		<td colspan="6" class="number">', _('Total Value of all variances on this shipment'), '</td>
+echo '<tr class="total_row">
+		<td colspan="7" class="number">', _('Total Value of all variances on this shipment'), '</td>
 		<td class="number">', locale_number_format($TotalShiptVariance, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td></td>
 	</tr>';
 
 echo '</table>';
 
-echo '<table width="95%">
+echo '<table>
 		<tr>
 			<td valign="top">'; // put this shipment charges side by side in a table (major table 2 cols)
 $SQL = "SELECT suppliers.suppname,
@@ -568,7 +567,7 @@ while ($MyRow = DB_fetch_array($ChargesResult)) {
 	$TotalItemShipmentChgs+= $MyRow['value'];
 }
 
-echo '<tr>
+echo '<tr class="total_row">
 		<td colspan="5" class="number"><b>', _('Total Charges Against Shipment Items'), ':</b></td>
 		<td class="number">', locale_number_format($TotalItemShipmentChgs, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 	</tr>';
@@ -632,7 +631,7 @@ while ($MyRow = DB_fetch_array($ChargesResult)) {
 
 }
 
-echo '<tr>
+echo '<tr class="total_row">
 		<td class="number" colspan="4"><b>', _('Total General Shipment Charges'), ':</b></td>
 		<td class="number">', locale_number_format($TotalGeneralShipmentChgs, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 	</tr>';
@@ -646,20 +645,26 @@ if (isset($_GET['Close'])) {
 	/* Only an opportunity to confirm user wishes to close */
 
 	// if the page was called with Close=Yes then show options to confirm OK to c
-	echo '<div class="centre">
-			<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedShipment=', $_GET['SelectedShipment'], '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedShipment=', urlencode($_GET['SelectedShipment']), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	if ($_SESSION['WeightedAverageCosting'] == 0) {
 		/* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
-		echo _('Update Standard Costs'), ':';
-		echo '<select required="required" name="UpdateCost">
-				<option selected="selected" value="Yes">', _('Yes'), '</option>
-				<option value="No">', _('No'), '</option>
-			</select>';
+		echo '<fieldset>
+				<legend>', _('Cost Update'), '</legend>
+				<field>
+					<label for="UpdateCost">', _('Update Standard Costs'), ':</label>
+					<select required="required" name="UpdateCost">
+						<option selected="selected" value="Yes">', _('Yes'), '</option>
+						<option value="No">', _('No'), '</option>
+					</select>
+				</field>
+			</fieldset>';
 	}
-	echo '<input type="submit" name="Close" value="', _('Confirm OK to Close'), '" />
-		</form>';
+	echo '<div class="centre">
+			<input type="submit" name="Close" value="', _('Confirm OK to Close'), '" />
+		</div>
+	</form>';
 }
 
 if (isset($_POST['Close'])) {

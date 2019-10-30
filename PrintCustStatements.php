@@ -79,7 +79,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	if (DB_Num_Rows($StatementResults) == 0) {
 		$Title = _('Print Statements') . ' - ' . _('No Customers Found');
 		require ('includes/header.php');
-		echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />', ' ', _('Print Customer Account Statements'), '
+			</p>';
 		prnMsg(_('There were no Customers matching your selection of ') . $_POST['FromCust'] . ' - ' . $_POST['ToCust'] . '.', 'error');
 		include ('includes/footer.php');
 		exit();
@@ -93,7 +95,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	} else {
 		$Title = _('Email Customer Statements');
 		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/email.png" title="' . _('Email') . '" alt="" />' . ' ' . _('Emailing Customer Account Statements') . '</p>';
+
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/email.png" title="', _('Email'), '" alt="" />', ' ', _('Emailing Customer Account Statements'), '
+			</p>';
 
 		echo '<table>
 				<thead>
@@ -510,17 +515,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 		$Title = _('Print Statements') . ' - ' . _('No Statements Found');
 		if ($_POST['EmailOrPrint'] == 'print') {
 			include ('includes/header.php');
-			echo '<br />
-				<br />
-				<br />' . prnMsg(_('There were no statements to print'), 'warn');
+			echo prnMsg(_('There were no statements to print'), 'warn');
 		} else {
-			echo '<br />
-				<br />
-				<br />' . prnMsg(_('There were no statements to email'), 'warn');
+			echo prnMsg(_('There were no statements to email'), 'warn');
 		}
-		echo '<br />
-				<br />
-				<br />';
 		include ('includes/footer.php');
 	}
 
@@ -532,7 +530,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	$ViewTopic = 'ARReports';
 	$BookMark = 'CustomerStatements';
 	include ('includes/header.php');
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Customer Account Statements') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />', ' ', _('Print Customer Account Statements'), '
+		</p>';
 	if (!isset($_POST['FromCust']) or $_POST['FromCust'] == '') {
 
 		/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
@@ -544,29 +544,32 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 
-		echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-		echo '<table>';
-		echo '<tr>
-				<td>', _('Starting Customer statement to print (Customer code)'), '</td>
-				<td><input type="text" maxlength="10" size="8" name="FromCust" value="0" /></td></tr>
-			<tr>
-				<td>', _('Ending Customer statement to print (Customer code)'), '</td>
-				<td><input type="text" maxlength="10" size="8" name="ToCust" value="zzzzzz" /></td>
-			</tr>
-			<tr>
-				<td>', _('Print Or Email to flagged customer contacts'), '</td>
-				<td><select name="EmailOrPrint">
-						<option selected="selected" value="print">', _('Print'), '</option>
-						<option value="email">', _('Email to flagged customer contacts'), '</option>
-					</select>
-				</td>
-			</tr>
-		</table>';
+		echo '<fieldset>
+				<legend>', _('Select criteria for Statements'), '</legend>';
+		echo '<field>
+				<label for="FromCust">', _('Starting Customer statement to print (Customer code)'), '</label>
+				<input type="text" maxlength="10" size="8" name="FromCust" value="0" />
+			</field>
+			<field>
+				<label for="ToCust">', _('Ending Customer statement to print (Customer code)'), '</label>
+				<input type="text" maxlength="10" size="8" name="ToCust" value="zzzzzz" />
+			</field>
+			<field>
+				<label for="EmailOrPrint">', _('Print Or Email to flagged customer contacts'), '</label>
+				<select name="EmailOrPrint">
+					<option selected="selected" value="print">', _('Print'), '</option>
+					<option value="email">', _('Email to flagged customer contacts'), '</option>
+				</select>
+			</field>
+		</fieldset>';
+
 		echo '<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print (or Email) All Statements in the Range Selected') . '" />
+				<input type="submit" name="PrintPDF" value="', _('Print (or Email) All Statements in the Range Selected'), '" />
 			</div>';
+
 		echo '</form>';
 	}
 	include ('includes/footer.php');
