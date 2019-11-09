@@ -34,7 +34,7 @@ if (isset($_POST['StockUOM'])) {
 $NoCustItemData = 0;
 
 echo '<div class="toplink">
-		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+		<a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>
 	</div>';
 
 if (isset($_POST['cust_description'])) {
@@ -119,7 +119,9 @@ if ($Edit == false) {
 
 	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockId . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . ' - ' . $DescriptionRow['description'] . '</p><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, ' ', _('For Stock Code'), ' - ', $StockId, ' - ', $DescriptionRow['description'], '
+		</p>';
 
 	$SQL = "SELECT custitem.debtorno,
 				debtorsmaster.name,
@@ -144,11 +146,11 @@ if ($Edit == false) {
 		echo '<table cellpadding="2">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Customer') . '</th>
-						<th>' . _('Customer Unit') . '</th>
-						<th>' . _('Conversion Factor') . '</th>
-						<th class="SortedColumn">' . _('Customer Item') . '</th>
-						<th class="SortedColumn">' . _('Customer Description') . '</th>
+						<th class="SortedColumn">', _('Customer'), '</th>
+						<th>', _('Customer Unit'), '</th>
+						<th>', _('Conversion Factor'), '</th>
+						<th class="SortedColumn">', _('Customer Item'), '</th>
+						<th class="SortedColumn">', _('Customer Description'), '</th>
 					</tr>
 				</thead>';
 
@@ -157,18 +159,18 @@ if ($Edit == false) {
 		echo '<tbody>';
 		while ($MyRow = DB_fetch_array($custitemResult)) {
 
-			printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td><a href="%s?StockID=%s&amp;DebtorNo=%s&amp;Edit=1">' . _('Edit') . '</a></td>
-						<td><a href="%s?StockID=%s&amp;DebtorNo=%s&amp;Delete=1" onclick=\'return confirm("' . _('Are you sure you wish to delete this customer data?') . '");\'>' . _('Delete') . '</a></td>
-					</tr>', $MyRow['name'], $MyRow['customersUOM'], locale_number_format($MyRow['conversionfactor'], 'Variable'), $MyRow['cust_part'], $MyRow['cust_description'], htmlspecialchars(basename(__FILE__)), $StockId, $MyRow['debtorno'], htmlspecialchars(basename(__FILE__)), $StockId, $MyRow['debtorno']);
+			echo '<tr class="striped_row">
+						<td>', $MyRow['name'], '</td>
+						<td>', $MyRow['customersUOM'], 's</td>
+						<td class="number">', locale_number_format($MyRow['conversionfactor'], 'Variable'), '</td>
+						<td>', $MyRow['cust_part'], '</td>
+						<td>', $MyRow['cust_description'], '</td>
+						<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;Edit=1">', _('Edit'), '</a></td>
+						<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;Delete=1" onclick=\'return confirm("', _('Are you sure you wish to delete this customer data?'), '");\'>', _('Delete'), '</a></td>
+					</tr>';
 		} //end of while loop
-		echo '</tbody>';
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 	} // end of there are rows to show
 	
 }
@@ -198,25 +200,33 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 	}
 } else {
 	if ($NoCustItemData == 0) {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . '</p><br />';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', _('Search For Customer'), '
+			</p>';
 	}
 	if (!isset($_POST['Searchcustomer'])) {
-		echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-				<table cellpadding="3" colspan="4">
-				<tr>
-					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-					<input type="hidden" name="StockID" value="' . $StockId . '" />
-					<td>' . _('Text in the customer') . ' <b>' . _('NAME') . '</b>:</td>
-					<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-					<td><b>' . _('OR') . '</b></td>
-					<td>' . _('Text in customer') . ' <b>' . _('CODE') . '</b>:</td>
-					<td><input type="text" name="cust_no" data-type="no-illegal-chars" size="20" maxlength="50" /></td>
-				</tr>
-				</table>
-				<div class="centre">
-					<input type="submit" name="Searchcustomer" value="' . _('Find Customers Now') . '" />
-				</div>
-			</form>';
+		echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
+				<input type="hidden" name="StockID" value="', $StockId, '" />
+				<legend>', _('Search Criteria'), '</legend>
+				<field>
+					<label for="Keywords">', _('Text in the customer'), ' <b>', _('NAME'), '</b>:</label>
+					<input type="text" name="Keywords" size="20" maxlength="25" />
+				</field>
+				<h1>', _('OR'), '</h1>
+				<field>
+					<label for="cust_no">', _('Text in customer'), ' <b>', _('CODE'), '</b>:</label>
+					<input type="text" name="cust_no" data-type="no-illegal-chars" size="20" maxlength="50" />
+				</field>
+			</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="Searchcustomer" value="', _('Find Customers Now'), '" />
+			</div>
+		</form>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -225,13 +235,14 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 if ($Edit == true) {
 	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockId . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . ' - ' . $DescriptionRow['description'] . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, ' ', _('For Stock Code'), ' - ', $StockId, ' - ', $DescriptionRow['description'], '
+		</p>';
 }
 
 if (isset($_POST['Searchcustomer'])) {
 	if (isset($_POST['Keywords']) and isset($_POST['cust_no'])) {
 		prnMsg(_('Customer Name keywords have been used in preference to the customer Code extract entered') . '.', 'info');
-		echo '<br />';
 	}
 	if ($_POST['Keywords'] == '' and $_POST['cust_no'] == '') {
 		$_POST['Keywords'] = ' ';
@@ -298,14 +309,14 @@ if (isset($debtorsmasterResult) and DB_num_rows($debtorsmasterResult) > 0) {
 	$k = 0;
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($debtorsmasterResult)) {
-		printf('<tr class="striped_row">
-					<td><input type="submit" name="DebtorNo" value="%s" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-				</tr>', $MyRow['DebtorNo'], $MyRow['name'], $MyRow['currcode'], $MyRow['address1'], $MyRow['address2'], $MyRow['address3']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="DebtorNo" value="', $MyRow['DebtorNo'], '" /></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['currcode'], '</td>
+				<td>', $MyRow['address1'], '</td>
+				<td>', $MyRow['address2'], '</td>
+				<td>', $MyRow['address3'], '</td>
+			</tr>';
 
 		echo '<input type="hidden" name="StockID" value="' . $StockId . '" />';
 		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
@@ -352,33 +363,40 @@ if (!isset($debtorsmasterResult)) {
 		$_POST['cust_part'] = $MyRow['cust_part'];
 		$StockUOM = $MyRow['units'];
 	}
-	echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">
-		<table>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($DebtorNo)) {
 		$DebtorNo = '';
 	}
 	if ($Edit == true) {
-		echo '<tr>
-				<td>' . _('Customer Name') . ':</td>
-				<td><input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />' . $DebtorNo . ' - ' . $Name . '</td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Details'), '</legend>
+				<field>
+					<label for="DebtorNo">', _('Customer Name'), ':</label>
+					<input type="hidden" name="DebtorNo" value="', $DebtorNo, '" />
+					<div class="fieldtext">', $DebtorNo, ' - ', $Name, '</div>
+				</field>';
 	} else {
-		echo '<tr>
-				<td>' . _('Customer Name') . ':</td>
-				<input type="hidden" name="DebtorNo" maxlength="10" size="11" value="' . $DebtorNo . '" />';
+		echo '<fieldset>
+				<legend>', _('New Details'), '</legend>
+				<field>
+					<label for="DebtorNo">', _('Customer Name'), ':</label>
+					<input type="hidden" name="DebtorNo" maxlength="10" size="11" value="', $DebtorNo, '" />';
 
 		if ($DebtorNo != '') {
-			echo '<td>' . $Name;
+			echo '<div class="fieldtext">', $Name;
 		}
 		if (!isset($Name) or $Name = '') {
-			echo '(' . _('A search facility is available below if necessary') . ')';
+			echo '(', _('A search facility is available below if necessary'), ')';
 		} else {
-			echo '<td>' . $Name;
+			echo '<div class="fieldtext">' . $Name;
 		}
-		echo '</td></tr>';
+		echo '</div>
+			</field>';
 	}
-	echo '<td><input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
+	echo '<input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -392,59 +410,67 @@ if (!isset($debtorsmasterResult)) {
 	if (!isset($_POST['cust_part'])) {
 		$_POST['cust_part'] = '';
 	}
-	echo '<tr>
-			<td>' . _('Currency') . ':</td>
-			<td><input type="hidden" name="CurrCode" . value="' . $CurrCode . '" />' . $CurrCode . '</td>
-		</tr>
-		<tr>
-			<td>' . _('Our Unit of Measure') . ':</td>';
+	echo '<field>
+			<label for="CurrCode">', _('Currency'), ':</label>
+			<input type="hidden" name="CurrCode" value="', $CurrCode, '" />
+			<div class="fieldtext">', $CurrCode, '</div>
+		</field>';
+
+	echo '<field>
+			<label>', _('Our Unit of Measure'), ':</label>';
 
 	if (isset($DebtorNo)) {
-		echo '<td>' . $StockUOM . '</td></tr>';
+		echo '<div class="fieldtext">', $StockUOM, '</div>
+		</field>';
 	}
-	echo '<tr>
-			<td>' . _('Customer Unit of Measure') . ':</td>
-			<td><input type="text" name="customersUOM" size="20" maxlength="20" value ="' . $_POST['customersUOM'] . '"/></td>
-		</tr>';
+	echo '<field>
+			<label for="customersUOM">', _('Customer Unit of Measure'), ':</label>
+			<input type="text" name="customersUOM" size="20" maxlength="20" value ="', $_POST['customersUOM'], '"/>
+		</field>';
 
 	if (!isset($_POST['ConversionFactor']) or $_POST['ConversionFactor'] == '') {
 		$_POST['ConversionFactor'] = 1;
 	}
 
-	echo '<tr>
-			<td>' . _('Conversion Factor (to our UOM)') . ':</td>
-			<td><input type="text" class="number" name="ConversionFactor" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Customer Stock Code') . ':</td>
-			<td><input type="text" name="cust_part" maxlength="20" size="20" value="' . $_POST['cust_part'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Customer Stock Description') . ':</td>
-			<td><input type="text" name="cust_description" maxlength="30" size="30" value="' . $_POST['cust_description'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="ConversionFactor">', _('Conversion Factor (to our UOM)'), ':</label>
+			<input type="text" class="number" name="ConversionFactor" maxlength="12" size="12" value="', $_POST['ConversionFactor'], '" />
+		</field>';
 
-	echo '</table>
-		<div class="centre">';
+	echo '<field>
+			<label for="cust_part">', _('Customer Stock Code'), ':</label>
+			<input type="text" name="cust_part" maxlength="20" size="20" value="', $_POST['cust_part'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="cust_description">', _('Customer Stock Description'), ':</label>
+			<input type="text" name="cust_description" maxlength="30" size="30" value="', $_POST['cust_description'], '" />
+		</field>';
+
+	echo '</fieldset>';
 
 	if ($Edit == true) {
-		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
-		echo '<input type="hidden" name="Edit" value="1" />';
+		echo '<div class="centre">
+				<input type="submit" name="UpdateRecord" value="', _('Update'), '" />
+				<input type="hidden" name="Edit" value="1" />
+			</div>';
 	} else {
-		echo '<input type="submit" name="AddRecord" value="' . _('Add') . '" />';
+		echo '<div class="centre">
+				<input type="submit" name="AddRecord" value="', _('Add'), '" />
+			</div>';
 	}
-
 	echo '</div>
-		<div class="centre">';
+		';
 
 	if (isset($StockLocation) and isset($StockId) and mb_strlen($StockId) != 0) {
-		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockId . '">' . _('Show Stock Status') . '</a>';
-		echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockId . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
-		echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockId . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
-		echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockId . '">' . _('Search Completed Sales Orders') . '</a>';
+		echo '<div class="centre">
+				<a href="', $RootPath, '/StockStatus.php?StockID=', $StockId, '">', _('Show Stock Status'), '</a><br />
+				<a href="', $RootPath, '/StockMovements.php?StockID=', $StockId, '&StockLocation=', $StockLocation, '">', _('Show Stock Movements'), '</a><br />
+				<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', $StockId, '&StockLocation=', $StockLocation, '">', _('Search Outstanding Sales Orders'), '</a><br />
+				<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', $StockId, '">', _('Search Completed Sales Orders'), '</a><br />
+			</div>';
 	}
-	echo '</div>
-		</form>';
+	echo '</form>';
 }
 
 include ('includes/footer.php');

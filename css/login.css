@@ -1,7 +1,7 @@
 body {
-background:#404552;
-color:#A3B7FF;
-font-family: Futura,Trebuchet MS,Arial,sans-serif; ;
+background: rgb(69,68,134);
+background: linear-gradient(90deg, #26386D 0%, #909EC9 100%);font-family: Futura,Trebuchet MS,Arial,sans-serif;
+color:#E6EAF7;
 font-size:10pt;
 margin:0;
 padding:0;
@@ -9,7 +9,7 @@ text-align:center
 }
 
 #container {
-border:solid #A49999 1px;
+border:solid #0B0B42 1px;
 border-radius:15px;
 margin:90px auto 0;
 opacity:1.0;
@@ -32,14 +32,14 @@ padding-left: 0%;
 }
 
 #login_box {
-background:#404552;
-border:solid #A49999 1px;
+background:#556699;
+border:solid #0B0B42 2px;
 border-radius:15px;
 margin:0 10px 10px 20px;
 }
 
 #login-container {
-width:70%;
+width:50%;
 }
 
 #contact_box {
@@ -66,11 +66,11 @@ select {
 -moz-border-radius:3px;
 -webkit-border-radius:3px;
 background:transparent;
-border-color:gray;
+border-color:#FFFFFF;
 border-radius:3px;
 border-style:solid;
 border-width:1px;
-color:#A3B7FF;
+color:#E6EAF7;
 font-size:100%;
 margin:10px 0 0;
 width:auto
@@ -78,7 +78,7 @@ width:auto
 
 select:hover, select:focus {
 background:transparent;
-border-color:#000;
+border-color:#FFFFFF;
 border-radius:3px;
 border-style:solid;
 border-width:1px;
@@ -89,11 +89,11 @@ box-shadow:0 0 5px #7E7575
 
 input {
 background-color:transparent;
-border-color:gray;
+border-color:#FFFFFF;
 border-radius:3px;
 border-style:solid;
 border-width:1px;
-color:#A3B7FF;
+color:#E6EAF7;
 font-size:100%;
 margin:10px 0 0;
 vertical-align:middle;
@@ -102,7 +102,7 @@ width:50%
 
 input:hover, input:focus {
 background-color:transparent;
-border-color:#000;
+border-color:#FFFFFF;
 border-style:solid;
 border-width:1px;
 font-size:100%;
@@ -110,10 +110,10 @@ box-shadow:0 0 5px #7E7575
 }
 
 button {
-background:#404552;
-border:solid gray 1px;
+background:transparent;
+border:solid #FFFFFF 2px;
 border-radius:7px;
-color:#A3B7FF;
+color:#E6EAF7;
 font-size:100%;
 font-weight:700;
 margin:10px 10px 10px 50px;
@@ -123,7 +123,7 @@ width:30%
 
 button:hover {
 background:transparent;
-color:#82BCF4;
+color:#E6EAF7;
 cursor:pointer;
 box-shadow:0 0 5px #7E7575
 }

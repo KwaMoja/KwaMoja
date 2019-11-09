@@ -1,5 +1,7 @@
 DIV.page_help_text {
 background:#D3D3D3;
+background-size:32px 32px;
+minimum-height:32px;
 border:#a52a2a 1px solid;
 padding-top:12px;
 padding-bottom:12px;

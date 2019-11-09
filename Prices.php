@@ -11,10 +11,12 @@ $ViewTopic = 'Prices';
 include ('includes/SQL_CommonFunctions.php');
 
 echo '<div class="toplink">
-		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+		<a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>
 	</div>';
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" />', ' ', $Title, '
+	</p>';
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;
@@ -45,7 +47,6 @@ if (DB_num_rows($Result) == 0) {
 }
 
 if (!isset($Item)) {
-	echo '<p>';
 	prnMsg(_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'), 'error');
 	include ('includes/footer.php');
 	exit;
@@ -202,24 +203,26 @@ $SQL = "SELECT currencies.currency,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	echo '<table>
 			<thead>
 				<tr>
 					<th colspan="7">
-						<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . _('Pricing for part') . ':
-						<input type="text" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
-						<input type="submit" name="NewPart" value="' . _('Review Prices') . '" />
+						', _('Pricing for part'), ':
+						<input type="text" autofocus="autofocus" name="Item" size="22" value="', $Item, '" maxlength="20" />
+						<input type="submit" name="NewPart" value="', _('Review Prices'), '" />
 					</th>
 			</tr>
 			<tr>
-				<th class="SortedColumn">' . _('Currency') . '</th>
-				<th class="SortedColumn">' . _('Sales Type') . '</th>
-				<th>' . _('Price') . '</th>
-				<th class="SortedColumn">' . _('Start Date') . ' </th>
-				<th>' . _('End Date') . '</th>';
+				<th class="SortedColumn">', _('Currency'), '</th>
+				<th class="SortedColumn">', _('Sales Type'), '</th>
+				<th>', _('Price'), '</th>
+				<th class="SortedColumn">', _('Start Date'), ' </th>
+				<th>', _('End Date'), '</th>';
 	if (in_array(1000, $_SESSION['AllowedPageSecurityTokens'])) { // If is allow to modify prices.
-		echo '<th colspan="2">' . _('Maintenance') . '</th>';
+		echo '<th colspan="2">', _('Maintenance'), '</th>';
 	}
 	echo '</tr>
 		</thead>';
@@ -233,15 +236,15 @@ if (DB_num_rows($Result) > 0) {
 		}
 
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['currency'] . '</td>
-				<td>' . $MyRow['sales_type'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces'] + 2) . '</td>
-				<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
-				<td>' . $EndDateDisplay . '</td>';
+				<td>', $MyRow['currency'], '</td>
+				<td>', $MyRow['sales_type'], '</td>
+				<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces'] + 2), '</td>
+				<td>', ConvertSQLDate($MyRow['startdate']), '</td>
+				<td>', $EndDateDisplay, '</td>';
 		/*Only allow access to modify prices if securiy token 1000 is allowed */
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Item=' . $MyRow['stockid'] . '&amp;TypeAbbrev=' . $MyRow['typeabbrev'] . '&amp;CurrAbrev=' . $MyRow['currabrev'] . '&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate=' . $MyRow['startdate'] . '&amp;EndDate=' . $MyRow['enddate'] . '&amp;Edit=1">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Item=' . $MyRow['stockid'] . '&amp;TypeAbbrev=' . $MyRow['typeabbrev'] . '&amp;CurrAbrev=' . $MyRow['currabrev'] . '&amp;StartDate=' . $MyRow['startdate'] . '&amp;EndDate=' . $MyRow['enddate'] . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>';
+			echo '<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Item=', $MyRow['stockid'], '&amp;TypeAbbrev=', $MyRow['typeabbrev'], '&amp;CurrAbrev=', $MyRow['currabrev'], '&amp;Price=', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '&amp;StartDate=', $MyRow['startdate'], '&amp;EndDate=', $MyRow['enddate'], '&amp;Edit=1">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Item=', $MyRow['stockid'], '&amp;TypeAbbrev=', $MyRow['typeabbrev'], '&amp;CurrAbrev=', $MyRow['currabrev'], '&amp;StartDate=', $MyRow['startdate'], '&amp;EndDate=', $MyRow['enddate'], '&amp;delete=yes" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this price?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>';
 		}
 		echo '</tr>';
 	}
@@ -253,13 +256,13 @@ if (DB_num_rows($Result) > 0) {
 	prnMsg(_('There are no prices set up for this part'), 'warn');
 }
 
-echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 if (isset($_GET['Edit'])) {
-	echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] . '" />';
-	echo '<input type="hidden" name="OldCurrAbrev" value="' . $_GET['CurrAbrev'] . '" />';
-	echo '<input type="hidden" name="OldStartDate" value="' . $_GET['StartDate'] . '" />';
-	echo '<input type="hidden" name="OldEndDate" value="' . $_GET['EndDate'] . '" />';
+	echo '<input type="hidden" name="OldTypeAbbrev" value="', $_GET['TypeAbbrev'], '" />';
+	echo '<input type="hidden" name="OldCurrAbrev" value="', $_GET['CurrAbrev'], '" />';
+	echo '<input type="hidden" name="OldStartDate" value="', $_GET['StartDate'], '" />';
+	echo '<input type="hidden" name="OldEndDate" value="', $_GET['EndDate'], '" />';
 	$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 	$_POST['TypeAbbrev'] = $_GET['TypeAbbrev'];
 	/*the price sent with the get is sql format price so no need to filter */
@@ -277,43 +280,40 @@ $SQL = "SELECT currabrev,
 		FROM currencies";
 $Result = DB_query($SQL);
 
-echo '<table>
-		<tr>
-			<th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th>
-		</tr>';
-echo '<tr>
-		<td>' . _('Currency') . ':</td>
-		<td><select required="required" name="CurrAbrev">';
+echo '<fieldset>
+		<legend>', _('Prices for item'), ' ', $Item, ' - ', $PartDescription, '</legend>';
+
+echo '<field>
+		<label for="CurrAbrev">', _('Currency'), ':</label>
+		<select required="required" name="CurrAbrev">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['currabrev'] == $_POST['CurrAbrev']) {
-		echo '<option selected="selected" value="';
+		echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	}
-	echo $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 } //end while loop
 DB_free_result($Result);
 
 echo '</select>
-			</td>
-		</tr>
-		<tr>
-			<td>' . _('Sales Type Price List') . ':</td>
-			<td><select required="required" name="TypeAbbrev">';
+	</field>';
+
+echo '<field>
+		<label for="TypeAbbrev">', _('Sales Type Price List'), ':</label>
+		<select required="required" name="TypeAbbrev">';
 
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['typeabbrev'] == $_POST['TypeAbbrev']) {
-		echo '<option selected="selected" value="';
+		echo '<option selected="selected" value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	}
-	echo $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
-
 } //end while loop
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 DB_free_result($Result);
 
@@ -323,28 +323,30 @@ if (!isset($_POST['StartDate'])) {
 if (!isset($_POST['EndDate'])) {
 	$_POST['EndDate'] = DateAdd(Date($_SESSION['DefaultDateFormat']), 'y', 1);
 }
-echo '<tr>
-		<td>' . _('Price Effective From Date') . ':</td>
-		<td><input type="text" class="date" name="StartDate" size="10" required="required" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Price Effective To Date') . ':</td>
-		<td><input type="text" class="date" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
-	</tr>';
-echo '<input type="hidden" name="Item" value="' . $Item . '" />';
+echo '<field>
+		<label for="StartDate">', _('Price Effective From Date'), ':</label>
+		<input type="text" class="date" name="StartDate" size="10" required="required" maxlength="10" value="', $_POST['StartDate'], '" />
+	</field>';
+
+echo '<field>
+		<label for="EndDate">', _('Price Effective To Date'), ':</label>
+		<input type="text" class="date" name="EndDate" size="10" maxlength="10" value="', $_POST['EndDate'], '" />
+	</field>';
+
+echo '<input type="hidden" name="Item" value="', $Item, '" />';
 if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
-echo '<tr>
-		<td>' . _('Price') . ':</td>
-		<td>
-			<input type="text" class="number" name="Price" size="12" required="required" maxlength="11" value="' . $_POST['Price'] . '" />
-		</td>
-	</tr>
-</table>
-<div class="centre">
-	<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
-</div>';
+echo '<field>
+		<label for="Price">', _('Price'), ':</label>
+		<input type="text" class="number" name="Price" size="12" required="required" maxlength="11" value="', $_POST['Price'], '" />
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="submit" value="', _('Enter'), '/', _('Amend Price'), '" />
+	</div>';
 
 echo '</form>';
 include ('includes/footer.php');

@@ -7,20 +7,20 @@ border-radius: 7px;
 }
 .ModuleList {
 float:right;
-background:#AAAAEE;
+background:#556699;
 white-space:nowrap;
 text-align:left;
 padding:10px;
 width:11%;
 border:1px solid #8DCDEB;
-border-radius:17px;
+border-radius:4px;
 margin:7px;
 }
 .ModuleList li a,.ModuleList li a:hover {
 background:navy;
 color:#CCDDFF;
 display:block;
-border-radius:10px;
+border-radius:3px;
 text-decoration:none;
 margin-bottom:5px;
 padding:3px;
@@ -47,30 +47,34 @@ padding:0;
 list-style:none;
 }
 .MenuList {
-background:white;
+background:#556699;
 display: inline;
 width:30%;
 border-radius:10px;
 margin-top:5px;
 vertical-align:top;
 margin-right:5px;
+color:#BADFF0;
 }
 .MenuList legend {
-border:1px solid #7F7F7F;
-background:white;
+border:1px solid #ADD8E6;
+background:#556699;
 border-radius:10px;
 padding-right:10px;
+color:#FFFFFF;
 }
 .MenuList legend img {
-padding:7px;
-width:24px;
+padding:2px;
+width:32px;
 vertical-align:middle;
 }
 .MenuItem {
-color:#8DCDEB;
 text-decoration:none;
 text-align:left;
 padding:2px;
+}
+.MenuItem a{
+color:#BADFF0;
 }
 .MenuItem:hover {
 background:transparent;
@@ -81,6 +85,7 @@ color:white;
 background:#ddd;
 border:thin solid #ddd;
 text-align:center;
+color:#556699;
 }
 .page_title_text {
 font-weight:700;
@@ -90,7 +95,7 @@ clear: both;
 }
 .page_title_text img {
 padding-right:7px;
-width:32px;
+width:48px;
 vertical-align:middle;
 }
 .toplink {

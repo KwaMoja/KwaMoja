@@ -21,10 +21,12 @@ if (isset($_GET['Related'])) {
 }
 
 echo '<div class="toplink">
-		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+		<a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>
 	</div>';
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', $Title, '
+	</p>';
 
 $Result = DB_query("SELECT stockmaster.description
 					FROM stockmaster
@@ -37,7 +39,6 @@ if (DB_num_rows($Result) == 0) {
 }
 
 if (!isset($Item)) {
-	echo '<p>';
 	prnMsg(_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'), 'error');
 	include ('includes/footer.php');
 	exit;
@@ -134,19 +135,20 @@ $SQL = "SELECT stockmaster.stockid,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<table>
 			<thead>
 				<tr>
 					<th colspan="3">
-					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />' . _('Related Items To') . ':
-					<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
-					<input type="submit" name="NewPart" value="' . _('List Related Items') . '" /></th>
+					', _('Related Items To'), ':
+					<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="', $Item, '" maxlength="20" />
+					<input type="submit" name="NewPart" value="', _('List Related Items'), '" /></th>
 				</tr>
 				<tr>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th>' . _('Delete') . '</th>
+					<th class="SortedColumn">', _('Code'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th>', _('Delete'), '</th>
 				</tr>
 			</thead>';
 
@@ -154,9 +156,9 @@ if (DB_num_rows($Result) > 0) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['stockid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $MyRow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this relationship?') . '\');">' . _('Delete') . '</a></td>
+				<td>', $MyRow['stockid'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Item=', $Item, '&amp;Related=', $MyRow['stockid'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to delete this relationship?'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 
 	}
@@ -169,31 +171,27 @@ if (DB_num_rows($Result) > 0) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Item=' . $Item . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 if (isset($_GET['Edit'])) {
 	/*the price sent with the get is sql format price so no need to filter */
 	$_POST['Related'] = $_GET['Related'];
 }
 
-echo '<table>';
-
-echo '<tr>
-		<th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th>
-	</tr>';
+echo '<fieldset>
+		<legend>', $Item, ' - ', $PartDescription, '</legend>';
 
 if (!isset($_POST['Related'])) {
 	$_POST['Related'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Related Item Code') . ':</td>
-        <td>
-			<input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="' . $_POST['Related'] . '" />
-		</td>
-	</tr>
-</table>';
+echo '<field>
+		<label for="Related">', _('Related Item Code'), ':</label>
+        <input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="', $_POST['Related'], '" />
+	</field>
+</fieldset>';
+
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Relation') . '" />
+		<input type="submit" name="submit" value="', _('Enter'), '/', _('Amend Relation'), '" />
 	</div>';
 
 echo '</form>';

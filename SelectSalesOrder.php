@@ -846,8 +846,6 @@ if (!isset($StockId)) {
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			} //end of due date inquiry
-			$SQL.= $OrderDateFrom . $OrderDateTo;
-
 			$SQL.= " FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
 						INNER JOIN debtorsmaster
@@ -858,6 +856,7 @@ if (!isset($StockId)) {
 						INNER JOIN currencies
 						ON debtorsmaster.currcode = currencies.currabrev
 						WHERE salesorderdetails.completed=0 ";
+			$SQL.= $OrderDateFrom . $OrderDateTo;
 		}
 
 		//Add salesman role control

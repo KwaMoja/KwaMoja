@@ -45,19 +45,20 @@ padding:10px;
 margin-left:0px;
 }
 header #favourites {
-background:transparent;
+background: url(images/descending.png) no-repeat right #DDDDDD;
+background-size:contain;
 overflow: hidden;
-color:#12263F;
+color:#090938;
 font-size: 130%;
+font-weight:bold;
 padding-top: 2px;
 padding-bottom: 2px;
 padding-left: 7px;
 padding-right: 7px;
-border: solid 1px #navy;
-border-radius: 15px;
+border: solid 2px #090938;
+border-radius: 4px;
 margin: 2px;
-}
-header #favourites:hover {
-box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+-moz-appearance:none;
+-webkit-appearance: none;
 cursor:pointer;
 }

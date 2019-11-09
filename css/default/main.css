@@ -15,7 +15,7 @@ text-decoration:underline;
 }
 .ModuleList {
 float:left;
-background:#8EDE8D;
+background:#AF6060;
 white-space:nowrap;
 text-align:left;
 padding-left:10px;
@@ -29,7 +29,7 @@ margin:7px;
 color:black;
 }
 .ModuleList li a,.ModuleList li a:hover {
-background:#008000;
+background:#A62121;
 display:block;
 border-radius:10px;
 text-decoration:none;
@@ -37,18 +37,20 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #083309;
 padding-left:5px;
-color:#8EDE8D;
+color:#B1CBE1;
+font-weight:bold;
 }
 .ModuleList .ModuleSelected a {
 border:1px solid #083309;
-background:#008000;
-color:#8EDE8D;
+background:#A62121;
 padding-left:5px;
+color:#B1CBE1;
+font-weight:bold;
 }
 .ModuleList .ModuleUnSelected a{
 border:1px solid #083309;
-background:#8EDE8D;
-color:#008000;
+background:#AF6060;
+color:#FFFFFF;
 padding-left:5px;
 }
 .ModuleList ul,.MenuList ul {
@@ -59,7 +61,7 @@ padding:0;
 list-style:none;
 }
 .MenuList {
-background:white;
+background:#C0DFFE;
 display: inline;
 width:30%;
 border-radius:10px;
@@ -70,14 +72,15 @@ color:black;
 border:1px solid #588BB6;
 }
 .MenuList legend {
-background:white;
+background:#C0DFFE;
 border-radius:10px;
 border:1px solid #588BB6;
-padding:7px;
+padding:3px;
+padding-right:7px;
 }
 .MenuList legend img {
 padding-right:7px;
-width:24px;
+width:32px;
 vertical-align:middle;
 }
 .MenuItem {
@@ -101,11 +104,11 @@ border-bottom:thin solid #000;
 font-weight:700;
 color:#000;
 text-align:center;
-padding:5px;
+padding:1px;
 clear: both;
 }
 .page_title_text img{
-width:24px;
+width:40px;
 padding-right:9px;
 vertical-align:middle;
 }

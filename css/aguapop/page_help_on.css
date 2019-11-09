@@ -1,6 +1,8 @@
 
 DIV.page_help_text {
 background:#D3D3D3 url(images/help.png) top left no-repeat;
+background-size:32px 32px;
+minimum-height:32px;
 border:maroon 1px solid;
 border-radius:3px;
 padding-top:2px;

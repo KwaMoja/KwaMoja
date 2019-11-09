@@ -1,5 +1,7 @@
 div.page_help_text {
 background:lightgrey url(images/help.png) top left no-repeat;
+background-size:32px 32px;
+minimum-height:32px;
 border:thin solid #C3C3C3;
 padding:4px 20px;
 z-index:1;

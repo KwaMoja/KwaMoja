@@ -44,7 +44,7 @@ if (isset($_GET['DeleteDiscountID'])) {
 $NoPurchasingData = 0;
 
 echo '<div class="toplink">
-		<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
+		<a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>
 	</div>';
 
 if (isset($_POST['SupplierDescription'])) {
@@ -249,7 +249,9 @@ if (isset($_GET['Delete'])) {
 }
 
 if (!isset($_GET['Edit'])) {
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . '</p><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, ' ', _('For Stock Code'), ' - ', $StockId, '
+		</p>';
 	$SQL = "SELECT purchdata.supplierno,
 					suppliers.suppname,
 					purchdata.price,
@@ -282,17 +284,18 @@ if (!isset($_GET['Edit'])) {
 		echo '<table cellpadding="2">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Supplier') . '</th>
-						<th>' . _('Price') . '</th>
-						<th>' . _('Qty Greater Than') . '</th>
-						<th>' . _('Supplier Unit') . '</th>
-						<th>' . _('Conversion Factor') . '</th>
-						<th>' . _('Cost Per Our Unit') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th class="SortedColumn">' . _('Effective From') . '</th>
-						<th>' . _('Min Order Qty') . '</th>
-						<th>' . _('Lead Time') . '</th>
-						<th class="SortedColumn">' . _('Preferred') . '</th>
+						<th class="SortedColumn">', _('Supplier'), '</th>
+						<th>', _('Price'), '</th>
+						<th>', _('Qty Greater Than'), '</th>
+						<th>', _('Supplier Unit'), '</th>
+						<th>', _('Conversion Factor'), '</th>
+						<th>', _('Cost Per Our Unit'), '</th>
+						<th>', _('Currency'), '</th>
+						<th class="SortedColumn">', _('Effective From'), '</th>
+						<th>', _('Min Order Qty'), '</th>
+						<th>', _('Lead Time'), '</th>
+						<th class="SortedColumn">', _('Preferred'), '</th>
+						<th colspan="2"><th>
 					</tr>
 				</thead>';
 		$CountPreferreds = 0;
@@ -307,22 +310,22 @@ if (!isset($_GET['Edit'])) {
 				$DisplayPreferred = _('No');
 			}
 			$UPriceDecimalPlaces = max($MyRow['currdecimalplaces'], $_SESSION['StandardCostDecimalPlaces']);
-			printf('<tr class="striped_row">
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s ' . _('days') . '</td>
-						<td>%s</td>
-						<td><a href="%s?StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s">' . _('Edit') . '</a></td>
-						<td><a href="%s?StockID=%s&SupplierID=%s&Copy=1&EffectiveFrom=%s">' . _('Copy') . '</a></td>
-						<td><a href="%s?StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this suppliers price?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-					</tr>', $MyRow['suppname'], locale_number_format($MyRow['price'], $UPriceDecimalPlaces), $MyRow['qtygreaterthan'], $MyRow['suppliersuom'], locale_number_format($MyRow['conversionfactor'], 'Variable'), locale_number_format($MyRow['price'] / $MyRow['conversionfactor'], $UPriceDecimalPlaces), $MyRow['currcode'], ConvertSQLDate($MyRow['effectivefrom']), locale_number_format($MyRow['minorderqty'], 'Variable'), locale_number_format($MyRow['leadtime'], 'Variable'), $DisplayPreferred, htmlspecialchars(basename(__FILE__)), $StockId, $MyRow['supplierno'], $MyRow['effectivefrom'], htmlspecialchars(basename(__FILE__)), $StockId, $MyRow['supplierno'], $MyRow['effectivefrom'], htmlspecialchars(basename(__FILE__)), $StockId, $MyRow['supplierno'], $MyRow['effectivefrom']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['suppname'], 's</td>
+					<td class="number">', locale_number_format($MyRow['price'], $UPriceDecimalPlaces), '</td>
+					<td class="number">', $MyRow['qtygreaterthan'], '</td>
+					<td>', $MyRow['suppliersuom'], '</td>
+					<td class="number">', locale_number_format($MyRow['conversionfactor'], 'Variable'), '</td>
+					<td class="number">', locale_number_format($MyRow['price'] / $MyRow['conversionfactor'], $UPriceDecimalPlaces), '</td>
+					<td>', $MyRow['currcode'], '</td>
+					<td>', ConvertSQLDate($MyRow['effectivefrom']), 's</td>
+					<td>', locale_number_format($MyRow['minorderqty'], 'Variable'), '</td>
+					<td>', locale_number_format($MyRow['leadtime'], 'Variable'), ' ' . _('days') . '</td>
+					<td>', $DisplayPreferred, '</td>
+					<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&SupplierID=', urlencode($MyRow['supplierno']), '&Edit=1&EffectiveFrom=', urlencode($MyRow['effectivefrom']), '">', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&SupplierID=', urlencode($MyRow['supplierno']), '&Copy=1&EffectiveFrom=', urlencode($MyRow['effectivefrom']), '">', _('Copy'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&SupplierID=', urlencode($MyRow['supplierno']), '&Delete=1&EffectiveFrom=', urlencode($MyRow['effectivefrom']), '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this suppliers price?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				</tr>';
 		} //end of while loop
 		echo '</tbody>';
 		echo '</table>';
@@ -360,25 +363,32 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 	}
 } else {
 	if ($NoPurchasingData == 0) {
-		echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . '</p><br />';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', _('Search Suppliers'), '
+			</p><';
 	}
 	if (!isset($_POST['SearchSupplier'])) {
-		echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">
-				<table cellpadding="3" colspan="4">
-				<tr>
-					<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-					<input type="hidden" name="StockID" value="' . $StockId . '" />
-					<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>
-					<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-					<td><b>' . _('OR') . '</b></td>
-					<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>
-					<td><input type="text" name="SupplierCode" size="20" maxlength="50" /></td>
-				</tr>
-				</table>
-				<div class="centre">
-					<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
-				</div>
-			</form>';
+		echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<legend>', _('Search Criteria'), '</legend>
+				<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
+				<input type="hidden" name="StockID" value="', $StockId, '" />
+				<field>
+					<label for="Keywords">', _('Text in the Supplier'), ' <b>', _('NAME'), '</b>:</label>
+					<input type="text" name="Keywords" size="20" maxlength="25" />
+				</field>
+				<h1>', _('OR'), '</h1>
+				<field>
+					<label for="SupplierCode">', _('Text in Supplier'), ' <b>', _('CODE'), '</label>
+					<input type="text" name="SupplierCode" size="20" maxlength="50" />
+				</field>
+			</fieldset>
+			<div class="centre">
+				<input type="submit" name="SearchSupplier" value="', _('Find Suppliers Now'), '" />
+			</div>
+		</form>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -387,12 +397,13 @@ if (isset($SupplierID) and $SupplierID != '' and !isset($_POST['SearchSupplier']
 if ($Edit == true) {
 	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockId . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Stock Code') . ' - ' . $StockId . ' - ' . $DescriptionRow['description'] . '</p><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, ' ', _('For Stock Code'), ' - ', $StockId, ' - ', $DescriptionRow['description'], '
+		</p>';
 }
 if (isset($_POST['SearchSupplier'])) {
 	if (isset($_POST['Keywords']) and isset($_POST['SupplierCode'])) {
 		prnMsg(_('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info');
-		echo '<br />';
 	}
 	if ($_POST['Keywords'] == '' and $_POST['SupplierCode'] == '') {
 		$_POST['Keywords'] = ' ';
@@ -450,34 +461,34 @@ if (isset($SuppliersResult)) {
 		$StockId = '';
 		$StockUOM = 'each';
 	}
-	echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<table cellpadding="2" colspan="7">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Supplier Name') . '</th>
-					<th class="SortedColumn">' . _('Currency') . '</th>
-					<th>' . _('Address 1') . '</th>
-					<th>' . _('Address 2') . '</th>
-					<th>' . _('Address 3') . '</th>
+					<th class="SortedColumn">', _('Code'), '</th>
+					<th class="SortedColumn">', _('Supplier Name'), '</th>
+					<th class="SortedColumn">', _('Currency'), '</th>
+					<th>', _('Address 1'), '</th>
+					<th>', _('Address 2'), '</th>
+					<th>', _('Address 3'), '</th>
 				</tr>
 			</thead>';
 	$k = 0;
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($SuppliersResult)) {
-		printf('<tr class="striped_row">
-					<td><input type="submit" name="SupplierID" value="%s" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-				</tr>', $MyRow['supplierid'], $MyRow['suppname'], $MyRow['currcode'], $MyRow['address1'], $MyRow['address2'], $MyRow['address3']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SupplierID" value="', $MyRow['supplierid'], '" /></td>
+				<td>', $MyRow['suppname'], '</td>
+				<td>', $MyRow['currcode'], '</td>
+				<td>', $MyRow['address1'], '</td>
+				<td>', $MyRow['address2'], '</td>
+				<td>', $MyRow['address3'], '</td>
+			</tr>';
 
-		echo '<input type="hidden" name="StockID" value="' . $StockId . '" />';
-		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
+		echo '<input type="hidden" name="StockID" value="', $StockId, '" />';
+		echo '<input type="hidden" name="StockUOM" value="', $StockUOM, '" />';
 
 	}
 	//end of while loop
@@ -544,34 +555,41 @@ if (!isset($SuppliersResult)) {
 		$_POST['SupplierCode'] = $MyRow['suppliers_partno'];
 		$StockUOM = $MyRow['units'];
 	}
-	echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">
-		<table>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	if (!isset($SupplierID)) {
 		$SupplierID = '';
 	}
 	if ($Edit == true) {
-		echo '<tr>
-				<td>' . _('Supplier Name') . ':</td>
-				<td><input type="hidden" name="SupplierID" value="' . $SupplierID . '" />' . $SupplierID . ' - ' . $SuppName . '<input type="hidden" name="WasEffectiveFrom" value="' . $MyRow['effectivefrom'] . '" /></td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit purchasing data'), '</legend>
+				<field>
+					<label for="SupplierID">', _('Supplier Name'), ':</label>
+					<input type="hidden" name="SupplierID" value="', $SupplierID, '" />', $SupplierID, ' - ', $SuppName, '<input type="hidden" name="WasEffectiveFrom" value="', $MyRow['effectivefrom'], '" />
+				</field>';
 		echo '<input type="hidden" name="OldQtyBreak" value="' . $_POST['OldQtyBreak'] . '" />';
 	} else {
-		echo '<tr>
-				<td>' . _('Supplier Name') . ':</td>
-				<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />';
+		echo '<fieldset>
+				<legend>', _('New purchasing data'), '</legend>
+				<field>
+					<label for="SupplierID">', _('Supplier Name'), ':</label>
+					<input type="hidden" name="SupplierID" maxlength="10" size="11" value="' . $SupplierID . '" />
+					<div class="fieldtext">';
 
 		if ($SupplierID != '') {
-			echo '<td>' . $SuppName;
+			echo $SuppName;
 		}
 		if (!isset($SuppName) or $SuppName = "") {
 			echo '(' . _('A search facility is available below if necessary') . ')';
 		} else {
-			echo '<td>' . $SuppName;
+			echo $SuppName;
 		}
-		echo '</td></tr>';
+		echo '</div>
+			</field>';
 	}
-	echo '<td><input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
+	echo '<input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -596,74 +614,85 @@ if (!isset($SuppliersResult)) {
 	if (!isset($_POST['MinOrderQty'])) {
 		$_POST['MinOrderQty'] = '1';
 	}
-	echo '<tr>
-			<td>' . _('Currency') . ':</td>
-			<td><input type="hidden" name="CurrCode" . value="' . $CurrCode . '" />' . $CurrCode . '</td>
-		</tr>
-		<tr>
-			<td>' . _('Price') . ' (' . _('in Supplier Currency') . '):</td>
-			<td><input type="text" class="number" name="Price" required="required" maxlength="12" size="12" value="' . $_POST['Price'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('For quantities greater than') . ':</td>
-			<td><input type="text" class="number" name="QtyGreaterThan" required="required" maxlength="12" size="12" value="' . $_POST['QtyGreaterThan'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Price Effective From') . ':</td>
-			<td><input type="text" class="date" name="EffectiveFrom" required="required" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Our Unit of Measure') . ':</td>';
+	echo '<field>
+			<label for="CurrCode">', _('Currency'), ':</label>
+			<input type="hidden" name="CurrCode" . value="', $CurrCode, '" />
+			<div class="fieldtext">', $CurrCode, '</div>
+		</field>';
+
+	echo '<field>
+			<label for="Price">', _('Price'), ' (', _('in Supplier Currency'), '):</label>
+			<input type="text" class="number" name="Price" required="required" maxlength="12" size="12" value="', $_POST['Price'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="QtyGreaterThan">', _('For quantities greater than'), ':</label>
+			<input type="text" class="number" name="QtyGreaterThan" required="required" maxlength="12" size="12" value="', $_POST['QtyGreaterThan'], '" />
+		</field>';
+
+	echo '<field>
+			<label for ="EffectiveFrom">', _('Price Effective From'), ':</label>
+			<input type="text" class="date" name="EffectiveFrom" required="required" maxlength="10" size="11" value="', $_POST['EffectiveFrom'], '" />
+		</field>';
+
+	echo '<field>
+			<label>', _('Our Unit of Measure'), ':</label>';
 	if (isset($SupplierID) and isset($StockUOM)) {
-		echo '<td>' . $StockUOM . '</td></tr>';
+		echo '<div class="fieldtext">', $StockUOM, '</div>';
 	}
-	echo '<tr>
-			<td>' . _('Suppliers Unit of Measure') . ':</td>
-			<td><input type="text" name="SuppliersUOM" size="20" maxlength="20" value ="' . $_POST['SuppliersUOM'] . '"/></td>
-		</tr>';
+	echo '</field>';
+
+	echo '<field>
+			<label for="SuppliersUOM">', _('Suppliers Unit of Measure'), ':</label>
+			<input type="text" name="SuppliersUOM" size="20" maxlength="20" value ="', $_POST['SuppliersUOM'], '"/>
+		</field>';
 
 	if (!isset($_POST['ConversionFactor']) or $_POST['ConversionFactor'] == '') {
 		$_POST['ConversionFactor'] = 1;
 	}
-	echo '<tr>
-			<td>' . _('Conversion Factor (to our UOM)') . ':</td>
-			<td><input type="text" class="number" name="ConversionFactor" required="required" maxlength="12" size="12" value="' . $_POST['ConversionFactor'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Supplier Stock Code') . ':</td>
-			<td><input type="text" name="SupplierCode" maxlength="50" size="20" value="' . $_POST['SupplierCode'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('MinOrderQty') . ':</td>
-			<td><input type="text" class="number" name="MinOrderQty" required="required" maxlength="15" size="15" value="' . $_POST['MinOrderQty'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Supplier Stock Description') . ':</td>
-			<td><input type="text" name="SupplierDescription" maxlength="50" size="51" value="' . $_POST['SupplierDescription'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="ConversionFactor">', _('Conversion Factor (to our UOM)'), ':</label>
+			<input type="text" class="number" name="ConversionFactor" required="required" maxlength="12" size="12" value="', $_POST['ConversionFactor'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="SupplierCode">', _('Supplier Stock Code'), ':</label>
+			<input type="text" name="SupplierCode" maxlength="50" size="20" value="', $_POST['SupplierCode'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="MinOrderQty">', _('MinOrderQty'), ':</label>
+			<input type="text" class="number" name="MinOrderQty" required="required" maxlength="15" size="15" value="', $_POST['MinOrderQty'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="SupplierDescription">', _('Supplier Stock Description'), ':</label>
+			<input type="text" name="SupplierDescription" maxlength="50" size="51" value="', $_POST['SupplierDescription'], '" />
+		</field>';
 
 	if (!isset($_POST['LeadTime']) or $_POST['LeadTime'] == "") {
 		$_POST['LeadTime'] = 1;
 	}
-	echo '<tr>
-			<td>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</td>
-			<td><input type="text" class="integer" name="LeadTime" required="required" maxlength="4" size="5" value="' . $_POST['LeadTime'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Preferred Supplier') . ':</td>
-			<td><select required="required" name="Preferred">';
+	echo '<field>
+			<label for="LeadTime">', _('Lead Time'), ' (', _('in days from date of order'), '):</label>
+			<input type="text" class="integer" name="LeadTime" required="required" maxlength="4" size="5" value="', $_POST['LeadTime'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Preferred">', _('Preferred Supplier'), ':</label>
+			<select required="required" name="Preferred">';
 
 	if (isset($_POST['Preferred']) and $_POST['Preferred'] == 1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>
-				<option value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+		echo '<option value="0">', _('No'), '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>
-				<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option value="1">', _('Yes'), '</option>';
+		echo '<option selected="selected" value="0">', _('No'), '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<div class="centre">';
+	echo '</select>
+		</field>';
+
+	echo '</fieldset>';
 
 	if ($Edit == true) {
 		/* A supplier purchase price is being edited - also show the discounts applicable to the supplier  for update/deletion*/
@@ -686,26 +715,26 @@ if (!isset($SuppliersResult)) {
 		echo '<table cellpadding="2" colspan="7">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Discount Name') . '</th>
-						<th>' . _('Discount') . '<br />' . _('Value') . '</th>
-						<th>' . _('Discount') . '<br />' . _('Percent') . '</th>
-						<th class="SortedColumn">' . _('Effective From') . '</th>
-						<th>' . _('Effective To') . '</th>
+						<th class="SortedColumn">', _('Discount Name'), '</th>
+						<th>', _('Discount'), '<br />', _('Value'), '</th>
+						<th>', _('Discount'), '<br />', _('Percent'), '</th>
+						<th class="SortedColumn">', _('Effective From'), '</th>
+						<th>', _('Effective To'), '</th>
 					</tr>
 				</thead>';
 		$k = 0;
 		$i = 0; //DiscountCounter
 		echo '<tbody>';
 		while ($MyRow = DB_fetch_array($DiscountsResult)) {
-			printf('<tr class="striped_row">
-						<input type="hidden" name="DiscountID%s" value="%s" />
-						<td><input type="text" name="DiscountNarrative%s" value="%s" maxlength="20" size="20" /></td>
-						<td><input type="text" class="number" name="DiscountAmount%s" value="%s" maxlength="10" size="11" /></td>
-						<td><input type="text" class="number" name="DiscountPercent%s" value="%s" maxlength="5" size="6" /></td>
-						<td><input type="text" class="date" name="DiscountEffectiveFrom%s" maxlength="10" size="11" value="%s" /></td>
-						<td><input type="text" class="date" name="DiscountEffectiveTo%s" maxlength="10" size="11" value="%s" /></td>
-						<td><a href="%s?DeleteDiscountID=%s&amp;StockID=%s&amp;EffectiveFrom=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Delete') . '</a></td>
-					</tr>', $i, $MyRow['id'], $i, $MyRow['discountnarrative'], $i, locale_number_format($MyRow['discountamount'], $CurrDecimalPlaces), $i, locale_number_format($MyRow['discountpercent'] * 100, 2), $i, ConvertSQLDate($MyRow['effectivefrom']), $i, ConvertSQLDate($MyRow['effectiveto']), htmlspecialchars(basename(__FILE__)), $MyRow['id'], $StockId, $EffectiveFrom, $SupplierID);
+			echo '<tr class="striped_row">
+					<input type="hidden" name="DiscountID', $i, '" value="', $MyRow['id'], '" />
+					<td><input type="text" name="DiscountNarrative', $i, '" value="', $MyRow['discountnarrative'], '" maxlength="20" size="20" /></td>
+					<td><input type="text" class="number" name="DiscountAmount', $i, '" value="', locale_number_format($MyRow['discountamount'], $CurrDecimalPlaces), '" maxlength="10" size="11" /></td>
+					<td><input type="text" class="number" name="DiscountPercent', $i, '" value="', locale_number_format($MyRow['discountpercent'] * 100, 2), '" maxlength="5" size="6" /></td>
+					<td><input type="text" class="date" name="DiscountEffectiveFrom', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectivefrom']), '" /></td>
+					<td><input type="text" class="date" name="DiscountEffectiveTo', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectiveto']), '" /></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__)), '?DeleteDiscountID=', urlencode($MyRow['id']), '&amp;StockID=', $StockId, '&amp;EffectiveFrom=', urlencode($EffectiveFrom), '&amp;SupplierID=', urlencode($SupplierID), '&amp;Edit=1">', _('Delete'), '</a></td>
+				</tr>';
 
 			++$i;
 		} //end of while loop
@@ -714,31 +743,37 @@ if (!isset($SuppliersResult)) {
 
 		$DefaultEndDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
 
-		echo '<tr>
+		echo '<tr class="striped_row">
 				<td><input type="text" name="DiscountNarrative" value="" maxlength="20" size="20" /></td>
 				<td><input type="text" class="number" name="DiscountAmount" value="0" maxlength="10" size="11" /></td>
 				<td><input type="text" class="number" name="DiscountPercent" value="0" maxlength="5" size="6" /></td>
-				<td><input type="text" class="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-				<td><input type="text" class="date" name="DiscountEffectiveTo" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
+				<td><input type="text" class="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="', Date($_SESSION['DefaultDateFormat']), '" /></td>
+				<td><input type="text" class="date" name="DiscountEffectiveTo" maxlength="10" size="11" value="', $DefaultEndDate, '" /></td>
 			</tr>
-			</table>';
+		</table>';
 
-		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
+		echo '<div class="centre">
+				<input type="submit" name="UpdateRecord" value="', _('Update'), '" />
+			</div>';
+
 		echo '<input type="hidden" name="Edit" value="1" />';
 
 		/*end if there is a supplier purchasing price being updated */
 	} else {
-		echo '<input type="submit" name="AddRecord" value="' . _('Add') . '" />';
+		echo '<div class="centre">
+				<input type="submit" name="AddRecord" value="', _('Add'), '" />
+			</div>';
 	}
-	echo '<div class="centre">';
 
 	if (isset($StockLocation) and isset($StockId) and mb_strlen($StockId) != 0) {
-		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockId) . '">' . _('Show Stock Status') . '</a>';
-		echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockId) . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</a>';
-		echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockId) . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</a>';
-		echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockId) . '">' . _('Search Completed Sales Orders') . '</a>';
+		echo '<div class="centre">
+				<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a><br />
+				<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '&StockLocation=', $StockLocation, '">', _('Show Stock Movements'), '</a><br />
+				<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&StockLocation=', $StockLocation, '">', _('Search Outstanding Sales Orders'), '</a><br />
+				<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Completed Sales Orders'), '</a>
+			</div>';
 	}
-	echo '</div></form>';
+	echo '</form>';
 }
 
 include ('includes/footer.php');

@@ -821,10 +821,10 @@ function initMap() {
 		} // DB_num_rows($Result) <> 0
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<div class="centre">
+				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" title="', _('Customer Contacts'), '" alt="" />
 						<a href="AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', _('Add New Contact'), '</a>
-					</div>';
+					</p>';
 			} // $_SESSION['CustomerID'] != ''
 			
 		}
@@ -841,9 +841,9 @@ function initMap() {
 				ORDER BY date DESC";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) <> 0) {
-			echo '<div class="centre">
+			echo '<p class="page_title_text">
 					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/note_add.png" title="', _('Customer Notes'), '" alt="" />', ' ', _('Customer Notes'), '
-				</div>';
+				</p>';
 			echo '<table style="width: 45%;">
 					<thead>
 						<tr>
@@ -874,10 +874,10 @@ function initMap() {
 		} // DB_num_rows($Result) <> 0
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-				echo '<div class="centre">
+				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/note_add.png" title="', _('Customer Notes'), '" alt="" />
 						<a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', _('Add New Note for this Customer'), '</a>
-					</div>';
+					</p>';
 			} // $_SESSION['CustomerID'] != ''
 			
 		}

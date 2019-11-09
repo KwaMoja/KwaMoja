@@ -1,9 +1,7 @@
 <?php
-
 // Display demo user name and password within login form if $AllowDemoMode is true
-
-include('LanguageSetup.php');
-include('MobileDetect.php');
+include ('LanguageSetup.php');
+include ('MobileDetect.php');
 $MobileDetect = new Mobile_Detect;
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
 	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('kwamoja') . '</i>';
@@ -21,7 +19,7 @@ echo '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />';
 if (!$MobileDetect->isMobile()) {
 	echo '<link rel="stylesheet" href="css/login.css" type="text/css" />';
 } else {
-//	echo '<link rel="stylesheet" href="css/login-mobile.css" type="text/css" />';
+	//	echo '<link rel="stylesheet" href="css/login-mobile.css" type="text/css" />';
 	echo '<link rel="stylesheet" href="css/login.css" type="text/css" />';
 }
 ?>
@@ -54,7 +52,7 @@ if (get_magic_quotes_gpc()) {
 		<tr>
 			<th colspan="2">
 				<div id="login_logo">
-					<a href="<?php echo $HomePage; ?>" target="_blank"><img src="css/<?php echo $DefaultDatabase;?>.png" style="width:100%" /></a>
+					<a href="<?php echo $HomePage; ?>" target="_blank"><img src="css/<?php echo $DefaultDatabase; ?>.png" style="width:100%" /></a>
 				</div>
 			</th>
 		</tr>
@@ -76,7 +74,7 @@ if (isset($_COOKIE['Login'])) {
 if ($AllowCompanySelectionBox === 'Hide') {
 	// do not show input or selection box
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-} else if ($AllowCompanySelectionBox === 'ShowInputBox'){
+} else if ($AllowCompanySelectionBox === 'ShowInputBox') {
 	// show input box
 	echo '<input type="text" required="required" autofocus="autofocus" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else {
@@ -88,7 +86,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
 		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-				include('companies/' . $CompanyEntry . '/Companies.php');
+				include ('companies/' . $CompanyEntry . '/Companies.php');
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
@@ -130,24 +128,6 @@ echo _('Login');
 ?>
 					 <img src="css/tick.png" title="' . _('Upgrade') . '" alt="" class="ButtonIcon" /></button>
 					</form>
-				</div>
-			</td>
-			<td id="ProjectLinks">
-				<div>
-					<b>Join us at :</b><br />
-					<a href="<?php echo $SourceforgeSite; ?>" target="_blank"><img src="css/sourceforge-logo.png" style="width:70%; border: 1px solid #A49999;" /></a><br />
-					<a href="<?php echo $LaunchpadSite; ?>" target="_blank"><img src="css/launchpad.png" style="width:70%; border: 1px solid #A49999;" /></a><br />
-					<a href="<?php echo $CodeplexSite; ?>" target="_blank"><img src="css/codeplex-logo.png" style="width:70%; border: 1px solid #A49999;" /></a><br /><br />
-				</div>
-			</td>
-			<td id="ProjectLinks">
-				<div>
-					<b>Follow us at:</b>
-					<!--Follow us on twitter button-->
-					<a href="https://twitter.com/<?php echo $TwitterAccount; ?>" class="twitter-follow-button" data-show-count="false"><?php echo _('Follow') . ' @' . $TwitterAccount; ?></a><br />
-					<a href="https://plus.google.com/u/0/communities/<?php echo $GoogleCommunity; ?>" target="_blank"><img src="css/google-plus.png" style="width:50%; border: 1px solid #A49999;" /></a>
-					<a href="<?php echo $FacebookPage; ?>" target="_blank"><img src="css/FindUsOnFacebook.png" style="width:70%; border: 1px solid #A49999;" /></a>
-					<a href="<?php echo $LinkedInGroup; ?>" target="_blank"><img src="css/linkedin.png" style="width:70%; border: 1px solid #A49999;" /></a>
 				</div>
 			</td>
 		</tr>
