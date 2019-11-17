@@ -10,7 +10,9 @@ $FieldHeadings = array('StockID', //  0 'STOCKID',
 //  3 'Price'
 );
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="', $Title, '" />', ' ', $Title, '
+	</p>';
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 	//check file info
@@ -50,7 +52,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	DB_Txn_Begin();
 
 	//loop through file rows
-	$row = 1;
+	$RowNumber = 1;
 	while (($MyRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 
 		//check for correct number of fields
@@ -131,12 +133,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			break;
 		}
 
-		$row++;
+		$RowNumber++;
 
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row ' . $row . '. Batch import has been rolled back.'), 'error');
+		prnMsg(_('Failed on row ' . $RowNumber . '. Batch import has been rolled back.'), 'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
@@ -146,15 +148,29 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	fclose($FileHandle);
 
 } else { //show file upload form
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
-	echo '<div class="centre">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<div class="page_help_text">' . _('This function loads a new sales price list from a comma separated variable (csv) file.') . '<br />' . _('The file must contain four columns, and the first row should be the following headers') . ':' . '<br />' . _('StockID,PriceListID,CurrencyCode,Price') . '<br />' . _('followed by rows containing these four fields for each price to be uploaded.') . '<br />' . _('The StockID, PriceListID, and CurrencyCode fields must have a corresponding entry in the stockmaster, salestypes, and currencies tables.') . '</div>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" enctype="multipart/form-data">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' . _('Prices effective from') . ':&nbsp;<input type="text" name="StartDate" size="10" class="date" value="' . date($_SESSION['DefaultDateFormat']) . '" />&nbsp;' . _('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" name="submit" value="' . _('Send File') . '" />
+	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
+
+	echo '<div class="page_help_text">', _('This function loads a new sales price list from a comma separated variable (csv) file.'), '<br />', _('The file must contain four columns, and the first row should be the following headers'), ':', '<br />', _('StockID,PriceListID,CurrencyCode,Price'), '<br />', _('followed by rows containing these four fields for each price to be uploaded.'), '<br />', _('The StockID, PriceListID, and CurrencyCode fields must have a corresponding entry in the stockmaster, salestypes, and currencies tables.'), '</div>';
+
+	echo '<fieldset>
+			<legend>', _('Input File Details'), '</legend>
+			<field>
+				<label for="StartDate">', _('Prices effective from'), ':</label>
+				<input type="text" name="StartDate" size="10" class="date" value="', date($_SESSION['DefaultDateFormat']), '" />
+			</field>
+			<field>
+				<label for="userfile>', _('Upload file'), ':</label>
+				<input name="userfile" type="file" />
+			</field>
+		</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Send File'), '" />
 		</div>
-		</form>';
+	</form>';
 
 }
 

@@ -1,6 +1,7 @@
 body {
 background: rgb(69,68,134);
-background: linear-gradient(90deg, #26386D 0%, #909EC9 100%);font-family: Futura,Trebuchet MS,Arial,sans-serif;
+background: linear-gradient(90deg, #26386D 0%, #909EC9 100%);
+font-family: Futura,Trebuchet MS,Arial,sans-serif;
 color:#E6EAF7;
 font-size:10pt;
 margin:0;
@@ -63,28 +64,22 @@ vertical-align:top
 }
 
 select {
--moz-border-radius:3px;
--webkit-border-radius:3px;
-background:transparent;
-border-color:#FFFFFF;
-border-radius:3px;
-border-style:solid;
-border-width:1px;
-color:#E6EAF7;
-font-size:100%;
-margin:10px 0 0;
-width:auto
-}
-
-select:hover, select:focus {
-background:transparent;
-border-color:#FFFFFF;
-border-radius:3px;
-border-style:solid;
-border-width:1px;
-box-shadow:0 0 5px #7E7575;
-font-size:100%;
-box-shadow:0 0 5px #7E7575
+background: url(descending.png) no-repeat right transparent;
+background-size:contain;
+overflow: hidden;
+color:#FFFFFF;
+font-size: 100%;
+font-weight:nrmal;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 77px;
+border: solid 1px #fff;
+border-radius: 4px;
+margin-top: 10px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
 }
 
 input {

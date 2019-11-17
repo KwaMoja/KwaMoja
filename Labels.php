@@ -17,7 +17,7 @@ $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Label Template Maintenance') . '" alt="' . _('Label Template Maintenance') . '" />' . $Title . _('all measurements in mm.') . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Label Template Maintenance'), '" alt="', _('Label Template Maintenance'), '" />', $Title, ' - ', _('All measurements in mm.'), '
 	</p>';
 
 if (!function_exists('gd_info')) {
@@ -175,16 +175,16 @@ if (!isset($SelectedLabelID)) {
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($Result) > 0) {
-		echo '<table summary="' . _('List of all currently setup Label dimensions') . '">
+		echo '<table summary="', _('List of all currently setup Label dimensions'), '">
 				<tr>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Rows x Cols') . '</th>
-					<th>' . _('Page Width') . '</th>
-					<th>' . _('Page Height') . '</th>
-					<th>' . _('Height') . '</th>
-					<th>' . _('Width') . '</th>
-					<th>' . _('Row Height') . '</th>
-					<th>' . _('Column Width') . '</th>
+					<th>', _('Description'), '</th>
+					<th>', _('Rows x Cols'), '</th>
+					<th>', _('Page Width'), '</th>
+					<th>', _('Page Height'), '</th>
+					<th>', _('Height'), '</th>
+					<th>', _('Width'), '</th>
+					<th>', _('Row Height'), '</th>
+					<th>', _('Column Width'), '</th>
 				</tr>';
 		$k = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -205,30 +205,30 @@ if (!isset($SelectedLabelID)) {
 				}
 			}
 			if (isset($Paper)) {
-				printf('<tr class="striped_row">
-							<td>%s</td>
-							<td>%s</td>
-							<td colspan="2">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-							<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-						</tr>', $MyRow['description'], $NoOfRows . ' x ' . $NoOfCols, $Paper, $MyRow['height'], $MyRow['width'], $MyRow['rowheight'], $MyRow['columnwidth'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['labelid'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['labelid'], $RootPath . '/LabelFields.php?', $MyRow['labelid']);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['description'], '</td>
+						<td>', $NoOfRows, ' x ', $NoOfCols, '</td>
+						<td colspan="2">', $Paper, '</td>
+						<td class="number">', $MyRow['height'], '</td>
+						<td class="number">', $MyRow['width'], '</td>
+						<td class="number">', $MyRow['rowheight'], '</td>
+						<td class="number">', $MyRow['columnwidth'], '</td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLabelID=', urlencode($MyRow['labelid']), '">', _('Edit'), '</a></td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLabelID=', urlencode($MyRow['labelid']), '&delete=yes" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this label?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+					</tr>';
 			} else {
-				printf('<tr class="striped_row">
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-							<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-						</tr>', $MyRow['description'], $NoOfRows . ' x ' . $NoOfCols, $MyRow['pagewidth'], $MyRow['pageheight'], $MyRow['height'], $MyRow['width'], $MyRow['rowheight'], $MyRow['columnwidth'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['labelid'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['labelid'], $RootPath . '/LabelFields.php?', $MyRow['labelid']);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['description'], '</td>
+						<td>', $NoOfRows, ' x ', $NoOfCols, '</td>
+						<td class="number">', $MyRow['pagewidth'], '</td>
+						<td class="number">', $MyRow['pageheight'], '</td>
+						<td class="number">', $MyRow['height'], '</td>
+						<td class="number">', $MyRow['width'], '</td>
+						<td class="number">', $MyRow['rowheight'], '</td>
+						<td class="number">', $MyRow['columnwidth'], '</td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLabelID=', urlencode($MyRow['labelid']), '">', _('Edit'), '</a></td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLabelID=', urlencode($MyRow['labelid']), '&delete=yes" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this label?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+					</tr>';
 			}
 		}
 		//END WHILE LIST LOOP
@@ -240,12 +240,12 @@ if (!isset($SelectedLabelID)) {
 
 if (isset($SelectedLabelID)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Review all defined label records') . '</a>
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Review all defined label records'), '</a>
 		</div>';
 }
 
-echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (isset($SelectedLabelID)) {
 	//editing an existing label
@@ -288,34 +288,38 @@ if (isset($SelectedLabelID)) {
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
-echo '<table summary="' . _('Outside container for label diagram and info') . '">
-		<tr>
-			<td><img src="css/paramsLabel.png" alt="Label diagram" /></td>
-			<td><table summary="' . _('Label specifications') . '">
-				<tr>
-					<td>' . _('Label Description') . ':</td>
-					<td><input type="text" name="Description" size="21" required="required" maxlength="20" value="' . $_POST['Description'] . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Label Paper Size') . ':</td>
-					<td><select required="required" name="PaperSize" onchange="ReloadForm(submit)" >';
+echo '<fieldset>
+		<fieldset>
+			<legend>', _('Label diagram'), '</legend>
+			<field>
+				<img src="css/labelsDim.png" />
+			</field>
+		</fieldset>
+		<fieldset>
+			<legend>', _('Label specifications'), '</legend>
+				<field>
+					<label for="Description">', _('Label Description'), ':</label>
+					<input type="text" name="Description" size="21" required="required" maxlength="20" value="', $_POST['Description'], '" />
+				</field>
+				<field>
+					<label for="PaperSize">', _('Label Paper Size'), ':</label>
+					<select required="required" name="PaperSize" onchange="ReloadForm(submit)" >';
 
 if (!isset($_POST['PaperSize'])) {
-	echo '<option selected="selected" value="custom">' . _('Custom Size') . '</option>';
+	echo '<option selected="selected" value="custom">', _('Custom Size'), '</option>';
 } else {
-	echo '<option value="custom">' . _('Custom Size') . '</option>';
+	echo '<option value="custom">', _('Custom Size'), '</option>';
 }
 foreach ($PaperSize as $PaperType => $PaperSizeElement) {
 	if (isset($_POST['PaperSize']) and $PaperType == $_POST['PaperSize']) {
-		echo '<option selected="selected" value="';
+		echo '<option selected="selected" value="', $PaperType, '">', $PaperType, '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $PaperType, '">', $PaperType, '</option>';
 	}
-	echo $PaperType . '">' . $PaperType . '</option>';
 
 } //end while loop
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['PageHeight'])) {
 	$_POST['PageHeight'] = 0;
@@ -348,42 +352,48 @@ if (!isset($_POST['PaperSize']) or $_POST['PaperSize'] == 'Custom') {
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
 	}
-	echo '<tr>
-			<td>' . _('Page Width') . '</td>
-			<td><input type="text" size="4" required="required" maxlength="4" name="PageWidth" value="' . $_POST['PageWidth'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Page Height') . '</td>
-			<td><input type="text" size="4" required="required" maxlength="4" name="PageHeight" value="' . $_POST['PageHeight'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="PageWidth">', _('Page Width'), '</label>
+			<input type="text" size="4" class="number" required="required" maxlength="4" name="PageWidth" value="', $_POST['PageWidth'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="PageHeight">', _('Page Height'), '</label>
+			<input type="text" size="4" class="number" required="required" maxlength="4" name="PageHeight" value="', $_POST['PageHeight'], '" />
+		</field>';
 }
-echo '<tr>
-		<td>' . _('Label Height') . ' - (He):</td>
-		<td><input type="text" name="Height" size="4" required="required" maxlength="4" value="' . $_POST['Height'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Label Width') . ' - (Wi):</td>
-		<td><input type="text" name="Width" size="4" required="required" maxlength="4" value="' . $_POST['Width'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Top Margin') . ' - (Tm):</td>
-		<td><input type="text" name="TopMargin" size="4" required="required" maxlength="4" value="' . $_POST['TopMargin'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Left Margin') . ' - (Lm):</td>
-		<td><input type="text" name="LeftMargin" size="4" required="required" maxlength="4" value="' . $_POST['LeftMargin'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Row Height') . ' - (Rh):</td>
-		<td><input type="text" name="RowHeight" size="4" required="required" maxlength="4" value="' . $_POST['RowHeight'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Column Width') . ' - (Cw):</td>
-		<td><input type="text" name="ColumnWidth" size="4" required="required" maxlength="4" value="' . $_POST['ColumnWidth'] . '" /></td>
-	</tr>
-	</table></td></tr>
-	</td></tr>
-	</table>';
+echo '<field>
+		<label for="Height">', _('Label Height'), ' - (He):</label>
+		<input type="text" name="Height" class="number" size="4" required="required" maxlength="4" value="', $_POST['Height'], '" />
+	</field>';
+
+echo '<field>
+		<label for="Width">', _('Label Width'), ' - (Wi):</label>
+		<input type="text" name="Width" size="4" class="number" required="required" maxlength="4" value="', $_POST['Width'], '" />
+	</field>';
+
+echo '<field>
+		<label for="TopMargin">', _('Top Margin'), ' - (Tm):</label>
+		<input type="text" name="TopMargin" class="number" size="4" required="required" maxlength="4" value="', $_POST['TopMargin'], '" />
+	</field>';
+
+echo '<field>
+		<label for="LeftMargin">', _('Left Margin'), ' - (Lm):</label>
+		<input type="text" name="LeftMargin" size="4" class="number" required="required" maxlength="4" value="', $_POST['LeftMargin'], '" />
+	</field>';
+
+echo '<field>
+		<label for="RowHeight">', _('Row Height'), ' - (Rh):</label>
+		<input type="text" name="RowHeight" size="4" class="number" required="required" maxlength="4" value="', $_POST['RowHeight'], '" />
+	</field>';
+
+echo '<field>
+		<label for="ColumnWidth">', _('Column Width'), ' - (Cw):</label>
+		<input type="text" name="ColumnWidth" size="4" class="number" required="required" maxlength="4" value="', $_POST['ColumnWidth'], '" />
+	</field>';
+
+echo '</fieldset>
+	</fieldset>';
 
 if (isset($SelectedLabelID)) {
 	//get the fields to show
@@ -400,63 +410,81 @@ if (isset($SelectedLabelID)) {
 	$ErrMsg = _('Could not get the label fields because');
 	$Result = DB_query($SQL, $ErrMsg);
 	$i = 0;
-	echo '<table summary="' . _('Outside container for label diagram and info') . '">
-				<tr>
-				<td><img src="css/labelsDim.png" alt="Label dimensions diagram" /></td>
-				<td><table summary="' . _('Label dimensions table') . '">
-					<tr>
-						<th>' . _('Field') . '</th>
-						<th>' . _('Vertical') . '<br />' . _('Position') . '<br />(VPos)</th>
-						<th>' . _('Horizontal') . '<br />' . _('Position') . '<br />(HPos)</th>
-						<th>' . _('Font Size') . '</th>
-						<th>' . _('Bar-code') . '</th>
-					</tr>';
+	echo '<table summary="', _('Outside container for label diagram and info'), '">
+			<tr>
+				<td>
+					<img src="css/labelsDim.png" alt="Label dimensions diagram" />
+				</td>
+				<td>
+					<table summary="', _('Label dimensions table'), '">
+						<tr>
+							<th>', _('Field'), '</th>
+							<th>', _('Vertical'), '<br />', _('Position'), '<br />(VPos)</th>
+							<th>', _('Horizontal'), '<br />', _('Position'), '<br />(HPos)</th>
+							<th>', _('Font Size'), '</th>
+							<th>', _('Bar-code'), '</th>
+						</tr>';
 	if (DB_num_rows($Result) > 0) {
 		$k = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $MyRow['labelfieldid'] . '" />
-			<tr class="striped_row"><td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
+			echo '<input type="hidden" name="LabelFieldID', $i, '" value="', $MyRow['labelfieldid'], '" />';
+
+			echo '<tr class="striped_row">
+					<td>
+						<select name="FieldName', $i, '" onchange="ReloadForm(submit)">';
 			if ($MyRow['fieldvalue'] == 'itemcode') {
-				echo '<option selected="selected" value="itemcode">' . _('Item Code') . '</option>';
+				echo '<option selected="selected" value="itemcode">', _('Item Code'), '</option>';
 			} else {
-				echo '<option value="itemcode">' . _('Item Code') . '</option>';
+				echo '<option value="itemcode">', _('Item Code'), '</option>';
 			}
 			if ($MyRow['fieldvalue'] == 'itemdescription') {
-				echo '<option selected="selected" value="itemdescription">' . _('Item Description') . '</option>';
+				echo '<option selected="selected" value="itemdescription">', _('Item Description'), '</option>';
 			} else {
-				echo '<option value="itemdescription">' . _('Item Descrption') . '</option>';
+				echo '<option value="itemdescription">', _('Item Descrption'), '</option>';
 			}
 			if ($MyRow['fieldvalue'] == 'barcode') {
-				echo '<option selected="selected" value="barcode">' . _('Item Barcode') . '</option>';
+				echo '<option selected="selected" value="barcode">', _('Item Barcode'), '</option>';
 			} else {
-				echo '<option value="barcode">' . _('Item Barcode') . '</option>';
+				echo '<option value="barcode">', _('Item Barcode'), '</option>';
 			}
 			if ($MyRow['fieldvalue'] == 'price') {
-				echo '<option selected="selected" value="price">' . _('Price') . '</option>';
+				echo '<option selected="selected" value="price">', _('Price'), '</option>';
 			} else {
-				echo '<option value="price">' . _('Price') . '</option>';
+				echo '<option value="price">', _('Price'), '</option>';
 			}
 			if ($MyRow['fieldvalue'] == 'logo') {
-				echo '<option selected="selected" value="logo">' . _('Company Logo') . '</option>';
+				echo '<option selected="selected" value="logo">', _('Company Logo'), '</option>';
 			} else {
-				echo '<option value="logo">' . _('Company Logo') . '</option>';
+				echo '<option value="logo">', _('Company Logo'), '</option>';
 			}
-			echo '</select></td>
-				<td><input type="text" name="VPos' . $i . '" size="4" required="required" maxlength="4" value="' . $MyRow['vpos'] . '" /></td>
-				<td><input type="text" name="HPos' . $i . '" size="4" required="required" maxlength="4" value="' . $MyRow['hpos'] . '" /></td>
-				<td><input type="text" name="FontSize' . $i . '" size="4" required="required" maxlength="4" value="' . $MyRow['fontsize'] . '" /></td>
-				<td><select name="Barcode' . $i . '" onchange="ReloadForm(submit)">';
+			echo '</select>
+				</td>';
+
+			echo '<td>
+					<input type="text" name="VPos', $i, '" size="4" required="required" maxlength="4" value="', $MyRow['vpos'], '" />
+				</td>
+				<td>
+					<input type="text" name="HPos', $i, '" size="4" required="required" maxlength="4" value="', $MyRow['hpos'], '" />
+				</td>
+				<td>
+					<input type="text" name="FontSize', $i, '" size="4" required="required" maxlength="4" value="', $MyRow['fontsize'], '" />
+				</td>
+				<td>
+					<select name="Barcode', $i, '" onchange="ReloadForm(submit)">';
 			if ($MyRow['barcode'] == 0) {
-				echo '<option selected="selected" value="0">' . _('No') . '</option>
-						<option value="1">' . _('Yes') . '</option>';
+				echo '<option selected="selected" value="0">', _('No'), '</option>';
+				echo '<option value="1">', _('Yes'), '</option>';
 			} else {
-				echo '<option selected="selected" value="1">' . _('Yes') . '</option>
-						<option value="0">' . _('No') . '</option>';
+				echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+				echo '<option value="0">', _('No'), '</option>';
 			}
-			echo '</select></td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $MyRow['labelfieldid'] . ' onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this label field?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>';
+			echo '</select>';
+
+			echo '<td>
+					<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLabelID=', urlencode($SelectedLabelID), '&amp;DeleteField=', urlencode($MyRow['labelfieldid']), ' onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this label field?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a>
+				</td>
+			</tr>';
 			++$i;
 		}
 		//END WHILE LIST LOOP
@@ -468,40 +496,45 @@ if (isset($SelectedLabelID)) {
 	echo '<tr>
 			<td>
 				<select name="FieldName">
-					<option value="itemcode">' . _('Item Code') . '</option>
-					<option value="itemdescription">' . _('Item Descrption') . '</option>
-					<option value="barcode">' . _('Item Barcode') . '</option>
-					<option value="price">' . _('Price') . '</option>
-					<option value="logo">' . _('Company Logo') . '</option>
+					<option value="itemcode">', _('Item Code'), '</option>
+					<option value="itemdescription">', _('Item Descrption'), '</option>
+					<option value="barcode">', _('Item Barcode'), '</option>
+					<option value="price">', _('Price'), '</option>
+					<option value="logo">', _('Company Logo'), '</option>
 				</select>
-			</td>
-			<td>
-				<input type="text" size="4" required="required" maxlength="4" name="VPos" />
-			</td>
-			<td>
-				<input type="text" size="4" required="required" maxlength="4" name="HPos" />
-			</td>
-			<td>
-				<input type="text" size="4" required="required" maxlength="4" name="FontSize" />
-			</td>
-			<td>
-				<select name="Barcode">
-					<option value="1">' . _('Yes') . '</option>
-					<option selected="selected" value="0">' . _('No') . '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
+			</td>';
+
+	echo '<td>
+			<input type="text" size="4" required="required" maxlength="4" name="VPos" />
+		</td>';
+
+	echo '<td>
+			<input type="text" size="4" required="required" maxlength="4" name="HPos" />
+		</td>';
+
+	echo '<td>
+			<input type="text" size="4" required="required" maxlength="4" name="FontSize" />
+		</td>';
+
+	echo '<td>
+			<select name="Barcode">
+				<option value="1">', _('Yes'), '</option>
+				<option selected="selected" value="0">', _('No'), '</option>
+			</select>
 		</td>
-		</tr>
-		</table>';
+	</tr>';
+
+	echo '</table>
+		</td>
+	</tr>
+</table>';
 }
 
 echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="', _('Enter Information'), '" />
 		</div>
 		<div class="centre">
-			<a href="' . $RootPath . '/PDFPrintLabel.php">' . _('Print Labels') . '</a>
+			<a href="', $RootPath, '/PDFPrintLabel.php">', _('Print Labels'), '</a>
 		</div>
 	</form>';
 

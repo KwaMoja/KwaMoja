@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF'])) {
 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 		include ('includes/header.php');
 		prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
@@ -228,7 +228,7 @@ if (isset($_POST['PrintPDF'])) {
 			$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 			include ('includes/header.php');
 			prnMsg(_('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 			if ($Debug == 1) {
 				echo '<br />' . $SQL;
 			}
@@ -259,7 +259,7 @@ if (isset($_POST['PrintPDF'])) {
 			$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 			include ('includes/header.php');
 			prnMsg(_('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 			if ($Debug == 1) {
 				echo '<br />' . $SQL;
 			}
@@ -294,7 +294,7 @@ if (isset($_POST['PrintPDF'])) {
 			$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 			include ('includes/header.php');
 			prnMsg(_('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 			if ($Debug == 1) {
 				echo '<br />' . $SQL;
 			}
@@ -363,7 +363,7 @@ if (isset($_POST['PrintPDF'])) {
 		$Title = _('Print Inventory Planning Report Empty');
 		include ('includes/header.php');
 		prnMsg(_('There were no items in the range and location specified'), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	} else {
@@ -378,14 +378,16 @@ if (isset($_POST['PrintPDF'])) {
 	$Title = _('Preferred Supplier Inventory Planning');
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<tr><td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
 	$SQL = "SELECT locations.loccode,
 					locationname
 				FROM locations
@@ -395,45 +397,52 @@ if (isset($_POST['PrintPDF'])) {
 					AND locationusers.canview=1";
 	$LocnResult = DB_query($SQL);
 
-	echo '<option value="All">' . _('All Locations') . '</option>';
-
+	echo '<field>
+			<label for="Location">', _('For Inventory in Location'), ':</label>
+			<select name="Location">
+				<option value="All">', _('All Locations'), '</option>';
 	while ($MyRow = DB_fetch_array($LocnResult)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr><td>' . _('Months Buffer Stock to Hold') . ':</td>
-			<td><select name="NumberMonthsHolding">';
+	echo '<field>
+			<label for="NumberMonthsHolding">', _('Months Buffer Stock to Hold'), ':</label>
+			<select name="NumberMonthsHolding">';
 
 	if (!isset($_POST['NumberMonthsHolding'])) {
 		$_POST['NumberMonthsHolding'] = 1;
 	}
 	if ($_POST['NumberMonthsHolding'] == 0.5) {
-		echo '<option selected="selected" value="0.5">' . _('Two Weeks') . '</option>';
+		echo '<option selected="selected" value="0.5">', _('Two Weeks'), '</option>';
 	} else {
-		echo '<option value="0.5">' . _('Two Weeks') . '</option>';
+		echo '<option value="0.5">', _('Two Weeks'), '</option>';
 	}
 	if ($_POST['NumberMonthsHolding'] == 1) {
-		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">', _('One Month'), '</option>';
 	} else {
-		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">', _('One Month'), '</option>';
 	}
 	if ($_POST['NumberMonthsHolding'] == 1.5) {
-		echo '<option selected="selected" value="1.5">' . _('Six Weeks') . '</option>';
+		echo '<option selected="selected" value="1.5">', _('Six Weeks'), '</option>';
 	} else {
-		echo '<option value="1.5">' . _('Six Weeks') . '</option>';
+		echo '<option value="1.5">', _('Six Weeks'), '</option>';
 	}
 	if ($_POST['NumberMonthsHolding'] == 2) {
-		echo '<option selected="selected" value="2">' . _('Two Months') . '</option>';
+		echo '<option selected="selected" value="2">', _('Two Months'), '</option>';
 	} else {
-		echo '<option value="2">' . _('Two Months') . '</option>';
+		echo '<option value="2">', _('Two Months'), '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+		</div>';
+
 	echo '</form>';
 
 	include ('includes/footer.php');

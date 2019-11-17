@@ -657,16 +657,16 @@ if (isset($StockId) and $StockId != '') {
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="EnterAdjustment" value="', _('Enter Stock Adjustment'), '" />';
+			<input type="submit" name="EnterAdjustment" value="', _('Enter Stock Adjustment'), '" /><br />';
 
 	if (!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = '';
 	}
 
-	echo '<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a>';
-	echo '<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '">', _('Show Movements'), '</a>';
-	echo '<a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Show Stock Usage'), '</a>';
-	echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a>';
+	echo '<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a><br />';
+	echo '<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '">', _('Show Movements'), '</a><br />';
+	echo '<a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Show Stock Usage'), '</a><br />';
+	echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a><br />';
 	echo '<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Completed Sales Orders'), '</a>';
 
 	echo '</div>

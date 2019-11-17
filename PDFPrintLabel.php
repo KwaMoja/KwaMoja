@@ -8,6 +8,10 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll'])) and isset($_POST
 	$Title = _('Print Labels');
 	include ('includes/header.php');
 
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Price Labels'), '" alt="" />', ' ', _('Select Labels to rint'), '
+		</p>';
+
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
 					stockmaster.barcode,
@@ -34,7 +38,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll'])) and isset($_POST
 
 	if (DB_error_no() != 0) {
 		prnMsg(_('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		if ($debug == 1) {
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL, 'error');
 		}
@@ -43,63 +47,66 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll'])) and isset($_POST
 	}
 	if (DB_num_rows($LabelsResult) == 0) {
 		prnMsg(_('There were no price labels to print out for the category specified'), 'warn');
-		echo '<br /><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Back') . '</a>';
+		echo '<br /><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Back'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<table>
 			<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Print') . ' ?</th>
-			</tr>
-			<tr>
-				<th colspan="4"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+				<th colspan="3"><input type="submit" name="SelectAll" value="', _('Select All Labels'), '" /></th>
+				<th><input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])) {
 		echo 'checked="checked" ';
 	}
 	echo 'onchange="ReloadForm(SelectAll)" /></td>
 		</tr>';
 
+	echo '<tr>
+			<th>', _('Item Code'), '</th>
+			<th>', _('Item Description'), '</th>
+			<th>', _('Price'), '</th>
+			<th>', _('Print'), ' ?</th>
+		</tr>';
+
 	$i = 0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)) {
 		echo '<tr>
-				<td>' . $LabelRow['stockid'] . '</td>
-				<td>' . $LabelRow['description'] . '</td>
-				<td class="number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
+				<td>', $LabelRow['stockid'], '</td>
+				<td>', $LabelRow['description'], '</td>
+				<td class="number">', locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']), '</td>
 				<td>';
 		if (isset($_POST['SelectAll']) and isset($_POST['CheckAll'])) {
-			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i . '" />';
+			echo '<input type="checkbox" checked="checked" name="PrintLabel', $i, '" />';
 		} else {
-			echo '<input type="checkbox" name="PrintLabel' . $i . '" />';
+			echo '<input type="checkbox" name="PrintLabel', $i, '" />';
 		}
 		echo '</td>
 			</tr>';
-		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
-			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
-			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
-			<input type="hidden" name="Price' . $i . '" value="' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '" />';
+		echo '<input type="hidden" name="StockID', $i, '" value="', $LabelRow['stockid'], '" />
+			<input type="hidden" name="Description', $i, '" value="', $LabelRow['description'], '" />
+			<input type="hidden" name="Barcode', $i, '" value="', $LabelRow['barcode'], '" />
+			<input type="hidden" name="Price', $i, '" value="', locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']), '" />';
 		$i++;
 	}
 	$i--;
-	echo '</table>
-		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
-		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
-		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
-		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" />
-		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
-		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
-		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
-		<div class="centre">
+	echo '</table>';
 
-			<input type="submit" name="PrintLabels" value="' . _('Print Labels') . '" />
+	echo '<input type="hidden" name="NoOfLabels" value="', $i, '" />';
+	echo '<input type="hidden" name="LabelID" value="', $_POST['LabelID'], '" />';
+	echo '<input type="hidden" name="StockCategory" value="', $_POST['StockCategory'], '" />';
+	echo '<input type="hidden" name="SalesType" value="', $_POST['SalesType'], '" />';
+	echo '<input type="hidden" name="Currency" value="', $_POST['Currency'], '" />';
+	echo '<input type="hidden" name="EffectiveDate" value="', $_POST['EffectiveDate'], '" />';
+	echo '<input type="hidden" name="LabelsPerItem" value="', $_POST['LabelsPerItem'], '" />';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintLabels" value="', _('Print Labels'), '" />
 		</div>
 		<div class="centre">
-			<a href="' . $RootPath . '/Labels.php">' . _('Label Template Maintenance') . '</a>
+			<a href="', $RootPath, '/Labels.php">', _('Label Template Maintenance'), '</a>
 		</div>
 	</form>';
 	include ('includes/footer.php');
@@ -265,8 +272,9 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 	$Title = _('Price Labels');
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
-         ' . ' ' . _('Print Price Labels') . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Price Labels'), '" alt="" />', ' ', _('Print Price Labels'), '
+		</p>';
 
 	if (!function_exists('gd_info')) {
 		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is enabled.'), 'error');
@@ -276,81 +284,83 @@ if (isset($_POST['PrintLabels']) and $NoOfLabels > 0) {
 
 		/*if $StockCategory is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table>
-				<tr>
-					<td>' . _('Label to print') . ':</td>
-					<td><select required="required" autofocus="autofocus" name="LabelID">';
+		echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
+		echo '<fieldset>
+				<legend>', _('Label Criteria'), '</legend>';
+
+		echo '<field>
+				<label for="LabelID">', _('Label to print'), ':</label>
+				<select required="required" autofocus="autofocus" name="LabelID">';
 		$LabelResult = DB_query("SELECT labelid, description FROM labels");
 		while ($LabelRow = DB_fetch_array($LabelResult)) {
-			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
+			echo '<option value="', $LabelRow['labelid'], '">', $LabelRow['description'], '</option>';
 		}
 		echo '</select>
-				</td>
-			</tr>
-			<tr>
-				<td>' . _('For Stock Category') . ':</td>
-				<td><select name="StockCategory">';
+			</field>';
 
+		echo '<field>
+				<label for="StockCategory">', _('For Stock Category'), ':</label>
+				<select name="StockCategory">';
 		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($MyRow = DB_fetch_array($CatResult)) {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		}
 		echo '</select>
-					</td>
-				</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>' . _('For Sales Type/Price List') . ':</td>
-				<td><select name="SalesType">';
+		echo '<field>
+				<label for="SalesType">', _('For Sales Type/Price List'), ':</label>
+				<select name="SalesType">';
 		$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult = DB_query($SQL);
-
 		while ($MyRow = DB_fetch_array($SalesTypesResult)) {
 			if ($_SESSION['DefaultPriceList'] == $MyRow['typeabbrev']) {
-				echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+				echo '<option selected="selected" value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 			} else {
-				echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+				echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 			}
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>' . _('For Currency') . ':</td>
-				<td><select name="Currency">';
+		echo '<field>
+				<label for="Currency">', _('For Currency'), ':</label>
+				<select name="Currency">';
 		$SQL = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult = DB_query($SQL);
 
 		while ($MyRow = DB_fetch_array($CurrenciesResult)) {
 			if ($_SESSION['CompanyRecord']['currencydefault'] == $MyRow['currabrev']) {
-				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
+				echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['country'], ' - ', $MyRow['currency'], '</option>';
 			} else {
-				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
+				echo '<option value="', $MyRow['currabrev'], '">', $MyRow['country'], ' - ', $MyRow['currency'], '</option>';
 			}
 		}
-		echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Effective As At') . ':</td>
-			<td><input type="text" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-		echo '</td></tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr><td>' . _('Number of labels per item') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /></tr>';
+		echo '<field>
+				<label for="EffectiveDate">', _('Effective As At'), ':</label>
+				<input type="text" size="11" class="date" name="EffectiveDate" value="', Date($_SESSION['DefaultDateFormat']), '" />
+			</field>';
 
-		echo '</table>
-				<div class="centre">
-					<input type="submit" name="ShowLabels" value="' . _('Show Labels') . '" />
-				</div>
-				<br />
-				<div class="centre">
-					<a href="' . $RootPath . '/Labels.php">' . _('Label Template Maintenance') . '</a>
-				</div>
-				</form>';
+		echo '<field>
+				<label for="LabelsPerItem">', _('Number of labels per item'), ':</label>
+				<input type="text" class="number" name="LabelsPerItem" size="3" value="1" />
+			</field>';
+
+		echo '</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="ShowLabels" value="', _('Show Labels'), '" />
+			</div>';
+
+		echo '<div class="centre">
+				<a href="', $RootPath, '/Labels.php">', _('Label Template Maintenance'), '</a>
+			</div>
+		</form>';
 
 	}
 	include ('includes/footer.php');

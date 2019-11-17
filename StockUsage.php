@@ -19,10 +19,6 @@ if (isset($_POST['ShowGraphUsage'])) {
 
 include ('includes/header.php');
 
-echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Dispatch'), '" alt="" />', ' ', $Title, '
-	</p>';
-
 $Result = DB_query("SELECT description,
 						units,
 						mbflag,
@@ -31,31 +27,40 @@ $Result = DB_query("SELECT description,
 					WHERE stockid='" . $StockId . "'");
 $MyRow = DB_fetch_array($Result);
 
+if (isset($StockId) and $StockId != '') {
+	echo '<p class="page_title_text" >
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Dispatch'), '" alt="" />', _('Item'), ' : ', $StockId, ' - ', $MyRow['description'], '   (', _('in units of'), ' : ', $MyRow['units'], ')
+		</p>';
+} else {
+	echo '<p class="page_title_text" >
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Dispatch'), '" alt="" />', ' ', _('Stock Usage Inquiry'), '
+		</p>';
+}
+
 $DecimalPlaces = $MyRow['decimalplaces'];
 
 echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-echo '<table>';
 
 $ItsKitSetAssemblyOrDummy = False;
 if ($MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'A' or $MyRow['mbflag'] == 'D') {
 
-	$ItsKitSetAssemblyOrDummy = True;
-	echo '<h3>' . $StockId . ' - ' . $MyRow['description'] . '</h3>';
-
 	prnMsg(_('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item'), 'warn');
 
 	$StockId = '';
-} else {
-	echo '<tr>
-			<th><h3>', _('Item'), ' : ', $StockId, ' - ', $MyRow['description'], '   (', _('in units of'), ' : ', $MyRow['units'], ')</h3></th>
-		</tr>';
 }
 
-echo '<tr>
-		<td>', _('Stock Code'), ':<input type="text" name="StockID" size="21" required="required" maxlength="20" value="', $StockId, '" />';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>';
 
-echo _('From Stock Location'), ':<select required="required" name="StockLocation">';
+echo '<field>
+		<label for="StockID">', _('Stock Code'), ':</label>
+		<input type="text" name="StockID" size="21" required="required" maxlength="20" value="', $StockId, '" />
+	</field>';
+
+echo '<field>
+		<label for="StockLocation">', _('From Stock Location'), ':</label>
+		<select required="required" name="StockLocation">';
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -78,12 +83,14 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		$_POST['StockLocation'] = 'All';
 	}
 }
-echo '</select>';
+echo '</select>
+	<field>
+</fieldset>';
 
-echo ' <input type="submit" name="ShowUsage" value="', _('Show Stock Usage'), '" />';
-echo ' <input type="submit" name="ShowGraphUsage" value="', _('Show Graph Of Stock Usage'), '" /></td>
-		</tr>
-		</table>';
+echo '<div class="centre">
+		<input type="submit" name="ShowUsage" value="', _('Show Stock Usage'), '" />
+		<input type="submit" name="ShowGraphUsage" value="', _('Show Graph Of Stock Usage'), '" />
+	</div>';
 
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
  but there is no physical stock movement - it makes sense honest ??? */
@@ -148,7 +155,7 @@ if (isset($_POST['ShowUsage'])) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($MovtsResult)) {
 
-		$DisplayDate = MonthAndYearFromSQLDate($MyRow['lastdate_in_period']);
+		$DisplayDate = $MyRow['periodno'] . ' - ' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']);
 
 		$TotalUsage+= $MyRow['qtyused'];
 		$PeriodsCounter++;
@@ -163,21 +170,19 @@ if (isset($_POST['ShowUsage'])) {
 	//end of while loop
 	if ($TotalUsage > 0 and $PeriodsCounter > 0) {
 		echo '</tbody>';
-		echo '<tfoot>
-				<tr>
-					<th colspan="2">', _('Average Usage per month is'), ' ', locale_number_format($TotalUsage / $PeriodsCounter), '</th>
-				</tr>
-			</tfoot>';
+		echo '<tr class="total_row">
+				<td colspan="2">', _('Average Usage per month is'), ' ', locale_number_format($TotalUsage / $PeriodsCounter), '</td>
+			</tr>';
 	}
 	echo '</table>';
 }
 /* end if Show Usage is clicked */
 
 echo '<div class="centre">
-		<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a>
-		<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Show Stock Movements'), '</a>
-		<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a>
-		<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Completed Sales Orders'), '</a>
+		<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a><br />
+		<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Show Stock Movements'), '</a><br />
+		<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a><br />
+		<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Completed Sales Orders'), '</a><br />
 		<a href="', $RootPath, '/PO_SelectOSPurchOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Outstanding Purchase Orders'), '</a>
 	</div>';
 

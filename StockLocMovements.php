@@ -12,9 +12,8 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
-echo '<table>
-		<tr>
-			<td>', _('From Stock Location'), ':<select required="required" name="StockLocation"> ';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>';
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -23,12 +22,14 @@ $SQL = "SELECT locationname,
 				ON locationusers.loccode=locations.loccode
 				AND locationusers.userid='" . $_SESSION['UserID'] . "'
 				AND locationusers.canview=1";
-echo '<option selected="selected" value="All">', _('All Locations'), '</option>';
+$ResultStkLocs = DB_query($SQL);
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] = 'All';
 }
-
-$ResultStkLocs = DB_query($SQL);
+echo '<field>
+		<label for="StockLocation">', _('From Stock Location'), ':</label>
+		<select required="required" name="StockLocation">
+			<option selected="selected" value="All">', _('All Locations'), '</option>';
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
 		if ($MyRow['loccode'] == $_POST['StockLocation']) {
@@ -40,8 +41,8 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
 }
-
-echo '</select>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['BeforeDate']) or !is_date($_POST['BeforeDate'])) {
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -49,11 +50,18 @@ if (!isset($_POST['BeforeDate']) or !is_date($_POST['BeforeDate'])) {
 if (!isset($_POST['AfterDate']) or !is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
-echo ' ', _('Show Movements before'), ': <input type="text" class="date" name="BeforeDate" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />';
-echo ' ', _('But after'), ': <input type="text" class="date" name="AfterDate" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" />';
-echo '</td>
-	 </tr>
-	 </table>';
+echo '<field>
+		<label for="BeforeDate">', _('Show Movements before'), ':</label>
+		<input type="text" class="date" name="BeforeDate" size="12" required="required" maxlength="12" value="', $_POST['BeforeDate'], '" />
+	</field>';
+
+echo '<field>
+		<label for="AfterDate">', _('But after'), ':</label>
+		<input type="text" class="date" name="AfterDate" size="12" required="required" maxlength="12" value="', $_POST['AfterDate'], '" />
+	</field>';
+
+echo '</fieldset>';
+
 echo '<div class="centre">
 		   <input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
 	 </div>';
@@ -94,19 +102,22 @@ $MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
 	echo '<table cellpadding="5" cellspacing="4 "class="selection">
-			<tr>
-				<th>', _('Item Code'), '</th>
-				<th>', _('Type'), '</th>
-				<th>', _('Trans No'), '</th>
-				<th>', _('Date'), '</th>
-				<th>', _('Customer'), '</th>
-				<th>', _('Quantity'), '</th>
-				<th>', _('Reference'), '</th>
-				<th>', _('Price'), '</th>
-				<th>', _('Discount'), '</th>
-				<th>', _('Quantity on Hand'), '</th>
-				<th>', _('Serial No.'), '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th class="SortedColumn">', _('Item Code'), '</th>
+					<th class="SortedColumn">', _('Type'), '</th>
+					<th class="SortedColumn">', _('Trans No'), '</th>
+					<th class="SortedColumn">', _('Date'), '</th>
+					<th class="SortedColumn">', _('Customer'), '</th>
+					<th>', _('Quantity'), '</th>
+					<th>', _('Reference'), '</th>
+					<th>', _('Price'), '</th>
+					<th>', _('Discount'), '</th>
+					<th>', _('Quantity on Hand'), '</th>
+					<th>', _('Serial No.'), '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($MovtsResult)) {
 
@@ -127,7 +138,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 				<td><a target="_blank" href="', $RootPath, '/StockStatus.php?StockID=', mb_strtoupper(urlencode($MyRow['stockid'])), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
 				<td>', $MyRow['typename'], '</td>
 				<td>', $MyRow['transno'], '</td>
-				<td>', $DisplayTranDate, '</td>
+				<td class="date">', $DisplayTranDate, '</td>
 				<td>', $MyRow['debtorno'], '</td>
 				<td class="number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
 				<td>', $MyRow['reference'], '</td>
@@ -140,7 +151,8 @@ if (DB_num_rows($MovtsResult) > 0) {
 	//end of while loop
 	
 }
-echo '</table>';
+echo '</tbody>
+	</table>';
 echo '</form>';
 
 include ('includes/footer.php');

@@ -58,9 +58,9 @@ if (isset($_POST['PrintPDF'])) {
 		$Title = _('Reorder Level') . ' - ' . _('Problem Report');
 		include ('includes/header.php');
 		prnMsg(_('The Reorder Level report could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		if ($Debug == 1) {
-			echo '<br />' . $SQL;
+			echo '<br />', $SQL;
 		}
 		include ('includes/footer.php');
 		exit;
@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF'])) {
 		$Title = _('Print Reorder Level Report');
 		include ('includes/header.php');
 		prnMsg(_('There were no items with demand greater than supply'), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	} else {
@@ -182,15 +182,21 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Title = _('Reorder Level Reporting');
 	include ('includes/header.php');
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
-	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('From Stock Location') . ':</td>
-				<td><select required="required" name="StockLocation"> ';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" />', ' ', _('Inventory Reorder Level Report'), '
+		</p>';
+
+	echo '<div class="page_help_text">', _('Use this report to display the reorder levels for Inventory items in different categories.'), '</div>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="StockLocation">', _('From Stock Location'), ':</label>
+				<select required="required" name="StockLocation"> ';
 	$SQL = "SELECT locationname,
 					locations.loccode
 				FROM locations
@@ -198,56 +204,55 @@ if (isset($_POST['PrintPDF'])) {
 					ON locationusers.loccode=locations.loccode
 					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canview=1";
-	echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+	echo '<option selected="selected" value="All">', _('All Locations'), '</option>';
 	$ResultStkLocs = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if (isset($_POST['StockLocation']) and $MyRow['loccode'] == $_POST['StockLocation']) {
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	}
 	echo '</select>
-				</td>
-			</tr>';
+		</field>';
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>'A' ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	if (DB_num_rows($Result1) == 0) {
-		echo '</td>
-			</tr>
-		</table>';
+		echo '</fieldset>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'), 'warn');
-		echo '<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
 
-	echo '<tr>
-			<td>' . _('In Stock Category') . ':</td>
-			<td><select required="required" name="StockCat">';
+	echo '<field>
+			<label for="StockCat">', _('In Stock Category'), ':</label>
+			<select required="required" name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">', _('All'), '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">', _('All'), '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
 	echo '</select>
-				</td>
-			</tr>';
-	echo '</table>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>';
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+		</div>';
+
 	echo '</form>';
 	include ('includes/footer.php');
 

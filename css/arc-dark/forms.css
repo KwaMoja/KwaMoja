@@ -9,12 +9,10 @@ border:solid 1px;
 margin:auto;
 padding-top:7px;
 margin-bottom:4px;
-margin-top:4px;
 margin-right:4px;
 border-radius:7px;
-vertical-align:top;
 text-align:left;
-width:auto;
+vertical-align:top;
 }
 form fieldset legend {
 background-color:transparent;

@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['CSV'])) {
 		$Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 		include ('includes/header.php');
 		prnMsg(_('The Inventory Quantity report could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
@@ -91,7 +91,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['CSV'])) {
 		$Title = _('Print Inventory Quantities Report');
 		include ('includes/header.php');
 		prnMsg(_('There were no items with inventory quantities'), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -152,19 +152,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['CSV'])) {
 
 	$Title = _('Inventory Quantities Reporting');
 	include ('includes/header.php');
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
-	echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" />', ' ', _('Inventory Quantities Report'), '
+		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table>
-		<tr>
-			<td>' . _('Selection') . ':</td>
-			<td><select name="Selection">
-				<option selected="selected" value="All">' . _('All') . '</option>
-				<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>
-				</select></td>
-		</tr>';
+	echo '<div class="page_help_text">', _('Use this report to display the quantity of Inventory items in different categories.'), '</div><br />';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="Selection">', _('Selection'), ':</label>
+				<select name="Selection">
+					<option selected="selected" value="All">', _('All'), '</option>
+					<option value="Multiple">', _('Only Parts With Multiple Locations'), '</option>
+				</select>
+			</field>';
 
 	$SQL = "SELECT categoryid,
 				categorydescription
@@ -172,39 +177,41 @@ if (isset($_POST['PrintPDF']) or isset($_POST['CSV'])) {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	if (DB_num_rows($Result1) == 0) {
-		echo '</table>
-			<p />';
+		echo '</fieldset>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'), 'warn');
-		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
 
-	echo '<tr>
-			<td>' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">', _('In Stock Category'), ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">', _('All'), '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">', _('All'), '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
+	echo '</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+			<input type="submit" name="CSV" value="', _('Output to CSV'), '" />
 		</div>';
+
 	echo '</form>';
 	include ('includes/footer.php');
 

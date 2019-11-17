@@ -7,11 +7,12 @@ form fieldset {
 background:#556699;
 color:#FFFFFF;
 display: inline;
-border:solid 0px;
+border:solid 1px;
 margin:auto;
 padding-top:7px;
+margin-top:4px;
 margin-bottom:4px;
-margin-right:4px;
+margin-right:2px;
 border-radius:7px;
 text-align:left;
 vertical-align:top;

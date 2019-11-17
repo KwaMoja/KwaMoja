@@ -83,7 +83,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['CSV'])) and isset($_POST['Catego
 		$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 		include ('includes/header.php');
 		prnMsg(_('The inventory valuation could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
@@ -94,7 +94,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['CSV'])) and isset($_POST['Catego
 		$Title = _('Print Inventory Valuation Error');
 		include ('includes/header.php');
 		prnMsg(_('There were no items with any value to print out for the location specified'), 'info');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo '<br /><a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>';
 		include ('includes/footer.php');
 		exit;
 	}
@@ -221,34 +221,36 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['CSV'])) and isset($_POST['Catego
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" />', ' ', $Title, '
 		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table>
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid,
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	$SQL = "SELECT categoryid,
 					categorydescription
 				FROM stockcategory
-				ORDER BY categorydescription';
+				ORDER BY categorydescription";
 	$CatResult = DB_query($SQL);
+	echo '<field>
+			<label for="Categories">', _('Select Inventory Categories'), ':</label>
+			<select autofocus="autofocus" required="required" size="12" name="Categories[]"multiple="multiple">';
 	while ($MyRow = DB_fetch_array($CatResult)) {
 		if (isset($_POST['Categories']) and in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">', _('For Inventory in Location'), ':</label>
+			<select name="Location">';
 
 	$SQL = "SELECT locations.loccode,
 					locationname
@@ -263,25 +265,26 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['CSV'])) and isset($_POST['Catego
 	echo '<option value="All">' . _('All Locations') . '</option>';
 
 	while ($MyRow = DB_fetch_array($LocnResult)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Summary or Detailed Report') . ':</td>
-			<td><select name="DetailedReport">
-					<option selected="selected" value="No">' . _('Summary Report') . '</option>
-					<option value="Yes">' . _('Detailed Report') . '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
+	echo '<field>
+			<label for="DetailedReport">', _('Summary or Detailed Report'), ':</label>
+			<select name="DetailedReport">
+				<option selected="selected" value="No">', _('Summary Report'), '</option>
+				<option value="Yes">', _('Detailed Report'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+			<input type="submit" name="CSV" value="', _('Output to CSV'), '" />
 		</div>';
+
 	echo '</form>';
 
 	include ('includes/footer.php');

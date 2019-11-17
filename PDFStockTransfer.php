@@ -16,19 +16,26 @@ if (!isset($_GET['TransferNo'])) {
 		//open a form for entering a transfer number
 		$Title = _('Print Stock Transfer');
 		include ('includes/header.php');
-		echo '<p class="page_title_text" ><img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print Transfer Note'), '" alt="" />', $Title, '</p>';
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print Transfer Note'), '" alt="" />', $Title, '
+			</p>';
+
 		echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="form">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table>
-			<tr>
-				<td>', _('Print Stock Transfer Note'), ' : ', '</td>
-				<td><input type="text" class="integer"  name="TransferNo" required="required" maxlength="10" size="11" /></td>
-			</tr>
-			</table>';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<legend>', _('Report Criteria'), '</legend>
+				<field>
+					<label for="TransferNo">', _('Print Stock Transfer Note'), ' :</label>
+					<input type="text" class="integer"  name="TransferNo" required="required" maxlength="10" size="11" />
+				</field>
+			</fieldset>';
+
 		echo '<div class="centre">
 				<input type="submit" name="Process" value="', _('Print Transfer Note'), '" />
 			</div>
-			</form>';
+		</form>';
+
 		include ('includes/footer.php');
 		exit();
 	}
@@ -68,7 +75,9 @@ if (DB_num_rows($Result) == 0) {
 	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.php');
 	prnMsg(_('There was no transfer found at your location with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="PDFStockTransfer.php">' . _('Try Again') . '</a>';
+	echo '<div class="centre">
+			<a href="PDFStockTransfer.php">', _('Try Again'), '</a>
+		</div>';
 	include ('includes/footer.php');
 	exit;
 }

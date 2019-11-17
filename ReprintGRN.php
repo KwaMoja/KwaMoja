@@ -3,27 +3,29 @@ include ('includes/session.php');
 $Title = _('Reprint a GRN');
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', $Title, '" alt="" />', ' ', $Title, '
+	</p>';
 
 if (!isset($_POST['PONumber'])) {
 	$_POST['PONumber'] = '';
 }
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table>
-		<tr>
-			<th colspan="2"><h3>' . _('Select a purchase order') . '</h3></th>
-		</tr>
-		<tr>
-			<td>' . _('Enter a Purchase Order Number') . '</td>
-			<td>' . '<input type="text" name="PONumber" required="required" maxlength="7" class="number" size="7" value="' . $_POST['PONumber'] . '" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" style="text-align: center"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
-		</tr>
-	</table>
-	</form>';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+echo '<fieldset>
+		<legend>', _('Select a purchase order'), '</legend>
+		<field>
+			<label for="PONumber">', _('Enter a Purchase Order Number'), '</label>
+			<input type="text" name="PONumber" required="required" maxlength="7" class="number" value="', $_POST['PONumber'], '" />
+		</field>
+	</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="Show" value="', _('Show GRNs'), '" />
+	</div>
+</form>';
 
 if (isset($_POST['Show'])) {
 	if ($_POST['PONumber'] == '') {
@@ -76,29 +78,31 @@ if (isset($_POST['Show'])) {
 	$k = 0;
 	echo '<table>
 			<tr>
-				<th colspan="8"><h3>' . _('GRNs for Purchase Order No') . ' ' . $_POST['PONumber'] . '</h3></th>
+				<th colspan="9"><h3>', _('GRNs for Purchase Order No'), ' ', $_POST['PONumber'], '</h3></th>
 			</tr>
 			<tr>
-				<th>' . _('Supplier') . '</th>
-				<th>' . _('PO Order line') . '</th>
-				<th>' . _('GRN Number') . '</th>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . _('Delivery Date') . '</th>
-				<th>' . _('Quantity Received') . '</th>
+				<th>', _('Supplier'), '</th>
+				<th>', _('PO Order line'), '</th>
+				<th>', _('GRN Number'), '</th>
+				<th>', _('Item Code'), '</th>
+				<th>', _('Item Description'), '</th>
+				<th>', _('Delivery Date'), '</th>
+				<th>', _('Quantity Received'), '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['suppname'] . '</td>
-				<td class="number">' . $MyRow['podetailitem'] . '</td>
-				<td class="number">' . $MyRow['grnbatch'] . '</td>
-				<td>' . $MyRow['itemcode'] . '</td>
-				<td>' . $MyRow['itemdescription'] . '</td>
-				<td>' . $MyRow['deliverydate'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
-				<td><a href="PDFGrn.php?GRNNo=' . urlencode($MyRow['grnbatch']) . '&PONo=' . urlencode($_POST['PONumber']) . '">' . _('Reprint GRN ') . '</a></td>
-				<td><a href="PDFQALabel.php?GRNNo=' . urlencode($MyRow['grnbatch']) . '&PONo=' . urlencode($_POST['PONumber']) . '">' . _('Reprint QA Label') . '</a></td>
+				<td>', $MyRow['suppname'], '</td>
+				<td class="number">', $MyRow['podetailitem'], '</td>
+				<td class="number">', $MyRow['grnbatch'], '</td>
+				<td>', $MyRow['itemcode'], '</td>
+				<td>', $MyRow['itemdescription'], '</td>
+				<td>', $MyRow['deliverydate'], '</td>
+				<td class="number">', locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']), '</td>
+				<td><a href="PDFGrn.php?GRNNo=', urlencode($MyRow['grnbatch']), '&PONo=', urlencode($_POST['PONumber']), '">', _('Reprint GRN '), '</a></td>
+				<td><a href="PDFQALabel.php?GRNNo=', urlencode($MyRow['grnbatch']), '&PONo=', urlencode($_POST['PONumber']), '">', _('Reprint QA Label'), '</a></td>
 			</tr>';
 	}
 	echo '</table>';

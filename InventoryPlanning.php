@@ -470,32 +470,31 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="Categories">', _('Select Inventory Categories'), ':</label>
+			<select autofocus="autofocus" required="required" size="12" name="Categories[]"multiple="multiple">';
+	$SQL = "SELECT categoryid, categorydescription
 			FROM stockcategory
-			ORDER BY categorydescription';
+			ORDER BY categorydescription";
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
 		if (isset($_POST['Categories']) and in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		}
 	}
 	echo '</select>
-				</td>
-			 </tr>';
-
-	echo '<tr>
-			<td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+		 </field>';
 
 	$SQL = "SELECT locations.loccode,
 					locationname
@@ -505,40 +504,41 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canview=1";
 	$LocnResult = DB_query($SQL);
-
-	echo '<option value="All">' . _('All Locations') . '</option>';
-
+	echo '<field>
+			<label for="Location">', _('For Inventory in Location'), ':</label>
+			<select name="Location">
+				<option value="All">', _('All Locations'), '</option>';
 	while ($MyRow = DB_fetch_array($LocnResult)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Stock Planning') . ':</td>
-			<td><select name="NumberMonthsHolding">
-					<option selected="selected" value="1">' . _('One Month MAX') . '</option>
-					<option value="1.5">' . _('One Month and a half MAX') . '</option>
-					<option value="2">' . _('Two Months MAX') . '</option>
-					<option value="2.5">' . _('Two Month and a half MAX') . '</option>
-					<option value="3">' . _('Three Months MAX') . '</option>
-					<option value="4">' . _('Four Months MAX') . '</option>
-					<option value="11">' . _('One Month AVG') . '</option>
-					<option value="11.5">' . _('One Month and a half AVG') . '</option>
-					<option value="12">' . _('Two Months AVG') . '</option>
-					<option value="12.5">' . _('Two Month and a half AVG') . '</option>
-					<option value="13">' . _('Three Months AVG') . '</option>
-					<option value="14">' . _('Four Months AVG') . '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="ExportToCSV" value="' . _('Export 24 months to CSV') . '" />
+	echo '<field>
+			<label for="NumberMonthsHolding">', _('Stock Planning'), ':</label>
+			<select name="NumberMonthsHolding">
+				<option selected="selected" value="1">', _('One Month MAX'), '</option>
+				<option value="1.5">', _('One Month and a half MAX'), '</option>
+				<option value="2">', _('Two Months MAX'), '</option>
+				<option value="2.5">', _('Two Month and a half MAX'), '</option>
+				<option value="3">', _('Three Months MAX'), '</option>
+				<option value="4">', _('Four Months MAX'), '</option>
+				<option value="11">', _('One Month AVG'), '</option>
+				<option value="11.5">', _('One Month and a half AVG'), '</option>
+				<option value="12">', _('Two Months AVG'), '</option>
+				<option value="12.5">', _('Two Month and a half AVG'), '</option>
+				<option value="13">', _('Three Months AVG'), '</option>
+				<option value="14">', _('Four Months AVG'), '</option>
+			</select>
+		</field>
+	</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
+			<input type="submit" name="ExportToCSV" value="', _('Export 24 months to CSV'), '" />
 		</div>
-		</form>';
+	</form>';
+
 	include ('includes/footer.php');
 
 }
