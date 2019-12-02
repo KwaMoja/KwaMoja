@@ -155,10 +155,12 @@ if (isset($_POST['Submit'])) {
 	
 } else {
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Contract'), '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	$SQL = "SELECT stockid,
 					description
@@ -167,22 +169,28 @@ if (isset($_POST['Submit'])) {
 				AND  mbflag IN ('M', 'A', 'K', 'G');";
 	$Result = DB_query($SQL);
 
-	echo '<table>
-			<tr>
-				<td>' . _('From Stock ID') . '</td>';
-	echo '<td><select name="StockID">';
+	echo '<fieldset>
+			<legend>', _('Copy Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="StockID">', _('From Stock ID'), '</label>
+			<select name="StockID">';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
-			echo '<option selected="selected" value="' . $MyRow[0] . '">' . $MyRow[0] . ' -- ' . $MyRow[1] . '</option>';
+			echo '<option selected="selected" value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		} else {
-			echo '<option value="' . $MyRow[0] . '">' . $MyRow[0] . ' -- ' . $MyRow[1] . '</option>';
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		}
 	}
-	echo '</select></td>
-			</tr>';
-	echo '<tr>
-			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
-	echo '<td><input type="text" required="required" maxlength="20" name="ToStockID" /></td></tr>';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', _(' To New Stock ID'), '</label>
+			<input type="text" required="required" maxlength="20" name="ToStockID" />
+		</field>';
+
+	echo '<h1>', _('OR'), '</h1>';
 
 	$SQL = "SELECT stockid,
 					description
@@ -190,19 +198,23 @@ if (isset($_POST['Submit'])) {
 				WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom)
 				AND mbflag IN ('M', 'A', 'K', 'G');";
 	$Result = DB_query($SQL);
-
 	if (DB_num_rows($Result) > 0) {
-		echo '<tr>
-				<td><input type="radio" name="NewOrExisting" value="E" />' . _('To Existing Stock ID') . '</td><td>';
+		echo '<field>
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', _('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
 		while ($MyRow = DB_fetch_row($Result)) {
-			echo '<option value="' . $MyRow[0] . '">' . $MyRow[0] . ' -- ' . $MyRow[1] . '</option>';
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 	}
-	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-		  </form>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value="Submit" />
+		</div>';
+
+	echo '</form>';
 
 	include ('includes/footer.php');
 }

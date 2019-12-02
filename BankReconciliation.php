@@ -355,12 +355,12 @@ if (isset($_POST['ShowRec']) or isset($_POST['DoExchangeDifference'])) {
 
 if (isset($_POST['BankAccount'])) {
 	echo '<div class="centre">
-			<a href="', $RootPath, '/BankMatching.php?Type=Payments&amp;Account=', urlencode($_POST['BankAccount']), '">', _('Match off cleared payments'), '</a>
+			<a href="', $RootPath, '/BankMatching.php?Type=Payments&amp;Account=', urlencode($_POST['BankAccount']), '">', _('Match off cleared payments'), '</a><br />
 			<a href="', $RootPath, '/BankMatching.php?Type=Receipts&amp;Account=', urlencode($_POST['BankAccount']), '">', _('Match off cleared deposits'), '</a>
 		</div>';
 } else {
 	echo '<div class="centre">
-			<a href="', $RootPath, '/BankMatching.php?Type=Payments">', _('Match off cleared payments'), '</a>
+			<a href="', $RootPath, '/BankMatching.php?Type=Payments">', _('Match off cleared payments'), '</a><br />
 			<a href="', $RootPath, '/BankMatching.php?Type=Receipts">', _('Match off cleared deposits'), '</a>
 		</div>';
 }

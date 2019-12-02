@@ -113,11 +113,13 @@ font-size:100%;
 font-weight:700;
 margin:10px 10px 10px 50px;
 padding:4px;
-width:30%
+width:30%;
+transition-property:background;
+transition-duration:0.5s;
 }
 
 button:hover {
-background:transparent;
+background:#030343;
 color:#E6EAF7;
 cursor:pointer;
 box-shadow:0 0 5px #7E7575

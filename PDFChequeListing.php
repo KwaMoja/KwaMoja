@@ -21,51 +21,56 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
 	$BookMark = 'ChequePaymentListing';
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . $Title . '" alt="' . $Title . '" />' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="', $Title, '" />', $Title, '
+		</p>';
 
 	if ($InputError == 1) {
 		prnMsg($Msg, 'error');
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<div><input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" /></div>';
 
-	echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
-	echo '<table summary="' . _('Report Criteria') . '">
-	 		<tr>
-				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
-				<td><input type="text" name="FromDate" required="required" maxlength="10" size="10" class="date"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Enter the date to which cheques are to be listed') . ':</td>
-				<td><input type="text" name="ToDate" required="required" maxlength="10" size="10"  class="date"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Bank Account') . '</td><td>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="FromDate">', _('Enter the date from which cheques are to be listed'), ':</label>
+			<input type="text" name="FromDate" required="required" maxlength="10" size="10" class="date"  value="', Date($_SESSION['DefaultDateFormat']), '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToDate">', _('Enter the date to which cheques are to be listed'), ':</label>
+			<input type="text" name="ToDate" required="required" maxlength="10" size="10"  class="date"  value="', Date($_SESSION['DefaultDateFormat']), '" />
+		</field>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
 	$Result = DB_query($SQL);
-
-	echo '<select name="BankAccount">';
-
+	echo '<field>
+			<label for="BankAccount">', _('Bank Account'), '</label>
+			<select name="BankAccount">';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], '</option>';
 	}
 
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-				<td>' . _('Email the report off') . ':</td>
-				<td><select required="required" name="Email">
-					<option selected="selected" value="No">' . _('No') . '</option>
-					<option value="Yes">' . _('Yes') . '</option>
-				</select></td>
-			</tr>
-			</table>
-			<div class="centre">
-				<br />
-				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>
-			</form>';
+	echo '<field>
+			<label for="Email">', _('Email the report off'), ':</label>
+			<select required="required" name="Email">
+				<option selected="selected" value="No">', _('No'), '</option>
+				<option value="Yes">', _('Yes'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Go" value="', _('Create PDF'), '" />
+		</div>
+	</form>';
 
 	include ('includes/footer.php');
 	exit;

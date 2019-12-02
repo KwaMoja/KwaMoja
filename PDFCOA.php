@@ -25,26 +25,34 @@ if (isset($_GET['QASampleID'])) {
 if ((!isset($SelectedCOA) || $SelectedCOA == '') and (!isset($QASampleID) or $QASampleID == '')) {
 	$Title = _('Select Certificate of Analysis To Print');
 	include ('includes/header.php');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table>
-			<tr>
-				<td>' . _('Enter Item') . ':</td>
-				<td><input type="text" name="ProdSpec" size="25" maxlength="25" /></td>
-				<td>' . _('Enter Lot') . ':</td>
-				<td><input type="text" name="LotKey" size="25" maxlength="25" /></td>
-			</tr>
-		</table>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />', ' ', $Title, '
+		</p>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Batch Criteria'), '</legend>
+			<field>
+				<label for="ProdSpec">', _('Enter Item'), ':</label>
+				<input type="search" name="ProdSpec" size="25" maxlength="25" />
+			</field>
+			<field>
+				<label for="LotKey">', _('Enter Lot'), ':</label>
+				<input type="search" name="LotKey" size="25" maxlength="25" />
+			</field>
+		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>';
+
 	echo '</form>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	$SQLSpecSelect = "SELECT sampleid,
 							lotkey,
@@ -55,23 +63,24 @@ if ((!isset($SelectedCOA) || $SelectedCOA == '') and (!isset($QASampleID) or $QA
 						WHERE cert='1'
 						ORDER BY lotkey";
 	$ResultSelection = DB_query($SQLSpecSelect);
-	echo '<table>
-			<tr>
-				<td>' . _('Or Select Existing Lot') . ':</td>
-				<td><select name="QASampleID" style="font-family: monospace; white-space:pre;">';
-	echo '<option value="">' . str_pad(_('Lot/Serial'), 15, '_') . str_pad(_('Item'), 20, '_', STR_PAD_RIGHT) . str_pad(_('Description'), 20, '_') . '</option>';
+	echo '<fieldset>
+			<legend>', _('Or Select Existing Lot'), '</legend>
+			<field>
+				<label for="QASampleID">', _('Select Existing Lot'), ':</label>
+				<select name="QASampleID">';
+	echo '<option value="">', str_pad(_('Lot/Serial'), 15, '_'), str_pad(_('Item'), 20, '_', STR_PAD_RIGHT), str_pad(_('Description'), 20, '_'), '</option>';
 	while ($MyRowSelection = DB_fetch_array($ResultSelection)) {
-		echo '<option value="' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'], 15, '_', STR_PAD_RIGHT) . str_pad($MyRowSelection['prodspeckey'], 20, '_') . htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo '<option value="', $MyRowSelection['sampleid'], '">', str_pad($MyRowSelection['lotkey'], 15, '_', STR_PAD_RIGHT), str_pad($MyRowSelection['prodspeckey'], 20, '_'), htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false), '</option>';
 	}
 	echo '</select>
-				</td>
-			</tr>
-		</table>';
+		</field>
+	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>
 	</form>';
+
 	include ('includes/footer.php');
 	exit();
 }
@@ -131,7 +140,7 @@ if (DB_num_rows($Result) == 0) {
 	include ('includes/header.php');
 	prnMsg(_('Unable to Locate Lot') . ' : ' . $SelectedCOA . ' ', 'error');
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/PDFCOA.php">' . _('Certificate of Analysis') . '</a></li></ul>
+			<a href="', $RootPath, '/PDFCOA.php">', _('Certificate of Analysis'), '</a></li></ul>
 		</div>';
 	include ('includes/footer.php');
 	exit;

@@ -25,7 +25,7 @@ font-size:150%;
 margin-top:3px;
 }
 form fieldset legend.search {
-background-image:url(images/magnifier.png);
+background-image:url(images/search.png);
 background-repeat: no-repeat;
 background-size:contain;
 padding-left:32px;
@@ -48,9 +48,12 @@ background-color:#FFFFE0;
 border-radius: 5px;
 border: 1px solid #8DCDEB;
 padding:2px;
+padding-top:3px;
+padding-bottom:3px;
 color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
+transition-duration:0.5s;
 }
 form fieldset field input:hover,select:hover,textarea:hover {
 box-shadow: 0 0 3px #480FCE;
@@ -97,10 +100,15 @@ padding-bottom: 5px;
 padding-left: 16px;
 padding-right: 16px;
 margin: 1px;
-border: 1px solid #E4DEDE;
+border: 1px solid #1A1A1A;
 color:#1A1A1A;
 border-radius: 3px;
 cursor: pointer;
+transition-duration:0.5s;
+}
+form input[type="submit"]:hover{
+background:linear-gradient(315deg, #655051, #551b1b);
+color:#E6E6FA;
 }
 form input[type="reset"]{
 padding-top: 2px;

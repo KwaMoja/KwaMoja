@@ -4,8 +4,8 @@ $Title = _('WO items can be produced with available stock');
 include ('includes/header.php');
 
 echo '<p class="page_title_text" align="center">
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" title="' . _('Search') . '" alt="" />
-		<strong>' . "List of items in WO ready to be produced in: " . '</strong>
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Search'), '" alt="" />
+		' . _('List of items in WO ready to be produced.'), '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -35,45 +35,46 @@ function submit($RootPath, $Location) {
 	$ResultItems = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($ResultItems) != 0) {
 		echo '<table>';
-		$TableHeader = '<tr>
-							<th>' . _('WO') . '</th>
-							<th>' . _('Stock ID') . '</th>
-							<th>' . _('Requested') . '</th>
-							<th>' . _('Received') . '</th>
-							<th>' . _('Pending') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th>' . _('Component') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Needed') . '</th>
-							<th>' . _('Shrinkage') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th></th>
-							<th>' . _('Result') . '</th>
-						</tr>';
 
-		while ($myItem = DB_fetch_array($ResultItems)) {
-			echo $TableHeader;
+		while ($MyItem = DB_fetch_array($ResultItems)) {
+			echo '<tr>
+					<th>', _('WO'), '</th>
+					<th>', _('Stock ID'), '</th>
+					<th>', _('Requested'), '</th>
+					<th>', _('Received'), '</th>
+					<th>', _('Pending'), '</th>
+					<th>', _('UOM'), '</th>
+					<th>', _('Component'), '</th>
+					<th>', _('QOH'), '</th>
+					<th>', _('Needed'), '</th>
+					<th>', _('Shrinkage'), '</th>
+					<th>', _('UOM'), '</th>
+					<th></th>
+					<th>', _('Result'), '</th>
+				</tr>';
 
-			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
+			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 			$QtyCanBeProduced = $QtyPending;
 
-			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $myItem['wo'] . '">' . $myItem['wo'] . '</a>';
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myItem['stockid'] . '">' . $myItem['stockid'] . '</a>';
+			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $MyItem['wo'] . '">' . $MyItem['wo'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyItem['stockid'] . '">' . $MyItem['stockid'] . '</a>';
 
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', $WOLink, $CodeLink, locale_number_format($myItem['qtyreqd'], $myItem['decimalplaces']), locale_number_format($myItem['qtyrecd'], $myItem['decimalplaces']), locale_number_format($QtyPending, $myItem['decimalplaces']), $myItem['units'], '', '', '', '', '', '', '');
+			echo '<tr class="striped_row">
+					<td class="number">', $WOLink, '</td>
+					<td>', $CodeLink, '</td>
+					<td class="number">', locale_number_format($MyItem['qtyreqd'], $MyItem['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyItem['qtyrecd'], $MyItem['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($QtyPending, $MyItem['decimalplaces']), '</td>
+					<td', $MyItem['units'], '</td>
+					<td></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>';
 
 			// Get the BOM for this item
 			$SQLBOM = "SELECT bom.parent,
@@ -87,7 +88,7 @@ function submit($RootPath, $Location) {
 					WHERE bom.component = stockmaster.stockid
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '" . $Location . "'
-						AND bom.parent = '" . $myItem['stockid'] . "'
+						AND bom.parent = '" . $MyItem['stockid'] . "'
 						AND bom.effectiveafter <= CURRENT_DATE
 						AND (bom.effectiveto > CURRENT_DATE
 						 OR bom.effectiveto='0000-00-00')";
@@ -96,60 +97,62 @@ function submit($RootPath, $Location) {
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
 			$ItemCanBeproduced = True;
 
-			while ($myComponent = DB_fetch_array($BOMResult)) {
+			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
-				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;
-				$PrevisionShrinkage = $ComponentNeeded * ($myComponent['shrinkfactor'] / 100);
+				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
+				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
 
-				if ($myComponent['qoh'] >= $ComponentNeeded) {
+				if ($MyComponent['qoh'] >= $ComponentNeeded) {
 					$Available = "OK";
 				} else {
 					$Available = "";
 					$ItemCanBeproduced = False;
 				}
 
-				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myComponent['component'] . '">' . $myComponent['component'] . '</a>';
+				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';
 
-				printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', '', '', '', '', '', '', $ComponentLink, locale_number_format($myComponent['qoh'], $myComponent['decimalplaces']), locale_number_format($ComponentNeeded, $myComponent['decimalplaces']), locale_number_format($PrevisionShrinkage, $myComponent['decimalplaces']), $myComponent['units'], $Available, '');
+				echo '<tr class="striped_row">
+						<td class="number"></td>
+						<td></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td></td>
+						<td>', $ComponentLink, '</td>
+						<td class="number">', locale_number_format($MyComponent['qoh'], $MyComponent['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']), '</td>
+						<td>', $MyComponent['units'], '</td>
+						<td>', $Available, '</td>
+						<td></td>
+					</tr>';
 			}
 			if ($ItemCanBeproduced) {
-				$Action = 'Produce ' . locale_number_format($QtyPending, 0) . ' x ' . $myItem['stockid'] . ' for WO ' . locale_number_format($myItem['wo'], 0);
-				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $myItem['stockid'] . '&WO=' . $myItem['wo'] . '&Location=' . $Location . '">' . $Action . '</a>';
+				$Action = 'Produce ' . locale_number_format($QtyPending, 0) . ' x ' . $MyItem['stockid'] . ' for WO ' . locale_number_format($MyItem['wo'], 0);
+				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $MyItem['stockid'] . '&WO=' . $MyItem['wo'] . '&Location=' . $Location . '">' . $Action . '</a>';
 			} else {
 				$ComponentLink = "";
 			}
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', '', '', '', '', '', '', '', '', '', '', '', '', $ComponentLink);
+			echo '<tr>
+					<td class="number"></td>
+					<td></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td></td>
+					<td></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td></td>
+					<td></td>
+					<td>', $ComponentLink, '</td>
+				</tr>';
 		}
 		echo '</table>';
 
 	} else {
-		prnMsg('No items waiting to be produced in ' . $Location);
+		prnMsg('No items waiting to be produced in ' . $Location, 'info');
 	}
 
 } // End of function submit()
@@ -158,14 +161,11 @@ function submit($RootPath, $Location) {
 function display() {
 	// Display form fields. This function is called the first time
 	// the page is called.
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<table>';
-
-	echo '<tr>
-				<td>' . _('For Factory Location') . ':</td>
-				<td><select name="Location">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 
 	$SQL = "SELECT locations.loccode,
 				locationname
@@ -176,17 +176,21 @@ function display() {
 				AND locationusers.canview=1
 			WHERE locations.usedforwo=1";
 	$LocnResult = DB_query($SQL);
-
+	echo '<field>
+			<label for="Location">', _('For Factory Location'), ':</label>
+			<select name="Location">';
 	while ($MyRow = DB_fetch_array($LocnResult)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 	}
-	echo '</select></td>
-			</tr>';
+	echo '</select>
+		</tr>';
 
-	echo '</table>
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Search Items To Produce') . '" />
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Search Items To Produce'), '" />
 		</div>';
+
 	echo '</form>';
 
 } // End of function display()

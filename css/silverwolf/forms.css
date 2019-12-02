@@ -1,6 +1,7 @@
 form {
 background:transparent;
 width: 100%;
+margin:0 auto;
 text-align: center;
 color:#1A1A1A;
 }
@@ -50,6 +51,7 @@ padding:2px;
 color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
+transition-duration:0.5s;
 }
 form fieldset field input:hover,select:hover,textarea:hover {
 background-color:#e3e5f5;
@@ -102,6 +104,11 @@ color:#8DCDEB;
 border-radius: 3px;
 cursor: pointer;
 color:#1A1A1A;
+transition-duration:0.5s;
+}
+form input[type="submit"]:hover{
+background:#7F7F7F;
+color:#FFFFFF;
 }
 form input[type="reset"]{
 padding-top: 2px;

@@ -381,12 +381,24 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					AND language='" . $_SESSION['ChartLanguage'] . "'";
 			$Result = DB_query($SQL);
 
+			if (!isset($_POST['tag'])) {
+				$_POST['tag'] = array('0');
+			}
 			if (DB_num_rows($Result) == 0) {
 				prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'), 'warn');
 				unset($_POST['GLManualCode']);
 			} else {
 				$MyRow = DB_fetch_array($Result);
-				$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $MyRow['accountname'], $_POST['tag']);
+				if (isset($_POST['Id'])) {
+					$OldAmount = $_SESSION['JournalDetail']->GLEntries[$_POST['Id']]->Amount;
+					$_SESSION['JournalDetail']->GLEntries[$_POST['Id']]->GLCode = $_POST['GLManualCode'];
+					$_SESSION['JournalDetail']->GLEntries[$_POST['Id']]->tag = $_POST['tag'];
+					$_SESSION['JournalDetail']->GLEntries[$_POST['Id']]->Amount = $_POST['GLAmount'];
+					$_SESSION['JournalDetail']->GLEntries[$_POST['Id']]->Narrative = $_POST['GLNarrative'];
+					$_SESSION['JournalDetail']->JournalTotal+= ($_POST['GLAmount'] - $OldAmount);
+				} else {
+					$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $MyRow['accountname'], $_POST['tag']);
+				}
 			}
 		}
 	} else {
@@ -458,25 +470,21 @@ if (!is_date($_SESSION['JournalDetail']->JnlDate)) {
 	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
 }
 
-echo '<table>
-		<tr>
-			<td colspan="5"><table>
-				<tr>
-					<td>', _('Date to Process Journal'), ':</td>';
+echo '<fieldset>
+		<legend>', _('Journal Header Details'), '</legend>';
 
+echo '<field>
+		<label for="JournalProcessDate">', _('Date to Process Journal'), ':</label>';
 if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
-	echo '<td>
-			<input type="text" class="date" name="JournalProcessDate" required="required" maxlength="10" size="11" value="', $_SESSION['JournalDetail']->JnlDate, '" />
-		</td>';
+	echo '<input type="text" class="date" name="JournalProcessDate" required="required" maxlength="10" size="11" value="', $_SESSION['JournalDetail']->JnlDate, '" />';
 } else {
-	echo '<td>
-			<input type="text" autofocus="autofocus" class="date" name="JournalProcessDate" required="required" maxlength="10" size="11" value="', $_SESSION['JournalDetail']->JnlDate, '" />
-		</td>';
+	echo '<input type="text" autofocus="autofocus" class="date" name="JournalProcessDate" required="required" maxlength="10" size="11" value="', $_SESSION['JournalDetail']->JnlDate, '" />';
 }
+echo '</field>';
 
-echo '<td>', _('Type'), ':</td>
-		<td><select name="JournalType">';
-
+echo '<field>
+		<label for="JournalType">', _('Type'), ':</label>
+		<select name="JournalType">';
 if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">', _('Reversing'), '</option>';
 	echo '<option value = "Normal">', _('Normal'), '</option>';
@@ -484,67 +492,19 @@ if (isset($_POST['JournalType']) and $_POST['JournalType'] == 'Reversing') {
 	echo '<option value = "Reversing">', _('Reversing'), '</option>';
 	echo '<option selected="selected" value = "Normal">', _('Normal'), '</option>';
 }
-
 echo '</select>
-		</td>
-	</tr>
-</table>';
+	</field>
+</fieldset>';
 /* close off the table in the first column  */
 
-echo '<table width="70%">';
-/* Set upthe form for the transaction entry for a GL Payment Analysis item */
+echo '<fieldset>
+		<legend>', _('Journal Line Entry'), '</legend>';
 
-echo '<tr>
-		<th colspan="3">
-			<div class="centre"><h2>', _('Journal Line Entry'), '</h2></div>
-		</th>
-	</tr>';
+if (isset($_GET['Edit'])) {
+	echo '<input type="hidden" name="Id" value="', $_GET['Edit'], '" />';
+}
 
 /*now set up a GLCode field to select from avaialble GL accounts */
-echo '<tr>
-		<th>', _('GL Tag'), '</th>
-		<th>', _('GL Account Code'), '</th>
-		<th>', _('Select GL Account'), '</th>
-	</tr>';
-
-/* Set upthe form for the transaction entry for a GL Payment Analysis item */
-
-//Select the tag
-echo '<tr>
-		<td rowspan="4" valign="top">
-			<select multiple="multiple" name="tag[]">';
-
-$SQL = "SELECT tagref,
-				tagdescription
-		FROM tags
-		ORDER BY tagref";
-
-$Result = DB_query($SQL);
-echo '<option value="0">0 - ', _('None'), '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
-		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
-	} else {
-		echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
-	}
-}
-echo '</select>
-	</td>';
-// End select tag
-if (!isset($_POST['GLManualCode'])) {
-	$_POST['GLManualCode'] = '';
-}
-
-if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
-	echo '<td>
-			<input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,', "'", 'The account code ', "'", '+ this.value+ ', "'", ' doesnt exist', "'", ')" value="', $_POST['GLManualCode'], '"  />
-		</td>';
-} else {
-	echo '<td>
-			<input type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this, GLCode.options,', "'", 'The account code ', "'", '+ this.value+ ', "'", ' doesnt exist', "'", ')" value="', $_POST['GLManualCode'], '"  />
-		</td>';
-}
-
 $SQL = "SELECT chartmaster.accountcode,
 			chartmaster.accountname
 		FROM chartmaster
@@ -554,9 +514,9 @@ $SQL = "SELECT chartmaster.accountcode,
 			AND glaccountusers.canupd=1
 		WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
 		ORDER BY chartmaster.accountcode";
-
 $Result = DB_query($SQL);
-echo '<td>
+echo '<field>
+		<label for="GLCode">', _('Select GL Account'), '</label>
 		<select name="GLCode" onchange="return assignComboToInput(this,', 'GLManualCode', ')">
 			<option value="">', _('Select a general ledger account code'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
@@ -567,45 +527,97 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 }
 echo '</select>
-		</td>
-	</tr>';
+	</field>';
 
-if (!isset($_POST['GLNarrative'])) {
-	$_POST['GLNarrative'] = '';
+if (isset($_GET['Edit'])) {
+	$_POST['GLManualCode'] = $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->GLCode;
 }
-if (!isset($_POST['Credit'])) {
-	$_POST['Credit'] = 0;
+if (!isset($_POST['GLManualCode'])) {
+	$_POST['GLManualCode'] = '';
+}
+echo '<field>
+		<label for="GLManualCode">', _('GL Account Code'), '</label>';
+if (!isset($_GET['NewJournal']) or $_GET['NewJournal'] == '') {
+	echo '<td>
+			<input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this.value, GLCode.options,', "'", 'The account code ', "'", '+ this.value+ ', "'", ' doesnt exist', "'", ')" value="', $_POST['GLManualCode'], '"  />
+		</td>';
+} else {
+	echo '<td>
+			<input type="text" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this, GLCode.options,', "'", 'The account code ', "'", '+ this.value+ ', "'", ' doesnt exist', "'", ')" value="', $_POST['GLManualCode'], '"  />
+		</td>';
+}
+echo '</field>';
+
+//Select the tag
+$SQL = "SELECT tagref,
+				tagdescription
+		FROM tags
+		ORDER BY tagref";
+$Result = DB_query($SQL);
+echo '<field>
+		<label for="tag">', _('GL Tag'), '</label>
+		<select multiple="multiple" name="tag[]">';
+echo '<option value="0">0 - ', _('None'), '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
+		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+	} else {
+		echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+	}
+}
+echo '</select>
+	</field>';
+// End select tag
+if (isset($_GET['Edit'])) {
+	if ($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->Amount > 0) {
+		$_POST['Debit'] = $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->Amount;
+	} else {
+		$_POST['Debit'] = 0;
+	}
 }
 if (!isset($_POST['Debit'])) {
 	$_POST['Debit'] = 0;
 }
+echo '<field>
+		<label for="Debit">', _('Debit'), '</label>
+		<input type="text" class="number" name="Debit" onchange="eitherOr(this, ', 'Credit', ')" maxlength="12" size="10" value="', locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']), '" />
+	</field>';
 
-echo '<tr>
-		<th>', _('Debit'), '</th>
-		<td><input type="text" class="number" name="Debit" onchange="eitherOr(this, ', 'Credit', ')" maxlength="12" size="10" value="', locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']), '" /></td>
-	</tr>
-	<tr>
-		<th>', _('Credit'), '</th>
-		<td><input type="text" class="number" name="Credit" onchange="eitherOr(this, ', 'Debit', ')" maxlength="12" size="10" value="', locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']), '" /></td>
-	</tr>
-	<tr>
-		<td></td>
-		<th>', _('Narrative'), '</th>
-	</tr>
-	<tr>
-		<th></th>
-		<th>', _('GL Narrative'), '</th>
-		<td><input type="text" name="GLNarrative" maxlength="100" size="100" value="', $_POST['GLNarrative'], '" /></td>
-	</tr>
-	</table>';
+if (isset($_GET['Edit'])) {
+	if ($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->Amount < 0) {
+		$_POST['Credit'] = - $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->Amount;
+	} else {
+		$_POST['Credit'] = 0;
+	}
+}
+if (!isset($_POST['Credit'])) {
+	$_POST['Credit'] = 0;
+}
+echo '<field>
+		<label for="field">', _('Credit'), '</label>
+		<input type="text" class="number" name="Credit" onchange="eitherOr(this, ', 'Debit', ')" maxlength="12" size="10" value="', locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']), '" />
+	</field>';
+
+if (isset($_GET['Edit'])) {
+	$_POST['GLNarrative'] = $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->Narrative;
+}
+if (!isset($_POST['GLNarrative'])) {
+	$_POST['GLNarrative'] = '';
+}
+echo '<field>
+		<label for="GLNarrative">', _('GL Narrative'), '</label>
+		<input type="text" name="GLNarrative" maxlength="100" size="100" value="', $_POST['GLNarrative'], '" />
+	</field>
+</fieldset>';
 /*Close the main table */
+
 echo '<div class="centre">
 		<input type="submit" name="Process" value="', _('Accept'), '" />
 	</div>';
 
 echo '<table width="85%">
 		<tr>
-			<th colspan="6"><div class="centre"><h2>', _('Journal Summary'), '</h2></div></th>
+			<th colspan="7"><div class="centre"><h2>', _('Journal Summary'), '</h2></div></th>
 		</tr>
 		<tr>
 			<th>', _('GL Tag'), '</th>
@@ -613,6 +625,8 @@ echo '<table width="85%">
 			<th>', _('Debit'), '</th>
 			<th>', _('Credit'), '</th>
 			<th>', _('Narrative'), '</th>
+			<th></th>
+			<th></th>
 		</tr>';
 
 $DebitTotal = 0;
@@ -649,6 +663,7 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	}
 
 	echo '<td>', $JournalItem->Narrative, '</td>
+		<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit=', $JournalItem->ID, '">', _('Edit'), '</a></td>
 		<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Delete=', $JournalItem->ID, '">', _('Delete'), '</a></td>
 	</tr>';
 }

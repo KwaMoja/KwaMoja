@@ -343,7 +343,7 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 	$PDF->addTextWrap(490, $YPos, 45, $FontSize, locale_number_format($weeklyavail[18], 0), 'right');
 	$YPos-= $line_height;
 	$PDF->addTextWrap($Left_Margin, $YPos, 40, $FontSize, _('Planned Acc'));
-	$PDF->addTextWrap($Left_Margin + 40, $YPos, 45, $FontSize, locale_number_format($plannedaccum[9], 0), right);
+	$PDF->addTextWrap($Left_Margin + 40, $YPos, 45, $FontSize, locale_number_format($plannedaccum[9], 0), 'right');
 	$InitialPoint = 130;
 	for ($c = 10;$c < 19;$c++) {
 		$PDF->addTextWrap($InitialPoint, $YPos, 45, $FontSize, locale_number_format($plannedaccum[$c], 0), 'right');
@@ -464,7 +464,7 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 			$PDF->addTextWrap(200, $YPos, 40, $FontSize, locale_number_format($Requirements[$i]['quantity'], $MyRow['decimalplaces']), 'right');
 			$PDF->addTextWrap(240, $YPos, 50, $FontSize, $FormatedReqDueDate, 'right');
 		}
-		if (mb_strlen($Supplies[$i]['part']) > 1) {
+		if (isset($Supplies[$i]) and mb_strlen($Supplies[$i]['part']) > 1) {
 			$suptype = $Supplies[$i]['ordertype'];
 			// If ordertype is not QOH,PO,or WO, it is an MRP generated planned order and the
 			// ordertype is actually the demandtype that caused the planned order
@@ -523,55 +523,67 @@ if (isset($_POST['PrintPDF']) and $_POST['Part'] != '') {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	if (DB_num_rows($Result1) == 0) {
-		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<p class="bad">', _('Problem Report'), ':<br />', _('There are no stock categories currently defined please use the link below to set them up');
+		echo '<br /><a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
 		exit;
 	}
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>';
-	echo '<table><tr>';
-	echo '<td>' . _('In Stock Category') . ':';
-	echo '<select name="StockCat">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', _('Search for Inventory Items'), '
+		</p>';
+
+	echo '<fieldset>
+			<legend>', _('Search Criteria'), '</legend>';
+
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
+	echo '<field>
+			<label for="StockCat">', _('In Stock Category'), ':</label>
+			<select name="StockCat">';
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">', _('All'), '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">', _('All'), '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
-	echo '</select></td>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Keywords">', _('Enter partial'), '<b> ', _('Description'), '</b>:</label>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
+		echo '<input type="search" autofocus="autofocus" name="Keywords" value="', $_POST['Keywords'], '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />';
+		echo '<input type="search" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />';
 	}
-	echo '</td></tr><tr><td></td>';
-	echo '<td><h3><b>' . _('OR') . ' ' . '</b></h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
-	echo '<td>';
+	echo '</field>';
+
+	echo '<h1>' . _('OR') . ' ' . '</h1>';
+
+	echo '<field>
+			<label for="StockCode">', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
+		echo '<input type="search" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" />';
 	} else {
-		echo '<input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" />';
+		echo '<input type="search" autofocus="autofocus" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-		</div>
-		<br />';
+	echo '</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Search" value="', _('Search Now'), '" />
+		</div>';
 
 	echo '</form>';
 	if (!isset($_POST['Search'])) {
@@ -717,8 +729,8 @@ if (isset($_POST['Search']) or isset($_POST['Go']) or isset($_POST['Next']) or i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($searchresult) and !isset($_POST['Select'])) {
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	$ListCount = DB_num_rows($searchresult);
 	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
@@ -738,33 +750,33 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre">
-					<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+					', $_POST['PageOffset'], ' ', _('of'), ' ', $ListPageMax, ' ', _('pages'), '. ', _('Go to Page'), ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
-					echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+					echo '<option value="', $ListPage, '" selected="selected">', $ListPage, '</option>';
 				} else {
-					echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
+					echo '<option value="', $ListPage, '">', $ListPage, '</option>';
 				}
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . _('Go') . '" />
-				<input type="submit" name="Previous" value="' . _('Previous') . '" />
-				<input type="submit" name="Next" value="' . _('Next') . '" />
-				<input type="hidden" name="Keywords" value="' . $_POST['Keywords'] . '" />
-				<input type="hidden" name="StockCat" value="' . $_POST['StockCat'] . '" />
-				<input type="hidden" name="StockCode" value="' . $_POST['StockCode'] . '" />
-				</div>';
+				<input type="submit" name="Go" value="', _('Go'), '" />
+				<input type="submit" name="Previous" value="', _('Previous'), '" />
+				<input type="submit" name="Next" value="', _('Next'), '" />
+				<input type="hidden" name="Keywords" value="', $_POST['Keywords'], '" />
+				<input type="hidden" name="StockCat" value="', $_POST['StockCat'], '" />
+				<input type="hidden" name="StockCode" value="', $_POST['StockCode'], '" />
+			</div>';
 		}
 		echo '<table>
 				<tr>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Total Qty On Hand') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Stock Status') . '</th>
+					<th>', _('Code'), '</th>
+					<th>', _('Description'), '</th>
+					<th>', _('Total Qty On Hand'), '</th>
+					<th>', _('Units'), '</th>
+					<th>', _('Stock Status'), '</th>
 				</tr>';
 		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
@@ -778,11 +790,11 @@ if (isset($searchresult) and !isset($_POST['Select'])) {
 				$qoh = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 			}
 			echo '<tr class="striped_row">
-					<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
-					<td>' . $MyRow['description'] . '</td>
-					<td class="number">' . $qoh . '</td>
-					<td>' . $MyRow['units'] . '</td>
-					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $MyRow['stockid'] . '">' . _('View') . '</a></td>
+					<td><input type="submit" name="Select" value="', $MyRow['stockid'], '" /></td>
+					<td>', $MyRow['description'], '</td>
+					<td class="number">', $qoh, '</td>
+					<td>', $MyRow['units'], '</td>
+					<td><a target="_blank" href="', $RootPath, '/StockStatus.php?StockID=', urlencode($MyRow['stockid']), '">', _('View'), '</a></td>
 				</tr>';
 		}
 		//end of while loop

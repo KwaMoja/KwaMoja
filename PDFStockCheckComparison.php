@@ -103,7 +103,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 								prd,
 								reference,
 								qty,
-								newqoh)
+								newqoh,
+								standardcost)
 						VALUES ('" . $MyRow['stockid'] . "',
 							17,
 							'" . $AdjustmentNumber . "',
@@ -113,7 +114,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
-							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
+							'" . ($QtyOnHandPrior + $StockQtyDifference) . "',
+							'" . $MyRow['standardcost'] . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
@@ -341,42 +343,47 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$Title = _('Inventory Comparison Report');
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', $Title, '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<table>';
-	echo '<tr><td>' . _('Choose Option') . ':</td>
-			  <td><select required="required" name="ReportOrClose">';
+	echo '<fieldset>
+			<legend>', _('Report Options'), '</legend>';
+	echo '<field>
+			<label for="ReportOrClose">', _('Choose Option'), ':</label>
+			<select required="required" name="ReportOrClose" autofocus="autofocus">';
 
 	if (isset($_POST['ReportOrClose']) and $_POST['ReportOrClose'] == 'ReportAndClose') {
 		echo '<option selected="selected" value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 		echo '<option value="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 	} else {
 		echo '<option selected="selected" value="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
-		echo '<option value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
-	}
-
-	echo '</select></td></tr>';
-	echo '<tr>
-			<td>' . _('Action for Zero Counts') . ':</td>
-			<td><select required="required" name="ZeroCounts">';
-
-	if (isset($_POST['ZeroCounts']) and $_POST['ZeroCounts'] == 'Adjust') {
-		echo '<option selected="selected" value="Adjust">' . _('Adjust System stock to Nil') . '</option>';
-		echo '<option value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
-	} else {
-		echo '<option value="Adjust">' . _('Adjust System stock to Nil') . '</option>';
-		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
+		echo '<option value="ReportAndClose">', _('Report and Close the Inventory Comparison Processing Adjustments As Necessary'), '</option>';
 	}
 
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>';
+		</field>';
+
+	echo '<field>
+			<label for="ZeroCounts">', _('Action for Zero Counts'), ':</label>
+			<select required="required" name="ZeroCounts">';
+
+	if (isset($_POST['ZeroCounts']) and $_POST['ZeroCounts'] == 'Adjust') {
+		echo '<option selected="selected" value="Adjust">', _('Adjust System stock to Nil'), '</option>';
+		echo '<option value="Leave">', _('Do not Adjust System stock to Nil'), '</option>';
+	} else {
+		echo '<option value="Adjust">', _('Adjust System stock to Nil'), '</option>';
+		echo '<option selected="selected" value="Leave">', _('Do not Adjust System stock to Nil'), '</option>';
+	}
+	echo '</select>
+		</field>';
+
+	echo '</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
 		</div>';
 	echo '</form>';
 

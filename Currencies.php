@@ -18,7 +18,9 @@ if (isset($_GET['SelectedCurrency'])) {
 $ForceConfigReload = true;
 include ('includes/GetConfig.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/currency.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
+	</p>';
 
 $SQL = "SELECT count(currabrev)
 		FROM currencies";
@@ -30,7 +32,7 @@ if (isset($_SESSION['CompanyRecord']['currencydefault'])) {
 }
 
 if ($MyRow[0] == 0) {
-	echo '<div class="page_help_text">' . _('As this is the first time that the system has been used, you must first set up your main accounting currency.') . '</div>';
+	echo '<div class="page_help_text">', _('As this is the first time that the system has been used, you must first set up your main accounting currency.'), '</div>';
 }
 
 if (isset($_POST['submit'])) {
@@ -293,7 +295,7 @@ if (!isset($SelectedCurrency)) {
 	echo '<table>';
 	echo '<thead>
 			<tr>
-				<td></td>
+				<th></th>
 				<th class="SortedColumn">', _('Country'), '</th>
 				<th class="SortedColumn">', _('ISO4217 Code'), '</th>
 				<th class="SortedColumn">', _('Currency Name'), '</th>
@@ -305,6 +307,9 @@ if (!isset($SelectedCurrency)) {
 				<th>', _('Exchange Rate'), '</th>
 				<th>', _('1 / Ex Rate'), '</th>
 				<th>', _('Ex Rate - ECB'), '</th>
+				<th></th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>';

@@ -5,27 +5,27 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . $Title . '" alt="' . $Title . '" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="', $Title, '" />', ' ', $Title, '
+	</p>';
 
 if (!isset($_POST['Show'])) {
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<table summary="' . _('Selection Criteria') . '">
-			<tr>
-				<th colspan="3">' . _('Selection Criteria') . '</th>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Selection Criteria'), '</legend>';
 
 	$SQL = "SELECT typeno FROM systypes WHERE typeid=0";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$MaxJournalNumberUsed = $MyRow['typeno'];
 
-	echo '<tr>
-			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" required="required" maxlength="11" value="1" />' . '</td>
-			<td>' . _('To') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" required="required" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '</td>
-		</tr>';
+	echo '<field>
+			<label>', _('Journal Number Range'), ' (', _('Between'), ' 1 ', _('and'), ' ', $MaxJournalNumberUsed, ')</label>
+			', _('From'), ':', '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberFrom" size="10" required="required" maxlength="11" value="1" />', '
+			', _('To'), ':', '&nbsp;&nbsp;&nbsp;<input type="text" class="number" name="NumberTo" size="10" required="required" maxlength="11" value="', $MaxJournalNumberUsed, '" />
+		</field>';
 
 	$SQL = "SELECT MIN(trandate) AS fromdate,
 					MAX(trandate) AS todate FROM gltrans WHERE type=0";
@@ -39,14 +39,18 @@ if (!isset($_POST['Show'])) {
 		$ToDate = date('Y-m-d');
 	}
 
-	echo '<tr>
-			<td>' . _('Journals Dated Between') . ':</td>
-			<td>' . _('From') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
-			<td>' . _('To') . ':' . '&nbsp;&nbsp;&nbsp;<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
-		</tr>';
+	echo '<field>
+			<label>', _('Journals Dated Between'), ':</label>
+			', _('From'), ':', '&nbsp;&nbsp;&nbsp;<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="', ConvertSQLDate($FromDate), '" />
+			', _('To'), ':', '&nbsp;&nbsp;&nbsp;<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="', ConvertSQLDate($ToDate), '" />
+		</field>';
 
-	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Show" value"' . _('Show transactions') . '" /></div>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Show" value"', _('Show transactions'), '" />
+		</div>';
+
 	echo '</form>';
 } else {
 
@@ -74,21 +78,22 @@ if (!isset($_POST['Show'])) {
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
 	} else {
-		echo '<table summary="' . _('General ledger journal listing') . '">
+		echo '<table summary="', _('General ledger journal listing'), '">
 			<tr>
 				<th colspan="9">
-					<b>' . _('General Ledger Jornals') . '</b>
-					<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+					<b>', _('General Ledger Jornals'), '</b>
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
 				</th>
 			</tr>
 			<tr>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Journal Number') . '</th>
-				<th>' . _('Account Code') . '</th>
-				<th>' . _('Account Description') . '</th>
-				<th>' . _('Narrative') . '</th>
-				<th>' . _('Amount') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-				<th>' . _('Tag') . '</th>
+				<th>', _('Date'), '</th>
+				<th>', _('Journal Number'), '</th>
+				<th>', _('Account Code'), '</th>
+				<th>', _('Account Description'), '</th>
+				<th>', _('Narrative'), '</th>
+				<th>', _('Amount'), ' ', $_SESSION['CompanyRecord']['currencydefault'], '</th>
+				<th>', _('Tag'), '</th>
+				<th></th>
 			</tr>';
 
 		$LastJournal = 0;
@@ -112,12 +117,12 @@ if (!isset($_POST['Show'])) {
 				echo '<tr>
 						<td colspan="8"></td>
 					</tr>
-					<tr>
-						<td valign="top">' . ConvertSQLDate($MyRow['trandate']) . '</td>
-						<td valign="top" class="number">' . $MyRow['typeno'] . '</td>';
+					<tr class="striped_row">
+						<td valign="top">', ConvertSQLDate($MyRow['trandate']), '</td>
+						<td valign="top" class="number">', $MyRow['typeno'], '</td>';
 
 			} else {
-				echo '<tr>
+				echo '<tr class="striped_row">
 						<td valign="top" colspan="2"></td>';
 			}
 
@@ -131,19 +136,19 @@ if (!isset($_POST['Show'])) {
 			$CheckRow = DB_fetch_row($CheckResult);
 
 			if ($CheckRow[0] > 0) {
-				echo '<td valign="top">' . $MyRow['account'] . '</td>
-						<td valign="top">' . $MyRow['accountname'] . '</td>';
+				echo '<td valign="top">', $MyRow['account'], '</td>
+						<td valign="top">', $MyRow['accountname'], '</td>';
 			} else {
-				echo '<td valign="top">' . _('Others') . '</td>
-						<td valign="top">' . _('Other GL Accounts') . '</td>';
+				echo '<td valign="top">', _('Others'), '</td>
+						<td valign="top">', _('Other GL Accounts'), '</td>';
 			}
 
-			echo '<td valign="top">' . $MyRow['narrative'] . '</td>
-					<td valign="top" class="number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td valign="top" class="number">' . $TagDescriptions . '</td>';
+			echo '<td valign="top">', $MyRow['narrative'], '</td>
+					<td valign="top" class="number">', locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td valign="top" class="number">', $TagDescriptions, '</td>';
 
 			if ($MyRow['typeno'] != $LastJournal) {
-				echo '<td valign="top" class="number"><a href="PDFGLJournal.php?JournalNo=' . urlencode($MyRow['typeno']) . '">' . _('Print') . '</a></td></tr>';
+				echo '<td valign="top" class="number"><a href="PDFGLJournal.php?JournalNo=', urlencode($MyRow['typeno']), '">', _('Print'), '</a></td></tr>';
 
 				$LastJournal = $MyRow['typeno'];
 			} else {
@@ -153,9 +158,9 @@ if (!isset($_POST['Show'])) {
 		}
 		echo '</table>';
 	} //end if no bank trans in the range to show
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<div class="centre"><input type="submit" name="Return" value="', _('Select Another Date'), '" /></div>';
 	echo '</form>';
 }
 include ('includes/footer.php');

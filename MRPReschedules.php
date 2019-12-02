@@ -23,16 +23,16 @@ if (isset($_POST['PrintPDF'])) {
 	$line_height = 12;
 
 	/*Find mrpsupplies records where the duedate is not the same as the mrpdate */
-	$selecttype = " ";
+	$SelectType = " ";
 	if ($_POST['Selection'] != 'All') {
-		$selecttype = " AND ordertype = '" . $_POST['Selection'] . "'";
+		$SelectType = " AND ordertype = '" . $_POST['Selection'] . "'";
 	}
 	$SQL = "SELECT mrpsupplies.*,
 				   stockmaster.description,
 				   stockmaster.decimalplaces
 			  FROM mrpsupplies,stockmaster
 			  WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
-				 $selecttype
+				 $SelectType
 			  ORDER BY mrpsupplies.part";
 	$Result = DB_query($SQL, '', '', false, true);
 
@@ -116,37 +116,38 @@ if (isset($_POST['PrintPDF'])) {
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text" >
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Stock'), '" alt="" />', ' ', $Title, '
 		</p>';
 
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table>
-		<tr>
-			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
-				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-				<option value="no">' . _('Plain Print') . '</option>
-				</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Selection') . ':</td>
-			<td><select name="Selection">
-				<option selected="selected" value="All">' . _('All') . '</option>
-				<option value="WO">' . _('Work Orders Only') . '</option>
-				<option value="PO">' . _('Purchase Orders Only') . '</option>
-				</select></td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="Fill">', _('Print Option'), ':</label>
+			<select name="Fill">
+				<option selected="selected" value="yes">', _('Print With Alternating Highlighted Lines'), '</option>
+				<option value="no">', _('Plain Print'), '</option>
+			</select>
+		</field>';
+
+	echo '<field>
+			<label for="Selection">', _('Selection'), ':</label>
+			<select name="Selection">
+				<option selected="selected" value="All">', _('All'), '</option>
+				<option value="WO">', _('Work Orders Only'), '</option>
+				<option value="PO">', _('Purchase Orders Only'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
 		</div>
-		</div>
-		</form>';
+	</form>';
 
 	include ('includes/footer.php');
 

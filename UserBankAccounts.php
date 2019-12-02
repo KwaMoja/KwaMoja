@@ -5,7 +5,9 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include ('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('User Authorised Bank Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', _('User Authorised Bank Accounts'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 if (isset($_POST['SelectedBankAccount'])) {
 	$SelectedBankAccount = mb_strtoupper($_POST['SelectedBankAccount']);
@@ -67,9 +69,9 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
+			$Msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
 			$Result = DB_query($SQL);
-			prnMsg($msg, 'success');
+			prnMsg($Msg, 'success');
 			unset($_POST['SelectedBankAccount']);
 		}
 	}
@@ -88,31 +90,33 @@ if (!isset($SelectedUser)) {
 
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedBankAccount will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	 then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table>
-			<tr>
-				<td>' . _('Select User') . ':</td>
-				<td><select name="SelectedUser">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Users'), '</legend>';
+
+	echo '<field>
+			<label for="SelectedUser">', _('Select User'), ':</label>
+			<select name="SelectedUser">';
 
 	$Result = DB_query("SELECT userid,
 								realname
 						FROM www_users
 						ORDER BY userid");
 
-	echo '<option value="">' . _('Not Yet Selected') . '</option>';
+	echo '<option value="">', _('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedUser) and $MyRow['userid'] == $SelectedUser) {
-			echo '<option selected="selected" value="';
+			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		} else {
-			echo '<option value="';
+			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
-		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
-
 	} //end while loop
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>'; // close main table
+	echo '</fieldset>'; // close main table
 	DB_free_result($Result);
 
 	echo '<div class="centre">
@@ -133,10 +137,12 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	$MyRow = DB_fetch_array($Result);
 	$SelectedUserName = $MyRow['realname'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Authorised bank accounts for') . ' ' . $SelectedUserName . '</a></div>
-		<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
+	echo '<div class="centre"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Authorised bank accounts for'), ' ', $SelectedUserName, '</a></div>';
+
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<input type="hidden" name="SelectedUser" value="', $SelectedUser, '" />';
 
 	$SQL = "SELECT bankaccountusers.accountcode,
 					bankaccounts.bankaccountname
@@ -144,17 +150,16 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			ON bankaccountusers.accountcode=bankaccounts.accountcode
 			WHERE bankaccountusers.userid='" . $SelectedUser . "'
 			ORDER BY bankaccounts.bankaccountname ASC";
-
 	$Result = DB_query($SQL);
 
-	echo '<table>';
-	echo '<tr>
-			<th colspan="6"><h3>' . _('Authorised bank accounts for User') . ': ' . $SelectedUserName . '</h3></th>
-		</tr>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Name') . '</th>
-		</tr>';
+	echo '<table>
+			<tr>
+				<th colspan="6"><h3>', _('Authorised bank accounts for User'), ': ', $SelectedUserName, '</h3></th>
+			</tr>
+			<tr>
+				<th>', _('Code'), '</th>
+				<th>', _('Name'), '</th>
+			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 

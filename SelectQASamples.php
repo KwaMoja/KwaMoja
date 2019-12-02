@@ -41,7 +41,7 @@ if (!isset($_POST['ToDate'])) {
 }
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', $Title, '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -137,6 +137,7 @@ if (!isset($SelectedSampleID)) {
 
 	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	if (isset($_POST['ResetPart'])) {
 		unset($SelectedStockItem);
 	}
@@ -231,34 +232,52 @@ if (!isset($SelectedSampleID)) {
 		if (!isset($SampleID)) {
 			$SampleID = '';
 		}
-		echo '<table>
-				<tr>
-					<td>';
+		echo '<fieldset>
+				<legend>', _('Search Criteria'), '</legend>';
+
 		if (isset($SelectedStockItem)) {
-			echo _('For the part'), ':<b>', $SelectedStockItem, '</b> ', _('and'), ' ', '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" />';
+			echo '<field>
+					<label>', _('For the part'), ':</label>
+					<div class="fieldtext">', $SelectedStockItem, '</div> ', _('and'), ' ', '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" />
+				</field>';
 		}
-		echo _('Lot Number'), ': <input name="LotNumber" autofocus="autofocus" maxlength="20" size="12" value="', $LotNumber, '" /> ';
-		echo _('Sample ID'), ': <input name="SampleID" maxlength="10" size="10" value="', $SampleID, '" /> ';
-		echo _('From Sample Date'), ': <input name="FromDate" size="10" class="date" value="', $_POST['FromDate'], '" /> ';
-		echo _('To Sample Date'), ': <input name="ToDate" size="10" class="date" value="', $_POST['ToDate'], '" /> ';
-		echo '<input type="submit" name="SearchSamples" value="', _('Search Samples'), '" />';
-		echo '</td>
-			</tr>
-		</table>';
+		echo '<field>
+				<label for="">', _('Lot Number'), ':</label>
+				<input type="search" name="LotNumber" autofocus="autofocus" maxlength="20" size="12" value="', $LotNumber, '" />
+			</field>';
+
+		echo '<field>
+				<label for="">', _('Sample ID'), ':</label>
+				<input type="search" name="SampleID" maxlength="10" size="10" value="', $SampleID, '" />
+			</field>';
+
+		echo '<field>
+				<label for="">', _('From Sample Date'), ':</label>
+				<input type="text" name="FromDate" size="10" class="date" value="', $_POST['FromDate'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="">', _('To Sample Date'), ':</label>
+				<input type="text" name="ToDate" size="10" class="date" value="', $_POST['ToDate'], '" />
+			</field>';
+
+		echo '</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="SearchSamples" value="', _('Search Samples'), '" />
+			</div>';
 	}
 	$SQL = "SELECT categoryid,
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
-	echo '<table>
-			<tr>
-				<th colspan="6">
-					<h3>', _('To search for Pick Lists for a specific part use the part selection facilities below'), '</h3>
-				</th>
-			</tr>';
-	echo '<tr>
-			<td>', _('Select a stock category'), ':<select name="StockCat">';
+	echo '<fieldset>
+			<legend>', _('To search for samples for a specific part use the part selection facilities below'), '</legend>';
+
+	echo '<field>
+			<label for="StockCat">', _('Select a stock category'), ':</label>
+			<select name="StockCat">';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $MyRow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
@@ -266,16 +285,22 @@ if (!isset($SelectedSampleID)) {
 			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 		}
 	}
-	echo '</select></td>
-			<td>', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</td>
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Keywords">', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</label>
 			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="number"><b>', _('OR'), ' </b>', _('Enter extract of the'), '<b> ', _('Stock Code'), '</b>:</td>
-			<td><input type="text" name="StockCode" size="20" maxlength="25" /></td>
-		</tr>
-		</table>
-		<div class="centre">
+		</field>';
+
+	echo '<field>
+			<label for="StockCode">', _('OR'), ' </b>', _('Enter extract of the'), '<b> ', _('Stock Code'), '</b>:</label>
+			<input type="text" name="StockCode" size="20" maxlength="25" />
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
 			<input type="submit" name="SearchParts" value="', _('Search Parts Now'), '" />
 			<input type="submit" name="ResetPart" value="', _('Show All'), '" />
 		</div>';
@@ -384,6 +409,8 @@ if (!isset($SelectedSampleID)) {
 							<th class="SortedColumn">', _('Sample Date'), '</th>
 							<th class="SortedColumn">', _('Comments'), '</th>
 							<th class="SortedColumn">', _('Cert Allowed'), '</th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>';
 
@@ -456,35 +483,43 @@ if (!isset($_GET['delete'])) {
 		echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 		echo '<input type="hidden" name="SelectedSampleID" value="', $SelectedSampleID, '" />';
-		echo '<table>
-				<tr>
-					<td>', _('Sample ID'), ':</td>
-					<td>', str_pad($SelectedSampleID, 10, '0', STR_PAD_LEFT), '</td>
-				</tr>';
 
-		echo '<tr>
-				<td>', _('Specification'), ':</td>
-				<td>', $_POST['ProdSpecKey'], '</td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Lot'), ':</td>
-				<td>', $_POST['LotKey'], '</td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Identifier'), ':</td>
-				<td><input type="text" name="Identifier" size="10" maxlength="10" value="', $_POST['Identifier'], '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Comments'), ':</td>
-				<td><input type="text" name="Comments" size="30" maxlength="255" value="', $_POST['Comments'], '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Sample Date'), ':</td>
-				<td><input class="date" type="text" name="SampleDate" size="10" maxlength="10" value="', $_POST['SampleDate'], '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Use for Cert?'), ':</td>
-				<td><select name="Cert">';
+		echo '<fieldset>
+				<legend>', _('Edit Sample Information'), '</legend>';
+
+		echo '<field>
+				<label>', _('Sample ID'), ':</label>
+				<div class="fieldtext">', str_pad($SelectedSampleID, 10, '0', STR_PAD_LEFT), '</div>
+			</field>';
+
+		echo '<field>
+				<label>', _('Specification'), ':</label>
+				<div class="fieldtext">', $_POST['ProdSpecKey'], '</div>
+			</field>';
+
+		echo '<field>
+				<label>', _('Lot'), ':</label>
+				<div class="fieldtext">', $_POST['LotKey'], '</div>
+			</field>';
+
+		echo '<field>
+				<label for="Identifier">', _('Identifier'), ':</label>
+				<input type="text" name="Identifier" size="10" maxlength="10" value="', $_POST['Identifier'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="Comments">', _('Comments'), ':</label>
+				<input type="text" name="Comments" size="30" maxlength="255" value="', $_POST['Comments'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="SampleDate">', _('Sample Date'), ':</label>
+				<input class="date" type="text" name="SampleDate" size="10" maxlength="10" value="', $_POST['SampleDate'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="Cert">', _('Use for Cert?'), ':</label>
+				<select name="Cert">';
 		if ($_POST['Cert'] == 1) {
 			echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 		} else {
@@ -496,13 +531,13 @@ if (!isset($_GET['delete'])) {
 			echo '<option value="0">', _('No'), '</option>';
 		}
 		echo '</select>
-					</td>
-				</tr>
-			</table>
-			<div class="centre">
+			</field>
+		</fieldset>';
+
+		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Enter Information'), '" />
 			</div>
-			</form>';
+		</form>';
 
 	} else { //end of if $SelectedSampleID only do the else when a new record is being entered
 		$_POST['ProdSpecKey'] = '';
@@ -514,7 +549,9 @@ if (!isset($_GET['delete'])) {
 
 		echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		echo '<table>';
+
+		echo '<fieldset>
+				<legend>', _('New Sample Information'), '</legend>';
 
 		$SQLSpecSelect = "SELECT DISTINCT(keyval),
 								description
@@ -522,31 +559,33 @@ if (!isset($_GET['delete'])) {
 							LEFT OUTER JOIN stockmaster
 								ON stockmaster.stockid=prodspecs.keyval";
 		$ResultSelection = DB_query($SQLSpecSelect);
-		echo '<tr>
-				<td>', _('Specification'), ':</td>
-				<td><select name="ProdSpecKey">';
+		echo '<field>
+				<label for="ProdSpecKey">', _('Specification'), ':</label>
+				<select name="ProdSpecKey">';
 		while ($MyRowSelection = DB_fetch_array($ResultSelection)) {
 			echo '<option value="', $MyRowSelection['keyval'], '">', $MyRowSelection['keyval'], ' - ', htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		}
 		echo '</select>
-				</td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Lot'), ':</td>
-				<td><input type="text" required="required" name="LotKey" size="25" maxlength="25" value="', $_POST['LotKey'], '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Identifier'), ':</td>
-				<td><input type="text" name="Identifier" size="10" maxlength="10" value="', $_POST['Identifier'], '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>', _('Comments'), ':</td>
-				<td><input type="text" name="Comments" size="30" maxlength="255" value="', $_POST['Comments'], '" /></td>
-			</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>', _('Use for Cert?'), ':</td>
-				<td><select name="Cert">';
+		echo '<field>
+				<label for="LotKey">', _('Lot'), ':</label>
+				<input type="text" name="LotKey" size="25" maxlength="25" value="', $_POST['LotKey'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="Identifier">', _('Identifier'), ':</label>
+				<input type="text" name="Identifier" size="10" maxlength="10" value="', $_POST['Identifier'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="Comments">', _('Comments'), ':</label>
+				<input type="text" name="Comments" size="30" maxlength="255" value="', $_POST['Comments'], '" />
+			</field>';
+
+		echo '<field>
+				<label for="Cert">', _('Use for Cert?'), ':</label>
+				<select name="Cert">';
 		if ($_POST['Cert'] == 1) {
 			echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 		} else {
@@ -558,12 +597,11 @@ if (!isset($_GET['delete'])) {
 			echo '<option value="0">', _('No'), '</option>';
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
-		echo '<tr>
-				<td>', _('Duplicate for Lot OK?'), ':</td>
-				<td><select name="DuplicateOK">';
+		echo '<field>
+				<label for="DuplicateOK">', _('Duplicate for Lot OK?'), ':</label>
+				<select name="DuplicateOK">';
 		if ($_POST['DuplicateOK'] == 1) {
 			echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 		} else {
@@ -575,10 +613,11 @@ if (!isset($_GET['delete'])) {
 			echo '<option value="0">', _('No'), '</option>';
 		}
 		echo '</select>
-					</td>
-				</tr>
-			</table>
-			<div class="centre">
+			</field>';
+
+		echo '</fieldset>';
+
+		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Enter Information'), '" />
 			</div>
 		</form>';

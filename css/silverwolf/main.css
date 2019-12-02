@@ -30,6 +30,8 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #404552;
 padding-left:5px;
+transition-property:background;
+transition-duration:0.5s;
 }
 .ModuleList .ModuleSelected a {
 border:1px solid #1A1A1A;
@@ -55,8 +57,8 @@ background:#DCDCDC;
 display: inline;
 width:30%;
 border-radius:10px;
-margin-top:5px;
 vertical-align:top;
+margin-top:5px;
 margin-right:5px;
 }
 .MenuList legend {
@@ -67,7 +69,7 @@ padding-right:7px;
 border-radius:7px;
 }
 .MenuList legend img {
-width:24px;
+width:40px;
 padding-right:5px;
 vertical-align:middle;
 }
@@ -95,12 +97,13 @@ font-size:120%;
 text-align:center;
 margin:5px auto;
 padding:5px;
-width:30%;
+width:50%;
 clear: both;
+border-radius:7px;
 }
 .page_title_text img {
 padding-right:7px;
-width:32px;
+width:40px;
 vertical-align:middle;
 }
 .toplink {

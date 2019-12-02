@@ -33,52 +33,49 @@ $FromDate = FormatDateForSQL($_POST['FromDate']);
 $ToDate = FormatDateForSQL($_POST['ToDate']);
 
 echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 //prompt user for Key Value
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<table>
-		<tr>
-			<td>' . _('Show Test Results For') . ':</td>
-			<td><select name="KeyValue">';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>';
+
 $SQLSpecSelect = "SELECT DISTINCT(prodspeckey),
 						description
 					FROM qasamples LEFT OUTER JOIN stockmaster
 					ON stockmaster.stockid=qasamples.prodspeckey";
 
 $ResultSelection = DB_query($SQLSpecSelect);
-
+echo '<field>
+		<label for="KeyValue">', _('Show Test Results For'), ':</label>
+		<select name="KeyValue">';
 while ($MyRowSelection = DB_fetch_array($ResultSelection)) {
 	if ($MyRowSelection['prodspeckey'] == $KeyValue) {
 		$Selected = ' selected="selected" ';
 	} else {
 		$Selected = '';
 	}
-	echo '<option' . $Selected . ' value="' . $MyRowSelection['prodspeckey'] . '">' . $MyRowSelection['prodspeckey'] . ' - ' . htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+	echo '<option', $Selected, ' value="', $MyRowSelection['prodspeckey'], '">', $MyRowSelection['prodspeckey'], ' - ', htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false), '</option>';
 }
 echo '</select>
-			</td>
-		</tr>';
+	</field>';
 
-echo '<tr>
-		<td>' . _('From Sample Date') . ': </td>
-		<td>
-			<input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '"/>
-		</td>
-	</tr>
-	<tr>
-		<td> ' . _('To Sample Date') . ':</td>
-		<td>
-			<input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '"/>
-		</td>
-	</tr>
-</table>';
+echo '<field>
+		<label for="FromDate">', _('From Sample Date'), ':</label>
+		<input name="FromDate" size="10" class="date" value="', $_POST['FromDate'], '"/>
+	</field>';
+
+echo '<field>
+		<label for="ToDate"> ', _('To Sample Date'), ':</label>
+		<input name="ToDate" size="10" class="date" value="', $_POST['ToDate'], '"/>
+	</field>
+</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		<input type="submit" name="pickspec" value="', _('Submit'), '" />
 	</div>
 </form>';
 
@@ -130,26 +127,29 @@ if (isset($KeyValue)) {
 	}
 
 	if ($TotResults > 0) {
-		echo '<br/>' . _('Historical Test Results for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/>';
-
-		echo '<div style="overflow:auto; width:98%; padding:10px; "><table width="90%" style="overflow: scroll;"><tr><th style="white-space:nowrap; text-align:right">' . _('Sample ID:') . '<br>' . _('Lot/Serial:') . '<br>' . _('Identifier:') . '<br>' . _('Sample Date:') . '</th>';
+		echo '<table>
+				<tr>
+					<th colspan="2">', _('Historical Test Results for'), ' ', $KeyValue, '-', $MyRowSelection['description'], '</th>
+				</tr>
+				<tr>
+					<th>', _('Sample ID:'), '<br>', _('Lot/Serial:'), '<br>', _('Identifier:'), '<br>', _('Sample Date:'), '</th>';
 		foreach ($SamplesArray as $SampleKey => $SampleValue) {
-			echo '<th>' . $SampleKey . '<br>' . $SampleValue['lotkey'] . '<br>' . $SampleValue['identifier'] . '<br>' . ConvertSQLDate($SampleValue['sampledate']) . '</th>';
+			echo '<th>', $SampleKey, '<br>', $SampleValue['lotkey'], '<br>', $SampleValue['identifier'], '<br>', ConvertSQLDate($SampleValue['sampledate']), '</th>';
 		}
 		echo '</tr>';
 		foreach ($TestsArray as $TestKey => $TestValue) {
-			echo '<tr class="striped_row"><td class="select" style="white-space:nowrap;">' . $TestValue . '</td>';
+			echo '<tr class="striped_row"><td>', $TestValue, '</td>';
 			foreach ($SamplesArray as $SampleKey => $SampleValue) {
 				if ($AllResultsArray[$TestKey][$SampleKey]['testvalue'] == '' or !isset($AllResultsArray[$TestKey][$SampleKey]['testvalue'])) {
 					$AllResultsArray[$TestKey][$SampleKey]['testvalue'] = '&nbsp;';
 				}
-				echo '<td>' . $AllResultsArray[$TestKey][$SampleKey]['testvalue'] . '</td>';
+				echo '<td>', $AllResultsArray[$TestKey][$SampleKey]['testvalue'], '</td>';
 			}
 			echo '</tr>';
 		}
-		echo '</tr>
-			</table>
-		</div>';
+		echo '</table>';
+	} else {
+		prnMsg(_('There are no test results meeting this criteria'), 'info');
 	}
 }
 include ('includes/footer.php');

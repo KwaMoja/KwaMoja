@@ -14,44 +14,47 @@ if (isset($_GET['KeyValue'])) {
 if (!isset($SelectedProdSpec) || $SelectedProdSpec == "") {
 	$Title = _('Select Product Specification To Print');
 	include ('includes/header.php');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Enter Specification Name') . ':</td>
-				<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
-			</tr>
-		</table>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print'), '" alt="" />', ' ', $Title, '
+		</p>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<field>
+				<label for="KeyValue">', _('Enter Specification Name'), ':</label>
+				<input type="text" name="KeyValue" size="25" maxlength="25" />
+			</field>
+		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>
 	</form>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Or Select Existing Specification') . ':</td>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	$SQLSpecSelect = "SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
 						ON stockmaster.stockid=prodspecs.keyval";
 
 	$ResultSelection = DB_query($SQLSpecSelect);
-	echo '<td><select name="KeyValue">';
-
+	echo '<fieldset>
+			<field>
+				<label for="KeyValue">', _('Or Select Existing Specification'), ':</label>
+				<select name="KeyValue">';
 	while ($MyRowSelection = DB_fetch_array($ResultSelection)) {
-		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'] . ' - ' . htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo '<option value="', $MyRowSelection['keyval'], '">', $MyRowSelection['keyval'], ' - ', htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false), '</option>';
 	}
 	echo '</select>
-				</td>
-			</tr>
-		</table>';
+		</field>
+	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>
 	</form>';
 	include ('includes/footer.php');
@@ -91,7 +94,7 @@ if (DB_num_rows($Result) == 0) {
 	include ('includes/header.php');
 	prnMsg(_('Unable to Locate Specification') . ' : ' . $_SelectedProdSpec . ' ', 'error');
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/PDFProdSpec.php">' . _('Product Specifications') . '</a>
+			<a href="', $RootPath, '/PDFProdSpec.php">', _('Product Specifications'), '</a>
 		</div>';
 	include ('includes/footer.php');
 	exit;

@@ -27,16 +27,26 @@ if (!isset($_POST['RangeMax']) or $_POST['RangeMax'] == '') {
 	$RangeMax = "'" . $_POST['RangeMax'] . "'";
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+	</p>';
 
 if (isset($_GET['CopySpec']) or isset($_POST['CopySpec'])) {
 	if (!isset($_POST['CopyTo']) or $_POST['CopyTo'] == '') {
-		echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />';
+		echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<legend>', _('Copy Criteria'), '</legend>
+				<field>
+					<label for="CopyTo">', _('Enter The Item, Fixed Asset or Template to Copy this Specification to'), ':</label>
+					<input type="text" name="CopyTo" size="25" maxlength="25" />
+				</field>
+			</fieldset>';
+
 		echo '<div class="centre">
-					<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
-					<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
+					<input type="hidden" name="KeyValue" value="', $KeyValue, '" />
+					<input type="submit" name="CopySpec" value="', _('Copy'), '" />
 			</div>
 		</form>';
 		include ('includes/footer.php');
@@ -77,41 +87,42 @@ if (isset($_GET['CopySpec']) or isset($_POST['CopySpec'])) {
 } //CopySpec
 if (!isset($KeyValue) or $KeyValue == '') {
 	//prompt user for Key Value
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Enter Specification Name') . ':</td>
-				<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
-			</tr>
-		</table>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<field>
+				<label for="KeyValue">', _('Enter Specification Name'), ':</label>
+				<input type="search" name="KeyValue" size="25" maxlength="25" />
+			</field>
+		</fieldset>';
+
 	echo '<div>
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>
 	</form>';
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-			<div>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table>
-				<tr>
-					<td>' . _('Or Select Existing Specification') . ':</td>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	$SQLSpecSelect = "SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
 						ON stockmaster.stockid=prodspecs.keyval";
-
 	$ResultSelection = DB_query($SQLSpecSelect);
-	echo '<td><select name="KeyValue">';
-
+	echo '<fieldset>
+			<field>
+				<label for="KeyValue">', _('Or Select Existing Specification'), ':</label>
+				<select name="KeyValue">';
 	while ($MyRowSelection = DB_fetch_array($ResultSelection)) {
-		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'] . ' - ' . htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		echo '<option value="', $MyRowSelection['keyval'], '">', $MyRowSelection['keyval'], ' - ', htmlspecialchars($MyRowSelection['description'], ENT_QUOTES, 'UTF-8', false), '</option>';
 	}
 	echo '</select>
-				</td>
-			</tr>
-		</table>
-		<div>
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+		</field>
+	</fieldset>';
+
+	echo '<div>
+			<input type="submit" name="pickspec" value="', _('Submit'), '" />
 		</div>
 	</form>';
 
@@ -123,7 +134,7 @@ if (!isset($KeyValue) or $KeyValue == '') {
 
 	$ResultSelection = DB_query($SQLSpecSelect);
 	$MyRowSelection = DB_fetch_array($ResultSelection);
-	echo '<br/>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/><br/>';
+	echo '<div class="page_title_text">', _('Product Specification for'), ' ', $KeyValue, '-', $MyRowSelection['description'], '</div>';
 }
 if (isset($_GET['ListTests'])) {
 	$SQL = "SELECT qatests.testid,
@@ -141,19 +152,19 @@ if (isset($_GET['ListTests'])) {
 			AND prodspecs.keyval IS NULL
 			ORDER BY name";
 	$Result = DB_query($SQL);
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Add') . '</th>
-					<th class="SortedColumn">' . _('Name') . '</th>
-					<th class="SortedColumn">' . _('Method') . '</th>
-					<th class="SortedColumn">' . _('Units') . '</th>
-					<th>' . _('Possible Values') . '</th>
-					<th>' . _('Target Value') . '</th>
-					<th>' . _('Range Min') . '</th>
-					<th>' . _('Range Max') . '</th>
+					<th class="SortedColumn">', _('Add'), '</th>
+					<th class="SortedColumn">', _('Name'), '</th>
+					<th class="SortedColumn">', _('Method'), '</th>
+					<th class="SortedColumn">', _('Units'), '</th>
+					<th>', _('Possible Values'), '</th>
+					<th>', _('Target Value'), '</th>
+					<th>', _('Range Min'), '</th>
+					<th>', _('Range Max'), '</th>
 				</tr>
 			</thead>';
 	$k = 0;
@@ -191,25 +202,25 @@ $RangeMin = '<input  class="' . $Class . '" type="text" name="AddRangeMin' . $x 
 $RangeMax = '<input  class="' . $Class . '" type="text" name="AddRangeMax' . $x . '" />';
 break;
 } //end switch
-printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-				</tr>', '<input type="checkbox" name="AddRow' . $x . '"><input type="hidden" name="AddTestID' . $x . '" value="' . $MyRow['testid'] . '">', $MyRow['name'], $MyRow['method'], $MyRow['units'], $MyRow['defaultvalue'], '<input  class="' . $Class . '" type="text" name="AddTargetValue' . $x . '" />', $RangeMin, $RangeMax);
+echo '<tr class="striped_row">
+				<td><input type="checkbox" name="AddRow', $x, '"><input type="hidden" name="AddTestID', $x, '" value="', $MyRow['testid'], '"></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td><input  class="', $Class, '" type="text" name="AddTargetValue', $x, '" /></td>
+				<td>', $RangeMin, '</td>
+				<td>', $RangeMax, '</td>
+			</tr>';
 
 } //END WHILE LIST LOOP
 echo '</tbody>
-	</table>';
+		</table>';
 
 echo '<div class="centre">
-			<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
-			<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
-			<input type="submit" name="AddTests" value="' . _('Add') . '" />
+			<input type="hidden" name="KeyValue" value="', $KeyValue, '" />
+			<input type="hidden" name="AddTestsCounter" value="', $x, '" />
+			<input type="submit" name="AddTests" value="', _('Add'), '" />
 		</div>
 	</form>';
 include ('includes/footer.php');
@@ -217,7 +228,7 @@ exit;
 } //ListTests
 if (isset($_POST['AddTests'])) {
 	for ($i = 0;$i <= $_POST['AddTestsCounter'];$i++) {
-		if ($_POST['AddRow' . $i] == 'on') {
+		if (isset($_POST['AddRow' . $i]) and $_POST['AddRow' . $i] == 'on') {
 			if ($_POST['AddRangeMin' . $i] == '') {
 				$AddRangeMin = "NULL";
 			} else {
@@ -325,7 +336,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-if (!isset($SelectedQATest)) {
+if (!isset($SelectedQATest) and isset($KeyValue)) {
 
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedQATest will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	then none of the above are true and the list of QA Test will be displayed with
@@ -355,18 +366,20 @@ if (!isset($SelectedQATest)) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Name') . '</th>
-					<th class="SortedColumn">' . _('Method') . '</th>
-					<th class="SortedColumn">' . _('Units') . '</th>
-					<th class="SortedColumn">' . _('Type') . '</th>
-					<th>' . _('Possible Values') . '</th>
-					<th>' . _('Target Value') . '</th>
-					<th>' . _('Range Min') . '</th>
-					<th>' . _('Range Max') . '</th>
-					<th class="SortedColumn">' . _('Show on Cert') . '</th>
-					<th class="SortedColumn">' . _('Show on Spec') . '</th>
-					<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
-					<th class="SortedColumn">' . _('Active') . '</th>
+					<th class="SortedColumn">', _('Name'), '</th>
+					<th class="SortedColumn">', _('Method'), '</th>
+					<th class="SortedColumn">', _('Units'), '</th>
+					<th class="SortedColumn">', _('Type'), '</th>
+					<th>', _('Possible Values'), '</th>
+					<th>', _('Target Value'), '</th>
+					<th>', _('Range Min'), '</th>
+					<th>', _('Range Max'), '</th>
+					<th class="SortedColumn">', _('Show on Cert'), '</th>
+					<th class="SortedColumn">', _('Show on Spec'), '</th>
+					<th class="SortedColumn">', _('Show on Test Plan'), '</th>
+					<th class="SortedColumn">', _('Active'), '</th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>';
 	$k = 0;
@@ -416,37 +429,37 @@ case 4; //range
 $TypeDisp = 'Range';
 break;
 } //end switch
-printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this Product Specification ?') . '\');">' . _('Delete') . '</a></td>
-				</tr>', $MyRow['name'], $MyRow['method'], $MyRow['units'], $TypeDisp, $MyRow['defaultvalue'], $MyRow['targetvalue'], $MyRow['rangemin'], $MyRow['rangemax'], $ShowOnCertText, $ShowOnSpecText, $ShowOnTestPlanText, $ActiveText, htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['testid'], $KeyValue, htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['testid'], $KeyValue);
+echo '<tr class="striped_row">
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $TypeDisp, '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td>', $MyRow['targetvalue'], '</td>
+				<td>', $MyRow['rangemin'], '</td>
+				<td>', $MyRow['rangemax'], '</td>
+				<td>', $ShowOnCertText, '</td>
+				<td>', $ShowOnSpecText, '</td>
+				<td>', $ShowOnTestPlanText, '</td>
+				<td>', $ActiveText, '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedQATest=', urlencode($MyRow['testid']), '&amp;KeyValue=', urlencode($KeyValue), '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedQATest=', urlencode($MyRow['testid']), '&amp;KeyValue=', urlencode($KeyValue), '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this Product Specification ?'), '\');">', _('Delete'), '</a></td>
+			</tr>';
 
 } //END WHILE LIST LOOP
 echo '</tbody>
-	</table>';
+		</table>';
 } //end of ifs and buts!
 if (isset($SelectedQATest)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?KeyValue=' . $KeyValue . '">' . _('Show All Product Specs') . '</a>
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?KeyValue=', urlencode($KeyValue), '">', _('Show All Product Specs'), '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	if (isset($SelectedQATest)) {
 		//editing an existing Prod Spec
@@ -456,6 +469,7 @@ if (!isset($_GET['delete'])) {
 						units,
 						type,
 						numericvalue,
+						groupby,
 						prodspecs.defaultvalue,
 						prodspecs.targetvalue,
 						prodspecs.rangemin,
@@ -488,14 +502,16 @@ if (!isset($_GET['delete'])) {
 		$_POST['ShowOnTestPlan'] = $MyRow['showontestplan'];
 		$_POST['Active'] = $MyRow['active'];
 
-		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
-		echo '<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />';
-		echo '<input type="hidden" name="TestID" value="' . $_POST['SelectedQATest'] . '" />';
-		echo '<table>
-				<tr>
-					<td>' . _('Test Name') . ':</td>
-					<td>' . $_POST['QATestName'] . '</td>
-				</tr>';
+		echo '<input type="hidden" name="SelectedQATest" value="', $SelectedQATest, '" />';
+		echo '<input type="hidden" name="KeyValue" value="', $KeyValue, '" />';
+		echo '<input type="hidden" name="TestID" value="', $_POST['SelectedQATest'], '" />';
+		echo '<input type="hidden" name="QATestName" value="', $_POST['QATestName'], '" />';
+		echo '<fieldset>
+				<legend>', _('Edit Test Details'), '</legend>
+				<field>
+					<label for="QATestName">', _('Test Name'), ':</label>
+					<div class="fieldtext">', $_POST['QATestName'], '</div>
+				</field>';
 
 		if (!isset($_POST['Active'])) {
 			$_POST['Active'] = 1;
@@ -529,31 +545,33 @@ $TypeDisp = 'Range';
 break;
 } //end switch
 if ($TypeDisp == 'Select Box') {
-	echo '<tr>
-					<td>' . _('Possible Values') . ':</td>
-					<td><input type="text" name="DefaultValue" size="50" maxlength="150" value="' . $_POST['DefaultValue'] . '" /></td>
-				</tr>';
+	echo '<field>
+					<label for="DefaultValue">', _('Possible Values'), ':</label>
+					<input type="text" name="DefaultValue" size="50" maxlength="150" value="', $_POST['DefaultValue'], '" />
+				</field>';
+} else {
+	echo '<input type="hidden" name="DefaultValue" size="50" maxlength="150" value="" />';
 }
-echo '<tr>
-				<td>' . _('Target Value') . ':</td>
-				<td><input type="text" class="' . $Class . '" name="TargetValue" size="15" maxlength="15" value="' . $_POST['TargetValue'] . '" />&nbsp;' . $_POST['Units'] . '</td>
-			</tr>';
+echo '<field>
+				<label for="TargetValue">', _('Target Value'), ':</label>
+				<input type="text" class="', $Class, '" name="TargetValue" size="15" maxlength="15" value="', $_POST['TargetValue'], '" />&nbsp;', $_POST['Units'], '
+			</field>';
 
 if ($TypeDisp == 'Range') {
-	echo '<tr>
-					<td>' . _('Range Min') . ':</td>
-					<td><input class="' . $Class . '" type="text" name="RangeMin" size="10" maxlength="10" value="' . $_POST['RangeMin'] . '" /></td>
-				</tr>';
-	echo '<tr>
-					<td>' . _('Range Max') . ':</td>
-					<td><input class="' . $Class . '" type="text" name="RangeMax" size="10" maxlength="10" value="' . $_POST['RangeMax'] . '" /></td>
-				</tr>';
+	echo '<field>
+					<label for="RangeMin">', _('Range Min'), ':</label>
+					<input class="', $Class, '" type="text" name="RangeMin" size="10" maxlength="10" value="', $_POST['RangeMin'], '" />
+				</field>';
+	echo '<field>
+					<label for="RangeMax">', _('Range Max'), ':</label>
+					<input class="', $Class, '" type="text" name="RangeMax" size="10" maxlength="10" value="', $_POST['RangeMax'], '" />
+				</field>';
 }
-echo '<tr>
-				<td>' . _('Show On Cert?') . ':</td>
-				<td><select name="ShowOnCert">';
+echo '<field>
+				<label for="ShowOnCert">', _('Show On Cert?'), ':</label>
+				<select name="ShowOnCert">';
 if ($_POST['ShowOnCert'] == 1) {
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 } else {
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
@@ -562,59 +580,71 @@ if ($_POST['ShowOnCert'] == 0) {
 } else {
 	echo '<option value="0">' . _('No') . '</option>';
 }
-echo '</select></td></tr><tr>
-				<td>' . _('Show On Spec?') . ':</td>
-				<td><select name="ShowOnSpec">';
+echo '</select>
+			</field>';
+
+echo '<field>
+				<label for="ShowOnSpec">', _('Show On Spec?'), ':</label>
+				<select name="ShowOnSpec">';
 if ($_POST['ShowOnSpec'] == 1) {
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 } else {
-	echo '<option value="1">' . _('Yes') . '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
 }
 if ($_POST['ShowOnSpec'] == 0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">', _('No'), '</option>';
 } else {
-	echo '<option value="0">' . _('No') . '</option>';
+	echo '<option value="0">', _('No'), '</option>';
 }
-echo '</select></td></tr><tr>
-			<td>' . _('Show On Test Plan?') . ':</td>
-			<td><select name="ShowOnTestPlan">';
+echo '</select>
+			</field>';
+
+echo '<field>
+				<label for="ShowOnTestPlan">', _('Show On Test Plan?'), ':</label>
+				<select name="ShowOnTestPlan">';
 if ($_POST['ShowOnTestPlan'] == 1) {
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 } else {
-	echo '<option value="1">' . _('Yes') . '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
 }
 if ($_POST['ShowOnTestPlan'] == 0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">', _('No'), '</option>';
 } else {
-	echo '<option value="0">' . _('No') . '</option>';
+	echo '<option value="0">', _('No'), '</option>';
 }
-echo '</select></td></tr><tr>
-				<td>' . _('Active?') . ':</td>
-				<td><select name="Active">';
+echo '</select>
+			</field>';
+
+echo '<field>
+				<label for="Active">', _('Active?'), ':</label>
+				<select name="Active">';
 if ($_POST['Active'] == 1) {
-	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 } else {
-	echo '<option value="1">' . _('Yes') . '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
 }
 if ($_POST['Active'] == 0) {
-	echo '<option selected="selected" value="0">' . _('No') . '</option>';
+	echo '<option selected="selected" value="0">', _('No'), '</option>';
 } else {
-	echo '<option value="0">' . _('No') . '</option>';
+	echo '<option value="0">', _('No'), '</option>';
 }
-echo '</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+echo '</select>
+			</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+				<input type="submit" name="submit" value="', _('Enter Information'), '" />
 			</div>
-			</form>';
+		</form>';
 }
 if (isset($KeyValue)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?ListTests=yes&amp;KeyValue=' . $KeyValue . '">' . _('Add More Tests') . '</a></div>';
-	echo '<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?CopySpec=yes&amp;KeyValue=' . $KeyValue . '">' . _('Copy This Specification') . '</a></div>';
-	echo '<div class="centre"><a target="_blank" href="' . $RootPath . '/PDFProdSpec.php?KeyValue=' . $KeyValue . '">' . _('Print Product Specification') . '</a></div>';
-	echo '<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Product Specification Main Page') . '</a></div>';
+	echo '<div class="centre">
+				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?ListTests=yes&amp;KeyValue=', $KeyValue, '">', _('Add More Tests'), '</a><br />
+				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?CopySpec=yes&amp;KeyValue=', $KeyValue, '">', _('Copy This Specification'), '</a><br />
+				<a target="_blank" href="', $RootPath, '/PDFProdSpec.php?KeyValue=', $KeyValue, '">', _('Print Product Specification'), '</a><br />
+				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Product Specification Main Page'), '</a>
+			</div>';
 }
 } //end if record deleted no point displaying form to add record
 include ('includes/footer.php');

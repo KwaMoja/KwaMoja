@@ -150,7 +150,9 @@ switch ($_POST['Action']) {
 		
 }
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" /> ', $Title, '</p>';
+echo '<p class="page_title_text">
+		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" /> ', $Title, '
+	</p>';
 // BEGIN menu.
 if (!isset($page_help) or $page_help) {
 	// If it is not set the $page_help parameter OR it is TRUE, shows the page help text:
@@ -160,14 +162,9 @@ if (!isset($page_help) or $page_help) {
 echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />'; // Form's head.
 // Input table:
-echo '<table>
-		<thead>
-			<tr>
-				<th colspan="2">', _('Action to do'), '</th>
-			</tr>
-		</thead>';
+echo '<fieldset>
+		<legend>', _('Action to do'), '</legend>';
 
-echo '<tbody>';
 $SQL = "SELECT accountcode,
 				accountname
 			FROM chartmaster
@@ -179,9 +176,9 @@ $SQL = "SELECT accountcode,
 			ORDER BY chartmaster.accountcode";
 $GLAccounts = DB_query($SQL);
 // Setups the net profit for the period GL account:
-echo '<tr>
-		<td><label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label></td>
-		<td><select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required">';
+echo '<field>
+		<label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label>
+		<select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required" autofocus="autofocus">';
 
 if (!isset($_SESSION['PeriodProfitAccount']) or $_SESSION['PeriodProfitAccount'] == '') {
 	$SQL = "SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'";
@@ -201,11 +198,11 @@ if (!isset($_SESSION['PeriodProfitAccount']) or $_SESSION['PeriodProfitAccount']
 while ($MyRow = DB_fetch_array($GLAccounts)) {
 	echo '<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected="selected"' : ''), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
-echo '</select>', (!isset($field_help) || $field_help ? _('GL account to post the net profit for the period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.*/
-'</td>
-</tr>';
+echo '</select>
+	<fieldhelp>', _('GL account to post the net profit for the period'), '</fieldhelp>
+</field>';
 // Setups the retained earnings GL account:
-echo '<tr>
+echo '<field>
 		<td><label for="RetainedEarningsAccount">', _('Retained earnings GL account'), ':</label></td>
 		<td><select id="RetainedEarningsAccount" name="RetainedEarningsAccount" required="required">';
 if (!isset($_SESSION['RetainedEarningsAccount']) or $_SESSION['RetainedEarningsAccount'] == '') {
@@ -223,17 +220,17 @@ DB_data_seek($GLAccounts, 0);
 while ($MyRow = DB_fetch_array($GLAccounts)) {
 	echo '<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected="selected"' : ''), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
-echo '</select>', (!isset($field_help) || $field_help ? _('GL account to post the retained earnings') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.*/
-'</td>
-			</tr>
-		</tbody>
-		</table>';
+echo '</select>
+	<fieldhelp>', _('GL account to post the retained earnings'), '</fieldhelp>
+</field>';
+echo '</fieldset>';
+
 echo '<div class="centre">
-		<input name="Action" type="submit" value="', _('Update'), '" />', // "Update" button.
-'<input name="Action" type="submit" value="', _('Reset'), '" />', // "Reset values" button.
-'<input name="Action" type="submit" value="', _('Automatic'), '" />', // "Automatic setup" button.
-'<input name="Action" type="submit" value="', _('Manual'), '" />', // "Manual setup" button.
-'</div>
+		<input name="Action" type="submit" value="', _('Update'), '" />
+		<input name="Action" type="submit" value="', _('Reset'), '" />
+		<input name="Action" type="submit" value="', _('Automatic'), '" />
+		<input name="Action" type="submit" value="', _('Manual'), '" />
+	</div>
 </form>';
 
 include ('includes/footer.php');

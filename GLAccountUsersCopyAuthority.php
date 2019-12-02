@@ -19,14 +19,14 @@ if (isset($_POST['ProcessCopyAuthority'])) {
 	if ($InputError == 0) { // no input errors
 		$Result = DB_Txn_Begin();
 
-		echo '<br />' . _('Deleting the current authority to view / update the GL Accounts of user') . ' ' . $_POST['ToUserID'];
+		echo '<br />', _('Deleting the current authority to view / update the GL Accounts of user'), ' ', $_POST['ToUserID'];
 		$SQL = "DELETE FROM glaccountusers WHERE userid = '" . $_POST['ToUserID'] . "'";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to delete the auhority in glaccountusers record failed');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		echo ' ... ' . _('completed');
+		echo ' ... ', _('completed');
 
-		echo '<br />' . _('Copying the authority to view / update the GL Accounts from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to') . ' ' . $_POST['ToUserID'];
+		echo '<br />', _('Copying the authority to view / update the GL Accounts from user'), ' ', $_POST['FromUserID'], ' ', _('to'), ' ', $_POST['ToUserID'];
 		$SQL = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 						SELECT '" . $_POST['ToUserID'] . "', accountcode, canview, canupd
 						FROM glaccountusers
@@ -35,7 +35,7 @@ if (isset($_POST['ProcessCopyAuthority'])) {
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the auhority in glaccountusers record failed');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		echo ' ... ' . _('completed');
+		echo ' ... ', _('completed');
 		echo '<br />';
 		$Result = DB_Txn_Commit();
 
@@ -43,46 +43,46 @@ if (isset($_POST['ProcessCopyAuthority'])) {
 	
 }
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<table>
-		<tr>
-			<td>' . _('Select User to copy the Authority FROM') . ':</td>
-			<td><select name="FromUserID">';
+echo '<fieldset>
+		<legend>', _('User Selection'), '</legend>';
+
 $Result = DB_query("SELECT userid,
 							realname
 					FROM www_users
 					ORDER BY userid");
-
-echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
+echo '<field>
+		<label for="FromUserID">', _('Select User to copy the Authority FROM'), ':</label>
+		<select name="FromUserID">
+			<option selected value="">', _('Not Yet Selected'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+	echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 } //end while loop
 echo '</select>
-		</td>
-	</tr>';
+	</field>';
 
-echo '<tr>
-		<td>' . _('Select User to copy the Authority TO') . ':</td>
-		<td><select name="ToUserID">';
 $Result = DB_query("SELECT userid,
 							realname
 					FROM www_users
 					ORDER BY userid");
-
-echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
+echo '<field>
+		<label for="ToUserID">', _('Select User to copy the Authority TO'), ':</label>
+		<select name="ToUserID">
+			<option selected value="">', _('Not Yet Selected'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+	echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 } //end while loop
 echo '</select>
-		</td>
-	</tr>';
+	</field>';
 
-echo '</table>';
+echo '</fieldset>';
 
-echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Authority') . '" />
-	</form>';
+echo '<div class="centre">
+		<input type="submit" name="ProcessCopyAuthority" value="', _('Process Copy of Authority'), '" />
+	</div>
+</form>';
 
 include ('includes/footer.php');
 ?>

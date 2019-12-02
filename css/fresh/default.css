@@ -17,6 +17,9 @@ text-align: left;
 padding: 1%;
 border-radius: 4px;
 }
+img {
+width:32px;
+}
 a {
 color:#5A5F00;
 text-decoration:none;

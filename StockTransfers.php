@@ -17,7 +17,15 @@ if (empty($_GET['identifier'])) {
 	$Identifier = $_GET['identifier'];
 }
 
-if (isset($_GET['New'])) {
+if (isset($_POST['NewTransfer'])) {
+	$_GET['NewTransfer'] = $_POST['NewTransfer'];
+}
+
+if (isset($_POST['StockID'])) {
+	$_GET['StockID'] = $_POST['StockID'];
+}
+
+if (isset($_GET['New']) or isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer' . $Identifier]);
 }
 
@@ -48,6 +56,10 @@ if (isset($_POST['CheckCode'])) {
 	$ErrMsg = _('The stock information cannot be retrieved because');
 	$DbgMsg = _('The SQL to get the stock description was');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 	echo '<table>
 			<thead>
 				<tr>
@@ -59,15 +71,21 @@ if (isset($_POST['CheckCode'])) {
 
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr>
+		echo '<input type="hidden" name="Identifier" value="', $Identifier, '" />';
+		echo '<input type="hidden" name="NewTransfer" value="Yes" />';
+		echo '<input type="hidden" name="StockLocationFrom" value="', $_POST['StockLocationFrom'], '" />';
+		echo '<input type="hidden" name="StockLocationTo" value="', $_POST['StockLocationTo'], '" />';
+		echo '<tr class="striped_row">
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['description'], '</td>
 				<td><a href="', $RootPath, '/StockTransfers.php?identifier=', urlencode($Identifier), '&StockID=', urlencode($MyRow['stockid']), '&amp;Description=', urlencode($MyRow['description']), '&amp;NewTransfer=Yes&amp;Quantity=', urlencode(filter_number_format($_POST['Quantity'])), '&amp;From=', urlencode($_POST['StockLocationFrom']), '&amp;To=', urlencode($_POST['StockLocationTo']), '">', _('Transfer'), '</a></td>
+				<td><input type="submit" name="StockID" value="', $MyRow['stockid'], '" /></td>
 			</tr>';
 
 	}
 	echo '</tbody>';
 	echo '</table>';
+	echo '</form>';
 	include ('includes/footer.php');
 	exit;
 }
@@ -82,10 +100,7 @@ if (isset($_GET['NewTransfer'])) {
 	$NewTransfer = $_GET['NewTransfer'];
 }
 
-if (isset($_GET['StockID'])) {
-	/*carry the stockid through to the form for additional inputs */
-	$_POST['StockID'] = trim(mb_strtoupper($_GET['StockID']));
-} elseif (isset($_POST['StockID'])) {
+if (isset($_POST['StockID'])) {
 	/* initiate a new transfer only if the StockID is different to the previous entry */
 	if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0])) {
 		if ($_POST['StockID'] != $_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) {
@@ -98,8 +113,8 @@ if (isset($_GET['StockID'])) {
 	}
 }
 
-if ($NewTransfer and isset($_POST['StockID'])) {
-
+if ($NewTransfer and isset($_GET['StockID'])) {
+	$_POST['StockID'] = $_GET['StockID'];
 	if (!isset($_POST['StockLocationFrom'])) {
 		$_POST['StockLocationFrom'] = '';
 	}
@@ -245,7 +260,7 @@ if (isset($_POST['EnterTransfer'])) {
 		}
 		// BEGIN: **********************************************************************
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-		if (($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != '' or $_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') and ($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
+		if (($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != '' or $_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') and ($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != $_SESSION['Transfer' . $Identifier]->StockLocationToAccount)) {
 			// Get the account code:
 			if ($_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') {
 				$AccountCode = $_SESSION['Transfer' . $Identifier]->StockLocationToAccount;
@@ -413,7 +428,7 @@ if (isset($_POST['EnterTransfer'])) {
 		}
 		// BEGIN: **********************************************************************
 		// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-		if (($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != '' or $_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') and ($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
+		if (($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != '' or $_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') and ($_SESSION['Transfer' . $Identifier]->StockLocationFromAccount != $_SESSION['Transfer' . $Identifier]->StockLocationToAccount)) {
 			// Get the account code:
 			if ($_SESSION['Transfer' . $Identifier]->StockLocationToAccount != '') {
 				$AccountCode = $_SESSION['Transfer' . $Identifier]->StockLocationToAccount;
@@ -594,7 +609,7 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Dispatch'), '" alt="" />', ' ', $Title, '
 	</p>';
 
-if (!isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) or $_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID == '') {
+if (isset($_GET['NewTransfer']) or isset($_GET['New'])) {
 
 	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -606,17 +621,24 @@ if (!isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) or $_S
 	echo '<fieldset>
 			<legend>', _('Transfer Details'), '</legend>';
 
-	echo '<field>
-			<label for="StockText">', _('Partial Description'), ':</label>
-			<input type="text" name="StockText" size="21" autofocus="autofocus" value="', stripslashes($_GET['Description']), '" />
-			<fieldhelp>', _('Enter all or part of a description for a stock item.'), '</fieldhelp>
-		</field>';
+	if (isset($_GET['NewTransfer'])) {
+		echo '<field>
+				<label for="StockCode">', _('Stock Code'), ':</label>
+				<div class="fieldtext">', $_GET['StockID'], '</div>
+			</field>';
+	} else {
+		echo '<field>
+				<label for="StockText">', _('Partial Description'), ':</label>
+				<input type="text" name="StockText" size="21" autofocus="autofocus" value="', stripslashes($_GET['Description']), '" />
+				<fieldhelp>', _('Enter all or part of a description for a stock item.'), '</fieldhelp>
+			</field>';
 
-	echo '<field>
-			<label for="StockCode">', _('Partial Stock Code'), ':</label>
-			<input type="text" name="StockCode" size="21" value="" maxlength="20" />
-			<fieldhelp>', _('Enter all or part of a code for a stock item.'), '</fieldhelp>
-		</field>';
+		echo '<field>
+				<label for="StockCode">', _('Partial Stock Code'), ':</label>
+				<input type="text" name="StockCode" size="21" value="" maxlength="20" />
+				<fieldhelp>', _('Enter all or part of a code for a stock item.'), '</fieldhelp>
+			</field>';
+	}
 
 	echo '<h1>', _('AND'), '</h1>';
 
@@ -682,13 +704,32 @@ if (!isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) or $_S
 
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type="submit" name="CheckCode" value="', _('Find Part'), '" />
-		</div>
-	</form>';
+	if (isset($_GET['NewTransfer'])) {
+		echo '<input type="hidden" name="StockID", value="', $_GET['StockID'], '" />';
+		echo '<div class="centre">
+				<input type="submit" name="TransferDetails" value="', _('Enter Transfer Details'), '" />
+			</div>';
+	} else {
+		echo '<div class="centre">
+				<input type="submit" name="CheckCode" value="', _('Find Part'), '" />
+			</div>';
+	}
+
+	echo '</form>';
+	include ('includes/footer.php');
+	exit;
 }
 
 if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID != '') {
+	$SQL = "SELECT locationname, glaccountcode FROM locations WHERE loccode='" . $_SESSION['Transfer' . $Identifier]->StockLocationFrom . "'";
+	$Result = DB_query($SQL);
+	$LocationRow = DB_fetch_array($Result);
+	$_SESSION['Transfer' . $Identifier]->StockLocationFromName = $LocationRow['locationname'];
+
+	$SQL = "SELECT locationname, glaccountcode FROM locations WHERE loccode='" . $_SESSION['Transfer' . $Identifier]->StockLocationTo . "'";
+	$Result = DB_query($SQL);
+	$LocationRow = DB_fetch_array($Result);
+	$_SESSION['Transfer' . $Identifier]->StockLocationToName = $LocationRow['locationname'];
 
 	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -706,10 +747,44 @@ if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_S
 			<div class="fieldtext">', $_SESSION['Transfer' . $Identifier]->TransferItem[0]->ItemDescription, '</div>
 		</field>';
 
-	echo '<field>
-			<label for="StockLocationFrom">', _('From Location'), '</label>
-			<div class="fieldtext">', $_SESSION['Transfer' . $Identifier]->StockLocationFrom, ' - ', $_SESSION['Transfer' . $Identifier]->StockLocationFromName, '</div>
-		</field>';
+	if (isset($_SESSION['Transfer' . $Identifier]->StockLocationFrom) and $_SESSION['Transfer' . $Identifier]->StockLocationFrom != '') {
+		echo '<field>
+				<label for="StockLocationFrom">', _('From Location'), '</label>
+				<div class="fieldtext">', $_SESSION['Transfer' . $Identifier]->StockLocationFrom, ' - ', $_SESSION['Transfer' . $Identifier]->StockLocationFromName, '</div>
+			</field>';
+	} else {
+		echo '<field>
+				<label for="StockLocationFrom">', _('From Stock Location'), ':</label>
+				<select required="required" name="StockLocationFrom">';
+
+		$SQL = "SELECT locationname,
+						locations.loccode
+					FROM locations
+					INNER JOIN locationusers
+						ON locationusers.loccode=locations.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1";
+
+		$ResultStkLocs = DB_query($SQL);
+		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
+			if (isset($_SESSION['Transfer' . $Identifier]->StockLocationFrom)) {
+				if ($MyRow['loccode'] == $_SESSION['Transfer' . $Identifier]->StockLocationFrom) {
+					echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				} else {
+					echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				}
+			} elseif (isset($_SESSION['Transfer' . $Identifier]) and $MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				$_SESSION['Transfer' . $Identifier]->StockLocationFrom = $MyRow['loccode'];
+			} else {
+				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+			}
+		}
+
+		echo '</select>
+				<fieldhelp>', _('Select the location from where this stock adjustment will take place'), '</fieldhelp>
+			</field>';
+	}
 
 	if ($FromWarehouseDefined) {
 		$ContainerSQL = "SELECT id, name FROM container WHERE location='" . $_SESSION['Transfer' . $Identifier]->StockLocationFrom . "' AND putaway=1";
@@ -727,12 +802,48 @@ if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_S
 		echo '</select>
 			<fieldhelp>', _('Select the container within the warehouse from where the stock to be transferred is situated.'), '</fieldhelp>
 		</field>';
+	} else {
+		echo '<input type="hidden" name="FromContainer" value="', $_SESSION['Transfer' . $Identifier]->StockLocationFrom, '" />';
 	}
 
-	echo '<field>
-			<label for="StockLocationTo">', _('To Location'), '</label>
-			<div class="fieldtext">', $_SESSION['Transfer' . $Identifier]->StockLocationTo, ' - ', $_SESSION['Transfer' . $Identifier]->StockLocationToName, '</div>
-		</field>';
+	if (isset($_SESSION['Transfer' . $Identifier]->StockLocationTo) and $_SESSION['Transfer' . $Identifier]->StockLocationTo != '') {
+		echo '<field>
+				<label for="StockLocationTo">', _('To Location'), '</label>
+				<div class="fieldtext">', $_SESSION['Transfer' . $Identifier]->StockLocationTo, ' - ', $_SESSION['Transfer' . $Identifier]->StockLocationToName, '</div>
+			</field>';
+	} else {
+		echo '<field>
+				<label for="StockLocationTo">', _('To Stock Location'), ':</label>
+				<select required="required" name="StockLocationTo">';
+
+		$SQL = "SELECT locationname,
+						locations.loccode
+					FROM locations
+					INNER JOIN locationusers
+						ON locationusers.loccode=locations.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1";
+
+		$ResultStkLocs = DB_query($SQL);
+		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
+			if (isset($_SESSION['Transfer' . $Identifier]->StockLocationTo)) {
+				if ($MyRow['loccode'] == $_SESSION['Transfer' . $Identifier]->StockLocationTo) {
+					echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				} else {
+					echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				}
+			} elseif (isset($_SESSION['Transfer' . $Identifier]) and $MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+				$_SESSION['Transfer' . $Identifier]->StockLocationTo = $MyRow['loccode'];
+			} else {
+				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+			}
+		}
+
+		echo '</select>
+				<fieldhelp>', _('Select the location where this stock adjustment will go to'), '</fieldhelp>
+			</field>';
+	}
 
 	if ($ToWarehouseDefined) {
 		$ContainerSQL = "SELECT id, name FROM container WHERE location='" . $_SESSION['Transfer' . $Identifier]->StockLocationTo . "' AND putaway=1";
@@ -750,6 +861,8 @@ if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_S
 		echo '</select>
 			<fieldhelp>', _('Select the container within the warehouse where the stock to be transferred is to be placed.'), '</fieldhelp>
 		</field>';
+	} else {
+		echo '<input type="hidden" name="ToContainer" value="', $_SESSION['Transfer' . $Identifier]->StockLocationTo, '" />';
 	}
 
 	echo '<field>
@@ -783,7 +896,7 @@ if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_S
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="EnterTransfer" value="', _('Enter Stock Transfer'), '" />';
+			<input type="submit" name="EnterTransfer" value="', _('Enter Stock Transfer'), '" /><br />';
 
 	if (empty($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and isset($_POST['StockID'])) {
 		$StockId = $_POST['StockID'];
@@ -793,10 +906,10 @@ if (isset($_SESSION['Transfer' . $Identifier]->TransferItem[0]->StockID) and $_S
 		$StockId = '';
 	}
 	if (isset($_SESSION['Transfer' . $Identifier])) {
-		echo '<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a>';
-		echo '<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '">', _('Show Movements'), '</a>';
-		echo '<a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_SESSION['Transfer' . $Identifier]->StockLocationFrom), '">', _('Show Stock Usage'), '</a>';
-		echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_SESSION['Transfer' . $Identifier]->StockLocationFrom), '">', _('Search Outstanding Sales Orders'), '</a>';
+		echo '<a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '">', _('Show Stock Status'), '</a><br />';
+		echo '<a href="', $RootPath, '/StockMovements.php?StockID=', urlencode($StockId), '">', _('Show Movements'), '</a><br />';
+		echo '<a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockId), '&amp;StockLocation=', urlencode($_SESSION['Transfer' . $Identifier]->StockLocationFrom), '">', _('Show Stock Usage'), '</a><br />';
+		echo '<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockId), '&amp;StockLocation=', urlencode($_SESSION['Transfer' . $Identifier]->StockLocationFrom), '">', _('Search Outstanding Sales Orders'), '</a><br />';
 		echo '<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockId), '">', _('Search Completed Sales Orders'), '</a>';
 	}
 	echo '</div>

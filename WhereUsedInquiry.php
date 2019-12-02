@@ -9,10 +9,15 @@ if (isset($_GET['StockID'])) {
 	$StockId = trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<div class="toplink"><a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a></div>
-	<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+echo '<div class="toplink"><a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a></div>';
+
+echo '<p class="page_title_text" >
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
+
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
 if (isset($StockId)) {
 	$Result = DB_query("SELECT description,
 								units,
@@ -25,24 +30,30 @@ if (isset($StockId)) {
 		include ('includes/footer.php');
 		exit;
 	}
-	echo '<br />
-		<div class="centre"><h3>' . $StockId . ' - ' . $MyRow[0] . '  (' . _('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
+	echo '<fieldset>
+			<legend>', $StockId, ' - ', $MyRow[0], '  (', _('in units of'), ' ', $MyRow[1], ')</legend>';
+} else {
+	echo '<fieldset>
+			<legend>', _('Where Used Inquiry'), '</legend>';
 }
-
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">
-	<div class="centre">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($StockId)) {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" value="' . $StockId . '" />';
+	echo '<field>
+			<label for="StockID">', _('Enter an Item Code'), ':</label>
+			<input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" value="', $StockId, '" />
+		</field>';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" />';
+	echo '<field>
+			<label for="StockID">', _('Enter an Item Code') . ':</label>
+			<input type="text" name="StockID" size="21" autofocus="autofocus" required="required" maxlength="20" />
+		</field>';
 }
 
-echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />';
+echo '</fieldset>';
 
-echo '<br />
-	  </div>';
+echo '<div class="centre">
+		<input type="submit" name="ShowWhereUsed" value="', _('Show Where Used'), '" />
+	</div>';
 
 if (isset($StockId)) {
 
@@ -67,16 +78,19 @@ if (isset($StockId)) {
 	} else {
 
 		echo '<table width="97%">
-				<tr>
-					<th>' . _('Used By') . '</th>
-					<th>' . _('Status') . '</th>
-					<th>' . _('Work Centre') . '</th>
-					<th>' . _('Location') . '</th>
-					<th>' . _('Quantity Required') . '</th>
-					<th>' . _('Effective After') . '</th>
-					<th>' . _('Effective To') . '</th>
-				</tr>';
-		$k = 0;
+				<thead>
+					<tr>
+						<th class="SortedColumn">', _('Used By'), '</th>
+						<th class="SortedColumn">', _('Status'), '</th>
+						<th class="SortedColumn">', _('Work Centre'), '</th>
+						<th class="SortedColumn">', _('Location'), '</th>
+						<th>', _('Quantity Required'), '</th>
+						<th class="SortedColumn">', _('Effective After'), '</th>
+						<th class="SortedColumn">', _('Effective To'), '</th>
+					</tr>
+				</thead>
+				<tbody>';
+
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			if ($MyRow['discontinued'] == 1) {
@@ -86,19 +100,21 @@ if (isset($StockId)) {
 			}
 
 			echo '<tr class="striped_row">
-					<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $MyRow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $MyRow['parent'] . ' - ' . $MyRow['description'] . '</a></td>
-					<td>' . $MyRow['workcentreadded'] . '</td>
-					<td>' . $MyRow['loccode'] . '</td>
-					<td class="number">' . locale_number_format($MyRow['quantity'], 'Variable') . '</td>
-					<td>' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
-					<td>' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
+					<td><a target="_blank" href="', $RootPath, '/BOMInquiry.php?StockID=', urlencode($MyRow['parent']), '" alt="', _('Show Bill Of Material'), '">', $MyRow['parent'], ' - ', $MyRow['description'], '</a></td>
+					<td>', $Status, '</td>
+					<td>', $MyRow['workcentreadded'], '</td>
+					<td>', $MyRow['loccode'], '</td>
+					<td class="number">', locale_number_format($MyRow['quantity'], 'Variable'), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['effectiveafter']), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['effectiveto']), '</td>
 				</tr>';
 
 			//end of page full new headings if
 			
 		}
 
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 	}
 } // StockID is set
 echo '</form>';

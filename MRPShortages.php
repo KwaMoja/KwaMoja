@@ -248,54 +248,60 @@ if (isset($_POST['PrintPDF'])) {
 	$Title = _('MRP Shortages - Excess Reporting');
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Stock'), '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>';
-	echo '<tr><td>' . _('Inventory Category') . ':</td><td><select name="CategoryID">';
-	echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
 	$SQL = "SELECT categoryid,
 			categorydescription
 			FROM stockcategory";
 	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="CategoryID">', _('Inventory Category'), ':</label>
+			<select name="CategoryID">
+				<option selected="selected" value="All">', _('All Stock Categories'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
+		echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categoryid'], ' - ', $MyRow['categorydescription'], '</option>';
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Sort') . ':</td>
-			<td><select name="Sort">
-					<option selected="selected" value="extcost">' . _('Extended Shortage Dollars') . '</option>
-					<option value="stockid">' . _('Part Number') . '</option>
-				</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Shortage-Excess Option') . ':</td>
-			<td><select name="ReportType">
-					<option selected="selected" value="Shortage">' . _('Report MRP Shortages') . '</option>
-					<option value="Excess">' . _('Report MRP Excesses') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo '<field>
+			<label for="Sort">', _('Sort'), ':</label>
+			<select name="Sort">
+				<option selected="selected" value="extcost">', _('Extended Shortage Dollars'), '</option>
+				<option value="stockid">', _('Part Number'), '</option>
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
-					<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-					<option value="no">' . _('Plain Print') . '</option>
-				</select>
-			</td>
-		</tr>';
-	echo '</table>
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+	echo '<field>
+			<label for="ReportType">', _('Shortage-Excess Option'), ':</label>
+			<select name="ReportType">
+				<option selected="selected" value="Shortage">', _('Report MRP Shortages'), '</option>
+				<option value="Excess">', _('Report MRP Excesses'), '</option>
+			</select>
+		</field>';
+
+	echo '<field>
+			<label for="Fill">', _('Print Option'), ':</label>
+			<select name="Fill">
+				<option selected="selected" value="yes">', _('Print With Alternating Highlighted Lines'), '</option>
+				<option value="no">', _('Plain Print'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="', _('Print PDF'), '" />
 		</div>
-		</form>';
+	</form>';
 
 	include ('includes/footer.php');
 

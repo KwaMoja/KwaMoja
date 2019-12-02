@@ -20,6 +20,9 @@ border-radius: 4px;
 margin:0 auto;
 margin-bottom:10px;
 }
+img {
+width:32px;
+}
 a {
 color:#0088CD;
 text-decoration:none;

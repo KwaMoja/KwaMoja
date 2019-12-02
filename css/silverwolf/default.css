@@ -7,7 +7,13 @@ src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
 body {
 font-family:"Ubuntu, Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 font-weight:400;
-background:url(images/stripe.png) #FFF;
+background: repeating-linear-gradient(
+  315deg,
+  #6B6B6B,
+  #6B6B6B 10px,
+  #737373 10px,
+  #737373 20px
+);
 margin:0;
 padding:5px;
 }
@@ -17,6 +23,9 @@ border: 1px solid;
 text-align: left;
 padding: 1%;
 border-radius: 4px;
+}
+img {
+width:32px;
 }
 a {
 color:#5B5B68;

@@ -33,24 +33,29 @@ if (isset($_POST['Cancel']) or isset($_GET['Cancel'])) {
 if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedUser will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', _('GL Account Authorised Users'), '" /> ', _('GL Account Authorised Users'), '</p>'; // Page title.
+	echo '<p class="page_title_text">
+			<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', _('GL Account Authorised Users'), '" /> ', _('GL Account Authorised Users'), '
+		</p>'; // Page title.
 	if (isset($_POST['Process'])) {
 		prnMsg(_('You have not selected any GL Account'), 'error');
 	}
-	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">
-		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
-	echo '<table>
-			<tr>
-				<td>', _('Select GL Account'), ':</td>
-				<td>
-					<select name="SelectedGLAccount" onchange="this.form.submit()">', // Submit when the value of the select is changed.
-	'<option value="">', _('Not Yet Selected'), '</option>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('GL Accounts'), '</legend>';
+
 	$SQL = "SELECT accountcode,
 					accountname
 				FROM chartmaster
 				WHERE language='" . $_SESSION['ChartLanguage'] . "'
 				ORDER BY accountcode";
 	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="SelectedGLAccount">', _('Select GL Account'), ':</label>
+			<select name="SelectedGLAccount" onchange="this.form.submit()">
+				<option value="">', _('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedGLAccount) and $MyRow['accountcode'] == $SelectedGLAccount) {
 			echo '<option selected="selected" value="', $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
@@ -59,9 +64,10 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 		}
 
 	} // End while loop.
-	echo '</select></td>
-			</tr>
-		</table>'; //Close Select_GL_Account table.
+	echo '</select>
+		</field>
+	</fieldset>';
+	//Close Select_GL_Account table.
 	echo '<div class="centre noPrint">
 			<input name="Process" type="submit" value="', _('Accept'), '" />
 		</div>'; // "Accept" button.
@@ -142,7 +148,7 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 					<th class="centre">', _('Update'), '</th>
 					<th class="noPrint" colspan="1">&nbsp;</th>
 					<th class="noPrint">
-						<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" class="PrintIcon" title="' . _('Print') . '" alt="' . _('Print') . '" onclick="window.print();" />
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon" data-title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
 					</th>
 				</tr>
 			</thead>';
@@ -174,11 +180,11 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 
 			$ScriptName = htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8');
 			if ($MyRow['canupd'] == 1) {
-				echo _('Yes'), '</td>', '<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this user?'), '\');">', _('Remove Update');
+				echo _('Yes'), '</td>', '<td class="noPrint"><a href="', urlencode($ScriptName), '?SelectedGLAccount=', urlencode($SelectedGLAccount), '&amp;SelectedUser=', urlencode($MyRow['userid']), '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this user?'), '\');">', _('Remove Update');
 			} else {
-				echo _('No'), '</td>', '<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this user?'), '\');">', _('Add Update');
+				echo _('No'), '</td>', '<td class="noPrint"><a href="', urlencode($ScriptName), '?SelectedGLAccount=', urlencode($SelectedGLAccount), '&amp;SelectedUser=', urlencode($MyRow['userid']), '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this user?'), '\');">', _('Add Update');
 			}
-			echo '</a></td>', '<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this user?'), '\');">', _('Un-authorise'), '</a></td>', '</tr>';
+			echo '</a></td>', '<td class="noPrint"><a href="', urlencode($ScriptName), '?SelectedGLAccount=', urlencode($SelectedGLAccount), '&amp;SelectedUser=', urlencode($MyRow['userid']), '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this user?'), '\');">', _('Un-authorise'), '</a></td>', '</tr>';
 		} // End while list loop.
 		
 	} else { // If the GL account does not have access permissions for users:
@@ -187,15 +193,12 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 			</tr>';
 	}
 	echo '</tbody>
-	</table>';
+		</table>';
 
-	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">
-			<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
-			<input name="SelectedGLAccount" type="hidden" value="', $SelectedGLAccount, '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
-	echo '<table class="selection noPrint">
-			<tr>
-				<td>';
+	echo '<input name="SelectedGLAccount" type="hidden" value="', $SelectedGLAccount, '" />';
 
 	$SQL = "SELECT userid,
 					realname
@@ -206,9 +209,12 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 										AND glaccountusers.userid=www_users.userid)
 				ORDER BY userid";
 	$Result = DB_query($SQL);
+	echo '<fieldset class="noPrint">
+			<legend>', _('Access Permissions'), '</legend>';
 	if (DB_num_rows($Result) > 0) { // If the GL account does not have access permissions for one or more users:
-		echo _('Add access permissions to a user'), ':</td>
-				<td><select name="SelectedUser">';
+		echo '<field>
+				<label for="SelectedUser">', _('Add access permissions to a user'), ':</label>
+				<select name="SelectedUser">';
 		if (!isset($_POST['SelectedUser'])) {
 			echo '<option selected="selected" value="">', _('Not Yet Selected'), '</option>';
 		}
@@ -220,18 +226,17 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 			}
 		}
 		echo '</select>
-			</td>';
-		echo '<td>
-				<input type="submit" name="submit" value="Accept" />
-			</td>';
+			</field>';
 	} else { // If the GL account has access permissions for all users:
 		echo _('GL account has access permissions for all users');
 	}
-	echo '</td>
-			</tr>
-		</table>';
+	echo '</fieldset>';
 
-	echo '<div class="centre noPrint">
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="Accept" />
+		</div>';
+
+	echo '<div class="page_title_text noPrint">
 			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '"><img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" /> ', _('Select A Different GL account'), '</a>
 		</div>'; // "Select A Different User" button.
 	echo '</form>';

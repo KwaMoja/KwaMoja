@@ -39,6 +39,7 @@ if (DB_num_rows($Result) == 0) {
 				<th>', _('Template ID'), '</th>
 				<th>', _('Template Description'), '</th>
 				<th>', _('Journal Type'), '</th>
+				<th></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
