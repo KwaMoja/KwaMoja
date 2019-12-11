@@ -421,7 +421,7 @@ if (isset($_POST['submit'])) {
 echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>', _('General Settings'), '</legend>';
 
 // DefaultDateFormat
@@ -476,7 +476,7 @@ echo '<field>
 //Months of Audit Trail to Keep
 echo '<field>
 		<label for="X_MonthsAuditTrail">', _('Months of Audit Trail to Retain'), ':</label>
-		<input type="text" class="integer" name="X_MonthsAuditTrail" size="3" required="required" maxlength="2" value="', $_SESSION['MonthsAuditTrail'], '" />
+		<input type="text" class="number" name="X_MonthsAuditTrail" size="3" required="required" maxlength="2" value="', $_SESSION['MonthsAuditTrail'], '" />
 		<fieldhelp>', _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained'), '</fieldhelp>
 	</field>';
 
@@ -632,21 +632,21 @@ echo '<field>
 //DefaultDisplayRecordsMax
 echo '<field>
 		<label for="X_DefaultDisplayRecordsMax">', _('Default Maximum Number of Records to Show'), ':</label>
-		<input type="text" class="integer" name="X_DefaultDisplayRecordsMax" size="4" required="required" maxlength="3" value="', $_SESSION['DefaultDisplayRecordsMax'], '" />
+		<input type="text" class="number" name="X_DefaultDisplayRecordsMax" size="4" required="required" maxlength="3" value="', $_SESSION['DefaultDisplayRecordsMax'], '" />
 		<fieldhelp>', _('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.'), '</fieldhelp>
 	</field>';
 
 //MaxImageSize
 echo '<field>
 		<label for="X_MaxImageSize">', _('Maximum Size in KB of uploaded images'), ':</label>
-		<input type="text" class="integer" name="X_MaxImageSize" size="4" required="required" maxlength="3" value="', $_SESSION['MaxImageSize'], '" />
+		<input type="text" class="number" name="X_MaxImageSize" size="4" required="required" maxlength="3" value="', $_SESSION['MaxImageSize'], '" />
 		<fieldhelp>', _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.'), '</fieldhelp>
 	</field>';
 
 //NumberOfMonthMustBeShown
 echo '<field>
 		<label for="X_NumberOfMonthMustBeShown">', _('Number Of Month Must Be Shown'), ':</label>
-		<input type="text" class="integer" name="X_NumberOfMonthMustBeShown" size="4" required="required" maxlength="3" value="', $_SESSION['NumberOfMonthMustBeShown'], '" />
+		<input type="text" class="number" name="X_NumberOfMonthMustBeShown" size="4" required="required" maxlength="3" value="', $_SESSION['NumberOfMonthMustBeShown'], '" />
 		<fieldhelp>', _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php '), '</fieldhelp>
 	</field>';
 
@@ -719,7 +719,7 @@ echo '<field>
 	</field>';
 
 echo '</fieldset>'; // end General Settings
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>', _('Sales Order/Purchase Order Settings'), '</legend>';
 
 //RomalpaClause
@@ -739,14 +739,14 @@ echo '<field>
 // QuickEntries
 echo '<field>
 		<label for="X_QuickEntries">', _('Quick Entries'), ':</label>
-		<input type="text" class="integer" name="X_QuickEntries" value="', $_SESSION['QuickEntries'], '" size="3" required="required" maxlength="2" />
+		<input type="text" class="number" name="X_QuickEntries" value="', $_SESSION['QuickEntries'], '" size="3" required="required" maxlength="2" />
 		<fieldhelp>', _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.'), '</fieldhelp>
 	</field>';
 
 // Frequently Ordered Items
 echo '<field>
 		<label for="X_FrequentlyOrderedItems">', _('Frequently Ordered Items'), ':</label>
-		<input type="text" class="integer" name="X_FrequentlyOrderedItems" value="', $_SESSION['FrequentlyOrderedItems'], '" size="3" required="required" maxlength="2" />
+		<input type="text" class="number" name="X_FrequentlyOrderedItems" value="', $_SESSION['FrequentlyOrderedItems'], '" size="3" required="required" maxlength="2" />
 		<fieldhelp>', _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.'), '</fieldhelp>
 	</field>';
 
@@ -809,7 +809,7 @@ echo '<field>
 // MaxSerialItemsIssued
 echo '<field>
 		<label for="X_MaxSerialItemsIssued">', _('Maximum number of serial numbered items to be issued'), ':</label>
-		<input type="text" class="integer" name="X_MaxSerialItemsIssued" value="', $_SESSION['MaxSerialItemsIssued'], '" size="3" required="required" maxlength="10" />
+		<input type="text" class="number" name="X_MaxSerialItemsIssued" value="', $_SESSION['MaxSerialItemsIssued'], '" size="3" required="required" maxlength="10" />
 		<fieldhelp>', _('This parameter defines the Maximum number of serial numbered items that can be issued. It should be an integer greater than zero.'), '</fieldhelp>
 	</field>';
 
@@ -940,7 +940,7 @@ echo '<field>
 // OverChargeProportion
 echo '<field>
 		<label for="X_OverChargeProportion">', _('Allowed Over Charge Proportion'), ':</label>
-		<input type="text" class="integer" name="X_OverChargeProportion" size="4" required="required" maxlength="3" value="', $_SESSION['OverChargeProportion'], '" />
+		<input type="text" class="number" name="X_OverChargeProportion" size="4" required="required" maxlength="3" value="', $_SESSION['OverChargeProportion'], '" />
 		<fieldhelp>', _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price'), '</fieldhelp>
 	</field>';
 
@@ -962,20 +962,20 @@ echo '<field>
 </field>';
 
 echo '</fieldset>'; //end SOP/POP settings
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>', _('Accounts Receivable/Payable Settings'), '</legend>';
 
 // PastDueDays1
 echo '<field>
 		<label for="X_PastDueDays1">', _('First Overdue Deadline in (days)'), ':</label>
-		<input type="text" class="integer" name="X_PastDueDays1" value="', $_SESSION['PastDueDays1'], '" size="3" required="required" maxlength="3" />
+		<input type="text" class="number" name="X_PastDueDays1" value="', $_SESSION['PastDueDays1'], '" size="3" required="required" maxlength="3" />
 		<fieldhelp>', _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings'), '</fieldhelp>
 	</field>';
 
 // PastDueDays2
 echo '<field>
 		<label for="X_PastDueDays2">', _('Second Overdue Deadline in (days)'), ':</label>
-		<input type="text" class="integer" name="X_PastDueDays2" value="', $_SESSION['PastDueDays2'], '" size="3" required="required" maxlength="3" />
+		<input type="text" class="number" name="X_PastDueDays2" value="', $_SESSION['PastDueDays2'], '" size="3" required="required" maxlength="3" />
 		<fieldhelp>', _('As above but the next level of overdue'), '</fieldhelp>
 	</field>';
 
@@ -1083,7 +1083,7 @@ echo '</select>
 </field>';
 
 echo '</fieldset>'; // end AR/AP settings
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>', _('Inventory Settings'), '</legend>';
 
 //ItemDescriptionLanguages
@@ -1197,7 +1197,7 @@ echo '<field>
 </field>';
 
 echo '</fieldset>'; // end Inventory settings
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>', _('Manufacturing/Quality Assurance Settings'), '</legend>';
 
 // Working days on a week
@@ -1302,7 +1302,7 @@ echo '</select>
 </field>';
 
 echo '</fieldset>'; // end Manufacturing/QA settings
-echo '<fieldset style="width:66%">
+echo '<fieldset>
 		<legend>' . _('General Ledger Settings') . '</legend>';
 
 $SQL = "SELECT lastdate_in_period FROM periods orDER BY periodno DESC";

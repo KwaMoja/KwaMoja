@@ -1,64 +1,27 @@
 <?php
-$PageSecurity = 0;
 $PathPrefix = '../';
-include ('../includes/session.php');
 
-$RootPath = '../';
-
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-
-echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Dashboard</title>';
-echo '<link rel="shortcut icon" href="' . $RootPath . '/favicon.ico" />';
-echo '<link rel="icon" href="' . $RootPath . '/favicon.ico" />';
-
-echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
-echo '<meta http-equiv="refresh" content="600">';
-
-echo '<link href="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/default.css" rel="stylesheet" type="text/css" />';
-echo '<script type="text/javascript" src = "' . $RootPath . '/javascripts/MiscFunctions.js"></script>';
-echo '<style media="screen">
-			.noPrint{ display: block; }
-			.yesPrint{ display: block !important; }
-		</style>
-		<style media="print">
-			.noPrint{ display: none; }
-			.yesPrint{ display: block !important; }
-		</style>';
-
-echo '</head><body style="background:transparent;">';
-
-switch ($_SESSION['ScreenFontSize']) {
-	case 0:
-		$FontSize = '8pt';
-	break;
-	case 1:
-		$FontSize = '10pt';
-	break;
-	case 2:
-		$FontSize = '12pt';
-	break;
-	default:
-		$FontSize = '10pt';
+if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	require_once ($PathPrefix . 'includes/session.php');
+	$DashBoardURL = $RootPath . '/Dashboard.php';
 }
-echo '<style>
-			body {
-					font-size: ' . $FontSize . ';
-				}
-			</style>';
 
-$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
-$Result = DB_query($SQL);
-$MyRow = DB_fetch_array($Result);
+$ScriptTitle = _('Latest purchase orders to authorise');
 
-echo '<table style="max-width:100%;width:99%;" border="0" cellspacing="0" cellpadding="1" border="1">
-		<tr>
-			<th colspan="6" style="margin:0px;padding:0px;background: transparent;">
-				<div class="CanvasTitle">' . _('Purchase orders to authorise') . '
-					<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
-				</div>
-			</th>
-		</tr>';
+$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
+$DashboardResult = DB_query($SQL);
+$DashboardRow = DB_fetch_array($DashboardResult);
+
+echo '<div class="container">
+		<table class="DashboardTable">
+			<tr>
+				<th colspan="5">
+					<div class="CanvasTitle">', $ScriptTitle, '
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" id="CloseButton">X</a>
+					</div>
+				</th>
+			</tr>';
+
 $SQL = "SELECT purchorders.*,
 			suppliers.suppname,
 			suppliers.currcode,
@@ -71,19 +34,18 @@ $SQL = "SELECT purchorders.*,
 			ON suppliers.currcode=currencies.currabrev
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator
-		WHERE status='Pending' LIMIT 5";
-$Result = DB_query($SQL);
+		WHERE status='Pending' LIMIT 10";
+$DashboardResult = DB_query($SQL);
 echo '<tbody>
 		<tr>
-			<th>' . _('Supplier') . '</th>
-			<th>' . _('Email') . '</th>
-			<th>' . _('Order Date') . '</th>
-			<th>' . _('Delivery Date') . '</th>
-			<th>' . _('Total Amount') . '</th>
-			<th>' . _('Status') . '</th>
+			<th>', _('Supplier'), '</th>
+			<th>', _('Order Date'), '</th>
+			<th>', _('Delivery Date'), '</th>
+			<th>', _('Total Amount'), '</th>
+			<th>', _('Status'), '</th>
 		</tr>';
 $k = 0;
-while ($row = DB_fetch_array($Result)) {
+while ($row = DB_fetch_array($DashboardResult)) {
 	$AuthSQL = "SELECT authlevel
 					FROM purchorderauth
 					WHERE currabrev='" . $row['currcode'] . "'
@@ -107,12 +69,11 @@ while ($row = DB_fetch_array($Result)) {
 	$FormatedDelDate2 = ConvertSQLDate($row['deliverydate']);
 
 	echo '<tr class="striped_row">
-			<td>' . $row['suppname'] . '</td>
-			<td>' . $row['email'] . '</td>
-			<td>' . $FormatedOrderDate2 . '</td>
-			<td>' . $FormatedDelDate2 . '</td>
-			<td class="number">' . locale_number_format($totalOV, $row['currdecimalplaces']) . '</td>
-			<td>' . $row['status'] . '</td>
+			<td>', $row['suppname'], '</td>
+			<td>', $FormatedOrderDate2, '</td>
+			<td>', $FormatedDelDate2, '</td>
+			<td class="number">', locale_number_format($totalOV, $row['currdecimalplaces']), '</td>
+			<td>', $row['status'], '</td>
 		</tr>';
 
 }

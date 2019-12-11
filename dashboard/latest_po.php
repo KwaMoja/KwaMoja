@@ -1,65 +1,28 @@
 <?php
-$PageSecurity = 0;
 $PathPrefix = '../';
-include ('../includes/session.php');
 
-$RootPath = '../';
-
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-
-echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Dashboard</title>';
-echo '<link rel="shortcut icon" href="' . $RootPath . '/favicon.ico" />';
-echo '<link rel="icon" href="' . $RootPath . '/favicon.ico" />';
-
-echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
-echo '<meta http-equiv="refresh" content="600">';
-
-echo '<link href="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/default.css" rel="stylesheet" type="text/css" />';
-echo '<script type="text/javascript" src = "' . $RootPath . '/javascripts/MiscFunctions.js"></script>';
-echo '<style media="screen">
-			.noPrint{ display: block; }
-			.yesPrint{ display: block !important; }
-		</style>
-		<style media="print">
-			.noPrint{ display: none; }
-			.yesPrint{ display: block !important; }
-		</style>';
-
-echo '</head><body style="background:transparent;">';
-
-switch ($_SESSION['ScreenFontSize']) {
-	case 0:
-		$FontSize = '8pt';
-	break;
-	case 1:
-		$FontSize = '10pt';
-	break;
-	case 2:
-		$FontSize = '12pt';
-	break;
-	default:
-		$FontSize = '10pt';
+if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	require_once ($PathPrefix . 'includes/session.php');
+	$DashBoardURL = $RootPath . '/Dashboard.php';
 }
-echo '<style>
-			body {
-					font-size: ' . $FontSize . ';
-				}
-			</style>';
 
-$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
-$Result = DB_query($SQL);
-$MyRow = DB_fetch_array($Result);
+$ScriptTitle = _('Latest purchase orders');
 
-echo '<table style="max-width:100%;width:99%;" cellspacing="0" cellpadding="1" border="0">
-		<tr>
-			<th colspan="5" style="margin:0px;padding:0px;background: transparent;">
-				<div class="CanvasTitle">' . _('Latest purchase orders') . '
-					<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
-				</div>
-			</th>
-		</tr>';
-$SQL = 'SELECT purchorders.orderno,
+$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
+$DashboardResult = DB_query($SQL);
+$DashboardRow = DB_fetch_array($DashboardResult);
+
+echo '<div class="container">
+		<table class="DashboardTable">
+			<tr>
+				<th colspan="5">
+					<div class="CanvasTitle">', $ScriptTitle, '
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" id="CloseButton">X</a>
+					</div>
+				</th>
+			</tr>';
+
+$SQL = "SELECT purchorders.orderno,
 				suppliers.suppname,
 				purchorders.orddate,
 				purchorders.deliverydate,
@@ -87,17 +50,17 @@ $SQL = 'SELECT purchorders.orderno,
 					purchorders.status,
 					suppliers.currcode,
 					currencies.decimalplaces
-			ORDER BY orddate DESC LIMIT 5';
+			ORDER BY orddate DESC LIMIT 12";
 $SalesOrdersResult2 = DB_query($SQL);
 $Total = 0;
 
 echo '<tbody>
 		<tr>
-			<th>' . _('Supplier') . '</th>
-			<th>' . _('Order Date') . '</th>
-			<th>' . _('Delivery Date') . '</th>
-			<th>' . _('Order Total') . '</th>
-			<th>' . _('Status') . '</th>
+			<th>', _('Supplier'), '</th>
+			<th>', _('Order Date'), '</th>
+			<th>', _('Delivery Date'), '</th>
+			<th>', _('Order Total'), '</th>
+			<th>', _('Status'), '</th>
 		</tr>';
 $k = 0;
 while ($row = DB_fetch_array($SalesOrdersResult2)) {
@@ -108,11 +71,11 @@ while ($row = DB_fetch_array($SalesOrdersResult2)) {
 	$FormatedDelDate1 = ConvertSQLDate($row['deliverydate']);
 
 	echo '<tr class="striped_row">
-			<td> ' . $row['suppname'] . ' </td>
-			<td>' . $FormatedOrderDate1 . '</td>
-			<td>' . $FormatedDelDate1 . '</td>
-			<td class="number">' . $FormatedOrderValue2 . '</td>
-			<td> ' . $row['status'] . ' </td> ';
+			<td> ', $row['suppname'], ' </td>
+			<td>', $FormatedOrderDate1, '</td>
+			<td>', $FormatedDelDate1, '</td>
+			<td class="number">', $FormatedOrderValue2, '</td>
+			<td> ', $row['status'], ' </td> ';
 
 }
 echo '</tbody>

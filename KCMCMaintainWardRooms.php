@@ -79,7 +79,7 @@ $Result = DB_query($SQL);
 while ($MyRoomRow = DB_fetch_array($Result)) {
 	echo '<field>
 			<label for="BedsForRoom', $MyRoomRow['room_nr'], '">', _('Number of beds in room'), ' ', $MyRow['roomprefix'], $MyRoomRow['room_nr'], '</label>
-			<input type="text" autofocus="autofocus" size="16" class="integer" name="BedsForRoom', $MyRoomRow['room_nr'], '" value="', $MyRoomRow['nr_of_beds'], '" />
+			<input type="text" autofocus="autofocus" size="16" class="number" name="BedsForRoom', $MyRoomRow['room_nr'], '" value="', $MyRoomRow['nr_of_beds'], '" />
 			<fieldhelp>', _('Enter the total number of beds in room'), ' ', $MyRow['roomprefix'], $MyRoomRow['room_nr'], '<fieldhelp>
 		</field>';
 }

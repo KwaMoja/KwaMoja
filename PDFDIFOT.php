@@ -45,7 +45,7 @@ if (!isset($_POST['FromDate']) or !isset($_POST['ToDate']) or $InputError == 1) 
 
 	echo '<field>
 			<label for="DaysAcceptable">', _('Accpetable wait in days'), ':</label>
-			<input type="text" class="integer" name="DaysAcceptable" required="required" maxlength="2" size="2" value="', $_POST['DaysAcceptable'], '" />
+			<input type="text" class="number" name="DaysAcceptable" required="required" maxlength="2" size="2" value="', $_POST['DaysAcceptable'], '" />
 			<fieldhelp>', _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)'), '</fieldhelp>
 		</field>';
 

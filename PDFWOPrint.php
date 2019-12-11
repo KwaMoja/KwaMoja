@@ -684,11 +684,11 @@ else {
 				</tr>
 				<tr>
 					<td>' . _('No of Full Packages') . ':</td>
-					<td><input name="NoOfBoxes" class="integer" value="' . $NoOfBoxes . '"/></td>
+					<td><input name="NoOfBoxes" class="number" value="' . $NoOfBoxes . '"/></td>
 				</tr>
 				<tr>
 					<td>' . _('Labels/Package') . ':</td>
-					<td><input name="LabelsPerBox" class="integer" value="' . $LabelsPerBox . '"/></td>
+					<td><input name="LabelsPerBox" class="number" value="' . $LabelsPerBox . '"/></td>
 				</tr>
 				<tr>
 					<td>' . _('Weight/Package') . ':</td>

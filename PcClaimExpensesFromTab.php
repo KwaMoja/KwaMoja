@@ -306,16 +306,17 @@ if (!isset($SelectedTabs)) {
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table>
-			<tr>
-				<td>', _('Petty Cash Tabs for User '), $_SESSION['UserID'], ':</td>
-				<td><select required="required" name="SelectedTabs">';
+
+	echo '<fieldset>
+			<legend>', _('Select Tab'), '</legend>';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE usercode='" . $_SESSION['UserID'] . "'";
-
 	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="SelectedTabs">', _('Petty Cash Tabs for User '), $_SESSION['UserID'], ':</label>
+			<select required="required" name="SelectedTabs">';
 	echo '<option value="">', _('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
@@ -325,13 +326,14 @@ if (!isset($SelectedTabs)) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
+
 	echo '</form>';
 
 } else { // isset($SelectedTabs)
@@ -361,14 +363,14 @@ if (!isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 		echo '<table>
 				<tr>
-					<th colspan="9">
+					<th colspan="11">
 						<h3>', _('Petty Cash Tab'), ' ', $SelectedTabs, '</h3>
 					</th>
 				</tr>
 				<tr>
-					<th colspan="9">', _('Detail Of Movements For Last '), ':
+					<th colspan="11">', _('Detail Of Movements For Last '), ':
 						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-						<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', _('Days'), '
+						<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="4" size="4" /> ', _('Days'), '
 						<input type="submit" name="Go" value="', _('Go'), '" />
 					</th>
 				</tr>';
@@ -407,6 +409,8 @@ if (!isset($SelectedTabs)) {
 				<th>', _('Tag'), '</th>
 				<th>', _('Notes'), '</th>
 				<th>', _('Receipt'), '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -478,12 +482,12 @@ if (!isset($SelectedTabs)) {
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td>', $AuthorisedDate, '</td>
 						<td>', $TaxesDescription, '</td>
-						<td>', $TaxesTaxAmount, '</td>
+						<td class="number">', $TaxesTaxAmount, '</td>
 						<td>', $TagString, '</td>
 						<td>', $MyRow['notes'], '</td>
 						<td>', $ReceiptText, '</td>
-						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
-						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedIndex=', urlencode($MyRow['counterindex']), '&SelectedTabs=', urlencode($SelectedTabs), '&amp;Days=', urlencode($Days), '&amp;edit=yes">', _('Edit'), '</a></td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedIndex=', urlencode($MyRow['counterindex']), '&amp;SelectedTabs=', urlencode($SelectedTabs), '&amp;Days=', urlencode($Days), '&amp;delete=yes" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this code and the expenses it may have set up?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 					</tr>';
 			} else {
 				echo '<tr class="striped_row">
@@ -492,10 +496,12 @@ if (!isset($SelectedTabs)) {
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td>', $AuthorisedDate, '</td>
 						<td>', $TaxesDescription, '</td>
-						<td>', $TaxesTaxAmount, '</td>
+						<td class="number">', $TaxesTaxAmount, '</td>
 						<td>', $TagString, '</td>
 						<td>', $MyRow['notes'], '</td>
 						<td>', $ReceiptText, '</td>
+						<td></td>
+						<td></td>
 					</tr>';
 			}
 
@@ -512,9 +518,10 @@ if (!isset($SelectedTabs)) {
 			$Amount['0'] = 0;
 		}
 
-		echo '<tr>
+		echo '<tr class="total_row">
 				<td colspan="2" class="number">', _('Current balance'), ':</td>
 				<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+				<td colspan=8"></td>
 			</tr>';
 
 		echo '</table>';
@@ -565,28 +572,16 @@ if (!isset($SelectedTabs)) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
 
-		echo '<table>';
+		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<tr>
-					<th colspan="2"><h3>', _('Update Expense'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('Update Expense'), '</legend>';
 		} else {
-			echo '<tr>
-					<th colspan="2"><h3>', _('New Expense'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('New Expense'), '</legend>';
 		}
-		echo '<tr>
-					<td>', _('Date Of Expense'), ':</td>
-					<td>
-						<input type="text" class="date" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
-					</td>
-				</tr>
-				<tr>
-					<td>', _('Code Of Expense'), ':</td>
-					<td>
-						<select required="required" name="SelectedExpense">';
-
-		DB_free_result($Result);
+		echo '<field>
+					<label for="Date">', _('Date Of Expense'), ':</label>
+					<input type="text" class="date" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				</field>';
 
 		$SQL = "SELECT pcexpenses.codeexpense,
 					pcexpenses.description,
@@ -596,9 +591,11 @@ if (!isset($SelectedTabs)) {
 				AND pctabexpenses.typetabcode = pctabs.typetabcode
 				AND pctabs.tabcode = '" . $SelectedTabs . "'
 			ORDER BY pcexpenses.codeexpense ASC";
-
 		$Result = DB_query($SQL);
-		echo '<option value="">', _('Not Yet Selected'), '</option>';
+		echo '<field>
+				<label for="SelectedExpense">', _('Code Of Expense'), ':</label>
+				<select required="required" name="SelectedExpense">
+					<option value="">', _('Not Yet Selected'), '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense'] == $_POST['SelectedExpense']) {
 				echo '<option selected="selected" value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
@@ -609,21 +606,17 @@ if (!isset($SelectedTabs)) {
 
 		} //end while loop
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
 		//Select the tag
-		echo '<tr>
-				<td valign="top">', _('Tag'), '</td>
-				<td>
-					<select multiple="multiple" name="tag[]">';
-
 		$SQL = "SELECT tagref,
 						tagdescription
 				FROM tags
 				ORDER BY tagref";
-
 		$Result = DB_query($SQL);
+		echo '<field>
+				<label for="tag">', _('Tag'), '</label>
+				<select multiple="multiple" name="tag[]">';
 		echo '<option value="0">0 - ' . _('None') . '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($_POST['tag']) and in_array($MyRow['tagref'], $TagArray)) {
@@ -633,18 +626,17 @@ if (!isset($SelectedTabs)) {
 			}
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
+
 		// 	End select tag
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
 		}
-
-		echo '<tr>
-				<td>', _('Gross Amount Claimed'), ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" /></td>
-			</tr>';
-
+		echo '<field>
+				<label for="Amount">', _('Gross Amount Claimed'), ':</label>
+				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" />
+			</field>';
+		$i = 0;
 		if (isset($_GET['edit'])) {
 			$SQL = "SELECT counterindex,
 							pccashdetail,
@@ -667,10 +659,10 @@ if (!isset($SelectedTabs)) {
 				echo '<input type="hidden" name="TaxGLAccount', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
 				echo '<input type="hidden" name="TaxOnTax', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxontax'], '" />';
 				echo '<input type="hidden" name="TaxRate', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxrate'], '" />';
-				echo '<tr>
-						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</td>
-						<td><input type="text" class="number" size="12" name="TaxAmount', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['amount'], '" /></td>
-					</tr>';
+				echo '<field>
+						<label for="TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</label>
+						<input type="text" class="number" size="12" name="TaxAmount', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['amount'], '" />
+					</field>';
 			}
 		} else {
 
@@ -693,8 +685,6 @@ if (!isset($SelectedTabs)) {
 							AND pctabs.tabcode='" . $SelectedTabs . "'
 						ORDER BY taxgrouptaxes.calculationorder";
 			$TaxResult = DB_query($SQL);
-
-			$i = 0;
 			while ($MyTaxRow = DB_fetch_array($TaxResult)) {
 				echo '<input type="hidden" name="index', $i, '" value="', $i, '" />';
 				echo '<input type="hidden" name="CalculationOrder', $i, '" value="', $MyTaxRow['calculationorder'], '" />';
@@ -703,10 +693,10 @@ if (!isset($SelectedTabs)) {
 				echo '<input type="hidden" name="TaxGLAccount', $i, '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
 				echo '<input type="hidden" name="TaxOnTax', $i, '" value="', $MyTaxRow['taxontax'], '" />';
 				echo '<input type="hidden" name="TaxRate', $i, '" value="', $MyTaxRow['taxrate'], '" />';
-				echo '<tr>
-						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</td>
-						<td><input type="text" class="number" size="12" name="TaxAmount', $i, '" value="0" /></td>
-					</tr>';
+				echo '<field>
+						<label for="TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</label>
+						<input type="text" class="number" size="12" name="TaxAmount', $i, '" value="0" />
+					</field>';
 				++$i;
 			}
 		}
@@ -715,22 +705,21 @@ if (!isset($SelectedTabs)) {
 			$_POST['Notes'] = '';
 		}
 
-		echo '<tr>
-				<td>', _('Notes'), ':</td>
-				<td>
-					<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
-				</td>
-			</tr>';
+		echo '<field>
+				<label for="Notes">', _('Notes'), ':</label>
+				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
+			</field>';
 
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt'] = '';
 		}
 
-		echo '<tr>
-				<td>', _('Receipt'), ':</td>
-				<td><input type="file" name="Receipt" id="Receipt" /></td>
-			</tr>';
-		echo '</table>'; // close main table
+		echo '<field>
+				<label for="Receipt">', _('Receipt'), ':</label>
+				<input type="file" name="Receipt" id="Receipt" />
+			</field>';
+
+		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 
@@ -738,6 +727,7 @@ if (!isset($SelectedTabs)) {
 				<input type="submit" name="submit" value="', _('Accept'), '" />
 				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
+
 		echo '</form>';
 
 	} // end if user wish to delete

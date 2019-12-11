@@ -38,6 +38,9 @@ display:inline;
 margin:0 auto;
 text-align:center;
 }
+.top {
+vertical-align:top;
+}
 .dpTD {
 border:0;
 width:20px;

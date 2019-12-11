@@ -691,7 +691,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 	++$j;
 	echo '<tr>
 			<td>' . _('No Of Packages in Delivery') . ':</td>
-			<td><input type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" /></td>
+			<td><input type="number" maxlength="6" size="6" class="number" name="Packages" value="' . $_POST['Packages'] . '" /></td>
 		</tr>';
 
 	++$j;

@@ -14,7 +14,7 @@ vertical-align:middle;
 header #Info a {
 }
 header #ActionIcon {
-background:#686868;
+background:#8A8A8A;
 display:inline;
 float:right;
 padding-left:10px;
@@ -30,9 +30,10 @@ width:32px;
 }
 header #ActionIcon:hover {
 background:#4D4D4D;
+transition-duration:0.5s;
 }
 header #ExitIcon {
-background:#686868;
+background:#8A8A8A;
 display:inline;
 float:right;
 padding-left:10px;
@@ -44,6 +45,7 @@ margin-top:-10px;
 }
 header #ExitIcon:hover {
 background:#4D4D4D;
+transition-duration:0.5s;
 }
 header #ExitIcon img {
 width:32px;
@@ -65,14 +67,14 @@ header #favourites {
 background: url(images/descending.png) no-repeat right transparent;
 background-size:contain;
 overflow: hidden;
-color:#B0C4DE;
+color:#FFFFFF;
 font-size: 130%;
 font-weight:bold;
 padding-top: 2px;
 padding-bottom: 2px;
 padding-left: 7px;
 padding-right:32px;
-border: solid 1px #B0C4DE;
+border: solid 1px #34A7E8;
 border-radius: 4px;
 margin: 2px;
 -moz-appearance:none;

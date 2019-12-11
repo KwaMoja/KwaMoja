@@ -283,7 +283,7 @@ echo '<fieldhelp>', _('If this user can release help invoices in this currency, 
 
 echo '<field>
 		<label for="AuthLevel">', _('User can authorise orders up to'), ':</label>
-		<input type="text" name="AuthLevel" required="required" maxlength="11" size="11" class="integer" value="', locale_number_format($AuthLevel, $CurrDecimalPlaces), '" />
+		<input type="text" name="AuthLevel" required="required" maxlength="11" size="11" class="number" value="', locale_number_format($AuthLevel, $CurrDecimalPlaces), '" />
 		<fieldhelp>', _('Set the limit up to which this user can create orders for'), '</fieldhelp
 	</field>';
 

@@ -27,6 +27,7 @@ padding:7px;
 border:0px solid #404552;
 padding-left:5px;
 font-weight:bold;
+transition-duration:0.5s;
 }
 .ModuleList .ModuleSelected a {
 border:0px solid #1A1A1A;
@@ -64,7 +65,7 @@ margin-right:5px;
 .MenuList legend {
 }
 .MenuList legend img {
-width:24px;
+width:40px;
 padding-right:8px;
 vertical-align:middle;
 }
@@ -102,7 +103,7 @@ clear: both;
 }
 .page_title_text img {
 padding-right:7px;
-width:32px;
+width:48px;
 vertical-align:middle;
 }
 .toplink {

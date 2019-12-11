@@ -628,7 +628,7 @@ if (isset($_POST['submit'])) {
 
 	echo '<field>
 			<label for="Leeway">', _('Days Leeway'), ':</label>
-			<input type="text" required="required" name="Leeway" class="integer" size="4" value="', $Leeway, '" />
+			<input type="text" required="required" name="Leeway" class="number" size="4" value="', $Leeway, '" />
 		</field>';
 
 	echo '<field>

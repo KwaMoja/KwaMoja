@@ -6,9 +6,13 @@ $BookMark = 'AssetItems';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
 
-echo '<div class="toplink"><a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a></div>' . "\n";
+echo '<div class="toplink">
+		<a href="', $RootPath, '/SelectAsset.php">', _('Back to Select'), '</a>
+	</div>';
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Fixed Asset Items') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Fixed Asset Items'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 /* If this form is called with the AssetID then it is assumed that the asset is to be modified  */
 if (isset($_GET['AssetID'])) {
@@ -376,17 +380,17 @@ if (isset($_POST['submit'])) {
 /* end if delete asset */
 $Result = DB_Txn_Commit();
 
-echo '<form id="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">
-	  <div>';
+echo '<form id="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table>';
+echo '<fieldset>
+		<legend>', _('Asset Details'), '</legend>';
 
 if (!isset($AssetID) or $AssetID == '') {
 
 	/*If the page was called without $AssetID passed to page then assume a new asset is to be entered other wise the form showing the fields with the existing entries against the asset will show for editing with a hidden AssetID field. New is set to flag that the page may have called itself and still be entering a new asset, in which case the page needs to know not to go looking up details for an existing asset*/
 
 	$New = 1;
-	echo '<tr><td><input type="hidden" name="New" value="" /></td></tr>';
+	echo '<input type="hidden" name="New" value="" />';
 
 	$_POST['LongDescription'] = '';
 	$_POST['Description'] = '';
@@ -427,24 +431,24 @@ if (!isset($AssetID) or $AssetID == '') {
 	$_POST['BarCode'] = $AssetRow['barcode'];
 	$_POST['DepnRate'] = locale_number_format($AssetRow['depnrate'], 2);
 
-	echo '<tr>
-			<td>' . _('Asset Code') . ':</td>
-			<td>' . $AssetID . '</td>
-		</tr>';
-	echo '<tr><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></tr>';
+	echo '<field>
+			<label>', _('Asset Code'), ':</label>
+			<div class="fieldtext">', $AssetID, '</div>
+		</field>';
+	echo '<input type="hidden" name="AssetID" value="', $AssetID, '"/>';
 
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
-	echo '<tr>
-			<td>' . _('Asset Code') . ':</td>
-			<td>' . $AssetID . '</td>
-		</tr>';
-	echo '<tr><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></tr>';
+	echo '<field>
+			<label>', _('Asset Code'), ':</label>
+			<div class="fieldtext">', $AssetID, '</div>
+		</field>';
+	echo '<input type="hidden" name="AssetID" value="', $AssetID, '"/>';
 }
 if (isset($AssetRow['disposaldate']) and $AssetRow['disposaldate'] != '0000-00-00') {
-	echo '<tr>
-			<td>' . _('Asset Already disposed on') . ':</td>
-			<td>' . ConvertSQLDate($AssetRow['disposaldate']) . '</td>
-		</tr>';
+	echo '<field>
+			<label>', _('Asset Already disposed on'), ':</label>
+			<div class="fieldtext">', ConvertSQLDate($AssetRow['disposaldate']), '</div>
+		</field>';
 }
 
 if (isset($_POST['Description'])) {
@@ -453,27 +457,26 @@ if (isset($_POST['Description'])) {
 	$Description = '';
 }
 
-echo '<tr>
-		<td>' . _('Asset Description') . ' (' . _('short') . '):</td>
-		<td><input type="text" name="Description" size="52" required="required" maxlength="50" value="' . $Description . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Description">', _('Asset Description'), ' (', _('short'), '):</label>
+		<input type="text" name="Description" size="52" required="required" maxlength="50" value="', $Description, '" />
+	</field>';
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
 	$LongDescription = '';
 }
-echo '<tr>
-		<td>' . _('Asset Description') . ' (' . _('long') . '):</td>
-		<td><textarea name="LongDescription" cols="40" rows="4">' . stripslashes($LongDescription) . '</textarea></td>
-	</tr>';
+echo '<field>
+		<label for="LongDescription">', _('Asset Description'), ' (', _('long'), '):</label>
+		<textarea name="LongDescription" cols="40" rows="4">', stripslashes($LongDescription), '</textarea>
+	</field>';
 
 if (!isset($New)) { //ie not new at all!
-	echo '<tr>
-			<td>' . _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
-			<td><input type="file" id="ItemPicture" name="ItemPicture" />
-			<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" >' . _('Clear Image') . '
-			</td>';
+	echo '<field>
+			<label for="ItemPicture">', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
+			<input type="file" id="ItemPicture" name="ItemPicture" />
+			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >', _('Clear Image');
 
 	$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 	$ImageFile = reset($ImageFileArray);
@@ -486,9 +489,9 @@ if (!isset($New)) { //ie not new at all!
 	}
 
 	if ($AssetImgLink != _('No Image')) {
-		echo '<td>' . _('Image') . '<br />' . $AssetImgLink . '</td></tr>';
+		echo _('Image'), '<br />', $AssetImgLink, '</field>';
 	} else {
-		echo '</td></tr>';
+		echo '</field>';
 	}
 
 	// EOR Add Image upload for New Item  - by Ori
@@ -509,119 +512,119 @@ if (isset($_POST['ClearImage'])) {
 	}
 }
 
-echo '<tr>
-		<td>' . _('Asset Category') . ':</td>
-		<td><select name="AssetCategoryID">';
-
 $SQL = "SELECT categoryid, categorydescription FROM fixedassetcategories";
 $ErrMsg = _('The asset categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg);
-
+echo '<field>
+		<label for="AssetCategoryID">', _('Asset Category'), ':</label>
+		<select name="AssetCategoryID">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (!isset($_POST['AssetCategoryID']) or $MyRow['categoryid'] == $_POST['AssetCategoryID']) {
-		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	}
 	$category = $MyRow['categoryid'];
 }
-echo '</select><a target="_blank" href="' . $RootPath . '/FixedAssetCategories.php">' . ' ' . _('Add or Modify Asset Categories') . '</a></td></tr>';
+echo '</select>
+	<a target="_blank" href="', $RootPath, '/FixedAssetCategories.php">', ' ', _('Add or Modify Asset Categories'), '</a>
+</field>';
+
 if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID'] = $category;
 }
-
 if (isset($AssetRow) and ($AssetRow['datepurchased'] != '0000-00-00' and $AssetRow['datepurchased'] != '')) {
-	echo '<tr>
-			<td>' . _('Date Purchased') . ':</td>
-			<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-		</tr>';
+	echo '<field>
+			<label>', _('Date Purchased'), ':</label>
+			<div class="fieldtext">', ConvertSQLDate($AssetRow['datepurchased']), '</div>
+		</field>';
 }
 
 $SQL = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $ErrMsg = _('The asset locations could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve asset locations and failed was');
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg);
-
-echo '<tr>
-		<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
-
+echo '<field>
+		<label for="AssetLocation">', _('Asset Location'), ':</label>
+		<select name="AssetLocation">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($_POST['AssetLocation'] == $MyRow['locationid']) {
-		echo '<option selected="selected" value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['locationid'], '">', $MyRow['locationdescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
+		echo '<option value="', $MyRow['locationid'], '">', $MyRow['locationdescription'], '</option>';
 	}
 }
 echo '</select>
-	<a target="_blank" href="' . $RootPath . '/FixedAssetLocations.php">' . ' ' . _('Add Asset Location') . '</a></td>
-	</tr>
-	<tr>
-		<td>' . _('Bar Code') . ':</td>
-		<td><input type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Serial Number') . ':</td>
-		<td><input type="text" name="SerialNo" size="32" maxlength="30" value="' . $_POST['SerialNo'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Depreciation Type') . ':</td>
-		<td><select name="DepnType">';
+	<a target="_blank" href="', $RootPath, '/FixedAssetLocations.php">', ' ', _('Add Asset Location'), '</a>
+</field>';
+
+echo '<field>
+		<label for="BarCode">', _('Bar Code'), ':</label>
+		<input type="text" name="BarCode" size="22" maxlength="20" value="', $_POST['BarCode'], '" />
+	</field>';
+
+echo '<field>
+		<label for="SerialNo">', _('Serial Number'), ':</label>
+		<input type="text" name="SerialNo" size="32" maxlength="30" value="', $_POST['SerialNo'], '" />
+	</field>';
 
 if (!isset($_POST['DepnType'])) {
 	$_POST['DepnType'] = 0; //0 = Straight line - 1 = Diminishing Value
 	
 }
+echo '<field>
+		<label for="DepnType">', _('Depreciation Type'), ':</label>
+		<select name="DepnType">';
 if ($_POST['DepnType'] == 0) { //straight line
-	echo '<option selected="selected" value="0">' . _('Straight Line') . '</option>';
-	echo '<option value="1">' . _('Diminishing Value') . '</option>';
+	echo '<option selected="selected" value="0">', _('Straight Line'), '</option>';
+	echo '<option value="1">', _('Diminishing Value'), '</option>';
 } else {
-	echo '<option value="0">' . _('Straight Line') . '</option>';
-	echo '<option selected="selected" value="1">' . _('Diminishing Value') . '</option>';
+	echo '<option value="0">', _('Straight Line'), '</option>';
+	echo '<option selected="selected" value="1">', _('Diminishing Value'), '</option>';
 }
+echo '</select>
+	</field>';
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Depreciation Rate') . ':</td>
-		<td><input type="text" class="integer" name="DepnRate" size="4" required="required" maxlength="4" value="' . $_POST['DepnRate'] . '" />%</td>
-	</tr>
-	</table>';
+echo '<field>
+		<label for="DepnRate">', _('Depreciation Rate'), ':</label>
+		<input type="text" class="number" name="DepnRate" size="4" required="required" maxlength="4" value="', $_POST['DepnRate'], '" />%
+	</field>
+</fieldset>';
 
 if (isset($AssetRow)) {
 
 	echo '<table>
-		<tr>
-			<th colspan="2">' . _('Asset Financial Summary') . '</th>
-		</tr>
-		<tr>
-			<td>' . _('Accumulated Costs') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>
-		<tr>
-			<td>' . _('Accumulated Depreciation') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>';
+			<tr>
+				<th colspan="2">', _('Asset Financial Summary'), '</th>
+			</tr>
+			<tr>
+				<td>', _('Accumulated Costs'), ':</td>
+				<td class="number">', locale_number_format($AssetRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>
+			<tr>
+				<td>', _('Accumulated Depreciation'), ':</td>
+				<td class="number">', locale_number_format($AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>';
 	if ($AssetRow['disposaldate'] != '0000-00-00') {
 		echo '<tr>
-			<td>' . _('Net Book Value at disposal date') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['cost'] - $AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>';
+				<td>', _('Net Book Value at disposal date'), ':</td>
+				<td class="number">', locale_number_format($AssetRow['cost'] - $AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>';
 		echo '<tr>
-			<td>' . _('Disposal Proceeds') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>';
+				<td>', _('Disposal Proceeds'), ':</td>
+				<td class="number">', locale_number_format($AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>';
 		echo '<tr>
-			<td>' . _('P/L after disposal') . ':</td>
-			<td class="number">' . locale_number_format(-$AssetRow['cost'] + $AssetRow['accumdepn'] + $AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>';
+				<td>', _('P/L after disposal'), ':</td>
+				<td class="number">', locale_number_format(-$AssetRow['cost'] + $AssetRow['accumdepn'] + $AssetRow['disposalproceeds'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>';
 
 	} else {
 		echo '<tr>
-			<td>' . _('Net Book Value') . ':</td>
-			<td class="number">' . locale_number_format($AssetRow['cost'] - $AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>';
+				<td>', _('Net Book Value'), ':</td>
+				<td class="number">', locale_number_format($AssetRow['cost'] - $AssetRow['accumdepn'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			</tr>';
 	}
 	/*Get the last period depreciation (depn is transtype =44) was posted for */
 	$Result = DB_query("SELECT periods.lastdate_in_period,
@@ -639,29 +642,26 @@ if (isset($AssetRow)) {
 		$LastRunDate = ConvertSQLDate($LastDepnRun[0]);
 	}
 	echo '<tr>
-			<td>' . _('Depreciation last run') . ':</td>
-			<td>' . $LastRunDate . '</td>
+			<td>', _('Depreciation last run'), ':</td>
+			<td>', $LastRunDate, '</td>
 		</tr>
-		</table>';
+	</table>';
 }
 
 if (isset($New)) {
 	echo '<div class="centre">
-			<br />
-			<input type="submit" name="submit" value="' . _('Insert New Fixed Asset') . '" />';
+			<input type="submit" name="submit" value="', _('Insert New Fixed Asset'), '" />';
 } else {
-	echo '<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Update') . '" />
-		</div>';
 	prnMsg(_('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
-	echo '<br />
-		<div class="centre">
-			<input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return MakeConfirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Update'), '" />
+		</div>';
+	echo '<div class="centre">
+			<input type="submit" name="delete" value="', _('Delete This Asset'), '" onclick="return MakeConfirm(\'', _('Are You Sure? Only assets with a zero book value can be deleted.'), '\');" />';
 }
 
 echo '</div>
-	  </div>
 	</form>';
+
 include ('includes/footer.php');
 ?>

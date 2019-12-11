@@ -1240,7 +1240,7 @@ if (((isset($_SESSION['CustomerRecord' . $Identifier]) and isset($_POST['Custome
 			<input type="text" name="CustCode" data-type="no-illegal-chars" title="', _('Enter an extract of the customer code to search for. Customer codes can contain any alpha-numeric character or underscore'), '" size="10" maxlength="18" />
 			<b>', _('OR'), '</b>
 			', _('Customer invoice number'), ':
-			<input type="text" name="CustInvNo" class="integer" size="8" maxlength="8" />
+			<input type="text" name="CustInvNo" class="number" size="8" maxlength="8" />
 		</field>
 		</fieldset>
 		<div class="centre">

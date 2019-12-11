@@ -52,12 +52,23 @@ padding:2px;
 color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
+margin-right:3px;
+margin-bottom:4px;
+}
+form fieldset field select:not([multiple]) {
+background:url(images/descending.png) no-repeat right #e2f5ff;
+padding-right:24px;
+background-size:contain;
+-moz-appearance:none;
+-webkit-appearance: none;
 }
 form fieldset field input:hover,select:hover,textarea:hover {
 box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
 }
 form fieldset field input:focus,select:focus,textarea:focus {
 box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
 }
 form fieldset field input[type="email"] {
 display:inline;
@@ -108,16 +119,20 @@ cursor: pointer;
 color:#FFFFFF;
 }
 form input[type="reset"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
+background:#34A7E8;
+font-weight:bold;
+padding-left: 16px;
+padding-right: 16px;
+padding-top:6px;
+padding-bottom:6px;
 margin: 1px;
-border: 1px solid #8DCDEB;
+margin-top:10px;
+margin-bottom:10px;
+border: 1px solid #0C374B;
 color:#8DCDEB;
-border-radius: 15px;
+border-radius: 6px;
 cursor: pointer;
-color:#1A1A1A;
+color:#FFFFFF;
 }
 form .number {
 text-align:right;

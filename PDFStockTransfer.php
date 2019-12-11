@@ -27,7 +27,7 @@ if (!isset($_GET['TransferNo'])) {
 				<legend>', _('Report Criteria'), '</legend>
 				<field>
 					<label for="TransferNo">', _('Print Stock Transfer Note'), ' :</label>
-					<input type="text" class="integer"  name="TransferNo" required="required" maxlength="10" size="11" />
+					<input type="text" class="number"  name="TransferNo" required="required" maxlength="10" size="11" />
 				</field>
 			</fieldset>';
 

@@ -1,6 +1,7 @@
 table {
 background-color:white;
 margin:0 auto;
+margin-bottom:10px;
 width:auto;
 /*border-collapse: collapse;*/
 border:thin outset #B3B3B3;
@@ -67,7 +68,7 @@ color:red;
 background-color:#FFC0CB;
 }
 table tr.total_row {
-background:#F1F1F1;
+background:#CDC7C7;
 color:#1A1A1A;
 font-weight:bold;
 }

@@ -456,7 +456,7 @@ if (!isset($_GET['delete'])) {
 		echo '<legend>', _('New Account Group Details'), '</legend>';
 		echo '<field>
 				<label for="GroupCode">', _('Account Group Code'), ':</label>
-				<input class="integer" type="text" name="GroupCode" size="10" autofocus="autofocus" required="required" maxlength="10" value="', $_POST['GroupCode'], '" />
+				<input class="number" type="text" name="GroupCode" size="10" autofocus="autofocus" required="required" maxlength="10" value="', $_POST['GroupCode'], '" />
 				<fieldhelp>', _('The integer group code for this account group'), '</fieldhelp>
 			</field>';
 	} //!isset($_POST['MoveGroup'])
@@ -535,7 +535,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for="SequenceInTB">', _('Sequence In TB'), ':</label>
-			<input type="text" required="required" maxlength="4" name="SequenceInTB" class="integer" value="', $_POST['SequenceInTB'], '" />
+			<input type="text" required="required" maxlength="4" name="SequenceInTB" class="number" value="', $_POST['SequenceInTB'], '" />
 			<fieldhelp>', _('The sequence in the trial balance where this group will appear.'), '</fieldhelp>
 		</field>';
 

@@ -5,7 +5,7 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
 include ('includes/header.php');
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['submit']) and !isset($_POST['delete'])) {
@@ -90,70 +90,73 @@ if (DB_num_rows($Result) > 0) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Location ID') . '</th>
-					<th class="SortedColumn">' . _('Location Description') . '</th>
-					<th>' . _('Parent Location') . '</th>
+					<th class="SortedColumn">', _('Location ID'), '</th>
+					<th class="SortedColumn">', _('Location Description'), '</th>
+					<th>', _('Parent Location'), '</th>
+					<th></th>
 				</tr>
 			</thead>';
 }
 echo '<tbody>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<tr>
-			<td>' . $MyRow['locationid'] . '</td>
-			<td>' . $MyRow['locationdescription'] . '</td>';
 	$ParentSql = "SELECT locationdescription FROM fixedassetlocations WHERE locationid='" . $MyRow['parentlocationid'] . "'";
 	$ParentResult = DB_query($ParentSql);
 	$ParentRow = DB_fetch_array($ParentResult);
-	echo '<td>' . $ParentRow['locationdescription'] . '</td>
-		<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedLocation=' . $MyRow['locationid'] . '">' . _('Edit') . '</a></td></tr>';
+	echo '<tr class="striped_row">
+			<td>', $MyRow['locationid'], '</td>
+			<td>', $MyRow['locationdescription'], '</td>
+			<td>', $ParentRow['locationdescription'], '</td>
+			<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($MyRow['locationid']), '">', _('Edit'), '</a></td>
+		</tr>';
 }
 
 echo '</tbody>';
 echo '</table>';
-echo '<form id="LocationForm" method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">
-	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table>
-	<tr>
-		<th style="text-align:left">' . _('Location ID') . '</th>';
+
+echo '<form id="LocationForm" method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+echo '<fieldset>
+		<legend>', _('Location Details'), '</legend>';
+
+echo '<field>
+		<label for="LocationID">', _('Location ID'), '</label>';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="hidden" name="LocationID" value="' . $LocationID . '" />';
-	echo '<td>' . $LocationID . '</td>';
+	echo '<input type="hidden" name="LocationID" value="', $LocationID, '" />';
+	echo '<div class="fieldtext">', $LocationID, '</div>';
 } else {
-	echo '<td><input type="text" name="LocationID" required="required" maxlength="6" size="6" value="' . $LocationID . '" /></td>
-		</tr>';
+	echo '<input type="text" name="LocationID" required="required" maxlength="6" size="6" value="', $LocationID, '" />
+		</field>';
 }
 
-echo '<tr>
-		<th style="text-align:left">' . _('Location Description') . '</th>
-		<td><input type="text" name="LocationDescription" required="required" maxlength="20" size="20" value="' . $LocationDescription . '" /></td>
-	</tr>
-	<tr>
-		<th style="text-align:left">' . _('Parent Location') . '</th>
-		<td><select name="ParentLocationID">';
+echo '<field>
+		<label for="LocationDescription">', _('Location Description'), '</label>
+		<input type="text" name="LocationDescription" required="required" maxlength="20" size="20" value="', $LocationDescription, '" />
+	</field>';
 
 $SQL = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $Result = DB_query($SQL);
-
-echo '<option value=""></option>';
+echo '<field>
+		<label for="ParentLocationID">', _('Parent Location'), '</label>
+		<select name="ParentLocationID">
+			<option value=""></option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['locationid'] == $ParentLocationID) {
-		echo '<option selected="selected" value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['locationid'], '">', $MyRow['locationdescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
+		echo '<option value="', $MyRow['locationid'], '">', $MyRow['locationdescription'], '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>
+</fieldset>';
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="submit" name="update" value="' . _('Update Information') . '" />';
-	echo '<br />
-		<br />
-		<input type="submit" name="delete" value="' . _('Delete This Location') . '" />';
+	echo '<input type="submit" name="update" value="', _('Update Information'), '" />';
+	echo '<input type="submit" name="delete" value="', _('Delete This Location'), '" />';
 } else {
-	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
+	echo '<input type="submit" name="submit" value="', _('Enter Information'), '" />';
 }
 echo '</div>
 	</form>';

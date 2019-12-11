@@ -181,17 +181,17 @@ if (isset($_POST['Submit'])) {
 
 	echo '<field>
 			<label for="APercent">', _('Percentage in A Category'), '</label>
-			<input required="required" type="text" size="3" class="integer" name="APercent" value="10" />
+			<input required="required" type="text" size="3" class="number" name="APercent" value="10" />
 			<fieldhelp>', _('The percentage of items to place in the A category.'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="BPercent">', _('Percentage in B Category'), '</label>
-			<input required="required" type="text" size="3" class="integer" name="BPercent" value="30" />
+			<input required="required" type="text" size="3" class="number" name="BPercent" value="30" />
 			<fieldhelp>', _('The percentage of items to place in the B category.'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="CPercent">', _('Percentage in C Category'), '</label>
-			<input required="required" type="text" size="3" class="integer" name="CPercent" value="60" />
+			<input required="required" type="text" size="3" class="number" name="CPercent" value="60" />
 			<fieldhelp>', _('The percentage of items to place in the C category.'), '</fieldhelp>
 		</field>
 		<field>

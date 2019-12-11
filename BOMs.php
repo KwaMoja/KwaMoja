@@ -418,7 +418,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 		echo '<field>
 				<label for="Sequence">', _('Sequence in BOM'), ':</label>
-				<input type="text" class="integer" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
+				<input type="text" class="number" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
 				<fieldhelp>', _('Enter the sequence in the BOM where this component is to be included.'), '</fieldhelp>
 			</field>';
 
@@ -470,7 +470,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 		echo '<field>
 				<label for="Sequence">', _('Sequence in BOM'), ':</label>
-				<input type="text" class="integer" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
+				<input type="text" class="number" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
 				<fieldhelp>', _('Enter the sequence in the BOM where this component is to be included.'), '</fieldhelp>
 			</field>';
 

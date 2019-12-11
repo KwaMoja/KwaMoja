@@ -524,7 +524,7 @@ if (!isset($StockId)) {
 				<legend class="search">', _('Search Criteria'), '</legend>
 				<field>
 					<label for="OrderNumber">', _('Order number'), ': </label>
-					<input type="search" class="integer" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />
+					<input type="search" class="number" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />
 					<fieldhelp>', _('If you know the order number you are looking for, then enter it here, otherwise leave empty.'), '</fieldhelp>
 				</field>
 				<field>

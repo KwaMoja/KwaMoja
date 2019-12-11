@@ -391,7 +391,7 @@ echo '</select>
 
 echo '<field>
 		<label for="Sequence">', _('Sequence'), '</label>
-		<input type="text" size="5" class="integer" name="Sequence" value="', $_POST['Sequence'], '" />
+		<input type="text" size="5" class="number" name="Sequence" value="', $_POST['Sequence'], '" />
 		<fieldhelp>', _('Enter the sequence number for this container.'), '</fieldhelp>
 	</field>';
 
@@ -455,17 +455,17 @@ echo '<fieldset>
 		<legend>', _('Position in Parent Container') . ':</legend>
 		<field>
 			<label for="X">x : ', '</label>
-			<input type="text" size="5" class="integer" name="X" value="', $_POST['X'], '" />
+			<input type="text" size="5" class="number" name="X" value="', $_POST['X'], '" />
 			<fieldhelp>', _('The x co-ordinate of the location within the parent container'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="Y">y : ' . '</label>
-			<input type="text" size="5" class="integer" name="Y" value="', $_POST['Y'], '" />
+			<input type="text" size="5" class="number" name="Y" value="', $_POST['Y'], '" />
 			<fieldhelp>', _('The y co-ordinate of the location within the parent container'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="Z">z : ' . '</label>
-			<input type="text" size="5" class="integer" name="Z" value="', $_POST['Z'], '" />
+			<input type="text" size="5" class="number" name="Z" value="', $_POST['Z'], '" />
 			<fieldhelp>', _('The z co-ordinate of the location within the parent container'), '</fieldhelp>
 		</field>
 	</fieldset><br />';
@@ -474,17 +474,17 @@ echo '<fieldset>
 		<legend>', _('Size of Container'), ': </legend>
 		<field>
 			<label for="Width">', _('width'), ':</label>
-			<input type="text" size="5" class="integer" name="Width" value="', $_POST['Width'], '" />
+			<input type="text" size="5" class="number" name="Width" value="', $_POST['Width'], '" />
 			<fieldhelp>', _('The width of this container.'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="Length">', _('length'), ':</label>
-			<input type="text" size="5" class="integer" name="Length" value="', $_POST['Length'], '" />
+			<input type="text" size="5" class="number" name="Length" value="', $_POST['Length'], '" />
 			<fieldhelp>', _('The length of this container.'), '</fieldhelp>
 		</field>
 		<field>
 			<label for="Height">', _('height'), ':</label>
-			<input type="text" size="5" class="integer" name="Height" value="', $_POST['Height'], '" />
+			<input type="text" size="5" class="number" name="Height" value="', $_POST['Height'], '" />
 			<fieldhelp>', _('The height of this container.'), '</fieldhelp>
 		</field>
 	</fieldset><br />';
@@ -496,8 +496,8 @@ if (!isset($_GET['Edit'])) {
 	}
 	echo '<field>
 			<label>', _('Create a Block of Containers'), ':</label>
-			<input type="text" size="5" class="integer" name="NoWide" value="' . $_POST['NoWide'] . '" />&nbsp;X
-			<input type="text" size="5" class="integer" name="NoLong" value="' . $_POST['NoLong'] . '" />
+			<input type="text" size="5" class="number" name="NoWide" value="' . $_POST['NoWide'] . '" />&nbsp;X
+			<input type="text" size="5" class="number" name="NoLong" value="' . $_POST['NoLong'] . '" />
 		</field>';
 }
 

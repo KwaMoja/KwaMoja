@@ -145,7 +145,7 @@ if ($MyRow['auth'] == 1) {
 }
 echo '<tr>
 		<td>' . _('Timeout (seconds)') . '</td>
-		<td><input type="text" size="5" name="Timeout" required="required" maxlength="4" class="integer" value="' . $MyRow['timeout'] . '" /></td>
+		<td><input type="text" size="5" name="Timeout" required="required" maxlength="4" class="number" value="' . $MyRow['timeout'] . '" /></td>
 	</tr>
 	<tr>
 		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>

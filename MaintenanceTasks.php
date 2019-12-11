@@ -8,7 +8,9 @@ $BookMark = 'AssetMaintenance';
 
 include ('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 if (isset($_POST['Submit'])) {
 	if (!is_numeric(filter_number_format($_POST['FrequencyDays'])) or filter_number_format($_POST['FrequencyDays']) < 0) {
@@ -84,50 +86,57 @@ $SQL = "SELECT taskid,
 $ErrMsg = _('The maintenance task details cannot be retrieved because');
 $Result = DB_query($SQL, $ErrMsg);
 
-echo '<table>
-	 <tr>
-		<th>' . _('Task ID') . '</th>
-		<th>' . _('Asset') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Last Completed') . '</th>
-		<th>' . _('Person') . '</th>
-		<th>' . _('Manager') . '</th>
-	</tr>';
+if (DB_num_rows($Result) > 0) {
+	echo '<table>
+			<tr>
+				<th>', _('Task ID'), '</th>
+				<th>', _('Asset'), '</th>
+				<th>', _('Description'), '</th>
+				<th>', _('Last Completed'), '</th>
+				<th>', _('Person'), '</th>
+				<th>', _('Manager'), '</th>
+				<th></th>
+				<th></th>
+			</tr>';
 
-while ($MyRow = DB_fetch_array($Result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['manager'] != '') {
+			$SQL = "SELECT realname FROM www_users WHERE userid='" . $MyRow['manager'] . "'";
+			$ManagerResult = DB_query($SQL);
+			$ManagerRow = DB_fetch_array($ManagerResult);
+			$ManagerName = $ManagerRow['realname'];
+		} else {
+			$ManagerName = _('No Manager Set');
+		}
 
-	if ($MyRow['manager'] != '') {
-		$ManagerResult = DB_query("SELECT realname FROM www_users WHERE userid='" . $MyRow['manager'] . "'");
-		$ManagerRow = DB_fetch_array($ManagerResult);
-		$ManagerName = $ManagerRow['realname'];
-	} else {
-		$ManagerName = _('No Manager Set');
+		echo '<tr>
+				<td>', $MyRow['taskid'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td>', $MyRow['taskdescription'], '</td>
+				<td>', ConvertSQLDate($MyRow['lastcompleted']), '</td>
+				<td>', $MyRow['realname'], '</td>
+				<td>', $ManagerName, '</td>
+				<td><a href="', $RootPath, '/MaintenanceTasks.php?Edit=Yes&amp;TaskID=', $MyRow['taskid'], '">', _('Edit'), '</a></td>
+				<td><a href="', $RootPath, '/MaintenanceTasks.php?Delete=Yes&amp;TaskID=', $MyRow['taskid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this maintenance task?'), '\');">', _('Delete'), '</a></td>
+			</tr>';
 	}
 
-	echo '<tr>
-			<td>' . $MyRow['taskid'] . '</td>
-			<td>' . $MyRow['description'] . '</td>
-			<td>' . $MyRow['taskdescription'] . '</td>
-			<td>' . ConvertSQLDate($MyRow['lastcompleted']) . '</td>
-			<td>' . $MyRow['realname'] . '</td>
-			<td>' . $ManagerName . '</td>
-			<td><a href="' . $RootPath . '/MaintenanceTasks.php?Edit=Yes&amp;TaskID=' . $MyRow['taskid'] . '">' . _('Edit') . '</a></td>
-			<td><a href="' . $RootPath . '/MaintenanceTasks.php?Delete=Yes&amp;TaskID=' . $MyRow['taskid'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this maintenance task?') . '\');">' . _('Delete') . '</a></td>
-		</tr>';
+	echo '</table>';
 }
 
-echo '</table>';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="form1">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post" id="form1">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table>';
+echo '<fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<tr>
-			<td>' . _('Task ID') . '</td>
-			<td>' . $_GET['TaskID'] . '</td>
-		</tr>';
-	echo '<input type="hidden" name="TaskID" value="' . $_GET['TaskID'] . '" />';
+	echo '<legend>', _('Edit Maintenance Task'), '</legend>';
+
+	echo '<field>
+			<label for="TaskID">', _('Task ID'), '</label>
+			<div class="fieldtext">', $_GET['TaskID'], '</div>
+		</field>';
+	echo '<input type="hidden" name="TaskID" value="', $_GET['TaskID'], '" />';
 	$SQL = "SELECT assetid,
 				taskdescription,
 				frequencydays,
@@ -144,6 +153,8 @@ if (isset($_GET['Edit'])) {
 	$_POST['UserResponsible'] = $MyRow['userresponsible'];
 	$_POST['Manager'] = $MyRow['manager'];
 	$_POST['AssetID'] = $MyRow['assetid'];
+} else {
+	echo '<legend>', _('New Maintenance Task'), '</legend>';
 }
 
 if (!isset($_POST['TaskDescription'])) {
@@ -162,75 +173,74 @@ if (!isset($_POST['AssetID'])) {
 	$_POST['AssetID'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Asset to Maintain') . ':</td>
-		<td><select required="required" name="AssetID">';
+echo '<field>
+		<label for="AssetID">', _('Asset to Maintain'), ':</label>
+		<select required="required" name="AssetID">';
 $AssetSQL = "SELECT assetid, description FROM fixedassets";
 $AssetResult = DB_query($AssetSQL);
 while ($MyRow = DB_fetch_array($AssetResult)) {
 	if ($MyRow['assetid'] == $_POST['AssetID']) {
-		echo '<option selected="selected" value="' . $MyRow['assetid'] . '">' . $MyRow['assetid'] . ' - ' . $MyRow['description'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['assetid'], '">', $MyRow['assetid'], ' - ', $MyRow['description'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['assetid'] . '">' . $MyRow['assetid'] . ' - ' . $MyRow['description'] . '</option>';
+		echo '<option value="', $MyRow['assetid'], '">', $MyRow['assetid'], ' - ', $MyRow['description'], '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Task Description') . ':</td>
-		<td><textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
-	</tr>';
+echo '<field>
+		<label for="TaskDescription">', _('Task Description'), ':</label>
+		<textarea name="TaskDescription" required="required" cols="40" rows="3">', $_POST['TaskDescription'], '</textarea>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Days Before Task Due') . ':</td>
-		<td><input type="text" class="integer" name="FrequencyDays" size="5" required="required" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="FrequencyDays">', _('Days Before Task Due'), ':</label>
+		<input type="text" class="number" name="FrequencyDays" size="5" required="required" maxlength="5" value="', $_POST['FrequencyDays'], '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Responsible') . ':</td>
-		<td><select required="required" name="UserResponsible">';
+echo '<field>
+		<label for="UserResponsible">', _('Responsible'), ':</label>
+		<select required="required" name="UserResponsible">';
 $UserSQL = "SELECT userid FROM www_users";
 $UserResult = DB_query($UserSQL);
 while ($MyRow = DB_fetch_array($UserResult)) {
 	if ($MyRow['userid'] == $_POST['UserResponsible']) {
-		echo '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
+		echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
-	}
-}
-echo '</select></td>
-	</tr>';
-
-echo '<tr>
-		<td>' . _('Manager') . ':</td>
-		<td><select required="required" name="Manager">';
-if ($_POST['Manager'] == '') {
-	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
-} else {
-	echo '<option value="">' . _('No Manager') . '</option>';
-}
-$ManagerSQL = "SELECT userid FROM www_users";
-$ManagerResult = DB_query($UserSQL);
-while ($MyRow = DB_fetch_array($ManagerResult)) {
-	if ($MyRow['userid'] == $_POST['Manager']) {
-		echo '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
+		echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], '</option>';
 	}
 }
 echo '</select>
-		</td>
-	</tr>
-</table>';
+	</field>';
+
+$ManagerSQL = "SELECT userid FROM www_users";
+$ManagerResult = DB_query($UserSQL);
+echo '<field>
+		<label for="Manager">', _('Manager'), ':</label>
+		<td><select required="required" name="Manager">';
+if ($_POST['Manager'] == '') {
+	echo '<option selected="selected" value="">', _('No Manager'), '</option>';
+} else {
+	echo '<option value="">', _('No Manager'), '</option>';
+}
+while ($MyRow = DB_fetch_array($ManagerResult)) {
+	if ($MyRow['userid'] == $_POST['Manager']) {
+		echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], '</option>';
+	} else {
+		echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], '</option>';
+	}
+}
+echo '</select>
+	</field>
+</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="' . _('Update Task') . '" />
+			<input type="submit" name="Update" value="', _('Update Task'), '" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="' . _('Enter New Task') . '" />
+			<input type="submit" name="Submit" value="', _('Enter New Task'), '" />
 		</div>';
 }
 echo '</form>';

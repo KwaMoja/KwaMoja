@@ -206,7 +206,7 @@ foreach ($Frequencies as $Initial => $Name) {
 	}
 }
 echo '</select>
-			&nbsp;&nbsp;&nbsp;' . _('Days') . '&nbsp;:&nbsp;&nbsp;&nbsp;<input type="number" min="0" max="366" step="1" class="integer" size="4" name="Days" value="' . $_POST['Days'] . '" />
+			&nbsp;&nbsp;&nbsp;' . _('Days') . '&nbsp;:&nbsp;&nbsp;&nbsp;<input type="number" min="0" max="366" step="1" class="number" size="4" name="Days" value="' . $_POST['Days'] . '" />
 			<i>' . _('The number of days from the start of the period that the payment is to be made') . '</i>
 		</td>
 	</tr>

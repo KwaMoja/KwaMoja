@@ -675,7 +675,7 @@ if (!isset($SuppliersResult)) {
 	}
 	echo '<field>
 			<label for="LeadTime">', _('Lead Time'), ' (', _('in days from date of order'), '):</label>
-			<input type="text" class="integer" name="LeadTime" required="required" maxlength="4" size="5" value="', $_POST['LeadTime'], '" />
+			<input type="text" class="number" name="LeadTime" required="required" maxlength="4" size="5" value="', $_POST['LeadTime'], '" />
 		</field>';
 
 	echo '<field>

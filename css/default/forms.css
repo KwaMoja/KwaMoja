@@ -54,11 +54,20 @@ color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
 }
+form fieldset field select:not([multiple]) {
+background:url(images/descending.png) no-repeat right #C0C3FF;
+padding-right:24px;
+background-size:contain;
+-moz-appearance:none;
+-webkit-appearance: none;
+}
 form fieldset field input:hover,select:hover,textarea:hover {
 box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
 }
 form fieldset field input:focus,select:focus,textarea:focus {
 box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
 }
 form fieldset field input[type="email"] {
 display:inline;
@@ -106,16 +115,17 @@ cursor: pointer;
 form input[type="submit"]:hover{
 background:#7F7F7F;
 color:black;
+transition-duration:0.5s;
 }
 form input[type="reset"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 16px;
+padding-right: 16px;
 margin: 1px;
-border: 1px solid #8DCDEB;
-color:#8DCDEB;
-border-radius: 15px;
+border: 1px solid #588BB6;
+color:#1A1A1A;
+border-radius: 5px;
 cursor: pointer;
 }
 form .number {

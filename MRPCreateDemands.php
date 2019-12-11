@@ -296,7 +296,7 @@ echo '<field>
 
 echo '<field>
 		<label for="Multiplier">', _('Multiplier'), ':</label>
-		<input type="text" class="integer" name="Multiplier" required="required" maxlength="2" size="2" value="1" />
+		<input type="text" class="number" name="Multiplier" required="required" maxlength="2" size="2" value="1" />
 	</field>';
 
 echo '</fieldset>';

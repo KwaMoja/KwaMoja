@@ -8,7 +8,8 @@ font-weight:lighter;
 
 img {
 border:none;
-width:50%;
+width:90%;
+margin-left:2%;
 }
 
 #pagetitle {
@@ -59,7 +60,18 @@ text-decoration:none;
 a:hover {
 color:#03c;
 }
-
+.code{
+background:#C7E4ED;
+color:#0A0A42;
+font-family: monospace;
+margin-left: 2%;
+margin-right: 1%;
+word-wrap: break-word;
+font-size:80%;
+}
+div{
+margin-left: 2%;
+}
 .right {
 text-align:right;
 }
@@ -180,5 +192,6 @@ margin-left: 2%;
 pre {
     font-size: 1.2em;
     color:black;
+word-wrap: break-word;
 }
 

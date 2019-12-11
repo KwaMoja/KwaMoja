@@ -262,12 +262,12 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="DayNumber">', _('Days (Or Day In Following Month)'), ':</label>';;
 	if ($DaysBeforeDue != 0) {
-		echo '<input type="text" name="DayNumber" maxvalue="30" class="integer" size="3" maxlength="3" value="', locale_number_format($DaysBeforeDue, 0), '" />';
+		echo '<input type="text" name="DayNumber" maxvalue="30" class="number" size="3" maxlength="3" value="', locale_number_format($DaysBeforeDue, 0), '" />';
 	} else {
 		if (isset($DayInFollowingMonth)) {
-			echo '<input type="text" name="DayNumber" maxvalue="30" class="integer" size="3" maxlength="3" value="', locale_number_format($DayInFollowingMonth, 0), '" />';
+			echo '<input type="text" name="DayNumber" maxvalue="30" class="number" size="3" maxlength="3" value="', locale_number_format($DayInFollowingMonth, 0), '" />';
 		} else {
-			echo '<input type="text" name="DayNumber" maxvalue="30" class="integer" size="3" maxlength="3" value="0" />';
+			echo '<input type="text" name="DayNumber" maxvalue="30" class="number" size="3" maxlength="3" value="0" />';
 		}
 	}
 	echo '<fieldhelp>', _('The number of days credit, or the day of the appropriate month when payment is due.'), '</fieldhelp>

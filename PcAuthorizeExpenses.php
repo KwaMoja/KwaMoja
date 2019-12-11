@@ -102,8 +102,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<table>
 			<thead>
 				<tr>
-					<th colspan="7">', _('Detail Of Movement For Last '), ':
-						<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
+					<th colspan="10">', _('Detail Of Movement For Last '), ':
+						<input type="text" class="number" name="Days" value="', $Days, '" maxlength="4" size="4" />', _('Days'), '
 						<input type="submit" name="Go" value="', _('Go'), '" />
 					</th>
 				</tr>
@@ -406,9 +406,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$Amount['0'] = 0;
 	}
 
-	echo '<tr>
+	echo '<tr class="total_row">
 			<td colspan="2" class="number">', _('Current balance'), ':</td>
 			<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+			<td colspan="7"></td>
 		</tr>';
 
 	// Do the postings
@@ -425,18 +426,18 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table>'; //Main table
+
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE authorizerexpenses='" . $_SESSION['UserID'] . "'
 		ORDER BY tabcode";
-
 	$Result = DB_query($SQL);
 
-	echo '<tr>
-			<td>', _('Authorise expenses to Petty Cash Tab'), ':</td>
-			<td><select required="required" name="SelectedTabs">';
-
+	echo '<fieldset>
+			<legend>', _('Select Tab'), '</legend>'; //Main table
+	echo '<field>
+			<label for="SelectedTabs">', _('Authorise expenses to Petty Cash Tab'), ':</label>
+			<select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
@@ -445,15 +446,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		}
 	} //end while loop get type of tab
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
-	DB_free_result($Result);
+		</field>';
 
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
+
 	echo '</form>';
 }
 /*end of else not submit */

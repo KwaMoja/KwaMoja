@@ -8,7 +8,7 @@ $BookMark = 'AssetCategories';
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Fixed Asset Categories'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['SelectedCategory'])) {
@@ -145,37 +145,43 @@ if (!isset($SelectedCategory) or isset($_POST['submit'])) {
 			FROM fixedassetcategories";
 	$Result = DB_query($SQL);
 
-	echo '<br />
-			<table>';
-	echo '<tr>
-			<th>' . _('Cat Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Cost GL') . '</th>
-			<th>' . _('P and L') . '<br />' . _('Depreciation GL') . '</th>
-			<th>' . _('Disposal GL') . '</th>
-			<th>' . _('Accum Depn GL') . '</th>
-		  </tr>';
+	echo '<table>
+			<thead>
+				<tr>
+					<th class="SortedColumn">', _('Cat Code'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th>', _('Cost GL'), '</th>
+					<th>', _('P and L'), '<br />', _('Depreciation GL'), '</th>
+					<th>', _('Disposal GL'), '</th>
+					<th>', _('Accum Depn GL'), '</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>', $MyRow['categoryid'], $MyRow['categorydescription'], $MyRow['costact'], $MyRow['depnact'], $MyRow['disposalact'], $MyRow['accumdepnact'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['categoryid'], htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?', $MyRow['categoryid']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['categoryid'], '</td>
+				<td>', $MyRow['categorydescription'], '</td>
+				<td class="number">', $MyRow['costact'], '</td>
+				<td class="number">', $MyRow['depnact'], '</td>
+				<td class="number">', $MyRow['disposalact'], '</td>
+				<td class="number">', $MyRow['accumdepnact'], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedCategory=', urlencode($MyRow['categoryid']), '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedCategory=', urlencode($MyRow['categoryid']), '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
-	echo '</table>
-		  <br />';
+	echo '</tbody>
+		</table>';
 }
 
 //end of ifs and buts!
 if (isset($SelectedCategory)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<div class="centre">
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Show All Fixed Asset Categories'), '</a>
+		</div>';
 }
 
 echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
@@ -204,21 +210,23 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
-	echo '<table>
-		<tr>
-			<td>' . _('Category Code') . ':</td>
-			<td>' . $_POST['CategoryID'] . '</td>
-		</tr>';
+	echo '<fieldset>
+			<legend>', _('Edit Category Details'), '</legend>
+			<field>
+				<label>', _('Category Code'), ':</label>
+				<div class="fieldtext">', $_POST['CategoryID'], '</div>
+			</field>';
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
 	}
-	echo '<table>
-			<tr>
-				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" size="7" required="required" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Create New Category'), '</legend>
+			<field>
+				<label for="CategoryID">', _('Category Code'), ':</label>
+				<input type="text" name="CategoryID" size="7" required="required" maxlength="6" value="', $_POST['CategoryID'], '" />
+			</field>';
 }
 
 //SQL to poulate account selection boxes
@@ -253,76 +261,70 @@ if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" size="22" required="required" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Fixed Asset Cost GL Code') . ':</td>
-		<td><select required="required" name="CostAct">';
+echo '<field>
+		<label for="CategoryDescription">', _('Category Description'), ':</label>
+		<input type="text" name="CategoryDescription" size="22" required="required" maxlength="20" value="', $_POST['CategoryDescription'], '" />
+	</field>';
 
+echo '<field>
+		<label for="CostAct">', _('Fixed Asset Cost GL Code'), ':</label>
+		<select required="required" name="CostAct">';
 while ($MyRow = DB_fetch_array($BSAccountsResult)) {
-
 	if (isset($_POST['CostAct']) and $MyRow['accountcode'] == $_POST['CostAct']) {
-		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')</option>';
+		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')</option>';
 	} else {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Profit and Loss Depreciation GL Code') . ':</td>
-		<td><select required="required" name="DepnAct">';
+echo '</select>
+	</field>';
 
+echo '<field>
+		<label for="DepnAct">', _('Profit and Loss Depreciation GL Code'), ':</label>
+		<select required="required" name="DepnAct">';
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DepnAct']) and $MyRow['accountcode'] == $_POST['DepnAct']) {
-		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')</option>';
+		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')</option>';
 	} else {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 DB_data_seek($PnLAccountsResult, 0);
-echo '<tr>
-		<td>' . _('Profit or Loss on Disposal GL Code') . ':</td>
-		<td><select required="required" name="DisposalAct">';
+echo '<field>
+		<label for="DisposalAct">', _('Profit or Loss on Disposal GL Code'), ':</label>
+		<select required="required" name="DisposalAct">';
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $MyRow['accountcode'] == $_POST['DisposalAct']) {
-		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')' . '</option>';
+		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')', '</option>';
 	} else {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')' . '</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')', '</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 DB_data_seek($BSAccountsResult, 0);
-echo '<tr>
-		<td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td>
-		<td><select required="required" name="AccumDepnAct">';
-
+echo '<field>
+		<label for="AccumDepnAct">', _('Balance Sheet Accumulated Depreciation GL Code'), ':</label>
+		<select required="required" name="AccumDepnAct">';
 while ($MyRow = DB_fetch_array($BSAccountsResult)) {
-
 	if (isset($_POST['AccumDepnAct']) and $MyRow['accountcode'] == $_POST['AccumDepnAct']) {
-		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')' . '</option>';
+		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')', '</option>';
 	} else {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' (' . $MyRow['accountcode'] . ')' . '</option>';
+		echo '<option value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), ' (', $MyRow['accountcode'], ')', '</option>';
 	}
-
 } //end while loop
-
-
-echo '</select></td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>
+</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="', _('Enter Information'), '" />
 	</div>
-	</form>';
+</form>';
 
 include ('includes/footer.php');
 ?>

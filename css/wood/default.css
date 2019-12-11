@@ -37,6 +37,9 @@ display:inline;
 margin:0 auto;
 text-align:center;
 }
+.top {
+vertical-align:top;
+}
 .dpTbl {
 border:thin solid #000;
 background:#FFF;

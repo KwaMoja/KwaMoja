@@ -139,14 +139,16 @@ if (!isset($SelectedTab)) {
 			<tr>
 				<th>', _('Type Of Tab'), '</th>
 				<th>', _('Description'), '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
 				<td>', $MyRow['typetabcode'], '</td>
 				<td>', $MyRow['typetabdescription'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTab=', $MyRow['typetabcode'], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTab=', $MyRow['typetabcode'], '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this code and all the description it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTab=', urlencode($MyRow['typetabcode']), '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTab=', urlencode($MyRow['typetabcode']), '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this code and all the description it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -180,11 +182,12 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />
 			  <input type="hidden" name="TypeTabCode" value="', $_POST['TypeTabCode'], '" />
-			  <table>
-				<tr>
-					<td>', _('Code Of Type Of Tab'), ':</td>
-					<td>', $_POST['TypeTabCode'], '</td>
-				</tr>';
+			  <fieldset>
+				<legend>', _('Edit tab type'), '</legend>
+				<field>
+					<label for="TypeTabCode">', _('Code Of Type Of Tab'), ':</label>
+					<div class="fieldtext">', $_POST['TypeTabCode'], '</div>
+				</field>';
 
 		// We dont allow the user to change an existing type code
 		
@@ -193,23 +196,25 @@ if (!isset($_GET['delete'])) {
 	} else {
 
 		// This is a new type so the user may volunteer a type code
-		echo '<table>
-				<tr>
-					<td>', _('Code Of Type Of Tab'), ':</td>
-					<td><input type="text" minlegth="1" maxlength="20" name="TypeTabCode" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create new tab type'), '</legend>
+				<field>
+					<label for="TypeTabCode">', _('Code Of Type Of Tab'), ':</label>
+					<input type="text" minlegth="1" maxlength="20" name="TypeTabCode" />
+				</field>';
 
 	}
 
 	if (!isset($_POST['TypeTabDescription'])) {
 		$_POST['TypeTabDescription'] = '';
 	}
-	echo '<tr>
-			<td>', _('Description Of Type of Tab'), ':</td>
-			<td><input type="text" name="TypeTabDescription" size="50" required="required" maxlength="50" value="', $_POST['TypeTabDescription'], '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="TypeTabDescription">', _('Description Of Type of Tab'), ':</label>
+			<input type="text" name="TypeTabDescription" size="50" required="required" maxlength="50" value="', $_POST['TypeTabDescription'], '" />
+		</field>';
 
-	echo '</table>'; // close main table
+	echo '</fieldset>';
+
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />

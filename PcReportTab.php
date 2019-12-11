@@ -32,17 +32,17 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	}
 
 	/*Show a form to allow input of criteria for Tabs to show */
-	echo '<table>
-			<tr>
-				<td>', _('Code Of Petty Cash Tab'), ':</td>
-				<td><select autofocus="autofocus" required="required" name="SelectedTabs">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE ( authorizer='" . $_SESSION['UserID'] . "' OR usercode ='" . $_SESSION['UserID'] . "' OR assigner ='" . $_SESSION['UserID'] . "' )
 		ORDER BY tabcode";
 	$Result = DB_query($SQL);
-
+	echo '<field>
+			<label for="SelectedTabs">', _('Code Of Petty Cash Tab'), ':</label>
+			<select autofocus="autofocus" required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectedTabs']) and $MyRow['tabcode'] == $_POST['SelectedTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
@@ -51,23 +51,25 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		}
 	} //end while loop get type of tab
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('From Date'), ':</td>
-			<td>
-				<input class="date" type="text" name="FromDate" required="required" maxlength="10" size="11" value="', $_POST['FromDate'], '" />
-			</td>
-		</tr>
-		<tr>
-			<td>', _('To Date'), ':</td>
-			<td>
-				<input class="date" type="text" name="ToDate" required="required" maxlength="10" size="11" value="', $_POST['ToDate'], '" />
-			</td>
-		</tr>
-	</table>';
-	echo '<div class="centre"><input type="submit" name="ShowTB" value="', _('Show HTML'), '" />';
-	echo '<input type="submit" name="PrintPDF" value="', _('PrintPDF'), '" /></div>';
+		</field>';
+
+	echo '<field>
+			<label for="FromDate">', _('From Date'), ':</label>
+			<input class="date" type="text" name="FromDate" required="required" maxlength="10" size="11" value="', $_POST['FromDate'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToDate">', _('To Date'), ':</label>
+			<input class="date" type="text" name="ToDate" required="required" maxlength="10" size="11" value="', $_POST['ToDate'], '" />
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="ShowTB" value="', _('Show HTML'), '" />
+			<input type="submit" name="PrintPDF" value="', _('PrintPDF'), '" />
+		</div>';
+
 	echo '</form>';
 
 } else if (isset($_POST['PrintPDF'])) {
@@ -330,7 +332,6 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 
 	$SQL = "SELECT counterindex,
 					tabcode,
-					tag,
 					date,
 					codeexpense,
 					amount,
@@ -403,13 +404,16 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		$Amount[0] = 0;
 	}
 
-	echo '<tr>
+	echo '<tr class="total_row">
 			<td colspan="2" style="text-align:right">', _('Balance At'), ' ', $_POST['ToDate'], ':</td>
 			<td>', locale_number_format($Amount[0], $_SESSION['CompanyRecord']['decimalplaces']), ' </td>
 			<td>', $Tabs['currency'], '</td>
+			<td></td>
+			<td></td>
 		</tr>';
 
 	echo '</table>';
+
 	echo '<div class="centre">
 			<input type="submit" name="SelectDifferentDate" value="', _('Select A Different Date'), '" />
 		</div>';

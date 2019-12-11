@@ -42,6 +42,9 @@ display:inline;
 margin:0 auto;
 text-align:center;
 }
+.top {
+vertical-align:top;
+}
 .dpTbl {
 border:solid navy 1px;
 }

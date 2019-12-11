@@ -7,7 +7,7 @@ $BookMark = 'BankAccounts'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Bank'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', _('Bank'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 echo '<div class="page_help_text">

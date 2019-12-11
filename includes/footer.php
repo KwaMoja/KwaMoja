@@ -53,7 +53,6 @@ echo '<footer class="noPrint">
 		<div class="FooterVersion">KwaMoja ', _('version'), ' ', $_SESSION['VersionNumber'], '.', $_SESSION['DBUpdateNumber'], '</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
 	</footer>'; // FooterDiv
-echo '<script async type="text/javascript" src = "', $RootPath, '/javascripts/MiscFunctions.js"></script>';
 echo '</body>';
 echo '</html>';
 

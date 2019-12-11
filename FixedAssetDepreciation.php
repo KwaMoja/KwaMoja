@@ -7,6 +7,10 @@ $BookMark = 'AssetDepreciation';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
 
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+	</p>';
+
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 $Result = DB_query("SELECT periods.lastdate_in_period,
 							max(fixedassettrans.periodno)
@@ -80,19 +84,18 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false) {
 	$PeriodNo = GetPeriod($_POST['ProcessDate']);
 }
 
-echo '<br /><table>';
-$Heading = '<tr>
-				<th>' . _('Asset ID') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Date Purchased') . '</th>
-				<th>' . _('Cost') . '</th>
-				<th>' . _('Accum Depn') . '</th>
-				<th>' . _('B/fwd Book Value') . '</th>
-				<th>' . _('Depn Type') . '</th>
-				<th>' . _('Depn Rate') . '</th>
-				<th>' . _('New Depn') . '</th>
-			</tr>';
-echo $Heading;
+echo '<table>
+		<tr>
+			<th>' . _('Asset ID') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Date Purchased') . '</th>
+			<th>' . _('Cost') . '</th>
+			<th>' . _('Accum Depn') . '</th>
+			<th>' . _('B/fwd Book Value') . '</th>
+			<th>' . _('Depn Type') . '</th>
+			<th>' . _('Depn Rate') . '</th>
+			<th>' . _('New Depn') . '</th>
+		</tr>';
 
 $AssetCategoryDescription = '0';
 
@@ -103,24 +106,20 @@ $TotalCategoryCost = 0;
 $TotalCategoryAccumDepn = 0;
 $TotalCategoryDepn = 0;
 
-$RowCounter = 0;
-$k = 0;
-
 while ($AssetRow = DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] or $AssetCategoryDescription == '0') {
 		if ($AssetCategoryDescription != '0') { //then print totals
-			echo '<tr>
-					<th colspan="3" align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class="number">' . locale_number_format($TotalCategoryCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format($TotalCategoryAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class="number">' . locale_number_format(($TotalCategoryCost - $TotalCategoryAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th colspan="2"></th>
-					<th class="number">' . locale_number_format($TotalCategoryDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+			echo '<tr class="total_row">
+					<td colspan="3" align="right">', _('Total for'), ' ', $AssetCategoryDescription, ' </td>
+					<td class="number">', locale_number_format($TotalCategoryCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($TotalCategoryAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(($TotalCategoryCost - $TotalCategoryAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td colspan="2"></td>
+					<td class="number">', locale_number_format($TotalCategoryDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				</tr>';
-			$RowCounter = 0;
 		}
-		echo '<tr>
-				<th colspan="9" align="left">' . $AssetRow['categorydescription'] . '</th>
+		echo '<tr class="total_row">
+				<td colspan="9" align="left">', $AssetRow['categorydescription'], '</td>
 			</tr>';
 		$AssetCategoryDescription = $AssetRow['categorydescription'];
 		$TotalCategoryCost = 0;
@@ -138,25 +137,20 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 		$DepreciationType = _('DV');
 		$NewDepreciation = $BookValueBfwd * $AssetRow['depnrate'] / 100 / 12;
 	}
-	if (Date1GreaterThanDate2($AssetRow['datepurchased'], $_POST['ProcessDate'])) {
+	if (Date1GreaterThanDate2(ConvertSQLDate($AssetRow['datepurchased']), $_POST['ProcessDate'])) {
 		/*Over-ride calculations as the asset was not purchased at the date of the calculation!! */
 		$NewDepreciation = 0;
 	}
-	$RowCounter++;
-	if ($RowCounter == 15) {
-		echo $Heading;
-		$RowCounter = 0;
-	}
 	echo '<tr class="striped_row">
-			<td>' . $AssetRow['assetid'] . '</td>
-			<td>' . $AssetRow['description'] . '</td>
-			<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-			<td class="number">' . locale_number_format($AssetRow['costtotal'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($AssetRow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($AssetRow['costtotal'] - $AssetRow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td align="center">' . $DepreciationType . '</td>
-			<td class="number">' . $AssetRow['depnrate'] . '</td>
-			<td class="number">' . locale_number_format($NewDepreciation, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>', $AssetRow['assetid'], '</td>
+			<td>', $AssetRow['description'], '</td>
+			<td>', ConvertSQLDate($AssetRow['datepurchased']), '</td>
+			<td class="number">', locale_number_format($AssetRow['costtotal'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td class="number">', locale_number_format($AssetRow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td class="number">', locale_number_format($AssetRow['costtotal'] - $AssetRow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td align="center">', $DepreciationType, '</td>
+			<td class="number">', $AssetRow['depnrate'], '</td>
+			<td class="number">', locale_number_format($NewDepreciation, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 		</tr>';
 	$TotalCategoryCost+= $AssetRow['costtotal'];
 	$TotalCategoryAccumDepn+= $AssetRow['depnbfwd'];
@@ -233,50 +227,55 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 	} //end if Committing the depreciation to DB
 	
 } //end loop around the assets to calculate depreciation for
-echo '<tr>
-		<th colspan="3" align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-		<th class="number">' . locale_number_format($TotalCategoryCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class="number">' . locale_number_format($TotalCategoryAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class="number">' . locale_number_format(($TotalCategoryCost - $TotalCategoryAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th colspan="2"></th>
-		<th class="number">' . locale_number_format($TotalCategoryDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+echo '<tr class="total_row">
+		<td colspan="3" align="right">', _('Total for'), ' ', $AssetCategoryDescription, ' </td>
+		<td class="number">', locale_number_format($TotalCategoryCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td class="number">', locale_number_format($TotalCategoryAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td class="number">', locale_number_format(($TotalCategoryCost - $TotalCategoryAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td colspan="2"></td>
+		<td class="number">', locale_number_format($TotalCategoryDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 	</tr>
-	<tr>
-		<th colspan="3" align="right">' . _('GRAND Total') . ' </th>
-		<th class="number">' . locale_number_format($TotalCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class="number">' . locale_number_format($TotalAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class="number">' . locale_number_format(($TotalCost - $TotalAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th colspan="2"></th>
-		<th class="number">' . locale_number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+	<tr class="total_row">
+		<td colspan="3" align="right">', _('GRAND Total'), ' </td>
+		<td class="number">', locale_number_format($TotalCost, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td class="number">', locale_number_format($TotalAccumDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td class="number">', locale_number_format(($TotalCost - $TotalAccumDepn), $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+		<td colspan="2"></td>
+		<td class="number">', locale_number_format($TotalDepn, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 	</tr>';
 
-echo '</table>
-		<hr />
-		<br />';
+echo '</table>';
 
 if (isset($_POST['CommitDepreciation']) and $InputError == false) {
 	$Result = DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'), 'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href="index.php">' . _('Return to main menu') . '</a>';
+	echo '<a href="index.php">', _('Return to main menu'), '</a>';
 	/*And post the journal too */
 	include ('includes/GLPostings.php');
 } else {
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post" id="form">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table width="30%">
-		<tr>';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="form">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<fieldset>
+			<legend>', _('Process Journal'), '</legend>';
+
 	if ($AllowUserEnteredProcessDate) {
-		echo '<td>' . _('Date to Process Depreciation') . ':</td>
-			<td><input type="text" class="date" name="ProcessDate" required="required" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
+		echo '<field>
+				<label for="ProcessDate">', _('Date to Process Depreciation'), ':</label>
+				<input type="text" class="date" name="ProcessDate" required="required" maxlength="10" size="11" value="', $_POST['ProcessDate'], '" />
+			</field>';
 	} else {
-		echo '<td>' . _('Date to Process Depreciation') . ':</td>
-			<td>' . $_POST['ProcessDate'] . '</td>';
+		echo '<field>
+				<label for="ProcessDate">', _('Date to Process Depreciation'), ':</label>
+				<div class="fieldtext">', $_POST['ProcessDate'], '</div>
+			</field>';
 	}
-	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="' . _('Commit Depreciation') . '" /></div></td>
-		</tr>
-		</table>
-		</form>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="CommitDepreciation" value="', _('Commit Depreciation'), '" />
+		</div>
+	</form>';
 }
 include ('includes/footer.php');
 ?>

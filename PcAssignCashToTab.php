@@ -168,10 +168,12 @@ if (!isset($SelectedTabs)) {
 
 	$Result = DB_query($SQL);
 
-	echo '<table>
-			<tr>
-				<td>', _('Petty Cash Tab To Assign Cash'), ':</td>
-				<td><select name="SelectedTabs">';
+	echo '<fieldset>
+			<legend>', _('Select Tab'), '</legend>';
+
+	echo '<field>
+			<label for="SelectedTabs">', _('Petty Cash Tab To Assign Cash'), ':</label>
+			<select name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
@@ -179,15 +181,15 @@ if (!isset($SelectedTabs)) {
 			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
 	}
-
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
+
 	echo '</form>';
 }
 
@@ -306,7 +308,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			$Amount['0'] = 0;
 		}
 
-		echo '<tr>
+		echo '<tr class="total_row">
 				<td colspan="2" style="text-align:right"><b>', _('Current balance'), ':</b></td>
 				<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
 			</tr>';
@@ -357,52 +359,43 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
 
-		echo '<br /><table>'; //Main table
+		echo '<fieldset>'; //Main table
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<tr>
-					<th colspan="2"><h3>', _('Update Cash Assignment'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('Update Cash Assignment'), '</legend>';
 		} else {
-			echo '<tr>
-					<th colspan="2"><h3>', _('New Cash Assignment'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('New Cash Assignment'), '</legend>';
 		}
-		echo '<tr>
-				<td>', _('Cash Assignation Date'), ':</td>';
 
-		echo '<td>
+		echo '<field>
+				<label for="Date">', _('Cash Assignation Date'), ':</label>
 				<input type="text" class="date" name="Date" size="10" required="required" maxlength="10" value="', $_POST['Date'], '" />
-			</td>
-		</tr>';
+			</field>';
 
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
 		}
-
-		echo '<tr>
-				<td>', _('Amount'), ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', locale_number_format($_POST['Amount'], $CurrDecimalPlaces), '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Amount">', _('Amount'), ':</label>
+				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', locale_number_format($_POST['Amount'], $CurrDecimalPlaces), '" /></td>
+			</field>';
 
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}
-
-		echo '<tr>
-				<td>', _('Notes'), ':</td>
-				<td><input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Notes">', _('Notes'), ':</label>
+				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" /></td>
+			</field>';
 
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt'] = '';
 		}
+		echo '<field>
+				<label for="Receipt">', _('Receipt'), ':</label>
+				<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" /></td>
+			</field>';
 
-		echo '<tr>
-				<td>' . _('Receipt') . ':</td>
-				<td><input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" /></td>
-			</tr>';
-
-		echo '</table>'; // close main table
+		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';

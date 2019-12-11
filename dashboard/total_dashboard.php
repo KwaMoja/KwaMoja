@@ -1,60 +1,27 @@
 <?php
-$PageSecurity = 0;
 $PathPrefix = '../';
-include ('../includes/session.php');
 
-$RootPath = '../';
-
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-
-echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Dashboard</title>';
-echo '<link rel="shortcut icon" href="' . $RootPath . '/favicon.ico" />';
-echo '<link rel="icon" href="' . $RootPath . '/favicon.ico" />';
-
-echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
-echo '<meta http-equiv="refresh" content="600">';
-
-echo '<link href="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/default.css" rel="stylesheet" type="text/css" />';
-echo '<script type="text/javascript" src = "' . $RootPath . '/javascripts/MiscFunctions.js"></script>';
-header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-header('Pragma: no-cache'); // HTTP 1.0.
-header('Expires: 0'); // Proxies.
-switch ($_SESSION['ScreenFontSize']) {
-	case 0:
-		$FontSize = '8pt';
-	break;
-	case 1:
-		$FontSize = '10pt';
-	break;
-	case 2:
-		$FontSize = '12pt';
-	break;
-	default:
-		$FontSize = '10pt';
+if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	require_once ($PathPrefix . 'includes/session.php');
+	$DashBoardURL = $RootPath . '/Dashboard.php';
 }
-echo '<style>
-		body { font-size: ' . $FontSize . ';
-			}
-	</style>';
 
-echo '</head><body style="background:transparent;">';
+$ScriptTitle = _('Order Summary');
 
-$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
-$Result = DB_query($SQL);
-$MyRow = DB_fetch_array($Result);
+$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
+$DashboardResult = DB_query($SQL);
+$DashboardRow = DB_fetch_array($DashboardResult);
 
-echo '<div class="centre">
-		<table border="0" cellspacing="0" style="max-width:100%;width:99%;" cellpadding="2">
+echo '<div class="container">
+		<table class="DashboardTable">
 			<tr>
-				<th colspan="2" style="margin:0px;padding:0px;background: transparent;">
-					<div class="CanvasTitle">' . _('Sales/Purchase Order Report') . '
-						<a href="' . $RootPath . 'Dashboard.php?Remove=' . urlencode($MyRow['id']) . '" target="_parent" id="CloseButton">X</a>
+				<th colspan="2">
+					<div class="CanvasTitle">', $ScriptTitle, '
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" id="CloseButton">X</a>
 					</div>
 				</th>
-			</tr>
-			<tr bgcolor="#F2F2F2">
-				<td style="border-bottom:1px solid #3550aa;"> Total amount of sales orders</td>';
+			</tr>';
+
 $SQL = "SELECT salesorders.orderno,
 				debtorsmaster.name,
 				custbranch.brname,
@@ -88,8 +55,10 @@ while ($row = DB_fetch_array($SalesOrdersResult)) {
 	$TotalSalesOrders+= $row['ordervalue'];
 }
 
-echo '<td style="border-bottom:1px solid #3550aa;" class="number"><strong>' . locale_number_format($TotalSalesOrders, $row['currdecimalplaces']) . '</strong></td></tr>
-<tr bgcolor="#FFFFFF"><td style="border-bottom:1px solid #3550aa";>Total amount of Purchase orders</td>';
+echo '<tr class="striped_row">
+		<th>', _('Total Sales Orders'), '</th>
+		<td class="number">', locale_number_format($TotalSalesOrders, $row['currdecimalplaces']), '</td>
+	</tr>';
 
 $SQL = "SELECT purchorders.orderno,
 						suppliers.suppname,
@@ -125,9 +94,11 @@ while ($row = DB_fetch_array($SalesOrdersResult2)) {
 
 	$TotalPurchaseOrders+= $row['ordervalue'];
 }
+echo '<tr class="striped_row">
+		<th>', _('Total Purchase orders'), '</th>
+		<td class="number">', locale_number_format($TotalPurchaseOrders, $row['currdecimalplaces']), '</td>
+	</tr>';
 
-echo '<td style="border-bottom:1px solid #3550aa;" class="number"><strong>' . locale_number_format($TotalPurchaseOrders, $row['currdecimalplaces']) . '</strong></td></tr>
-<tr bgcolor="#F2F2F2"><td>Total amount of Outstanding to receive</td>';
 $SQL = "SELECT salesorders.orderno,
 					debtorsmaster.name,
 					custbranch.brname,
@@ -165,8 +136,10 @@ while ($row = DB_fetch_array($SalesOrdersResult1)) {
 	$TotalOutstanding+= $row['ordervalue'];
 }
 
-echo '<td style="padding-left:60px;" class="number"><strong>' . locale_number_format($TotalOutstanding, $row['currdecimalplaces']) . '</strong></td>
-</table>
-</div></body>';
+echo '<tr class="striped_row">
+		<th>', _('Total Outstanding to receive'), '</th>
+		<td class="number">', locale_number_format($TotalOutstanding, $row['currdecimalplaces']), '</td>
+	</tr>
+</table>';
 
 ?>

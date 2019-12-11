@@ -47,10 +47,8 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	}
 
 	/*Show a form to allow input of criteria for Expenses to show */
-	echo '<table>
-			<tr>
-				<td>', _('Code Of Petty Cash Expense'), ':</td>
-				<td><select name="SelectedExpense">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
 					FROM pctabs
@@ -58,9 +56,10 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 						ON pctabexpenses.typetabcode = pctabs.typetabcode
 					WHERE ( pctabs.authorizer='" . $_SESSION['UserID'] . "' OR pctabs.usercode ='" . $_SESSION['UserID'] . "' OR pctabs.assigner ='" . $_SESSION['UserID'] . "' )
 					ORDER BY pctabexpenses.codeexpense";
-
 	$Result = DB_query($SQL);
-
+	echo '<field>
+			<label for="SelectedExpense">', _('Code Of Petty Cash Expense'), ':</label>
+			<select name="SelectedExpense">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense'] == $_POST['SelectedExpense']) {
 			echo '<option selected="selected" value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], '</option>';
@@ -69,24 +68,25 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 		}
 
 	} //end while loop get type of tab
-	DB_free_result($Result);
-
 	echo '</select>
-			</td>
-		</tr>
-		<tr>
-			<td>', _('From Date'), ':', '</td>
-			<td><input class="date" type="text" name="FromDate" maxlength="10" size="11" value="', $_POST['FromDate'], '" /></td>
-		</tr>
-		<tr>
-			<td>', _('To Date'), ':', '</td>
-			<td><input class="date" type="text" name="ToDate" maxlength="10" size="11" value="', $_POST['ToDate'], '" /></td>
-		</tr>
-	</table>
-	<div class="centre">
-		<input type="submit" name="ShowTB" value="', _('Show HTML'), '" />
-	</div>
-</form>';
+		</field>';
+
+	echo '<field>
+			<label for="FromDate">', _('From Date'), ':</label>
+			<input class="date" type="text" name="FromDate" maxlength="10" size="11" value="', $_POST['FromDate'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToDate">', _('To Date'), ':</label>
+			<input class="date" type="text" name="ToDate" maxlength="10" size="11" value="', $_POST['ToDate'], '" />
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="ShowTB" value="', _('Show HTML'), '" />
+		</div>
+	</form>';
 
 } else {
 
@@ -99,13 +99,13 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	echo '<table>
 			<tr>
 				<td>', _('Expense Code'), ':</td>
-				<td style="width:200px">', $SelectedExpense, '</td>
+				<td>', $SelectedExpense, '</td>
+			</tr>
+			<tr>
 				<td>', _('From'), ':</td>
 				<td>', $_POST['FromDate'], '</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
 				<td>', _('To'), ':</td>
 				<td>', $_POST['ToDate'], '</td>
 			</tr>
@@ -169,9 +169,11 @@ if ((!isset($_POST['FromDate']) and !isset($_POST['ToDate'])) or isset($_POST['S
 	}
 
 	echo '</table>';
+
 	echo '<div class="centre">
 			<input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" />
 		</div>';
+
 	echo '</form>';
 }
 include ('includes/footer.php');

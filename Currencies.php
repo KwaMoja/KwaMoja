@@ -491,7 +491,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for="DecimalPlaces">', _('Decimal Places to Display'), ':</label>
-			<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" maxlength="2" value="', $_POST['DecimalPlaces'], '" />
+			<input class="number" type="text" name="DecimalPlaces" size="2" required="required" maxlength="2" value="', $_POST['DecimalPlaces'], '" />
 		</field>';
 
 	echo '<field>

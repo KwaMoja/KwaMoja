@@ -201,7 +201,7 @@ if (!isset($_GET['delete'])) {
 				<legend>', _('Insert New Credit Status'), '</legend>
 				<field>
 					<label for="ReasonCode">', _('Status Code'), ':</label>
-					<input class="integer" type="text" name="ReasonCode" value="', $_POST['ReasonCode'], '" size="3" autofocus="autofocus" required="required" maxlength="2" />
+					<input class="number" type="text" name="ReasonCode" value="', $_POST['ReasonCode'], '" size="3" autofocus="autofocus" required="required" maxlength="2" />
 					<fieldhelp>', _('Code for this credit status'), '</fieldhelp>
 				</field>';
 	}

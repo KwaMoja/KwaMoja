@@ -312,7 +312,7 @@ if (isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for="DaysActive">', _('Below Number of Active Days'), '</label>
-			<input type="text" class="integer" requited="required" name="StartFrom" size="3" value="0" />
+			<input type="text" class="number" requited="required" name="StartFrom" size="3" value="0" />
 			<fieldhelp>', _('This commission can apply for just a certain number of days after the customer has become active. Choose zero if the rate always applies.'), '</fieldhelp>
 		</field>';
 }

@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-$Title = _('Maintenance Of Petty Cash Of Expenses');
+$Title = _('Maintenance Of Petty Cash Expenses');
 /* Manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
@@ -168,6 +168,8 @@ if (!isset($SelectedExpense)) {
 				<th>', _('Account Description'), '</th>
 				<th>', _('Tag'), '</th>
 				<th>', _('Tax Category'), '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -201,8 +203,8 @@ if (!isset($SelectedExpense)) {
 				<td>', $Description['accountname'], '</td>
 				<td>', $DescriptionTag['tagdescription'], '</td>
 				<td>', $DescriptionTaxCat['taxcatname'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '">', _('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', urlencode($MyRow['codeexpense']), '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', urlencode($MyRow['codeexpense']), '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -244,31 +246,29 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedExpense" value="', $SelectedExpense, '" />';
 		echo '<input type="hidden" name="CodeExpense" value="', $_POST['CodeExpense'], '" />';
 		// We dont allow the user to change an existing type code
-		echo '<table>
-				<tr>
-					<td>', _('Code Of Expense'), ':</td>
-					<td>', $_POST['CodeExpense'], '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Amend Expense Code'), '</legend>
+				<field>
+					<label for="CodeExpense">', _('Code Of Expense'), ':</label>
+					<div class="fieldtext">', $_POST['CodeExpense'], '</div>
+				</field>';
 	} else {
 		// This is a new type so the user may volunteer a type code
-		echo '<table>
-				<tr>
-					<td>', _('Code Of Expense'), ':</td>
-					<td><input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create New Expense Code'), '</legend>
+				<field>
+					<label for="CodeExpense">', _('Code Of Expense'), ':</label>
+					<input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" /></td>
+				</field>';
 	}
 
 	if (!isset($_POST['Description'])) {
 		$_POST['Description'] = '';
 	}
-	echo '<tr>
-			<td>', _('Description'), ':</td>
-			<td><input type="text" name="Description" size="50" required="required" maxlength="50" value="', $_POST['Description'], '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>', _('Account Code'), ':</td>
-			<td><select required="required" name="GLAccount">';
+	echo '<field>
+			<label for="Description">', _('Description'), ':</label>
+			<input type="text" name="Description" size="50" required="required" maxlength="50" value="', $_POST['Description'], '" /></td>
+		</field>';
 
 	DB_free_result($Result);
 	$SQL = "SELECT accountcode,
@@ -277,7 +277,9 @@ if (!isset($_GET['delete'])) {
 			WHERE language='" . $_SESSION['ChartLanguage'] . "'
 			ORDER BY accountcode";
 	$Result = DB_query($SQL);
-
+	echo '<field>
+			<label for="GLAccount">', _('Account Code'), ':</label>
+			<select required="required" name="GLAccount">';
 	echo '<option value="">', _('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['GLAccount']) and $MyRow['accountcode'] == $_POST['GLAccount']) {
@@ -287,20 +289,17 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
 	//Select the tag
-	echo '<tr>
-			<td>', _('Tag'), ':</td>
-			<td><select name="Tag">';
-
 	$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
 			ORDER BY tagref";
-
 	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="Tag">', _('Tag'), ':</label>
+			<select name="Tag">';
 	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
@@ -310,17 +309,15 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	// End select tag
 	$SQL = "SELECT taxcatid,
 					taxcatname
 				FROM taxcategories";
 	$Result = DB_query($SQL);
-
-	echo '<tr>
-			<td>', _('Tax Category'), ':</td>
-			<td><select name="TaxCategory">';
+	echo '<field>
+			<label for="TaxCategory">', _('Tax Category'), ':</label>
+			<select name="TaxCategory">';
 	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxCategory']) and $_POST['TaxCategory'] == $MyRow['taxcatid']) {
@@ -330,10 +327,9 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '</table>'; // close main table
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
