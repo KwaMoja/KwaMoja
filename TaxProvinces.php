@@ -8,7 +8,7 @@ $BookMark = 'TaxProvinces'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['SelectedTaxProvince'])) $SelectedTaxProvince = $_GET['SelectedTaxProvince'];
@@ -179,10 +179,10 @@ if (!isset($SelectedTaxProvince)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['taxprovincename'] . '</td>
-				<td>' . $MyRow['taxcatname'] . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTaxProvince=' . $MyRow['taxprovinceid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTaxProvince=' . $MyRow['taxprovinceid'] . '&amp;delete=1">' . _('Delete') . '</a></td>
+				<td>', $MyRow['taxprovincename'], '</td>
+				<td>', $MyRow['taxcatname'], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTaxProvince=', urlencode($MyRow['taxprovinceid']), '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTaxProvince=', urlencode($MyRow['taxprovinceid']), '&amp;delete=1">', _('Delete'), '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -193,14 +193,14 @@ if (!isset($SelectedTaxProvince)) {
 
 if (isset($SelectedTaxProvince)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Review Tax Provinces') . '</a>
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Review Tax Provinces'), '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	if (isset($SelectedTaxProvince)) {
 		//editing an existing section
@@ -219,51 +219,52 @@ if (!isset($_GET['delete'])) {
 			$_POST['TaxProvinceName'] = $MyRow['taxprovincename'];
 			$_POST['TaxCatFreight'] = $MyRow['freighttaxcatid'];
 
-			echo '<input type="hidden" name="SelectedTaxProvince" value="' . $SelectedTaxProvince . '" />';
-			echo '<table>';
+			echo '<input type="hidden" name="SelectedTaxProvince" value="', $SelectedTaxProvince, '" />';
+			echo '<fieldset>
+				<legend>', _('Edit Tax Province Details'), '</legend>';
 		}
 
 	} else {
 		$_POST['TaxProvinceName'] = '';
-		echo '<table>';
+		echo '<fieldset>
+				<legend>', _('Create Tax Province Details'), '</legend>';
 	}
-	echo '<tr>
-			<td>' . _('Tax Province Name') . ':' . '</td>
-			<td><input type="text" name="TaxProvinceName" size="30" required="required" maxlength="30" value="' . $_POST['TaxProvinceName'] . '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('Tax Category for Freight') . ':</td>
-			<td><select name="TaxCatFreight">';
-	$SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
-	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="TaxProvinceName">', _('Tax Province Name'), ':</label>
+			<input type="text" name="TaxProvinceName" size="30" required="required" maxlength="30" value="', $_POST['TaxProvinceName'], '" />
+		</field>';
 
 	if (!isset($_POST['TaxCat'])) {
 		$_POST['TaxCat'] = $_SESSION['DefaultTaxCategory'];
 	}
-
+	$SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
+	$Result = DB_query($SQL);
+	echo '<field>
+			<label for="TaxCatFreight">', _('Tax Category for Freight'), ':</label>
+			<select name="TaxCatFreight">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['TaxCatFreight'] == $MyRow['taxcatid']) {
-			echo '<option selected="selected" value="' . $MyRow['taxcatid'] . '">' . $MyRow['taxcatname'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['taxcatid'], '">', $MyRow['taxcatname'], '</option>';
 		} else {
-			echo '<option value="' . $MyRow['taxcatid'] . '">' . $MyRow['taxcatname'] . '</option>';
+			echo '<option value="', $MyRow['taxcatid'], '">', $MyRow['taxcatname'], '</option>';
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>';
+		</field>';
+
+	echo '</fieldset>';
+
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="', _('Enter Information'), '" />
 		</div>';
 
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 echo '<div class="centre">
-		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Edit/Review Tax Authorities') . '</a>
-		<a href="' . $RootPath . '/TaxGroups.php">' . _('Edit/Review Tax Groupings') . '</a>
-		<a href="' . $RootPath . '/TaxCategories.php">' . _('Edit/Review Tax Categories') . '</a>
+		<a href="', $RootPath, '/TaxAuthorities.php">', _('Edit/Review Tax Authorities'), '</a><br />
+		<a href="', $RootPath, '/TaxGroups.php">', _('Edit/Review Tax Groupings'), '</a><br />
+		<a href="', $RootPath, '/TaxCategories.php">', _('Edit/Review Tax Categories'), '</a>
 	</div>';
 
 include ('includes/footer.php');

@@ -23,19 +23,6 @@ if (!$MobileDetect->isMobile()) {
 	echo '<link rel="stylesheet" href="css/login.css" type="text/css" />';
 }
 ?>
-	<!-- Javascript required for Twitter follow me button-->
-	<script>
-	  !function(d,s,id){
-		var js,fjs=d.getElementsByTagName(s)[0];
-		if(!d.getElementById(id)){
-		  js=d.createElement(s);
-		  js.id=id;
-		  js.src="//platform.twitter.com/widgets.js";
-		  fjs.parentNode.insertBefore(js,fjs);
-		}
-	  }(document,"script","twitter-wjs");
-	</script>
-	<!-- End of Javascript required for Twitter follow me button-->
 </head>
 <body>
 

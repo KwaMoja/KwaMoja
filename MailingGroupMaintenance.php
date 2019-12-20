@@ -3,7 +3,9 @@ include ('includes/session.php');
 $Title = _('Mailing Group Maintenance');
 include ('includes/header.php');
 
-echo '<p class= "page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/group_add.png" alt="" />' . $Title . '</p>';
+echo '<p class= "page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" alt="" />', $Title, '
+	</p>';
 
 //show the mail group existed only when user request this page first
 if (!isset($_POST['Clean']) and !isset($_GET['Delete']) and !isset($_GET['Edit']) and !isset($_GET['Add']) and !isset($_GET['Remove'])) {
@@ -134,13 +136,21 @@ if (isset($_GET['Remove'])) {
 }
 
 if (!isset($_GET['Edit'])) { //display the input form
-	echo '<form id="MailGroups" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<label for="MailGroup">' . _('Mail Group') . '</label>
-			<input type="text" autofocus="autofocus" name="MailGroup" required="required" maxlength="100" size="20" />
+	echo '<form id="MailGroups" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Mailing Group Details'), '</legend>
+			<field>
+				<label for="MailGroup">', _('Mail Group'), '</label>
+				<input type="text" autofocus="autofocus" name="MailGroup" required="required" maxlength="100" size="20" />
+			</field>
+		</fieldset>';
+	echo '<div class="centre">
 			<input type="hidden" name="Clean" value="1" />
-			<input type="submit" name="Enter" value="' . _('Submit') . '" />
-		</form>';
+			<input type="submit" name="Enter" value="', _('Submit'), '" />
+		</div>
+	</form>';
 	include ('includes/footer.php');
 }
 
@@ -152,13 +162,16 @@ function GetMailGroup() {
 	if (DB_num_rows($Result) != 0) {
 		echo '<table>
 				<tr>
-					<th>' . _('Mail Group') . '</th>
+					<th>', _('Mail Group'), '</th>
+					<th></th>
+					<th></th>
 				</tr>';
+
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<tr>
-					<td>' . $MyRow['groupname'] . '</td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?GroupId=' . urlencode($MyRow['id']) . '&amp;Edit=1&amp;GroupName=' . urlencode($MyRow['groupname']) . '" >' . _('Edit') . '</a></td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Id=' . urlencode($MyRow['id']) . '&amp;Delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+			echo '<tr class="striped_row">
+					<td>', $MyRow['groupname'], '</td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?GroupId=', urlencode($MyRow['id']), '&amp;Edit=1&amp;GroupName=', urlencode($MyRow['groupname']), '" >', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Id=', urlencode($MyRow['id']), '&amp;Delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this group?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 				</tr>';
 		}
 		echo '</table>';
@@ -183,22 +196,21 @@ function GetUsers($GroupId, $GroupName) {
 	$ErrMsg = _('Failed to retrieve user information');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) != 0) {
-		echo '<div class="centre">' . _('Current Mail Group') . ' : ' . stripslashes($GroupName) . '</div>
-			<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('View All Groups') . '</a></div>';
+		echo '<p class="page_title_text">', _('Current Mail Group'), ' : ', stripslashes($GroupName), '</p>';
 
 		echo '<table>
 				<tr>
-					<th colspan="3">' . _('Assigned Users') . '</th>
-					<th colspan="3">' . _('Available Users') . '</th>
+					<th colspan="3">', _('Assigned Users'), '</th>
+					<th colspan="3">', _('Available Users'), '</th>
 				</tr>';
 		$k = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			if (in_array($MyRow['userid'], $UsersAssigned)) {
 				echo '<tr class="striped_row">
-						<td>' . $MyRow['userid'] . '</td>
-						<td>' . $MyRow['realname'] . '</td>
-						<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?UserId=' . urlencode(stripslashes($MyRow['userid'])) . '&amp;GroupName=' . urlencode(stripslashes($GroupName)) . '&amp;Remove=1&amp;GroupId=' . urlencode(stripslashes($GroupId)) . '" onclick="return MakeConfirm(\'Are you sure you want to remove this user?\', \'Confirm Delete\', this); ">' . _('Remove') . '</a></td>
+						<td>', $MyRow['userid'], '</td>
+						<td>', $MyRow['realname'], '</td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?UserId=', urlencode(stripslashes($MyRow['userid'])), '&amp;GroupName=', urlencode(stripslashes($GroupName)), '&amp;Remove=1&amp;GroupId=', urlencode(stripslashes($GroupId)), '" onclick="return MakeConfirm(\'Are you sure you want to remove this user?\', \'Confirm Delete\', this); ">', _('Remove'), '</a></td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>';
@@ -207,14 +219,16 @@ function GetUsers($GroupId, $GroupName) {
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
-						<td>' . $MyRow['userid'] . '</td>
-						<td>' . $MyRow['realname'] . '</td>
-						<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?UserId=' . urlencode(stripslashes($MyRow['userid'])) . '&amp;Add=1&amp;GroupName=' . urlencode(stripslashes($GroupName)) . '&amp;GroupId=' . urlencode(stripslashes($GroupId)) . '">' . _('Add') . '</a></td>';
+						<td>', $MyRow['userid'], '</td>
+						<td>', $MyRow['realname'], '</td>
+						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?UserId=', urlencode(stripslashes($MyRow['userid'])), '&amp;Add=1&amp;GroupName=', urlencode(stripslashes($GroupName)), '&amp;GroupId=', urlencode(stripslashes($GroupId)), '">', _('Add'), '</a></td>';
 			}
 
 			echo '</tr>';
 		}
 		echo '</table>';
+
+		echo '<div class="centre"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('View All Groups'), '</a></div>';
 	} else {
 		prnMsg(_('There are no user set up, please set up user first'), 'error');
 		include ('includes/footer.php');

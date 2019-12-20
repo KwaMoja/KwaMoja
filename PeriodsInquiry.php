@@ -1,10 +1,9 @@
 <?php
-
-include('includes/session.php');
+include ('includes/session.php');
 
 $Title = _('Periods Inquiry');
 
-include('includes/header.php');
+include ('includes/header.php');
 
 $SQL = "SELECT periodno ,
 		lastdate_in_period
@@ -23,14 +22,14 @@ $PeriodsInTable = round($NumberOfPeriods / 3, 0);
 
 echo '<table><tr>';
 
-for ($i = 0; $i < 3; $i++) {
+for ($i = 0;$i < 3;$i++) {
 	echo '<td valign="top">';
 	echo '<table cellpadding="2">
 			<tr>
 				<th>' . _('Period Number') . '</th>
 				<th>' . _('Date of Last Day') . '</th>
 			</tr>';
-	$k = 0;
+	$j = 0;
 	while ($MyRow = DB_fetch_array($PeriodsResult)) {
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['periodno'] . '</td>
@@ -47,6 +46,5 @@ for ($i = 0; $i < 3; $i++) {
 
 echo '</tr></table>';
 //end of while loop
-
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>

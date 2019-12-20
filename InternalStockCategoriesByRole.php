@@ -30,8 +30,7 @@ if (isset($_POST['Cancel'])) {
 if (isset($_POST['Process'])) {
 
 	if ($_POST['SelectedRole'] == '') {
-		echo prnMsg(_('You have not selected a security role to maintain the internal stock categories on'), 'error');
-		echo '<br />';
+		prnMsg(_('You have not selected a security role to maintain the internal stock categories on'), 'error');
 		unset($SelectedRole);
 		unset($_POST['SelectedRole']);
 	}
@@ -43,23 +42,22 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedCategory'] == '') {
 		$InputError = 1;
-		echo prnMsg(_('You have not selected a stock category to be added as internal to this security role'), 'error');
-		echo '<br />';
+		prnMsg(_('You have not selected a stock category to be added as internal to this security role'), 'error');
 		unset($SelectedRole);
 	}
 
 	if ($InputError != 1) {
 
 		// First check the type is not being duplicated
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 				 FROM internalstockcatrole
 				 WHERE secroleid= '" . $_POST['SelectedRole'] . "'
 				 AND categoryid = '" . $_POST['SelectedCategory'] . "'";
 
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$CheckResult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($CheckResult);
 
-		if ($checkrow[0] > 0) {
+		if ($CheckRow[0] > 0) {
 			$InputError = 1;
 			prnMsg(_('The Stock Category') . ' ' . $_POST['categoryid'] . ' ' . _('already allowed as internal for this security role'), 'error');
 		} else {
@@ -72,10 +70,10 @@ if (isset($_POST['submit'])) {
 												)";
 
 			$Msg = _('Stock Category') . ': ' . stripslashes($_POST['SelectedCategory']) . ' ' . _('has been allowed to user role') . ' ' . $_POST['SelectedRole'] . ' ' . _('as internal');
-			$checkSql = "SELECT count(secroleid)
+			$CheckSQL = "SELECT count(secroleid)
 							FROM securityroles";
-			$Result = DB_query($checkSql);
-			$row = DB_fetch_row($Result);
+			$Result = DB_query($CheckSQL);
+			$MyRow = DB_fetch_row($Result);
 		}
 	}
 
@@ -105,15 +103,16 @@ if (!isset($SelectedRole)) {
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table>'; //Main table
+	echo '<fieldset>
+			<legend>', _('Select Role'), '</legend>'; //Main table
 	$SQL = "SELECT secroleid,
 					secrolename
 			FROM securityroles";
 	$Result = DB_query($SQL);
 
-	echo '<tr>
-			<td>', _('Select User Role'), ':</td>
-			<td><select required="required" name="SelectedRole">';
+	echo '<field>
+			<label for="SelectedRole">', _('Select User Role'), ':</label>
+			<select required="required" name="SelectedRole">';
 	echo '<option value="">', _('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedRole) and $MyRow['secroleid'] == $SelectedRole) {
@@ -123,13 +122,12 @@ if (!isset($SelectedRole)) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '</table>'; // close main table
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 
 	echo '</form>';
@@ -138,6 +136,11 @@ if (!isset($SelectedRole)) {
 
 //end of ifs and buts!
 if (isset($_POST['process']) or isset($SelectedRole)) {
+
+	$SQL = "SELECT secrolename FROM securityroles WHERE secroleid='" . $SelectedRole . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SelectedRoleName = $MyRow['secrolename'];
 
 	echo '<div class="toplink"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select another role'), '</a></div>';
 	echo '<p class="page_title_text">
@@ -148,16 +151,15 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 
 		echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		echo '<table>'; //Main table
-		echo '<tr>
-				<td>', _('Select Stock Category Code'), ':</td>
-				<td><select name="SelectedCategory">';
-
+		echo '<fieldset>
+				<legend>', _('Select Category'), '</legend>'; //Main table
 		$SQL = "SELECT categoryid,
 						categorydescription
 				FROM stockcategory";
-
 		$Result = DB_query($SQL);
+		echo '<field>
+				<label for="SelectedCategory">', _('Select Stock Category Code'), ':</label>
+				<select name="SelectedCategory">';
 		if (!isset($_POST['SelectedCategory'])) {
 			echo '<option selected="selected" value="">', _('Not Yet Selected'), '</option>';
 		}
@@ -169,14 +171,14 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 			}
 		} //end while loop
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 
-		echo '</table>'; // close main table
+		echo '</fieldset>'; // close main table
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+				<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
+
 		echo '<input type="hidden" name="SelectedRole" value="', $SelectedRole, '" />';
 
 		echo '</form>';
@@ -192,13 +194,17 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 		$Result = DB_query($SQL);
 
 		echo '<table>
-				<tr>
-					<th colspan="3"><h3>', _('Internal Stock Categories Allowed to user role'), ' ', $SelectedRole, '</h3></th>
-				</tr>
-				<tr>
-					<th>', _('Category Code'), '</th>
-					<th>', _('Description'), '</th>
-				</tr>';
+				<thead>
+					<tr>
+						<th colspan="3"><h3>', _('Internal Stock Categories Allowed to user role'), ' - ', $SelectedRoleName, '</h3></th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">', _('Category Code'), '</th>
+						<th class="SortedColumn">', _('Description'), '</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
@@ -209,7 +215,8 @@ if (isset($_POST['process']) or isset($SelectedRole)) {
 				</tr>';
 		}
 		//END WHILE LIST LOOP
-		echo '</table>';
+		echo '<tbody>
+			</table>';
 	} // end if user wish to delete
 	
 }

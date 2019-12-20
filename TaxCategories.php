@@ -6,7 +6,9 @@ $ViewTopic = 'Tax'; // Filename in ManualContents.php's TOC.
 $BookMark = 'TaxCategories'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Supplier Types') . '" alt="" />' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Supplier Types'), '" alt="" />', $Title, '
+	</p>';
 
 if (isset($_GET['SelectedTaxCategory'])) {
 	$SelectedTaxCategory = $_GET['SelectedTaxCategory'];
@@ -122,7 +124,7 @@ if (isset($_POST['submit'])) {
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] > 0) {
 			prnMsg(_('Cannot delete this tax category because inventory items have been created using this tax category'), 'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('inventory items that refer to this tax category') . '</font>';
+			echo '<br />', _('There are'), ' ', $MyRow[0], ' ', _('inventory items that refer to this tax category'), '</font>';
 		} else {
 			$SQL = "DELETE FROM taxauthrates WHERE taxcatid  = '" . $SelectedTaxCategory . "'";
 			$Result = DB_query($SQL);
@@ -169,15 +171,15 @@ if (!isset($SelectedTaxCategory) or $SelectedTaxCategory == '') {
 
 		if ($MyRow['taxcatname'] != 'Freight') {
 			echo '<tr class="striped_row">
-					<td>' . _($MyRow['taxcatname']) . '</td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $MyRow['taxcatid'] . '">' . _('Edit') . '</a></td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedTaxCategory=' . $MyRow['taxcatid'] . '&amp;delete=1" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this tax category?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
+					<td>', _($MyRow['taxcatname']), '</td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTaxCategory=', urlencode($MyRow['taxcatid']), '">', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTaxCategory=', urlencode($MyRow['taxcatid']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this tax category?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 				</tr>';
 		} else {
 			echo '<tr class="striped_row">
-					<td>' . _($MyRow['taxcatname']) . '</td>
-					<td>' . _('Edit') . '</td>
-					<td>' . _('Delete') . '</td>
+					<td>', _($MyRow['taxcatname']), '</td>
+					<td>', _('Edit'), '</td>
+					<td>', _('Delete'), '</td>
 				</tr>';
 		}
 
@@ -187,18 +189,18 @@ if (!isset($SelectedTaxCategory) or $SelectedTaxCategory == '') {
 } //end of ifs and buts!
 
 
-if ($SelectedTaxCategory != '') {
+if (isset($SelectedTaxCategory) and $SelectedTaxCategory != '') {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Review Tax Categories') . '</a>
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Review Tax Categories'), '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	if ($SelectedTaxCategory != '') {
+	if (isset($SelectedTaxCategory) and $SelectedTaxCategory != '') {
 		//editing an existing section
 		$SQL = "SELECT taxcatid,
 				taxcatname
@@ -214,29 +216,32 @@ if (!isset($_GET['delete'])) {
 
 			$_POST['TaxCategoryName'] = $MyRow['taxcatname'];
 
-			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $MyRow['taxcatid'] . '" />';
-			echo '<table>';
+			echo '<input type="hidden" name="SelectedTaxCategory" value="', $MyRow['taxcatid'], '" />';
+			echo '<fieldset>
+					<legend>', _('Edit Tax Category'), '</legend>';
 		}
 
 	} else {
 		$SelectedTaxCategory = '';
-		echo '<table>';
+		$_POST['TaxCategoryName'] = '';
+		echo '<fieldset>
+				<legend>', _('Create New Tax Category'), '</legend>';
 	}
-	echo '<tr>
-			<td>' . _('Tax Category Name') . ':' . '</td>
-			<td><input type="text" name="TaxCategoryName" size="30" required="required" maxlength="30" value="' . $_POST['TaxCategoryName'] . '" /></td>
-		</tr>
-	</table>';
+	echo '<field>
+			<label for="TaxCategoryName">', _('Tax Category Name'), ':</label>
+			<input type="text" name="TaxCategoryName" size="30" required="required" maxlength="30" value="', $_POST['TaxCategoryName'], '" />
+		</field>
+	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="', _('Enter Information'), '" />
 		</div>
 	</form>';
 
 } //end if record deleted no point displaying form to add record
 echo '<div class="centre">
-		<a href="', $RootPath, '/TaxAuthorities.php">', _('Tax Authorities and Rates Maintenance'), '</a>
-		<a href="', $RootPath, '/TaxGroups.php">', _('Tax Group Maintenance'), '</a>
+		<a href="', $RootPath, '/TaxAuthorities.php">', _('Tax Authorities and Rates Maintenance'), '</a><br />
+		<a href="', $RootPath, '/TaxGroups.php">', _('Tax Group Maintenance'), '</a><br />
 		<a href="', $RootPath, '/TaxProvinces.php">', _('Dispatch Tax Province Maintenance'), '</a>
 	</div>';
 

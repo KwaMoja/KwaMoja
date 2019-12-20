@@ -5,7 +5,10 @@ $Title = _('SMTP Server details');
 
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/email.png" title="' . _('SMTP Server') . '" alt="" />' . ' ' . _('SMTP Server Settings') . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/email.png" title="', _('SMTP Server'), '" alt="" />', ' ', _('SMTP Server Settings'), '
+	</p>';
+
 // First check if there are smtp server data or not
 $SecurityOptions = array('', 'ssl', 'tls');
 
@@ -26,7 +29,6 @@ if ((isset($_POST['submit']) or isset($_POST['reload'])) and $_POST['MailServerS
 	if (isset($_POST['submit'])) {
 		prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	}
-	echo '<br />';
 
 } elseif ((isset($_POST['submit']) or isset($_POST['reload'])) and $_POST['MailServerSetting'] == 0) { //There is no data setup yet
 	$SQL = "INSERT INTO emailsettings(host,
@@ -53,7 +55,6 @@ if ((isset($_POST['submit']) or isset($_POST['reload'])) and $_POST['MailServerS
 	if (isset($_POST['submit'])) {
 		prnMsg(_('The settings for the SMTP server have been sucessfully inserted'), 'success');
 	}
-	echo '<br/>';
 }
 
 // Check the mail server setting status
@@ -89,46 +90,54 @@ if (DB_num_rows($Result) != 0) {
 
 echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
 echo '<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />';
-echo '<table>';
-echo '<tr>
-		<td>' . _('Server Host Name') . '</td>
-		<td><input type="text" name="Host" required="required" maxlength="50" value="' . $MyRow['host'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('SMTP port') . '</td>
-		<td><input type="text" name="Port" required="required" maxlength="4" size="4" class="number" value="' . $MyRow['port'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Helo Command') . '</td>
-		<td><input type="text" name="HeloAddress" required="required" maxlength="10" value="' . $MyRow['heloaddress'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Authorisation Required') . '</td>
-		<td>
-			<select required="required" name="Auth"  onchange="ReloadForm(reload);">';
+
+echo '<fieldset>
+		<legend>', _('Server Settings'), '</legend>';
+
+echo '<field>
+		<label for="Host">', _('Server Host Name'), '</label>
+		<input type="text" name="Host" required="required" maxlength="50" value="', $MyRow['host'], '" />
+	</field>';
+
+echo '<field>
+		<label for="Port">', _('SMTP port'), '</label>
+		<input type="text" name="Port" required="required" maxlength="4" size="4" class="number" value="', $MyRow['port'], '" />
+	</field>';
+
+echo '<field>
+		<label for="HeloAddress">', _('Helo Command'), '</label>
+		<input type="text" name="HeloAddress" required="required" maxlength="10" value="', $MyRow['heloaddress'], '" />
+	</field>';
+
+echo '<field>
+		<label for="Auth">', _('Authorisation Required'), '</label>
+		<select required="required" name="Auth"  onchange="ReloadForm(reload);">';
 if ($MyRow['auth'] == 1) {
-	echo '<option selected="selected" value="1">' . _('True') . '</option>';
-	echo '<option value="0">' . _('False') . '</option>';
+	echo '<option selected="selected" value="1">', _('True'), '</option>';
+	echo '<option value="0">', _('False'), '</option>';
 } else {
-	echo '<option value="1">' . _('True') . '</option>';
-	echo '<option selected="selected" value="0">' . _('False') . '</option>';
+	echo '<option value="1">', _('True'), '</option>';
+	echo '<option selected="selected" value="0">', _('False'), '</option>';
 }
 echo '</select>
-		</td>
-	</tr>';
+	</field>';
+
 if ($MyRow['auth'] == 1) {
-	echo '<tr>
-			<td>' . _('User Name') . '</td>
-			<td><input type="text" name="UserName" required="required" maxlength="50" value="' . $MyRow['username'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Password') . '</td>
-			<td><input type="password" name="Password" required="required" maxlength="50" value="' . $MyRow['password'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>', _('SSL/TLS'), '</td>
-			<td><select name="Security">';
+	echo '<field>
+			<label for="UserName">', _('User Name'), '</label>
+			<input type="text" name="UserName" required="required" maxlength="100" size="30" value="', $MyRow['username'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Password">', _('Password'), '</label>
+			<input type="password" name="Password" required="required" maxlength="50" value="', $MyRow['password'], '" />
+		</field>';
+
+	echo '<field>
+			<label for="Security">', _('SSL/TLS'), '</label>
+			<select name="Security">';
 	foreach ($SecurityOptions as $SecurityOption) {
 		if ($SecurityOption == $MyRow['security']) {
 			echo '<option selected="selected" value="', $SecurityOption, '">', mb_strtoupper($SecurityOption), '</option>';
@@ -137,22 +146,24 @@ if ($MyRow['auth'] == 1) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 } else {
-	echo '<input type="hidden" name="UserName" value="' . $MyRow['username'] . '" />
-		<input type="hidden" name="Password" value="' . $MyRow['password'] . '" />';
+	echo '<input type="hidden" name="UserName" value="', $MyRow['username'], '" />
+		<input type="hidden" name="Password" value="', $MyRow['password'], '" />';
 }
-echo '<tr>
-		<td>' . _('Timeout (seconds)') . '</td>
-		<td><input type="text" size="5" name="Timeout" required="required" maxlength="4" class="number" value="' . $MyRow['timeout'] . '" /></td>
-	</tr>
-	<tr>
-		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>
-	</tr>';
-echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />';
-echo '</table>
-	  </form>';
+echo '<field>
+		<label for="Timeout">', _('Timeout (seconds)'), '</label>
+		<input type="text" size="5" name="Timeout" required="required" maxlength="4" class="number" value="', $MyRow['timeout'], '" />
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="submit" value="', _('Update'), '" />
+	</div>';
+
+echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />
+	</form>';
 
 include ('includes/footer.php');
 

@@ -3,7 +3,9 @@ include ('includes/session.php');
 $Title = _('Page Security Levels');
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/security.png" title="', _('Page Security Levels'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 if ($AllowDemoMode == true) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
@@ -28,10 +30,8 @@ $SQL = "SELECT script,
 
 $Result = DB_query($SQL);
 
-echo '<form method="post" id="PageSecurity" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<table>';
+echo '<form method="post" id="PageSecurity" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 $TokenSql = "SELECT tokenid,
 					tokenname
@@ -39,28 +39,31 @@ $TokenSql = "SELECT tokenid,
 			ORDER BY tokenname";
 $TokenResult = DB_query($TokenSql);
 
+echo '<fieldset>
+		<legend>', _('Set securitly level for scripts'), '</legend>';
+
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<tr>
-			<td>' . $MyRow['script'] . '</td>
-			<td><select name="' . $MyRow['script'] . '">';
+	echo '<field>
+			<label for="', $MyRow['script'], '">', $MyRow['script'], '</label>
+			<select name="', $MyRow['script'], '">';
 	while ($myTokenRow = DB_fetch_array($TokenResult)) {
 		if ($myTokenRow['tokenid'] == $MyRow['pagesecurity']) {
-			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
+			echo '<option selected="selected" value="', $myTokenRow['tokenid'], '">', $myTokenRow['tokenname'], '</option>';
 		} else {
-			echo '<option value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
+			echo '<option value="', $myTokenRow['tokenid'], '">', $myTokenRow['tokenname'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	DB_data_seek($TokenResult, 0);
 }
 
-echo '</table>';
+echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="Update" value="' . _('Update Security Levels') . '" />
+		<input type="submit" name="Update" value="', _('Update Security Levels'), '" />
 	</div>
-	</form>';
+</form>';
 
 include ('includes/footer.php');
 ?>

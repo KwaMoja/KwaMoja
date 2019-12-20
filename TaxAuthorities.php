@@ -305,8 +305,8 @@ echo '<div class="centre">
 	</form>';
 
 echo '<div class="centre">
-		<a href="', $RootPath, '/TaxGroups.php">', _('Tax Group Maintenance'), '</a>
-		<a href="', $RootPath, '/TaxProvinces.php">', _('Dispatch Tax Province Maintenance'), '</a>
+		<a href="', $RootPath, '/TaxGroups.php">', _('Tax Group Maintenance'), '</a><br />
+		<a href="', $RootPath, '/TaxProvinces.php">', _('Dispatch Tax Province Maintenance'), '</a><br />
 		<a href="', $RootPath, '/TaxCategories.php">', _('Tax Category Maintenance'), '</a>
 	</div>';
 
