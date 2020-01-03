@@ -43,6 +43,7 @@ width:24.5em;
 text-align:left;
 }
 form fieldset field .fieldtext {
+display:inline;
 margin-bottom:8px;
 }
 form fieldset field input,textarea,select {
@@ -114,7 +115,7 @@ cursor: pointer;
 }
 form input[type="submit"]:hover{
 background:#7F7F7F;
-color:black;
+color:#ffffff;
 transition-duration:0.5s;
 }
 form input[type="reset"]{

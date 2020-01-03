@@ -8,6 +8,7 @@ padding:10px;
 }
 header #Info img {
 padding-right:7px;
+height:32px;
 width:32px;
 vertical-align:middle;
 }
@@ -26,6 +27,7 @@ margin-top:-10px;
 }
 header #ActionIcon img{
 padding-right:7px;
+height:32px;
 width:32px;
 }
 header #ActionIcon:hover {
@@ -48,6 +50,7 @@ background:#4D4D4D;
 transition-duration:0.5s;
 }
 header #ExitIcon img {
+height:32px;
 width:32px;
 }
 header .FontSize {
@@ -64,7 +67,7 @@ padding:10px;
 margin-left:0px;
 }
 header #favourites {
-background: url(images/descending.png) no-repeat right transparent;
+background: url(images/descending.png) no-repeat right #8A8A8A;
 background-size:contain;
 overflow: hidden;
 color:#FFFFFF;

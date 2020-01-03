@@ -10,7 +10,9 @@ if (isset($_POST['SelectedDT'])) {
 	$SelectedDT = trim(mb_strtoupper($_GET['SelectedDT']));
 }
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" />', ' ', $Title, '
+	</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -99,32 +101,40 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 
 	echo '<table>
-			<tr>
-				<th>' . _('Demand Type') . '</th>
-				<th>' . _('Description') . '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th class="SortedColumn">', _('Demand Type'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
 
-		echo '<tr>
-					<td>' . $MyRow[0] . '</td>
-					<td>' . $MyRow[1] . '</td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedDT=' . urlencode($MyRow[0]) . '">' . _('Edit') . '</a></td>
-					<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedDT=' . urlencode($MyRow[0]) . '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this account group?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-				</tr>';
+		echo '<tr class="striped_row">
+				<td>', $MyRow[0], '</td>
+				<td>', $MyRow[1], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedDT=', urlencode($MyRow[0]), '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedDT=', urlencode($MyRow[0]), '&amp;delete=yes" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this account group?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+			</tr>';
 	}
 
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 }
 
 //end of ifs and buts!
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
-	echo '<div class="centre"><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">' . _('Show all Demand Types') . '</a></div>';
+	echo '<div class="centre">
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Show all Demand Types'), '</a>
+		</div>';
 }
 
-echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	//editing an existing demand type
@@ -139,38 +149,42 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	$_POST['MRPDemandType'] = $MyRow['mrpdemandtype'];
 	$_POST['Description'] = $MyRow['description'];
 
-	echo '<input type="hidden" name="SelectedDT" value="' . $SelectedDT . '" />';
-	echo '<input type="hidden" name="MRPDemandType" value="' . $_POST['MRPDemandType'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Demand Type') . ':</td>
-				<td>' . $_POST['MRPDemandType'] . '</td>
-			</tr>';
+	echo '<input type="hidden" name="SelectedDT" value="', $SelectedDT, '" />';
+	echo '<input type="hidden" name="MRPDemandType" value="', $_POST['MRPDemandType'], '" />';
+	echo '<fieldset>
+			<legend>', _('Edit Demand Type'), '</legend>
+			<field>
+				<label for="MRPDemandType">', _('Demand Type'), ':</label>
+				<div class="fieldtext">', $_POST['MRPDemandType'], '</div>
+			</field>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
 	if (!isset($_POST['MRPDemandType'])) {
 		$_POST['MRPDemandType'] = '';
 	}
-	echo '<table>
-			<tr>
-				<td>' . _('Demand Type') . ':</td>
-				<td><input type="text" name="MRPDemandType" size="6" required="required" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('New Demand Type'), '</legend>
+			<field>
+				<label for="MRPDemandType">', _('Demand Type'), ':</label>
+				<input type="text" name="MRPDemandType" size="6" required="required" maxlength="5" value="', $_POST['MRPDemandType'], '" />
+			</field>';
 }
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Demand Type Description') . ':</td>
-		<td><input type="text" name="Description" size="31" required="required" maxlength="30" value="' . $_POST['Description'] . '" /></td>
-	</tr>
-	</table>
-	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+echo '<field>
+		<label for="Description">', _('Demand Type Description'), ':</label>
+		<input type="text" name="Description" size="31" required="required" maxlength="30" value="', $_POST['Description'], '" /></td>
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="submit" value="', _('Enter Information'), '" />
 	</div>
-	</form>';
+</form>';
 
 include ('includes/footer.php');
 ?>

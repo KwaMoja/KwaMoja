@@ -14,6 +14,7 @@ padding:10px;
 header #Info img {
 padding-right:7px;
 width:32px;
+height:32px;
 vertical-align:middle;
 }
 header #Info a {
@@ -26,6 +27,7 @@ padding-left:10px;
 header #ActionIcon img{
 padding-right:7px;
 width:32px;
+height:32px;
 }
 header #ExitIcon {
 display:inline;
@@ -35,6 +37,7 @@ padding-right:30px;
 }
 header #ExitIcon img {
 width:32px;
+height:32px;
 }
 header .FontSize {
 color:#000000;

@@ -5,7 +5,9 @@ $Title = _('Upload a Plugin');
 
 include ('includes/header.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/upload.png" title="' . _('Upload Plugin') . '" alt="" />' . _('Upload Plugin') . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/ascending.png" title="', _('Upload Plugin'), '" alt="" />', _('Upload Plugin'), '
+	</p>';
 
 if (isset($_POST['submit'])) {
 	switch ($_FILES['pluginfile']['error']) {
@@ -53,16 +55,21 @@ if (isset($_POST['submit'])) {
 }
 
 if (!isset($_POST['submit'])) {
-	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form enctype="multipart/form-data" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<div class="page_help_text">' . _('Use this screen to upload a plugin file to your plugins directory. The file should be of type *.zip') . '</div>';
+	echo '<div class="page_help_text">', _('Use this screen to upload a plugin file to your plugins directory. The file should be of type *.zip'), '</div>';
 
 	echo '<input type="submit" name="reload" value="Reload" hidden="hidden" />';
 	if (!isset($_POST['reload'])) {
-		echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" /><br />
-			<label for="pluginfile">' . _('Select a plugin file') . '</label>
-			<input name="pluginfile" type="file" accept="application/x-gzip" onchange="ReloadForm(reload);" /><br />';
+		echo '<fieldset>
+				<legend>', _('Plugin File'), '</legend>
+				<field>
+					<input type="hidden" name="MAX_FILE_SIZE" value="1000000" /><br />
+					<label for="pluginfile">', _('Select a plugin file'), '</label>
+					<input name="pluginfile" type="file" accept="application/x-gzip" onchange="ReloadForm(reload);" />
+				</field>
+			</fieldset>';
 	} else {
 		$ZipFile = zip_open($_FILES['pluginfile']['tmp_name']);
 		while ($FileName = zip_read($ZipFile)) {
@@ -79,31 +86,30 @@ if (!isset($_POST['submit'])) {
 		}
 		$ApprovedString = '<font color="0E9320"><b>' . _('Yes') . '</b></font>';
 		zip_close($ZipFile);
-		echo '<br />
-				<table>
+		echo '<table>
 					<tr>
-						<th colspan="2">' . _('Plugin attributes') . '</th>
+						<th colspan="2">', _('Plugin attributes'), '</th>
 					</tr>
 					<tr>
-						<td>' . _('File Name') . '</td>
-						<td><font color="#0E9320"><b>' . $_FILES['pluginfile']['name'] . '</b></font></td>
+						<td>', _('File Name'), '</td>
+						<td><font color="#0E9320"><b>', $_FILES['pluginfile']['name'], '</b></font></td>
 					</tr>
 					<tr>
-						<td>' . _('Plugin Name') . '</td>
-						<td><font color="0E9320"><b>' . $Summary->name . '</b></font></td>
+						<td>', _('Plugin Name'), '</td>
+						<td><font color="0E9320"><b>', $Summary->name, '</b></font></td>
 					</tr>
 					<tr>
-						<td>' . _('License') . '</td>
-						<td><font color="0E9320"><b>' . $Summary->license . '</b></font></td>
+						<td>', _('License'), '</td>
+						<td><font color="0E9320"><b>', $Summary->license, '</b></font></td>
 					</tr>
 					<tr>
-						<td>' . _('Approved') . '</td>
-						<td>' . $ApprovedString . '</td>
+						<td>', _('Approved'), '</td>
+						<td>', $ApprovedString, '</td>
 					</tr>
 				</table>';
-		echo '<input type="submit" name="submit" value="' . _('Upload Plugin') . '" />';
+		echo '<input type="submit" name="submit" value="', _('Upload Plugin'), '" />';
 	}
-	echo '</form><br />';
+	echo '</form>';
 }
 
 include ('includes/footer.php');

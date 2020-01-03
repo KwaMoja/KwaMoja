@@ -66,6 +66,7 @@ color:#FFFFFF;
 .MenuList legend img {
 padding:2px;
 width:32px;
+height:32px;
 vertical-align:middle;
 }
 .MenuItem {
@@ -96,6 +97,7 @@ clear: both;
 .page_title_text img {
 padding-right:7px;
 width:48px;
+height:48px;
 vertical-align:middle;
 }
 .toplink {

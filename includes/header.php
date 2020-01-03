@@ -13,6 +13,14 @@ if (!isset($RootPath)) {
 $ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
 $BookMark = isset($BookMark) ? '#' . $BookMark : '';
 
+if (isset($_GET['Theme'])) {
+	if (file_exists($PathPrefix . $RootPath . 'css/' . $_GET['Theme'])) {
+		$_SESSION['Theme'] = $_GET['Theme'];
+		$SQL = "UPDATE www_users SET theme='" . $_GET['Theme'] . "' WHERE userid='" . $_SESSION['UserID'] . "'";
+		$Result = DB_query($SQL);
+	}
+}
+
 if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
 	ob_start();
 }
@@ -194,6 +202,23 @@ if ($ScriptName == 'index.php') {
 	} else {
 		echo '<a style="font-size:12pt;" class="FontSize" href="', $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
 	}
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';
+
+	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
+
+	$Themes = glob('css/*', GLOB_ONLYDIR);
+	foreach ($Themes as $ThemeName) {
+		$ThemeName = basename($ThemeName);
+		if ($ThemeName != 'mobile') {
+			if ($_SESSION['Theme'] == $ThemeName) {
+				echo '<option selected="selected" value="', $ThemeName, '">', $ThemeName, '</option>';
+			} else {
+				echo '<option value="', $ThemeName, '">', $ThemeName, '</option>';
+			}
+		}
+	}
+	echo '</select>';
 }
 
 echo '</header>';

@@ -70,6 +70,7 @@ border-radius:7px;
 }
 .MenuList legend img {
 width:40px;
+height:40px;
 padding-right:5px;
 vertical-align:middle;
 }
@@ -104,6 +105,7 @@ border-radius:7px;
 .page_title_text img {
 padding-right:7px;
 width:40px;
+height:40px;
 vertical-align:middle;
 }
 .toplink {

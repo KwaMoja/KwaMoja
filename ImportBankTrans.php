@@ -7,7 +7,7 @@ $ViewTopic = 'GeneralLedger'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'ImportBankTrans'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
-var_dump($_POST);
+
 /*
 Read in the flat file one line at a time
 parse the data in the line of text from the flat file to read the bank transaction into an SESSION array of banktransactions objects
@@ -37,7 +37,7 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 	echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="', basename(__FILE__), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/upload.png" title="', _('Receive'), '" alt="" />', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/ascending.png" title="', _('Receive'), '" alt="" />', $Title, '
 		</p>';
 
 	echo '<fieldset>

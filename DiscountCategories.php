@@ -182,25 +182,30 @@ if (isset($_POST['SelectChoice'])) {
 			}
 		}
 	} else {
-		echo '<table>
-				<tr>
-				<td>' . _('Assign discount category') . '</td>';
-		echo '<td><input type="text" name="DiscountCategory" required="required" maxlength="2" size="2" /></td>';
-		echo '<td>' . _('to all items in stock category') . '</td>';
+		echo '<fieldset>
+				<legend>', _('Assign discount category'), '</legend>';
+
+		echo '<field>
+				<label for="DiscountCategory">', _('Assign discount category'), '</label>
+				<input type="text" name="DiscountCategory" required="required" maxlength="2" size="2" />
+			</field>';
+
 		$SQL = "SELECT categoryid,
 				categorydescription
 				FROM stockcategory";
 		$Result = DB_query($SQL);
-		echo '<td><select name="stockcategory">';
+		echo '<field>
+				<label for="stockcategory">', _('to all items in stock category'), '</label>
+				<select name="stockcategory">';
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 		}
 		echo '</select>
-					</td>
-				</tr>
-			</table>';
+			</field>
+		</fieldset>';
+
 		echo '<div class="centre">
-				<input type="submit" name="SubmitCategory" value="' . _('Update Items') . '" />
+				<input type="submit" name="SubmitCategory" value="', _('Update Items'), '" />
 			</div>';
 	}
 	echo '</form>';
@@ -230,25 +235,29 @@ if (isset($_POST['SelectChoice'])) {
 
 		$Result = DB_query($SQL);
 
-		echo '<br />
-				<table>
+		echo '<table>
+				<thead>
 					<tr>
-						<th>' . _('Discount Category') . '</th>
-						<th>' . _('Item') . '</th>
-					</tr>';
+						<th class="SortedColumn">', _('Discount Category'), '</th>
+						<th class="SortedColumn">', _('Item'), '</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			$DeleteURL = htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Delete=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'];
+			$DeleteURL = htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?Delete=yes&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;DiscountCategory=' . urlencode($MyRow['discountcategory']);
 
-			printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s - %s</td>
-						<td><a href="%s" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this discount category?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
-					</tr>', $MyRow['discountcategory'], $MyRow['stockid'], $MyRow['description'], $DeleteURL);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['discountcategory'], '</td>
+					<td>', $MyRow['stockid'], ' - ', $MyRow['description'], '</td>
+					<td><a href="', $DeleteURL, '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this discount category?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				</tr>';
 
 		}
 
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 
 	} else {
 		/* $_POST['DiscCat'] ==0 */
@@ -258,21 +267,24 @@ if (isset($_POST['SelectChoice'])) {
 }
 
 if (!isset($_POST['SelectChoice'])) {
-	echo '<form method="post" id="choose" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table>
-					<tr>
-						<td>' . _('Update discount category for') . '</td>
-						<td>
-							<select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
-								<option value="1">' . _('a single stock item') . '</option>
-								<option value="2">' . _('a complete stock category') . '</option>
-							</select>
-						</td>
-					</tr>
-				</table>
-				<div class="centre"><input type="submit" name="SelectChoice" value="' . _('Select') . '" /></div>
-			</form>';
+	echo '<form method="post" id="choose" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+
+	echo '<fieldset>
+			<legend>', _('Select Items'), '</legend>
+			<field>
+				<label for="ChooseOption">', _('Update discount category for'), '</label>
+				<select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
+					<option value="1">', _('a single stock item'), '</option>
+					<option value="2">', _('a complete stock category'), '</option>
+				</select>
+			</field>
+		</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="SelectChoice" value="', _('Select'), '" />
+		</div>
+	</form>';
 }
 
 include ('includes/footer.php');

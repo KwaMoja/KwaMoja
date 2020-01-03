@@ -25,23 +25,28 @@ if (!isset($_POST['SecurityRole'])) {
 				FROM securityroles";
 	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+		</p>';
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<div class="centre">
-			<select name="SecurityRole" required="required">
-				<option value=""></option>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
+	echo '<fieldset>
+			<legend>', _('Security Roll Selection'), '</legend>
+			<field>
+				<label for="SecurityRole">', _('Select Roll'), '</label>
+				<select name="SecurityRole" required="required">
+					<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['secroleid'] . '">' . $MyRow['secrolename'] . '</option>';
+		echo '<option value="', $MyRow['secroleid'], '">', $MyRow['secrolename'], '</option>';
 	}
-
 	echo '</select>
-		</div>';
+		</field>
+	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="' . _('Select Security Role') . '" />
+			<input type="submit" name="Submit" value="', _('Select Security Role'), '" />
 		</div>';
 
 	echo '</form>';

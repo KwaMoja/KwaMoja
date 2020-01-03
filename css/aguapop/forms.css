@@ -28,9 +28,9 @@ font-weight:bold;
 color:#FFFFFF;
 }
 form fieldset legend.search {
-background-image:url(images/magnifier.png);
+background-image:url(images/search.png);
 background-repeat: no-repeat;
-background-size:contain;
+background-size:middle;
 background-position:5px;
 padding-left:32px;
 }
@@ -47,6 +47,7 @@ text-align:left;
 form fieldset field .fieldtext {
 margin-top:2px;
 margin-bottom:8px;
+display:inline;
 }
 form fieldset field input,textarea,select {
 background-color:#E9E8FA;

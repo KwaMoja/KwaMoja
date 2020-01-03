@@ -108,8 +108,9 @@ if (!isset($SelectedLocation)) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
 			<fieldset>
 				<legend>', _('Location'), '</legend>
-				<label for="SelectedLocation">', _('Select the location'), '</label>
-				<select name="SelectedLocation" autofocus="autofocus">';
+				<field>
+					<label for="SelectedLocation">', _('Select the location'), '</label>
+					<select name="SelectedLocation" autofocus="autofocus">';
 
 	$SQL = "SELECT loccode,
 					locationname
@@ -125,12 +126,13 @@ if (!isset($SelectedLocation)) {
 		}
 
 	} //end while loop
-	echo '</select>';
+	echo '</select>
+		</field>';
 
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="submit" name="Process" value="', _('Accept'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 
 	echo '</form>';
@@ -166,25 +168,28 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 
 	$Result = DB_query($SQL);
 
-	echo '<table>';
-	echo '<tr>
-			<th colspan="6"><h3>', _('Authorised users for Location'), ': ', $SelectedLocationName, '</h3></th>
-		</tr>';
-	echo '<tr>
-			<th>', _('User Code'), '</th>
-			<th>', _('User Name'), '</th>
-			<th>', _('View'), '</th>
-			<th>', _('Update'), '</th>
-			<th colspan="2"></th>
-		</tr>';
+	echo '<table>
+			<thead>
+				<tr>
+					<th colspan="6"><h3>', _('Authorised users for Location'), ': ', $SelectedLocationName, '</h3></th>
+				</tr>
+				<tr>
+					<th class="SortedColumn">', _('User Code'), '</th>
+					<th class="SortedColumn">', _('User Name'), '</th>
+					<th>', _('View'), '</th>
+					<th>', _('Update'), '</th>
+					<th colspan="2"></th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		if ($MyRow['canupd'] == 1) {
-			$ToggleText = '<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . $MyRow['userid'] . '&amp;ToggleUpdate=0&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this user?') . '\');">' . _('Remove Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . urlencode($MyRow['userid']) . '&amp;ToggleUpdate=0&amp;SelectedLocation=' . urlencode($SelectedLocation) . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this user?') . '\');">' . _('Remove Update') . '</a></td>';
 			$Update = _('Yes');
 		} else {
-			$ToggleText = '<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . $MyRow['userid'] . '&amp;ToggleUpdate=1&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this user?') . '\');">' . _('Add Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . urlencode($MyRow['userid']) . '&amp;ToggleUpdate=1&amp;SelectedLocation=' . urlencode($SelectedLocation) . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this user?') . '\');">' . _('Add Update') . '</a></td>';
 			$Update = _('No');
 		}
 
@@ -203,7 +208,8 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 			</tr>';
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 
 	if (!isset($_GET['delete'])) {
 

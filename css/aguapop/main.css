@@ -19,8 +19,9 @@ padding-right:10px;
 padding-top:3px;
 width:11%;
 border: 6px solid #4682B4;
-border-radius:7px;
-margin:7px;
+border-bottom-left-radius:7px;
+border-bottom-left-radius:7px;
+margin-left:5px;
 }
 .ModuleList li a,.ModuleList li a:hover {
 background:#494C56;
@@ -66,6 +67,7 @@ margin-right:5px;
 .MenuList legend img {
 padding-right:7px;
 width:48px;
+height:48px;
 vertical-align:middle;
 }
 .MenuItem {
@@ -102,6 +104,7 @@ clear: both;
 .page_title_text img {
 padding-right:7px;
 width:48px;
+height:48px;
 vertical-align:middle;
 }
 .toplink {
