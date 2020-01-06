@@ -1,12 +1,12 @@
 <?php
-
 /* $Revision: 0.01 $ */
 
 if (!file_exists('OcOpenCart_config.php')) {
-	echo '<P>' . _("KwaMoja - Opencart connector can't access the OpenCart_config.php file");
-	include('includes/footer.php');
+	prnMsg(_('KwaMoja - Opencart connector cannot access the OpenCart_config.php file'), 'error');
+	include ('includes/footer.php');
+	exit;
 } else {
-	include('OcOpenCart_config.php');
+	include ('OcOpenCart_config.php');
 }
 
 if (!isset($mysqlport)) {
@@ -15,7 +15,6 @@ if (!isset($mysqlport)) {
 
 global $db_oc; // Make sure it IS global, regardless of our context
 global $oc_tableprefix; // Make sure it IS global, regardless of our context
-
 $oc_tableprefix = $opencart_db_tableprefix;
 $db_oc = mysqli_connect($opencart_db_host, $opencart_db_user, $opencart_db_pwd, $opencart_db_name, $mysqlport);
 mysqli_set_charset($db_oc, 'utf8');
@@ -41,7 +40,7 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 
 	if (DB_error_no($db_oc) != 0 and $TrapErrors == true) {
 		if ($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.php');
+			require_once ($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error') . ' ' . DB_error_no());
 		if ($Debug == 1) {
@@ -57,7 +56,7 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 			}
 		}
 		if ($TrapErrors) {
-			include($PathPrefix . 'includes/footer.php');
+			include ($PathPrefix . 'includes/footer.php');
 			exit;
 		}
 	}

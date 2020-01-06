@@ -1186,21 +1186,24 @@ if (isset($_POST['ClearImage'])) {
 }
 echo '</field>';
 
+if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId . '.pdf')) {
+	$FileName = ':' . $StockId . '.pdf';
+} else {
+	$FileName = '';
+}
 echo '<field>
 		<label for="ItemSpec">', _('Specification File (.pdf format)'), ':</label>
-		<input type="file" id="ItemSpec" name="ItemSpec" />
+		<input type="file" id="ItemSpec" name="ItemSpec" />', $FileName, '
 		<input type="checkbox" name="ClearImage" id="ClearSpec" value="1" > ', _('Clear Specification');
 if (isset($_POST['ClearSpec'])) {
-	foreach ($SupportedImgExt as $ext) {
-		$File = $_SESSION['part_pics_dir'] . '/' . $StockId . '.' . $ext;
-		if (file_exists($File)) {
-			//workaround for many variations of permission issues that could cause unlink fail
-			@unlink($File);
-			if (is_file($ImageFile)) {
-				prnMsg(_('You do not have access to delete this item image file.'), 'error');
-			} else {
-				$StockImgLink = _('No Image');
-			}
+	$File = $_SESSION['part_pics_dir'] . '/' . $StockId . '.pdf';
+	if (file_exists($File)) {
+		//workaround for many variations of permission issues that could cause unlink fail
+		@unlink($File);
+		if (is_file($ImageFile)) {
+			prnMsg(_('You do not have access to delete this item specification file.'), 'error');
+		} else {
+			$StockImgLink = _('No Image');
 		}
 	}
 }

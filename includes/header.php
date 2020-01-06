@@ -14,11 +14,9 @@ $ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
 $BookMark = isset($BookMark) ? '#' . $BookMark : '';
 
 if (isset($_GET['Theme'])) {
-	if (file_exists($PathPrefix . $RootPath . 'css/' . $_GET['Theme'])) {
-		$_SESSION['Theme'] = $_GET['Theme'];
-		$SQL = "UPDATE www_users SET theme='" . $_GET['Theme'] . "' WHERE userid='" . $_SESSION['UserID'] . "'";
-		$Result = DB_query($SQL);
-	}
+	$_SESSION['Theme'] = $_GET['Theme'];
+	$SQL = "UPDATE www_users SET theme='" . $_GET['Theme'] . "' WHERE userid='" . $_SESSION['UserID'] . "'";
+	$Result = DB_query($SQL);
 }
 
 if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
@@ -212,9 +210,9 @@ if ($ScriptName == 'index.php') {
 		$ThemeName = basename($ThemeName);
 		if ($ThemeName != 'mobile') {
 			if ($_SESSION['Theme'] == $ThemeName) {
-				echo '<option selected="selected" value="', $ThemeName, '">', $ThemeName, '</option>';
+				echo '<option selected="selected" value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
 			} else {
-				echo '<option value="', $ThemeName, '">', $ThemeName, '</option>';
+				echo '<option value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
 			}
 		}
 	}
