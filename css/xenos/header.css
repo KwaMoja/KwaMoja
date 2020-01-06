@@ -84,3 +84,8 @@ margin: 2px;
 -webkit-appearance: none;
 cursor:pointer;
 }
+header #favourites:hover {
+background:url(images/descending.png) no-repeat right #4D4D4D;
+background-size:contain;
+transition-duration:0.5s;
+}

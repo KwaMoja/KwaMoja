@@ -15,6 +15,7 @@ padding-right:10px;
 padding-top:13px;
 padding-bottom:13px;
 width:11%;
+width:min-content;
 border:0px solid #8DCDEB;
 border-radius:7px;
 margin:7px;

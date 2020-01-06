@@ -45,7 +45,7 @@ margin-bottom:8px;
 display:inline;
 }
 form fieldset field input,textarea,select {
-background-color:#FFFFE0;
+background-color:#DDDDDD;
 border-radius: 5px;
 border: 1px solid #8DCDEB;
 padding:2px;
@@ -57,7 +57,7 @@ font-size:inherit;
 transition-duration:0.5s;
 }
 form fieldset field select:not([multiple]) {
-background:url(images/descending.png) no-repeat right #FFFFE0;
+background:url(images/descending.png) no-repeat right #DDDDDD;
 padding-right:24px;
 background-size:contain;
 -moz-appearance:none;

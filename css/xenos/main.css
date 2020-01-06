@@ -12,6 +12,7 @@ white-space:nowrap;
 text-align:left;
 padding:10px;
 width:11%;
+width:min-content;
 border:0px solid #8DCDEB;
 border-radius:7px;
 margin:7px;

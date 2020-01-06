@@ -491,6 +491,11 @@ if ($Its_A_Labour_Item == true) {
 				<a href="', $RootPath, '/WhereUsedInquiry.php?StockID=', $UrlEncodedStockId, '">', _('Where This Labour Item Is Used'), '</a>
 			</li>';
 }
+if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId . '.pdf')) {
+	echo '<li class="MenuItem">
+			<a href="', $_SESSION['part_pics_dir'] . '/' . $StockId . '.pdf">', _('View Product Specification'), '</a>
+		</li>';
+}
 echo '<li class="MenuItem">
 			', wikiLink('Product', $StockId), '
 		</li>

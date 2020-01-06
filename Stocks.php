@@ -103,6 +103,45 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 		$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
+
+if (isset($_FILES['ItemSpec']) and $_FILES['ItemSpec']['name'] != '') {
+
+	$ImgExt = pathinfo($_FILES['ItemSpec']['name'], PATHINFO_EXTENSION);
+	$Result = $_FILES['ItemSpec']['error'];
+	$UploadTheFile = 'Yes'; //Assume all is well to start off with
+	$FileName = $_SESSION['part_pics_dir'] . '/' . $StockId . '.' . $ImgExt;
+
+	//But check for the worst
+	if ($ImgExt != 'pdf') {
+		prnMsg(_('Only pdf files are supported - a file extension of *.pdf is expected'), 'warn');
+		$UploadTheFile = 'No';
+	} elseif ($_FILES['ItemSpec']['size'] > ($_SESSION['MaxImageSize'] * 1024)) { //File Size Check
+		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'], 'warn');
+		$UploadTheFile = 'No';
+	} elseif ($_FILES['ItemSpec']['error'] == 6) { //upload temp directory check
+		prnMsg(_('No tmp directory set. You must have a tmp directory set in your PHP for upload of files.'), 'warn');
+		$UploadTheFile = 'No';
+	} elseif (!is_writable($_SESSION['part_pics_dir'])) {
+		prnMsg(_('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
+		$UploadTheFile = 'No';
+	}
+	foreach ($SupportedImgExt as $ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockId . '.' . $ext;
+		if (file_exists($File)) {
+			$Result = unlink($File);
+			if (!$Result) {
+				prnMsg(_('The existing specification could not be removed'), 'error');
+				$UploadTheFile = 'No';
+			}
+		}
+	}
+
+	if ($UploadTheFile == 'Yes') {
+		$Result = move_uploaded_file($_FILES['ItemSpec']['tmp_name'], $FileName);
+		$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : _('Something is wrong with uploading a file');
+	}
+}
+
 $InputError = 0;
 
 if (isset($_POST['submit'])) {
@@ -371,6 +410,7 @@ if (isset($_POST['submit'])) {
 							grossweight='" . filter_number_format($_POST['GrossWeight']) . "',
 							netweight='" . filter_number_format($_POST['NetWeight']) . "',
 							barcode='" . $_POST['BarCode'] . "',
+							drawingnumber='" . $_POST['DrawingNumber'] . "',
 							discountcategory='" . $_POST['DiscountCategory'] . "',
 							taxcatid='" . $_POST['TaxCat'] . "',
 							decimalplaces='" . $_POST['DecimalPlaces'] . "',
@@ -620,6 +660,7 @@ if (isset($_POST['submit'])) {
 												grossweight,
 												netweight,
 												barcode,
+												drawingnumber,
 												discountcategory,
 												taxcatid,
 												decimalplaces,
@@ -640,6 +681,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['GrossWeight']) . "',
 								'" . filter_number_format($_POST['NetWeight']) . "',
 								'" . $_POST['BarCode'] . "',
+								'" . $_POST['DrawingNumber'] . "',
 								'" . $_POST['DiscountCategory'] . "',
 								'" . $_POST['TaxCat'] . "',
 								'" . $_POST['DecimalPlaces'] . "',
@@ -755,6 +797,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['GrossWeight']);
 						unset($_POST['NetWeight']);
 						unset($_POST['BarCode']);
+						unset($_POST['DrawingNumber']);
 						unset($_POST['ReorderLevel']);
 						unset($_POST['DiscountCategory']);
 						unset($_POST['DecimalPlaces']);
@@ -981,6 +1024,7 @@ if (!isset($StockId) or $StockId == '' or isset($_POST['UpdateCategories'])) {
 					grossweight,
 					netweight,
 					barcode,
+					drawingnumber,
 					discountcategory,
 					taxcatid,
 					decimalplaces,
@@ -1013,6 +1057,7 @@ if (!isset($StockId) or $StockId == '' or isset($_POST['UpdateCategories'])) {
 	$_POST['GrossWeight'] = $MyRow['grossweight'];
 	$_POST['NetWeight'] = $MyRow['netweight'];
 	$_POST['BarCode'] = $MyRow['barcode'];
+	$_POST['DrawingNumber'] = $MyRow['drawingnumber'];
 	$_POST['DiscountCategory'] = $MyRow['discountcategory'];
 	$_POST['TaxCat'] = $MyRow['taxcatid'];
 	$_POST['DecimalPlaces'] = $MyRow['decimalplaces'];
@@ -1109,6 +1154,7 @@ foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 			</field>';
 	}
 }
+
 echo '<field>
 		<label for="ItemPicture">', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
 		<input type="file" id="ItemPicture" name="ItemPicture" />
@@ -1125,6 +1171,26 @@ if (extension_loaded('gd') and function_exists('gd_info') and isset($StockId) an
 }
 
 if (isset($_POST['ClearImage'])) {
+	foreach ($SupportedImgExt as $ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockId . '.' . $ext;
+		if (file_exists($File)) {
+			//workaround for many variations of permission issues that could cause unlink fail
+			@unlink($File);
+			if (is_file($ImageFile)) {
+				prnMsg(_('You do not have access to delete this item image file.'), 'error');
+			} else {
+				$StockImgLink = _('No Image');
+			}
+		}
+	}
+}
+echo '</field>';
+
+echo '<field>
+		<label for="ItemSpec">', _('Specification File (.pdf format)'), ':</label>
+		<input type="file" id="ItemSpec" name="ItemSpec" />
+		<input type="checkbox" name="ClearImage" id="ClearSpec" value="1" > ', _('Clear Specification');
+if (isset($_POST['ClearSpec'])) {
 	foreach ($SupportedImgExt as $ext) {
 		$File = $_SESSION['part_pics_dir'] . '/' . $StockId . '.' . $ext;
 		if (file_exists($File)) {
@@ -1375,6 +1441,16 @@ if (isset($_POST['BarCode'])) {
 echo '<field>
 		<label for="BarCode">', _('Bar Code'), ':</label>
 		<input type="text" name="BarCode" size="22" maxlength="20" value="', $BarCode, '" />
+	</field>';
+
+if (isset($_POST['DrawingNumber'])) {
+	$DrawingNumber = $_POST['DrawingNumber'];
+} else {
+	$DrawingNumber = '';
+}
+echo '<field>
+		<label for="DrawingNumber">', _('Drawing Number'), ':</label>
+		<input type="text" name="DrawingNumber" size="22" maxlength="20" value="', $DrawingNumber, '" />
 	</field>';
 
 if (isset($_POST['DiscountCategory'])) {
