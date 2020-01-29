@@ -104,7 +104,7 @@ if (!isset($_POST['Language'])) {
 	$_SESSION['Installer']['Language'] = $_POST['Language'];
 }
 
-echo '<form id="installation" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<form id="installation" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<fieldset>
 			<legend>' . _('Welcome to the KwaMoja Installation Wizard') . '</legend>
 			<div class="page_help_text">
@@ -168,11 +168,6 @@ if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
 	echo '<option selected="selected" value="mariadb">MariaDB</option>';
 } else {
 	echo '<option value="mariadb">MariaDB</option>';
-}
-if ($_SESSION['Installer']['DBMS'] == 'postgres') {
-	echo '<option selected="selected" value="postgres">PostgreSQL</option>';
-} else {
-	echo '<option value="postgres">PostgreSQL</option>';
 }
 echo '</select>
 			</li>

@@ -5,13 +5,16 @@ include('includes/session.php');
 
 if (!isset($_SESSION['InitialScripts'])) {
 	$_SESSION['InitialScripts'][] = 'SystemParameters.php';
+	$_SESSION['InitialScripts'][] = 'BankAccountUsers.php';
+	$_SESSION['InitialScripts'][] = 'BankAccounts.php';
 	$_SESSION['InitialScripts'][] = 'Shippers.php';
 	$_SESSION['InitialScripts'][] = 'SalesTypes.php';
 	$_SESSION['InitialScripts'][] = 'Locations.php';
 	$_SESSION['InitialScripts'][] = 'TaxAuthorityRates.php';
-	$_SESSION['InitialScripts'][] = 'TaxCategories.php';
+	$_SESSION['InitialScripts'][] = 'TaxGroups.php';
 	$_SESSION['InitialScripts'][] = 'TaxAuthorities.php';
 	$_SESSION['InitialScripts'][] = 'TaxProvinces.php';
+	$_SESSION['InitialScripts'][] = 'TaxCategories.php';
 	$_SESSION['InitialScripts'][] = 'CompanyPreferences.php';
 	$_SESSION['InitialScripts'][] = 'Currencies.php';
 }

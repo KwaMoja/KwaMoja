@@ -504,30 +504,10 @@ if (isset($_GET['Edit'])) {
 	echo '<input type="hidden" name="Id" value="', $_GET['Edit'], '" />';
 }
 
-/*now set up a GLCode field to select from avaialble GL accounts */
-$SQL = "SELECT chartmaster.accountcode,
-			chartmaster.accountname
-		FROM chartmaster
-		INNER JOIN glaccountusers
-			ON glaccountusers.accountcode=chartmaster.accountcode
-			AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
-			AND glaccountusers.canupd=1
-		WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-		ORDER BY chartmaster.accountcode";
-$Result = DB_query($SQL);
 echo '<field>
-		<label for="GLCode">', _('Select GL Account'), '</label>
-		<select name="GLCode" onchange="return assignComboToInput(this,', 'GLManualCode', ')">
-			<option value="">', _('Select a general ledger account code'), '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	}
-}
-echo '</select>
-	</field>';
+		<label for="GLCode">', _('Select GL Account'), '</label>';
+GLSelect(2, 'GLCode');
+echo '</field>';
 
 if (isset($_GET['Edit'])) {
 	$_POST['GLManualCode'] = $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->GLCode;

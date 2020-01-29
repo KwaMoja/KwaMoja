@@ -30,9 +30,9 @@ color:#FFFFFF;
 form fieldset legend.search {
 background-image:url(images/search.png);
 background-repeat: no-repeat;
-background-size:middle;
-background-position:5px;
-padding-left:32px;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
 }
 form fieldset field {
 display:block;
@@ -131,4 +131,7 @@ transition-duration:0.5s;
 }
 form .number {
 text-align:right;
+}
+fieldset ul li {
+text-align:left;
 }

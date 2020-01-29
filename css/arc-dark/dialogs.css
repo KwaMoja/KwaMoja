@@ -5,7 +5,8 @@ right:0;
 bottom:0;
 left:0;
 position:fixed;
-background-image:url(images/mask.png);
+background-color: rgba(26, 26, 26, 0.5);
+backdrop-filter: blur(2px);
 z-index:2;
 }
 #dialog {

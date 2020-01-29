@@ -194,33 +194,10 @@ echo '</select>
 	<fieldhelp>', _('Select the sales type to be used in this group. To cover all types just select Any Other'), '</fieldhelp>
 </field>';
 
-$SQL = "SELECT chartmaster.accountcode,
-			chartmaster.accountname
-		FROM chartmaster
-		INNER JOIN accountgroups
-			ON chartmaster.groupcode=accountgroups.groupcode
-			AND chartmaster.language=accountgroups.language
-		WHERE accountgroups.pandl=1
-			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-		ORDER BY accountgroups.sequenceintb,
-			chartmaster.accountcode,
-			chartmaster.accountname";
-$Result = DB_query($SQL);
-
 echo '<field>
-		<label for="GLCode">', _('Post to GL account'), ':</label>
-		<select required="required" name="GLCode">';
-
-echo '<option value=""></option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['GLCode']) and $MyRow['accountcode'] == $_POST['GLCode']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('Select the general ledger code to do COGS postingst to where the above criteria have been met.'), '</fieldhelp>
+		<label for="GLCode">', _('Post to GL account'), ':</label>';
+GLSelect(1, 'GLCode');
+echo '<fieldhelp>', _('Select the general ledger code to do COGS postingst to where the above criteria have been met.'), '</fieldhelp>
 </field>';
 
 echo '</fieldset>';

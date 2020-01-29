@@ -958,15 +958,18 @@ if ($_SESSION['RequireCustomerSelection'] == 1 or !isset($_SESSION['CreditItems'
 
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				//				$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-				foreach ($SupportedImgExt as $Extension) {
-					if (file_exists($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.' . $Extension)) {
-						$ImageFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.' . $Extension;
-					} else {
-						$ImageFile = '';
-					}
+				$SupportedImgExt = array('png', 'jpg', 'jpeg');
+				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
+				$ImageFile = reset($ImageFileArray);
+				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
+					$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '" alt="" />';
+				} else if (file_exists($ImageFile)) {
+					$ImageSource = '<img class="StockImage" src="' . $ImageFile . '" />';
+				} else {
+					$ImageSource = _('No Image');
 				}
-				if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
-					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=&width=64&height=64" alt="" />';
+
+				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile) == 1) {
 					echo '<tr class="striped_row">
 							<td><input type="submit" name="NewItem" value="', $MyRow['stockid'], '" /></td>
 							<td>', $MyRow['description'], '</td>

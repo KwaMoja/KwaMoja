@@ -1,5 +1,4 @@
 <?php
-
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
 *
@@ -8,14 +7,13 @@ not included on any menu for obvious reasons
 *
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
 
-
-include('includes/session.php');
+include ('includes/session.php');
 $Title = _('Delete Invoice');
-include('includes/header.php');
+include ('includes/header.php');
 
 if (!isset($_GET['InvoiceNo'])) {
 	prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . _('This page should not be run by non-system administrators'), 'info');
-	include('includes/footer.php');
+	include ('includes/footer.php');
 	exit;
 }
 /*Get the order number that was invoiced */
@@ -90,7 +88,6 @@ $Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 prnMsg(_('The debtortranstaxes record has been deleted'), 'info');
 
-
 /*Now delete the DebtorTrans */
 
 $SQL = "DELETE FROM debtortrans
@@ -101,7 +98,6 @@ $ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql 
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 prnMsg(_('The debtor transaction record has been deleted'), 'info');
-
 
 /*Now reverse updated SalesOrderDetails for the quantities invoiced and the actual dispatch dates. */
 
@@ -145,7 +141,17 @@ $SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
 
 $ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-prnMsg(_('Deleted the credit note stock move taxes') . 'info');
+prnMsg(_('Deleted the credit note stock move taxes'), 'info');
+echo '<br /><br />';
+
+/* Delete the stock serial movements  */
+$SQL = "DELETE stockserialmoves.* FROM stockserialmoves INNER JOIN stockmoves
+			ON stockserialmoves.stkmoveno=stockmoves.stkmoveno
+               WHERE stockmoves.type=11 AND stockmoves.transno = '" . $_GET['InvoiceNo'] . "'";
+
+$ErrMsg = _('SQL to delete the stock serial moves records failed with the message');
+$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+prnMsg(_('Deleted the credit note stock serial moves'), 'info');
 echo '<br /><br />';
 
 /* Delete the stock movements  */
@@ -166,5 +172,5 @@ $Result = DB_Txn_Commit();
 
 prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'), 'info');
 
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>

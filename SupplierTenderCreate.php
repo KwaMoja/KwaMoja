@@ -762,9 +762,9 @@ if (isset($_POST['Search'])) {
 			$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 			$ImageFile = reset($ImageFileArray);
 			if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-				$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=&width=64&height=64" alt="" />';
+				$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '" alt="" />';
 			} else if (file_exists($ImageFile)) {
-				$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
+				$ImageSource = '<img class="StockImage" src="' . $ImageFile . '" />';
 			} else {
 				$ImageSource = _('No Image');
 			}

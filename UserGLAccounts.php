@@ -190,7 +190,7 @@ if (!isset($SelectedUser)) { // If is NOT set a user for GL accounts.
 				</td>
 			</tr>';
 		} // End while list loop.
-		
+
 	} else { // If the user does not have access permissions to GL accounts:
 		echo '<tr>
 				<td class="centre" colspan="6">', _('User does not have access permissions to GL accounts'), '</td>
@@ -219,20 +219,9 @@ if (!isset($SelectedUser)) { // If is NOT set a user for GL accounts.
 
 	if (DB_num_rows($Result) > 0) { // If the user does not have access permissions to one or more GL accounts:
 		echo '<field>
-				<label for="SelectedGLAccount">', _('Add access permissions to a GL account'), ':</label>
-				<select name="SelectedGLAccount">';
-		if (!isset($_POST['SelectedGLAccount'])) {
-			echo '<option selected="selected" value="">', _('Not Yet Selected'), '</option>';
-		}
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['SelectedGLAccount']) and $MyRow['accountcode'] == $_POST['SelectedGLAccount']) {
-				echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
-			} else {
-				echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
-			}
-		}
-		echo '</select>
-			</field>';
+				<label for="SelectedGLAccount">', _('Add access permissions to a GL account'), ':</label>';
+		GLSelect(2, 'SelectedGLAccount');
+		echo '</field>';
 
 		echo '</fieldset>';
 

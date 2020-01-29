@@ -406,6 +406,10 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		$_POST['AutoIssue'] = $MyRow['autoissue'];
 		$_POST['Comment'] = $MyRow['comment'];
 
+		$SQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $SelectedComponent . "'";
+		$ComponentResult = DB_query($SQL);
+		$ComponentRow = DB_fetch_array($ComponentResult);
+
 		echo '<input type="hidden" name="Edit" value="Yes" />';
 		echo '<input type="hidden" name="LocCode" value="', $_POST['LocCode'], '" />';
 		echo '<input type="hidden" name="WorkCentreAdded" value="', $_POST['WorkCentreAdded'], '" />';
@@ -414,6 +418,11 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		echo '<field>
 				<label for="SelectedComponent">', _('Component'), ':</label>
 				<div class="fieldtext"><b>', $SelectedComponent, '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="ComponentDescription">', _('Component Description'), ':</label>
+				<div class="fieldtext"><b>', $ComponentRow['description'], '</b></div>
 			</field>';
 
 		echo '<field>
@@ -460,12 +469,21 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
 		$_POST['Comment'] = '';
 
+		$SQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $SelectedComponent . "'";
+		$ComponentResult = DB_query($SQL);
+		$ComponentRow = DB_fetch_array($ComponentResult);
+
 		echo '<input type="hidden" name="Add" value="Yes" />';
 		echo '<legend><b>', _('New Component Details'), '</b></legend>';
 
 		echo '<field>
 				<label for="SelectedComponent">', _('Component'), ':</label>
 				<div class="fieldtext"><b>', $SelectedComponent, '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="ComponentDescription">', _('Component Description'), ':</label>
+				<div class="fieldtext"><b>', $ComponentRow['description'], '</b></div>
 			</field>';
 
 		echo '<field>
@@ -543,6 +561,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 	echo '<field>
 			<label for="Quantity">', _('Quantity'), ': </label>
 			<input type="text" class="number" name="Quantity" size="10" required="required" maxlength="8" value="', $_POST['Quantity'], '" />
+			', $ComponentRow['units'], '
 			<fieldhelp>', _('Enter the quantity of this component is to be included.'), '</fieldhelp>
 		</field>';
 

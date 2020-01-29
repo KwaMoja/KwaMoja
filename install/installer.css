@@ -110,7 +110,6 @@ background:#dcefb3;
 border-color:#ceef86;
 border-style:solid;
 border-width:2px;
--moz-border-radius:5px;
 -webkit-border-radius:5px;
 border-radius:5px;
 list-style:none
@@ -122,7 +121,7 @@ padding-right:15px;
 text-align:left;
 margin:auto;
 border:0;
-line-height:0.9
+line-height:1;
 }
 
 .page_help_text span {
@@ -166,8 +165,7 @@ border-color:#c2efec;
 border-color:rgba(255,255,255,.6);
 border-style:solid;
 border-width:2px;
--moz-border-radius:5px;
--webkit-border-radius:5px;
+webkit-border-radius:5px;
 border-radius:5px;
 line-height:1.8;
 list-style:none;
@@ -183,7 +181,6 @@ width:14.5em
 form input:not([type=radio]),form textarea {
 background:#fff;
 border:none;
--moz-border-radius:3px;
 -webkit-border-radius:3px;
 -khtml-border-radius:3px;
 border-radius:3px;
@@ -214,7 +211,6 @@ box-shadow:0 0 5px #83F07B;
 form button {
 background:#3e3e3e;
 border:none;
--moz-border-radius:20px;
 -webkit-border-radius:20px;
 -khtml-border-radius:20px;
 border-radius:20px;
@@ -308,4 +304,26 @@ z-index:999
 
 form li span {
 font-size:12px
+}
+
+#loader {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+#waittext {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding:20px;
+  background:#2185C4;
+  color:white;
+  font-weight:bold;
+  font-size:140%;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -606,7 +606,7 @@ if (!isset($_GET['delete'])) {
 	}
 	if (!isset($_POST['AllowInvoicing'])) {
 		$_POST['AllowInvoicing'] = 1; // If not set, set value to "Yes".
-		
+
 	}
 	if (!isset($_POST['GLAccountCode'])) {
 		$_POST['GLAccountCode'] = '';
@@ -647,6 +647,7 @@ if (!isset($_GET['delete'])) {
 			<input type="text" name="DelAdd5" value="', $_POST['DelAdd5'], '" size="21" maxlength="20" />
 			<fieldhelp>', _('Fifth line of the delivery address'), '</fieldhelp>
 		</field>
+		<field>
 			<label for="DelAdd6">', _('Country'), ':</label>
 			<select name="DelAdd6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
@@ -695,32 +696,11 @@ if (!isset($_GET['delete'])) {
 	</field>';
 
 	// Location's ledger account:
-	//SQL to poulate account selection boxes
-	$SQL = "SELECT accountcode,
-					accountname
-				FROM chartmaster
-				LEFT JOIN accountgroups
-					ON chartmaster.groupcode=accountgroups.groupcode
-					AND chartmaster.language=accountgroups.language
-				WHERE accountgroups.pandl=0
-					AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-				ORDER BY accountcode";
-	$BSAccountsResult = DB_query($SQL);
 	echo '<field>
-			<label for="GLAccountCode">', _('GL Account Code'), ':</label>
-			<select name="GLAccountCode">
-				<option value="">', _('No General Ledger Code'), '</option>';
-
-	while ($MyRow = DB_fetch_array($BSAccountsResult)) {
-		if (isset($_POST['GLAccountCode']) and $MyRow['accountcode'] == $_POST['GLAccountCode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountname'] . ' (' . $MyRow['accountcode'] . ')' . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountname'] . ' (' . $MyRow['accountcode'] . ')' . '</option>';
-		}
-	} //end while loop
-	echo '</select>
-		<fieldhelp>', _('Select the GL account for this location, or select "No General Ledger Code".'), '</fieldhelp>
-	</field>';
+			<label for="GLAccountCode">', _('GL Account Code'), ':</label>';
+	GLSelect(0, 'GLAccountCode');
+	echo '<fieldhelp>', _('Select the GL account for this location, or select "No General Ledger Code".'), '</fieldhelp>
+		</field>';
 
 	// Allow or deny the invoicing of items in this location:
 	echo '<field>

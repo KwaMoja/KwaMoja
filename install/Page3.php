@@ -1,5 +1,5 @@
 <?php
-echo '<form id="DatabaseConfig" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 if (!empty($Errors)) {
 	foreach ($Errors as $Error) {
 		echo '<div class="error">' . $Error . '</div>';

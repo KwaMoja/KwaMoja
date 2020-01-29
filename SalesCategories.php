@@ -17,6 +17,47 @@ if (isset($SelectedCategory)) {
 		</div>';
 }
 
+$SupportedImgExt = array('png', 'jpg', 'jpeg');
+
+if (isset($_FILES['CategoryPicture']) and $_FILES['CategoryPicture']['name'] != '') {
+	$ImgExt = pathinfo($_FILES['CategoryPicture']['name'], PATHINFO_EXTENSION);
+
+	$Result = $_FILES['CategoryPicture']['error'];
+	$UploadTheFile = 'Yes'; //Assume all is well to start off with
+	$filename = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ImgExt;
+	//But check for the worst
+	if (!in_array($ImgExt, $SupportedImgExt)) {
+		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'), 'warn');
+		$UploadTheFile = 'No';
+	} elseif ($_FILES['CategoryPicture']['size'] > ($_SESSION['MaxImageSize'] * 1024)) { //File Size Check
+		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'], 'warn');
+		$UploadTheFile = 'No';
+	} elseif ($_FILES['CategoryPicture']['type'] == 'text/plain') { //File Type Check
+		prnMsg(_('Only graphics files can be uploaded'), 'warn');
+		$UploadTheFile = 'No';
+	} elseif ($_FILES['CategoryPicture']['error'] == 6) { //upload temp directory check
+		prnMsg(_('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '), 'warn');
+		$UploadTheFile = 'No';
+	} elseif (!is_writable($_SESSION['part_pics_dir'])) {
+		prnMsg(_('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
+		$UploadTheFile = 'No';
+	}
+	foreach ($SupportedImgExt as $ext) {
+		$file = $_SESSION['part_pics_dir'] . '/SALESCAT_' . $SelectedCategory . '.' . $ext;
+		if (file_exists($file)) {
+			$Result = unlink($file);
+			if (!$Result) {
+				prnMsg(_('The existing image could not be removed'), 'error');
+				$UploadTheFile = 'No';
+			}
+		}
+	}
+	if ($UploadTheFile == 'Yes') {
+		$Result = move_uploaded_file($_FILES['CategoryPicture']['tmp_name'], $filename);
+		$message = ($Result) ? _('File url') . '<a href="' . $filename . '">' . $filename . '</a>' : _('Something is wrong with uploading a file');
+	}
+}
+
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
@@ -181,9 +222,9 @@ if (isset($SearchResult)) {
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
 				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=&width=64&height=64" alt="" />';
+					$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '" alt="" />';
 				} else if (file_exists($ImageFile)) {
-					$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
+					$ImageSource = '<img class="StockImage" src="' . $ImageFile . '" />';
 				} else {
 					$ImageSource = _('No Image');
 				}
@@ -297,9 +338,9 @@ if (!isset($_GET['Select'])) {
 		$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $MyRow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 		$ImageFile = reset($ImageFileArray);
 		if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-			$CatImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode('SALESCAT_' . $MyRow['salescatid']) . '&text=&width=64&height=64" alt="" />';
+			$CatImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode('SALESCAT_' . $MyRow['salescatid']) . '" alt="" />';
 		} else if (file_exists($ImageFile)) {
-			$CatImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
+			$CatImgLink = '<img class="StockImage" src="' . $ImageFile . '"" />';
 		} else {
 			$CatImgLink = _('No Image');
 		}

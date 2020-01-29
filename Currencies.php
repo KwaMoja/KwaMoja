@@ -270,7 +270,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	//end if currency used in customer or supplier accounts
-	
+
 }
 
 if (!isset($SelectedCurrency)) {
@@ -453,7 +453,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for="Country">', _('Country'), ':</label>';
-	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
+	if ($_POST['Abbreviation'] != $FunctionalCurrency or $FunctionalCurrency == '') {
 		echo '<input type="text" name="Country" size="30" required="required" autofocus="autofocus" maxlength="50" value="', $_POST['Country'], '" />';
 	} else {
 		echo '<div class="fieldtext">', $_POST['Country'], '</div>';

@@ -516,15 +516,15 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	//show the item image if it has been uploaded
 	if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
 		if ($_SESSION['ShowStockidOnImages'] == '0') {
-			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . $UrlEncodedStockId . '&amp;text=' . '&amp;width=200' . '&amp;height=200' . '" alt="" />';
+			$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . $UrlEncodedStockId . '&amp;text=' . '&amp;width=200' . '&amp;height=200' . '" alt="" />';
 		} else if (file_exists($ImageFile)) {
-			$StockImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
+			$StockImgLink = '<img class="StockImage" src="' . $ImageFile . '" height="100" width="100" />';
 		} else {
-			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . $UrlEncodedStockId . '&amp;text=' . $UrlEncodedStockId . '&amp;width=200' . '&amp;height=200' . '" alt="" />';
+			$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . $UrlEncodedStockId . '&amp;text=' . $UrlEncodedStockId . '&amp;width=200' . '&amp;height=200' . '" alt="" />';
 		}
 	} else {
 		if (isset($StockId) and file_exists($_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg')) {
-			$StockImgLink = '<img src="' . urlencode($_SESSION['part_pics_dir']) . '/' . urlencode($StockId) . '.jpg" height="200" width="200" />';
+			$StockImgLink = '<img class="StockImage" src="' . urlencode($_SESSION['part_pics_dir']) . '/' . urlencode($StockId) . '.jpg" height="200" width="200" />xx';
 		} else {
 			$StockImgLink = _('No Image');
 		}
@@ -831,7 +831,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				$ItemStatus = '';
 			}
 			if (file_exists($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.png') or file_exists($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg') or file_exists($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpeg')) {
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=' . urlencode($MyRow['stockid']) . '&width=100&height=100" alt="" />';
+				$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=' . urlencode($MyRow['stockid']) . '&width=100&height=100" alt="" />';
 			} else {
 				$StockImgLink = '<p>' . _('No Image') . '</p>';
 			}

@@ -53,20 +53,10 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 				ORDER BY accountcode";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="SelectedGLAccount">', _('Select GL Account'), ':</label>
-			<select name="SelectedGLAccount" onchange="this.form.submit()">
-				<option value="">', _('Not Yet Selected'), '</option>';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedGLAccount) and $MyRow['accountcode'] == $SelectedGLAccount) {
-			echo '<option selected="selected" value="', $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
-		} else {
-			echo '<option value="', $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
-		}
-
-	} // End while loop.
-	echo '</select>
-		</field>
-	</fieldset>';
+			<label for="SelectedGLAccount">', _('Select GL Account'), ':</label>';
+	GLSelect(2, 'SelectedGLAccount');
+	echo '</field>
+		</fieldset>';
 	//Close Select_GL_Account table.
 	echo '<div class="centre noPrint">
 			<input name="Process" type="submit" value="', _('Accept'), '" />
@@ -186,7 +176,7 @@ if (!isset($SelectedGLAccount)) { // If is NOT set a GL account for users.
 			}
 			echo '</a></td>', '<td class="noPrint"><a href="', urlencode($ScriptName), '?SelectedGLAccount=', urlencode($SelectedGLAccount), '&amp;SelectedUser=', urlencode($MyRow['userid']), '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this user?'), '\');">', _('Un-authorise'), '</a></td>', '</tr>';
 		} // End while list loop.
-		
+
 	} else { // If the GL account does not have access permissions for users:
 		echo '<tr>
 				<td class="centre" colspan="6">', _('GL account does not have access permissions for users'), '</td>

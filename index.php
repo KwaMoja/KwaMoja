@@ -169,7 +169,7 @@ function GetRptLinks($GroupID) {
 							reportname";
 		$Result = DB_query($SQL, '', '', false, true);
 		$_SESSION['ReportList'] = array();
-		while ($Temp = DB_fetch_array($Result)) {
+		while ($Temp = DB_fetch_assoc($Result)) {
 			$_SESSION['ReportList'][] = $Temp;
 		}
 	}
@@ -183,7 +183,8 @@ function GetRptLinks($GroupID) {
 			foreach ($_SESSION['ReportList'] as $Report) {
 				if (isset($Report['groupname']) and $Report['groupname'] == $GroupID and $Report['defaultreport'] == $Def) {
 					$RptLinks.= '<li class="menu_group_item">';
-					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/ReportMaker.php?action=go&amp;reportid=' . urlencode($Report['id']) . '">&bull; ' . _($Report['reportname']) . '</a></p>';
+					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/ReportMaker.php?action=go&amp;reportid=';
+					$RptLinks.= urlencode($Report['id']) . '">&nbsp; ' . _($Report['reportname']) . '</a></p>';
 					$RptLinks.= '</li>';
 					$NoEntries = false;
 				}
@@ -193,10 +194,10 @@ function GetRptLinks($GroupID) {
 			foreach ($_SESSION['ReportList'] as $Report) {
 				$Group = explode(':', $Report['groupname']); // break into main group and form group array
 				if ($NoForms and $Group[0] == $GroupID and $Report['reporttype'] == 'frm' and $Report['defaultreport'] == $Def) {
-					$RptLinks.= '<li class="MenuItem">';
-					$RptLinks.= '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width="16" height="13" alt="" />&nbsp;';
-					$RptLinks.= '<a href="' . $RootPath . '/reportwriter/FormMaker.php?id=' . urlencode($Report['groupname']) . '">&bull; ';
-					$RptLinks.= $_SESSION['FormGroups'][$Report['groupname']] . '</a>';
+					$RptLinks.= '<li class="menu_group_item">';
+					$RptLinks.= '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width="16" height="13" alt="" />&nbsp; ';
+					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/FormMaker.php?id=' . urlencode($Report['groupname']) . '">';
+					$RptLinks.= $_SESSION['FormGroups'][$Report['groupname']] . '</a></p>';
 					$RptLinks.= '</li>';
 					$NoForms = false;
 					$NoEntries = false;

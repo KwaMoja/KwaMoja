@@ -807,6 +807,9 @@ if (isset($_POST['submit'])) {
 						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 							unset($_POST['Description_' . str_replace('.', '_', $LanguageId) ]);
 						}
+						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
+							unset($_POST['LongDescription_' . str_replace('.', '_', $LanguageId) ]);
+						}
 						$New = 1;
 					} else {
 						$InsResult = DB_Txn_Rollback();
@@ -1155,20 +1158,20 @@ foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 	}
 }
 
-echo '<field>
-		<label for="ItemPicture">', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
-		<input type="file" id="ItemPicture" name="ItemPicture" />
-		<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ', _('Clear Image');
-
 $ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $StockId . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 $ImageFile = reset($ImageFileArray);
 if (extension_loaded('gd') and function_exists('gd_info') and isset($StockId) and !empty($StockId)) {
-	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockId) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
+	$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockId) . '&amp;text=' . '" alt="" />';
 } else if (file_exists($ImageFile)) {
-	$StockImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
+	$StockImgLink = '<img class="StockImage" src="' . $ImageFile . '" />';
 } else {
 	$StockImgLink = _('No Image');
 }
+echo '<field>
+		<label for="ItemPicture">', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
+		<div class="fieldtext">', $StockImgLink, '</div>
+		<input type="file" id="ItemPicture" name="ItemPicture" />
+		<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ', _('Clear Image');
 
 if (isset($_POST['ClearImage'])) {
 	foreach ($SupportedImgExt as $ext) {

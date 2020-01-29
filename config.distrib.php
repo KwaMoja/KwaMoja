@@ -1,13 +1,15 @@
 <?php
 // User configurable variables
 //---------------------------------------------------
-/*DefaultLanguage to use for the login screen and the setup of new users
- *the users language selection will override
+/* DefaultLanguage to use for the login screen and the setup of new users
+ * the users language selection will override this selection.
 */
 $DefaultLanguage = 'en_GB.utf8';
 
-// Whether to display the demo login and password or not on the login screen
-$AllowDemoMode = True;
+/* If this is set to True then various options are disabled, and the
+ * default user name and password are displayed on the login page.
+*/
+$AllowDemoMode = False;
 
 // email address of the system administrator
 $SysAdminEmail = 'admin@mydomain.com';

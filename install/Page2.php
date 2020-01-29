@@ -110,7 +110,7 @@ if (isset($_POST['DBMS'])) {
 }
 
 if ($InputError != 0) {
-	echo '<form id="refresh" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
+	echo '<form id="refresh" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<fieldset style="text-align:center">
 			<button type="submit">' . _('Check Again') . '</button>
 		</fieldset>';
@@ -118,14 +118,14 @@ if ($InputError != 0) {
 	exit;
 }
 if ($InputWarn != 0) {
-	echo '<form id="refresh" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
+	echo '<form id="refresh" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<fieldset style="text-align:center">
 			<button type="submit">' . _('Check Again') . '</button>
 		</fieldset>';
 	echo '</form';
 }
 
-echo '<form id="DatabaseConfig" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<fieldset style="text-align:center">
 		<input type="hidden" name="SystemValid" value="1" />
 		<button type="submit" name="previous">' . _('Previous Step') . '<img src="left.png" style="float:left" /></button>

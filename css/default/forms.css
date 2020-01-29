@@ -20,6 +20,8 @@ form fieldset legend {
 background-color:#B06161;
 color:#FFFFFF;
 padding:3px;
+padding-left:5px;
+padding-right:5px;
 border: 0px solid;
 border-radius:9px;
 font-size:150%;
@@ -27,10 +29,11 @@ font-weight:bold;
 margin-top:3px;
 }
 form fieldset legend.search {
-background-image:url(images/magnifier.png);
+background-image:url(images/search.png);
 background-repeat: no-repeat;
-background-size:contain;
-padding-left:32px;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
 }
 form fieldset field {
 display:block;
@@ -44,7 +47,7 @@ text-align:left;
 }
 form fieldset field .fieldtext {
 display:inline;
-margin-bottom:8px;
+padding-bottom:10px;
 }
 form fieldset field input,textarea,select {
 background-color:#C0C3FF;
@@ -112,6 +115,7 @@ border: 1px solid #588BB6;
 color:#1A1A1A;
 border-radius: 5px;
 cursor: pointer;
+transition-duration:0.5s;
 }
 form input[type="submit"]:hover{
 background:#7F7F7F;
@@ -131,4 +135,7 @@ cursor: pointer;
 }
 form .number {
 text-align:right;
+}
+fieldset ul li {
+text-align:left;
 }

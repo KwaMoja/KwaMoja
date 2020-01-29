@@ -371,191 +371,65 @@ echo '</select>
 	<fieldhelp>', _('Is the organisation a not for profit organisation.'), '</fieldhelp>
 </field>';
 
-$Result = DB_query("SELECT accountcode,
-						accountname
-					FROM chartmaster
-					INNER JOIN accountgroups
-						ON chartmaster.groupcode=accountgroups.groupcode
-						AND chartmaster.language=accountgroups.language
-					WHERE accountgroups.pandl=0
-						AND chartmaster.Language='" . $_SESSION['ChartLanguage'] . "'
-					ORDER BY chartmaster.accountcode");
+echo '<field>
+		<label for="DebtorsAct">', _('Debtors Control GL Account'), ':</label>';
+GLSelect(0, 'DebtorsAct');
+echo '<fieldhelp>', _('The general ledger account to act as the control for the accounts receivable transactions. This account should agree with the total aged debtors report.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="DebtorsAct">', _('Debtors Control GL Account'), ':</label>
-		<select name="DebtorsAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['DebtorsAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the control for the accounts receivable transactions. This account should agree with the total aged debtors report.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="CreditorsAct">', _('Creditors Control GL Account'), ':</label>';
+GLSelect(0, 'CreditorsAct');
+echo '<fieldhelp>', _('The general ledger account to act as the control for the accounts payable transactions. This account should agree with the total aged creditors report.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="CreditorsAct">', _('Creditors Control GL Account'), ':</label>
-		<select name="CreditorsAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['CreditorsAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the control for the accounts payable transactions. This account should agree with the total aged creditors report.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="PayrollAct">', _('Payroll Net Pay Clearing GL Account'), ':</label>';
+GLSelect(0, 'PayrollAct');
+echo '<fieldhelp>', _('The general ledger account to act as the control for the payroll transactions.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="PayrollAct">', _('Payroll Net Pay Clearing GL Account'), ':</label>
-		<select name="PayrollAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PayrollAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the control for the payroll transactions.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="GRNAct">', _('Goods Received Clearing GL Account'), ':</label>';
+GLSelect(0, 'GRNAct');
+echo '<fieldhelp>', _('The general ledger account to act as the clearing account for Goods Received. When the GRN is raised an entry is posted here, and when the supplier invoice is posted, it will contra off this entry. This account should always reconcile back to zero.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="GRNAct">', _('Goods Received Clearing GL Account'), ':</label>
-		<select name="GRNAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['GRNAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the clearing account for Goods Received. When the GRN is raised an entry is posted here, and when the supplier invoice is posted, it will contra off this entry. This account should always reconcile back to zero.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="CommAct">', _('Sales Commission Accruals Account'), ':</label>';
+GLSelect(0, 'CommAct');
+echo '<fieldhelp>', _('The general ledger account to act as the sales commission accruals account. Commission earned but not paid will be posted here, and cleared when the commission is paid.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="CommAct">', _('Sales Commission Accruals Account'), ':</label>
-		<select name="CommAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['CommAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the sales commission accruals account. Commission earned but not paid will be posted here, and cleared when the commission is paid.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="RetainedEarnings">', _('Retained Earning Clearing GL Account'), ':</label>';
+GLSelect(0, 'RetainedEarnings');
+echo '<fieldhelp>', _('The general ledger account to act as the retained earnings account with the accumulated Profit/Loss. This account is managed by KwaMoja and once set up should not be accessed directly.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="RetainedEarnings">', _('Retained Earning Clearing GL Account'), ':</label>
-		<select name="RetainedEarnings">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['RetainedEarnings'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account to act as the retained earnings account with the accumulated Profit/Loss. This account is managed by KwaMoja and once set up should not be accessed directly.'), '</fieldhelp>
-</field>';
-
-$Result = DB_query("SELECT accountcode,
-						accountname
-					FROM chartmaster
-					INNER JOIN accountgroups
-						ON chartmaster.groupcode=accountgroups.groupcode
-						AND chartmaster.language=accountgroups.language
-					WHERE accountgroups.pandl=1
-						AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-					ORDER BY chartmaster.accountcode");
+		<label for="FreightAct">', _('Freight Re-charged GL Account'), ':</label>';
+GLSelect(1, 'FreightAct');
+echo '<fieldhelp>', _('The general ledger account where the freight charges will get posted to.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="FreightAct">', _('Freight Re-charged GL Account'), ':</label>
-		<select name="FreightAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['FreightAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account where the freight charges will get posted to.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="ExchangeDiffAct">', _('Sales Exchange Variances GL Account'), ':</label>';
+GLSelect(1, 'ExchangeDiffAct');
+echo '<fieldhelp>', _('The general ledger account where the profit/loss on currency exchange for sales transactions will be posted.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="ExchangeDiffAct">', _('Sales Exchange Variances GL Account'), ':</label>
-		<select name="ExchangeDiffAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['ExchangeDiffAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account where the profit/loss on currency exchange for sales transactions will be posted.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
+		<label for="PurchasesExchangeDiffAct">', _('Purchases Exchange Variances GL Account'), ':</label>';
+GLSelect(1, 'PurchasesExchangeDiffAct');
+echo '<fieldhelp>', _('The general ledger account where the profit/loss on currency exchange for purchase transactions will be posted.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="PurchasesExchangeDiffAct">', _('Purchases Exchange Variances GL Account'), ':</label>
-		<select name="PurchasesExchangeDiffAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PurchasesExchangeDiffAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option  value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account where the profit/loss on currency exchange for purchase transactions will be posted.'), '</fieldhelp>
-</field>';
-
-DB_data_seek($Result, 0);
-
-echo '<field>
-		<label for="PytDiscountAct">', _('Payment Discount GL Account'), ':</label>
-		<select name="PytDiscountAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PytDiscountAct'] == $MyRow[0]) {
-		echo '<option selected="selected" value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	} else {
-		echo '<option value="', $MyRow[0], '">', htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8'), ' (', $MyRow[0], ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger account where the discount on purchase transactions will be posted.'), '</fieldhelp>
-</field>';
+		<label for="PytDiscountAct">', _('Payment Discount GL Account'), ':</label>';
+GLSelect(1, 'PytDiscountAct');
+echo '<fieldhelp>', _('The general ledger account where the discount on purchase transactions will be posted.'), '</fieldhelp>
+	</field>';
 
 DB_data_seek($Result, 0);
 

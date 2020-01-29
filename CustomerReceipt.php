@@ -120,7 +120,7 @@ if (!isset($_GET['Delete']) and isset($_SESSION['ReceiptBatch' . $Identifier]) o
 	if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate'] != '') {
 		if (is_numeric(filter_number_format($_POST['FunctionalExRate']))) {
 			$_SESSION['ReceiptBatch' . $Identifier]->FunctionalExRate = filter_number_format($_POST['FunctionalExRate']); //ex rate between receipt currency and account currency
-			
+
 		} else {
 			prnMsg(_('The functional exchange rate entered should be numeric'), 'warn');
 		}
@@ -255,9 +255,9 @@ if (isset($_POST['CommitBatch'])) {
 	all DebtorTrans will refer to a single banktrans. A GL entry is created for
 	each GL receipt entry and one for the debtors entry and one for the bank
 	account debit
-	
+
 	NB allocations against debtor receipts are a separate exercice
-	
+
 	first off run through the array of receipt items $_SESSION['ReceiptBatch' . $Identifier]->Items and
 	if GL integrated then create GL Entries for the GL Receipt items
 	and add up the non-GL ones for posting to debtors later,
@@ -383,27 +383,27 @@ if (isset($_POST['CommitBatch'])) {
 				bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 				receiving USD - 1 AUD = 0.85 USD  (ExRate)
 				from a bank account in EUR - 1 NZD = 0.52 EUR
-				
+
 				oh yeah - now we are getting tricky!
 				Lets say we received USD 100 to the AUD bank account from the EUR bank account
-				
+
 				To get the ExRate for the bank account we are transferring money from
 				we need to use the cross rate between the NZD-AUD/NZD-EUR
 				and apply this to the
-				
+
 				the receipt record will read
 				exrate = 0.85 (1 AUD = USD 0.85)
 				amount = 100 (USD)
 				functionalexrate = 0.90 (1 NZD = AUD 0.90)
-				
+
 				the payment record will read
-				
+
 				amount 100 (USD)
 				exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD  ~ 1.47
 				(ExRate x FunctionalExRate) / USD Functional ExRate
 				Check this is 1 EUR = 1.47 USD
 				functionalexrate =  (1NZD = EUR 0.52)
-				
+
 				*/
 
 				$PaymentTransNo = GetNextTransNo(1);
@@ -434,7 +434,7 @@ if (isset($_POST['CommitBatch'])) {
 				$ErrMsg = _('Cannot insert a bank transaction using the SQL');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 			} //end if an item is a transfer between bank accounts
-			
+
 		} else { //its not a GL item - its a customer receipt then
 			/*Accumulate the total debtors credit including discount */
 			$BatchDebtorTotal+= (($ReceiptItem->Discount + $ReceiptItem->Amount) / $_SESSION['ReceiptBatch' . $Identifier]->ExRate / $_SESSION['ReceiptBatch' . $Identifier]->FunctionalExRate);
@@ -594,7 +594,7 @@ if (isset($_POST['CommitBatch'])) {
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} //end if there is some discount
-		
+
 	} //end if there is GL work to be done - ie config is to link to GL
 	EnsureGLEntriesBalance(12, $_SESSION['ReceiptBatch' . $Identifier]->BatchNo);
 
@@ -675,7 +675,7 @@ if (isset($_POST['Search'])) {
 	}
 
 	//one of keywords or custcode was more than a zero length string
-	
+
 } //end of if search
 if (isset($_POST['CustomerID'])) {
 	/*will only be true if a customer has just been selected by clicking on the customer or only one
@@ -1123,35 +1123,10 @@ if (isset($_POST['GLEntry']) and isset($_SESSION['ReceiptBatch' . $Identifier]))
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<field>
-			<label for="GLCode">', _('GL Account'), ':</label>
-			<select name="GLCode">';
-
-	$SQL = "SELECT chartmaster.accountcode,
-					chartmaster.accountname
-				FROM chartmaster
-				INNER JOIN glaccountusers
-					ON glaccountusers.accountcode=chartmaster.accountcode
-					AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
-					AND glaccountusers.canupd=1
-				WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-				ORDER BY chartmaster.accountcode";
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) == 0) {
-		echo '</select>', _('No General ledger accounts have been set up yet'), ' - ', _('receipts cannot be entered against GL accounts until the GL accounts are set up'), '</td>
-			</field>';
-	} else {
-		echo '<option value=""></option>';
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
-				echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
-			} else {
-				echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
-			}
-		}
-		echo '</select>
-			<fieldhelp>', _('Select the General Ledger account to post this receipt to.'), '</fieldhelp>
+			<label for="GLCode">', _('GL Account'), ':</label>';
+	GLSelect(2, 'GLCode');
+	echo '<fieldhelp>', _('Select the General Ledger account to post this receipt to.'), '</fieldhelp>
 		</field>';
-	}
 }
 
 /*if either a customer is selected or its a GL Entry then set out
@@ -1282,7 +1257,7 @@ if (isset($CustomerSearchResult)) {
 			</tr>';
 
 		//end of page full new headings if
-		
+
 	}
 	//end of while loop
 	echo '</table>';

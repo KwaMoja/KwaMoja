@@ -825,8 +825,10 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	$InvoiceNo = GetNextTransNo(10);
 	$PeriodNo = GetPeriod($DefaultDispatchDate);
 
-	/*Start an SQL transaction */
+	$_SESSION['Items' . $Identifier]->total = round($_SESSION['Items' . $Identifier]->total, $_SESSION['Items' . $Identifier]->CurrDecimalPlaces);
+	$TaxTotal = round($TaxTotal, $_SESSION['Items' . $Identifier]->CurrDecimalPlaces);
 
+	/*Start an SQL transaction */
 	DB_Txn_Begin();
 
 	if ($DefaultShipVia != $_SESSION['Items' . $Identifier]->ShipVia) {

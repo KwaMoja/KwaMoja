@@ -27,7 +27,7 @@ if (empty($_GET['identifier'])) {
 	$Identifier = date('U');
 } else {
 	$Identifier = $_GET['identifier']; //edit GLItems
-	
+
 }
 if (isset($_GET['NewPayment']) and $_GET['NewPayment'] == 'Yes') {
 	unset($_SESSION['PaymentDetail' . $Identifier]->GLItems);
@@ -169,7 +169,7 @@ if (isset($_GET['SupplierID'])) {
 		if (isset($_GET['Amount']) and is_numeric($_GET['Amount'])) {
 			$_SESSION['PaymentDetail' . $Identifier]->Amount = filter_number_format($_GET['Amount']);
 		} //isset($_GET['Amount']) and is_numeric($_GET['Amount'])
-		
+
 	}
 	$SQL = "SELECT suppliergroupid FROM suppliers WHERE supplierid='" . $_SESSION['PaymentDetail' . $Identifier]->SupplierID . "'";
 	$Result = DB_query($SQL);
@@ -212,11 +212,11 @@ if (isset($_POST['DatePaid']) and $_POST['DatePaid'] != '' and is_date($_POST['D
 } //isset($_POST['DatePaid']) and $_POST['DatePaid'] != '' and is_date($_POST['DatePaid'])
 if (isset($_POST['ExRate']) and $_POST['ExRate'] != '') {
 	$_SESSION['PaymentDetail' . $Identifier]->ExRate = filter_number_format($_POST['ExRate']); //ex rate between payment currency and account currency
-	
+
 } //isset($_POST['ExRate']) and $_POST['ExRate'] != ''
 if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate'] != '') {
 	$_SESSION['PaymentDetail' . $Identifier]->FunctionalExRate = filter_number_format($_POST['FunctionalExRate']); //ex rate between payment currency and account currency
-	
+
 } //isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate'] != ''
 if (isset($_POST['Paymenttype']) and $_POST['Paymenttype'] != '') {
 	$_SESSION['PaymentDetail' . $Identifier]->Paymenttype = $_POST['Paymenttype'];
@@ -282,7 +282,7 @@ if (isset($_POST['Narrative']) and $_POST['Narrative'] != '') {
 if (isset($_POST['gltrans_narrative'])) {
 	if ($_POST['gltrans_narrative'] == '') {
 		$_SESSION['PaymentDetail' . $Identifier]->gltrans_narrative = $_POST['Narrative']; // If blank, it uses the bank narrative.
-		
+
 	} else {
 		$_SESSION['PaymentDetail' . $Identifier]->gltrans_narrative = $_POST['gltrans_narrative'];
 	}
@@ -291,7 +291,7 @@ if (isset($_POST['gltrans_narrative'])) {
 if (isset($_POST['supptrans_suppreference'])) {
 	if ($_POST['supptrans_suppreference'] == '') {
 		$_SESSION['PaymentDetail' . $Identifier]->supptrans_suppreference = $_POST['Paymenttype']; // If blank, it uses the payment type.
-		
+
 	} else {
 		$_SESSION['PaymentDetail' . $Identifier]->supptrans_suppreference = $_POST['supptrans_suppreference'];
 	}
@@ -300,7 +300,7 @@ if (isset($_POST['supptrans_suppreference'])) {
 if (isset($_POST['supptrans_transtext'])) {
 	if ($_POST['supptrans_transtext'] == '') {
 		$_SESSION['PaymentDetail' . $Identifier]->supptrans_transtext = $_POST['Narrative']; // If blank, it uses the narrative.
-		
+
 	} else {
 		$_SESSION['PaymentDetail' . $Identifier]->supptrans_transtext = $_POST['supptrans_transtext'];
 	}
@@ -325,7 +325,7 @@ else {
 	if (!isset($_SESSION['PaymentDetail' . $Identifier]->Discount)) {
 		$_SESSION['PaymentDetail' . $Identifier]->Discount = 0;
 	} //!isset($_SESSION['PaymentDetail' . $Identifier]->Discount)
-	
+
 }
 
 if (isset($_POST['CommitBatch'])) {
@@ -334,9 +334,9 @@ if (isset($_POST['CommitBatch'])) {
 	the payment in the batch and SuppTrans record for the supplier payment if a supplier was selected
 	A GL entry is created for each GL entry (only one for a supplier entry) and one for the bank
 	account credit.
-	
+
 	NB allocations against supplier payments are a separate exercice
-	
+
 	if GL integrated then
 	first off run through the array of payment items $_SESSION['Payment']->GLItems and
 	create GL Entries for the GL payment items
@@ -487,26 +487,26 @@ if (isset($_POST['CommitBatch'])) {
 					bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 					paying USD - 1 AUD = 0.85 USD  (ExRate)
 					to a bank account in EUR - 1 NZD = 0.52 EUR
-					
+
 					oh yeah - now we are getting tricky!
 					Lets say we pay USD 100 from the AUD bank account to the EUR bank account
-					
+
 					To get the ExRate for the bank account we are transferring money to
 					we need to use the cross rate between the NZD-AUD/NZD-EUR
 					and apply this to the
-					
+
 					the payment record will read
 					exrate = 0.85 (1 AUD = USD 0.85)
 					amount = 100 (USD)
 					functionalexrate = 0.90 (1 NZD = AUD 0.90)
-					
+
 					the receipt record will read
-					
+
 					amount 100 (USD)
 					exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD)
 					(ExRate x FunctionalExRate) / USD Functional ExRate
 					functionalexrate =     (1NZD = EUR 0.52)
-					
+
 					*/
 
 					$ReceiptTransNo = GetNextTransNo(2);
@@ -541,9 +541,9 @@ if (isset($_POST['CommitBatch'])) {
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				} //in_array($PaymentItem->GLCode, $BankAccounts)
-				
+
 			} //$_SESSION['PaymentDetail' . $Identifier]->GLItems as $PaymentItem
-			
+
 		} else {
 
 			$TransNo = GetNextTransNo(22);
@@ -677,9 +677,9 @@ if (isset($_POST['CommitBatch'])) {
 						$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 					} // end if discount
-					
+
 				} // end if gl creditors
-				
+
 			} // end if supplier
 			$TransactionTotal = 0;
 			foreach ($CreditorTotal as $Supplier => $Amount) {
@@ -719,7 +719,7 @@ if (isset($_POST['CommitBatch'])) {
 
 				EnsureGLEntriesBalance($TransType, $TransNo);
 			} //$_SESSION['PaymentDetail' . $Identifier]->Amount != 0
-			
+
 		} //$_SESSION['CompanyRecord']['gllink_creditors'] == 1
 		/*now enter the BankTrans entry */
 		if ($TransType == 22) {
@@ -934,7 +934,7 @@ if (isset($_POST['BankAccount']) and $_POST['BankAccount'] != '') {
 	elseif (DB_num_rows($Result) == 0) {
 		prnMsg(_('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account with a valid general ledger account'), 'error');
 	} //DB_num_rows($Result) == 0
-	
+
 } //isset($_POST['BankAccount']) and $_POST['BankAccount'] != ''
 echo '<form action="', htmlspecialchars(basename(__FILE__) . '?identifier=' . $Identifier), '" method="post">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -1055,7 +1055,7 @@ if ($_SESSION['PaymentDetail' . $Identifier]->SupplierID == '') {
 		$MyRow = DB_fetch_row($Result);
 		$_SESSION['PaymentDetail' . $Identifier]->ExRate = locale_number_format($MyRow[0], 'Variable');
 	} //!isset($_POST['ExRate']) or $_POST['ExRate'] == ''
-	
+
 }
 
 if ($_SESSION['PaymentDetail' . $Identifier]->AccountCurrency != $_SESSION['PaymentDetail' . $Identifier]->Currency and isset($_SESSION['PaymentDetail' . $Identifier]->AccountCurrency)) {
@@ -1167,77 +1167,10 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 	}
 
 	echo '<field>
-			<label for="GLGroup">', _('Select GL Group'), ':</label>
-			<select name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
-
-	$SQL = "SELECT groupcode,
-					groupname
-			FROM accountgroups
-			WHERE language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY groupcode";
-
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) == 0) {
-		echo '</select>
-			</field>';
-		prnMsg(_('No General ledger account groups have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'), 'error');
-	} else {
-		echo '<option value=""></option>';
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['GLGroup']) and (stripslashes($_POST['GLGroup']) == $MyRow['groupcode'])) {
-				echo '<option selected="selected" value="', $MyRow['groupcode'], '">', $MyRow['groupcode'], ' - ', $MyRow['groupname'], '</option>';
-			} //isset($_POST['GLGroup']) and ($_POST['GLGroup'] == $MyRow['groupname'])
-			else {
-				echo '<option value="', $MyRow['groupcode'], '">', $MyRow['groupcode'], ' - ', $MyRow['groupname'], '</option>';
-			}
-		} //$MyRow = DB_fetch_array($Result)
-		echo '</select>
-				<fieldhelp>', _('Select the account group to filter the codes'), '</fieldhelp>
-				<input type="submit" name="UpdateCodes" value="Select" />
-			</field>';
-	}
-
-	if (isset($_POST['GLGroup']) and $_POST['GLGroup'] != '') {
-		$SQL = "SELECT chartmaster.accountcode,
-						chartmaster.accountname
-				FROM chartmaster
-					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
-				WHERE chartmaster.groupcode='" . $_POST['GLGroup'] . "'
-					AND language='" . $_SESSION['ChartLanguage'] . "'
-				ORDER BY chartmaster.accountcode";
-	} else {
-		$SQL = "SELECT chartmaster.accountcode,
-						chartmaster.accountname
-				FROM chartmaster
-					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canupd=1
-				WHERE language='" . $_SESSION['ChartLanguage'] . "'
-				ORDER BY chartmaster.accountcode";
-	}
-
-	echo '<field>
-			<label for="GLCode">', _('Select GL Account'), ':</label>
-			<select name="GLCode" onchange="return assignComboToInput(this,', 'GLManualCode', ')">';
-
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) == 0) {
-		echo '</select>
-			</field>';
-		prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'), 'error');
-	} //DB_num_rows($Result) == 0
-	else {
-		echo '<option value=""></option>';
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
-				echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-			} //isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']
-			else {
-				echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-			}
-		} //$MyRow = DB_fetch_array($Result)
-		echo '</select>
-			<fieldhelp>', _('Select the account code for this transaction'), '</fieldhelp>
+			<label for="GLCode">', _('Select GL Account'), ':</label>';
+	GLSelect(2, 'GLCode');
+	echo '<fieldhelp>', _('Select the account code for this transaction'), '</fieldhelp>
 		</field>';
-	}
 
 	echo '<field>
 			<label for="Cheque">', _('Cheque/Voucher Number'), '</label>
@@ -1348,7 +1281,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 and $_SESSION['PaymentDe
 		</table>';
 		echo '<div class="centre"><input type="submit" name="CommitBatch" value="', _('Accept and Process GL Payment'), '" /></div>';
 	} //sizeOf($_SESSION['PaymentDetail' . $Identifier]->GLItems) > 0
-	
+
 } else {
 	/*a supplier is selected or the GL link is not active then set out
 	 the fields for entry of receipt amt and disc */

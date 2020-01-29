@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The selected tax authority record has been deleted'), 'success');
 		unset($SelectedTaxAuthID);
 	} // end of related records testing
-	
+
 }
 
 if (!isset($SelectedTaxAuthID)) {
@@ -226,21 +226,6 @@ if (isset($SelectedTaxAuthID)) {
 			<legend>', _('Create New Tax Authority details'), '</legend>';
 }
 
-$SQL = "SELECT accountcode,
-				accountname
-		FROM chartmaster
-		INNER JOIN accountgroups
-			ON chartmaster.groupcode=accountgroups.groupcode
-			AND chartmaster.language=accountgroups.language
-		WHERE accountgroups.pandl=0
-			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-		ORDER BY accountcode";
-$Result = DB_query($SQL);
-
-while ($MyRow = DB_fetch_array($Result)) {
-	$GLAccounts[$MyRow['accountcode']] = $MyRow['accountname'];
-}
-
 echo '<field>
 		<label for="Description">', _('Tax Type Description'), ':</label>
 		<input type="text" name="Description" size="21" required="required" autofocus="autofocus" maxlength="40" value="', $_POST['Description'], '" />
@@ -248,34 +233,16 @@ echo '<field>
 	</field>';
 
 echo '<field>
-		<label for="PurchTaxGLCode">', _('Input tax GL Account'), ':</label>
-		<select required="required" name="PurchTaxGLCode">';
-
-foreach ($GLAccounts as $Code => $Name) {
-	if (isset($_POST['PurchTaxGLCode']) and $Code == $_POST['PurchTaxGLCode']) {
-		echo '<option selected="selected" value="', $Code, '">', $Name, ' (', $Code, ')</option>';
-	} else {
-		echo '<option value="', $Code, '">', $Name, ' (', $Code, ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('Select a GL account where the purchase (input) tax will be posted to.'), '</fieldhelp>
-</field>';
+		<label for="PurchTaxGLCode">', _('Input tax GL Account'), ':</label>';
+GLSelect(0, 'PurchTaxGLCode');
+echo '<fieldhelp>', _('Select a GL account where the purchase (input) tax will be posted to.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="TaxGLCode">', _('Output tax GL Account'), ':</label>
-		<select required="required" name="TaxGLCode">';
-
-foreach ($GLAccounts as $Code => $Name) {
-	if (isset($_POST['TaxGLCode']) and $Code == $_POST['TaxGLCode']) {
-		echo '<option selected="selected" value="', $Code, '">', $Name, ' (', $Code, ')</option>';
-	} else {
-		echo '<option value="', $Code, '">', $Name, ' (', $Code, ')</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('Select a GL account where the sales (output) tax will be posted to.'), '</fieldhelp>
-</field>';
+		<label for="TaxGLCode">', _('Output tax GL Account'), ':</label>';
+GLSelect(0, 'TaxGLCode');
+echo '<fieldhelp>', _('Select a GL account where the sales (output) tax will be posted to.'), '</fieldhelp>
+	</field>';
 
 echo '<field>
 		<label>', _('Bank Name'), ':</label>

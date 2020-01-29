@@ -359,3 +359,10 @@
 if(typeof tz !== 'undefined'){
 	window.onload=tz;
 }
+
+function start_install() {
+	document.getElementById("installation").style["display"] = "none";
+	document.getElementById("loader").style["display"] = "block";
+	document.getElementById("waittext").style["display"] = "block";
+	return true;
+}

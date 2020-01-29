@@ -56,7 +56,7 @@ echo '<table>
 		<tr>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (in_array($MyRow['id'], $ScriptArray) and in_array($MyRow['pagesecurity'], $_SESSION['AllowedPageSecurityTokens'])) {
-		echo '<td class="dashboard_cell" id="dashboard_cell', $i, '" title="', $MyRow['scripts'], '" onload="">';
+		echo '<td class="dashboard_cell" id="dashboard_cell', $i, '" title="', $MyRow['description'], '" onload="">';
 		include ('dashboard/' . $MyRow['scripts']);
 		echo '</td>';
 		if ($i == 2) {

@@ -282,30 +282,10 @@ if (isset($SelectedBankAccount) and !isset($_GET['delete'])) {
 	echo '<fieldset>
 			<legend>', _('New Bank Account Details'), '</legend>
 			<field>
-				<label for="AccountCode">', _('Bank Account GL Code'), ':</label>
-				<select required="required" autofocus="autofocus" name="AccountCode">';
-
-	$SQL = "SELECT accountcode,
-					accountname
-			FROM chartmaster
-			LEFT JOIN accountgroups
-				ON chartmaster.groupcode = accountgroups.groupcode
-				AND chartmaster.language = accountgroups.language
-			WHERE accountgroups.pandl = 0
-				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY accountcode";
-	echo '<option value=""></option>';
-	$Result = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['AccountCode']) and $MyRow['accountcode'] == $_POST['AccountCode']) {
-			echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-		} else {
-			echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-		}
-	} //end while loop
-	echo '</select>
-		<fieldhelp>', _('Select the General Ledger code to use for this bank account.'), '</fieldhelp>
-	</field>';
+				<label for="AccountCode">', _('Bank Account GL Code'), ':</label>';
+	GLSelect(0, 'AccountCode');
+	echo '<fieldhelp>', _('Select the General Ledger code to use for this bank account.'), '</fieldhelp>
+		</field>';
 }
 
 // Check if details exist, if not set some defaults
@@ -402,7 +382,7 @@ if (isset($SelectedBankAccount)) {
 					<option value="1">' . _('Fall Back Default') . '</option>';
 		}
 	} //end while loop
-	
+
 } else {
 	echo '<option value="1">' . _('Fall Back Default') . '</option>
 			<option  value="2">' . _('Currency Default') . '</option>

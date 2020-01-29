@@ -5,9 +5,28 @@ ini_set('output_buffering', 4096);
 
 session_name('kwamoja_installation');
 session_start();
+
+$Debug = 0;
+
 if (isset($_POST['DefaultTimeZone'])) {
 	$_SESSION['Installer']['TimeZone'] = $_POST['DefaultTimeZone'];
 }
+
+if (isset($_SERVER['HTTP_CLIENT_IP']))
+{
+    $real_ip_adress = $_SERVER['HTTP_CLIENT_IP'];
+}
+
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+{
+    $real_ip_adress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}
+else
+{
+    $real_ip_adress = $_SERVER['REMOTE_ADDR'];
+}
+
+$iptolocation = 'http://api.hostip.info/country.php?ip=' . $real_ip_adress;
 
 if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $_SESSION['Installer']['CurrentPage'] == 1) {
 	/* Page 1 has been submitted so deal with the input */
@@ -49,6 +68,7 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	/* Try to connect to the DBMS */
 	switch($_SESSION['Installer']['DBMS']) {
 		case 'mariadb':
+		echo $_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'];
 			$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
 			break;
 		case 'mysql':
@@ -57,7 +77,7 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 		case 'mysqli':
 			$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password']);
 			break;
-		case 'posgres':
+		case 'postgres':
 			$DB = pg_connect('host=' . $_SESSION['Installer']['HostName'] . ' dbname=kwamoja port=5432 user=postgres');;
 			break;
 		default:
@@ -66,6 +86,8 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	}
 	if (!$DB) {
 		$Errors[] = _('Failed to connect the database management system');
+	} else {
+		$Result = @mysqli_query($DB, 'SET SQL_MODE="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
 	}
 
 	/* Does the database of that name exist?
@@ -147,12 +169,16 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	$_SESSION['Installer']['KwaMojaPassword'] = $_POST['KwaMojaPassword'];
 }
 
+if (isset($_SESSION['Installer']['CurrentPage']) and $_SESSION['Installer']['CurrentPage'] == 5) {
+	/* Page 2 has been submitted so deal with the input */
+}
+
 if (isset($_GET['New']) or isset($_POST['cancel'])) { /* If the installer is just starting */
 	unset($_SESSION['Installer']);
 	$_SESSION['Installer']['CurrentPage'] = 1;
 	$_SESSION['Installer']['Language'] = 'en_GB.utf8';
-	$_SESSION['Installer']['CoA'] = 'en_GB-utf8.php';
-	$_SESSION['Installer']['DBMS'] = 'postgres';
+	$_SESSION['Installer']['CoA'] = 'en_GB-utf8.sql';
+	$_SESSION['Installer']['DBMS'] = 'mysqli';
 	$_SESSION['Installer']['DBExt'] = 1;
 	$_SESSION['Installer']['HostName'] = 'localhost';
 	$_SESSION['Installer']['UserName'] = 'root';
@@ -164,7 +190,7 @@ if (isset($_GET['New']) or isset($_POST['cancel'])) { /* If the installer is jus
 	$_SESSION['CompanyRecord']['coyname'] = 'KwaMoja';
 	$_SESSION['Installer']['TimeZone'] = 'Africa/Nairobi';
 } else { /* Move on a page in the wizard */
-	if (isset($_POST['next']) and empty($Errors) and $_SESSION['Installer']['CurrentPage'] < 5) {
+	if (isset($_POST['next']) and empty($Errors) and $_SESSION['Installer']['CurrentPage'] < 6) {
 		$_SESSION['Installer']['CurrentPage']++;
 	}
 	if (isset($_POST['previous']) and $_SESSION['Installer']['CurrentPage'] > 1) {
@@ -195,6 +221,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 			<title>' . _('KwaMoja Installer') . '</title>
 			<link rel="stylesheet" type="text/css" href="installer.css" />
 		</head>';
+echo '<script src="installer.js"></script>';
 
 echo '<body onload="tz();">
 		<div id="CanvasDiv">';
@@ -205,8 +232,6 @@ if (file_exists($PathPrefix . 'config.php') or file_exists($PathPrefix . 'Config
 } else {
 	include('Page' . $_SESSION['Installer']['CurrentPage'] . '.php');
 }
-
-echo '<script src="installer.js"></script>';
 
 echo '</div>
 	</body>
@@ -220,7 +245,7 @@ function PingDomain($domain){
 	if (!$file) {
 		$status = -1;  // Site is down
 	}
-	return $status;
+	return true;
 }
 
 ?>

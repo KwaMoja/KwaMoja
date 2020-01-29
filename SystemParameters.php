@@ -421,7 +421,7 @@ if (isset($_POST['submit'])) {
 echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-echo '<fieldset>
+echo '<fieldset style="min-width:55%";>
 		<legend>', _('General Settings'), '</legend>';
 
 // DefaultDateFormat
@@ -719,40 +719,40 @@ echo '<field>
 	</field>';
 
 echo '</fieldset>'; // end General Settings
-echo '<fieldset>
+echo '<fieldset style="min-width:55%;">
 		<legend>', _('Sales Order/Purchase Order Settings'), '</legend>';
 
 //RomalpaClause
 echo '<field>
-		<label for="X_RomalpaClause">', _('Romalpa Clause'), ':</label>
+		<label style="min-width:45%;" for="X_RomalpaClause">', _('Romalpa Clause'), ':</label>
 		<textarea name="X_RomalpaClause" rows="3" cols="40">', $_SESSION['RomalpaClause'], '</textarea>
 		<fieldhelp>', _('This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts.'), '</fieldhelp>
 	</field>';
 
 //TermsAndConditions
 echo '<field>
-		<label for="X_TermsAndConditions">', _('Terms and Conditions of Sale'), ':</label>
+		<label style="min-width:45%;" for="X_TermsAndConditions">', _('Terms and Conditions of Sale'), ':</label>
 		<textarea name="X_TermsAndConditions" rows="3" cols="40">', $_SESSION['TermsAndConditions'], '</textarea>
 		<fieldhelp>', _('The organisations terms and conditions of sale to be printed on order acknowledgements.'), '</fieldhelp>
 	</field>';
 
 // QuickEntries
 echo '<field>
-		<label for="X_QuickEntries">', _('Quick Entries'), ':</label>
+		<label style="min-width:45%;" for="X_QuickEntries">', _('Quick Entries'), ':</label>
 		<input type="text" class="number" name="X_QuickEntries" value="', $_SESSION['QuickEntries'], '" size="3" required="required" maxlength="2" />
 		<fieldhelp>', _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.'), '</fieldhelp>
 	</field>';
 
 // Frequently Ordered Items
 echo '<field>
-		<label for="X_FrequentlyOrderedItems">', _('Frequently Ordered Items'), ':</label>
+		<label style="min-width:45%;" for="X_FrequentlyOrderedItems">', _('Frequently Ordered Items'), ':</label>
 		<input type="text" class="number" name="X_FrequentlyOrderedItems" value="', $_SESSION['FrequentlyOrderedItems'], '" size="3" required="required" maxlength="2" />
 		<fieldhelp>', _('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.'), '</fieldhelp>
 	</field>';
 
 // SO_AllowSameItemMultipleTimes
 echo '<field>
-		<label for="X_SO_AllowSameItemMultipleTimes">', _('Sales Order Allows Same Item Multiple Times'), ':</label>
+		<label style="min-width:45%;" for="X_SO_AllowSameItemMultipleTimes">', _('Sales Order Allows Same Item Multiple Times'), ':</label>
 		<select required="required" name="X_SO_AllowSameItemMultipleTimes">
 			<option ', ($_SESSION['SO_AllowSameItemMultipleTimes'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['SO_AllowSameItemMultipleTimes'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -762,7 +762,7 @@ echo '<field>
 
 //'AllowOrderLineItemNarrative'
 echo '<field>
-		<label for="X_AllowOrderLineItemNarrative">', _('Order Entry allows Line Item Narrative'), ':</label>
+		<label style="min-width:45%;" for="X_AllowOrderLineItemNarrative">', _('Order Entry allows Line Item Narrative'), ':</label>
 		<select required="required" name="X_AllowOrderLineItemNarrative">
 			<option ', ($_SESSION['AllowOrderLineItemNarrative'] === '1' ? 'selected="selected" ' : ''), 'value="1">', _('Allow Narrative Entry'), '</option>
 			<option ', ($_SESSION['AllowOrderLineItemNarrative'] === '0' ? 'selected="selected" ' : ''), 'value="0">', _('No Narrative Line'), '</option>
@@ -772,7 +772,7 @@ echo '<field>
 
 //'RequirePickingNote'
 echo '<field>
-		<label for="X_RequirePickingNote">', _('A picking note must be produced before an order can be delivered'), ':</label>
+		<label style="min-width:45%;" for="X_RequirePickingNote">', _('A picking note must be produced before an order can be delivered'), ':</label>
 		<select required="required" name="X_RequirePickingNote">
 			<option ', ($_SESSION['RequirePickingNote'] === '1' ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', ($_SESSION['RequirePickingNote'] === '0' ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -782,7 +782,7 @@ echo '<field>
 
 // AllowSalesOfZeroCostItems
 echo '<field>
-		<label for="X_AllowSalesOfZeroCostItems">', _('Allow Sales Of Zero Cost Items'), ':</label>
+		<label style="min-width:45%;" for="X_AllowSalesOfZeroCostItems">', _('Allow Sales Of Zero Cost Items'), ':</label>
 		<select required="required" name="X_AllowSalesOfZeroCostItems">
 			<option ', ($_SESSION['AllowSalesOfZeroCostItems'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['AllowSalesOfZeroCostItems'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -791,14 +791,14 @@ echo '<field>
 	</field>';
 
 echo '<field>
-		<label for="X_PurchasingManagerEmail">', _('Purchasing Manager Email Address'), ':</label>
+		<label style="min-width:45%;" for="X_PurchasingManagerEmail">', _('Purchasing Manager Email Address'), ':</label>
 		<input type="email" name="X_PurchasingManagerEmail" size="50" required="required" maxlength="50" value="', $_SESSION['PurchasingManagerEmail'], '" />
 		<fieldhelp>', _('The email address for the purchasing manager, used to receive notifications by the tendering system'), '</fieldhelp>
 	</field>';
 
 // AutoAuthorisePO
 echo '<field>
-		<label for="X_AutoAuthorisePO">', _('Automatically authorise purchase orders if user has authority'), ':</label>
+		<label style="min-width:45%;" for="X_AutoAuthorisePO">', _('Automatically authorise purchase orders if user has authority'), ':</label>
 		<select required="required" name="X_AutoAuthorisePO">
 			<option ', ($_SESSION['AutoAuthorisePO'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['AutoAuthorisePO'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -808,14 +808,14 @@ echo '<field>
 
 // MaxSerialItemsIssued
 echo '<field>
-		<label for="X_MaxSerialItemsIssued">', _('Maximum number of serial numbered items to be issued'), ':</label>
+		<label style="min-width:45%;" for="X_MaxSerialItemsIssued">', _('Maximum number of serial numbered items to be issued'), ':</label>
 		<input type="text" class="number" name="X_MaxSerialItemsIssued" value="', $_SESSION['MaxSerialItemsIssued'], '" size="3" required="required" maxlength="10" />
 		<fieldhelp>', _('This parameter defines the Maximum number of serial numbered items that can be issued. It should be an integer greater than zero.'), '</fieldhelp>
 	</field>';
 
 //Default Packing Note Format
 echo '<field>
-		<label for="X_PackNoteFormat">', _('Format of Packing Slips'), ':</label>
+		<label style="min-width:45%;" for="X_PackNoteFormat">', _('Format of Packing Slips'), ':</label>
 		<select required="required" name="X_PackNoteFormat">
 			<option ', ($_SESSION['PackNoteFormat'] === '1' ? 'selected="selected" ' : ''), 'value="1">', _('Laser Printed'), '</option>
 			<option ', ($_SESSION['PackNoteFormat'] === '2' ? 'selected="selected" ' : ''), 'value="2">', _('Special Stationery'), '</option>
@@ -825,7 +825,7 @@ echo '<field>
 
 //Default Invoice Quantity
 echo '<field>
-		<label for="X_InvoiceQuantityDefault">', _('Invoice Quantity Default'), ':</label>
+		<label style="min-width:45%;" for="X_InvoiceQuantityDefault">', _('Invoice Quantity Default'), ':</label>
 		<select name="X_InvoiceQuantityDefault">
 			<option ', ($_SESSION['InvoiceQuantityDefault'] === '0' ? 'selected="selected" ' : ''), 'value="0">', _('0'), '</option>
 			<option ', ($_SESSION['InvoiceQuantityDefault'] === '1' ? 'selected="selected" ' : ''), 'value="1">', _('Outstanding'), '</option>
@@ -835,7 +835,7 @@ echo '<field>
 
 //Blind packing note
 echo '<field>
-		<label for="X_DefaultBlindPackNote">', _('Show company details on packing slips'), ':</label>
+		<label style="min-width:45%;" for="X_DefaultBlindPackNote">', _('Show company details on packing slips'), ':</label>
 		<select required="required" name="X_DefaultBlindPackNote">
 			<option ', ($_SESSION['DefaultBlindPackNote'] === '1' ? 'selected="selected" ' : ''), 'value="1">', _('Show Company Details'), '</option>
 			<option ', ($_SESSION['DefaultBlindPackNote'] === '2' ? 'selected="selected" ' : ''), 'value="2">', _('Hide Company Details'), '</option>
@@ -845,7 +845,7 @@ echo '<field>
 
 // DispatchCutOffTime
 echo '<field>
-		<label for="X_DispatchCutOffTime">', _('Dispatch Cut-Off Time') . ':</label>
+		<label style="min-width:45%;" for="X_DispatchCutOffTime">', _('Dispatch Cut-Off Time') . ':</label>
 		<select required="required" name="X_DispatchCutOffTime">';
 for ($i = 0;$i < 24;$i++) {
 	echo '<option ', ($_SESSION['DispatchCutOffTime'] == $i ? 'selected="selected" ' : ''), 'value="', $i, '">', $i, '</option>';
@@ -856,7 +856,7 @@ echo '</select>
 
 // CreditingControlledItems_MustExist
 echo '<field>
-		<label for="X_CreditingControlledItems_MustExist">', _('Controlled Items Must Exist For Crediting'), ':</label>
+		<label style="min-width:45%;" for="X_CreditingControlledItems_MustExist">', _('Controlled Items Must Exist For Crediting'), ':</label>
 		<select required="required" name="X_CreditingControlledItems_MustExist">
 			<option ', ($_SESSION['CreditingControlledItems_MustExist'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['CreditingControlledItems_MustExist'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -869,7 +869,7 @@ $SQL = "SELECT typeabbrev, sales_type FROM salestypes orDER BY sales_type";
 $ErrMsg = _('Could not load price lists');
 $Result = DB_query($SQL, $ErrMsg);
 echo '<field>
-		<label for="X_DefaultPriceList">', _('Default Price List'), ':</label>
+		<label style="min-width:45%;" for="X_DefaultPriceList">', _('Default Price List'), ':</label>
 		<select required="required" name="X_DefaultPriceList">';
 if (DB_num_rows($Result) == 0) {
 	echo '<option selected="selected" value="">', _('Unavailable'), '</option>';
@@ -887,7 +887,7 @@ $SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
 $ErrMsg = _('Could not load shippers');
 $Result = DB_query($SQL, $ErrMsg);
 echo '<field>
-		<label for="X_Default_Shipper">', _('Default Shipper'), ':</label>
+		<label style="min-width:45%;" for="X_Default_Shipper">', _('Default Shipper'), ':</label>
 		<select required="required" name="X_Default_Shipper">';
 if (DB_num_rows($Result) == 0) {
 	echo '<option selected="selected" value="">', _('Unavailable'), '</option>';
@@ -902,7 +902,7 @@ echo '</select>
 
 // DoFreightCalc
 echo '<field>
-		<label for="X_DoFreightCalc">', _('Do Freight Calculation'), ':</label>
+		<label style="min-width:45%;" for="X_DoFreightCalc">', _('Do Freight Calculation'), ':</label>
 		<select required="required" name="X_DoFreightCalc">
 			<option ', ($_SESSION['DoFreightCalc'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['DoFreightCalc'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -912,14 +912,14 @@ echo '<field>
 
 //FreightChargeAppliesIfLessThan
 echo '<field>
-		<label for="X_FreightChargeAppliesIfLessThan">', _('Apply freight charges if an order is less than'), ':</label>
+		<label style="min-width:45%;" for="X_FreightChargeAppliesIfLessThan">', _('Apply freight charges if an order is less than'), ':</label>
 		<input type="text" class="number" name="X_FreightChargeAppliesIfLessThan" size="12" required="required" maxlength="12" value="', $_SESSION['FreightChargeAppliesIfLessThan'], '" />
 		<fieldhelp>', _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight'), '</fieldhelp>
 	</field>';
 
 // Check_Qty_Charged_vs_Del_Qty
 echo '<field>
-		<label for="X_Check_Qty_Charged_vs_Del_Qty">', _('Check Quantity Charged vs Deliver Qty'), ':</label>
+		<label style="min-width:45%;" for="X_Check_Qty_Charged_vs_Del_Qty">', _('Check Quantity Charged vs Deliver Qty'), ':</label>
 		<select required="required" name="X_Check_Qty_Charged_vs_Del_Qty">
 			<option ', ($_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -929,7 +929,7 @@ echo '<field>
 
 // Check_Price_Charged_vs_Order_Price
 echo '<field>
-		<label for="X_Check_Price_Charged_vs_Order_Price">', _('Check Price Charged vs Order Price'), ':</label>
+		<label style="min-width:45%;" for="X_Check_Price_Charged_vs_Order_Price">', _('Check Price Charged vs Order Price'), ':</label>
 		<select required="required" name="X_Check_Price_Charged_vs_Order_Price">
 			<option ', ($_SESSION['Check_Price_Charged_vs_Order_Price'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['Check_Price_Charged_vs_Order_Price'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -939,21 +939,21 @@ echo '<field>
 
 // OverChargeProportion
 echo '<field>
-		<label for="X_OverChargeProportion">', _('Allowed Over Charge Proportion'), ':</label>
+		<label style="min-width:45%;" for="X_OverChargeProportion">', _('Allowed Over Charge Proportion'), ':</label>
 		<input type="text" class="number" name="X_OverChargeProportion" size="4" required="required" maxlength="3" value="', $_SESSION['OverChargeProportion'], '" />
 		<fieldhelp>', _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price'), '</fieldhelp>
 	</field>';
 
 // OverReceiveProportion
 echo '<field>
-		<label for="X_OverReceiveProportion">', _('Allowed Over Receive Proportion'), ':</label>
+		<label style="min-width:45%;" for="X_OverReceiveProportion">', _('Allowed Over Receive Proportion'), ':</label>
 		<input type="text" class="number" name="X_OverReceiveProportion" size="4" required="required" maxlength="3" value="', $_SESSION['OverReceiveProportion'], '" />
 		<fieldhelp>', _('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery'), '</fieldhelp>
 	</field>';
 
 // PO_AllowSameItemMultipleTimes
 echo '<field>
-		<label for="X_PO_AllowSameItemMultipleTimes">', _('Purchase Order Allows Same Item Multiple Times'), ':</label>
+		<label style="min-width:45%;" for="X_PO_AllowSameItemMultipleTimes">', _('Purchase Order Allows Same Item Multiple Times'), ':</label>
 		<select required="required" name="X_PO_AllowSameItemMultipleTimes">
 			<option ', ($_SESSION['PO_AllowSameItemMultipleTimes'] ? 'selected="selected" ' : ''), 'value="1">', _('Yes'), '</option>
 			<option ', (!$_SESSION['PO_AllowSameItemMultipleTimes'] ? 'selected="selected" ' : ''), 'value="0">', _('No'), '</option>
@@ -962,7 +962,7 @@ echo '<field>
 </field>';
 
 echo '</fieldset>'; //end SOP/POP settings
-echo '<fieldset>
+echo '<fieldset style="min-width:55%";>
 		<legend>', _('Accounts Receivable/Payable Settings'), '</legend>';
 
 // PastDueDays1
@@ -1083,7 +1083,7 @@ echo '</select>
 </field>';
 
 echo '</fieldset>'; // end AR/AP settings
-echo '<fieldset>
+echo '<fieldset style="min-width:55%";>
 		<legend>', _('Inventory Settings'), '</legend>';
 
 //ItemDescriptionLanguages
@@ -1197,7 +1197,7 @@ echo '<field>
 </field>';
 
 echo '</fieldset>'; // end Inventory settings
-echo '<fieldset>
+echo '<fieldset style="min-width:55%";>
 		<legend>', _('Manufacturing/Quality Assurance Settings'), '</legend>';
 
 // Working days on a week
@@ -1302,7 +1302,7 @@ echo '</select>
 </field>';
 
 echo '</fieldset>'; // end Manufacturing/QA settings
-echo '<fieldset>
+echo '<fieldset style="min-width:55%";>
 		<legend>' . _('General Ledger Settings') . '</legend>';
 
 $SQL = "SELECT lastdate_in_period FROM periods orDER BY periodno DESC";

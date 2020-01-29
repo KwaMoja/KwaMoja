@@ -214,12 +214,6 @@ if (isset($_POST['Location'])) {
 
 if (isset($_POST['ChargeFreightCost'])) {
 	$_SESSION['CreditItems' . $Identifier]->FreightCost = abs(filter_number_format($_POST['ChargeFreightCost']));
-	if (($TotalQtyCredited + abs($_POST['ChargeFreightCost'])) <= 0) {
-		prnMsg(_('There are no item quantity or freight charge input'), 'error');
-		if (isset($_POST['ProcessCredit'])) {
-			unset($_POST['ProcessCredit']);
-		}
-	}
 }
 
 if ($_SESSION['SalesmanLogin'] == '') {
@@ -227,9 +221,9 @@ if ($_SESSION['SalesmanLogin'] == '') {
 		$_SESSION['CreditItems' . $Identifier]->SalesPerson = $_POST['SalesPerson'];
 	}
 }
-
+$i = 1;
 foreach ($_SESSION['CreditItems' . $Identifier]->FreightTaxes as $FreightTaxKey => $FreightTaxLine) {
-	if (is_numeric(filter_number_format($_POST['FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder]))) {
+	if (isset($_POST['FreightTaxRate' . $i])) {
 		$_SESSION['CreditItems' . $Identifier]->FreightTaxes[$FreightTaxKey]->TaxRate = filter_number_format($_POST['FreightTaxRate' . $FreightTaxKey]) / 100;
 	}
 }

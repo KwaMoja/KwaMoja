@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 			$Result = DB_query($SQL);
 			prnMsg(_('The selected work centre record has been deleted'), 'succes');
 		} // end of Contract BOM test
-		
+
 	} // end of BOM test
 	unset($SelectedWC);
 }
@@ -250,31 +250,11 @@ echo '</select>
 	<fieldhelp>', _('The location of this work centre'), '</fieldhelp>
 </field>';
 
-//SQL to poulate account selection boxes
-$SQL = "SELECT accountcode,
-				accountname
-		FROM chartmaster
-		INNER JOIN accountgroups
-			ON chartmaster.groupcode=accountgroups.groupcode
-			AND chartmaster.language=accountgroups.language
-		WHERE accountgroups.pandl=1
-			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-		ORDER BY accountcode";
-
-$Result = DB_query($SQL);
 echo '<field>
-		<label for="OverheadRecoveryAct">', _('Overhead Recovery GL Account'), ':</label>
-		<select required="required" name="OverheadRecoveryAct">';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['OverheadRecoveryAct']) and $MyRow['accountcode'] == $_POST['OverheadRecoveryAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountcode'] . ' - ' . $MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', htmlspecialchars($MyRow['accountcode'] . ' - ' . $MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	}
-} //end while loop
-echo '</select>
-	<fieldhelp>', _('The general ledger expense code where any overheads absorbed into the costings at this work centre will be posted.'), '</fieldhelp>
-</field>';
+		<label for="OverheadRecoveryAct">', _('Overhead Recovery GL Account'), ':</label>';
+GLSelect(1, 'OverheadRecoveryAct');
+echo '<fieldhelp>', _('The general ledger expense code where any overheads absorbed into the costings at this work centre will be posted.'), '</fieldhelp>
+	</field>';
 
 if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour'] = 0;

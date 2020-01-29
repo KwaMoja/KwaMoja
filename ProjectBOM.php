@@ -271,7 +271,7 @@ if (isset($SearchResult)) {
 	while ($MyRow = DB_fetch_array($SearchResult)) {
 
 		if (file_exists($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg')) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $MyRow['stockid'] . '&amp;text=&amp;width=50&amp;height=50" />';
+			$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC&amp;StockID=' . $MyRow['stockid'] . '" />';
 		} else {
 			$ImageSource = '<i>' . _('No Image') . '</i>';
 		}

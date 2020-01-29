@@ -12,6 +12,14 @@ background:white;
 margin:0;
 padding:0;
 }
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 button img {
 /* Describes how button image should be displayed. */

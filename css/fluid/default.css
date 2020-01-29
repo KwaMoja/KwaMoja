@@ -20,6 +20,14 @@ border-radius: 4px;
 img {
 width:32px;
 }
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 a {
 color:blue;
 text-decoration:none;
