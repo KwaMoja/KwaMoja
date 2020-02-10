@@ -405,31 +405,6 @@ if (isset($SelectedCategory)) {
 			</field>';
 }
 
-//SQL to poulate account selection boxes
-$SQL = "SELECT accountcode,
-				accountname
-			FROM chartmaster
-			LEFT JOIN accountgroups
-				ON chartmaster.groupcode=accountgroups.groupcode
-				AND chartmaster.language=accountgroups.language
-			WHERE accountgroups.pandl=0
-				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY accountcode";
-
-$BSAccountsResult = DB_query($SQL);
-
-$SQL = "SELECT accountcode,
-				accountname
-			FROM chartmaster
-			LEFT JOIN accountgroups
-				ON chartmaster.groupcode=accountgroups.groupcode
-				AND chartmaster.language=accountgroups.language
-			WHERE accountgroups.pandl=1
-				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY accountcode";
-
-$PnLAccountsResult = DB_query($SQL);
-
 // Category Description input.
 if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
@@ -474,93 +449,34 @@ echo '</select>
 	</field>';
 
 if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
-	$Result = $PnLAccountsResult;
 	echo '<field>
 			<label for="StockAct">', _('Recovery GL Code'), ':</label>';
 } else {
-	$Result = $BSAccountsResult;
 	echo '<field>
 			<label for="StockAct">', _('Stock GL Code'), ':</label>';
 }
-echo '<select required="required" name="StockAct">';
-
-while ($MyRow = DB_fetch_array($Result)) {
-
-	if (isset($_POST['StockAct']) and $MyRow['accountcode'] == $_POST['StockAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-} //end while loop
-echo '</select>
-	</field>';
-DB_data_seek($PnLAccountsResult, 0);
-DB_data_seek($BSAccountsResult, 0);
+GLSelect(0, 'StockAct');
+echo '</field>';
 
 echo '<field>
-		<label for="WIPAct">', _('WIP GL Code'), ':</label>
-		<select required="required" name="WIPAct">';
-while ($MyRow = DB_fetch_array($BSAccountsResult)) {
-
-	if (isset($_POST['WIPAct']) and $MyRow['accountcode'] == $_POST['WIPAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-
-} //end while loop
-echo '</select>
-	</field>';
-DB_data_seek($BSAccountsResult, 0);
+		<label for="WIPAct">', _('WIP GL Code'), ':</label>';
+GLSelect(0, 'WIPAct');
+echo '</field>';
 
 echo '<field>
-		<label for="AdjGLAct">', _('Stock Adjustments GL Code'), ':</label>
-		<select required="required" name="AdjGLAct">';
-
-while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['AdjGLAct']) and $MyRow['accountcode'] == $_POST['AdjGLAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-
-} //end while loop
-DB_data_seek($PnLAccountsResult, 0);
-echo '</select>
-	</field>';
+		<label for="AdjGLAct">', _('Stock Adjustments GL Code'), ':</label>';
+GLSelect(1, 'AdjGLAct');
+echo '</field>';
 
 echo '<field>
-		<label for="IssueGLAct">', _('Internal Stock Issues GL Code'), ':</label>
-		<select required="required" name="IssueGLAct">';
-
-while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['IssueGLAct']) and $MyRow['accountcode'] == $_POST['IssueGLAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-
-} //end while loop
-DB_data_seek($PnLAccountsResult, 0);
-echo '</select>
-	</field>';
+		<label for="IssueGLAct">', _('Internal Stock Issues GL Code'), ':</label>';
+GLSelect(1, 'IssueGLAct');
+echo '</field>';
 
 echo '<field>
-		<label for="PurchPriceVarAct">', _('Price Variance GL Code'), ':</label>
-		<select required="required" name="PurchPriceVarAct">';
-
-while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['PurchPriceVarAct']) and $MyRow['accountcode'] == $_POST['PurchPriceVarAct']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-
-} //end while loop
-DB_data_seek($PnLAccountsResult, 0);
-
-echo '</select>
-	</field>';
+		<label for="PurchPriceVarAct">', _('Price Variance GL Code'), ':</label>';
+GLSelect(1, 'PurchPriceVarAct');
+echo '</select>';
 
 echo '<field>
 		<label for="MaterialUseageVarAc">';
@@ -569,21 +485,10 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 } else {
 	echo _('Usage Variance GL Code');
 }
-echo ':</label>
-		<select required="required" name="MaterialUseageVarAc">';
-
-while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
-	if (isset($_POST['MaterialUseageVarAc']) and $MyRow['accountcode'] == $_POST['MaterialUseageVarAc']) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountname'], ' (', $MyRow['accountcode'], ')', '</option>';
-	}
-
-} //end while loop
-DB_free_result($PnLAccountsResult);
-echo '</select>
-	</field>
-</fieldset>';
+echo ':</label>';
+GLSelect(1, 'MaterialUseageVarAc');
+echo '</field>
+	</fieldset>';
 
 if (isset($SelectedCategory)) {
 	//editing an existing stock category

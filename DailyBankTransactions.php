@@ -91,7 +91,7 @@ if (!isset($_POST['Show'])) {
 				<option value="Unmatched">', _('Unmatched'), '</option>
 				<option value="Matched">', _('Matched'), '</option>
 			</select>
-			<fieldhelp>', _('Select whether to show only matched or unmatched transactions. To show all transactions choose "All".'), '</fieldhelp>
+			<fieldhelp>', _('Select whether to show only matched or unmatched transactions. To show all transactions choose All.'), '</fieldhelp>
 		</field>
 		</fieldset>
 		<div class="centre">

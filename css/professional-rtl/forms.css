@@ -3,9 +3,9 @@ background:transparent;
 width: 100%;
 text-align: center;
 color:#1A1A1A;
-direction:rtl;
 }
 form fieldset {
+background:#EEEEEE;
 display: inline;
 border:solid 1px;
 margin:auto;
@@ -13,52 +13,54 @@ padding-top:7px;
 margin-bottom:4px;
 margin-right:4px;
 border-radius:7px;
-direction:rtl;
-text-align:left;
+text-align:right;
 vertical-align:top;
 }
 form fieldset legend {
-background-color:transparent;
+background-color:#EEEEEE;
 padding:3px;
 border: 1px solid;
 border-radius:3px;
 font-size:150%;
 margin-top:3px;
-direction:rtl;
 }
 form fieldset legend.search {
 background-image:url(images/search.png);
 background-repeat: no-repeat;
 background-size:18px 18px;
-background-position:5px center;
-padding-left:26px;
+background-position:right center;
+padding-right:26px;
 }
 form fieldset field {
 display:block;
-text-align:left;
+text-align:right;
 margin-bottom:3px;
 }
 form fieldset field label {
-float:left;
+float:right;
 width:24.5em;
-text-align:left;
+text-align:right;
 }
 form fieldset field .fieldtext {
 margin-bottom:8px;
 display:inline;
+line-height:170%;
 }
 form fieldset field input,textarea,select {
-background-color:transparent;
+background-color:#DDDDDD;
 border-radius: 5px;
 border: 1px solid #8DCDEB;
 padding:2px;
+padding-top:3px;
+padding-bottom:3px;
 color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
+transition-duration:0.5s;
 }
 form fieldset field select:not([multiple]) {
-background:url(images/descending.png) no-repeat right transparent;
-padding-right:24px;
+background:url(images/descending.png) no-repeat left #DDDDDD;
+padding-left:24px;
 background-size:contain;
 -moz-appearance:none;
 -webkit-appearance: none;
@@ -75,63 +77,67 @@ form fieldset field input[type="email"] {
 display:inline;
 background-image:url(images/mail.png);
 background-repeat: no-repeat;
-background-position:4px center;
+background-position:right center;
 background-size:14px 14px;
-padding-left:24px;
+padding-right:24px;
 }
 form fieldset field input[type="search"] {
 display:inline;
 background-image:url(images/search.png);
 background-repeat: no-repeat;
-background-position:4px center;
+background-position:right center;
 background-size:14px 14px;
-padding-left:24px;
+padding-right:24px;
 }
 form fieldset field input[type="tel"] {
 display:inline;
 background-image:url(images/tel.png);
 background-repeat: no-repeat;
-background-position:4px center;
+background-position:right center;
 background-size:14px 14px;
-padding-left:24px;
+padding-right:24px;
 }
 form fieldset field input.date {
 display:inline;
 background-image:url(images/date.png);
 background-repeat: no-repeat;
-background-position:4px center;
+background-position:right center;
 background-size:14px 14px;
-padding-left:24px;
+padding-right:24px;
 }
 form input[type="submit"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
+background:#EEEEEE;
+padding-top: 5px;
+padding-bottom: 5px;
+padding-left: 16px;
+padding-right: 16px;
 margin: 1px;
-border: 1px solid #8DCDEB;
-color:#8DCDEB;
-border-radius: 15px;
-cursor: pointer;
+border: 1px solid #1A1A1A;
 color:#1A1A1A;
+border-radius: 3px;
+cursor: pointer;
 transition-duration:0.5s;
 }
+form input[type="submit"]:hover{
+background:linear-gradient(315deg, #655051, #551b1b);
+color:#E6E6FA;
+}
 form input[type="reset"]{
-padding-top: 2px;
-padding-bottom: 2px;
-padding-left: 6px;
-padding-right: 6px;
+background:#EEEEEE;
+padding-top: 5px;
+padding-bottom: 5px;
+padding-left: 16px;
+padding-right: 16px;
 margin: 1px;
-border: 1px solid #8DCDEB;
-color:#8DCDEB;
-border-radius: 15px;
-cursor: pointer;
+border: 1px solid #1A1A1A;
 color:#1A1A1A;
+border-radius: 3px;
+cursor: pointer;
 transition-duration:0.5s;
 }
 form .number {
-text-align:right;
+text-align:left;
 }
 fieldset ul li {
-text-align:left;
+text-align:right;
 }

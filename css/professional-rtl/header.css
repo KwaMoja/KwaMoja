@@ -7,7 +7,7 @@ display:inline;
 padding:10px;
 }
 header #Info img {
-padding-right:7px;
+padding-left:7px;
 width:32px;
 vertical-align:middle;
 }
@@ -15,18 +15,18 @@ header #Info a {
 }
 header #ActionIcon {
 display:inline;
-float:right;
-padding-left:10px;
+float:left;
+padding-right:10px;
 }
 header #ActionIcon img{
-padding-right:7px;
+padding-left:7px;
 width:32px;
 }
 header #ExitIcon {
 display:inline;
-float:right;
-padding-left:10px;
-padding-right:30px;
+float:left;
+padding-right:10px;
+padding-left:30px;
 }
 header #ExitIcon img {
 width:32px;
@@ -44,17 +44,22 @@ padding:10px;
 margin-left:0px;
 }
 header #favourites {
-background:transparent;
+background: url(images/descending.png) no-repeat left #DDDDDD;
+background-size:contain;
 overflow: hidden;
-color:#B0C4DE;
+color:#090938;
 font-size: 130%;
+font-weight:bold;
 padding-top: 2px;
 padding-bottom: 2px;
-padding-left: 7px;
-padding-right: 7px;
-border: solid 1px #fff;
-border-radius: 15px;
+padding-left: 32px;
+padding-right:7px;
+border: solid 2px #090938;
+border-radius: 4px;
 margin: 2px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
 }
 header #favourites:hover {
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;

@@ -149,8 +149,8 @@ if (!isset($PayrollID)) {
 	echo '<a href="' . $RootPath . '/prlEditPayroll.php?&PayrollID=' . $PayrollID . '">' . _('Edit Payroll Period') . '</a>';
 	echo '</td><td WIDTH=100%>';
 	echo '</td></tr></table><BR>';
-	echo '<FONT size=1>' . _('') . "</FONT><input type=SUBMIT name='Close' value='" . _('Close Payroll Period') . "'><input type=SUBMIT name='Purge' value='" . _('Purge Payroll Period') . "'><HR>";
-	echo '<FONT size=1>' . _('') . "</FONT><input type=SUBMIT name='Generate' value='" . _('Generate Payroll Data') . "'><input type=SUBMIT name='Reopen' value='" . _('Re-open Payroll Period') . "'><HR>";
+	echo '<FONT size=1>' . '' . "</FONT><input type=SUBMIT name='Close' value='" . _('Close Payroll Period') . "'><input type=SUBMIT name='Purge' value='" . _('Purge Payroll Period') . "'><HR>";
+	echo '<FONT size=1>' . '' . "</FONT><input type=SUBMIT name='Generate' value='" . _('Generate Payroll Data') . "'><input type=SUBMIT name='Reopen' value='" . _('Re-open Payroll Period') . "'><HR>";
 
 ?>
 

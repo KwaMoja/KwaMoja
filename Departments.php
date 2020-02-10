@@ -267,7 +267,7 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">', _('No'), '</option>';
 	}
 	echo '<select>
-		<fieldhelp>', _('If this department is a medical department then select "Yes" otherwise select "No"'), '</fieldhelp
+		<fieldhelp>', _('If this department is a medical department then select Yes otherwise select No'), '</fieldhelp
 	<field>';
 
 	echo '</fieldset>';

@@ -33,7 +33,7 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	}
 }
 echo '</select>
-	<fieldhelp>', _('Select the stock category to search through. To search over all stock categories select "All"'), '</fieldhelp>
+	<fieldhelp>', _('Select the stock category to search through. To search over all stock categories select All'), '</fieldhelp>
 </field>';
 
 $SQL = "SELECT locationname,

@@ -18,15 +18,15 @@ the next project. :)
 
 ***/
 @font-face {
-font-family: 'Ubuntu';
-font-style: normal;
-font-weight: 400;
+font-family:Ubuntu;
+font-style:normal;
+font-weight:400;
 src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
 }
 body {
-font-family: Arial, Verdana, Helvetica, sans-serif;
-font-size: 10px;
-background-color: #ddd;
+font-family:"Ubuntu, Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+font-weight:400;
+background-color:#FFFFFF;
 margin:0;
 padding:0;
 direction:rtl;
@@ -34,7 +34,7 @@ direction:rtl;
 .summary_box{
 width:20%;
 border: 1px solid;
-text-align: left;
+text-align: right;
 padding: 1%;
 border-radius: 4px;
 }
@@ -52,9 +52,9 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 a {
 color:blue;
 text-decoration:none;
+transition-duration:0.5s;
 }
 a:hover {
-color:blue;
 text-decoration:underline;
 }
 a.ButtonLink {
@@ -69,38 +69,40 @@ text-align:center;
 vertical-align:top;
 }
 .dpTbl {
-border: solid navy 1px;
-background:white;
+border:solid navy 1px;
+background:#FFF;
 }
 .dpTD {
-border: 0;
+border:0;
 width:20px;
-background-color: #EEEEEE;
-text-align:right;
+background-color:#EEE;
+text-align:left;
 cursor:pointer;
 }
 .dpDayHighlight {
-border: 0;
+border:0;
 width:20px;
-background-color: yellow;
-text-align:right;
+background-color:#FF0;
+text-align:left;
 cursor:pointer;
 }
 .dpTDHover {
-border: 0;
+border:0;
 width:20px;
-background-color: #CCCCCC;
-text-align:right;
+background-color:#CCC;
+text-align:left;
 cursor:pointer;
 }
 .notavailable {
 font-weight:lighter;
 font-style:italic;
-color:#555555;
+color:#555;
 }
 .gallery {
 margin: 5px;
-float: left;
+float: right;
+/* Class selector to let an element float to the left. */
+}
 [data-title]:hover:after {
 opacity: 1;
 transition: all 0.1s ease 0.5s;
@@ -114,7 +116,7 @@ font-size: 100%;
 position: absolute;
 padding: 1px 5px 2px 5px;
 bottom: -1.9em;
-left: 10%;
+right: 10%;
 white-space: nowrap;
 box-shadow: 1px 1px 3px #222222;
 opacity: 0;

@@ -1,10 +1,10 @@
 #mask {
 display:none;
+position:fixed;
 top:0;
 right:0;
 bottom:0;
 left:0;
-position:fixed;
 background-color: rgba(26, 26, 26, 0.5);
 backdrop-filter: blur(2px);
 z-index:2;
@@ -19,20 +19,20 @@ border:solid #000 1px;
 border-radius:7px;
 position:fixed;
 top:50%;
-left:50%;
+right:50%;
 margin-top:-9em;
-margin-left:-15em;
-box-shadow:0 0 15px #000;
+margin-right:-15em;
+box-shadow:0 0 5px #16187A;
 padding:2px 2px 5px;
 }
 #dialog #dialog_header {
-background:#B0C4DE;
+background:#cccce5;
 width:auto;
 border-radius:4px;
 font-size:130%;
-text-align:left;
+text-align:right;
 padding-left:5px;
-color:#171380;
+color:#300;
 margin:2px;
 }
 #dialog .dialog_image {
@@ -42,7 +42,7 @@ vertical-align:middle;
 background:#FFF;
 width:auto;
 border-radius:4px;
-text-align:left;
+text-align:right;
 padding-left:5px;
 padding-right:5px;
 font-style:italic;
@@ -51,21 +51,20 @@ color:navy;
 margin:3% 2px;
 }
 #dialog #dialog_buttons {
-text-align:right;
+text-align:left;
 }
 #dialog .okButton {
 display:inline-block;
-background-color:#B0C4DE;
+background-color:#cccce5;
 border:thin;
 color:#171380;
 border-radius:3px;
 cursor:pointer;
 font-style:normal;
 box-shadow:2px 2px 3px;
-max-width:48%;
-min-width:20%;
+width:20%;
 border-color:#CCC;
-margin:2px 15px 5px 0;
+margin:2px 0px 5px 15px;
 padding:2px;
 }
 #dialog .okButton:active {

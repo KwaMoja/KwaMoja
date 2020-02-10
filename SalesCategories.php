@@ -559,7 +559,7 @@ if (!isset($_GET['Select'])) {
 	}
 
 	echo '</select>
-		<fieldhelp>', _('Select the stock category to search in. To search in all categories, choose "All".'), '</fieldhelp>
+		<fieldhelp>', _('Select the stock category to search in. To search in all categories, choose All.'), '</fieldhelp>
 	</field>';
 
 	echo '<field>

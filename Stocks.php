@@ -1160,9 +1160,9 @@ foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 
 $ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $StockId . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 $ImageFile = reset($ImageFileArray);
-if (extension_loaded('gd') and function_exists('gd_info') and isset($StockId) and !empty($StockId)) {
+if (extension_loaded('gd') and function_exists('gd_info') and isset($StockId) and $StockId != '') {
 	$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockId) . '&amp;text=' . '" alt="" />';
-} else if (file_exists($ImageFile)) {
+} else if (file_exists($ImageFile) and $StockId != '') {
 	$StockImgLink = '<img class="StockImage" src="' . $ImageFile . '" />';
 } else {
 	$StockImgLink = _('No Image');

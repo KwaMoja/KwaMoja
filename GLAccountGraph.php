@@ -46,35 +46,10 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<fieldset>
 			<legend>', _('Select Report Criteria'), '</legend>
 			<field>
-				<label for="Account">', _('Select GL Account'), ':</label>
-				<select name="Account" autofocus="autofocus">';
-
-	$SQL = "SELECT chartmaster.accountcode,
-				bankaccounts.accountcode AS bankact,
-				bankaccounts.currcode,
-				chartmaster.accountname
-			FROM chartmaster
-			LEFT JOIN bankaccounts
-				ON chartmaster.accountcode=bankaccounts.accountcode
-			INNER JOIN glaccountusers
-				ON glaccountusers.accountcode=chartmaster.accountcode
-				AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
-				AND glaccountusers.canview=1
-			ORDER BY chartmaster.accountcode";
-	$Account = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($Account)) {
-		if ($MyRow['accountcode'] == $SelectedAccount) {
-			if (!is_null($MyRow['bankact'])) {
-				$BankAccount = true;
-			}
-			echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-		} else {
-			echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-		}
-	}
-	echo '</select>
-		<fieldhelp>', _('Select the GL account for this graph.'), '</fieldhelp>
-	</field>';
+				<label for="Account">', _('Select GL Account'), ':</label>';
+	GLSelect(2, 'Account');
+	echo '<fieldhelp>', _('Select the GL account for this graph.'), '</fieldhelp>
+		</field>';
 
 	echo '<field>
 			<label for="GraphType">', _('Graph Type'), '</label>

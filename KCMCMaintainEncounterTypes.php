@@ -163,7 +163,7 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-	<fieldhelp>', _('If this encounter type is currently in use select "Active" otherwise select "InActive".'), '</fieldhelp>
+	<fieldhelp>', _('If this encounter type is currently in use select Active otherwise select InActive.'), '</fieldhelp>
 </field>';
 
 	echo '</fieldset>'; // close main table

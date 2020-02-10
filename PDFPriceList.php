@@ -369,7 +369,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 			echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 		}
 		echo '</select>
-			<fieldhelp>', _('Select the currencies to report on. To report on all currencies select "All"'), '</fieldhelp>
+			<fieldhelp>', _('Select the currencies to report on. To report on all currencies select All'), '</fieldhelp>
 		</field>';
 
 		echo '<field>
@@ -378,7 +378,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					<option selected="selected" value="No">', _('Prices Only'), '</option>
 					<option value="Yes">', _('Show GP % too'), '</option>
 				</select>
-				<fieldhelp>', _('To include the gross profit percentage in the report select "Yes" otherwise select "no".'), '</fieldhelp>
+				<fieldhelp>', _('To include the gross profit percentage in the report select Yes otherwise select no.'), '</fieldhelp>
 			</field>';
 
 		echo '<field>

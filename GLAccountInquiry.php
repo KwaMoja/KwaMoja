@@ -74,33 +74,14 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 $DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m'), 0, Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-$SQL = "SELECT chartmaster.accountcode,
-			   chartmaster.accountname
-		FROM chartmaster
-		INNER JOIN glaccountusers
-			ON glaccountusers.accountcode=chartmaster.accountcode
-			AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
-			AND glaccountusers.canview=1
-		WHERE chartmaster.accountcode<>'" . $_SESSION['CompanyRecord']['retainedearnings'] . "'
-			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-		ORDER BY chartmaster.accountcode";
-$Account = DB_query($SQL);
 
 echo '<fieldset>
 		<legend>', _('Inquiry Selection Criteria'), '</legend>
 		<field>
-			<label for="Account">', _('Account'), ':</label>
-			<select name="Account" autofocus="autofocus">';
-while ($MyRow = DB_fetch_array($Account)) {
-	if (isset($SelectedAccount) and $MyRow['accountcode'] == $SelectedAccount) {
-		echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	} else {
-		echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
-	}
-}
-echo '</select>
-	<fieldhelp>', _('Select a General Ledger account to report on.'), '</fieldhelp>
-</field>';
+			<label for="Account">', _('Account'), ':</label>';
+GLSelect(2, 'Account');
+echo '<fieldhelp>', _('Select a General Ledger account to report on.'), '</fieldhelp>
+	</field>';
 
 //Select the tag
 $SQL = "SELECT tagref,
@@ -117,7 +98,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	} else {
-		echo '<option value="', $MyRow['tagref'] . '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+		echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	}
 }
 echo '</select>

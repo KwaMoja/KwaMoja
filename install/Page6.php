@@ -30,7 +30,6 @@ if (!$DB) {
 	$Result = @mysqli_query($DB, 'SET SQL_MODE="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
 }
 
-
 include ($PathPrefix . 'includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 include ($PathPrefix . 'includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 $Result = DB_query('SET SQL_MODE="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
@@ -183,7 +182,7 @@ for ($i = 0;$i < $ScriptFileEntries;$i++) {
 		}
 
 	} //end if its a valid sql line not a comment
-
+	
 } //end of for loop around the lines of the sql script
 /* End database structure */
 
@@ -282,7 +281,7 @@ if (!isset($_POST['Demo'])) {
 			}
 
 		} //end if its a valid sql line not a comment
-
+		
 	} //end of for loop around the lines of the sql script
 	echo '<div class="success">' . _('Your chosen chart of accounts has been uploaded') . '</div>';
 	ob_flush();
@@ -1237,7 +1236,7 @@ $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `ca
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'stock','Transactions','Inventory Location Transfers','/StockTransfers.php?New=Yes',4)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'stock','Transactions','Receive Purchase Orders','/PO_SelectOSPurchOrder.php',1)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'stock','Transactions','Reverse Goods Received','/ReverseGRN.php',6)";
-$SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'system','Maintenance','Automaticall allocate customer receipts and credit notes','/Z_AutoCustomerAllocations.php',16)";
+$SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'system','Maintenance','Automatically allocate customer receipts and credit notes','/Z_AutoCustomerAllocations.php',16)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'system','Maintenance','Bank Account Authorised Users','/BankAccountUsers.php',13)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'system','Maintenance','Discount Category Maintenance','/DiscountCategories.php',3)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'system','Maintenance','Install a KwaMoja plugin','/PluginInstall.php',11)";
@@ -1454,7 +1453,7 @@ function PopulateSQLDataBySQL($File, $DB, $DBType, $NewDB = false, $DemoDB = 'kw
 		flush();
 
 	} //end of for loop around the lines of the sql script
-
+	
 }
 
 function chmod_R($path, $filemode, $dirmode) {

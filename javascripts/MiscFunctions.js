@@ -41,7 +41,7 @@ function expandTable(e) {
 	table=e.parentNode;
 	for (var r = 1, i; i = table.rows[r]; r++) {
 		if (i.cells[3].innerHTML == parent) {
-			i.className='visible';
+			i.className='visible striped_row';
 		}
 	}
 	e.onclick=function onclick(event) {collapseTable(this)};

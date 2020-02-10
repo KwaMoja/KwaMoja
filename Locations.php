@@ -606,7 +606,7 @@ if (!isset($_GET['delete'])) {
 	}
 	if (!isset($_POST['AllowInvoicing'])) {
 		$_POST['AllowInvoicing'] = 1; // If not set, set value to "Yes".
-
+		
 	}
 	if (!isset($_POST['GLAccountCode'])) {
 		$_POST['GLAccountCode'] = '';
@@ -699,7 +699,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="GLAccountCode">', _('GL Account Code'), ':</label>';
 	GLSelect(0, 'GLAccountCode');
-	echo '<fieldhelp>', _('Select the GL account for this location, or select "No General Ledger Code".'), '</fieldhelp>
+	echo '<fieldhelp>', _('Select the GL account for this location, or select No General Ledger Code.'), '</fieldhelp>
 		</field>';
 
 	// Allow or deny the invoicing of items in this location:
@@ -726,7 +726,7 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">', _('No'), '</option>';
 	}
 	echo '</select>
-		<fieldhelp>', _('If the location can be used for internal stock transfer requests then select "Yes", otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('If the location can be used for internal stock transfer requests then select Yes, otherwise select No'), '</fieldhelp>
 	</field>';
 
 	echo '<field>
@@ -743,7 +743,7 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="0">', _('No'), '</option>';
 	}
 	echo '</select>
-		<fieldhelp>', _('If the location can be used for production of work orders then select "Yes", otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('If the location can be used for production of work orders then select Yes, otherwise select No'), '</fieldhelp>
 	</field>';
 
 	/*

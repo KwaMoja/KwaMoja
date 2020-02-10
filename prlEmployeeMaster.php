@@ -686,7 +686,7 @@ foreach ($EmploymentStatus as $Key => $Value) {
 	}
 }
 echo '</select>
-	<fieldhelp>', _('If the employee is not to be part of the payroll select "InActive", otherwise select "Active".'), '</fieldhelp>
+	<fieldhelp>', _('If the employee is not to be part of the payroll select InActive, otherwise select Active.'), '</fieldhelp>
 </field>';
 
 echo '</fieldset>';

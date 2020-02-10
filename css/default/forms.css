@@ -47,6 +47,7 @@ text-align:left;
 }
 form fieldset field .fieldtext {
 display:inline;
+line-height:170%;
 padding-bottom:10px;
 }
 form fieldset field input,textarea,select {

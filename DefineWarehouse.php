@@ -406,7 +406,7 @@ echo '<field>
 			<option value="1">', _('Yes'), '</option>
 			<option ', $Selected, ' value="0">', _('No'), '</option>
 		</select>
-		<fieldhelp>', _('Select "Yes" if this container can be used for directed put aways. Otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('Select Yes if this container can be used for directed put aways. Otherwise select No'), '</fieldhelp>
 	</field>';
 
 if ($_POST['Picking'] == 0) {
@@ -420,7 +420,7 @@ echo '<field>
 			<option value="1">', _('Yes'), '</option>
 			<option ', $Selected, ' value="0">', _('No'), '</option>
 		</select>
-		<fieldhelp>', _('Select "Yes" if this container can be used for directed picking. Otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('Select Yes if this container can be used for directed picking. Otherwise select No'), '</fieldhelp>
 	</field>';
 
 if ($_POST['Replenishment'] == 0) {
@@ -434,7 +434,7 @@ echo '<field>
 			<option value="1">', _('Yes'), '</option>
 			<option ', $Selected, ' value="0">', _('No'), '</option>
 		</select>
-		<fieldhelp>', _('Select "Yes" if this container can be replenished. Otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('Select Yes if this container can be replenished. Otherwise select No'), '</fieldhelp>
 	</field>';
 
 if ($_POST['Quarantine'] == 0) {
@@ -448,7 +448,7 @@ echo '<field>
 			<option value="1">', _('Yes'), '</option>
 			<option ', $Selected, ' value="0">', _('No'), '</option>
 		</select>
-		<fieldhelp>', _('Select "Yes" if this container is designated as a quarantine rea. Otherwise select "No"'), '</fieldhelp>
+		<fieldhelp>', _('Select Yes if this container is designated as a quarantine rea. Otherwise select No'), '</fieldhelp>
 	</field>';
 
 echo '<fieldset>

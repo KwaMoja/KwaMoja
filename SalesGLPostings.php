@@ -229,7 +229,7 @@ while ($AreaRow = DB_fetch_array($AreaResult)) {
 	}
 } //end while loop
 echo '</select>
-		<fieldhelp>', _('Select an Area here. If this record is to refer to all areas that do not have a specific record then select "Any Other".'), '</fieldhelp>
+		<fieldhelp>', _('Select an Area here. If this record is to refer to all areas that do not have a specific record then select Any Other.'), '</fieldhelp>
 	</field>';
 
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
@@ -249,7 +249,7 @@ while ($CategoryRow = DB_fetch_array($CategoryResult)) {
 	}
 } //end while loop
 echo '</select>
-		<fieldhelp>', _('Select a Stock Category here. If this record is to refer to all categories that do not have a specific record then select "Any Other".'), '</fieldhelp>
+		<fieldhelp>', _('Select a Stock Category here. If this record is to refer to all categories that do not have a specific record then select Any Other.'), '</fieldhelp>
 	</field>';
 
 $SQL = "SELECT typeabbrev,
@@ -270,7 +270,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 } //end while loop
 echo '</select>
-		<fieldhelp>', _('Select a Sales Type here. If this record is to refer to all types that do not have a specific record then select "Any Other".'), '</fieldhelp>
+		<fieldhelp>', _('Select a Sales Type here. If this record is to refer to all types that do not have a specific record then select Any Other.'), '</fieldhelp>
 	</field>';
 
 echo '<field>

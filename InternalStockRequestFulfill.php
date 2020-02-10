@@ -8,7 +8,9 @@ $BookMark = 'FulfilRequest';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
 
-echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfil Stock Requests') . '</p>';
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Contract'), '" alt="" />', _('Fulfil Stock Requests'), '
+	</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $Key => $Value) {
@@ -226,13 +228,14 @@ if (isset($_POST['UpdateAll'])) {
 }
 
 if (!isset($_POST['Location'])) {
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Choose a location to issue requests from') . '</td>
-				<td><select required="required" name="Location">
-					<option value="">' . _('Select a Location') . '</option>';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<fieldset>
+			<legend>', _('Location Selection'), '</legend>
+			<field>
+				<label for="Location">', _('Choose a location to issue requests from'), '</label>
+				<select required="required" name="Location">
+					<option value="">', _('Select a Location'), '</option>';
 	$SQL = "SELECT locationname,
 					locations.loccode
 				FROM locations
@@ -246,17 +249,22 @@ if (!isset($_POST['Location'])) {
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if (isset($_SESSION['Adjustment']->StockLocation)) {
 			if ($MyRow['loccode'] == $_SESSION['Adjustment']->StockLocation) {
-				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 			} else {
-				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 			}
 		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	}
-	echo '</select></td></tr>';
-	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . _('Show Requests') . '" /></div>';
+	echo '</select>
+		</field>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="EnterAdjustment" value="', _('Show Requests'), '" />
+		</div>';
+
 	echo '</form>';
 	include ('includes/footer.php');
 	exit;
@@ -292,25 +300,28 @@ if (isset($_POST['Location'])) {
 		exit;
 	}
 
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<table>
-			<tr>
-				<th>' . _('Request Number') . '</th>
-				<th>' . _('Department') . '</th>
-				<th>' . _('Location Of Stock') . '</th>
-				<th>' . _('Requested Date') . '</th>
-				<th>' . _('Narrative') . '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th>', _('Request Number'), '</th>
+					<th>', _('Department'), '</th>
+					<th>', _('Location Of Stock'), '</th>
+					<th>', _('Requested Date'), '</th>
+					<th>', _('Narrative'), '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr>
-				<td>' . $MyRow['dispatchid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td>' . $MyRow['locationname'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['despatchdate']) . '</td>
-				<td>' . $MyRow['narrative'] . '</td>
+				<td>', $MyRow['dispatchid'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td>', $MyRow['locationname'], '</td>
+				<td>', ConvertSQLDate($MyRow['despatchdate']), '</td>
+				<td>', $MyRow['narrative'], '</td>
 			</tr>';
 		$LineSQL = "SELECT stockrequestitems.dispatchitemsid,
 						stockrequestitems.dispatchid,
@@ -332,22 +343,22 @@ if (isset($_POST['Location'])) {
 				<td colspan="5" align="left">
 					<table align="left">
 					<tr>
-						<th>' . _('Product') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Required') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Delivered') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Completed') . '</th>
-						<th>' . _('Tag') . '</th>
+						<th>', _('Product'), '</th>
+						<th>', _('Quantity'), '<br />', _('Required'), '</th>
+						<th>', _('Quantity'), '<br />', _('Delivered'), '</th>
+						<th>', _('Units'), '</th>
+						<th>', _('Completed'), '</th>
+						<th>', _('Tag'), '</th>
 					</tr>';
 
 		while ($LineRow = DB_fetch_array($LineResult)) {
 			echo '<tr>
-					<td valign="top">' . $LineRow['description'] . '</td>
-					<td valign="top" class="number">' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '</td>
-					<td valign="top" class="number"><input type="text" class="number" name="' . $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value="' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" /></td>
-					<td valign="top">' . $LineRow['uom'] . '</td>
-					<td valign="top"><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>
-					<td valign="top"><select multiple="multiple" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '[]">';
+					<td valign="top">', $LineRow['description'], '</td>
+					<td valign="top" class="number">', locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']), '</td>
+					<td valign="top" class="number"><input type="text" class="number" name="', $LineRow['dispatchid'], 'Qty', $LineRow['dispatchitemsid'], '" value="', locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']), '" /></td>
+					<td valign="top">', $LineRow['uom'], '</td>
+					<td valign="top"><input type="checkbox" name="', $LineRow['dispatchid'], 'Completed', $LineRow['dispatchitemsid'], '" /></td>
+					<td valign="top"><select multiple="multiple" name="', $LineRow['dispatchid'], 'Tag', $LineRow['dispatchitemsid'], '[]">';
 
 			$SQL = "SELECT tagref,
 							tagdescription
@@ -358,24 +369,27 @@ if (isset($_POST['Location'])) {
 			echo '<option value=0>0 - None</option>';
 			while ($mytagrow = DB_fetch_array($TagResult)) {
 				if (isset($_SESSION['Adjustment']->tag) and $_SESSION['Adjustment']->tag == $mytagrow['tagref']) {
-					echo '<option selected="selected" value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
+					echo '<option selected="selected" value="', $mytagrow['tagref'], '">', $mytagrow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 				} else {
-					echo '<option value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'] . ' - ' . $mytagrow['tagdescription'] . '</option>';
+					echo '<option value="', $mytagrow['tagref'], '">', $mytagrow['tagref'], ' - ', $mytagrow['tagdescription'], '</option>';
 				}
 			}
 			echo '</select></td>';
 			// End select tag
 			echo '</tr>';
-			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'StockID' . $LineRow['dispatchitemsid'] . '" value="' . $LineRow['stockid'] . '" />';
-			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'Location' . $LineRow['dispatchitemsid'] . '" value="' . $_POST['Location'] . '" />';
-			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'RequestedQuantity' . $LineRow['dispatchitemsid'] . '" value="' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" />';
-			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'Department' . $LineRow['dispatchitemsid'] . '" value="' . $MyRow['description'] . '" />';
+			echo '<input type="hidden" class="number" name="', $LineRow['dispatchid'], 'StockID', $LineRow['dispatchitemsid'], '" value="', $LineRow['stockid'], '" />';
+			echo '<input type="hidden" class="number" name="', $LineRow['dispatchid'], 'Location', $LineRow['dispatchitemsid'], '" value="', $_POST['Location'], '" />';
+			echo '<input type="hidden" class="number" name="', $LineRow['dispatchid'], 'RequestedQuantity', $LineRow['dispatchitemsid'], '" value="', locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']), '" />';
+			echo '<input type="hidden" class="number" name="', $LineRow['dispatchid'], 'Department', $LineRow['dispatchitemsid'], '" value="', $MyRow['description'], '" />';
 		} // end while order line detail
 		echo '</table></td></tr>';
 	} //end while header loop
-	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update') . '" /></div>
-		  </form>';
+	echo '</tbody>
+		</table>';
+	echo '<div class="centre">
+			<input type="submit" name="UpdateAll" value="', _('Update'), '" />
+		</div>
+	</form>';
 }
 
 include ('includes/footer.php');

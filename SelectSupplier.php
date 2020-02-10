@@ -296,6 +296,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 echo '<fieldset>
+		<legend>', _('Search Criteria'), '</legend>
 		<field>
 			<label for="Keywords">', _('Enter a partial Name'), ':</label>';
 if (isset($_POST['Keywords'])) {

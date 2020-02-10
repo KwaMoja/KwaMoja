@@ -664,7 +664,7 @@ if (!isset($StockId)) {
 	}
 
 	echo '</select>
-		<fieldhelp>', _('Select the stock category to filter by, or choose "All" to select from all categories.'), '</fieldhelp>
+		<fieldhelp>', _('Select the stock category to filter by, or choose All to select from all categories.'), '</fieldhelp>
 	</field>';
 
 	echo '<field>

@@ -174,6 +174,7 @@ if (!isset($SelectedType)) {
 				<tr>
 					<th class="SortedColumn">', _('Type ID'), '</th>
 					<th class="SortedColumn">', _('Type Name'), '</th>
+					<th colspan="2"></th>
 				</tr>
 			</thead>';
 

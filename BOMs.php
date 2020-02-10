@@ -1134,7 +1134,7 @@ if (!isset($SelectedParent)) {
 	}
 
 	echo '</select>
-		<fieldhelp>', _('To show all levels of the BOM choose "Yes" otherwise choose "No".'), '</fieldhelp>
+		<fieldhelp>', _('To show all levels of the BOM choose Yes otherwise choose No.'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';

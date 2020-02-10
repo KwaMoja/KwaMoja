@@ -140,7 +140,7 @@ if ($_SESSION['AutoPatientNo'] == '0') {
 	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>
-	<fieldhelp>' . _('If new patient numbers are to be automatically allocated select "Yes" here.') . '</fieldhelp>
+	<fieldhelp>' . _('If new patient numbers are to be automatically allocated select Yes here.') . '</fieldhelp>
 </field>';
 
 $SQL = "SELECT typeid, typename FROM debtortype";

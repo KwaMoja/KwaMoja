@@ -390,7 +390,7 @@ foreach ($Status as $Key => $Value) {
 	}
 }
 echo '</select>
-	<fieldhelp>', _('If this encounter type is currently in use select "Active" otherwise select "InActive".'), '</fieldhelp>
+	<fieldhelp>', _('If this encounter type is currently in use select Active otherwise select InActive.'), '</fieldhelp>
 </field>';
 
 echo '</fieldset>';
