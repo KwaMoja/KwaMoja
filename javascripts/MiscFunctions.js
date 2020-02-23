@@ -325,14 +325,14 @@ function SortSelect() {
 			if (s.cursor == "s-resize") {
 				i.cells[t].style.cursor = "n-resize";
 				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/descending.png')";
-				i.cells[t].style.backgroundPosition = "right center";
+//				i.cells[t].style.backgroundPosition = "right center";
 				i.cells[t].style.backgroundRepeat = "no-repeat";
 				i.cells[t].style.backgroundSize = "12px";
 				direction = "a"
 			} else {
 				i.cells[t].style.cursor = "s-resize";
 				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/ascending.png')";
-				i.cells[t].style.backgroundPosition = "right center";
+//				i.cells[t].style.backgroundPosition = "right center";
 				i.cells[t].style.backgroundRepeat = "no-repeat";
 				i.cells[t].style.backgroundSize = "12px";
 				direction = "d"

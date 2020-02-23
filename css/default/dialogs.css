@@ -37,6 +37,8 @@ margin:2px;
 }
 #dialog .dialog_image {
 vertical-align:middle;
+width:32px;
+height:32px;
 }
 #dialog #dialog_main {
 background:#FFF;

@@ -1,8 +1,7 @@
 <?php
-
-include('includes/session.php');
+include ('includes/session.php');
 $Title = _('Stock Of Controlled Items');
-include('includes/header.php');
+include ('includes/header.php');
 
 echo '<p class="page_title_text" >
 		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title . '</b>
@@ -11,13 +10,13 @@ echo '<p class="page_title_text" >
 if (isset($_GET['StockID'])) {
 	if (ContainsIllegalCharacters($_GET['StockID'])) {
 		prnMsg(_('The stock code sent to this page appears to be invalid'), 'error');
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	}
 	$StockId = trim(mb_strtoupper($_GET['StockID']));
 } else {
 	prnMsg(_('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . _('It cannot be displayed without the proper parameters being passed'), 'error');
-	include('includes/footer.php');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -43,7 +42,7 @@ $Perishable = $MyRow['perishable'];
 if ($MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'A' or $MyRow['mbflag'] == 'D') {
 
 	prnMsg(_('This item is either a kitset or assembly or a dummy part and cannot have a stock holding') . '. ' . _('This page cannot be displayed') . '. ' . _('Only serialised or controlled items can be displayed in this page'), 'error');
-	include('includes/footer.php');
+	include ('includes/footer.php');
 	exit;
 }
 
@@ -51,7 +50,7 @@ $LocationsSQL = "SELECT locationname
 					FROM locations
 					INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode
-						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
 						AND locationusers.canview=1
 					WHERE locations.loccode='" . $_GET['Location'] . "'";
 $ErrMsg = _('Could not retrieve the stock location of the item because');
@@ -66,12 +65,11 @@ $SQL = "SELECT serialno,
 			FROM stockserialitems
 			INNER JOIN locationusers
 				ON locationusers.loccode=stockserialitems.loccode
-				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.userid='" . $_SESSION['UserID'] . "'
 				AND locationusers.canview=1
 			WHERE stockserialitems.loccode='" . $_GET['Location'] . "'
 				AND stockid = '" . $StockId . "'
 				AND quantity <>0";
-
 
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
 $LocStockResult = DB_query($SQL, $ErrMsg);
@@ -140,7 +138,7 @@ $Col = 0;
 $BGColor = '#CCCCCC';
 while ($MyRow = DB_fetch_array($LocStockResult)) {
 
-	$TotalQuantity += $MyRow['quantity'];
+	$TotalQuantity+= $MyRow['quantity'];
 
 	if ($Serialised == 1 and $Perishable == 0) {
 		echo '<tr class="striped_row">
@@ -170,10 +168,9 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 	}
 }
 //end of while loop
-
 echo '</table><br />';
-echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . locale_number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
+echo '<div class="centre"><br /><b>' . _('Total Quantity') . ': ' . locale_number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
 
 echo '</form>';
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>

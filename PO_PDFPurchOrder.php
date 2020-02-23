@@ -9,13 +9,13 @@ if (!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])) {
 	prnMsg(_('Select a Purchase Order Number to Print before calling this page'), 'error');
 	echo '<table class="table_index">
 					<tr><td class="menu_group_item">
-						<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-						<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+						<li><a href="', $RootPath, '/PO_SelectOSPurchOrder.php">', _('Outstanding Purchase Orders'), '</a></li>
+						<li><a href="', $RootPath, '/PO_SelectPurchOrder.php">', _('Purchase Order Inquiry'), '</a></li>
 						</td>
 					</tr></table>';
 
-	echo '<div class="centre">' . _('This page must be called with a purchase order number to print');
-	echo '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
+	echo '<div class="centre">', _('This page must be called with a purchase order number to print');
+	echo '<a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a></div>';
 	include ('includes/footer.php');
 	exit;
 } //!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])
@@ -119,8 +119,8 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 		prnMsg(_('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
 		echo '<table class="table_index">
 				<tr><td class="menu_group_item">
-				<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-				<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+				<li><a href="', $RootPath, '/PO_SelectOSPurchOrder.php">', _('Outstanding Purchase Orders'), '</a></li>
+				<li><a href="', $RootPath, '/PO_SelectPurchOrder.php">', _('Purchase Order Inquiry'), '</a></li>
 				</td>
 				</tr>
 			</table>';
@@ -142,14 +142,13 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0 and $OrderNo != 'Preview
 			if ($POHeader['allowprint'] == 0) {
 				$Title = _('Purchase Order Already Printed');
 				include ('includes/header.php');
-				echo '<p>';
 				prnMsg(_('Purchase Order Number') . ' ' . $OrderNo . ' ' . _('has previously been printed') . '. ' . _('It was printed on') . ' ' . ConvertSQLDate($POHeader['dateprinted']) . '<br />' . _('To re-print the order it must be modified to allow a reprint') . '<br />' . _('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
 
 				echo '<div class="centre">
-						<a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . urlencode($OrderNo) . '&ViewingOnly=1">' . _('Print This Order as a Copy') . '</a>
-						<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . urlencode($OrderNo) . '">' . _('Modify the order to allow a real reprint') . '</a>
-						<a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Select another order') . '</a>
-						<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>
+						<a href="', $RootPath, '/PO_PDFPurchOrder.php?OrderNo=', urlencode($OrderNo), '&ViewingOnly=1">', _('Print This Order as a Copy'), '</a>
+						<a href="', $RootPath, '/PO_Header.php?ModifyOrderNumber=', urlencode($OrderNo), '">', _('Modify the order to allow a real reprint'), '</a>
+						<a href="', $RootPath, '/PO_SelectPurchOrder.php">', _('Select another order'), '</a>
+						<a href="', $RootPath, '/index.php">', _('Back to the menu'), '</a>
 					</div>';
 
 				include ('includes/footer.php');
@@ -352,14 +351,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		if ($Success == 1) {
 			$Title = _('Email a Purchase Order');
 			include ('includes/header.php');
-			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
 
 		} //$Success == 1
 		else { //email failed
 			$Title = _('Email a Purchase Order');
 			include ('includes/header.php');
-			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(_('Emailing Purchase order') . ' ' . $OrderNo . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
 		}
 	}
@@ -379,50 +376,59 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 else {
 	/*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
 	include ('includes/header.php');
-	echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	echo '<p class="page_title_text">
+			<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Print the Purchase Order'), '" />', ' ', _('Print the Purchase Order'), '
+		</p>';
+
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	if ($ViewingOnly == 1) {
 		echo '<input type="hidden" name="ViewingOnly" value="1" />';
 	} //$ViewingOnly == 1
-	echo '<br /><br />';
-	echo '<input type="hidden" name="OrderNo" value="' . $OrderNo . '" />';
-	echo '<table>
-		 <tr>
-			 <td>' . _('Print or Email the Order') . '</td>
-			 <td><select required="required" name="PrintOrEmail">';
+	echo '<input type="hidden" name="OrderNo" value="', $OrderNo, '" />';
+	echo '<fieldset>
+			<legend>', _('Print Purchase Orders'), '</legend>
+			<field>
+				<label for="PrintOrEmail">', _('Print or Email the Order'), '</label>
+				<select required="required" name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
 	} //!isset($_POST['PrintOrEmail'])
 	if ($ViewingOnly != 0) {
-		echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
+		echo '<option selected="selected" value="Print">', _('Print'), '</option>';
 	} //$ViewingOnly != 0
 	else {
 		if ($_POST['PrintOrEmail'] == 'Print') {
-			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
-			echo '<option value="Email">' . _('Email') . '</option>';
+			echo '<option selected="selected" value="Print">', _('Print'), '</option>';
+			echo '<option value="Email">', _('Email'), '</option>';
 		} //$_POST['PrintOrEmail'] == 'Print'
 		else {
-			echo '<option value="Print">' . _('Print') . '</option>';
-			echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
+			echo '<option value="Print">', _('Print'), '</option>';
+			echo '<option selected="selected" value="Email">', _('Email'), '</option>';
 		}
 	}
-	echo '</select></td></tr>';
-	echo '<tr>
-			<td>' . _('Show Amounts on the Order') . '</td>
-			<td><select required="required" name="ShowAmounts">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ShowAmounts">', _('Show Amounts on the Order'), '</label>
+			<select required="required" name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
 	} //!isset($_POST['ShowAmounts'])
 	if ($_POST['ShowAmounts'] == 'Yes') {
-		echo '<option selected="selected" value="Yes">' . _('Yes') . '</option>';
-		echo '<option value="No">' . _('No') . '</option>';
+		echo '<option selected="selected" value="Yes">', _('Yes'), '</option>';
+		echo '<option value="No">', _('No'), '</option>';
 	} //$_POST['ShowAmounts'] == 'Yes'
 	else {
-		echo '<option value="Yes">' . _('Yes') . '</option>';
-		echo '<option selected="selected" value="No">' . _('No') . '</option>';
+		echo '<option value="Yes">', _('Yes'), '</option>';
+		echo '<option selected="selected" value="No">', _('No'), '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
+
 	if ($_POST['PrintOrEmail'] == 'Email') {
 		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
@@ -432,34 +438,34 @@ else {
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<tr><td>' . _('Email to') . ':</td><td><select name="EmailTo">';
+			echo '<field>
+					<label for="EmailTo">', _('Email to'), ':</label>
+					<select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 and mb_strpos($ContactDetails['email'], '@') > 0) {
 					if ($_POST['EmailTo'] == $ContactDetails['email']) {
-						echo '<option selected="selected" value="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
+						echo '<option selected="selected" value="', $ContactDetails['email'], '">', $ContactDetails['Contact'], ' - ', $ContactDetails['email'], '</option>';
 					} //$_POST['EmailTo'] == $ContactDetails['email']
 					else {
-						echo '<option value="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'] . '</option>';
+						echo '<option value="', $ContactDetails['email'], '">', $ContactDetails['contact'], ' - ', $ContactDetails['email'], '</option>';
 					}
 				} //mb_strlen($ContactDetails['email']) > 2 and mb_strpos($ContactDetails['email'], '@') > 0
 				
 			} //$ContactDetails = DB_fetch_array($ContactsResult)
 			echo '</select>
-					</td>
-				</tr>
-			</table>';
+				</field>
+			</fieldset>';
 		} //DB_num_rows($ContactsResult) > 0
 		else {
-			echo '</table><br />';
+			echo '</fieldset>';
 			prnMsg(_('There are no contacts defined for the supplier of this order') . '. ' . _('You must first set up supplier contacts before emailing an order'), 'error');
-			echo '<br />';
 		}
 	} //$_POST['PrintOrEmail'] == 'Email'
 	else {
-		echo '</table>';
+		echo '</fieldset>';
 	}
 	echo '<div class="centre">
-			  <input type="submit" name="DoIt" value="' . _('OK') . '" />
+			  <input type="submit" name="DoIt" value="', _('OK'), '" />
 		</div>
 	</form>';
 

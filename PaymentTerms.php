@@ -216,7 +216,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedTerms" value="', $SelectedTerms, '" />';
 		echo '<input type="hidden" name="TermsIndicator" value="', $_POST['TermsIndicator'], '" />';
 		echo '<fieldset>
-				<legend>', _('Edit Payment Terms.'), '</legend>
+				<legend>', _('Edit Payment Terms'), '</legend>
 				<field>
 					<label for="TermsIndicator">', _('Term Code'), ':</label>
 					<div class="fieldtext">', $_POST['TermsIndicator'], '</fieldtext>
@@ -234,7 +234,7 @@ if (!isset($_GET['delete'])) {
 		}
 
 		echo '<fieldset>
-				<legend>', _('New Payment Terms.'), '</legend>
+				<legend>', _('New Payment Terms'), '</legend>
 				<field>
 					<label for="TermsIndicator">', _('Term Code'), ':</label>
 					<input type="text" name="TermsIndicator" value="', $_POST['TermsIndicator'], '" size="3" autofocus="autofocus" required="required" maxlength="2" />

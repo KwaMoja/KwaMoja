@@ -9,7 +9,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll'])) and isset($_POST
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Price Labels'), '" alt="" />', ' ', _('Select Labels to rint'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" title="', _('Price Labels'), '" alt="" />', ' ', _('Select Labels to Print'), '
 		</p>';
 
 	$SQL = "SELECT prices.stockid,

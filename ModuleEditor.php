@@ -33,9 +33,9 @@ if (!isset($_POST['SecurityRole'])) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<fieldset>
-			<legend>', _('Security Roll Selection'), '</legend>
+			<legend>', _('Security Role Selection'), '</legend>
 			<field>
-				<label for="SecurityRole">', _('Select Roll'), '</label>
+				<label for="SecurityRole">', _('Select Role'), '</label>
 				<select name="SecurityRole" required="required">
 					<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {

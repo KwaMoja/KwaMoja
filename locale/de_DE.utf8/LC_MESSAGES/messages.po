@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-07 17:49+0000\n"
+"POT-Creation-Date: 2020-02-15 14:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4662,19 +4662,19 @@ msgstr "Zu"
 msgid "Translated"
 msgstr "Übersetzt"
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:54
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:56
 msgid "Cannot update stock item descriptions"
 msgstr "Artikelbeschreibungen können nicht aktualisiert werden"
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:55
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:57
 msgid "The sql that failed to update the item descriptions is"
 msgstr "Die SQL, die die Artikelbeschreibungen nicht aktualisieren konnte, ist"
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:86
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:88
 msgid "Number of translated descriptions via Google API"
 msgstr "Anzahl übersetzter Beschreibungen über Google API"
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:90
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:92
 msgid "No item descriptions were automatically translated"
 msgstr "Es wurden keine Artikelbeschreibungen automatisch übersetzt"
 
@@ -12303,7 +12303,7 @@ msgid "Cancel and Delete Contract"
 msgstr "Vertrag löschen und löschen"
 
 #: /home/tim/code/KwaMoja/CopyBOM.php:10
-#: /home/tim/code/KwaMoja/includes/header.php:22
+#: /home/tim/code/KwaMoja/includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr "Kopieren Sie eine Stückliste in den neuen Artikelcode"
 
@@ -14709,7 +14709,7 @@ msgstr "Legal"
 #: /home/tim/code/KwaMoja/UserSettings.php:163
 #: /home/tim/code/KwaMoja/WWW_Users.php:383
 #: /home/tim/code/KwaMoja/WWW_Users.php:780
-#: /home/tim/code/KwaMoja/includes/header.php:204
+#: /home/tim/code/KwaMoja/includes/header.php:208
 msgid "Theme"
 msgstr "Thema"
 
@@ -15638,7 +15638,7 @@ msgstr "hinzugefügt wurde, einen weiteren Zweig hinzugefügt oder zum"
 
 #: /home/tim/code/KwaMoja/CustomerBranches.php:269
 #: /home/tim/code/KwaMoja/index.php:14
-#: /home/tim/code/KwaMoja/includes/header.php:179
+#: /home/tim/code/KwaMoja/includes/header.php:183
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
@@ -24345,6 +24345,7 @@ msgid "Select a user role"
 msgstr "Wählen Sie eine Benutzerrolle aus"
 
 #: /home/tim/code/KwaMoja/InternalStockCategoriesByRole.php:107
+#: /home/tim/code/KwaMoja/ModuleEditor.php:38
 msgid "Select Role"
 msgstr "Wählen Sie Rolle"
 
@@ -29758,12 +29759,8 @@ msgid "Edit The Modules Menu"
 msgstr "Bearbeiten Sie das Modulmenü"
 
 #: /home/tim/code/KwaMoja/ModuleEditor.php:36
-msgid "Security Roll Selection"
+msgid "Security Role Selection"
 msgstr "Auswahl der Sicherheitsrolle"
-
-#: /home/tim/code/KwaMoja/ModuleEditor.php:38
-msgid "Select Roll"
-msgstr "Wählen Sie Rolle"
 
 #: /home/tim/code/KwaMoja/ModuleEditor.php:49
 msgid "Select Security Role"
@@ -39675,9 +39672,8 @@ msgid "The commission type no longer exist."
 msgstr "Die Provisionsart existiert nicht mehr."
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:63
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:66
-msgid "Unit of measure changed"
-msgstr "Maßeinheit geändert"
+msgid "Commision Type changed"
+msgstr "Provisionstyp geändert"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:72
 msgid "The commission type can not be created because another with the same name already exists."
@@ -39696,22 +39692,20 @@ msgid "Cannot delete this sales commission calculation method because it no long
 msgstr "Diese Berechnungsmethode für Verkaufsprovisionen kann nicht gelöscht werden, da sie nicht mehr vorhanden ist"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:123
-msgid "Cannot delete this sales commission type because sales people items have been created using this unit of measure"
-msgstr "Dieser Verkaufsprovisionstyp kann nicht gelöscht werden, da mit dieser Maßeinheit Verkaufspersonalpositionen erstellt wurden"
+msgid "Cannot delete this sales commission type because sales people items have been created using this type"
+msgstr "Dieser Verkaufsprovisionstyp kann nicht gelöscht werden, da Verkaufspersonalartikel mit diesem Typ erstellt wurden"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:124
 msgid "sales people that use this commission type"
 msgstr "Verkäufer, die diese Provisionsart verwenden"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:128
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:132
-msgid "unit of measure has been deleted"
-msgstr "Maßeinheit wurde gelöscht"
+msgid "commision type has been deleted"
+msgstr "Provisionstyp wurde gelöscht"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:146
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:158
-msgid "Could not get unit of measures because"
-msgstr "Konnte keine Maßeinheit bekommen, weil"
+msgid "Could not get commission types because"
+msgstr "Provisionsarten konnten wegen nicht abgerufen werden"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:154
 msgid "Calculation Method"
@@ -39726,9 +39720,8 @@ msgid "Review Commission Calculation Methods"
 msgstr "Überprüfen Sie die Berechnungsmethoden für Provisionen"
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:195
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:204
-msgid "Could not retrieve the requested unit of measure, please try again."
-msgstr "Die angeforderte Maßeinheit konnte nicht abgerufen werden. Bitte versuchen Sie es erneut."
+msgid "Could not retrieve the requested commission type, please try again."
+msgstr "Der angeforderte Provisionstyp konnte nicht abgerufen werden. Bitte versuchen Sie es erneut."
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:205
 msgid "Edit Calculation Method"
@@ -50404,6 +50397,10 @@ msgstr "Die Mengeneinheit kann nicht umbenannt werden, da bereits eine andere mi
 msgid "The unit of measure no longer exist."
 msgstr "Die Mengeneinheit existiert nicht mehr."
 
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:66
+msgid "Unit of measure changed"
+msgstr "Maßeinheit geändert"
+
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:75
 msgid "The unit of measure can not be created because another with the same name already exists."
 msgstr "Die Mengeneinheit kann nicht erstellt werden, da bereits eine andere mit demselben Namen existiert."
@@ -50428,6 +50425,14 @@ msgstr "Diese Mengeneinheit kann nicht gelöscht werden, weil Lagerartikel mit d
 msgid "inventory items that refer to this unit of measure"
 msgstr "Inventarartikel, die sich auf diese Maßeinheit beziehen"
 
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:132
+msgid "unit of measure has been deleted"
+msgstr "Maßeinheit wurde gelöscht"
+
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:158
+msgid "Could not get unit of measures because"
+msgstr "Konnte keine Maßeinheit bekommen, weil"
+
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:175
 msgid "Are you sure you wish to delete this unit of measure?"
 msgstr "Möchten Sie diese Maßeinheit wirklich löschen?"
@@ -50435,6 +50440,10 @@ msgstr "Möchten Sie diese Maßeinheit wirklich löschen?"
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:186
 msgid "Review Units of Measure"
 msgstr "Überprüfen Sie die Maßeinheiten"
+
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:204
+msgid "Could not retrieve the requested unit of measure, please try again."
+msgstr "Die angeforderte Maßeinheit konnte nicht abgerufen werden. Bitte versuchen Sie es erneut."
 
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:214
 msgid "Edit Unit of Measure"
@@ -63829,7 +63838,7 @@ msgid "Your webserver is configured to enable Magic Quotes. This may cause probl
 msgstr "Ihr Webserver ist so konfiguriert, dass er Magic Quotes aktiviert.  Dies kann zu Problemen führen, wenn Sie bei der Dateneingabe Interpunktionen (z. B. Anführungszeichen) verwenden.  Sie sollten sich an Ihren Webmaster wenden, um Magic Quotes zu deaktivieren"
 
 #: /home/tim/code/KwaMoja/includes/Login.php:54
-#: /home/tim/code/KwaMoja/includes/header.php:97
+#: /home/tim/code/KwaMoja/includes/header.php:101
 msgid "Company"
 msgstr "Unternehmen"
 
@@ -65768,82 +65777,82 @@ msgstr "Dokument.pdf"
 msgid "version"
 msgstr "Ausführung"
 
-#: /home/tim/code/KwaMoja/includes/header.php:31
+#: /home/tim/code/KwaMoja/includes/header.php:35
 msgid "KwaMoja"
 msgstr "KwaMoja"
 
-#: /home/tim/code/KwaMoja/includes/header.php:96
+#: /home/tim/code/KwaMoja/includes/header.php:100
 msgid "Company Details"
 msgstr "Unternehmens-Details"
 
-#: /home/tim/code/KwaMoja/includes/header.php:101
+#: /home/tim/code/KwaMoja/includes/header.php:105
 msgid "Change the settings for"
 msgstr "Ändern Sie die Einstellungen für"
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
-#: /home/tim/code/KwaMoja/includes/header.php:108
+#: /home/tim/code/KwaMoja/includes/header.php:111
+#: /home/tim/code/KwaMoja/includes/header.php:112
 msgid "Logout"
 msgstr "Ausloggen"
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
+#: /home/tim/code/KwaMoja/includes/header.php:111
 msgid "Are you sure you wish to logout?"
 msgstr "Möchten Sie sich wirklich abmelden?"
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
+#: /home/tim/code/KwaMoja/includes/header.php:111
 msgid "Confirm Logout"
 msgstr "Bestätigen Sie die Abmeldung"
 
-#: /home/tim/code/KwaMoja/includes/header.php:114
-#: /home/tim/code/KwaMoja/includes/header.php:121
+#: /home/tim/code/KwaMoja/includes/header.php:118
+#: /home/tim/code/KwaMoja/includes/header.php:125
 msgid "Read the manual"
 msgstr "Lesen Sie das Handbuch"
 
-#: /home/tim/code/KwaMoja/includes/header.php:114
-#: /home/tim/code/KwaMoja/includes/header.php:122
+#: /home/tim/code/KwaMoja/includes/header.php:118
+#: /home/tim/code/KwaMoja/includes/header.php:126
 msgid "Help"
 msgstr "Hilfe"
 
-#: /home/tim/code/KwaMoja/includes/header.php:143
+#: /home/tim/code/KwaMoja/includes/header.php:147
 msgid "Commonly used scripts"
 msgstr "Häufig verwendete Skripte"
 
-#: /home/tim/code/KwaMoja/includes/header.php:152
+#: /home/tim/code/KwaMoja/includes/header.php:156
 msgid "Add this script to your list of commonly used"
 msgstr "Fügen Sie dieses Skript zu Ihrer häufig verwendeten Liste hinzu"
 
-#: /home/tim/code/KwaMoja/includes/header.php:153
+#: /home/tim/code/KwaMoja/includes/header.php:157
 msgid "Add to commonly used"
 msgstr "Zu häufig verwendetem hinzufügen"
 
-#: /home/tim/code/KwaMoja/includes/header.php:158
+#: /home/tim/code/KwaMoja/includes/header.php:162
 msgid "Remove this script from your list of commonly used"
 msgstr "Entfernen Sie dieses Skript aus Ihrer häufig verwendeten Liste"
 
-#: /home/tim/code/KwaMoja/includes/header.php:159
+#: /home/tim/code/KwaMoja/includes/header.php:163
 msgid "Remove from commonly used"
 msgstr "Entfernen von häufig verwendet"
 
-#: /home/tim/code/KwaMoja/includes/header.php:169
-#: /home/tim/code/KwaMoja/includes/header.php:170
+#: /home/tim/code/KwaMoja/includes/header.php:173
+#: /home/tim/code/KwaMoja/includes/header.php:174
 msgid "Show Dashboard"
 msgstr "Dashboard anzeigen"
 
-#: /home/tim/code/KwaMoja/includes/header.php:178
+#: /home/tim/code/KwaMoja/includes/header.php:182
 msgid "Return to the main menu"
 msgstr "Kehre zum Hauptmenü zurück"
 
-#: /home/tim/code/KwaMoja/includes/header.php:189
-#: /home/tim/code/KwaMoja/includes/header.php:191
+#: /home/tim/code/KwaMoja/includes/header.php:193
+#: /home/tim/code/KwaMoja/includes/header.php:195
 msgid "Small text size"
 msgstr "Kleine Textgröße"
 
-#: /home/tim/code/KwaMoja/includes/header.php:194
-#: /home/tim/code/KwaMoja/includes/header.php:196
+#: /home/tim/code/KwaMoja/includes/header.php:198
+#: /home/tim/code/KwaMoja/includes/header.php:200
 msgid "Medium text size"
 msgstr "Mittlere Textgröße"
 
-#: /home/tim/code/KwaMoja/includes/header.php:199
-#: /home/tim/code/KwaMoja/includes/header.php:201
+#: /home/tim/code/KwaMoja/includes/header.php:203
+#: /home/tim/code/KwaMoja/includes/header.php:205
 msgid "Large text size"
 msgstr "Große Textgröße"
 
@@ -66272,139 +66281,139 @@ msgid "Please wait.............."
 msgstr "Warten Sie mal.............."
 
 #: /home/tim/code/KwaMoja/install/Page6.php:28
-#: /home/tim/code/KwaMoja/install/index.php:88
+#: /home/tim/code/KwaMoja/install/index.php:85
 msgid "Failed to connect the database management system"
 msgstr "Fehler beim Verbinden des Datenbankverwaltungssystems"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:55
+#: /home/tim/code/KwaMoja/install/Page6.php:57
 msgid "The companies directory has been successfully created"
 msgstr "Das Firmenverzeichnis wurde erfolgreich erstellt"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:64
+#: /home/tim/code/KwaMoja/install/Page6.php:66
 msgid "Your logo has been successfully uploaded"
 msgstr "Ihr Logo wurde erfolgreich hochgeladen"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:66
+#: /home/tim/code/KwaMoja/install/Page6.php:68
 msgid "Your logo could not be uploaded. You must copy this to your companies directory later."
 msgstr "Ihr Logo konnte nicht hochgeladen werden.  Sie müssen dies später in Ihr Firmenverzeichnis kopieren."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:70
+#: /home/tim/code/KwaMoja/install/Page6.php:72
 msgid "This company name already exists"
 msgstr "Dieser Firmenname existiert bereits"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:124
+#: /home/tim/code/KwaMoja/install/Page6.php:126
 msgid "Cannot open the configuration file"
 msgstr "Die Konfigurationsdatei kann nicht geöffnet werden"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:128
+#: /home/tim/code/KwaMoja/install/Page6.php:130
 msgid "Cannot write to the configuration file"
 msgstr "Kann nicht in die Konfigurationsdatei schreiben"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:133
+#: /home/tim/code/KwaMoja/install/Page6.php:135
 msgid "The config.php file has been created based on your settings."
 msgstr "Die Datei config.php wurde basierend auf Ihren Einstellungen erstellt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:143
+#: /home/tim/code/KwaMoja/install/Page6.php:145
 msgid "Cannot write to the Companies.php file"
 msgstr "Kann nicht in die Companies.php-Datei schreiben"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:190
+#: /home/tim/code/KwaMoja/install/Page6.php:192
 msgid "The database has been created."
 msgstr "Die Datenbank wurde erstellt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:192
+#: /home/tim/code/KwaMoja/install/Page6.php:194
 msgid "There was an error creating the database."
 msgstr "Beim Erstellen der Datenbank ist ein Fehler aufgetreten."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:199
+#: /home/tim/code/KwaMoja/install/Page6.php:201
 msgid "The version number has been inserted."
 msgstr "Die Versionsnummer wurde eingefügt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:201
+#: /home/tim/code/KwaMoja/install/Page6.php:203
 msgid "There was an error inserting the version number"
 msgstr "Beim Einfügen der Versionsnummer ist ein Fehler aufgetreten"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:208
+#: /home/tim/code/KwaMoja/install/Page6.php:210
 msgid "The database update revision has been inserted."
 msgstr "Die Revision der Datenbankaktualisierung wurde eingefügt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:210
+#: /home/tim/code/KwaMoja/install/Page6.php:212
 msgid "There was an error inserting the DB revision number"
 msgstr "Beim Einfügen der DB-Revisionsnummer ist ein Fehler aufgetreten"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:230
+#: /home/tim/code/KwaMoja/install/Page6.php:232
 msgid "Administrator"
 msgstr "Administrator"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:246
+#: /home/tim/code/KwaMoja/install/Page6.php:248
 msgid "The admin user has been inserted."
 msgstr "Der Admin-Benutzer wurde eingefügt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:248
+#: /home/tim/code/KwaMoja/install/Page6.php:250
 msgid "There was an error inserting the admin user"
 msgstr "Beim Einfügen des Admin-Benutzers ist ein Fehler aufgetreten"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:286
+#: /home/tim/code/KwaMoja/install/Page6.php:288
 msgid "Your chosen chart of accounts has been uploaded"
 msgstr "Ihr ausgewählter Kontenplan wurde hochgeladen"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:292
+#: /home/tim/code/KwaMoja/install/Page6.php:294
 msgid "The admin user has been given permissions on all GL accounts."
 msgstr "Dem Administrator wurden Berechtigungen für alle GL-Konten erteilt."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:294
+#: /home/tim/code/KwaMoja/install/Page6.php:296
 msgid "There was an error with creating permission for the admin user"
 msgstr "Beim Erstellen der Berechtigung für den Administrator ist ein Fehler aufgetreten"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:301
+#: /home/tim/code/KwaMoja/install/Page6.php:303
 msgid "Populating the database with demo data."
 msgstr "Füllen der Datenbank mit Demo-Daten."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1502
+#: /home/tim/code/KwaMoja/install/Page6.php:1504
 msgid "KwaMoja Installation Is Completed"
 msgstr "KwaMoja Installation ist abgeschlossen"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1505
+#: /home/tim/code/KwaMoja/install/Page6.php:1507
 msgid "The KwaMoja installation has been successfully completed."
 msgstr "Die KwaMoja-Installation wurde erfolgreich abgeschlossen."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1506
+#: /home/tim/code/KwaMoja/install/Page6.php:1508
 msgid "Before using your system please ensure that write permissions have been removed from all files except the companies folder."
 msgstr "Bevor Sie Ihr System benutzen, stellen Sie bitte sicher, dass die Schreibberechtigungen von allen Dateien außer dem Firmenordner entfernt wurden."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1507
+#: /home/tim/code/KwaMoja/install/Page6.php:1509
 msgid "Click on the button below to start using KwaMoja."
 msgstr "Klicken Sie auf die Schaltfläche, um KwaMoja zu verwenden."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1508
+#: /home/tim/code/KwaMoja/install/Page6.php:1510
 msgid "When you first sign in you will be taken to a series of screens to help you set KwaMoja up."
 msgstr "Wenn du dich zum ersten Mal anmeldest, wirst du zu einer Reihe von Bildschirmen geleitet, die dir helfen, KwaMoja einzurichten."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1509
+#: /home/tim/code/KwaMoja/install/Page6.php:1511
 msgid "Please enjoy using the software and hopefully contribute back to the project."
 msgstr "Bitte genießen Sie die Verwendung der Software und hoffentlich zu dem Projekt beitragen."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1515
+#: /home/tim/code/KwaMoja/install/Page6.php:1517
 msgid "Start KwaMoja"
 msgstr "Starte KwaMoja"
 
-#: /home/tim/code/KwaMoja/install/index.php:65
+#: /home/tim/code/KwaMoja/install/index.php:62
 msgid "The database host cannot be reached. Maybe you have typed it incorrectly."
 msgstr "Der Datenbankhost kann nicht erreicht werden.  Vielleicht hast du es falsch eingegeben."
 
-#: /home/tim/code/KwaMoja/install/index.php:125
+#: /home/tim/code/KwaMoja/install/index.php:123
 msgid "The database does not exist, and this database user does not have privileges to create it"
 msgstr "Die Datenbank existiert nicht und dieser Datenbankbenutzer hat keine Rechte, ihn zu erstellen"
 
-#: /home/tim/code/KwaMoja/install/index.php:222
+#: /home/tim/code/KwaMoja/install/index.php:227
 msgid "KwaMoja Installer"
 msgstr "KwaMoja-Installationsprogramm"
 
-#: /home/tim/code/KwaMoja/install/index.php:229
+#: /home/tim/code/KwaMoja/install/index.php:234
 msgid "KwaMoja Installation Wizard"
 msgstr "KwaMoja Installationsassistent"
 
-#: /home/tim/code/KwaMoja/install/index.php:232
+#: /home/tim/code/KwaMoja/install/index.php:237
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr "Es scheint, dass das System bereits installiert wurde.  Wenn Sie die Installation wiederholen möchten, entfernen Sie zuerst die Datei config.php"
 
@@ -67684,6 +67693,15 @@ msgstr "Mitarbeiterdarlehen"
 #: /home/tim/code/KwaMoja/sql/updates/99.php:145
 msgid "Staff Loan Repayments"
 msgstr "Mitarbeiter Darlehen Rückzahlungen"
+
+#~ msgid "Security Roll Selection"
+#~ msgstr "Auswahl der Sicherheitsrolle"
+
+#~ msgid "Select Roll"
+#~ msgstr "Wählen Sie Rolle"
+
+#~ msgid "Cannot delete this sales commission type because sales people items have been created using this unit of measure"
+#~ msgstr "Dieser Verkaufsprovisionstyp kann nicht gelöscht werden, da mit dieser Maßeinheit Verkaufspersonalpositionen erstellt wurden"
 
 #~ msgid "All the account section names must contain at least three characters"
 #~ msgstr "Alle Kontoabschnittsnamen müssen mindestens drei Zeichen enthalten"

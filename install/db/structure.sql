@@ -1295,6 +1295,19 @@ CREATE TABLE `mrpplannedorders` (
   `updateflag` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `mrpsupplies`;
+CREATE TABLE `mrpsupplies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `part` char(20) DEFAULT NULL,
+  `duedate` date DEFAULT NULL,
+  `supplyquantity` double DEFAULT NULL,
+  `ordertype` varchar(6) DEFAULT NULL,
+  `orderno` int(11) DEFAULT NULL,
+  `mrpdate` date DEFAULT NULL,
+  `updateflag` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `part` (`part`)
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 DROP TABLE IF EXISTS `offers`;
 CREATE TABLE `offers` (
   `offerid` int(11) NOT NULL AUTO_INCREMENT,
@@ -2737,6 +2750,7 @@ CREATE TABLE `stockmaster` (
   `volume` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `grossweight` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `barcode` varchar(50) NOT NULL DEFAULT '',
+  `drawingnumber` varchar(50) NOT NULL DEFAULT '',
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `taxcatid` tinyint(4) NOT NULL DEFAULT '1',
   `serialised` tinyint(4) NOT NULL DEFAULT '0',

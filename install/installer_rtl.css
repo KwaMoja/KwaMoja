@@ -1,0 +1,330 @@
+/*
+ * Installer Theme for KwaMoja
+ * V1.0 2013-07-26
+ * HTML5 - for usability
+ * (incomplete- needs refinement with font size, margin sizes etc)
+ **/
+html {
+width:: 100%;
+background:#f0f0f0
+}
+
+:focus {
+outline:none
+}
+
+/* Get rid of webkit focus at outset */
+body {
+font:16px/24px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+background:#f4f4f4;
+color:#333;
+margin:0;
+padding:0;
+border:0;
+width:100%;
+height:auto;
+min-height:10%;
+text-align:center;
+direction:rtl;
+/* Align the whole form page centre */
+}
+
+div#CanvasDiv {
+width:800px;
+margin:auto;
+min-width:600px;
+text-align:right;
+/* get back our normal text */
+padding:20px;
+height:auto
+}
+
+h1 {
+text-align:center;
+color:#efefef;
+background:#2185c4;
+width:auto;
+margin:0;
+padding:30px 0;
+border-top-left-radius: 19px;
+border-top-right-radius: 19px
+}
+
+p {
+text-align:right
+}
+
+a {
+}
+
+a:hover {
+}
+
+img {
+border:none;
+vertical-align:middle
+}
+
+/*** Standard KwaMoja STATUS MESSAGE classes ***/
+div.error {
+background:#ffd3bf url(invalid.png) no-repeat left;
+border:1px solid #ED5410;
+border-radius:5px;
+padding:2px 8px;
+margin:2px 0
+}
+
+div.warn {
+background:#ffe08f url(required.png) no-repeat left;
+border:1px solid #ffd35f;
+border-radius:5px;
+padding:2px 8px;
+margin:2px 0
+}
+
+div.success {
+background:#e9ffcf url(valid.png) no-repeat left;
+border:1px solid #7AAA3A;
+border-radius:5px;
+padding:2px 8px;
+margin:2px 0
+}
+
+div.info {
+background:#EFFFFF;
+border:1px solid #53BFBD;
+padding:2px 8px 2px 8px;
+margin:2px 0
+}
+
+form .page_help_text {
+text-align:center
+}
+
+.page_help_text {
+padding:0;
+margin-bottom:10px
+}
+
+.page_help_text ul {
+background:#dcefb3;
+border-color:#ceef86;
+border-style:solid;
+border-width:2px;
+-webkit-border-radius:5px;
+border-radius:5px;
+list-style:none
+}
+
+form .page_help_text ul li {
+padding-left:15px;
+padding-right:15px;
+text-align:right;
+margin:auto;
+border:0;
+line-height:1;
+}
+
+.page_help_text span {
+color:#d45252;
+margin:5px 0 0;
+display:inline;
+font-size:13px
+}
+
+/*** Custom Installer FORM ELEMENTS ***/
+form {
+background:#d8d8d8;
+padding:20px;
+border-bottom-left-radius: 19px;
+border-bottom-right-radius: 19px;
+margin:0
+}
+
+form fieldset {
+border:none;
+
+margin-bottom:10px
+}
+
+form legend {
+font:24px Georgia, "Times New Roman", Times, serif;
+color:#333;
+font-weight:700;
+padding:10px 0
+}
+
+form ul {
+padding:0;
+margin:0
+}
+
+form ul li {
+background:#bffffb;
+background:rgba(255,255,255,.3);
+border-color:#c2efec;
+border-color:rgba(255,255,255,.6);
+border-style:solid;
+border-width:2px;
+webkit-border-radius:5px;
+border-radius:5px;
+line-height:1.8;
+list-style:none;
+padding:5px 10px;
+margin-bottom:2px
+}
+
+form label {
+float:right;
+width:14.5em
+}
+
+form input:not([type=radio]),form textarea {
+background:#fff;
+border:none;
+-webkit-border-radius:3px;
+-khtml-border-radius:3px;
+border-radius:3px;
+font:italic 14px Georgia, "Times New Roman", Times, serif;
+outline:none;
+padding:5px;
+}
+
+form input:not([type=submit]):focus,form textarea:focus {
+background:#eaeaea
+}
+
+form select {
+background:#fff;
+color:#726868;
+font-size: 100%;
+font-style:italic;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 7px;
+border: solid 1px #28921F;
+border-radius: 15px;
+margin: 2px;
+box-shadow:0 0 5px #83F07B;
+}
+
+form button {
+background:#3e3e3e;
+border:none;
+-webkit-border-radius:20px;
+-khtml-border-radius:20px;
+border-radius:20px;
+color:#fff;
+display:inline-block;
+font:18px Georgia, "Times New Roman", Times, serif;
+letter-spacing:1px;
+margin:auto;
+margin-bottom:20px;
+padding:7px 25px;
+text-shadow:0 1px 1px #000;
+width:30%
+}
+
+form button:hover {
+background:#2185c4;
+cursor:pointer
+}
+
+form input:focus:invalid,form textarea:focus:invalid {
+/* browser */
+background:#fff url(invalid.png) no-repeat 98% center;
+box-shadow:0 0 5px #d45252;
+border-color:#b03535
+}
+
+form input:required,textarea:required {
+background:#fff url(required.png) no-repeat 98% center
+}
+
+form input:required:valid,form textarea:required:valid {
+background:#fff url(valid.png) no-repeat 98% center;
+box-shadow:0 0 5px #5cd053;
+border-color:#28921f
+}
+
+form li span {
+/* form info on focus */
+background:#d45252;
+border-radius:3px 3px 3px 3px;
+color:#FFF;
+margin-right:8px;
+margin-left:20px;
+padding:1px 6px;
+z-index:999;
+position:absolute;
+display:none
+}
+
+form li span::before {
+/* info pointing */
+content:"\25C0";
+color:#d45252;
+position:absolute;
+top:1px;
+right:-6px
+}
+
+form select:focus+span::before,input[type=checkbox]:checked+span::before,form input[type=file] + span::before {
+color:#28921f;
+}
+
+form input:focus + span,form select:focus+span,input[type=checkbox]:checked+span {
+display:inline
+}
+
+form input:required:valid + span,form select:focus+span,input[type=checkbox]:checked+span {
+/* change form hint color when valid */
+background:#28921f
+}
+
+form input:required:valid + span::before {
+/* change form hint arrow color when valid */
+color:#28921f
+}
+
+form input[type=file] + span {
+display:inline;
+background:#28921f
+}
+
+form li span {
+background:none repeat scroll 0 0 #D45252;
+border-radius:3px 3px 3px 3px;
+color:#FFF;
+margin-right:8px;
+padding:1px 6px;
+position:absolute;
+z-index:999
+}
+
+form li span {
+font-size:12px
+}
+
+#loader {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+#waittext {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding:20px;
+  background:#2185C4;
+  color:white;
+  font-weight:bold;
+  font-size:140%;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

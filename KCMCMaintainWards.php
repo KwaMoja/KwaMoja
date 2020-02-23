@@ -357,7 +357,7 @@ echo '</select>
 echo '<field>
 		<label for="Description">', _('Description'), ':</label>
 		<textarea name="Description" rows="6" cols="40">', $_POST['Description'], '</textarea>
-		<fieldhelp>', _('This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts.'), '</fieldhelp>
+		<fieldhelp>', _('A detailed description of this ward'), '</fieldhelp>
 	</field>';
 
 echo '<field>

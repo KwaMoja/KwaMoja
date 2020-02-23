@@ -839,8 +839,8 @@ if ($_SESSION['PO' . $Identifier]->SomethingReceived() == 0 and isset($_POST['Pr
 	unset($_POST['ProcessGoodsReceived']);
 
 	echo '<div class="centre">
-			', prnMsg(_('GRN number') . ' ' . $GRN . ' ' . _('has been processed'), 'success') . '
-			<a href="PDFGrn.php?GRNNo=', urlencode($GRN), '&amp;PONo=', urlencode($PONo), '">', _('Print this Goods Received Note (GRN)'), '</a>
+			', prnMsg(_('GRN number') . ' ' . $GRN . ' ' . _('has been processed'), 'success') . '<br />
+			<a href="PDFGrn.php?GRNNo=', urlencode($GRN), '&amp;PONo=', urlencode($PONo), '">', _('Print this Goods Received Note (GRN)'), '</a><br />
 			<a href="', $RootPath, '/PO_SelectOSPurchOrder.php">', _('Select a different purchase order for receiving goods against'), '</a>
 		</div>';
 	/*end of process goods received entry */
@@ -852,12 +852,11 @@ if ($_SESSION['PO' . $Identifier]->SomethingReceived() == 0 and isset($_POST['Pr
 	/*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
 
 	echo '<div class="centre">
-			<a href="', $RootPath, '/PO_Header.php?ModifyOrderNumber=', urlencode($_SESSION['PO' . $Identifier]->OrderNo), '">', _('Modify Order Items'), '</a>
+			<a href="', $RootPath, '/PO_Header.php?ModifyOrderNumber=', urlencode($_SESSION['PO' . $Identifier]->OrderNo), '">', _('Modify Order Items'), '</a><br />
 			<a href="', $RootPath, '/PO_SelectOSPurchOrder.php">', _('Select a different purchase order for receiving goods against'), '</a>
 		</div>
 		<div class="centre">
-			<input type="submit" name="Update" value="', _('Update'), '" />
-			<br />
+			<input type="submit" name="Update" value="', _('Update'), '" /><br />
 			<input type="submit" name="ProcessGoodsReceived" value="', _('Process Goods Received'), '" />
 		</div>';
 }

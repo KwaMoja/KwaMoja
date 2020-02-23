@@ -47,7 +47,7 @@ echo '<fieldset>
 			<legend>' . _('Installation option') . '</legend>
 				<ul>
 					<li>
-						<label for="InstallDemo">' . _('Install the demo data?') . '</label><input type="checkbox" name="Demo"  />
+						<label for="InstallDemo">' . _('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
 						<span>' . _("KwaMojaDemo site and data will be installed") . '</span>
 					</li>
 				</ul>

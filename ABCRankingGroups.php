@@ -122,7 +122,7 @@ if (isset($_POST['Submit'])) {
 			</tr>
 			<tr>
 				<th>', _('ID'), '</th>
-				<th>', _('Group name'), '</th>
+				<th>', _('Group Name'), '</th>
 				<th>', _('Method name'), '</th>
 				<th>', _('% in A category'), '</th>
 				<th>', _('% in B category'), '</th>

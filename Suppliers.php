@@ -671,7 +671,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 } //end while loop
 echo '</select>
-	<fieldhelp>', _('Select the sales person that this supplier refers to. If this supplier is not a sales person then select "None".'), '</fieldhelp>
+	<fieldhelp>', _('Select the sales person that this supplier refers to. If this supplier is not a sales person then select None.'), '</fieldhelp>
 </field>';
 
 echo '<field>
@@ -707,7 +707,7 @@ if ($_POST['Remittance'] == 0) {
 	echo '<option selected="selected" value="1">', _('Required'), '</option>';
 }
 echo '</select>
-	<fieldhelp>', _('If the supplier requires a remittance advice with each payment then select "Required" here'), '</fieldhelp>
+	<fieldhelp>', _('If the supplier requires a remittance advice with each payment then select Required here'), '</fieldhelp>
 </field>';
 
 // Default_Shipper

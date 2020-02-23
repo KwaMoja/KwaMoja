@@ -28,11 +28,13 @@ if (!$DB) {
 	$Errors[] = _('Failed to connect the database management system');
 } else {
 	$Result = @mysqli_query($DB, 'SET SQL_MODE="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
+	$Result = @mysqli_query($DB, 'SET SESSION sql_mode ="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
 }
 
 include ($PathPrefix . 'includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 include ($PathPrefix . 'includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 $Result = DB_query('SET SQL_MODE="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
+$Result = DB_query('SET SESSION sql_mode ="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"');
 include ($PathPrefix . 'includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 $Path_To_Root = '..';
@@ -192,7 +194,7 @@ if (DB_error_no() == 0) {
 	echo '<div class="error">' . _('There was an error creating the database.') . ' - ' . DB_error_msg() . '</div>';
 }
 
-$SQL = "INSERT INTO config VALUES('VersionNumber', '16.03')";
+$SQL = "INSERT INTO config VALUES('VersionNumber', CONCAT(SUBSTRING(YEAR(CURDATE()), 3, 2), '.', LPAD(MONTH(CURDATE()), 2 ,'0')));";
 $Result = DB_query($SQL);
 
 if (DB_error_no() == 0) {
@@ -232,7 +234,7 @@ $SQL = "INSERT INTO www_users  (userid,
 								50,
 								8,
 								1,
-								'1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,',
+								'1,1,1,1,1,1,1,1,1,1,1,1,',
 								0,
 								'aguapop',
 								'" . $_SESSION['Installer']['Language'] . "',
@@ -249,7 +251,7 @@ if (DB_error_no() == 0) {
 }
 
 /* Now we uploade the chosen chart of accounts */
-if (!isset($_POST['Demo'])) {
+if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 'Yes') {
 	$COAScriptFile = file($_SESSION['Installer']['CoA']);
 	$ScriptFileEntries = sizeof($COAScriptFile);
 	$SQL = '';
@@ -285,18 +287,28 @@ if (!isset($_POST['Demo'])) {
 	} //end of for loop around the lines of the sql script
 	echo '<div class="success">' . _('Your chosen chart of accounts has been uploaded') . '</div>';
 	ob_flush();
+
+	$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
+	$Result = DB_query($SQL);
+	if (DB_error_no() == 0) {
+		echo '<div class="success">' . _('The admin user has been given permissions on all GL accounts.') . '</div>';
+	} else {
+		echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
+	}
+	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','1')";
+	$Result = DB_query($SQL);
+
 	/* Create the admin user */
 } else {
 	echo '<legend>' . _('Populating the database with demo data.') . '</legend>';
 	PopulateSQLDataBySQL($PathPrefix . 'sql/demodata/data.sql', $DB, $DBType, false, $_SESSION['Installer']['Database']);
-}
-
-$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
-$Result = DB_query($SQL);
-if (DB_error_no() == 0) {
-	echo '<div class="success">' . _('The admin user has been given permissions on all GL accounts.') . '</div>';
-} else {
-	echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
+	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
+	$Result = DB_query($SQL);
+	$CompanyDir = $PathPrefix . 'companies/' . $_SESSION['Installer']['Database'];
+	foreach (glob($PathPrefix . "companies/default/part_pics/*.jp*") as $JpegFile) {
+		copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+	}
+	copy("../companies/default/logo.png", $CompanyDir . '/logo.png');
 }
 
 $CountryOfOperation = substr(basename($_SESSION['Installer']['CoA'], '.sql'), 3, 2);
@@ -339,7 +351,6 @@ $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('ExchangeRateFe
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('Extended_CustomerInfo','0')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('Extended_SupplierInfo','0')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FactoryManagerEmail','" . $_SESSION['Installer']['Email'] . "')";
-$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','1')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FreightChargeAppliesIfLessThan','1000')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FreightTaxCategory','1')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FrequentlyOrderedItems','0')";
@@ -348,13 +359,14 @@ $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('GoogleTranslat
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('HTTPS_Only','0')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('InventoryManagerEmail','" . $_SESSION['Installer']['Email'] . "')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('InvoiceQuantityDefault','0')";
-$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('ItemDescriptionLanguages','')";
+$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('ItemDescriptionLanguages','fr_FR.utf8,')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('KwaMojaImagesFromOpenCart','data/part_pics/')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('KwaMojaToOpenCartDaily_LastRun','0000-00-00 00:00:00')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('KwaMojaToOpenCartHourly_LastRun','0000-00-00 00:00:00')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('LogPath','')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('LogSeverity','0')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('MaxImageSize','300')";
+$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('MaxSerialItemsIssued','60')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('MonthsAuditTrail','12')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('NewBranchesMustBeAuthorised','1')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('NumberOfMonthMustBeShown','6')";
@@ -364,7 +376,7 @@ $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('OverChargeProp
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('OverReceiveProportion','20')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('PackNoteFormat','1')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('PageLength','48')";
-$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/EDI_Sent')";
+$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/part_pics')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('PastDueDays1','30')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('PastDueDays2','60')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('PO_AllowSameItemMultipleTimes','1')";
@@ -383,7 +395,7 @@ $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RadioBeaconSto
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RadioBraconFTP_server','192.168.2.2')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RadioBreaconFilePrefix','ORDXX')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password')";
-$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('reports_dir','companies/" . $_SESSION['DatabaseName'] . "/EDI_Sent')";
+$SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('reports_dir','companies/" . $_SESSION['DatabaseName'] . "/reports')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RequirePickingNote','1')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.')";
 $SQL[] = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('ShopAboutUs','')";
@@ -886,6 +898,7 @@ $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierContacts.php',5,'Entry of supplier contacts and contact details including email addresses')";
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierCredit.php',5,'Entry of supplier credit notes (debit notes)')";
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierGRNAndInvoiceInquiry.php',5,'')";
+$SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierGroups.php',15,'')";
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierInquiry.php',2,'Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding')";
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierInvoice.php',5,'Entry of supplier invoices')";
 $SQL[] = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('SupplierPriceList.php',4,'Maintain Supplier Price Lists')";
@@ -1003,11 +1016,11 @@ $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modul
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'AR','ar','Receivables',2)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'FA','fa','Asset Manager',11)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'GL','gl','General Ledger',7)";
-$SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'HR','hr','Human Resources',9)";
+//$SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'HR','hr','Human Resources',9)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'manuf','man','Manufacturing',6)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'orders','ord','Sales',1)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'PC','pc','Petty Cash',12)";
-$SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'pjct','pjct','Project Accounting',10)";
+//$SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'pjct','pjct','Project Accounting',10)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'PO','prch','Purchases',4)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'qa','qa','Quality Assurance',8)";
 $SQL[] = "INSERT INTO `modules` (`secroleid`, `modulelink`, `reportlink`, `modulename`, `sequence`) VALUES (8,'stock','inv','Inventory',5)";
@@ -1021,6 +1034,7 @@ $SQL = array();
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Maintenance','Add Supplier','/Suppliers.php',1)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Maintenance','Maintain Factor Companies','/Factors.php',3)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Maintenance','Select Supplier','/SelectSupplier.php',2)";
+$SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Maintenance','Maintain Supplier Groups','/SupplierGroups.php',4)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Reports','Aged Supplier Report','/AgedSuppliers.php',1)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Reports','List Daily Transactions','/PDFSuppTransListing.php',6)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'AP','Reports','Outstanding GRNs Report','/OutstandingGRNs.php',4)";

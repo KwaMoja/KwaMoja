@@ -782,11 +782,11 @@ echo '<field>
 $Themes = glob('css/*', GLOB_ONLYDIR);
 foreach ($Themes as $ThemeName) {
 	$ThemeName = basename($ThemeName);
-	if ($ThemeName != 'mobile') {
+	if ($ThemeName != 'mobile' and mb_substr($ThemeName, -4) != '-rtl') {
 		if ($_POST['Theme'] == $ThemeName) {
-			echo '<option selected="selected" value="', $ThemeName, '">', $ThemeName, '</option>';
+			echo '<option selected="selected" value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
 		} else {
-			echo '<option value="', $ThemeName, '">', $ThemeName, '</option>';
+			echo '<option value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
 		}
 	}
 }

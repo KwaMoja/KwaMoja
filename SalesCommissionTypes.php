@@ -60,7 +60,7 @@ if (isset($_POST['Submit'])) {
 				prnMsg(_('The commission type no longer exist.'), 'error');
 			}
 		}
-		$Msg = _('Unit of measure changed');
+		$Msg = _('Commision Type changed');
 	} elseif ($InputError != 1) {
 		/*SelectedTypeID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM salescommissiontypes
@@ -120,12 +120,12 @@ if (isset($_POST['Submit'])) {
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] > 0) {
-			prnMsg(_('Cannot delete this sales commission type because sales people items have been created using this unit of measure'), 'warn');
+			prnMsg(_('Cannot delete this sales commission type because sales people items have been created using this type'), 'warn');
 			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('sales people that use this commission type') . '</font>';
 		} else {
 			$SQL = "DELETE FROM salescommissiontypes WHERE commissiontypeid= '" . $SelectedTypeID . "'";
 			$Result = DB_query($SQL);
-			prnMsg($OldTypeName . ' ' . _('unit of measure has been deleted') . '!', 'success');
+			prnMsg($OldTypeName . ' ' . _('commision type has been deleted') . '!', 'success');
 		}
 	} //end if account group used in GL accounts
 	unset($SelectedTypeID);
@@ -143,7 +143,7 @@ if (!isset($SelectedTypeID)) {
 			FROM salescommissiontypes
 			ORDER BY commissiontypeid";
 
-	$ErrMsg = _('Could not get unit of measures because');
+	$ErrMsg = _('Could not get commission types because');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) > 0) {
@@ -192,7 +192,7 @@ if (!isset($_GET['delete'])) {
 
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
-			prnMsg(_('Could not retrieve the requested unit of measure, please try again.'), 'warn');
+			prnMsg(_('Could not retrieve the requested commission type, please try again.'), 'warn');
 			unset($SelectedTypeID);
 		} else {
 			$MyRow = DB_fetch_array($Result);

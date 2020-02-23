@@ -137,7 +137,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$typeno = GetNextTransNo($type);
 
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']) . ' - ' . $MyRow['receipt'];
+			$Narrative = _('Petty Cash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']) . ' - ' . $MyRow['receipt'];
 			//insert to gltrans
 			DB_Txn_Begin();
 

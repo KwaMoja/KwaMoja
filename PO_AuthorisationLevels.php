@@ -257,7 +257,7 @@ if (isset($_GET['Edit'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select thecurrency to which this authorisation applies.'), '</fieldhelp>
+		<fieldhelp>', _('Select the currency to which this authorisation applies.'), '</fieldhelp>
 	</field>';
 }
 

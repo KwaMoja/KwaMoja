@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-07 17:49+0000\n"
+"POT-Creation-Date: 2020-02-22 21:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,9 +199,9 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:712
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:715
 #: /home/tim/code/KwaMoja/PO_OrderDetails.php:147
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:398
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:402
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:406
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:400
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:404
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:408
 #: /home/tim/code/KwaMoja/PO_SelectOSPurchOrder.php:401
 #: /home/tim/code/KwaMoja/PO_SelectOSPurchOrder.php:433
 #: /home/tim/code/KwaMoja/PrintCustStatements.php:83
@@ -241,7 +241,8 @@ msgid "ID"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/ABCRankingGroups.php:125
-msgid "Group name"
+#: /home/tim/code/KwaMoja/AccountGroups.php:328
+msgid "Group Name"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/ABCRankingGroups.php:126
@@ -1146,10 +1147,6 @@ msgstr ""
 msgid "Group Code"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/AccountGroups.php:328
-msgid "Group Name"
-msgstr ""
-
 #: /home/tim/code/KwaMoja/AccountGroups.php:329
 #: /home/tim/code/KwaMoja/AccountSections.php:140
 #: /home/tim/code/KwaMoja/AccountSections.php:224
@@ -1271,8 +1268,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PO_AuthorisationLevels.php:154
 #: /home/tim/code/KwaMoja/PO_AuthorisationLevels.php:159
 #: /home/tim/code/KwaMoja/PO_Header.php:801
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:418
 #: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:422
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:426
 #: /home/tim/code/KwaMoja/PaymentMethods.php:207
 #: /home/tim/code/KwaMoja/PaymentMethods.php:208
 #: /home/tim/code/KwaMoja/PaymentMethods.php:209
@@ -1526,8 +1523,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PO_AuthorisationLevels.php:161
 #: /home/tim/code/KwaMoja/PO_Header.php:800
 #: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:50
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:419
 #: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:423
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:427
 #: /home/tim/code/KwaMoja/PaymentMethods.php:207
 #: /home/tim/code/KwaMoja/PaymentMethods.php:208
 #: /home/tim/code/KwaMoja/PaymentMethods.php:209
@@ -2108,8 +2105,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:617
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:713
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:716
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:403
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:407
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:405
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:409
 #: /home/tim/code/KwaMoja/PrintCustStatements.php:100
 #: /home/tim/code/KwaMoja/PrintCustTrans.php:868
 #: /home/tim/code/KwaMoja/PrintCustTransPortrait.php:890
@@ -2533,7 +2530,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/StockQuantityByDate.php:7
 #: /home/tim/code/KwaMoja/StockReorderLevel.php:19
 #: /home/tim/code/KwaMoja/StockSerialItemResearch.php:9
-#: /home/tim/code/KwaMoja/StockSerialItems.php:8
+#: /home/tim/code/KwaMoja/StockSerialItems.php:7
 #: /home/tim/code/KwaMoja/StockStatus.php:34
 #: /home/tim/code/KwaMoja/StockStatus.php:38
 #: /home/tim/code/KwaMoja/StockTransferControlled.php:13
@@ -3007,7 +3004,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFStockCheckComparison.php:273
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:122
 #: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:18
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:152
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:151
 #: /home/tim/code/KwaMoja/PrintCustOrder.php:221
 #: /home/tim/code/KwaMoja/PrintCustOrder_generic.php:332
 #: /home/tim/code/KwaMoja/PrintWOItemSlip.php:122
@@ -4662,19 +4659,19 @@ msgstr ""
 msgid "Translated"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:54
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:56
 msgid "Cannot update stock item descriptions"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:55
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:57
 msgid "The sql that failed to update the item descriptions is"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:86
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:88
 msgid "Number of translated descriptions via Google API"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:90
+#: /home/tim/code/KwaMoja/AutomaticTranslationDescriptions.php:92
 msgid "No item descriptions were automatically translated"
 msgstr ""
 
@@ -6926,7 +6923,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFRemittanceAdvice.php:57
 #: /home/tim/code/KwaMoja/PDFShipLabel.php:356
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:528
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:363
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:360
 #: /home/tim/code/KwaMoja/Payments.php:946
 #: /home/tim/code/KwaMoja/Payments.php:951
 #: /home/tim/code/KwaMoja/PcReportTab.php:104
@@ -12303,7 +12300,7 @@ msgid "Cancel and Delete Contract"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/CopyBOM.php:10
-#: /home/tim/code/KwaMoja/includes/header.php:22
+#: /home/tim/code/KwaMoja/includes/header.php:26
 msgid "Copy a BOM to New Item Code"
 msgstr ""
 
@@ -14582,8 +14579,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/SuppLoginSetup.php:112
 #: /home/tim/code/KwaMoja/WWW_Users.php:521
 #: /home/tim/code/KwaMoja/WWW_Users.php:535
-#: /home/tim/code/KwaMoja/includes/Login.php:100
 #: /home/tim/code/KwaMoja/includes/Login.php:102
+#: /home/tim/code/KwaMoja/includes/Login.php:104
 #: /home/tim/code/KwaMoja/install/Page3.php:37
 msgid "Password"
 msgstr ""
@@ -14709,7 +14706,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/UserSettings.php:163
 #: /home/tim/code/KwaMoja/WWW_Users.php:383
 #: /home/tim/code/KwaMoja/WWW_Users.php:780
-#: /home/tim/code/KwaMoja/includes/header.php:204
+#: /home/tim/code/KwaMoja/includes/header.php:208
 msgid "Theme"
 msgstr ""
 
@@ -14946,7 +14943,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:155
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:277
 #: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:71
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:208
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:207
 #: /home/tim/code/KwaMoja/PrintCredit.php:113
 #: /home/tim/code/KwaMoja/PrintCustOrder.php:26
 #: /home/tim/code/KwaMoja/PrintCustOrder.php:121
@@ -15638,7 +15635,7 @@ msgstr ""
 
 #: /home/tim/code/KwaMoja/CustomerBranches.php:269
 #: /home/tim/code/KwaMoja/index.php:14
-#: /home/tim/code/KwaMoja/includes/header.php:179
+#: /home/tim/code/KwaMoja/includes/header.php:183
 msgid "Main Menu"
 msgstr ""
 
@@ -19196,14 +19193,14 @@ msgid "The packing slip for order number"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/EmailConfirmation.php:100
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:146
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:145
 #: /home/tim/code/KwaMoja/PrintCustOrder.php:97
 #: /home/tim/code/KwaMoja/PrintCustOrder_generic.php:95
 msgid "has previously been printed"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/EmailConfirmation.php:100
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:146
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:145
 #: /home/tim/code/KwaMoja/PrintCustOrder.php:97
 #: /home/tim/code/KwaMoja/PrintCustOrder_generic.php:95
 msgid "It was printed on"
@@ -19337,13 +19334,13 @@ msgstr ""
 #: /home/tim/code/KwaMoja/EmailCustStatements.php:41
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:645
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:733
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:435
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:442
 msgid "Email to"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/EmailCustStatements.php:47
 #: /home/tim/code/KwaMoja/EmailCustTrans.php:69
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:462
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:468
 msgid "OK"
 msgstr ""
 
@@ -19525,7 +19522,7 @@ msgstr ""
 
 #: /home/tim/code/KwaMoja/FTP_RadioBeacon.php:165
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:277
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:208
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:207
 msgid "There was a problem retrieving the line details for order number"
 msgstr ""
 
@@ -20286,12 +20283,12 @@ msgstr ""
 #: /home/tim/code/KwaMoja/FixedAssetItems.php:568
 #: /home/tim/code/KwaMoja/FixedAssetRegister.php:90
 #: /home/tim/code/KwaMoja/StockSerialItemResearch.php:27
+#: /home/tim/code/KwaMoja/StockSerialItems.php:94
 #: /home/tim/code/KwaMoja/StockSerialItems.php:96
 #: /home/tim/code/KwaMoja/StockSerialItems.php:98
-#: /home/tim/code/KwaMoja/StockSerialItems.php:100
+#: /home/tim/code/KwaMoja/StockSerialItems.php:102
 #: /home/tim/code/KwaMoja/StockSerialItems.php:104
 #: /home/tim/code/KwaMoja/StockSerialItems.php:106
-#: /home/tim/code/KwaMoja/StockSerialItems.php:108
 #: /home/tim/code/KwaMoja/Z_ChangeSerialNumber.php:66
 msgid "Serial Number"
 msgstr ""
@@ -23691,7 +23688,7 @@ msgstr ""
 msgid "Modify Order Items"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/GoodsReceived.php:861
+#: /home/tim/code/KwaMoja/GoodsReceived.php:860
 msgid "Process Goods Received"
 msgstr ""
 
@@ -24345,6 +24342,7 @@ msgid "Select a user role"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/InternalStockCategoriesByRole.php:107
+#: /home/tim/code/KwaMoja/ModuleEditor.php:38
 msgid "Select Role"
 msgstr ""
 
@@ -26545,7 +26543,7 @@ msgid "The insurance company invoice for"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/KCMCInsuranceInvoice.php:270
-msgid "Hasbeen succesfuly raised"
+msgid "Has been succesfuly raised"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/KCMCInsuranceInvoice.php:271
@@ -26720,6 +26718,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/KCMCRadiologyReport.php:63
 #: /home/tim/code/KwaMoja/KCMCRadiologyReport.php:132
 #: /home/tim/code/KwaMoja/StockQuantityByDate.php:188
+#: /home/tim/code/KwaMoja/StockSerialItems.php:172
 #: /home/tim/code/KwaMoja/includes/InputSerialItemsFile.php:52
 #: /home/tim/code/KwaMoja/includes/InputSerialItemsFile.php:59
 #: /home/tim/code/KwaMoja/includes/InputSerialItemsKeyed.php:59
@@ -26981,8 +26980,7 @@ msgid "The department that this ward belongs to."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:360
-#: /home/tim/code/KwaMoja/SystemParameters.php:729
-msgid "This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts."
+msgid "A detailed description of this ward"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:364
@@ -27268,7 +27266,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFFGLabel.php:207
 #: /home/tim/code/KwaMoja/PDFShipLabel.php:351
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:524
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:356
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:354
 #: /home/tim/code/KwaMoja/PrintCustTrans.php:569
 #: /home/tim/code/KwaMoja/PrintCustTransPortrait.php:575
 msgid "has been emailed to"
@@ -29758,11 +29756,7 @@ msgid "Edit The Modules Menu"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/ModuleEditor.php:36
-msgid "Security Roll Selection"
-msgstr ""
-
-#: /home/tim/code/KwaMoja/ModuleEditor.php:38
-msgid "Select Roll"
+msgid "Security Role Selection"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/ModuleEditor.php:49
@@ -30817,7 +30811,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFFGLabel.php:198
 #: /home/tim/code/KwaMoja/PDFShipLabel.php:343
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:516
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:348
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:347
 msgid "The SMTP settings are wrong, please ask administrator for help"
 msgstr ""
 
@@ -30833,7 +30827,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFFGLabel.php:207
 #: /home/tim/code/KwaMoja/PDFShipLabel.php:351
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:524
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:356
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:354
 msgid "as directed"
 msgstr ""
 
@@ -30846,7 +30840,7 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PDFFGLabel.php:213
 #: /home/tim/code/KwaMoja/PDFShipLabel.php:356
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:528
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:363
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:360
 #: /home/tim/code/KwaMoja/Z_ChangeStockCode.php:174
 msgid "failed"
 msgstr ""
@@ -31328,7 +31322,7 @@ msgid "Price Labels"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PDFPrintLabel.php:12
-msgid "Select Labels to rint"
+msgid "Select Labels to Print"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PDFPrintLabel.php:40
@@ -31919,7 +31913,7 @@ msgstr ""
 
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:603
 #: /home/tim/code/KwaMoja/PDFWOPrint.php:702
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:391
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:393
 msgid "Print or Email the Order"
 msgstr ""
 
@@ -32338,7 +32332,7 @@ msgid "Select the user to set authorisations for"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PO_AuthorisationLevels.php:260
-msgid "Select thecurrency to which this authorisation applies."
+msgid "Select the currency to which this authorisation applies."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PO_AuthorisationLevels.php:265
@@ -32603,8 +32597,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PO_Items.php:944
 #: /home/tim/code/KwaMoja/PO_Items.php:947
 #: /home/tim/code/KwaMoja/PO_OrderDetails.php:93
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:201
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:356
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:200
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:354
 #: /home/tim/code/KwaMoja/PurchaseByPrefSupplier.php:294
 #: /home/tim/code/KwaMoja/SelectSalesOrder.php:259
 #: /home/tim/code/KwaMoja/SelectSalesOrder.php:418
@@ -33385,67 +33379,75 @@ msgstr ""
 msgid "Purchase Order Already Printed"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:146
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:202
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:339
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:145
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:201
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:338
 #: /home/tim/code/KwaMoja/includes/PO_PDFOrderPageHeader.php:10
 msgid "Purchase Order Number"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:146
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:145
 msgid "To re-print the order it must be modified to allow a reprint"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:146
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:145
 msgid "This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:149
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:148
 msgid "Print This Order as a Copy"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:150
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:149
 msgid "Modify the order to allow a real reprint"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:151
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:150
 msgid "Select another order"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:319
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:318
 msgid "Order Total - excl tax"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:338
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:337
 msgid "Please find herewith our purchase order number"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:353
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:360
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:352
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:358
 msgid "Email a Purchase Order"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:363
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:360
 msgid "Emailing Purchase order"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:367
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:364
 msgid "Printed by"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:412
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:381
+msgid "Print the Purchase Order"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:391
+msgid "Print Purchase Orders"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:416
 msgid "Show Amounts on the Order"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:427
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:433
 msgid "There was a problem retrieving the contact details for the supplier"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:454
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:461
 msgid "There are no contacts defined for the supplier of this order"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:454
+#: /home/tim/code/KwaMoja/PO_PDFPurchOrder.php:461
 msgid "You must first set up supplier contacts before emailing an order"
 msgstr ""
 
@@ -33894,11 +33896,11 @@ msgid "Show all Payment Terms Definitions"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PaymentTerms.php:219
-msgid "Edit Payment Terms."
+msgid "Edit Payment Terms"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PaymentTerms.php:237
-msgid "New Payment Terms."
+msgid "New Payment Terms"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PaymentTerms.php:241
@@ -34433,8 +34435,10 @@ msgstr ""
 
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:44
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:48
+#: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:140
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:61
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:65
+#: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:172
 #: /home/tim/code/KwaMoja/SuppLoginSetup.php:16
 #: /home/tim/code/KwaMoja/sql/updates/12.php:326
 #: /home/tim/code/KwaMoja/sql/updates/42.php:37
@@ -34449,11 +34453,6 @@ msgstr ""
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:62
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:105
 msgid "Detail Of Movement For Last "
-msgstr ""
-
-#: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:140
-#: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:172
-msgid "PettyCash"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:243
@@ -39675,8 +39674,7 @@ msgid "The commission type no longer exist."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:63
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:66
-msgid "Unit of measure changed"
+msgid "Commision Type changed"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:72
@@ -39696,7 +39694,7 @@ msgid "Cannot delete this sales commission calculation method because it no long
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:123
-msgid "Cannot delete this sales commission type because sales people items have been created using this unit of measure"
+msgid "Cannot delete this sales commission type because sales people items have been created using this type"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:124
@@ -39704,13 +39702,11 @@ msgid "sales people that use this commission type"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:128
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:132
-msgid "unit of measure has been deleted"
+msgid "commision type has been deleted"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:146
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:158
-msgid "Could not get unit of measures because"
+msgid "Could not get commission types because"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:154
@@ -39726,8 +39722,7 @@ msgid "Review Commission Calculation Methods"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:195
-#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:204
-msgid "Could not retrieve the requested unit of measure, please try again."
+msgid "Could not retrieve the requested commission type, please try again."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:205
@@ -41537,12 +41532,12 @@ msgstr ""
 #: /home/tim/code/KwaMoja/SelectProduct.php:373
 #: /home/tim/code/KwaMoja/StockLocStatus.php:168
 #: /home/tim/code/KwaMoja/StockReorderLevel.php:61
-#: /home/tim/code/KwaMoja/StockSerialItems.php:114
-#: /home/tim/code/KwaMoja/StockSerialItems.php:117
-#: /home/tim/code/KwaMoja/StockSerialItems.php:120
-#: /home/tim/code/KwaMoja/StockSerialItems.php:125
-#: /home/tim/code/KwaMoja/StockSerialItems.php:129
-#: /home/tim/code/KwaMoja/StockSerialItems.php:133
+#: /home/tim/code/KwaMoja/StockSerialItems.php:112
+#: /home/tim/code/KwaMoja/StockSerialItems.php:115
+#: /home/tim/code/KwaMoja/StockSerialItems.php:118
+#: /home/tim/code/KwaMoja/StockSerialItems.php:123
+#: /home/tim/code/KwaMoja/StockSerialItems.php:127
+#: /home/tim/code/KwaMoja/StockSerialItems.php:131
 #: /home/tim/code/KwaMoja/StockStatus.php:104
 msgid "Quantity On Hand"
 msgstr ""
@@ -45029,68 +45024,68 @@ msgstr ""
 msgid "Total Move Qty"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:4
+#: /home/tim/code/KwaMoja/StockSerialItems.php:3
 msgid "Stock Of Controlled Items"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:13
+#: /home/tim/code/KwaMoja/StockSerialItems.php:12
 msgid "The stock code sent to this page appears to be invalid"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:19
+#: /home/tim/code/KwaMoja/StockSerialItems.php:18
 msgid "This page must be called with parameters specifying the item to show the serial references and quantities"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:19
+#: /home/tim/code/KwaMoja/StockSerialItems.php:18
 msgid "It cannot be displayed without the proper parameters being passed"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:32
+#: /home/tim/code/KwaMoja/StockSerialItems.php:31
 msgid "Could not retrieve the requested item because"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:45
+#: /home/tim/code/KwaMoja/StockSerialItems.php:44
 msgid "This item is either a kitset or assembly or a dummy part and cannot have a stock holding"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:45
+#: /home/tim/code/KwaMoja/StockSerialItems.php:44
 msgid "This page cannot be displayed"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:45
+#: /home/tim/code/KwaMoja/StockSerialItems.php:44
 msgid "Only serialised or controlled items can be displayed in this page"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:57
+#: /home/tim/code/KwaMoja/StockSerialItems.php:56
 msgid "Could not retrieve the stock location of the item because"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:58
+#: /home/tim/code/KwaMoja/StockSerialItems.php:57
 msgid "The SQL used to lookup the location was"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:76
+#: /home/tim/code/KwaMoja/StockSerialItems.php:74
 msgid "The serial numbers/batches held cannot be retrieved because"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:83
+#: /home/tim/code/KwaMoja/StockSerialItems.php:81
 msgid "Serialised items in"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:86
+#: /home/tim/code/KwaMoja/StockSerialItems.php:84
 msgid "Controlled items in"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:91
+#: /home/tim/code/KwaMoja/StockSerialItems.php:89
 msgid "In units of"
 msgstr ""
 
+#: /home/tim/code/KwaMoja/StockSerialItems.php:103
 #: /home/tim/code/KwaMoja/StockSerialItems.php:105
 #: /home/tim/code/KwaMoja/StockSerialItems.php:107
-#: /home/tim/code/KwaMoja/StockSerialItems.php:109
-#: /home/tim/code/KwaMoja/StockSerialItems.php:126
-#: /home/tim/code/KwaMoja/StockSerialItems.php:130
-#: /home/tim/code/KwaMoja/StockSerialItems.php:134
+#: /home/tim/code/KwaMoja/StockSerialItems.php:124
+#: /home/tim/code/KwaMoja/StockSerialItems.php:128
+#: /home/tim/code/KwaMoja/StockSerialItems.php:132
 #: /home/tim/code/KwaMoja/SupplierTenders.php:310
 #: /home/tim/code/KwaMoja/WorkOrderReceive.php:856
 #: /home/tim/code/KwaMoja/includes/InputSerialItems.php:120
@@ -45100,17 +45095,13 @@ msgstr ""
 msgid "Expiry Date"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/StockSerialItems.php:113
-#: /home/tim/code/KwaMoja/StockSerialItems.php:116
-#: /home/tim/code/KwaMoja/StockSerialItems.php:119
-#: /home/tim/code/KwaMoja/StockSerialItems.php:124
-#: /home/tim/code/KwaMoja/StockSerialItems.php:128
-#: /home/tim/code/KwaMoja/StockSerialItems.php:132
+#: /home/tim/code/KwaMoja/StockSerialItems.php:111
+#: /home/tim/code/KwaMoja/StockSerialItems.php:114
+#: /home/tim/code/KwaMoja/StockSerialItems.php:117
+#: /home/tim/code/KwaMoja/StockSerialItems.php:122
+#: /home/tim/code/KwaMoja/StockSerialItems.php:126
+#: /home/tim/code/KwaMoja/StockSerialItems.php:130
 msgid "Batch/Bundle Ref"
-msgstr ""
-
-#: /home/tim/code/KwaMoja/StockSerialItems.php:175
-msgid "Total quantity"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/StockStatus.php:24
@@ -46362,19 +46353,28 @@ msgstr ""
 msgid "Qty Yet To Invoice"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/SuppInvGRNs.php:287
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:277
+msgid "Fair Value per Unit in"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:279
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:319
+msgid "Transaction Tag"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:291
 msgid "Add Whole PO to Invoice"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/SuppInvGRNs.php:314
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:325
 msgid "Select All"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/SuppInvGRNs.php:315
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:326
 msgid "Deselect All"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/SuppInvGRNs.php:317
+#: /home/tim/code/KwaMoja/SuppInvGRNs.php:328
 msgid "Add to Invoice"
 msgstr ""
 
@@ -48749,6 +48749,10 @@ msgstr ""
 msgid "Romalpa Clause"
 msgstr ""
 
+#: /home/tim/code/KwaMoja/SystemParameters.php:729
+msgid "This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts."
+msgstr ""
+
 #: /home/tim/code/KwaMoja/SystemParameters.php:734
 msgid "Terms and Conditions of Sale"
 msgstr ""
@@ -50404,6 +50408,10 @@ msgstr ""
 msgid "The unit of measure no longer exist."
 msgstr ""
 
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:66
+msgid "Unit of measure changed"
+msgstr ""
+
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:75
 msgid "The unit of measure can not be created because another with the same name already exists."
 msgstr ""
@@ -50428,12 +50436,24 @@ msgstr ""
 msgid "inventory items that refer to this unit of measure"
 msgstr ""
 
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:132
+msgid "unit of measure has been deleted"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:158
+msgid "Could not get unit of measures because"
+msgstr ""
+
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:175
 msgid "Are you sure you wish to delete this unit of measure?"
 msgstr ""
 
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:186
 msgid "Review Units of Measure"
+msgstr ""
+
+#: /home/tim/code/KwaMoja/UnitsOfMeasure.php:204
+msgid "Could not retrieve the requested unit of measure, please try again."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/UnitsOfMeasure.php:214
@@ -59688,8 +59708,8 @@ msgstr ""
 #: /home/tim/code/KwaMoja/api/api_xml-rpc.php:4127
 #: /home/tim/code/KwaMoja/api/api_xml-rpc.php:4165
 #: /home/tim/code/KwaMoja/api/api_xml-rpc.php:4203
-#: /home/tim/code/KwaMoja/includes/Login.php:96
 #: /home/tim/code/KwaMoja/includes/Login.php:98
+#: /home/tim/code/KwaMoja/includes/Login.php:100
 msgid "User name"
 msgstr ""
 
@@ -63800,41 +63820,41 @@ msgstr ""
 msgid "E-Mail"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:7
+#: /home/tim/code/KwaMoja/includes/Login.php:9
 msgid "Login as user"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:7
+#: /home/tim/code/KwaMoja/includes/Login.php:9
 msgid "admin"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:7
+#: /home/tim/code/KwaMoja/includes/Login.php:9
 msgid "with password"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:7
+#: /home/tim/code/KwaMoja/includes/Login.php:9
 msgid "kwamoja"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:9
+#: /home/tim/code/KwaMoja/includes/Login.php:11
 msgid "Please login here"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:15
+#: /home/tim/code/KwaMoja/includes/Login.php:17
 msgid "Login screen"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:32
+#: /home/tim/code/KwaMoja/includes/Login.php:34
 msgid "Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:54
-#: /home/tim/code/KwaMoja/includes/header.php:97
+#: /home/tim/code/KwaMoja/includes/Login.php:56
+#: /home/tim/code/KwaMoja/includes/header.php:101
 msgid "Company"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/Login.php:111
-#: /home/tim/code/KwaMoja/includes/Login.php:114
+#: /home/tim/code/KwaMoja/includes/Login.php:113
+#: /home/tim/code/KwaMoja/includes/Login.php:116
 msgid "Login"
 msgstr ""
 
@@ -65768,82 +65788,82 @@ msgstr ""
 msgid "version"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:31
+#: /home/tim/code/KwaMoja/includes/header.php:35
 msgid "KwaMoja"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:96
+#: /home/tim/code/KwaMoja/includes/header.php:100
 msgid "Company Details"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:101
+#: /home/tim/code/KwaMoja/includes/header.php:105
 msgid "Change the settings for"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
-#: /home/tim/code/KwaMoja/includes/header.php:108
+#: /home/tim/code/KwaMoja/includes/header.php:111
+#: /home/tim/code/KwaMoja/includes/header.php:112
 msgid "Logout"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
+#: /home/tim/code/KwaMoja/includes/header.php:111
 msgid "Are you sure you wish to logout?"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:107
+#: /home/tim/code/KwaMoja/includes/header.php:111
 msgid "Confirm Logout"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:114
-#: /home/tim/code/KwaMoja/includes/header.php:121
+#: /home/tim/code/KwaMoja/includes/header.php:118
+#: /home/tim/code/KwaMoja/includes/header.php:125
 msgid "Read the manual"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:114
-#: /home/tim/code/KwaMoja/includes/header.php:122
+#: /home/tim/code/KwaMoja/includes/header.php:118
+#: /home/tim/code/KwaMoja/includes/header.php:126
 msgid "Help"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:143
+#: /home/tim/code/KwaMoja/includes/header.php:147
 msgid "Commonly used scripts"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:152
+#: /home/tim/code/KwaMoja/includes/header.php:156
 msgid "Add this script to your list of commonly used"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:153
+#: /home/tim/code/KwaMoja/includes/header.php:157
 msgid "Add to commonly used"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:158
+#: /home/tim/code/KwaMoja/includes/header.php:162
 msgid "Remove this script from your list of commonly used"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:159
+#: /home/tim/code/KwaMoja/includes/header.php:163
 msgid "Remove from commonly used"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:169
-#: /home/tim/code/KwaMoja/includes/header.php:170
+#: /home/tim/code/KwaMoja/includes/header.php:173
+#: /home/tim/code/KwaMoja/includes/header.php:174
 msgid "Show Dashboard"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:178
+#: /home/tim/code/KwaMoja/includes/header.php:182
 msgid "Return to the main menu"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:189
-#: /home/tim/code/KwaMoja/includes/header.php:191
+#: /home/tim/code/KwaMoja/includes/header.php:193
+#: /home/tim/code/KwaMoja/includes/header.php:195
 msgid "Small text size"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:194
-#: /home/tim/code/KwaMoja/includes/header.php:196
+#: /home/tim/code/KwaMoja/includes/header.php:198
+#: /home/tim/code/KwaMoja/includes/header.php:200
 msgid "Medium text size"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/includes/header.php:199
-#: /home/tim/code/KwaMoja/includes/header.php:201
+#: /home/tim/code/KwaMoja/includes/header.php:203
+#: /home/tim/code/KwaMoja/includes/header.php:205
 msgid "Large text size"
 msgstr ""
 
@@ -66272,139 +66292,139 @@ msgid "Please wait.............."
 msgstr ""
 
 #: /home/tim/code/KwaMoja/install/Page6.php:28
-#: /home/tim/code/KwaMoja/install/index.php:88
+#: /home/tim/code/KwaMoja/install/index.php:85
 msgid "Failed to connect the database management system"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:55
+#: /home/tim/code/KwaMoja/install/Page6.php:57
 msgid "The companies directory has been successfully created"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:64
+#: /home/tim/code/KwaMoja/install/Page6.php:66
 msgid "Your logo has been successfully uploaded"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:66
+#: /home/tim/code/KwaMoja/install/Page6.php:68
 msgid "Your logo could not be uploaded. You must copy this to your companies directory later."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:70
+#: /home/tim/code/KwaMoja/install/Page6.php:72
 msgid "This company name already exists"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:124
+#: /home/tim/code/KwaMoja/install/Page6.php:126
 msgid "Cannot open the configuration file"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:128
+#: /home/tim/code/KwaMoja/install/Page6.php:130
 msgid "Cannot write to the configuration file"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:133
+#: /home/tim/code/KwaMoja/install/Page6.php:135
 msgid "The config.php file has been created based on your settings."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:143
+#: /home/tim/code/KwaMoja/install/Page6.php:145
 msgid "Cannot write to the Companies.php file"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:190
+#: /home/tim/code/KwaMoja/install/Page6.php:192
 msgid "The database has been created."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:192
+#: /home/tim/code/KwaMoja/install/Page6.php:194
 msgid "There was an error creating the database."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:199
+#: /home/tim/code/KwaMoja/install/Page6.php:201
 msgid "The version number has been inserted."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:201
+#: /home/tim/code/KwaMoja/install/Page6.php:203
 msgid "There was an error inserting the version number"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:208
+#: /home/tim/code/KwaMoja/install/Page6.php:210
 msgid "The database update revision has been inserted."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:210
+#: /home/tim/code/KwaMoja/install/Page6.php:212
 msgid "There was an error inserting the DB revision number"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:230
+#: /home/tim/code/KwaMoja/install/Page6.php:232
 msgid "Administrator"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:246
+#: /home/tim/code/KwaMoja/install/Page6.php:248
 msgid "The admin user has been inserted."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:248
+#: /home/tim/code/KwaMoja/install/Page6.php:250
 msgid "There was an error inserting the admin user"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:286
+#: /home/tim/code/KwaMoja/install/Page6.php:288
 msgid "Your chosen chart of accounts has been uploaded"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:292
+#: /home/tim/code/KwaMoja/install/Page6.php:294
 msgid "The admin user has been given permissions on all GL accounts."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:294
+#: /home/tim/code/KwaMoja/install/Page6.php:296
 msgid "There was an error with creating permission for the admin user"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:301
+#: /home/tim/code/KwaMoja/install/Page6.php:303
 msgid "Populating the database with demo data."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1502
+#: /home/tim/code/KwaMoja/install/Page6.php:1504
 msgid "KwaMoja Installation Is Completed"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1505
+#: /home/tim/code/KwaMoja/install/Page6.php:1507
 msgid "The KwaMoja installation has been successfully completed."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1506
+#: /home/tim/code/KwaMoja/install/Page6.php:1508
 msgid "Before using your system please ensure that write permissions have been removed from all files except the companies folder."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1507
+#: /home/tim/code/KwaMoja/install/Page6.php:1509
 msgid "Click on the button below to start using KwaMoja."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1508
+#: /home/tim/code/KwaMoja/install/Page6.php:1510
 msgid "When you first sign in you will be taken to a series of screens to help you set KwaMoja up."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1509
+#: /home/tim/code/KwaMoja/install/Page6.php:1511
 msgid "Please enjoy using the software and hopefully contribute back to the project."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1515
+#: /home/tim/code/KwaMoja/install/Page6.php:1517
 msgid "Start KwaMoja"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/index.php:65
+#: /home/tim/code/KwaMoja/install/index.php:62
 msgid "The database host cannot be reached. Maybe you have typed it incorrectly."
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/index.php:125
+#: /home/tim/code/KwaMoja/install/index.php:123
 msgid "The database does not exist, and this database user does not have privileges to create it"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/index.php:222
+#: /home/tim/code/KwaMoja/install/index.php:227
 msgid "KwaMoja Installer"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/index.php:229
+#: /home/tim/code/KwaMoja/install/index.php:234
 msgid "KwaMoja Installation Wizard"
 msgstr ""
 
-#: /home/tim/code/KwaMoja/install/index.php:232
+#: /home/tim/code/KwaMoja/install/index.php:237
 msgid "It seems that the system has been already installed. If you want to install again, please remove the config.php file first"
 msgstr ""
 
