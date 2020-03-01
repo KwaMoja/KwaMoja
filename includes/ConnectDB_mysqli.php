@@ -201,6 +201,7 @@ function DB_Maintenance() {
 
 function DB_Txn_Begin() {
 	global $db;
+	DB_IgnoreForeignKeys();
 	mysqli_query($db, 'SET autocommit=0');
 	mysqli_query($db, 'START TRANSACTION');
 }
@@ -209,6 +210,7 @@ function DB_Txn_Commit() {
 	global $db;
 	mysqli_query($db, 'COMMIT');
 	mysqli_query($db, 'SET autocommit=1');
+	DB_ReinstateForeignKeys();
 }
 
 function DB_Txn_Rollback() {

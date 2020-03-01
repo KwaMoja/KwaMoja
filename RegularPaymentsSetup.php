@@ -8,7 +8,7 @@ $BookMark = 'RegularPayments';
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['Complete'])) {
@@ -159,12 +159,8 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 echo '<form method="post" id="RegularPaymentsSetup" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table>';
-echo '<tr>
-		<th colspan="2">
-			<h3>' . _('Regular General Ledger Payment') . '</h3>
-		</th>
-	</tr>';
+echo '<fieldset>
+		<legend>', _('Regular General Ledger Payment'), '</legend>';
 
 $Frequencies['D'] = _('Daily');
 $Frequencies['W'] = _('Weekly');
@@ -193,31 +189,33 @@ if (!isset($_POST['Currency']) or $_POST['Currency'] == '') {
 	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
-echo '<tr>
-		<td>' . _('Frequency Of Payment') . '</td>
-		<td>
-			<select autofocus="autofocus" name="Frequency">
-				<option value=""></option>';
+echo '<field>
+		<label for="Frequency">', _('Frequency Of Payment'), '</label>
+		<select autofocus="autofocus" name="Frequency">
+			<option value=""></option>';
 foreach ($Frequencies as $Initial => $Name) {
 	if ($Initial == $_POST['Frequency']) {
-		echo '<option selected="selected" value="' . $Initial . '">' . $Name . '</option>';
+		echo '<option selected="selected" value="', $Initial, '">', $Name, '</option>';
 	} else {
-		echo '<option value="' . $Initial . '">' . $Name . '</option>';
+		echo '<option value="', $Initial, '">', $Name, '</option>';
 	}
 }
 echo '</select>
-			&nbsp;&nbsp;&nbsp;' . _('Days') . '&nbsp;:&nbsp;&nbsp;&nbsp;<input type="number" min="0" max="366" step="1" class="number" size="4" name="Days" value="' . $_POST['Days'] . '" />
-			<i>' . _('The number of days from the start of the period that the payment is to be made') . '</i>
-		</td>
-	</tr>
-	<tr>
-		<td>' . _('Date of first payment') . '</td>
-		<td><input type="date" name="FirstPaymentDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ' . "'" . $_SESSION['DefaultDateFormat'] . "'" . ')" value="' . $_POST['FirstPaymentDate'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Date of Last payment') . '</td>
-		<td><input type="date" name="LastPaymentDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ' . "'" . $_SESSION['DefaultDateFormat'] . "'" . ')" value="' . $_POST['LastPaymentDate'] . '" /></td>
-	</tr>';
+	</field>';
+
+echo '<field>
+		<label for="Days">', _('Days'), '</label>
+		<input type="text" class="number" size="4" name="Days" value="', $_POST['Days'], '" />
+		<fieldhelp>', _('The number of days from the start of the period that the payment is to be made'), '</fieldhelp>
+	</field>
+	<field>
+		<label for="FirstPaymentDate">', _('Date of first payment'), '</label>
+		<input type="text" name="FirstPaymentDate" class="date" required="required" maxlength="10" size="11" />
+	</field>
+	<field>
+		<label for="LastPaymentDate">', _('Date of Last payment'), '</label>
+		<input type="text" name="LastPaymentDate" class="date" required="required" maxlength="10" size="11" />
+	</field>';
 
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
@@ -230,19 +228,17 @@ $SQL = "SELECT bankaccountname,
 			WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
 			ORDER BY bankaccountname";
-
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<tr>
-		<td>' . _('Bank Account') . ':</td>
-		<td><select name="BankAccount">';
-
+echo '<field>
+		<label for="BankAccount">', _('Bank Account'), ':</label>
+		<select name="BankAccount">';
 if (DB_num_rows($AccountsResults) == 0) {
-	echo '</select></td>
-		</tr>
-		</table>';
+	echo '</select>
+		</field>
+	</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 	include ('includes/footer.php');
 	exit;
@@ -251,161 +247,100 @@ if (DB_num_rows($AccountsResults) == 0) {
 	while ($MyRow = DB_fetch_array($AccountsResults)) {
 		/*list the bank account names */
 		if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . ' - ' . $MyRow['currcode'] . '</option>';
+			echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		} //isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']
 		else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . ' - ' . $MyRow['currcode'] . '</option>';
+			echo '<option value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}
 	} //$MyRow = DB_fetch_array($AccountsResults)
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 }
 
-echo '<tr>
-		<td>' . _('Currency of Payment') . ':</td>
+echo '<field>
+		<label for="Currency">', _('Currency of Payment'), ':</label>
 		<td><select required="required" name="Currency">';
 $SQL = "SELECT currency, currabrev, rate FROM currencies";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) == 0) {
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	prnMsg(_('No currencies are defined yet. Payments cannot be entered until a currency is defined'), 'error');
 } else {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['Currency'] == $MyRow['currabrev']) {
-			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . _($MyRow['currency']) . '</option>';
+			echo '<option selected="selected" value="', $MyRow['currabrev'], '">', _($MyRow['currency']), '</option>';
 		} else {
-			echo '<option value="' . $MyRow['currabrev'] . '">' . _($MyRow['currency']) . '</option>';
+			echo '<option value="', $MyRow['currabrev'], '">', _($MyRow['currency']), '</option>';
 		}
 	} //$MyRow = DB_fetch_array($Result)
 	echo '</select>
-			<i>' . _('The transaction currency does not need to be the same as the bank account currency') . '</i></td>
-		</tr>';
+		<fieldhelp>', _('The transaction currency does not need to be the same as the bank account currency'), '</fieldhelp>
+	</field>';
 }
+
+//Select the tag
 $SQL = "SELECT tagref,
 				tagdescription
-			FROM tags
-			ORDER BY tagdescription";
+		FROM tags
+		ORDER BY tagref";
 $Result = DB_query($SQL);
-echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-		<td><select name="Tag">
-			<option value="0">' . _('None') . '</option>';
+echo '<field>
+		<label for="tag">', _('GL Tag'), '</label>
+		<select multiple="multiple" name="tag[]">';
+echo '<option value="0">0 - ', _('None'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
-		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
+	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
+		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	} else {
-		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
+		echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	}
-} //$MyRow = DB_fetch_array($Result)
+}
 echo '</select>
-		</td>
-	</tr>';
-// End select Tag
-echo '<tr>
-		<td>' . _('Enter GL Account Manually') . ':</td>
-		<td><input type="text" name="GLManualCode" maxlength="12" size="12" onchange="return inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')"' . ' value="' . $_POST['GLManualCode'] . '"   /></td>
-	</tr>';
-
-echo '<tr>
-		<td>' . _('Select GL Group') . ':</td>
-		<td><select name="GLGroup" onchange="return ReloadForm(UpdateCodes)">';
-
-$SQL = "SELECT groupcode,
-				groupname
-			FROM accountgroups
-			WHERE language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY sequenceintb";
-
-$Result = DB_query($SQL);
-if (DB_num_rows($Result) == 0) {
-	echo '</select></td>
-		</tr>';
-	prnMsg(_('No General ledger account groups have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'), 'error');
-} else {
-	echo '<option value=""></option>';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['GLGroup']) and ($_POST['GLGroup'] == $MyRow['groupcode'])) {
-			echo '<option selected="selected" value="', $MyRow['groupcode'], '">', $MyRow['groupcode'], ' - ', $MyRow['groupname'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['groupcode'], '">', $MyRow['groupcode'], ' - ', $MyRow['groupname'] . '</option>';
-		}
-	} //$MyRow = DB_fetch_array($Result)
-	echo '</select>
-			<input type="submit" name="UpdateCodes" value="Select" /></td>
-			</tr>';
-}
-
-if (isset($_POST['GLGroup']) and $_POST['GLGroup'] != '') {
-	$SQL = "SELECT accountcode,
-					accountname
-			FROM chartmaster
-			WHERE groupcode='" . $_POST['GLGroup'] . "'
-				AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY accountcode";
-} else {
-	$SQL = "SELECT accountcode,
-					accountname
-			FROM chartmaster
-			WHERE chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
-			ORDER BY accountcode";
-}
-
-echo '<tr>
-		<td>' . _('Select GL Account') . ':</td>
-		<td><select name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">';
-
-$Result = DB_query($SQL);
-if (DB_num_rows($Result) == 0) {
-	echo '</select></td></tr>';
-	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'), 'error');
-} else {
-	echo '<option value=""></option>';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-		}
-	} //$MyRow = DB_fetch_array($Result)
-	echo '</select></td></tr>';
-}
+	</field>';
+// End select tag
+echo '<field>
+		<label for="GLCode">', _('Select GL Account'), ':</label>';
+GLSelect(2, 'GLManualCode');
+echo '<fieldhelp>', _('Select the account code for this transaction'), '</fieldhelp>
+	</field>';
 
 if (isset($_POST['GLNarrative'])) { // General Ledger Payment (Different than Bank Account) info to be inserted on gltrans.narrative, varchar(200).
-	echo '<tr>
-			<td>' . _('GL Narrative') . ':</td>
-			<td><input type="text" name="GLNarrative" maxlength="50" size="52" value="' . stripslashes($_POST['GLNarrative']) . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="GLNarrative">', _('GL Narrative'), ':</label>
+			<input type="text" name="GLNarrative" maxlength="50" size="52" value="', stripslashes($_POST['GLNarrative']), '" /></label>
+		</field>';
 } else {
-	echo '<tr>
-			<td>' . _('GL Narrative') . ':</td>
-			<td><input type="text" name="GLNarrative" maxlength="50" size="52" /></td>
-		</tr>';
+	echo '<field>
+			<label for="GLNarrative">', _('GL Narrative'), ':</label>
+			<input type="text" name="GLNarrative" maxlength="50" size="52" />
+		</field>';
 }
 
 if (isset($_POST['GLAmount'])) {
-	echo '<tr>
-			<td>' . _('Amount') . '</td>
-			<td><input type="text" name="GLAmount" maxlength="12" size="12" class="number" value="' . $_POST['GLAmount'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="GLAmount">', _('Amount'), '</label>
+			<input type="text" name="GLAmount" maxlength="12" size="12" class="number" value="', $_POST['GLAmount'], '" />
+		</field>';
 } else {
-	echo '<tr><td>' . _('Amount') . '</td>
-			<td><input type="text" name="GLAmount" maxlength="12" size="12" class="number" /></td>
-		</tr>';
+	echo '<field>
+			<label for="GLAmount">', _('Amount'), '</label>
+			<input type="text" name="GLAmount" maxlength="12" size="12" class="number" />
+		</field>';
 }
 
-echo '</table>';
+echo '</fieldset>';
 
 if (!isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type="submit" name="Add" value="' . _('Add New Regular Payment') . '" />
+			<input type="submit" name="Add" value="', _('Add New Regular Payment'), '" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="' . _('Update Regular Payment Details') . '" />
+			<input type="submit" name="Update" value="', _('Update Regular Payment Details'), '" />
 		</div>
-		<input type="hidden" name="ID" value="' . $_GET['Payment'] . '" />';
+		<input type="hidden" name="ID" value="', $_GET['Payment'], '" />';
 }
 echo '</form>';
 
@@ -434,33 +369,35 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	echo '<table>
 			<tr>
-				<th>' . _('Frequency') . '</th>
-				<th>' . _('Days into Period') . '</th>
-				<th>' . _('Bank Account') . '</th>
-				<th>' . _('GL Account') . '</th>
-				<th>' . _('GL Tag') . '</th>
-				<th>' . _('Amount of Payment') . '</th>
-				<th>' . _('Currency of payment') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('First payment Date') . '</th>
-				<th>' . _('Next payment Date') . '</th>
-				<th>' . _('Last payment Date') . '</th>
+				<th>', _('Frequency'), '</th>
+				<th>', _('Days into Period'), '</th>
+				<th>', _('Bank Account'), '</th>
+				<th>', _('GL Account'), '</th>
+				<th>', _('GL Tag'), '</th>
+				<th>', _('Amount of Payment'), '</th>
+				<th>', _('Currency of payment'), '</th>
+				<th>', _('Description'), '</th>
+				<th>', _('First payment Date'), '</th>
+				<th>', _('Next payment Date'), '</th>
+				<th>', _('Last payment Date'), '</th>
+				<th></th>
+				<th></th>
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr>
-				<td>' . $Frequencies[$MyRow['frequency']] . '</td>
-				<td class="number">' . $MyRow['days'] . '</td>
-				<td>' . $MyRow['bankaccountname'] . '</td>
-				<td>' . $MyRow['glcode'] . ' - ' . $MyRow['accountname'] . '</td>
-				<td>' . $MyRow['tag'] . '</td>
-				<td class="number">' . $MyRow['amount'] . '</td>
-				<td>' . $MyRow['currabrev'] . '</td>
-				<td>' . $MyRow['narrative'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['firstpayment']) . '</td>
-				<td>' . ConvertSQLDate($MyRow['nextpayment']) . '</td>
-				<td>' . ConvertSQLDate($MyRow['finalpayment']) . '</td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__) . '?Payment=' . $MyRow['id']) . '&Edit=True">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars(basename(__FILE__) . '?Payment=' . $MyRow['id']) . '&Complete=True">' . _('Complete') . '</a></td>
+		echo '<tr class="striped_row">
+				<td>', $Frequencies[$MyRow['frequency']], '</td>
+				<td class="number">', $MyRow['days'], '</td>
+				<td>', $MyRow['bankaccountname'], '</td>
+				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>
+				<td>', $MyRow['tag'], '</td>
+				<td class="number">', $MyRow['amount'], '</td>
+				<td>', $MyRow['currabrev'], '</td>
+				<td>', $MyRow['narrative'], '</td>
+				<td>', ConvertSQLDate($MyRow['firstpayment']), '</td>
+				<td>', ConvertSQLDate($MyRow['nextpayment']), '</td>
+				<td>', ConvertSQLDate($MyRow['finalpayment']), '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), '?Payment=', $MyRow['id']), '&Edit=True">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), '?Payment=', $MyRow['id']), '&Complete=True">', _('Complete'), '</a></td>
 			</tr>';
 	}
 	echo '</table>';

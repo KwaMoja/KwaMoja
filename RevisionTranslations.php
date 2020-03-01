@@ -19,7 +19,7 @@ if (isset($_POST['Submit'])) {
 		if (isset($_POST['Revised' . $i]) and ($_POST['Revised' . $i] == '1')) {
 			$SQLUpdate = "UPDATE stockdescriptiontranslations
 						SET needsrevision = '0',
-							descriptiontranslation = '" . $_POST['DescriptionTranslation' . $i] . "',
+							descriptiontranslation = '" . $_POST['DescriptionTranslation' . $i] . "'
 						WHERE stockid = '" . $_POST['StockID' . $i] . "'
 							AND language_id = '" . $_POST['LanguageID' . $i] . "'";
 			$ResultUpdate = DB_query($SQLUpdate, '', '', true);

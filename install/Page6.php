@@ -1081,7 +1081,6 @@ $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `ca
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','GL Accounts Authorised Users Maintenance','/GLAccountUsers.php',6)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','GL Budgets','/GLBudgets.php',2)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','GL Tags','/GLTags.php',5)";
-$SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','Set up a RegularPayment','/RegularPaymentsSetup.php',10)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','User Authorised GL Accounts Maintenance','/UserGLAccounts.php',7)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Maintenance','User Authorized Bank Accounts','/UserBankAccounts.php',9)";
 $SQL[] = "INSERT INTO `menuitems` (`secroleid`, `modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES (8,'GL','Reports','Account Inquiry','/SelectGLAccount.php',2)";

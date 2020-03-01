@@ -29,7 +29,7 @@ echo '</select>
 		</li>';
 
 echo '<li>
-			<label for="TimeZone">' . _("Time Zone") . ': </label>
+			<label for="TimeZone">' . _('Time Zone') . ': </label>
 			<select name="TimeZone">';
 include ('timezone.php');
 echo '</select>
@@ -38,7 +38,7 @@ echo '</select>
 echo '<li>
 			<label for="Logo">' . _('Company logo file') . ': </label>
 			<input type="file" accept="image/jpg" name="LogoFile" title="' . _('A jpg file up to 10kb, and not greater than 170px x 80px') . '" />
-			<span>' . _("jpg file to 10kb, and not greater than 170px x 80px") . '<br />' . _('If you do not select a file, the default KwaMoja logo will be used') . '</span>
+			<span>' . _('jpg file to 10kb, and not greater than 170px x 80px') . '<br />' . _('If you do not select a file, the default KwaMoja logo will be used') . '</span>
 		</li>
 	</ul>
 </fieldset>';
@@ -48,7 +48,7 @@ echo '<fieldset>
 				<ul>
 					<li>
 						<label for="InstallDemo">' . _('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
-						<span>' . _("KwaMojaDemo site and data will be installed") . '</span>
+						<span>' . _('KwaMoja Demo site and data will be installed') . '</span>
 					</li>
 				</ul>
 		</fieldset>';

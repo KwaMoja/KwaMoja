@@ -165,7 +165,11 @@ if (isset($_POST['next']) and isset($_SESSION['Installer']['CurrentPage']) and $
 	$_SESSION['Installer']['Email'] = 'info@example.com';
 	$_SESSION['Installer']['AdminAccount'] = $_POST['adminaccount'];
 	$_SESSION['Installer']['KwaMojaPassword'] = $_POST['KwaMojaPassword'];
-	$_SESSION['Installer']['Demo'] = $_POST['Demo'];
+	if (isset($_POST['Demo'])) {
+		$_SESSION['Installer']['Demo'] = $_POST['Demo'];
+	} else {
+		$_SESSION['Installer']['Demo'] = 'No';
+	}
 }
 
 if (isset($_SESSION['Installer']['CurrentPage']) and $_SESSION['Installer']['CurrentPage'] == 5) {

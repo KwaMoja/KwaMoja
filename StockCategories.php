@@ -157,6 +157,7 @@ if (isset($_POST['submit'])) {
 									 issueglact = '" . $_POST['IssueGLAct'] . "',
 									 purchpricevaract = '" . $_POST['PurchPriceVarAct'] . "',
 									 materialuseagevarac = '" . $_POST['MaterialUseageVarAc'] . "',
+									 donationact = '" . $_POST['DonationAct'] . "',
 									 wipact = '" . $_POST['WIPAct'] . "'
 								WHERE categoryid = '" . stripslashes($SelectedCategory) . "'";
 		$ErrMsg = _('Could not update the stock category') . $_POST['CategoryDescription'] . _('because');
@@ -235,6 +236,7 @@ if (isset($_POST['submit'])) {
 											issueglact,
 											purchpricevaract,
 											materialuseagevarac,
+											donationsact,
 											wipact
 										) VALUES (
 											'" . $_POST['CategoryID'] . "',
@@ -246,6 +248,7 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['IssueGLAct'] . "',
 											'" . $_POST['PurchPriceVarAct'] . "',
 											'" . $_POST['MaterialUseageVarAc'] . "',
+											'" . $_POST['DonationAct'] . "',
 											'" . $_POST['WIPAct'] . "')";
 		$ErrMsg = _('Could not insert the new stock category') . $_POST['CategoryDescription'] . _('because');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -487,8 +490,14 @@ if (isset($_POST['StockType']) and $_POST['StockType'] == 'L') {
 }
 echo ':</label>';
 GLSelect(1, 'MaterialUseageVarAc');
-echo '</field>
-	</fieldset>';
+echo '</field>';
+
+echo '<field>
+		<label for="DonationAct">', _('Donations GL Code'), ':</label>';
+GLSelect(1, 'DonationAct');
+echo '</select>';
+
+echo '</fieldset>';
 
 if (isset($SelectedCategory)) {
 	//editing an existing stock category

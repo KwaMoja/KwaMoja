@@ -1,34 +1,31 @@
 <?php
-
 /* Script to import fixed assets into a specified period*/
 
-include('includes/session.php');
+include ('includes/session.php');
 $Title = _('Import Fixed Assets');
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
+include ('includes/header.php');
+include ('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/fixed_assets.png" title="' . _('Import Fixed Assets from .csv file') . '" />' . ' ' . _('Import Fixed Assets from .csv file') . '</p>';
 
 // If this script is called with a file object, then the file contents are imported
 // If this script is called with the gettemplate flag, then a template file is served
 // Otherwise, a file upload form is displayed
-
-$FieldNames = array(
-	'Description',			//  0 'Title of the fixed asset',
-	'LongDescription',		//  1 'Description of the fixed asset',
-	'AssetCategoryID',		//  2 'Asset category id',
-	'SerialNo',				//  3 'Serial number',
-	'BarCode',				//  4 'Bar code',
-	'AssetLocationCode',	//  5 'Asset location code',
-	'Cost',					//  6 'Cost',
-	'AccumDepn',			//  7 'Accumulated depreciation',
-	'DepnType',				//  8 'Depreciation type - SL or DV',
-	'DepnRate',				//  9 'Depreciation rate',
-	'DatePurchased'			// 10 'Date of purchase',
+$FieldNames = array('Description', //  0 'Title of the fixed asset',
+'LongDescription', //  1 'Description of the fixed asset',
+'AssetCategoryID', //  2 'Asset category id',
+'SerialNo', //  3 'Serial number',
+'BarCode', //  4 'Bar code',
+'AssetLocationCode', //  5 'Asset location code',
+'Cost', //  6 'Cost',
+'AccumDepn', //  7 'Accumulated depreciation',
+'DepnType', //  8 'Depreciation type - SL or DV',
+'DepnRate', //  9 'Depreciation rate',
+'DatePurchased'
+// 10 'Date of purchase',
 );
 
 if ($_FILES['SelectedAssetFile']['name']) { //start file processing
-
 	//initialize
 	$InputError = false;
 
@@ -42,7 +39,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	if (count($HeaderRow) != count($FieldNames)) {
 		prnMsg(_('File contains') . ' ' . count($HeaderRow) . ' ' . _('columns, expected') . ' ' . count($FieldNames) . '. ' . _('Study a downloaded template to see the format for the file'), 'error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include ('includes/footer.php');
 		exit;
 	}
 
@@ -50,9 +47,9 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	$i = 0;
 	foreach ($HeaderRow as $FieldName) {
 		if (mb_strtoupper($FieldName) != mb_strtoupper($FieldNames[$i])) {
-			prnMsg(_('The selected file contains fields in the incorrect order (' . mb_strtoupper($FieldName) . ' != ' . mb_strtoupper($FieldNames[$i]) . _('. Download a template and ensure that fields are in the same sequence as the template.')), 'error');
+			prnMsg(_('The selected file contains fields in the incorrect order (' . mb_strtoupper($FieldName) . ' != ' . mb_strtoupper($FieldNames[$i]) . '. ' . _('Download a template and ensure that fields are in the same sequence as the template.')), 'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 		}
 		++$i;
@@ -63,57 +60,57 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 	//loop through file rows
 	$Row = 1;
-	while (($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE) {
+	while (($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false) {
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldNames)) {
 			prnMsg(count($FieldNames) . ' ' . _('fields are required, but') . ' ' . $FieldCount . ' ' . _('fields were received'), 'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include ('includes/footer.php');
 			exit;
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		for ($i = 0; $i < count($MyRow); $i++) {
+		for ($i = 0;$i < count($MyRow);$i++) {
 			$MyRow[$i] = trim($MyRow[$i]);
 			switch ($i) {
 				case 0:
 					$Description = $MyRow[$i];
-					break;
+				break;
 				case 1:
 					$LongDescription = $MyRow[$i];
-					break;
+				break;
 				case 2:
 					$AssetCategoryID = $MyRow[$i];
-					break;
+				break;
 				case 3:
 					$SerialNo = $MyRow[$i];
-					break;
+				break;
 				case 4:
 					$BarCode = $MyRow[$i];
-					break;
+				break;
 				case 5:
 					$AssetLocationCode = $MyRow[$i];
-					break;
+				break;
 				case 6:
 					$Cost = $MyRow[$i];
-					break;
+				break;
 				case 7:
 					$AccumDepn = $MyRow[$i];
-					break;
+				break;
 				case 8:
 					$DepnType = mb_strtoupper($MyRow[$i]);
-					break;
+				break;
 				case 9:
 					$DepnRate = $MyRow[$i];
-					break;
+				break;
 				case 10:
 					$DatePurchased = $MyRow[$i];
-					break;
+				break;
 			} //end switch
+			
 		} //end loop around fields from import
-
 		if (mb_strlen($Description) == 0 or mb_strlen($Description) > 50) {
 			prnMsg('The description of the asset is expected to be more than 3 characters long and less than 50 characters long', 'error');
 			echo '<br />' . _('Row') . ':' . $Row . ' - ' . _('Invalid Description') . ': ' . $Description;
@@ -175,7 +172,6 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		}
 
 		if ($InputError == false) { //no errors
-
 			$TransNo = GetNextTransNo(49);
 			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']));
 
@@ -208,7 +204,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no() == 0) { //the insert of the new code worked so bang in the fixedassettrans records too
-
+				
 
 				$AssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				$SQL = "INSERT INTO fixedassettrans ( assetid,
@@ -272,11 +268,9 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 	fclose($FileHandle);
 
 } elseif (isset($_POST['gettemplate']) or isset($_GET['gettemplate'])) { //download an import template
-
 	echo '<br /><br /><br />"' . implode('","', $FieldNames) . '"<br /><br /><br />';
 
 } else { //show file upload form
-
 	echo '
 		<br />
 		<a href="Z_ImportFixedAssets.php?gettemplate=1">' . _('Get Import Template') . '</a>
@@ -307,5 +301,5 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 }
 
-include('includes/footer.php');
+include ('includes/footer.php');
 ?>

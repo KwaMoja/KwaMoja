@@ -1,7 +1,6 @@
 <?php
-
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
- */
+*/
 
 class SuppTrans {
 
@@ -56,7 +55,7 @@ class SuppTrans {
 	function GetTaxes() {
 
 		/*Gets the Taxes and rates applicable to the tax group of the supplier
-		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
+		 and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
 
 		$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
@@ -81,7 +80,7 @@ class SuppTrans {
 			$this->Taxes[$MyRow['calculationorder']] = new Tax($MyRow['calculationorder'], $MyRow['taxauthid'], $MyRow['description'], $MyRow['taxrate'], $MyRow['taxontax'], $MyRow['purchtaxglaccount']);
 		}
 	} //end method GetTaxes()
-
+	
 
 	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID = 0, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef) {
 
@@ -103,7 +102,6 @@ class SuppTrans {
 
 	function Copy_GRN_To_Trans($GRNSrc) {
 		if ($GRNSrc->This_QuantityInv != 0 and isset($GRNSrc->This_QuantityInv)) {
-
 			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, $GRNSrc->PODetailItem, $GRNSrc->ItemCode, $GRNSrc->ItemDescription, $GRNSrc->QtyRecd, $GRNSrc->Prev_QuantityInv, $GRNSrc->This_QuantityInv, $GRNSrc->OrderPrice, $GRNSrc->ChgPrice, $GRNSrc->Complete, $GRNSrc->StdCostUnit, $GRNSrc->ShiptRef, $GRNSrc->JobRef, $GRNSrc->GLCode, $GRNSrc->PONo, $GRNSrc->AssetID, $GRNSrc->Hold, $GRNSrc->DecimalPlaces, $GRNSrc->GRNBatchNo, $GRNSrc->SupplierRef);
 			return 1;
 		}
@@ -168,35 +166,35 @@ class SuppTrans {
 	function Total_GRN_Value() {
 		$TotalGRNs = 0;
 		foreach ($this->GRNs as $GRN) {
-			$TotalGRNs += ($GRN->This_QuantityInv * $GRN->ChgPrice);
+			$TotalGRNs+= ($GRN->This_QuantityInv * $GRN->ChgPrice);
 		}
 		return $TotalGRNs;
 	}
 	function Total_Shipts_Value() {
 		$TotalShiptValue = 0;
 		foreach ($this->Shipts as $Shipt) {
-			$TotalShiptValue += $Shipt->Amount;
+			$TotalShiptValue+= $Shipt->Amount;
 		}
 		return $TotalShiptValue;
 	}
 	function Total_GL_Value() {
 		$TotalGLValue = 0;
 		foreach ($this->GLCodes as $GL) {
-			$TotalGLValue += $GL->Amount;
+			$TotalGLValue+= $GL->Amount;
 		}
 		return $TotalGLValue;
 	}
 	function Total_Assets_Value() {
 		$TotalAssetValue = 0;
 		foreach ($this->Assets as $Asset) {
-			$TotalAssetValue += $Asset->Amount;
+			$TotalAssetValue+= $Asset->Amount;
 		}
 		return $TotalAssetValue;
 	}
 	function Total_Contracts_Value() {
 		$TotalContractsValue = 0;
 		foreach ($this->Contracts as $Contract) {
-			$TotalContractsValue += $Contract->Amount;
+			$TotalContractsValue+= $Contract->Amount;
 		}
 		return $TotalContractsValue;
 	}
@@ -206,7 +204,7 @@ class SuppTrans {
 class GRNs {
 
 	/* Contains relavent information from the PurchOrderDetails as well to provide in cached form,
-	all the info to do the necessary entries without looking up ie additional queries of the database again */
+	 all the info to do the necessary entries without looking up ie additional queries of the database again */
 
 	var $GRNNo;
 	var $PODetailItem;
@@ -230,8 +228,6 @@ class GRNs {
 	var $SupplierRef;
 
 	function __construct($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit = 0, $ShiptRef, $JobRef, $GLCode, $PONo, $AssetID, $Hold = 0, $DecimalPlaces = 2, $GRNBatchNo, $SupplierRef = '') {
-
-
 
 		/* Constructor function to add a new GRNs object with passed params */
 		$this->GRNNo = $GRNNo;
@@ -366,7 +362,6 @@ class Contract {
 		$this->AnticipatedCost = $AnticipatedCost;
 	}
 }
-
 
 class Tax {
 	var $TaxCalculationOrder;

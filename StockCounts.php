@@ -185,7 +185,7 @@ if ($_GET['Action'] == 'Enter') {
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 0) {
 				$InputError = 1;
-				prnMsg(_('Stock item "' . $StockID . '" is not a part code that has been added to the stock check file'), 'warn');
+				prnMsg(_('Stock item') . ' ' . $StockID . ' ' . _('is not a part code that has been added to the stock check file'), 'warn');
 			}
 
 			//next validate inputs are sensible

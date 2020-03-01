@@ -7,13 +7,16 @@ $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 
-if (!function_exists('curl_init')) {
-	prnMsg('This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available', 'error');
+include ('includes/GoogleTranslator.php');
+
+if (!isset($_POST['Continue'])) {
+	prnMsg(_('This can take a very long time, click on the button below to proceed'), 'warn');
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<input type="submit" name="Continue" value="', _('Continue'), '" />';
 	include ('includes/footer.php');
 	exit;
 }
-
-include ('includes/GoogleTranslator.php');
 
 $SourceLanguage = mb_substr($_SESSION['Language'], 0, 2);
 
@@ -31,7 +34,7 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid,
 				language_id";
 $Result = DB_query($SQL);
-echo $SQL;
+
 if (DB_num_rows($Result) != 0) {
 	echo '<p class="page_title_text" align="center">
 			<strong>', _('Description Automatic Translation for empty translations'), '</strong>
@@ -65,7 +68,10 @@ if (DB_num_rows($Result) != 0) {
 					<td>', $TranslatedText, '</td>
 				</tr>';
 		}
-		if ($MyRow['longdescriptiontranslation'] == '') {
+		$SQL = "SELECT longdescriptiontranslation FROM stocklongdescriptiontranslations WHERE stockid='" . $MyRow['stockid'] . "' AND language_id='" . $MyRow['language_id'] . "'";
+		$DescriptionResult = DB_query($SQL);
+		$DescriptionRow = DB_fetch_array($DescriptionResult);
+		if ($DescriptionRow['longdescriptiontranslation'] == '') {
 			$TargetLanguage = mb_substr($MyRow['language_id'], 0, 2);
 			$TranslatedText = translate_via_google_translator($MyRow['longdescription'], $TargetLanguage, $SourceLanguage);
 

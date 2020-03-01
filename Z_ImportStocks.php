@@ -216,7 +216,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 		if ($MyRow[17] == '') {
 			$InputError = 1;
-			prnMsg(_('ItemPDF must contain either a filename, or the keyword `none`'), 'error');
+			prnMsg(_('ItemPDF must contain either a filename, or the keyword none'), 'error');
 		}
 
 		if ($InputError != 1) {
