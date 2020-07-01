@@ -99,12 +99,13 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 		$Error = 1;
 	}
 	if ($Error == 0) {
+		$Tags = implode(',', $_POST['Tag']);
 		if (isset($_POST['Update'])) {
 			$SQL = "UPDATE regularpayments SET frequency='" . $_POST['Frequency'] . "',
 												days='" . $_POST['Days'] . "',
 												glcode='" . $_POST['GLManualCode'] . "',
 												bankaccountcode='" . $_POST['BankAccount'] . "',
-												tag='" . $_POST['Tag'] . "',
+												tag='" . $Tags . "',
 												amount='" . $_POST['GLAmount'] . "',
 												currabrev='" . $_POST['Currency'] . "',
 												narrative='" . $_POST['GLNarrative'] . "',
@@ -130,7 +131,7 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 												'" . $_POST['Days'] . "',
 												'" . $_POST['GLManualCode'] . "',
 												'" . $_POST['BankAccount'] . "',
-												'" . $_POST['Tag'] . "',
+												'" . $Tags . "',
 												'" . $_POST['GLAmount'] . "',
 												'" . $_POST['Currency'] . "',
 												'" . $_POST['GLNarrative'] . "',
@@ -188,7 +189,10 @@ if (!isset($_POST['LastPaymentDate'])) {
 if (!isset($_POST['Currency']) or $_POST['Currency'] == '') {
 	$_POST['Currency'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
-
+if (!isset($_POST['Tag'])) {
+	$_POST['Tag'] = '0';
+}
+$Tags = explode(',', $_POST['Tag']);
 echo '<field>
 		<label for="Frequency">', _('Frequency Of Payment'), '</label>
 		<select autofocus="autofocus" name="Frequency">
@@ -210,11 +214,11 @@ echo '<field>
 	</field>
 	<field>
 		<label for="FirstPaymentDate">', _('Date of first payment'), '</label>
-		<input type="text" name="FirstPaymentDate" class="date" required="required" maxlength="10" size="11" />
+		<input type="text" name="FirstPaymentDate" class="date" required="required" maxlength="10" size="11" value="', $_POST['FirstPaymentDate'], '" />
 	</field>
 	<field>
 		<label for="LastPaymentDate">', _('Date of Last payment'), '</label>
-		<input type="text" name="LastPaymentDate" class="date" required="required" maxlength="10" size="11" />
+		<input type="text" name="LastPaymentDate" class="date" required="required" maxlength="10" size="11" value="', $_POST['LastPaymentDate'], '" />
 	</field>';
 
 $SQL = "SELECT bankaccountname,
@@ -259,7 +263,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 
 echo '<field>
 		<label for="Currency">', _('Currency of Payment'), ':</label>
-		<td><select required="required" name="Currency">';
+		<select required="required" name="Currency">';
 $SQL = "SELECT currency, currabrev, rate FROM currencies";
 $Result = DB_query($SQL);
 
@@ -287,11 +291,11 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 $Result = DB_query($SQL);
 echo '<field>
-		<label for="tag">', _('GL Tag'), '</label>
-		<select multiple="multiple" name="tag[]">';
+		<label for="Tag">', _('GL Tag'), '</label>
+		<select multiple="multiple" name="Tag[]">';
 echo '<option value="0">0 - ', _('None'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
+	if (in_array($MyRow['tagref'], $Tags) or in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
 		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
 	} else {
 		echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -373,7 +377,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 				<th>', _('Days into Period'), '</th>
 				<th>', _('Bank Account'), '</th>
 				<th>', _('GL Account'), '</th>
-				<th>', _('GL Tag'), '</th>
+				<th>', _('GL Tags'), '</th>
 				<th>', _('Amount of Payment'), '</th>
 				<th>', _('Currency of payment'), '</th>
 				<th>', _('Description'), '</th>
@@ -384,20 +388,28 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 				<th></th>
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
+		$Tags = explode(',', $MyRow['tag']);
+		$TagText = '';
+		foreach ($Tags as $Tag) {
+			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
+			$TagResult = DB_query($TagSQL);
+			$TagRow = DB_fetch_array($TagResult);
+			$TagText.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
+		}
 		echo '<tr class="striped_row">
 				<td>', $Frequencies[$MyRow['frequency']], '</td>
 				<td class="number">', $MyRow['days'], '</td>
 				<td>', $MyRow['bankaccountname'], '</td>
 				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>
-				<td>', $MyRow['tag'], '</td>
+				<td>', $TagText, '</td>
 				<td class="number">', $MyRow['amount'], '</td>
 				<td>', $MyRow['currabrev'], '</td>
 				<td>', $MyRow['narrative'], '</td>
 				<td>', ConvertSQLDate($MyRow['firstpayment']), '</td>
 				<td>', ConvertSQLDate($MyRow['nextpayment']), '</td>
 				<td>', ConvertSQLDate($MyRow['finalpayment']), '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), '?Payment=', $MyRow['id']), '&Edit=True">', _('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), '?Payment=', $MyRow['id']), '&Complete=True">', _('Complete'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__) . '?Payment=' . urlencode($MyRow['id'])), '&Edit=True">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__) . '?Payment=' . urlencode($MyRow['id'])), '&Complete=True">', _('Complete'), '</a></td>
 			</tr>';
 	}
 	echo '</table>';

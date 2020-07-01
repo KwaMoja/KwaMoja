@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-29 16:11+0000\n"
+"POT-Creation-Date: 2020-03-08 00:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -579,7 +579,7 @@ msgstr "Метод ранжирования успешно сохранен в �
 #: /home/tim/code/KwaMoja/ProductSpecs.php:445
 #: /home/tim/code/KwaMoja/PurchData.php:325
 #: /home/tim/code/KwaMoja/QATests.php:455
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:462
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:411
 #: /home/tim/code/KwaMoja/SalesCategories.php:365
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:167
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:164
@@ -811,8 +811,8 @@ msgstr "были изменены в группу учетных записей"
 #: /home/tim/code/KwaMoja/KCMCViewPatientHistory.php:51
 #: /home/tim/code/KwaMoja/KCMCWardOverview.php:10
 #: /home/tim/code/KwaMoja/KCMCWardOverview.php:37
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:80
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:108
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:74
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:102
 #: /home/tim/code/KwaMoja/MRPReport.php:535
 #: /home/tim/code/KwaMoja/MaintenanceTasks.php:12
 #: /home/tim/code/KwaMoja/MaintenanceUserSchedule.php:11
@@ -2633,8 +2633,8 @@ msgstr "Акции"
 #: /home/tim/code/KwaMoja/ProjectBOM.php:154
 #: /home/tim/code/KwaMoja/ProjectBOM.php:261
 #: /home/tim/code/KwaMoja/ProjectOtherReqts.php:91
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:69
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:444
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:212
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:383
 #: /home/tim/code/KwaMoja/RelatedItemsUpdate.php:150
 #: /home/tim/code/KwaMoja/ReorderLevel.php:291
 #: /home/tim/code/KwaMoja/ReorderLevelLocation.php:74
@@ -3154,6 +3154,8 @@ msgstr "не может быть восстановлено, потому что
 #: /home/tim/code/KwaMoja/PurchData.php:147
 #: /home/tim/code/KwaMoja/PurchData.php:353
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:249
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:103
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:132
 #: /home/tim/code/KwaMoja/ReverseGRN.php:196
 #: /home/tim/code/KwaMoja/ReverseGRN.php:211
 #: /home/tim/code/KwaMoja/ReverseGRN.php:392
@@ -6334,9 +6336,9 @@ msgstr "Остатки на банковском счете"
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:33
 #: /home/tim/code/KwaMoja/PDFChequeListing.php:51
 #: /home/tim/code/KwaMoja/Payments.php:986
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:64
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:239
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:439
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:205
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:240
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:378
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:152
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:258
 msgid "Bank Account"
@@ -6668,6 +6670,7 @@ msgstr "Формат импорта"
 #: /home/tim/code/KwaMoja/PurchData.php:293
 #: /home/tim/code/KwaMoja/PurchData.php:472
 #: /home/tim/code/KwaMoja/PurchData.php:618
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:211
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:137
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:234
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:294
@@ -7117,8 +7120,9 @@ msgstr "ссылка"
 #: /home/tim/code/KwaMoja/PcReportTab.php:354
 #: /home/tim/code/KwaMoja/PrintCheque.php:81
 #: /home/tim/code/KwaMoja/PrintCheque.php:95
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:389
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:393
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:208
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:327
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:332
 #: /home/tim/code/KwaMoja/SalesCommissionReports.php:70
 #: /home/tim/code/KwaMoja/SalesCommissionStatements.php:70
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:612
@@ -7234,7 +7238,7 @@ msgstr "SQL-запросы не могут быть получены из-за �
 #: /home/tim/code/KwaMoja/KCMCRadiology.php:654
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:29
 #: /home/tim/code/KwaMoja/Payments.php:982
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:235
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:236
 #: /home/tim/code/KwaMoja/SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "SQL, используемый для получения банковских счетов, был"
@@ -14865,8 +14869,8 @@ msgstr "Не удалось получить данные об оплате"
 #: /home/tim/code/KwaMoja/GLJournal.php:604
 #: /home/tim/code/KwaMoja/GLTransInquiry.php:42
 #: /home/tim/code/KwaMoja/Payments.php:1244
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:65
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:440
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:206
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:379
 #: /home/tim/code/KwaMoja/SalesPeople.php:198
 #: /home/tim/code/KwaMoja/SupplierTransInquiry.php:159
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:149
@@ -16268,6 +16272,7 @@ msgstr "Невозможно вставить тег GL для строки жу
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:200
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:202
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:232
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:109
 #: /home/tim/code/KwaMoja/StockAdjustments.php:390
 #: /home/tim/code/KwaMoja/StockAdjustments.php:417
 #: /home/tim/code/KwaMoja/StockTransfers.php:305
@@ -16288,6 +16293,7 @@ msgstr "SQL, который не смог вставить банковскую 
 #: /home/tim/code/KwaMoja/CustomerReceipt.php:434
 #: /home/tim/code/KwaMoja/Payments.php:754
 #: /home/tim/code/KwaMoja/Payments.php:786
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:162
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Невозможно вставить банковскую транзакцию с использованием SQL"
 
@@ -16378,7 +16384,7 @@ msgstr "Сведения о клиенте не могут быть получе
 #: /home/tim/code/KwaMoja/KCMCRadiology.php:653
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:28
 #: /home/tim/code/KwaMoja/Payments.php:981
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:234
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:235
 msgid "The bank accounts could not be retrieved because"
 msgstr "Не удалось получить банковские счета, поскольку"
 
@@ -16538,7 +16544,7 @@ msgstr "Тег"
 #: /home/tim/code/KwaMoja/PcExpenses.php:303
 #: /home/tim/code/KwaMoja/PcExpenses.php:321
 #: /home/tim/code/KwaMoja/PcTabs.php:475 /home/tim/code/KwaMoja/PcTabs.php:494
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:294
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:296
 #: /home/tim/code/KwaMoja/StockAdjustments.php:645
 #: /home/tim/code/KwaMoja/StockTransfers.php:884
 #: /home/tim/code/KwaMoja/SuppTransGLAnalysis.php:277
@@ -21040,7 +21046,6 @@ msgstr "Для диапазона периода"
 #: /home/tim/code/KwaMoja/GLAccountInquiry.php:94
 #: /home/tim/code/KwaMoja/GLAccountReport.php:297
 #: /home/tim/code/KwaMoja/Payments.php:1211
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:292
 #: /home/tim/code/KwaMoja/StockAdjustments.php:636
 #: /home/tim/code/KwaMoja/StockTransfers.php:875
 #: /home/tim/code/KwaMoja/SuppTransGLAnalysis.php:268
@@ -21147,7 +21152,7 @@ msgstr "Выбранный период от фактического после
 #: /home/tim/code/KwaMoja/GLBudgets.php:49
 #: /home/tim/code/KwaMoja/GLJournal.php:508
 #: /home/tim/code/KwaMoja/Payments.php:1170
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:356
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:308
 msgid "Select GL Account"
 msgstr "Выберите аккаунт GL"
 
@@ -22062,7 +22067,6 @@ msgid "General ledger account selection"
 msgstr "Выбор счета в Главной книге"
 
 #: /home/tim/code/KwaMoja/GLBudgets.php:54
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:362
 msgid "No General ledger accounts have been set up yet"
 msgstr "Нет учетных записей Главной книги"
 
@@ -22537,8 +22541,7 @@ msgstr "Описание шаблона"
 #: /home/tim/code/KwaMoja/GLJournal.php:204
 #: /home/tim/code/KwaMoja/GLJournal.php:538
 #: /home/tim/code/KwaMoja/GLJournal.php:603
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:66
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:441
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:294
 msgid "GL Tag"
 msgstr "Тег GL"
 
@@ -22623,8 +22626,8 @@ msgstr "Ввод строки журнала"
 #: /home/tim/code/KwaMoja/GLJournal.php:588
 #: /home/tim/code/KwaMoja/Payments.php:1183
 #: /home/tim/code/KwaMoja/Payments.php:1189
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:377
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:382
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:315
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:320
 msgid "GL Narrative"
 msgstr "GL Повествование"
 
@@ -23827,7 +23830,7 @@ msgid "Select the file to import from"
 msgstr "Выберите файл для импорта"
 
 #: /home/tim/code/KwaMoja/ImportBankTrans.php:65
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:87
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:251
 #: /home/tim/code/KwaMoja/Z_ChangeBranchCode.php:215
 #: /home/tim/code/KwaMoja/Z_ChangeCustomerCode.php:251
 #: /home/tim/code/KwaMoja/Z_ChangeGLAccountCode.php:153
@@ -25492,8 +25495,7 @@ msgstr "Работа была правильно обновлена"
 
 #: /home/tim/code/KwaMoja/JobScheduler.php:81
 #: /home/tim/code/KwaMoja/JobScheduler.php:172
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:62
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:437
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:376
 msgid "Frequency"
 msgstr "частота"
 
@@ -25515,8 +25517,7 @@ msgid "Hourly"
 msgstr "почасовой"
 
 #: /home/tim/code/KwaMoja/JobScheduler.php:176
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:14
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:169
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:166
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:85
 #: /home/tim/code/KwaMoja/SystemParameters.php:577
 #: /home/tim/code/KwaMoja/SystemParameters.php:579
@@ -25533,8 +25534,7 @@ msgstr "Ежедневно"
 #: /home/tim/code/KwaMoja/MRPPlannedWorkOrders.php:381
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:443
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:445
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:15
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:170
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:167
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:94
 #: /home/tim/code/KwaMoja/SystemParameters.php:582
 #: /home/tim/code/KwaMoja/SystemParameters.php:584
@@ -26439,8 +26439,7 @@ msgstr "Частота выставления счетов"
 #: /home/tim/code/KwaMoja/MRPPlannedWorkOrders.php:383
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:453
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:455
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:17
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:172
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:169
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:103
 #: /home/tim/code/KwaMoja/SalesPeople.php:21
 #: /home/tim/code/KwaMoja/SystemParameters.php:587
@@ -26452,8 +26451,7 @@ msgstr "ежемесячно"
 #: /home/tim/code/KwaMoja/KCMCInsuranceCompanyDetails.php:416
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:463
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:465
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:18
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:173
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:170
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:112
 #: /home/tim/code/KwaMoja/SalesPeople.php:22
 msgid "Quarterly"
@@ -26844,14 +26842,14 @@ msgstr "Настроить количество спальных мест в к�
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:254
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:315
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:329
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:96
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:124
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:90
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:118
 msgid "Ward ID"
 msgstr "ID отделения"
 
 #: /home/tim/code/KwaMoja/KCMCMaintainWardRooms.php:64
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:336
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:125
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:119
 msgid "Ward Name"
 msgstr "Название прихода"
 
@@ -27781,51 +27779,51 @@ msgstr "Выберите опцию меню для работы в этом о�
 msgid "Ward Inquiries"
 msgstr "Опрос Уорда"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:46
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:50
 msgid "Ward Transactions"
 msgstr "Опека Сделки"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:48
-msgid "Ward Maintenance"
-msgstr "Обслуживание прихода"
-
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:55
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:53
 msgid "Allocate Patients to beds"
 msgstr "Распределите пациентов по кроватям"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:58
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:59
+msgid "Ward Maintenance"
+msgstr "Обслуживание прихода"
+
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:62
 msgid "Maintain ward details"
 msgstr "Вести детали прихода"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:59
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:65
 msgid "Maintain details of rooms in the ward"
 msgstr "Вести детали комнаты в палате"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:80
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:74
 msgid "Search For Ward"
 msgstr "Поиск Уорда"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:94
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:88
 msgid "Search for ward details"
 msgstr "Поиск деталей прихода"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:98
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:92
 msgid "Enter all or part of the ward ID if it is known"
 msgstr "Введите полностью или частично идентификатор прихода, если он известен"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:101
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:95
 msgid "Ward name"
 msgstr "Название прихода"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:103
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:97
 msgid "Enter all or part of the ward name if it is known"
 msgstr "Введите полностью или частично название прихода, если оно известно"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:123
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:117
 msgid "Ward Number"
 msgstr "Номер отделения"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:134
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:128
 msgid "Select Ward"
 msgstr "Выберите Уорд"
 
@@ -31015,7 +31013,7 @@ msgstr "Еще не напечатано"
 #: /home/tim/code/KwaMoja/PDFOrderStatus.php:369
 #: /home/tim/code/KwaMoja/PDFOrdersInvoiced.php:372
 #: /home/tim/code/KwaMoja/PO_Items.php:1006
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:463
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:412
 msgid "Complete"
 msgstr "полный"
 
@@ -34031,6 +34029,8 @@ msgid "No / Cancel Payment"
 msgstr "Нет / Отмена платежа"
 
 #: /home/tim/code/KwaMoja/Payments.php:449
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:102
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:131
 msgid "Cannot insert a GL entry for the payment using the SQL"
 msgstr "Невозможно вставить запись GL для платежа с использованием SQL"
 
@@ -34039,6 +34039,7 @@ msgstr "Невозможно вставить запись GL для плате�
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:199
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:201
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:231
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:108
 msgid "Cannot insert a GL tag for the payment line because"
 msgstr "Невозможно вставить тег GL для платежной линии, потому что"
 
@@ -34051,6 +34052,7 @@ msgstr "Передача акта из"
 #: /home/tim/code/KwaMoja/Payments.php:785
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:230
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:301
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:161
 #: /home/tim/code/KwaMoja/prlLoanPayments.php:64
 msgid "Cannot insert a bank transaction because"
 msgstr "Невозможно вставить банковскую транзакцию, потому что"
@@ -34227,7 +34229,6 @@ msgstr "Входная запись анализа основной книги"
 
 #: /home/tim/code/KwaMoja/Payments.php:1157
 #: /home/tim/code/KwaMoja/Payments.php:1163
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:307
 msgid "Enter GL Account Manually"
 msgstr "Введите аккаунт GL вручную"
 
@@ -34237,6 +34238,7 @@ msgid "If you know the GL code enter it here"
 msgstr "Если вы знаете код GL, введите его здесь"
 
 #: /home/tim/code/KwaMoja/Payments.php:1172
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:310
 msgid "Select the account code for this transaction"
 msgstr "Выберите код учетной записи для этой транзакции"
 
@@ -34386,7 +34388,7 @@ msgstr "Деталь перемещений панели ПК для после�
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:63
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:106
 #: /home/tim/code/KwaMoja/PcClaimExpensesFromTab.php:373
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:209
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:211
 #: /home/tim/code/KwaMoja/includes/PDFDIFOTPageHeader.php:46
 msgid "Days"
 msgstr "дней"
@@ -37726,8 +37728,7 @@ msgstr "Частота повторения"
 
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:448
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:450
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:16
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:171
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:168
 msgid "Fortnightly"
 msgstr "двухнедельный"
 
@@ -37743,8 +37744,7 @@ msgstr "Би-Ежегодно"
 
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:473
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:475
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:19
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:174
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:171
 #: /home/tim/code/KwaMoja/SalesPeople.php:23
 msgid "Annually"
 msgstr "ежегодно"
@@ -37853,43 +37853,46 @@ msgstr "Повторяющийся заказ, созданный советом
 msgid "No email advice was sent for this order because the location has no email contact defined with a valid email address"
 msgstr "Для этого заказа не было отправлено никаких советов по электронной почте, поскольку в адресе отсутствует контакт электронной почты, указанный с действительным адресом электронной почты"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:4
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:6
 msgid "Process regular payments"
 msgstr "Регулярные платежи"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:63
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:438
-msgid "Days into Period"
-msgstr "Дни на период"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:171
+msgid "The regular payment has been processed"
+msgstr "Регулярный платеж был обработан"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:67
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:442
-msgid "Amount of Payment"
-msgstr "Сумма оплаты"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:207
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:380
+#: /home/tim/code/KwaMoja/sql/updates/42.php:214
+msgid "GL Tags"
+msgstr "Теги GL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:68
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:443
-msgid "Currency of payment"
-msgstr "Валюта платежа"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:209
+msgid "Functional"
+msgstr "функциональная"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:70
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:445
-msgid "First payment Date"
-msgstr "Дата первой оплаты"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:209
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:210
+#: /home/tim/code/KwaMoja/SelectCreditItems.php:611
+msgid "Rate"
+msgstr "Ставка"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:71
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:446
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:210
+msgid "Exchange"
+msgstr "обмен"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:213
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:385
 msgid "Next payment Date"
 msgstr "Дата следующего платежа"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:72
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:447
-msgid "Last payment Date"
-msgstr "Дата последнего платежа"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:94
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:257
 msgid "Add Selected payments"
 msgstr "Добавить выбранные платежи"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:260
+msgid "There are no regular payments due"
+msgstr "Регулярных платежей нет"
 
 #: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:4
 msgid "Setup regular payments"
@@ -37951,23 +37954,23 @@ msgstr "Необходимо выбрать код главной книги"
 msgid "You must enter a payment amount"
 msgstr "Вы должны ввести сумму платежа"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:114
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:115
 msgid "Cannot update regular payment because"
 msgstr "Не удается обновить регулярный платеж, потому что"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:115
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:116
 msgid "Cannot update regular payment using the SQL"
 msgstr "Не удается обновить регулярный платеж с использованием SQL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:141
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:142
 msgid "Cannot insert a new regular payment because"
 msgstr "Невозможно вставить новый регулярный платеж, потому что"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:142
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:143
 msgid "Cannot insert a new regular payment using the SQL"
 msgstr "Невозможно вставить новый регулярный платеж с помощью SQL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:165
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:164
 msgid "Regular General Ledger Payment"
 msgstr "Регулярная оплата основной книги"
 
@@ -37975,38 +37978,45 @@ msgstr "Регулярная оплата основной книги"
 msgid "Frequency Of Payment"
 msgstr "Частота оплаты"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:210
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:213
 msgid "The number of days from the start of the period that the payment is to be made"
 msgstr "Количество дней с начала периода, в течение которого будет произведен платеж"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:214
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:216
 msgid "Date of first payment"
 msgstr "Дата первого платежа"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:218
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:220
 msgid "Date of Last payment"
 msgstr "Дата последнего платежа"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:312
-msgid "Select GL Group"
-msgstr "Выберите GL Group"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:325
-msgid "No General ledger account groups have been set up yet"
-msgstr "Пока не созданы группы учетных записей общей книги"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:325
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:362
-msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
-msgstr "платежи не могут быть проанализированы на счетах GL до тех пор, пока не будут установлены учетные записи GL"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:402
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:341
 msgid "Add New Regular Payment"
 msgstr "Добавить новый регулярный платеж"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:406
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:345
 msgid "Update Regular Payment Details"
 msgstr "Обновить данные о регулярных платежах"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:377
+msgid "Days into Period"
+msgstr "Дни на период"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:381
+msgid "Amount of Payment"
+msgstr "Сумма оплаты"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:382
+msgid "Currency of payment"
+msgstr "Валюта платежа"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:384
+msgid "First payment Date"
+msgstr "Дата первой оплаты"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:386
+msgid "Last payment Date"
+msgstr "Дата последнего платежа"
 
 #: /home/tim/code/KwaMoja/RelatedItemsUpdate.php:4
 msgid "Update Related Items"
@@ -40693,10 +40703,6 @@ msgstr "Детали товара не могут быть восстановл�
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:607
 msgid "Gross"
 msgstr "Валовой"
-
-#: /home/tim/code/KwaMoja/SelectCreditItems.php:611
-msgid "Rate"
-msgstr "Ставка"
 
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:685
 msgid "Are you sure you wish to delete this line item from the credit note?"
@@ -66380,31 +66386,31 @@ msgstr "Произошла ошибка при создании разрешен
 msgid "Populating the database with demo data."
 msgstr "Заполнение базы данных демо-данными."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1504
+#: /home/tim/code/KwaMoja/install/Page6.php:1503
 msgid "KwaMoja Installation Is Completed"
 msgstr "Установка KwaMoja завершена"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1507
+#: /home/tim/code/KwaMoja/install/Page6.php:1506
 msgid "The KwaMoja installation has been successfully completed."
 msgstr "Установка KwaMoja успешно завершена."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1508
+#: /home/tim/code/KwaMoja/install/Page6.php:1507
 msgid "Before using your system please ensure that write permissions have been removed from all files except the companies folder."
 msgstr "Перед использованием вашей системы убедитесь, что разрешения на запись были удалены из всех файлов, кроме папки компаний."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1509
+#: /home/tim/code/KwaMoja/install/Page6.php:1508
 msgid "Click on the button below to start using KwaMoja."
 msgstr "Нажмите на кнопку ниже, чтобы начать использовать KwaMoja."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1510
+#: /home/tim/code/KwaMoja/install/Page6.php:1509
 msgid "When you first sign in you will be taken to a series of screens to help you set KwaMoja up."
 msgstr "Когда вы впервые входите в систему, вы попадете на серию экранов, чтобы помочь вам установить KwaMoja."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1511
+#: /home/tim/code/KwaMoja/install/Page6.php:1510
 msgid "Please enjoy using the software and hopefully contribute back to the project."
 msgstr "Пожалуйста, наслаждайтесь использованием программного обеспечения и, надеюсь, внесите свой вклад в проект."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1517
+#: /home/tim/code/KwaMoja/install/Page6.php:1516
 msgid "Start KwaMoja"
 msgstr "Начать KwaMoja"
 
@@ -66854,6 +66860,15 @@ msgstr "Настройте приборную панель"
 msgid "Maintain Supplier Groups"
 msgstr "Поддерживать группы поставщиков"
 
+#: /home/tim/code/KwaMoja/sql/updates/215.php:22
+msgid "Setup Regular Payments"
+msgstr "Настройка регулярных платежей"
+
+#: /home/tim/code/KwaMoja/sql/updates/215.php:23
+#: /home/tim/code/KwaMoja/sql/updates/98.php:25
+msgid "Process Regular Payments"
+msgstr "Регулярные платежи процесса"
+
 #: /home/tim/code/KwaMoja/sql/updates/42.php:32
 msgid "Purchases"
 msgstr "Покупки"
@@ -67273,10 +67288,6 @@ msgstr "Налоговые отчеты"
 msgid "GL Budgets"
 msgstr "Бюджеты GL"
 
-#: /home/tim/code/KwaMoja/sql/updates/42.php:214
-msgid "GL Tags"
-msgstr "Теги GL"
-
 #: /home/tim/code/KwaMoja/sql/updates/42.php:216
 msgid "Add a new Asset"
 msgstr "Добавить новый объект"
@@ -67657,10 +67668,6 @@ msgstr "Удалить списавшийся актив"
 msgid "Auto Debtor Number"
 msgstr "Номер автообмена"
 
-#: /home/tim/code/KwaMoja/sql/updates/98.php:25
-msgid "Process Regular Payments"
-msgstr "Регулярные платежи процесса"
-
 #: /home/tim/code/KwaMoja/sql/updates/99.php:120
 msgid "Human Resources"
 msgstr "Отдел кадров"
@@ -67704,6 +67711,15 @@ msgstr "Кредиты для персонала"
 #: /home/tim/code/KwaMoja/sql/updates/99.php:145
 msgid "Staff Loan Repayments"
 msgstr "Погашение займов сотрудникам"
+
+#~ msgid "Select GL Group"
+#~ msgstr "Выберите GL Group"
+
+#~ msgid "No General ledger account groups have been set up yet"
+#~ msgstr "Пока не созданы группы учетных записей общей книги"
+
+#~ msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
+#~ msgstr "платежи не могут быть проанализированы на счетах GL до тех пор, пока не будут установлены учетные записи GL"
 
 #~ msgid "Select Labels to rint"
 #~ msgstr "Выберите этикетки для печати"

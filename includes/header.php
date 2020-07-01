@@ -33,8 +33,8 @@ echo '<html>
 		<head>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('KwaMoja'), ' - ', $Title, '</title>
-			<link rel="icon" href="', $PathPrefix, $RootPath, '/favicon.ico" />
-			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=13" rel="stylesheet" type="text/css" media="screen" />
+			<link rel="icon" href="', $PathPrefix, $RootPath, '/favicon.ico?v=2" />
+			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=15" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js"></script>';

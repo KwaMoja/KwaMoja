@@ -1,5 +1,4 @@
 <?php
-
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
 
@@ -10,30 +9,32 @@ mb_internal_encoding('UTF-8');
  * (session.php) NB this language must also exist in the locale on the web-server
  * normally the lower case two character country code underscore uppercase 2
  * character country code does the trick  except for en !!
- */
+*/
 
 $_SESSION['DefaultLanguage'] = $DefaultLanguage;
 
-if (isset($_POST['Language'])) {
+/*
+ * Improve language check to avoid potential LFI issue.
+ * Reported by: https://lyhinslab.org
+*/
+if (isset($_POST['Language']) and CheckLanguageChoice($_POST['Language'])) {
 	$_SESSION['Language'] = $_POST['Language'];
-	$Language = $_POST['Language'];
-} elseif (!isset($_SESSION['Language'])) {
-	$_SESSION['Language'] = $_SESSION['DefaultLanguage'];
-	$Language = $_SESSION['DefaultLanguage'];
 } else {
-	$Language = $_SESSION['Language'];
+	$_SESSION['Language'] = $DefaultLanguage;
 }
+
+$Language = $_SESSION['Language'];
 
 /* Since LanguagesArray requires the function _() to translate the
  * language names - we must provide a substitute if it doesn't exist
  * aready before we include includes/LanguagesArray.php
- */
+*/
 
 if (!function_exists('gettext')) {
 	/* PHPGettext integration by Braian Gomez http://www.vairux.com/
-	 */
-	require_once($PathPrefix . 'includes/php-gettext/streams.php');
-	require_once($PathPrefix . 'includes/php-gettext/gettext.php');
+	*/
+	require_once ($PathPrefix . 'includes/php-gettext/streams.php');
+	require_once ($PathPrefix . 'includes/php-gettext/gettext.php');
 	if (isset($_SESSION['Language'])) {
 		$Locale = $_SESSION['Language'];
 	} else {
@@ -61,9 +62,9 @@ if (!function_exists('gettext')) {
 			return $text;
 		}
 	}
-	include($PathPrefix . 'includes/LanguagesArray.php');
+	include ($PathPrefix . 'includes/LanguagesArray.php');
 } else {
-	include($PathPrefix . 'includes/LanguagesArray.php');
+	include ($PathPrefix . 'includes/LanguagesArray.php');
 
 	$LocaleSet = setlocale(LC_ALL, $_SESSION['Language'], $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 	$LocaleSet = setlocale(LC_NUMERIC, 'C', 'en_GB.utf8', 'en_GB', 'en_US', 'english-us');

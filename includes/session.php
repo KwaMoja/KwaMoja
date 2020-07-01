@@ -60,19 +60,23 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 if (isset($_SESSION['DatabaseName'])) {
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
-			if (get_magic_quotes_gpc()) {
-				$_POST['name'] = stripslashes($_POST['name']);
-			} //get_magic_quotes_gpc()
+			/*    if(get_magic_quotes_gpc()) {
+						$_POST['name'] = stripslashes($_POST['name']);
+					}
+			*/
+			$_POST[$PostVariableName] = quote_smart($_POST[$PostVariableName]);
 			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue, ENT_QUOTES, 'UTF-8'));
-		} //gettype($Value) != 'array'
-		else {
+		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				if (get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
-				}
-				$PostVariableValue[$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
-			} //$Value as $Key1 => $Value1
-			
+				/*
+				 if(get_magic_quotes_gpc()) {
+					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					}
+				*/
+				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
+				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
+
+			}
 		}
 	} //$_POST as $Key => $Value
 	/* iterate through all elements of the $_GET array and DB_escape_string them
@@ -338,5 +342,18 @@ if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	} //!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])
 	
 } //sizeof($_POST) > 0 and !isset($AllowAnyone)
+function quote_smart($value) {
+	// Stripslashes
+	if (phpversion() < "5.3") {
+		if (get_magic_quotes_gpc()) {
+			$value = stripslashes($value);
+		}
+	}
+	// Quote if not integer
+	if (!is_numeric($value)) {
+		$value = "'" . DB_escape_string($value) . "'";
+	}
+	return $value;
+}
 
 ?>

@@ -467,7 +467,11 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 			</li>';
 	$SupportedImgExt = array('png', 'jpg', 'jpeg');
 	$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $StockId . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
-	$ImageFile = reset($ImageFileArray);
+	if (count($ImageFileArray) > 0) {
+		$ImageFile = $ImageFileArray[0];
+	} else {
+		$ImageFile = '';
+	}
 	echo '<li class="MenuItem">
 				<a href="', $RootPath, '/', $ImageFile, '" target="_blank">', _('Show Part Picture (if available)'), '</a>
 			</li>';

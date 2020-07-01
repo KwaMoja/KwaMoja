@@ -45,15 +45,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 	}
 
 	$ShowObsolete = " AND `stockmaster`.`discontinued` != 1 "; // Query element to exclude obsolete items.
-	if ($_POST['ShowObsolete']) {
+	if (isset($_POST['ShowObsolete'])) {
 		$ShowObsolete = ''; // Cleans the query element to exclude obsolete items.
 		
 	}
 
 	// Option to select the order of the items in the report:
-	$ItemOrder = 'stockmaster.stockid'; // Query element to sort by currency, item_stock_category, and item_code.
+	$ItemOrder = ',stockmaster.stockid'; // Query element to sort by currency, item_stock_category, and item_code.
 	if ($_POST['ItemOrder'] == 'Description') {
-		$ItemOrder = 'stockmaster.description'; // Query element to sort by currency, item_stock_category, and item_description.
+		$ItemOrder = ',stockmaster.description'; // Query element to sort by currency, item_stock_category, and item_description.
 		
 	}
 
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					prices.startdate,
 					prices.enddate,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+					stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					prices.debtorno,
@@ -109,6 +109,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					currencies.decimalplaces
 				FROM stockmaster
 					INNER JOIN	stockcategory ON stockmaster.categoryid=stockcategory.categoryid
+					INNER JOIN	stockcosts ON stockmaster.stockid=stockcosts.stockid AND stockcosts.succeeded=0
 					INNER JOIN prices ON stockmaster.stockid=prices.stockid
 					INNER JOIN currencies ON prices.currabrev=currencies.currabrev
 					LEFT JOIN custbranch ON prices.debtorno=custbranch.debtorno AND prices.branchcode=custbranch.branchcode
@@ -140,12 +141,13 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					stockmaster.longdescription,
 					prices.currabrev,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+					stockcosts.materialcost+stockcosts.labourcost+stockcosts.overheadcost AS standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					currencies.decimalplaces
 				FROM stockmaster
 					INNER JOIN	stockcategory ON stockmaster.categoryid=stockcategory.categoryid
+					INNER JOIN	stockcosts ON stockmaster.stockid=stockcosts.stockid AND stockcosts.succeeded=0
 					INNER JOIN prices ON stockmaster.stockid=prices.stockid
 					INNER JOIN currencies ON prices.currabrev=currencies.currabrev
 				WHERE stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
@@ -157,7 +159,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 					prices.currabrev,
 					stockcategory.categorydescription,
 					stockmaster.stockid,
-					prices.startdate" . $ItemOrder;
+					prices.startdate " . $ItemOrder;
 	}
 
 	$PricesResult = DB_query($SQL, '', '', false, false);
@@ -187,6 +189,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 	$Category = '';
 	$CatTot_Val = 0;
 
+	$PDF->SetFillColor(238, 238, 238);
+	$Fill = false;
+
 	while ($PriceList = DB_fetch_array($PricesResult)) {
 
 		if ($CurrCode != $PriceList['currabrev']) {
@@ -215,15 +220,15 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 		}
 
 		$FontSize = 8;
-		$PDF->addText($Left_Margin, $YPos, $FontSize, $PriceList['stockid']);
-		$PDF->addText($Left_Margin + 80, $YPos, $FontSize, $PriceList['description']);
-		$PDF->addText($Left_Margin + 280, $YPos, $FontSize, ConvertSQLDate($PriceList['startdate']));
+		$PDF->addTextWrap($Left_Margin, $YPos - $FontSize, 80, $FontSize, $PriceList['stockid'], 'left', 0, $Fill);
+		$PDF->addTextWrap($Left_Margin + 80, $YPos - $FontSize, 200, $FontSize, $PriceList['description'], 'left', 0, $Fill);
+		$PDF->addTextWrap($Left_Margin + 280, $YPos - $FontSize, 60, $FontSize, ConvertSQLDate($PriceList['startdate']), 'left', 0, $Fill);
 		if ($PriceList['enddate'] != '0000-00-00') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
 			$DisplayEndDate = _('No End Date');
 		}
-		$PDF->addText($Left_Margin + 320, $YPos, $FontSize, $DisplayEndDate);
+		$PDF->addTextWrap($Left_Margin + 320, $YPos - $FontSize, 80, $FontSize, $DisplayEndDate, 'left', 0, $Fill);
 
 		// Shows gross profit percentage:
 		if ($_POST['ShowGPPercentages'] == 'Yes') {
@@ -231,16 +236,18 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 			if ($PriceList['price'] != 0) {
 				$DisplayGPPercent = locale_number_format((($PriceList['price'] - $PriceList['standardcost']) * 100 / $PriceList['price']), 2) . '%';
 			}
-			$PDF->addTextWrap($Page_Width - $Right_Margin - 128, $YPos - $FontSize, 32, $FontSize, $DisplayGPPercent, 'right');
+			$PDF->addTextWrap($Page_Width - $Right_Margin - 128, $YPos - $FontSize, 32, $FontSize, $DisplayGPPercent, 'right', 0, $Fill);
+		} else {
+			$PDF->addTextWrap($Page_Width - $Right_Margin - 128, $YPos - $FontSize, 32, $FontSize, '', 'right', 0, $Fill);
 		}
 		// Displays unit price:
-		$PDF->addTextWrap($Page_Width - $Right_Margin - 96, $YPos - $FontSize, 96, $FontSize, locale_number_format($PriceList['price'], $PriceList['decimalplaces']));
+		$PDF->addTextWrap($Page_Width - $Right_Margin - 96, $YPos - $FontSize, 96, $FontSize, locale_number_format($PriceList['price'], $PriceList['decimalplaces']), 0, $Fill);
 		if ($_POST['CustomerSpecials'] == 'Customer Special Prices Only') {
 			/*Need to show to which branch the price relates */
 			if ($PriceList['branchcode'] != '') {
-				$PDF->addText($Left_Margin + 376, $YPos, $FontSize, $PriceList['brname']);
+				$PDF->addTextWrap($Left_Margin + 425, $YPos - $FontSize, 50, $FontSize, $PriceList['brname'], 'left', 0, $Fill);
 			} else {
-				$PDF->addText($Left_Margin + 376, $YPos, $FontSize, _('All'));
+				$PDF->addTextWrap($Left_Margin + 425, $YPos - $FontSize, 50, $FontSize, _('All'), 'left', 0, $Fill);
 			}
 			$YPos-= $FontSize; // End-of-line line-feed.
 			
@@ -273,7 +280,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 						$YPosImage = $YPos; // Resets the image bottom $YPos.
 						
 					}
-					$LeftOvers = $PDF->addTextWrap($XPos, $YPos - $FontSize2, $Width, $FontSize2, $LeftOvers);
+					$LeftOvers = $PDF->addTextWrap($XPos, $YPos - $FontSize2, $Width, $FontSize2, $LeftOvers, 'j', 0, $Fill);
 					$YPos-= $FontSize2;
 					$LeftOvers = $PDF->Image($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.jpg', 265, $Page_Height - $Top_Margin - $YPos + 33, 33, 33);
 				}
@@ -283,6 +290,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 			$YPos-= $FontSize; // Jumps additional line after the image and the description.
 			
 		} else {
+			$PDF->addTextWrap($Left_Marginv + 425, $YPos - $FontSize, 50, $FontSize, '', 'left', 0, $Fill);
 			$YPos-= $FontSize; // End-of-line line-feed.
 			
 		} /* Endif full descriptions*/
@@ -290,7 +298,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['Categories']) and sizeOf($_POST[
 		if ($YPos < $Bottom_Margin + $line_height) {
 			PageHeader();
 		}
-
+		$Fill = !$Fill;
 	}
 	/*end inventory valn while loop */
 

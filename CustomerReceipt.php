@@ -120,7 +120,7 @@ if (!isset($_GET['Delete']) and isset($_SESSION['ReceiptBatch' . $Identifier]) o
 	if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate'] != '') {
 		if (is_numeric(filter_number_format($_POST['FunctionalExRate']))) {
 			$_SESSION['ReceiptBatch' . $Identifier]->FunctionalExRate = filter_number_format($_POST['FunctionalExRate']); //ex rate between receipt currency and account currency
-
+			
 		} else {
 			prnMsg(_('The functional exchange rate entered should be numeric'), 'warn');
 		}
@@ -189,6 +189,9 @@ if (!isset($_GET['Delete']) and isset($_SESSION['ReceiptBatch' . $Identifier]) o
 } else { //it must be a new receipt batch
 	$_SESSION['ReceiptBatch' . $Identifier] = new Receipt_Batch;
 }
+if (!isset($_SESSION['ReceiptBatch' . $Identifier]->Currency) or $_SESSION['ReceiptBatch' . $Identifier]->Currency == '') {
+	$_SESSION['ReceiptBatch' . $Identifier]->Currency = $_SESSION['CompanyRecord']['currencydefault'];
+}
 
 if (isset($_POST['Process'])) { //user hit submit a new entry to the receipt batch
 	if (!isset($_POST['GLCode'])) {
@@ -255,9 +258,9 @@ if (isset($_POST['CommitBatch'])) {
 	all DebtorTrans will refer to a single banktrans. A GL entry is created for
 	each GL receipt entry and one for the debtors entry and one for the bank
 	account debit
-
+	
 	NB allocations against debtor receipts are a separate exercice
-
+	
 	first off run through the array of receipt items $_SESSION['ReceiptBatch' . $Identifier]->Items and
 	if GL integrated then create GL Entries for the GL Receipt items
 	and add up the non-GL ones for posting to debtors later,
@@ -383,27 +386,27 @@ if (isset($_POST['CommitBatch'])) {
 				bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 				receiving USD - 1 AUD = 0.85 USD  (ExRate)
 				from a bank account in EUR - 1 NZD = 0.52 EUR
-
+				
 				oh yeah - now we are getting tricky!
 				Lets say we received USD 100 to the AUD bank account from the EUR bank account
-
+				
 				To get the ExRate for the bank account we are transferring money from
 				we need to use the cross rate between the NZD-AUD/NZD-EUR
 				and apply this to the
-
+				
 				the receipt record will read
 				exrate = 0.85 (1 AUD = USD 0.85)
 				amount = 100 (USD)
 				functionalexrate = 0.90 (1 NZD = AUD 0.90)
-
+				
 				the payment record will read
-
+				
 				amount 100 (USD)
 				exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD  ~ 1.47
 				(ExRate x FunctionalExRate) / USD Functional ExRate
 				Check this is 1 EUR = 1.47 USD
 				functionalexrate =  (1NZD = EUR 0.52)
-
+				
 				*/
 
 				$PaymentTransNo = GetNextTransNo(1);
@@ -434,7 +437,7 @@ if (isset($_POST['CommitBatch'])) {
 				$ErrMsg = _('Cannot insert a bank transaction using the SQL');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 			} //end if an item is a transfer between bank accounts
-
+			
 		} else { //its not a GL item - its a customer receipt then
 			/*Accumulate the total debtors credit including discount */
 			$BatchDebtorTotal+= (($ReceiptItem->Discount + $ReceiptItem->Amount) / $_SESSION['ReceiptBatch' . $Identifier]->ExRate / $_SESSION['ReceiptBatch' . $Identifier]->FunctionalExRate);
@@ -594,7 +597,7 @@ if (isset($_POST['CommitBatch'])) {
 			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} //end if there is some discount
-
+		
 	} //end if there is GL work to be done - ie config is to link to GL
 	EnsureGLEntriesBalance(12, $_SESSION['ReceiptBatch' . $Identifier]->BatchNo);
 
@@ -661,6 +664,7 @@ if (isset($_POST['Search'])) {
 	}
 
 	$CustomerSearchResult = DB_query($SQL, '', '', false, false);
+
 	if (DB_error_no() != 0) {
 		prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg(), 'error');
 		if ($debug == 1) {
@@ -669,13 +673,12 @@ if (isset($_POST['Search'])) {
 	} elseif (DB_num_rows($CustomerSearchResult) == 1) {
 		$MyRow = DB_fetch_array($CustomerSearchResult);
 		$Select = $MyRow['debtorno'];
-		unset($CustomerSearchResult);
+		$_POST['CustomerID'] = $MyRow['debtorno'];
 	} elseif (DB_num_rows($CustomerSearchResult) == 0) {
 		prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'), 'info');
 	}
-
 	//one of keywords or custcode was more than a zero length string
-
+	
 } //end of if search
 if (isset($_POST['CustomerID'])) {
 	/*will only be true if a customer has just been selected by clicking on the customer or only one
@@ -772,12 +775,22 @@ if (isset($_POST['CustomerID'])) {
 		$ErrMsg = _('The customer details could not be retrieved because');
 		$DbgMsg = _('The SQL that failed was');
 		$CustomerResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$CustomerRow = DB_fetch_array($CustomerResult);
 
 	} else {
 		$NIL_BALANCE = False;
 	}
 
 	$_SESSION['CustomerRecord' . $Identifier] = DB_fetch_array($CustomerResult);
+	$_SESSION['CustomerRecord' . $Identifier]['currcode'] = $CustomerRow['currcode'];
+	$_SESSION['CustomerRecord' . $Identifier]['dissallowinvoices'] = $CustomerRow['dissallowinvoices'];
+	$_SESSION['CustomerRecord' . $Identifier]['name'] = $CustomerRow['name'];
+	$_SESSION['CustomerRecord' . $Identifier]['currency'] = $CustomerRow['currency'];
+	$_SESSION['CustomerRecord' . $Identifier]['terms'] = $CustomerRow['terms'];
+	$_SESSION['CustomerRecord' . $Identifier]['creditlimit'] = $CustomerRow['creditlimit'];
+	$_SESSION['CustomerRecord' . $Identifier]['reasondescription'] = $CustomerRow['reasondescription'];
+	$_SESSION['CustomerRecord' . $Identifier]['currdecimalplaces'] = $CustomerRow['currdecimalplaces'];
+	$_SESSION['CustomerRecord' . $Identifier]['pymtdiscount'] = $CustomerRow['pymtdiscount'];
 
 	if ($NIL_BALANCE == True) {
 		$_SESSION['CustomerRecord' . $Identifier]['balance'] = 0;
@@ -795,6 +808,12 @@ echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 /*show the batch header details and the entries in the batch so far */
 
+if (isset($_SESSION['CustomerRecord' . $Identifier]['currcode'])) {
+	$BankCurr = $_SESSION['CustomerRecord' . $Identifier]['currcode'];
+} else {
+	$BankCurr = '%';
+}
+
 $SQL = "SELECT bankaccountname,
 				bankaccounts.accountcode,
 				bankaccounts.currcode
@@ -805,6 +824,7 @@ $SQL = "SELECT bankaccountname,
 			ON bankaccounts.accountcode=bankaccountusers.accountcode
 		WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 			AND chartmaster.language='" . $_SESSION['ChartLanguage'] . "'
+			AND currcode LIKE '" . $BankCurr . "'
 		ORDER BY bankaccountname";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
@@ -1067,7 +1087,7 @@ if (isset($_SESSION['CustomerRecord' . $Identifier]) and $_SESSION['CustomerReco
 	unset($_SESSION['CustomerRecord' . $Identifier]);
 }
 
-if (!isset($_POST['Search']) and isset($_SESSION['CustomerRecord' . $Identifier]) and isset($_POST['CustomerID']) and $_POST['CustomerID'] != '' and isset($_SESSION['ReceiptBatch' . $Identifier])) {
+if (isset($_SESSION['CustomerRecord' . $Identifier]) and isset($_POST['CustomerID']) and $_POST['CustomerID'] != '' and isset($_SESSION['ReceiptBatch' . $Identifier])) {
 	/*a customer is selected  */
 
 	echo '<table  style="width:50%">';
@@ -1223,6 +1243,7 @@ if (((isset($_SESSION['CustomerRecord' . $Identifier]) and isset($_POST['Custome
 			<input type="submit" name="GLEntry" value="', _('Enter A GL Receipt'), '" />
 		</div>';
 }
+
 if (isset($CustomerSearchResult)) {
 
 	echo '<table>';
@@ -1249,7 +1270,7 @@ if (isset($CustomerSearchResult)) {
 					WHERE debtortrans.debtorno='" . $MyRow['debtorno'] . "'";
 		$Result = DB_query($SQL);
 		$BalanceRow = DB_fetch_array($Result);
-
+		echo $SQL;
 		echo '<tr class="striped_row">
 				<td><input type="submit" name="CustomerID" value="', $MyRow['debtorno'], '" /></td>
 				<td>', $MyRow['name'], '</td>
@@ -1257,7 +1278,7 @@ if (isset($CustomerSearchResult)) {
 			</tr>';
 
 		//end of page full new headings if
-
+		
 	}
 	//end of while loop
 	echo '</table>';

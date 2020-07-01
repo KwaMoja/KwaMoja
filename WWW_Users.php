@@ -1,12 +1,17 @@
 <?php
-if (isset($_POST['UserID']) and isset($_POST['ID'])) {
-	if ($_POST['UserID'] == $_POST['ID']) {
-		$_POST['Language'] = $_POST['UserLanguage'];
-	}
-}
 include ('includes/session.php');
 
 include ('includes/MainMenuLinksArray.php');
+
+if (isset($_POST['UserID']) and isset($_POST['ID'])) {
+	if ($_POST['UserID'] == $_POST['ID']) {
+		if (isset($_POST['UserLanguage']) and !CheckLanguageChoice($_POST['UserLanguage'])) {
+			$_POST['UserLanguage'] = $DefaultLanguage;
+		}
+	} else if (isset($_POST['UserLanguage']) and !CheckLanguageChoice($_POST['UserLanguage'])) {
+		$_POST['UserLanguage'] = $DefaultLanguage;
+	}
+}
 
 $PDFLanguages = array(_('Latin Western Languages'), _('Eastern European Russian Japanese Korean Vietnamese Hebrew Arabic Thai'), _('Chinese'), _('Free Serif'));
 

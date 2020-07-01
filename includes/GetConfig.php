@@ -3,13 +3,6 @@
 // $ForceConfigReload to true
 if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION['CompanyDefaultsLoaded']) or isset($_SESSION['FirstStart'])) {
 
-	//purge the audit trail if necessary
-	if (isset($_SESSION['MonthsAuditTrail'])) {
-		$SQL = "DELETE FROM audittrail
-				WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
-		$ErrMsg = _('There was a problem deleting expired audit-trail history');
-		$Result = DB_query($SQL);
-	} //isset($_SESSION['MonthsAuditTrail'])
 	$SQL = "SELECT SQL_CACHE confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
@@ -22,7 +15,13 @@ if (isset($ForceConfigReload) and $ForceConfigReload == true or !isset($_SESSION
 		}
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
-
+	//purge the audit trail if necessary
+	if (isset($_SESSION['MonthsAuditTrail'])) {
+		$SQL = "DELETE FROM audittrail
+				WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+		$ErrMsg = _('There was a problem deleting expired audit-trail history');
+		$Result = DB_query($SQL);
+	} //isset($_SESSION['MonthsAuditTrail'])
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 

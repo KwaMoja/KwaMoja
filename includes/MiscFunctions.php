@@ -57,12 +57,12 @@ function IsEmailAddress($Email) {
 	$AtIndex = strrpos($Email, "@");
 	if ($AtIndex == false) {
 		return false; // No @ sign is not acceptable.
-
+		
 	}
 
 	if (preg_match('/\\.\\./', $Email)) {
 		return false; // > 1 consecutive dot is not allowed.
-
+		
 	}
 	//  Check component length limits
 	$Domain = mb_substr($Email, $AtIndex + 1);
@@ -436,7 +436,7 @@ function indian_number_format($Number, $DecimalPlaces) {
 		for ($i = 0;$i < $SizeOfExplodedUnits;$i++) {
 			if ($i == 0) {
 				$FirstPart.= intval($ExplodedUnits[$i]) . ','; // creates each of the 2's group and adds a comma to the end
-
+				
 			} else {
 				$FirstPart.= $ExplodedUnits[$i] . ',';
 			}
@@ -740,8 +740,8 @@ function GLSelect($Type, $Name) {
 	/* $Type = 0; : Balance Sheet accounts
 	 * $Type = 1; : Profit and loss accounts
 	 * $Type = 2; : All accounts
-	 */
-	 if ($Type == 2) {
+	*/
+	if ($Type == 2) {
 		$ResultSelection = DB_query("SELECT accountcode,
 											accountname,
 											group_
@@ -772,12 +772,20 @@ function GLSelect($Type, $Name) {
 			$OptGroup = $MyRowSelection['group_'];
 		}
 		if (isset($_POST[$Name]) and $_POST[$Name] == $MyRowSelection['accountcode']) {
-			echo '<option selected="selected" value="', $MyRowSelection['accountcode'], '">', $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false), '</option>';
+			echo '<option selected="selected" value="', $MyRowSelection['accountcode'], '">', $MyRowSelection['accountcode'] . ' - ' . htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		} else {
-			echo '<option value="', $MyRowSelection['accountcode'], '">', $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) , '</option>';
+			echo '<option value="', $MyRowSelection['accountcode'], '">', $MyRowSelection['accountcode'] . ' - ' . htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		}
 	}
 	echo '</select>';
+}
+
+/*
+ * Improve language check to avoid potential LFI issue.
+ * Reported by: https://lyhinslab.org
+*/
+function CheckLanguageChoice($language) {
+	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
 
 ?>

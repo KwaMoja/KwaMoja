@@ -8,8 +8,9 @@
 	<li>For using utf-8 pdf reports in languages other than english the adobe acrobat reader with fonts installed for the necessary locales is required. PDF reports are created used the TCPDF class making use of Adobe CIF fonts - this has the advantage that the pdf reports do not need to bundle with them the large utf-8 character set fonts that would otherwise be required.</li>
 </ul>
 <p>Using Apache with mod_ssl and openssl secure sockets makes sense where there is any data transmitted over the Internet and not just over a LAN. Getting PHP and MySQL installed are well covered elsewhere - see the following links:</p>
-<p><a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a><br></p>
-<p><a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a><br></p>
+<p><a href="https://howtoubuntu.org/how-to-install-lamp-on-ubuntu">Setting up a LAMP server under Ubuntu Linux</a><br></p>
+<p><a href="http://www.wampserver.com/en/download-wampserver-64bits/">Setting up the server under Microsoft Windows</a><br></p>
+<p><a href="https://discussions.apple.com/docs/DOC-250001766">Setting up a local web server on macOS 10.15 “Catalina” </a><br></p>
 <p>It is important to ensure that the php.ini setting for session.auto_start = 0. Some rpm distributions come with this set to 1 which makes it impossible to use classes within php code. Classes are used extensively in the system and the system starts sessions whenever it needs them. It is safe to set this to 0.<br></p>
 <p>The main issues with installation of PHP appear to be:</p>
 <ol>

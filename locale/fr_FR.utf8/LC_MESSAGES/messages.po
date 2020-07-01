@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-29 12:38+0000\n"
+"POT-Creation-Date: 2020-03-07 23:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -579,7 +579,7 @@ msgstr "La méthode de classement a été enregistrée avec succès dans la base
 #: /home/tim/code/KwaMoja/ProductSpecs.php:445
 #: /home/tim/code/KwaMoja/PurchData.php:325
 #: /home/tim/code/KwaMoja/QATests.php:455
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:462
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:411
 #: /home/tim/code/KwaMoja/SalesCategories.php:365
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:167
 #: /home/tim/code/KwaMoja/SalesCommissionTypes.php:164
@@ -811,8 +811,8 @@ msgstr "ont été remplacés par le groupe de comptes"
 #: /home/tim/code/KwaMoja/KCMCViewPatientHistory.php:51
 #: /home/tim/code/KwaMoja/KCMCWardOverview.php:10
 #: /home/tim/code/KwaMoja/KCMCWardOverview.php:37
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:80
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:108
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:74
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:102
 #: /home/tim/code/KwaMoja/MRPReport.php:535
 #: /home/tim/code/KwaMoja/MaintenanceTasks.php:12
 #: /home/tim/code/KwaMoja/MaintenanceUserSchedule.php:11
@@ -2633,8 +2633,8 @@ msgstr "Stock"
 #: /home/tim/code/KwaMoja/ProjectBOM.php:154
 #: /home/tim/code/KwaMoja/ProjectBOM.php:261
 #: /home/tim/code/KwaMoja/ProjectOtherReqts.php:91
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:69
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:444
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:212
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:383
 #: /home/tim/code/KwaMoja/RelatedItemsUpdate.php:150
 #: /home/tim/code/KwaMoja/ReorderLevel.php:291
 #: /home/tim/code/KwaMoja/ReorderLevelLocation.php:74
@@ -3154,6 +3154,8 @@ msgstr "n'a pas pu être récupéré parce que"
 #: /home/tim/code/KwaMoja/PurchData.php:147
 #: /home/tim/code/KwaMoja/PurchData.php:353
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:249
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:103
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:132
 #: /home/tim/code/KwaMoja/ReverseGRN.php:196
 #: /home/tim/code/KwaMoja/ReverseGRN.php:211
 #: /home/tim/code/KwaMoja/ReverseGRN.php:392
@@ -6334,9 +6336,9 @@ msgstr "Soldes de compte bancaire"
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:33
 #: /home/tim/code/KwaMoja/PDFChequeListing.php:51
 #: /home/tim/code/KwaMoja/Payments.php:986
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:64
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:239
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:439
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:205
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:240
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:378
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:152
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:258
 msgid "Bank Account"
@@ -6668,6 +6670,7 @@ msgstr "Importer le format"
 #: /home/tim/code/KwaMoja/PurchData.php:293
 #: /home/tim/code/KwaMoja/PurchData.php:472
 #: /home/tim/code/KwaMoja/PurchData.php:618
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:211
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:137
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:234
 #: /home/tim/code/KwaMoja/SalesCommissionRates.php:294
@@ -7117,8 +7120,9 @@ msgstr "Ref"
 #: /home/tim/code/KwaMoja/PcReportTab.php:354
 #: /home/tim/code/KwaMoja/PrintCheque.php:81
 #: /home/tim/code/KwaMoja/PrintCheque.php:95
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:389
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:393
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:208
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:327
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:332
 #: /home/tim/code/KwaMoja/SalesCommissionReports.php:70
 #: /home/tim/code/KwaMoja/SalesCommissionStatements.php:70
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:612
@@ -7234,7 +7238,7 @@ msgstr "Les comptes bancaires n'ont pas pu être récupérés par le SQL parce q
 #: /home/tim/code/KwaMoja/KCMCRadiology.php:654
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:29
 #: /home/tim/code/KwaMoja/Payments.php:982
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:235
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:236
 #: /home/tim/code/KwaMoja/SuppPaymentRun.php:318
 msgid "The SQL used to retrieve the bank accounts was"
 msgstr "Le SQL utilisé pour récupérer les comptes bancaires était"
@@ -14865,8 +14869,8 @@ msgstr "Impossible de récupérer les données de facturation"
 #: /home/tim/code/KwaMoja/GLJournal.php:604
 #: /home/tim/code/KwaMoja/GLTransInquiry.php:42
 #: /home/tim/code/KwaMoja/Payments.php:1244
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:65
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:440
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:206
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:379
 #: /home/tim/code/KwaMoja/SalesPeople.php:198
 #: /home/tim/code/KwaMoja/SupplierTransInquiry.php:159
 #: /home/tim/code/KwaMoja/TaxAuthorities.php:149
@@ -16268,6 +16272,7 @@ msgstr "Impossible d'insérer une balise GL pour la ligne de journal, car"
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:200
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:202
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:232
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:109
 #: /home/tim/code/KwaMoja/StockAdjustments.php:390
 #: /home/tim/code/KwaMoja/StockAdjustments.php:417
 #: /home/tim/code/KwaMoja/StockTransfers.php:305
@@ -16288,6 +16293,7 @@ msgstr "Le code SQL qui n'a pas réussi à insérer la transaction bancaire éta
 #: /home/tim/code/KwaMoja/CustomerReceipt.php:434
 #: /home/tim/code/KwaMoja/Payments.php:754
 #: /home/tim/code/KwaMoja/Payments.php:786
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:162
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr "Impossible d'insérer une transaction bancaire à l'aide du code SQL"
 
@@ -16378,7 +16384,7 @@ msgstr "Les détails du client n'ont pas pu être récupérés car"
 #: /home/tim/code/KwaMoja/KCMCRadiology.php:653
 #: /home/tim/code/KwaMoja/MonthlyBankTransactions.php:28
 #: /home/tim/code/KwaMoja/Payments.php:981
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:234
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:235
 msgid "The bank accounts could not be retrieved because"
 msgstr "Les comptes bancaires n'ont pas pu être récupérés car"
 
@@ -16538,7 +16544,7 @@ msgstr "Marque"
 #: /home/tim/code/KwaMoja/PcExpenses.php:303
 #: /home/tim/code/KwaMoja/PcExpenses.php:321
 #: /home/tim/code/KwaMoja/PcTabs.php:475 /home/tim/code/KwaMoja/PcTabs.php:494
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:294
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:296
 #: /home/tim/code/KwaMoja/StockAdjustments.php:645
 #: /home/tim/code/KwaMoja/StockTransfers.php:884
 #: /home/tim/code/KwaMoja/SuppTransGLAnalysis.php:277
@@ -21040,7 +21046,6 @@ msgstr "Pour la période"
 #: /home/tim/code/KwaMoja/GLAccountInquiry.php:94
 #: /home/tim/code/KwaMoja/GLAccountReport.php:297
 #: /home/tim/code/KwaMoja/Payments.php:1211
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:292
 #: /home/tim/code/KwaMoja/StockAdjustments.php:636
 #: /home/tim/code/KwaMoja/StockTransfers.php:875
 #: /home/tim/code/KwaMoja/SuppTransGLAnalysis.php:268
@@ -21147,7 +21152,7 @@ msgstr "La période sélectionnée à partir de est réellement après la pério
 #: /home/tim/code/KwaMoja/GLBudgets.php:49
 #: /home/tim/code/KwaMoja/GLJournal.php:508
 #: /home/tim/code/KwaMoja/Payments.php:1170
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:356
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:308
 msgid "Select GL Account"
 msgstr "Sélectionner un compte GL"
 
@@ -22062,7 +22067,6 @@ msgid "General ledger account selection"
 msgstr "Sélection du compte du grand livre"
 
 #: /home/tim/code/KwaMoja/GLBudgets.php:54
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:362
 msgid "No General ledger accounts have been set up yet"
 msgstr "Aucun compte de grand livre général n'a encore été mis en place"
 
@@ -22537,8 +22541,7 @@ msgstr "Description du modèle"
 #: /home/tim/code/KwaMoja/GLJournal.php:204
 #: /home/tim/code/KwaMoja/GLJournal.php:538
 #: /home/tim/code/KwaMoja/GLJournal.php:603
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:66
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:441
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:294
 msgid "GL Tag"
 msgstr "GL Tag"
 
@@ -22623,8 +22626,8 @@ msgstr "Entrée de ligne de journal"
 #: /home/tim/code/KwaMoja/GLJournal.php:588
 #: /home/tim/code/KwaMoja/Payments.php:1183
 #: /home/tim/code/KwaMoja/Payments.php:1189
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:377
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:382
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:315
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:320
 msgid "GL Narrative"
 msgstr "GL Narrative"
 
@@ -23827,7 +23830,7 @@ msgid "Select the file to import from"
 msgstr "Sélectionnez le fichier à importer"
 
 #: /home/tim/code/KwaMoja/ImportBankTrans.php:65
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:87
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:251
 #: /home/tim/code/KwaMoja/Z_ChangeBranchCode.php:215
 #: /home/tim/code/KwaMoja/Z_ChangeCustomerCode.php:251
 #: /home/tim/code/KwaMoja/Z_ChangeGLAccountCode.php:153
@@ -25492,8 +25495,7 @@ msgstr "Le travail a été correctement mis à jour"
 
 #: /home/tim/code/KwaMoja/JobScheduler.php:81
 #: /home/tim/code/KwaMoja/JobScheduler.php:172
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:62
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:437
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:376
 msgid "Frequency"
 msgstr "La fréquence"
 
@@ -25515,8 +25517,7 @@ msgid "Hourly"
 msgstr "Horaire"
 
 #: /home/tim/code/KwaMoja/JobScheduler.php:176
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:14
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:169
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:166
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:85
 #: /home/tim/code/KwaMoja/SystemParameters.php:577
 #: /home/tim/code/KwaMoja/SystemParameters.php:579
@@ -25533,8 +25534,7 @@ msgstr "du quotidien"
 #: /home/tim/code/KwaMoja/MRPPlannedWorkOrders.php:381
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:443
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:445
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:15
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:170
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:167
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:94
 #: /home/tim/code/KwaMoja/SystemParameters.php:582
 #: /home/tim/code/KwaMoja/SystemParameters.php:584
@@ -26439,8 +26439,7 @@ msgstr "Fréquence de facturation"
 #: /home/tim/code/KwaMoja/MRPPlannedWorkOrders.php:383
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:453
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:455
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:17
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:172
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:169
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:103
 #: /home/tim/code/KwaMoja/SalesPeople.php:21
 #: /home/tim/code/KwaMoja/SystemParameters.php:587
@@ -26452,8 +26451,7 @@ msgstr "Mensuel"
 #: /home/tim/code/KwaMoja/KCMCInsuranceCompanyDetails.php:416
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:463
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:465
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:18
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:173
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:170
 #: /home/tim/code/KwaMoja/SalesByTypePeriodInquiry.php:112
 #: /home/tim/code/KwaMoja/SalesPeople.php:22
 msgid "Quarterly"
@@ -26844,14 +26842,14 @@ msgstr "Configurer le nombre de lits par chambre"
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:254
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:315
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:329
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:96
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:124
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:90
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:118
 msgid "Ward ID"
 msgstr "ID du quartier"
 
 #: /home/tim/code/KwaMoja/KCMCMaintainWardRooms.php:64
 #: /home/tim/code/KwaMoja/KCMCMaintainWards.php:336
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:125
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:119
 msgid "Ward Name"
 msgstr "Nom du quartier"
 
@@ -27781,51 +27779,51 @@ msgstr "Sélectionnez une option de menu à utiliser pour ce service."
 msgid "Ward Inquiries"
 msgstr "Enquêtes de quartier"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:46
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:50
 msgid "Ward Transactions"
 msgstr "Transactions de quartier"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:48
-msgid "Ward Maintenance"
-msgstr "Entretien de la salle"
-
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:55
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:53
 msgid "Allocate Patients to beds"
 msgstr "Attribuer des patients aux lits"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:58
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:59
+msgid "Ward Maintenance"
+msgstr "Entretien de la salle"
+
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:62
 msgid "Maintain ward details"
 msgstr "Conserver les détails de la salle"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:59
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:65
 msgid "Maintain details of rooms in the ward"
 msgstr "Conserver les détails des pièces de la salle"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:80
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:74
 msgid "Search For Ward"
 msgstr "Rechercher Ward"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:94
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:88
 msgid "Search for ward details"
 msgstr "Rechercher les détails du quartier"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:98
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:92
 msgid "Enter all or part of the ward ID if it is known"
 msgstr "Entrez tout ou partie de l'ID de la salle si elle est connue"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:101
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:95
 msgid "Ward name"
 msgstr "Nom du quartier"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:103
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:97
 msgid "Enter all or part of the ward name if it is known"
 msgstr "Entrez tout ou partie du nom de la paroisse s'il est connu"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:123
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:117
 msgid "Ward Number"
 msgstr "Numéro de quartier"
 
-#: /home/tim/code/KwaMoja/KCMCWardOverview.php:134
+#: /home/tim/code/KwaMoja/KCMCWardOverview.php:128
 msgid "Select Ward"
 msgstr "Sélectionnez Ward"
 
@@ -31015,7 +31013,7 @@ msgstr "Pas encore imprimé"
 #: /home/tim/code/KwaMoja/PDFOrderStatus.php:369
 #: /home/tim/code/KwaMoja/PDFOrdersInvoiced.php:372
 #: /home/tim/code/KwaMoja/PO_Items.php:1006
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:463
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:412
 msgid "Complete"
 msgstr "Achevée"
 
@@ -34031,6 +34029,8 @@ msgid "No / Cancel Payment"
 msgstr "Non / Annuler le paiement"
 
 #: /home/tim/code/KwaMoja/Payments.php:449
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:102
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:131
 msgid "Cannot insert a GL entry for the payment using the SQL"
 msgstr "Impossible d'insérer une entrée GL pour le paiement à l'aide du code SQL"
 
@@ -34039,6 +34039,7 @@ msgstr "Impossible d'insérer une entrée GL pour le paiement à l'aide du code 
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:199
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:201
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:231
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:108
 msgid "Cannot insert a GL tag for the payment line because"
 msgstr "Impossible d'insérer un tag GL pour la ligne de paiement, car"
 
@@ -34051,6 +34052,7 @@ msgstr "Acte de transfert de"
 #: /home/tim/code/KwaMoja/Payments.php:785
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:230
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:301
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:161
 #: /home/tim/code/KwaMoja/prlLoanPayments.php:64
 msgid "Cannot insert a bank transaction because"
 msgstr "Impossible d'insérer une transaction bancaire car"
@@ -34227,7 +34229,6 @@ msgstr "Entrée de l'analyse de paiement du grand livre général"
 
 #: /home/tim/code/KwaMoja/Payments.php:1157
 #: /home/tim/code/KwaMoja/Payments.php:1163
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:307
 msgid "Enter GL Account Manually"
 msgstr "Entrer manuellement le compte GL"
 
@@ -34237,6 +34238,7 @@ msgid "If you know the GL code enter it here"
 msgstr "Si vous connaissez le code GL, entrez-le ici"
 
 #: /home/tim/code/KwaMoja/Payments.php:1172
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:310
 msgid "Select the account code for this transaction"
 msgstr "Sélectionnez le code de compte pour cette transaction"
 
@@ -34386,7 +34388,7 @@ msgstr "Détail des mouvements de l'onglet PC pour la fin"
 #: /home/tim/code/KwaMoja/PcAuthorizeCheque.php:63
 #: /home/tim/code/KwaMoja/PcAuthorizeExpenses.php:106
 #: /home/tim/code/KwaMoja/PcClaimExpensesFromTab.php:373
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:209
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:211
 #: /home/tim/code/KwaMoja/includes/PDFDIFOTPageHeader.php:46
 msgid "Days"
 msgstr "Journées"
@@ -37726,8 +37728,7 @@ msgstr "Fréquence de récurrence"
 
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:448
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:450
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:16
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:171
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:168
 msgid "Fortnightly"
 msgstr "Bimensuel"
 
@@ -37743,8 +37744,7 @@ msgstr "Bi-Annuellement"
 
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:473
 #: /home/tim/code/KwaMoja/RecurringSalesOrders.php:475
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:19
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:174
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:171
 #: /home/tim/code/KwaMoja/SalesPeople.php:23
 msgid "Annually"
 msgstr "Annuellement"
@@ -37853,43 +37853,46 @@ msgstr "Ordre récurrent créé des conseils"
 msgid "No email advice was sent for this order because the location has no email contact defined with a valid email address"
 msgstr "Aucun conseil par e-mail n'a été envoyé pour cette commande car le lieu n'a pas de contact e-mail défini avec une adresse e-mail valide"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:4
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:6
 msgid "Process regular payments"
 msgstr "Traiter les paiements réguliers"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:63
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:438
-msgid "Days into Period"
-msgstr "Jours dans la période"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:171
+msgid "The regular payment has been processed"
+msgstr "Le paiement régulier a été traité"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:67
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:442
-msgid "Amount of Payment"
-msgstr "Montant du paiement"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:207
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:380
+#: /home/tim/code/KwaMoja/sql/updates/42.php:214
+msgid "GL Tags"
+msgstr "Balises GL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:68
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:443
-msgid "Currency of payment"
-msgstr "Devise de paiement"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:209
+msgid "Functional"
+msgstr "Fonctionnel"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:70
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:445
-msgid "First payment Date"
-msgstr "Premier paiement Date"
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:209
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:210
+#: /home/tim/code/KwaMoja/SelectCreditItems.php:611
+msgid "Rate"
+msgstr "Taux"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:71
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:446
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:210
+msgid "Exchange"
+msgstr "Échange"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:213
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:385
 msgid "Next payment Date"
 msgstr "Prochain paiement Date"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:72
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:447
-msgid "Last payment Date"
-msgstr "Dernier paiement Date"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:94
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:257
 msgid "Add Selected payments"
 msgstr "Ajouter les paiements sélectionnés"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsProcess.php:260
+msgid "There are no regular payments due"
+msgstr "Aucun paiement régulier n'est dû"
 
 #: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:4
 msgid "Setup regular payments"
@@ -37951,23 +37954,23 @@ msgstr "Un code de grand livre général doit être sélectionné"
 msgid "You must enter a payment amount"
 msgstr "Vous devez entrer un montant de paiement"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:114
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:115
 msgid "Cannot update regular payment because"
 msgstr "Impossible de mettre à jour le paiement régulier car"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:115
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:116
 msgid "Cannot update regular payment using the SQL"
 msgstr "Impossible de mettre à jour le paiement régulier à l'aide de SQL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:141
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:142
 msgid "Cannot insert a new regular payment because"
 msgstr "Impossible d'insérer un nouveau paiement régulier car"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:142
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:143
 msgid "Cannot insert a new regular payment using the SQL"
 msgstr "Impossible d'insérer un nouveau paiement régulier à l'aide de SQL"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:165
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:164
 msgid "Regular General Ledger Payment"
 msgstr "Paiement régulier du grand livre"
 
@@ -37975,38 +37978,45 @@ msgstr "Paiement régulier du grand livre"
 msgid "Frequency Of Payment"
 msgstr "Fréquence de paiement"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:210
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:213
 msgid "The number of days from the start of the period that the payment is to be made"
 msgstr "Le nombre de jours depuis le début de la période que le paiement doit être effectué"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:214
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:216
 msgid "Date of first payment"
 msgstr "Date du premier paiement"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:218
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:220
 msgid "Date of Last payment"
 msgstr "Date du dernier paiement"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:312
-msgid "Select GL Group"
-msgstr "Sélectionnez le groupe GL"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:325
-msgid "No General ledger account groups have been set up yet"
-msgstr "Aucun groupe de comptes du grand livre général n'a encore été mis en place"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:325
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:362
-msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
-msgstr "les paiements ne peuvent être analysés par rapport aux comptes GL avant la création des comptes GL"
-
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:402
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:341
 msgid "Add New Regular Payment"
 msgstr "Ajouter un nouveau paiement régulier"
 
-#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:406
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:345
 msgid "Update Regular Payment Details"
 msgstr "Mettre à jour les détails du paiement régulier"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:377
+msgid "Days into Period"
+msgstr "Jours dans la période"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:381
+msgid "Amount of Payment"
+msgstr "Montant du paiement"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:382
+msgid "Currency of payment"
+msgstr "Devise de paiement"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:384
+msgid "First payment Date"
+msgstr "Premier paiement Date"
+
+#: /home/tim/code/KwaMoja/RegularPaymentsSetup.php:386
+msgid "Last payment Date"
+msgstr "Dernier paiement Date"
 
 #: /home/tim/code/KwaMoja/RelatedItemsUpdate.php:4
 msgid "Update Related Items"
@@ -40693,10 +40703,6 @@ msgstr "Les détails de l'article n'ont pas pu être récupérés car"
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:607
 msgid "Gross"
 msgstr "Brut"
-
-#: /home/tim/code/KwaMoja/SelectCreditItems.php:611
-msgid "Rate"
-msgstr "Taux"
 
 #: /home/tim/code/KwaMoja/SelectCreditItems.php:685
 msgid "Are you sure you wish to delete this line item from the credit note?"
@@ -66380,31 +66386,31 @@ msgstr "Une erreur s'est produite lors de la création de l'autorisation pour l'
 msgid "Populating the database with demo data."
 msgstr "Remplir la base de données avec des données de démonstration."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1504
+#: /home/tim/code/KwaMoja/install/Page6.php:1503
 msgid "KwaMoja Installation Is Completed"
 msgstr "L'installation de KwaMoja est terminée"
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1507
+#: /home/tim/code/KwaMoja/install/Page6.php:1506
 msgid "The KwaMoja installation has been successfully completed."
 msgstr "L'installation de KwaMoja a été complétée avec succès."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1508
+#: /home/tim/code/KwaMoja/install/Page6.php:1507
 msgid "Before using your system please ensure that write permissions have been removed from all files except the companies folder."
 msgstr "Avant d'utiliser votre système, assurez-vous que les autorisations d'écriture ont été supprimées de tous les fichiers, à l'exception du dossier des sociétés."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1509
+#: /home/tim/code/KwaMoja/install/Page6.php:1508
 msgid "Click on the button below to start using KwaMoja."
 msgstr "Cliquez sur le bouton ci-dessous pour commencer à utiliser KwaMoja."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1510
+#: /home/tim/code/KwaMoja/install/Page6.php:1509
 msgid "When you first sign in you will be taken to a series of screens to help you set KwaMoja up."
 msgstr "Lors de votre première connexion, vous serez redirigé vers une série d'écrans pour vous aider à définir KwaMoja."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1511
+#: /home/tim/code/KwaMoja/install/Page6.php:1510
 msgid "Please enjoy using the software and hopefully contribute back to the project."
 msgstr "S'il vous plaît profiter de l'utilisation du logiciel et, espérons-le, contribuer au projet."
 
-#: /home/tim/code/KwaMoja/install/Page6.php:1517
+#: /home/tim/code/KwaMoja/install/Page6.php:1516
 msgid "Start KwaMoja"
 msgstr "Démarrer KwaMoja"
 
@@ -66854,6 +66860,15 @@ msgstr "Configurer le tableau de bord"
 msgid "Maintain Supplier Groups"
 msgstr "Gérer les groupes de fournisseurs"
 
+#: /home/tim/code/KwaMoja/sql/updates/215.php:22
+msgid "Setup Regular Payments"
+msgstr "Configurer des paiements réguliers"
+
+#: /home/tim/code/KwaMoja/sql/updates/215.php:23
+#: /home/tim/code/KwaMoja/sql/updates/98.php:25
+msgid "Process Regular Payments"
+msgstr "Traiter les paiements réguliers"
+
 #: /home/tim/code/KwaMoja/sql/updates/42.php:32
 msgid "Purchases"
 msgstr "Achats"
@@ -67273,10 +67288,6 @@ msgstr "Rapports fiscaux"
 msgid "GL Budgets"
 msgstr "GL budgets"
 
-#: /home/tim/code/KwaMoja/sql/updates/42.php:214
-msgid "GL Tags"
-msgstr "Balises GL"
-
 #: /home/tim/code/KwaMoja/sql/updates/42.php:216
 msgid "Add a new Asset"
 msgstr "Ajouter un nouvel actif"
@@ -67657,10 +67668,6 @@ msgstr "Supprimer l'actif déductible"
 msgid "Auto Debtor Number"
 msgstr "Numéro de débiteur automatique"
 
-#: /home/tim/code/KwaMoja/sql/updates/98.php:25
-msgid "Process Regular Payments"
-msgstr "Traiter les paiements réguliers"
-
 #: /home/tim/code/KwaMoja/sql/updates/99.php:120
 msgid "Human Resources"
 msgstr "Ressources humaines"
@@ -67704,6 +67711,15 @@ msgstr "Prêts du personnel"
 #: /home/tim/code/KwaMoja/sql/updates/99.php:145
 msgid "Staff Loan Repayments"
 msgstr "Remboursements de prêts du personnel"
+
+#~ msgid "Select GL Group"
+#~ msgstr "Sélectionnez le groupe GL"
+
+#~ msgid "No General ledger account groups have been set up yet"
+#~ msgstr "Aucun groupe de comptes du grand livre général n'a encore été mis en place"
+
+#~ msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
+#~ msgstr "les paiements ne peuvent être analysés par rapport aux comptes GL avant la création des comptes GL"
 
 #~ msgid "Group name"
 #~ msgstr "Nom de groupe"

@@ -28,14 +28,6 @@ if ($LanguagesArray[$DefaultLanguage]['Direction'] == 'rtl') {
 </head>
 <body>
 
-<?php
-if (get_magic_quotes_gpc()) {
-	echo '<p style="background:white">';
-	echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
-	echo '</p>';
-}
-?>
-
 <div id="container">
 	<table>
 		<tr>
