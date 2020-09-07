@@ -109,7 +109,7 @@ if ($_SESSION['Trans'][$TransID]->Amount >= 0) { //its a receipt
 }
 
 /*Set up a form to allow input of new GL entries */
-echo '<form name="form1" action="' . basename(__FILE__) . '" method="post">';
+echo '<form name="form1" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="TransID" value=' . $TransID . ' />';
@@ -214,8 +214,8 @@ if ($AllowGLAnalysis == false) {
 				<td class=number>' . locale_number_format($EnteredGLCode->Amount, $_SESSION['Statement']->CurrDecimalPlaces) . '</td>
 				<td>' . $EnteredGLCode->Narrative . '</td>
 				<td>' . $EnteredGLCode->Tag . '</td>
-				<td><a href="' . basename(__FILE__) . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
-				<td><a href="' . basename(__FILE__) . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
 			</tr>';
 
 		$TotalGLValue+= $EnteredGLCode->Amount;

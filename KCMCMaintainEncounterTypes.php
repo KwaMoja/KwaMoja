@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-$Title = _('Maintian Encounter Types');
+$Title = _('Maintain Encounter Types');
 include ('includes/header.php');
 
 if (isset($_POST['SelectedType'])) {

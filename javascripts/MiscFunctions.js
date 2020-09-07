@@ -486,6 +486,13 @@ function SetSortingEvent() {
 		}
 	}
 }
+function ToggleCheckbox(element) {
+	if (element.checked==true) {
+		element.checked=false;
+	} else {
+		element.checked=true;
+	}
+}
 function initial() {
 	Scheduler();
 	if (document.getElementsByTagName) {

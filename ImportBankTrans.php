@@ -34,7 +34,7 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 		include ('includes/footer.php');
 		exit;
 	}
-	echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="', basename(__FILE__), '">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" name="ImportForm" enctype="multipart/form-data" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/ascending.png" title="', _('Receive'), '" alt="" />', $Title, '
@@ -438,7 +438,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 
 if (isset($_SESSION['Statement'])) {
 
-	echo '<form action="' . basename(__FILE__) . '" method="post" >';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($_SESSION['Statement']->BankGLAccount)) {
 		$AllowImport = false;

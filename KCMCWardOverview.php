@@ -5,6 +5,8 @@ $Title = _('Ward Overview');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.php');
 
+echo '<link href="css/', $_SESSION['Theme'], '/charts.css?v=5" rel="stylesheet" type="text/css" media="screen" />';
+
 if (!isset($_SESSION['WardID'])) {
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', _('Wards'), '
@@ -18,6 +20,22 @@ if (isset($_GET['SelectedWard'])) {
 }
 
 if (isset($_SESSION['WardID'])) {
+	$SQL = "SELECT SUM(nr_of_beds) AS total
+			FROM care_room
+			INNER JOIN care_ward
+				ON care_room.ward_nr=care_ward.nr
+			WHERE ward_nr='" . $_SESSION['WardID'] . "'";
+	$Result = DB_query($SQL);
+	$TotalRow = DB_fetch_array($Result);
+	$TotalBedsInWard = $TotalRow['total'];
+
+	$WardSQL = "SELECT COUNT(DISTINCT encounter_nr) AS occupied FROM care_encounter_location WHERE type_nr=2 AND location_nr='" . $_SESSION['WardID'] . "' and date_to='0000-00-00'";
+	$WardResult = DB_query($WardSQL);
+	$WardRow = DB_fetch_array($WardResult);
+	$TotalOccupiedBeds = $WardRow['occupied'];
+
+	$PieArea = 360 * $TotalOccupiedBeds / $TotalBedsInWard;
+
 	$SQL = "SELECT nr,
 					ward_id,
 					name,
@@ -38,42 +56,48 @@ if (isset($_SESSION['WardID'])) {
 		</p>';
 
 	echo '<div class="page_help_text">' . _('Select a menu option to operate for this ward.') . '</div>';
-	echo '<table width="90%" cellpadding="4">
-			<tr>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Ward Inquiries'), '" />', _('Ward Inquiries'), '</th>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Ward Transactions'), '" />', _('Ward Transactions'), '</th>
-				<th style="width:33%">
-					<img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Ward Maintenance'), '" />', _('Ward Maintenance'), '
-				</th>
-			</tr>
-			<tr>
-				<td style="vertical-align:top;">
-				</td>
-				<td style="vertical-align:top;">
+
+	echo '<fieldset style="text-align:center">';
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Ward Inquiries'), '" />', _('Ward Inquiries'), '</legend>
+			<ul>
+				<li>
+					<div class="chart_wrapper">
+						<div class="pie">
+							<div class="pie__segment" style="--offset:0; --value:', $PieArea, ';"></div>
+						</div>
+						<div class="chart_key">
+							<h2>', _('Ward Occupancy'), '</h2>
+							<span class="seg_two">', _('Occupied'), '</span><br /><br />
+							<span class="seg_one">', _('Unoccupied'), '</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</fieldset>';
+
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Ward Transactions'), '" />', _('Ward Transactions'), '</legend>
+			<ul>
+				<li class="MenuItem">
 					<a href="KCMCAllocatePatientsToBeds.php?SelectedWard=', $_SESSION['WardID'], '">', _('Allocate Patients to beds'), '</a>
-				</td>
-				<td style="vertical-align:top;">
+				</li>
+			<ul>
+		</fieldset>';
+
+	echo '<fieldset class="MenuList">
+			<legend><img alt="" src="', $RootPath . '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Ward Maintenance'), '" />', _('Ward Maintenance'), '</legend>
+			<ul>
+				<li class="MenuItem">
 					<a href="KCMCMaintainWards.php?SelectedWard=', $_SESSION['WardID'], '">', _('Maintain ward details'), '</a>
+				</li>
+				<li class="MenuItem">
 					<a href="KCMCMaintainWardRooms.php?SelectedWard=', $_SESSION['WardID'], '">', _('Maintain details of rooms in the ward'), '</a>
-				</td>
-			</tr>';
-	echo '<tr>';
+				</li>
+			</ul>
+		</fieldset>';
 
-	echo '<td valign="top" class="select">';
-	echo '</td>';
-
-	echo '<td valign="top" class="select">';
-
-	echo '</td>';
-
-	echo '<td valign="top" class="select">';
-
-	echo '</td>';
-
-	echo '</tr>
-		</table>';
+	echo '</fieldset>';
 }
 
 echo '<p class="page_title_text">

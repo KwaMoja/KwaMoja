@@ -40,6 +40,12 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['InsuranceDebtorType'] != $_POST['X_InsuranceDebtorType']) {
 			$SQL[] = "UPDATE config SET confvalue='" . $_POST['X_InsuranceDebtorType'] . "' WHERE confname='InsuranceDebtorType'";
 		}
+		if ($_SESSION['qrcodes_dir'] != $_POST['X_qrcodes_dir']) {
+			$SQL[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . $_POST['X_qrcodes_dir'] . "' WHERE confname = 'qrcodes_dir'";
+		}
+		if ($_SESSION['barcodes_dir'] != $_POST['X_barcodes_dir']) {
+			$SQL[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . $_POST['X_barcodes_dir'] . "' WHERE confname = 'barcodes_dir'";
+		}
 		$ErrMsg = _('The hospital configuration could not be updated because');
 		$DbgMsg = _('The SQL that failed was') . ':';
 		if (sizeof($SQL) > 0) {
@@ -157,6 +163,44 @@ while ($MyRow = DB_fetch_array($Result)) {
 } //end while loop
 echo '</select>
 	<fieldhelp>' . _('The debtor type that is used for insurance companies. All Insurancecompanies must be of this type.') . '</fieldhelp>
+</field>';
+
+//$qrcodes_dir
+$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
+$DirHandle = dir($CompanyDirectory);
+echo '<field>
+		<label for="X_qrcodes_dir">', _('The directory where QRcodes are stored'), ':</label>
+		<select required="required" name="X_qrcodes_dir">';
+while ($DirEntry = $DirHandle->read()) {
+	if (is_dir($CompanyDirectory . $DirEntry) and $DirEntry != '..' and $DirEntry != '.' and $DirEntry != '.svn' and $DirEntry != 'CVS' and $DirEntry != 'reports' and $DirEntry != 'locale' and $DirEntry != 'fonts') {
+		if ($_SESSION['qrcodes_dir'] == $CompanyDirectory . $DirEntry) {
+			echo '<option selected="selected" value="', $DirEntry, '">', $DirEntry, '</option>';
+		} else {
+			echo '<option value="', $DirEntry, '">', $DirEntry, '</option>';
+		}
+	}
+}
+echo '</select>
+	<fieldhelp>', _('The directory under which all qrcodes_dir files will be stored.'), '</fieldhelp>
+</field>';
+
+//barcodes_dir
+$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
+$DirHandle = dir($CompanyDirectory);
+echo '<field>
+		<label for="X_barcodes_dir">', _('The directory where barcodes are stored'), ':</label>
+		<select required="required" name="X_barcodes_dir">';
+while ($DirEntry = $DirHandle->read()) {
+	if (is_dir($CompanyDirectory . $DirEntry) and $DirEntry != '..' and $DirEntry != '.' and $DirEntry != '.svn' and $DirEntry != 'CVS' and $DirEntry != 'reports' and $DirEntry != 'locale' and $DirEntry != 'fonts') {
+		if ($_SESSION['barcodes_dir'] == $CompanyDirectory . $DirEntry) {
+			echo '<option selected="selected" value="', $DirEntry, '">', $DirEntry, '</option>';
+		} else {
+			echo '<option value="', $DirEntry, '">', $DirEntry, '</option>';
+		}
+	}
+}
+echo '</select>
+	<fieldhelp>', _('The directory under which all qrcodes_dir files will be stored.'), '</fieldhelp>
 </field>';
 
 echo '</fieldset>';

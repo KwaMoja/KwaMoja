@@ -77,7 +77,7 @@ if (isset($_POST['Process'])) {
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Confirm the Response For Tender'), ' ', $_SESSION['offer' . $Identifier]->TenderID, '
 		</p>';
 
-	echo '<form action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '" method="post">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<table>';
@@ -153,7 +153,7 @@ if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST
 	if (isset($_SESSION['offer' . $Identifier])) {
 		unset($_SESSION['offer' . $Identifier]);
 	}
-	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text">
@@ -291,7 +291,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 1 and !isset($_POST[
 }
 
 if (isset($_POST['TenderType']) and $_POST['TenderType'] != 3 and isset($_SESSION['offer' . $Identifier]) and $_SESSION['offer' . $Identifier]->LinesOnOffer > 0 or isset($_POST['Update'])) {
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text">
@@ -355,7 +355,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 2 and !isset($_POST[
 	if (!isset($_SESSION['offer' . $Identifier])) {
 		$_SESSION['offer' . $Identifier] = new Offer($_POST['SupplierID']);
 	}
-	echo '<form action="', htmlspecialchars(basename(__FILE__)), '?identifier=', $Identifier, '" method="post">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', $Identifier, '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text">
@@ -435,7 +435,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" title="', _('Tenders'), '" alt="" />', ' ', _('Tenders Waiting For Offers'), '
 		</p>';
 
-	echo '<form action="', basename(__FILE__), '" method="post">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<input type="hidden" name="TenderType" value="3" />';
 
@@ -549,7 +549,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType'] == 3 and !isset($_POST[
 
 if (isset($_POST['Search'])) {
 	/*ie seach for stock items */
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__)), '?identifier=', urlencode($Identifier), '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text">

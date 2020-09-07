@@ -855,7 +855,7 @@ echo '<p class="page_title_text">
 		</b>&nbsp;', _('Customer Name'), ' :<b> ', $_SESSION['Items' . $Identifier]->CustomerName, '</b>
 	</p>';
 
-echo '<form action="', basename(__FILE__), '?identifier=', urlencode($Identifier), '" method="post"  enctype="multipart/form-data">';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" method="post"  enctype="multipart/form-data">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 /*Display the order with or without discount depending on access level*/

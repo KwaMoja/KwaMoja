@@ -132,3 +132,38 @@ text-align:right;
 fieldset ul li {
 text-align:left;
 }
+fieldset .container {
+display: block;
+position: relative;
+padding-left: 35px;
+margin-bottom: 3px;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+fieldset .container input {
+position: absolute;
+cursor: pointer;
+display:none;
+}
+fieldset label .checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 10px;
+width: 25px;
+background-color: #eee;
+}
+fieldset .container:hover input ~ .checkmark {
+background-color: #ccc;
+}
+fieldset .container input:checked ~ .checkmark {
+background-color: #617C4F;
+}
+fieldset label .checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}

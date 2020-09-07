@@ -16,7 +16,7 @@ echo '<html>
 			<title>' . $ProjectName . ' ' . _('Login screen') . '</title>';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-echo '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />';
+echo '<link rel="shortcut icon" href="favicon.ico?v=2" type="image/x-icon" />';
 
 if ($LanguagesArray[$DefaultLanguage]['Direction'] == 'rtl') {
 	echo '<link rel="stylesheet" href="css/login_rtl.css" type="text/css" />';

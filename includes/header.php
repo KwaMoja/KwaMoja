@@ -34,7 +34,7 @@ echo '<html>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('KwaMoja'), ' - ', $Title, '</title>
 			<link rel="icon" href="', $PathPrefix, $RootPath, '/favicon.ico?v=2" />
-			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=15" rel="stylesheet" type="text/css" media="screen" />
+			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=30" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js"></script>';
@@ -95,7 +95,7 @@ echo '<style>
 
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
-echo '<header>';
+echo '<header class="noPrint">';
 
 echo '<div id="Info" data-title="', _('Company Details'), '">
 		<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" alt="', _('Company'), '"/>', stripslashes($_SESSION['CompanyRecord']['coyname']), '

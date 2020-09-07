@@ -360,6 +360,7 @@ if (isset($EmployeeID)) {
 	$_POST['PayType'] = '';
 	$_POST['PeriodRate'] = 0;
 	$_POST['HourlyRate'] = 0;
+	$_POST['NormalHours'] = 0;
 	$_POST['EmpStatID'] = '';
 	$_POST['Active'] = '';
 
@@ -649,7 +650,7 @@ echo '<field>
 echo '<field>
 		<label for="NormalHours">', _('Normal Weekly Hours'), ':</label>
 		<input class="number" type="text" name="NormalHours" value="', $_POST['NormalHours'], '" size="3" maxlength="2" /></td>
-		<fieldhelp>', _('Enter the employee\'s normal hours per week'), '</fieldhelp
+		<fieldhelp>', _('Enter the employee\'s normal hours per week'), '</fieldhelp>
 	</field>';
 
 echo '<field>

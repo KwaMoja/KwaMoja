@@ -4,12 +4,12 @@ include ('includes/SQL_CommonFunctions.php');
 $Title = _('Register a Patient');
 include ('includes/header.php');
 
-if (isset($_POST['FileNumber'])) {
-	$FileNumber = $_POST['FileNumber'];
-} elseif (isset($_GET['FileNumber'])) {
-	$FileNumber = $_GET['FileNumber'];
+if (isset($_POST['SelectedPatient'])) {
+	$SelectedPatient = $_POST['SelectedPatient'];
+} elseif (isset($_GET['SelectedPatient'])) {
+	$SelectedPatient = $_GET['SelectedPatient'];
 } else {
-	unset($FileNumber);
+	unset($SelectedPatient);
 }
 
 echo '<p class="page_title_text">
@@ -77,31 +77,60 @@ if (isset($_POST['Create'])) {
 			}
 		}
 
-		$Result = DB_Txn_Begin();
-
 		$SQL = "INSERT INTO care_person (hospital_file_nr,
 										date_reg,
 										title,
 										name_first,
 										name_last,
+										phone_1_nr,
 										date_birth,
 										blood_group,
 										civil_status,
-										sex
+										citizenship,
+										sex,
+										`create_id`,
+										`create_time`
 									) VALUES (
 										'" . $_POST['FileNumber'] . "',
 										NOW(),
 										'" . $_POST['Title'] . "',
 										'" . $_POST['FirstName'] . "',
 										'" . $_POST['LastName'] . "',
+										'" . $_POST['Telephone'] . "',
 										'" . FormatDateForSQL($_POST['DateOfBirth']) . "',
 										'" . $_POST['BloodGroup'] . "',
 										'" . $_POST['Marital'] . "',
-										'" . $_POST['Gender'] . "'
+										'" . $_POST['Citizenship'] . "',
+										'" . $_POST['Gender'] . "',
+										'" . $_SESSION['UserID'] . "',
+										NOW()
 									)";
 		$ErrMsg = _('There was a problem inserting the patient record because');
 		$DbgMsg = _('The SQL used to insert the patient record was');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+		$SQL = "SELECT pid FROM care_person WHERE hospital_file_nr='" . $_POST['FileNumber'] . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
+		$PID = $MyRow['pid'];
+
+		if (isset($_POST['StockItem'])) {
+			$SQL = "INSERT INTO care_billable_items (`pid`,
+													`stockid`,
+													`price_list`,
+													`create_id`,
+													`create_time`
+												) VALUES (
+													'" . $PID . "',
+													'" . $_POST['StockItem'] . "',
+													'" . $_POST['SalesType'] . "',
+													'" . $_SESSION['UserID'] . "',
+													NOW()
+											)";
+			$ErrMsg = _('There was a problem inserting the billable items because');
+			$DbgMsg = _('The SQL used to insert the billable items was');
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		}
 
 		$SQL = "INSERT INTO debtorsmaster (debtorno,
 										name,
@@ -115,7 +144,7 @@ if (isset($_POST['Create'])) {
 										salestype,
 										paymentterms)
 									VALUES (
-										'" . $_POST['FileNumber'] . "',
+										'" . $PID . "',
 										'" . $_POST['Name'] . "',
 										'" . $_POST['Address1'] . "',
 										'" . $_POST['Address2'] . "',
@@ -141,7 +170,7 @@ if (isset($_POST['Create'])) {
 										taxgroupid)
 									VALUES (
 										'CASH',
-										'" . $_POST['FileNumber'] . "',
+										'" . $PID . "',
 										'CASH',
 										'" . $SalesAreaRow['areacode'] . "',
 										'" . $SalesManRow['salesmancode'] . "',
@@ -153,7 +182,7 @@ if (isset($_POST['Create'])) {
 		$DbgMsg = _('The SQL used to insert the branch record was');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-		if ($_POST['Insurance'] != '') {
+		if (isset($_POST['Insurance']) and $_POST['Insurance'] != '') {
 			$SQL = "INSERT INTO custbranch (branchcode,
 											debtorno,
 											brname,
@@ -164,7 +193,7 @@ if (isset($_POST['Create'])) {
 											taxgroupid)
 										VALUES (
 											'" . $_POST['Insurance'] . "',
-											'" . $_POST['FileNumber'] . "',
+											'" . $PID . "',
 											'" . $_POST['Insurance'] . "',
 											'" . $SalesAreaRow['areacode'] . "',
 											'" . $SalesManRow['salesmancode'] . "',
@@ -172,18 +201,17 @@ if (isset($_POST['Create'])) {
 											'" . $_SESSION['DefaultFactoryLocation'] . "',
 											'1'
 										)";
-			$Result = DB_query($SQL);
 			$ErrMsg = _('There was a problem inserting the branch record because');
 			$DbgMsg = _('The SQL used to insert the branch record was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 		}
-		$Result = DB_Txn_Commit();
+
 		prnMsg(_('The patient') . ' ' . $_POST['FileNumber'] . ' ' . _('has been successfully registered'), 'success');
 
 		echo '<div class="centre">
-				<a href="', $RootPath, '/KCMCInpatientAdmission.php?SelectedPatient=', $_POST['FileNumber'], '">', _('Admit as Inpatient'), '</a>
-				<a href="', $RootPath, '/KCMCOutpatientAdmission.php?SelectedPatient=', $_POST['FileNumber'], '">', _('Admit as Outpatient'), '</a>
+				<a href="', $RootPath, '/KCMCInpatientAdmission.php?SelectedPatient=', $PID, '">', _('Admit as Inpatient'), '</a><br />
+				<a href="', $RootPath, '/KCMCOutpatientAdmission.php?SelectedPatient=', $PID, '">', _('Admit as Outpatient'), '</a>
 			</div>';
 
 		unset($_POST['FileNumber']);
@@ -198,12 +226,145 @@ if (isset($_POST['Create'])) {
 		unset($_POST['DateOfBirth']);
 		unset($_POST['Gender']);
 	}
+} elseif (isset($_POST['Update'])) {
+
+	$InputError = 0;
+
+	$_POST['Name'] = $_POST['FirstName'] . ' ' . $_POST['LastName'];
+
+	if (mb_strlen($_POST['Name']) == 0) {
+		$InputError = 1;
+		$msg[] = _('You must input the name of the patient you are registering');
+	}
+
+	if (mb_strlen($_POST['DateOfBirth']) == 0) {
+		$InputError = 1;
+		$msg[] = _('You must input the date of birth of the patient');
+	}
+
+	if (mb_strlen($_POST['SalesType']) == 0) {
+		$InputError = 1;
+		$msg[] = _('Please select a price list ');
+	}
+
+	if (mb_strlen($_POST['Gender']) == 0) {
+		$InputError = 1;
+		$msg[] = _('Please select the gender of the patient');
+	}
+
+	if ($InputError == 1) {
+		foreach ($msg as $message) {
+			prnMsg($message, 'error');
+		}
+	} else {
+
+		$SalesAreaSQL = "SELECT areacode FROM areas";
+		$SalesAreaResult = DB_query($SalesAreaSQL);
+		$SalesAreaRow = DB_fetch_array($SalesAreaResult);
+
+		$SalesManSQL = "SELECT salesmancode FROM salesman";
+		$SalesManResult = DB_query($SalesManSQL);
+		$SalesManRow = DB_fetch_array($SalesManResult);
+
+		if ($_SESSION['AutoPatientNo'] > 0) {
+			/* system assigned, sequential, numeric */
+			if ($_SESSION['AutoPatientNo'] == 1) {
+				$_POST['FileNumber'] = GetNextTransNo(520);
+			}
+		}
+
+		$SQL = "UPDATE care_person SET title='" . $_POST['Title'] . "',
+										name_first='" . $_POST['FirstName'] . "',
+										name_last='" . $_POST['LastName'] . "',
+										phone_1_nr='" . $_POST['Telephone'] . "',
+										date_birth='" . FormatDateForSQL($_POST['DateOfBirth']) . "',
+										blood_group='" . $_POST['BloodGroup'] . "',
+										civil_status='" . $_POST['Marital'] . "',
+										citizenship='" . $_POST['Citizenship'] . "',
+										sex='" . $_POST['Gender'] . "',
+										modify_id='" . $_SESSION['UserID'] . "',
+										modify_time=NOW()
+									WHERE pid='" . $SelectedPatient . "'";
+		$ErrMsg = _('There was a problem updating the patient record because');
+		$DbgMsg = _('The SQL used to update the patient record was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+		if (isset($_POST['StockItem'])) {
+			$SQL = "UPDATE care_billable_items SET `stockid`='" . $_POST['StockItem'] . "',
+													`price_list`='" . $_POST['SalesType'] . "',
+													`modify_id`='" . $_SESSION['UserID'] . "',
+													`modify_time`=NOW()
+												WHERE pid='" . $SelectedPatient . "'";
+			$ErrMsg = _('There was a problem updating the billable items because');
+			$DbgMsg = _('The SQL used to update the billable items was');
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		}
+
+		$SQL = "UPDATE debtorsmaster SET name='" . $_POST['Name'] . "',
+										address1='" . $_POST['Address1'] . "',
+										address2='" . $_POST['Address2'] . "',
+										address3='" . $_POST['Address3'] . "',
+										address4='" . $_POST['Address4'] . "',
+										address5='" . $_POST['Address5'] . "',
+										address6='" . $_POST['Address6'] . "',
+										currcode='" . $_SESSION['CompanyRecord']['currencydefault'] . "',
+										salestype='" . $_POST['SalesType'] . "'
+									WHERE debtorno='" . $SelectedPatient . "'";
+		$ErrMsg = _('There was a problem updating the debtors record because');
+		$DbgMsg = _('The SQL used to update the debtors record was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+		$SQL = "UPDATE custbranch SET area='" . $SalesAreaRow['areacode'] . "',
+										salesman='" . $SalesManRow['salesmancode'] . "',
+										phoneno='" . $_POST['Telephone'] . "',
+										defaultlocation='" . $_SESSION['DefaultFactoryLocation'] . "'
+									WHERE branchcode='CASH'
+										AND debtorno='" . $SelectedPatient . "'";
+		$ErrMsg = _('There was a problem updating the branch record because');
+		$DbgMsg = _('The SQL used to update the branch record was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+		if (isset($_POST['Insurance']) and $_POST['Insurance'] != '') {
+			$SQL = "UPDATE custbranch SET brname='" . $_POST['Insurance'] . "',
+											area='" . $SalesAreaRow['areacode'] . "',
+											salesman='" . $SalesManRow['salesmancode'] . "',
+											phoneno='" . $_POST['Telephone'] . "',
+											defaultlocation='" . $_SESSION['DefaultFactoryLocation'] . "'
+										WHERE branchcode='" . $_POST['Insurance'] . "'
+											AND debtorno='" . $SelectedPatient . "'";
+			$Result = DB_query($SQL);
+			$ErrMsg = _('There was a problem updating the branch record because');
+			$DbgMsg = _('The SQL used to update the branch record was');
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+		}
+
+		prnMsg(_('The patient') . ' ' . $_POST['FileNumber'] . ' ' . _('has been successfully updated'), 'success');
+
+		echo '<div class="centre">
+				<a href="', $RootPath, '/KCMCSelectPatient.php?Select=', $SelectedPatient, '">', _('Return to Patient Screen'), '</a>
+			</div>';
+
+		unset($_POST['FileNumber']);
+		unset($_POST['Name']);
+		unset($_POST['Address1']);
+		unset($_POST['Address2']);
+		unset($_POST['Address3']);
+		unset($_POST['Address4']);
+		unset($_POST['Address5']);
+		unset($_POST['Address6']);
+		unset($_POST['SalesType']);
+		unset($_POST['DateOfBirth']);
+		unset($_POST['Gender']);
+	}
+	include ('includes/footer.php');
+	exit;
 }
 
 echo '<form action="', $_SERVER['PHP_SELF'], '" method="post">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-if (!isset($FileNumber)) {
+if (!isset($SelectedPatient)) {
 
 	$_POST['Title'] = 1;
 	$_POST['FirstName'] = '';
@@ -226,10 +387,64 @@ if (!isset($FileNumber)) {
 	if ($_SESSION['AutoPatientNo'] == 0) {
 		echo '<field>
 				<label for="FileNumber">', _('File Number'), ':</label>
-				<input type="text" size="10" name="FileNumber" value="', $FileNumber, '" />
+				<input type="text" size="10" name="FileNumber" value="', $SelectedPatient, '" />
 				<fieldhelp>', _('A unique ID for this patient.'), '</fieldhelp>
 			</field>';
 	}
+} else {
+	$SQL = "SELECT care_person.title,
+					care_person.name_first,
+					care_person.name_last,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
+					care_person.phone_1_nr,
+					care_person.date_birth,
+					care_person.blood_group,
+					care_person.citizenship,
+					care_person.civil_status,
+					debtorsmaster.salestype,
+					care_person.sex
+				FROM care_person
+				INNER JOIN debtorsmaster
+					ON care_person.pid=debtorsmaster.debtorno
+				WHERE care_person.pid='" . $SelectedPatient . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+
+	$_POST['Title'] = $MyRow['title'];
+	$_POST['FirstName'] = $MyRow['name_first'];
+	$_POST['LastName'] = $MyRow['name_last'];
+	$_POST['Address1'] = $MyRow['address1'];
+	$_POST['Address2'] = $MyRow['address2'];
+	$_POST['Address3'] = $MyRow['address3'];
+	$_POST['Address4'] = $MyRow['address4'];
+	$_POST['Address5'] = $MyRow['address5'];
+	$_POST['Address6'] = $MyRow['address6'];
+	$_POST['Telephone'] = $MyRow['phone_1_nr'];
+	$_POST['DateOfBirth'] = ConvertSQLDate($MyRow['date_birth']);
+	$_POST['Citizenship'] = $MyRow['citizenship'];
+	$_POST['SalesType'] = $MyRow['salestype'];
+	$_POST['Gender'] = $MyRow['sex'];
+	$_POST['BloodGroup'] = $MyRow['blood_group'];
+	$_POST['Marital'] = $MyRow['civil_status'];
+
+	$SQL = "SELECT branchcode FROM custbranch WHERE branchcode<>'CASH'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0) {
+		$_POST['Insurance'] = '';
+	} else {
+		$MyRow = DB_fetch_array($Result);
+		$_POST['Insurance'] = $MyRow['branchcode'];
+	}
+
+	echo '<fieldset>
+			<legend>', _('Amend patient details'), '</legend>';
+
+	echo '<input type="hidden" size="10" name="SelectedPatient" value="', $SelectedPatient, '" />';
 }
 
 $Titles = array(1 => _('Mr'), 2 => _('Ms'), 3 => _('Miss'), 4 => _('Mrs'), 5 => _('Dr'));
@@ -425,21 +640,49 @@ if (isset($_POST['Insurance']) and $_POST['Insurance'] != '') {
 	$Result = DB_query($SQL);
 
 	echo '<field>
-			<td>' . _('Employer Company') . ':</td>
-			<td><select name="Employer">';
+			<label for="Employer">', _('Employer Company'), ':</label>
+			<select name="Employer">';
 	echo '<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
+		echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
 	}
 	echo '</select>
-				</td>
-			</field>';
+		</field>';
+}
+
+$SQL = "SELECT stockid,
+				description
+			FROM stockmaster
+			INNER JOIN stockcategory
+				ON stockmaster.categoryid=stockcategory.categoryid
+			INNER JOIN stocktypes
+				ON stockcategory.stocktype=stocktypes.type
+			WHERE stocktypes.type='R'";
+$Result = DB_query($SQL);
+
+if (DB_num_rows($Result) > 0) {
+	echo '<field>
+			<label for="StockItem">', _('Item to bill'), ':</label>
+			<select name="StockItem">';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="', $MyRow['stockid'], '">', $MyRow['stockid'], ' - ', $MyRow['description'], '</option>';
+	}
+	echo '</select>
+		</field>';
 }
 
 echo '</fieldset>';
-echo '<div class="centre">
-		<input type="submit" name="Create" value="' . ('Register the patient') . '" />
-	</div>';
+
+if (isset($SelectedPatient)) {
+	echo '<div class="centre">
+			<input type="submit" name="Update" value="' . ('Update patient') . '" />
+		</div>';
+} else {
+	echo '<div class="centre">
+			<input type="submit" name="Create" value="' . ('Register the patient') . '" />
+		</div>';
+}
+
 echo '</form>';
 
 include ('includes/footer.php');

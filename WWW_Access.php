@@ -44,13 +44,14 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add'])) {
 	unset($SQL);
 	if (isset($_POST['SecRoleName'])) { // Update or Add Security Headings
 		if (isset($SelectedRole)) { // Update Security Heading
-			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "'
+			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "',
+											clinician='" . $_POST['Clinician'] . "'
 					WHERE secroleid = '" . $SelectedRole . "'";
 			$ErrMsg = _('The update of the security role description failed because');
 			$ResMsg = _('The Security role description was updated.');
 		} else { // Add Security Heading
-			$SQL = "INSERT INTO securityroles (secrolename) VALUES ('" . $_POST['SecRoleName'] . "')";
-			$ErrMsg = _('The update of the security role failed because');
+			$SQL = "INSERT INTO securityroles (secrolename, clinician) VALUES ('" . $_POST['SecRoleName'] . "', '" . $_POST['Clinician'] . "')";
+			$ErrMsg = _('The insert of the security role failed because');
 			$ResMsg = _('The Security role was created.');
 		}
 		unset($_POST['SecRoleName']);
@@ -130,7 +131,8 @@ if (!isset($SelectedRole)) {
 	/* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
 	$SQL = "SELECT secroleid,
-			secrolename
+			secrolename,
+			clinician
 		FROM securityroles
 		ORDER BY secrolename";
 	$Result = DB_query($SQL);
@@ -138,15 +140,22 @@ if (!isset($SelectedRole)) {
 	echo '<table>
 			<tr>
 				<th>', _('Role'), '</th>
+				<th>', _('Clinician'), '</th>
 				<th colspan="2"></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		/*The SecurityHeadings array is defined in config.php */
+		if ($MyRow['clinician'] == 0) {
+			$Clinician = _('No');
+		} else {
+			$Clinician = _('Yes');
+		}
 
 		echo '<tr class="striped_row">
 				<td>', $MyRow['secrolename'], '</td>
+				<td>', $Clinician, '</td>
 				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?&amp;SelectedRole=', urlencode($MyRow['secroleid']), '">', _('Edit'), '</a></td>
 				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?&amp;SelectedRole=', urlencode($MyRow['secroleid']), '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this role?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 			</tr>';
@@ -165,7 +174,8 @@ if (isset($SelectedRole)) {
 if (isset($SelectedRole)) {
 	//editing an existing role
 	$SQL = "SELECT secroleid,
-			secrolename
+					secrolename,
+					clinician
 		FROM securityroles
 		WHERE secroleid='" . $SelectedRole . "'";
 	$Result = DB_query($SQL);
@@ -175,6 +185,7 @@ if (isset($SelectedRole)) {
 		$MyRow = DB_fetch_array($Result);
 		$_POST['SelectedRole'] = $MyRow['secroleid'];
 		$_POST['SecRoleName'] = $MyRow['secrolename'];
+		$_POST['Clinician'] = $MyRow['clinician'];
 	}
 }
 
@@ -192,6 +203,21 @@ echo '<field>
 		<label for="SecRoleName">', _('Role'), ':</label>
 		<input type="text" name="SecRoleName" size="40" required="required" maxlength="40" value="', $_POST['SecRoleName'], '" />
 	</field>';
+
+echo '<field>
+		<label for="Clinician">', _('Clinician'), '</label>
+		<select name="Clinician">';
+if ($_POST['Clinician'] == 0) {
+	echo '<option value="0" selected="selected">', _('No'), '</option>';
+	echo '<option value="1">', _('Yes'), '</option>';
+} else {
+	echo '<option value="0">', _('No'), '</option>';
+	echo '<option value="1" selected="selected">', _('Yes'), '</option>';
+}
+echo '</select>
+	<fieldhelp>', _('Is the role a clinical one. For instance, doctor, or a nurse'), '</fieldhelp>
+</field>';
+
 echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="', _('Enter Role'), '" />

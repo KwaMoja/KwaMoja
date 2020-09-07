@@ -9,55 +9,108 @@ if (isset($_POST['SelectedPatient'])) {
 	$SelectedPatient = $_GET['SelectedPatient'];
 }
 
+if (isset($SelectedPatient) and isset($_GET['Edit'])) {
+	$SQL = "SELECT current_dept_nr FROM care_encounter WHERE pid='" . $SelectedPatient . "' AND is_discharged=0 AND current_dept_nr<>0";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('This patient is not currently admitted as an outpatient'), 'error');
+		echo '<div class="centre">
+				<a href="', $RootPath, '/KCMCSelectPatient.php?Select=', $SelectedPatient, '">', _('Return to Patient Screen'), '</a>
+			</div>';
+		include ('includes/footer.php');
+		exit;
+	}
+}
+
 if (isset($_POST['Create'])) {
 
-	$SQL = "SELECT pid FROM care_person WHERE hospital_file_nr='" . $SelectedPatient . "'";
-	$Result = DB_query($SQL);
-	$MyPIDRow = DB_fetch_array($Result);
+	/* First off check that this patient isn't currently admitted */
+	$SQL = "SELECT pid FROM care_encounter WHERE is_discharged=0";
+	$CheckResult = DB_query($SQL);
 
-	$SQL = "INSERT INTO care_encounter (pid,
-										encounter_date,
-										encounter_class_nr,
-										referrer_diagnosis,
-										referrer_dr,
-										referrer_recom_therapy,
-										referrer_notes,
-										triage,
-										admit_type,
-										in_dept,
-										current_dept_nr,
-										status,
-										insurance_firm_id,
-										insurance_nr,
-										modify_id,
-										modify_time,
-										create_id,
-										create_time
-									) VALUES (
-										'" . $MyPIDRow['pid'] . "',
-										NOW(),
-										2,
-										'" . $_POST['Diagnosis'] . "',
-										'" . $_POST['ReferredBy'] . "',
-										'" . $_POST['Therapy'] . "',
-										'" . $_POST['ReferrerNotes'] . "',
-										'" . $_POST['TriageCode'] . "',
-										'" . $_POST['AdmissionType'] . "',
-										1,
-										'" . $_POST['Department'] . "',
-										'in_dept',
-										'" . $_POST['Insurance'] . "',
-										'" . $_POST['InsuranceNo'] . "',
-										'" . $_SESSION['UserID'] . "',
-										NOW(),
-										'" . $_SESSION['UserID'] . "',
-										NOW()
-									)";
-	$ErrMsg = _('There was a problem inserting the encounter record because');
+	if (DB_num_rows($CheckResult) == 0) {
+
+		$SQL = "SELECT pid FROM care_person WHERE pid='" . $SelectedPatient . "'";
+		$Result = DB_query($SQL);
+		$MyPIDRow = DB_fetch_array($Result);
+
+		$SQL = "INSERT INTO care_encounter (pid,
+											encounter_date,
+											encounter_class_nr,
+											referrer_diagnosis,
+											referrer_dr,
+											referrer_recom_therapy,
+											referrer_notes,
+											triage,
+											admit_type,
+											in_dept,
+											current_dept_nr,
+											status,
+											insurance_firm_id,
+											insurance_nr,
+											modify_id,
+											modify_time,
+											create_id,
+											create_time
+										) VALUES (
+											'" . $MyPIDRow['pid'] . "',
+											NOW(),
+											2,
+											'" . $_POST['Diagnosis'] . "',
+											'" . $_POST['ReferredBy'] . "',
+											'" . $_POST['Therapy'] . "',
+											'" . $_POST['ReferrerNotes'] . "',
+											'" . $_POST['TriageCode'] . "',
+											'" . $_POST['AdmissionType'] . "',
+											1,
+											'" . $_POST['Department'] . "',
+											'in_dept',
+											'" . $_POST['Insurance'] . "',
+											'" . $_POST['InsuranceNo'] . "',
+											'" . $_SESSION['UserID'] . "',
+											NOW(),
+											'" . $_SESSION['UserID'] . "',
+											NOW()
+										)";
+		$ErrMsg = _('There was a problem inserting the encounter record because');
+		$DbgMsg = _('The SQL used to insert the encounter record was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+
+		prnMsg(_('The patient was successfully admitted.'), 'success');
+		unset($SelectedPatient);
+		unset($_POST['Diagnosis']);
+		unset($_POST['ReferredBy']);
+		unset($_POST['Therapy']);
+		unset($_POST['ReferrerNotes']);
+		unset($_POST['TriageCode']);
+		unset($_POST['AdmissionType']);
+		unset($_POST['Department']);
+		unset($_POST['Insurance']);
+		unset($_POST['InsuranceNo']);
+
+	} else {
+		prnMsg(_('The patient is already admitted. They must be discharged before they can be re-admitted'), 'error');
+	}
+
+} elseif (isset($_POST['Update'])) {
+	$SQL = "UPDATE care_encounter SET referrer_diagnosis='" . $_POST['Diagnosis'] . "',
+											referrer_dr='" . $_POST['ReferredBy'] . "',
+											referrer_recom_therapy='" . $_POST['Therapy'] . "',
+											referrer_notes='" . $_POST['ReferrerNotes'] . "',
+											triage='" . $_POST['TriageCode'] . "',
+											admit_type='" . $_POST['AdmissionType'] . "',
+											current_dept_nr='" . $_POST['Department'] . "',
+											status='in_dept',
+											insurance_firm_id='" . $_POST['Insurance'] . "',
+											insurance_nr='" . $_POST['InsuranceNo'] . "',
+											modify_id='" . $_SESSION['UserID'] . "',
+											modify_time=NOW()
+										WHERE pid='" . $SelectedPatient . "'";
+	$ErrMsg = _('There was a problem updating the encounter record because');
 	$DbgMsg = _('The SQL used to insert the encounter record was');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	prnMsg(_('The patient was successfully admitted.'), 'success');
+	prnMsg(_('The patient data was successfully updated.'), 'success');
 	unset($SelectedPatient);
 	unset($_POST['Diagnosis']);
 	unset($_POST['ReferredBy']);
@@ -69,6 +122,12 @@ if (isset($_POST['Create'])) {
 	unset($_POST['Insurance']);
 	unset($_POST['InsuranceNo']);
 
+	echo '<div class="centre">
+				<a href="', $RootPath, '/KCMCSelectPatient.php?SelectedPatient=', $SelectedPatient, '">', _('Return to Patient Screen'), '</a>
+			</div>';
+
+	include ('includes/footer.php');
+	exit;
 }
 
 if (!isset($SelectedPatient)) {
@@ -133,7 +192,7 @@ if (!isset($SelectedPatient)) {
 						custbranch.phoneno
 					FROM debtorsmaster
 					INNER JOIN care_person
-						ON debtorsmaster.debtorno=care_person.hospital_file_nr
+						ON debtorsmaster.debtorno=care_person.pid
 					INNER JOIN custbranch
 						ON debtorsmaster.debtorno=custbranch.debtorno
 						AND custbranch.branchcode='CASH'
@@ -143,32 +202,40 @@ if (!isset($SelectedPatient)) {
 						AND CONCAT(address1, address2, address3, address4, address5, address6) LIKE '%" . $_POST['AddressSearch'] . "%'";
 		$Result = DB_query($SQL);
 
-		echo '<table>
-				<tr>
-					<th>', _('Patient Number'), '</th>
-					<th>', _('Patient Name'), '</th>
-					<th>', _('Address'), '</th>
-					<th>', _('Phone Number'), '</th>
-					<th></th>
-				</tr>';
+		if (DB_num_rows($Result) > 0) {
+			echo '<table>
+					<tr>
+						<th>', _('Patient Number'), '</th>
+						<th>', _('Patient Name'), '</th>
+						<th>', _('Address'), '</th>
+						<th>', _('Phone Number'), '</th>
+						<th></th>
+					</tr>';
 
-		while ($MyRow = DB_fetch_array($Result)) {
-			$Address = '';
-			for ($i = 1;$i <= 6;$i++) {
-				if ($MyRow['address' . $i] != '') {
-					$Address.= $MyRow['address' . $i];
+			while ($MyRow = DB_fetch_array($Result)) {
+				$SQL = "SELECT pid FROM care_encounter WHERE pid='" . $MyRow['debtorno'] . "' AND is_discharged=1 AND (current_dept_nr<>0 OR current_ward_nr<>0)";
+				$CheckResult = DB_query($SQL);
+				if (DB_num_rows($CheckResult) == 0) {
+					$Address = '';
+					for ($i = 1;$i <= 6;$i++) {
+						if ($MyRow['address' . $i] != '') {
+							$Address.= $MyRow['address' . $i];
+						}
+					}
+					echo '<tr class="striped_row">
+							<td>', $MyRow['debtorno'], '</td>
+							<td>', $MyRow['name'], '</td>
+							<td>', $Address, '</td>
+							<td>', $MyRow['phoneno'], '</td>
+							<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedPatient=', urlencode($MyRow['debtorno']), '">', _('Admit Patient'), '</a></td>
+						</tr>';
 				}
 			}
-			echo '<tr class="striped_row">
-					<td>', $MyRow['debtorno'], '</td>
-					<td>', $MyRow['name'], '</td>
-					<td>', $Address, '</td>
-					<td>', $MyRow['phoneno'], '</td>
-					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedPatient=', urlencode($MyRow['debtorno']), '">', _('Admit Patient'), '</a></td>
-				</tr>';
-		}
 
-		echo '</table>';
+			echo '</table>';
+		} else {
+			prnMsg(_('There are no patients matching this criteria'), 'info');
+		}
 	}
 	include ('includes/footer.php');
 	exit;
@@ -193,13 +260,36 @@ $SQL = "SELECT debtorsmaster.debtorno,
 				care_person.date_birth
 			FROM debtorsmaster
 			INNER JOIN care_person
-				ON debtorsmaster.debtorno=care_person.hospital_file_nr
+				ON debtorsmaster.debtorno=care_person.pid
 			INNER JOIN custbranch
 				ON debtorsmaster.debtorno=custbranch.debtorno
 				AND custbranch.branchcode='CASH'
 			WHERE debtorsmaster.debtorno='" . $SelectedPatient . "'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
+
+if (isset($_GET['Edit'])) {
+	$SQL = "SELECT referrer_diagnosis,
+					referrer_recom_therapy,
+					referrer_dr,
+					referrer_dept,
+					referrer_notes,
+					triage,
+					insurance_firm_id,
+					insurance_nr,
+					admit_type
+				FROM care_encounter
+				WHERE pid='" . $SelectedPatient . "'";
+	$EncounterResult = DB_query($SQL);
+	$EncounterRow = DB_fetch_array($EncounterResult);
+} else {
+	$EncounterRow['referrer_diagnosis'] = '';
+	$EncounterRow['referrer_recom_therapy'] = '';
+	$EncounterRow['referrer_dr'] = '';
+	$EncounterRow['referrer_dept'] = '';
+	$EncounterRow['referrer_notes'] = '';
+	$EncounterRow['insurance_nr'] = '';
+}
 
 echo '<form action="', $_SERVER['PHP_SELF'], '" method="post">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -269,7 +359,7 @@ echo '<field>
 		<label for="TriageCode">', _('Triage Code'), ':</label>
 		<select name="TriageCode">';
 foreach ($TriageCodes as $Key => $Value) {
-	if ($Key == $_POST['Title']) {
+	if ($Key == $EncounterRow['triage']) {
 		echo '<option selected="selected" value="', $Key, '">', $Value, '</option>';
 	} else {
 		echo '<option value="', $Key, '">', $Value, '</option>';
@@ -297,22 +387,22 @@ echo '</select>
 
 echo '<field>
 		<label for="Diagnosis">', _('Referrer Diagnosis'), ':</label>
-		<input type="text" name="Diagnosis" size="100" value="" />
+		<input type="text" name="Diagnosis" size="100" value="', $EncounterRow['referrer_diagnosis'], '" />
 	</field>';
 
 echo '<field>
 		<label for="ReferredBy">', _('Referred By'), ':</label>
-		<input type="text" name="ReferredBy" size="100" value="" />
+		<input type="text" name="ReferredBy" size="100" value="', $EncounterRow['referrer_dr'], '" />
 	</field>';
 
 echo '<field>
 		<label for="Therapy">', _('Referrer Therapy'), ':</label>
-		<input type="text" name="Therapy" size="100" value="" />
+		<input type="text" name="Therapy" size="100" value="', $EncounterRow['referrer_recom_therapy'], '" />
 	</field>';
 
 echo '<field>
 		<label for="ReferrerNotes">', _('Referrer Notes'), ':</label>
-		<input type="text" name="ReferrerNotes" size="100" value="" />
+		<input type="text" name="ReferrerNotes" size="100" value="', $EncounterRow['referrer_notes'], '" />
 	</field>';
 
 $SQL = "SELECT debtorno,
@@ -327,7 +417,7 @@ if (DB_num_rows($Result) > 0) {
 			<select name="Insurance">';
 	echo '<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['Insurance']) and $_POST['Insurance'] == $MyRow['debtorno']) {
+		if ($EncounterRow['insurance_firm_id'] == $MyRow['debtorno']) {
 			echo '<option selected="selected" value="', $MyRow['debtorno'], '">', $MyRow['name'], '</option>';
 		} else {
 			echo '<option value="', $MyRow['debtorno'], '">', $MyRow['name'], '</option>';
@@ -340,14 +430,20 @@ if (DB_num_rows($Result) > 0) {
 
 echo '<field>
 		<label for="InsuranceNo">', _('Insurance Number'), ':</label>
-		<input type="text" name="InsuranceNo" size="20" value="" />
+		<input type="text" name="InsuranceNo" size="20" value="', $EncounterRow['insurance_nr'], '" />
 	</field>';
 
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type="submit" name="Create" value="' . ('Admit the patient') . '" />
-	</div>';
+if (isset($_GET['Edit'])) {
+	echo '<div class="centre">
+			<input type="submit" name="Update" value="', ('Update Admission data'), '" />
+		</div>';
+} else {
+	echo '<div class="centre">
+			<input type="submit" name="Create" value="', ('Admit the patient'), '" />
+		</div>';
+}
 
 include ('includes/footer.php');
 ?>
